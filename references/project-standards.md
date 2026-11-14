@@ -6281,3 +6281,1013 @@ Given in the coordinating session of the Edmonton checklist digest (`session_202
 CONDITION: any session digesting a source whose figures a code also states, judging a figure's lens or comparator, deciding what `design_scale` holds, typing a figure's circumstance, minting or declining terms from a single source, building or reading the refusal register, or asked what the owner said about the Edmonton checklist.
 ACTION: (1) The statements are carried by the remediation plan (`workplan/2026-11-12-bidirectional-pipeline/`) as follows, and by nothing else: Q1 by T-035 item 2, T-071 step 3 and T-087; Q2 and Q3 by T-079's deferred-adjudication arm, T-087 and register decision OD-50; Q4 by T-029 item 2 (with T-033 as already planned); Q5 and Q8 by OD-24 as already resolved under delegation; Q6 by OD-47, OD-48 and T-056; Q7 by OD-49, T-091 and T-092; Q9 by T-060's design constraint and T-029; statements 1 to 5 by T-088 and T-089, with OD-54 holding the reading the assumption above sets aside; the instruction's "disability coverage" by T-090. (2) The adjudication's eight owner questions are register decisions OD-47 to OD-54, all open and not yet asked (`REMEDIATION-WORKPLAN.md` §8; phone-ready forms in `DECISION-CLOSURE.md` §4); this entry answers none of them. (3) Treat every [ASSUMPTION] above as unratified.
 DATE: 2026-11-13 — owner statements (questions, proposals and instructions), relayed and recorded on contact by the fold of the Edmonton case study; not owner answers.
+
+
+## Owner question 2026-11-13 — may the open decisions OD-40 to OD-55 be resolved by an Opus-class model on prior rulings, doctrine and the project's goal
+
+Given in the coordinating session of the Edmonton case study (`session_2026-11-13-edmonton-checklist-pass`; https://claude.ai/code/session_01Ub36iQaXrsGs27PBykEgY7), dated by the server clock, UTC, and recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim, in the order given (the first in a user message at 2026-11-13T23:17:22Z, after "merge 231 into main."; the second queued at 2026-11-13T23:17:39Z; both found with `git grep -n -F "<the sentence>" -- transcripts/harness_5dbc61f3/main.jsonl`):
+
+> "are you sure you can't resolve these owner decisions using Opus based upon prior rulings, mission/doctrine and project goal?"
+
+> "I don't know the machinery or code"
+
+**What this records.** The owner asks whether the open register decisions OD-40 to OD-55 can be resolved by an Opus-class model on the owner's prior rulings, the mission and doctrine, and the project's goal, and says the owner cannot judge the machinery or the code. The first sentence is a question, not a ruling.
+
+**Which grant covers OD-40 to OD-55 (the recorder's reading).** Not the delegation of 2026-11-12 ("I guess opus can do it", `grep -n -F "I guess opus can do it" references/project-standards.md`): that delegation named twenty decisions by number, OD-01 to OD-30, and none of OD-40 to OD-55 is among them. The grant that reaches them is the owner's twelfth instruction of 2026-11-12, "You have permission to use Opus for judgment if appropriate here" (`git grep -n -F "You have permission to use Opus for judgment if appropriate here" references/project-standards.md`), under its own unratified [ASSUMPTION] of what "appropriate" means, as OD-33 was resolved (`grep -n -F "OD-33 resolved under the twelfth instruction" references/project-standards.md`). [ASSUMPTION: the owner's question of 2026-11-13 is read as asking that the twelfth instruction ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws be applied to OD-40 to OD-55, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it: nothing in an always-DG-NON type of `governance/decision-protocol.md` §2.4 is resolved; a resolution never overrides a standing owner ruling (condition (e)); and every resolution is checked by a second, independent Opus-class instance before it is relied on (condition (d)); each judged against the owner's three criteria in the order ratified by OI-14. Unratified.] The first pass's entries said "under the owner's delegation of 2026-11-12 ("I guess opus can do it")"; the independent check (its defect C0) corrected that authority sentence, and the entries below carry the corrected one.
+
+The pass: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md`. The independent check of condition (d): `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, which confirmed the nine resolutions with corrections (applied in the entries below) and upheld the seven referrals. The decisions referred back are put in plain words in `workplan/2026-11-12-bidirectional-pipeline/OWNER-SHEET-PLAIN.md`.
+
+CONDITION: any session asking whether OD-40 to OD-55 are answered, or relying on a resolution of one.
+ACTION: (1) Read each decision's state by the gate of the 2026-11-12 convention, never by its `OD-NN:` line. (2) Treat every resolution below as delegated under the twelfth instruction, not the owner's words, and reversible by the owner. (3) Treat the [ASSUMPTION] above as unratified.
+DATE: 2026-11-13 — owner question, quoted above; the reading of the grant is the recorder's.
+
+
+## Delegated resolution 2026-11-13 — OD-40 what a derived figure carries as its quote and its locator
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13 (entry above), with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. Checked under condition (d) by a second, independent Opus-class instance (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-40): confirmed with corrections, which are applied here. Reasoning, facts and commands: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-40).
+
+OD-40: a derived figure has no quote or locator of its own; both are its inputs'
+
+**The resolution.** A derived row stores no quote and no locator; its words and its place are its two inputs', reached through its two `derived_from` edges, each carrying its input's verified quote. The writer refuses a derived row whose inputs lack a quote or a locator, and still checks the arithmetic. A figure that a source states in words is a claim row, never a derived one.
+
+**What decided it.** Criterion 1: every stored quote stays a source's own bytes, so no row is exempt from the verbatim check; an analyst's sentence in the column that means "the source's words" is the shape of the fabricated-citation failure (`CLAUDE.md` §5 (c)). The owner's 2026-08-24 ruling ("It is better to have a table cell point to another table cell than to rewrite") favours the pointer. Deleting the verb (option (c)) was rejected on criterion 1, not as overriding a ruling: a computed figure kept only in prose escapes the arithmetic check and its inputs' quotes; the owner's 2026-09-13 ruling ("Derived figures are a weighted average of their figures") says how such a figure is graded wherever it lives.
+
+**Reversal condition.** A derived figure must be shown with a sentence of its own that no input supplies, or the owner wants computed figures kept only in prose.
+
+CONDITION: any session writing, repairing or reading a derived figure.
+ACTION: (1) Store no quote or locator on a derived row; reach both through its edges. (2) Refuse a derived row whose inputs lack either. (3) Keep the arithmetic check. (4) Write a figure a source states in words as a claim row, never a derived one. (5) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-40 STATUS: RESOLVED UNDER DELEGATION
+OD-40 CHECK: confirmed with corrections applied
+
+
+## Delegated resolution 2026-11-13 — OD-41 the unit `ratio` changed to `rise:run ratio`
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. It is a reading of the owner's OR-3 under condition (c), resting on the prompt the owner answered. Checked under condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-41): confirmed with corrections applied, the one correction being the authority sentence above. Reasoning: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-41).
+
+OD-41: ratio to rise:run ratio is a reformat
+
+**The resolution.** The stored rows whose unit is the bare word `ratio` are amended in place under OR-3 (same digits and quote, the old unit kept in notes). `amend-extraction` gains one branch: a new unit in the notation families is accepted when the old unit stands, on word boundaries, in the new one and the stored figure reads under it.
+
+**What decided it.** The OR-3 prompt the owner answered "Yes, reformat in place" listed, among the forms to reformat, "a unit written 'ratio' where it is 'rise:run ratio'" (`grep -n 'id: OR-3$' -A14 governance/owner-browser.yaml`). Criterion 1: both options assert the same reading; a second row would be a second live home for one statement (rule 5).
+
+**Reversal condition.** The owner says the OR-3 example did not mean these rows, or a row's source defines its ratio otherwise (rise over sloped length), which is then a new reading.
+
+CONDITION: any session amending a bare-`ratio` row or building the reformat branch.
+ACTION: (1) Amend in place under OR-3, keeping the old unit in notes. (2) Write no second row for these. (3) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-41 STATUS: RESOLVED UNDER DELEGATION
+OD-41 CHECK: confirmed with corrections applied
+
+
+## Delegated resolution 2026-11-13 — OD-42 a figure moved between metric units
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. It reads OR-10 under condition (c). Checked under condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-42): confirmed with corrections, which are applied here (the authority sentence, and one fact of the reasoning file: no inch or foot figure is held as a claim or derived row today; one condition row is stated in feet (extraction 44, REF-01002), and one centimetre finding quotes inches beside it (extraction 220)). Reasoning: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-42).
+
+OD-42: a metric-to-metric conversion is shown exactly
+
+**The resolution.** A change of metric prefix (cm to mm, m to mm) keeps the source's digits and is shown exactly. The nearest quarter inch or 5 mm, on the safe side (OR-10, OD-22), applies to a conversion between inch-foot and metric units.
+
+**What decided it.** OR-10 answered a question about "inches and feet to millimetres and metres". Criterion 1: rounding a prefix change prints digits no source stated for a figure whose exact digits are in hand; it gains nothing in legibility, and an exact minimum is never below the source's.
+
+**Reversal condition.** The owner says OR-10's rounding covers every shown converted length.
+
+CONDITION: any session converting or displaying a length.
+ACTION: (1) Show a metric prefix change exactly. (2) Round only an inch-foot and metric conversion, on the safe side. (3) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-42 STATUS: RESOLVED UNDER DELEGATION
+OD-42 CHECK: confirmed with corrections applied
+
+
+## Delegated resolution 2026-11-13 — OD-43 when the engine may call a cell `convergent`
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. It applies a ratified definition; it makes none. Checked under condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-43): confirmed with corrections, which are applied here ("the same value or the same range" in place of "the same bound"; the clinical axis as the engine counts it, Tier 1 to 3; a rationale true of the cell). Reasoning: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-43).
+
+OD-43: convergent only when Tier 1 to 3 clinical evidence and Co-1 evidence agree on the parameter's value or range, their anchoring claims can all hold, and the governing figures rest on two or more independent roots
+
+**The resolution.** The engine writes `convergent` only when the cell has evidence on its clinical axis (Tier 1 to 3 clinical, as the engine counts it) and on its Co-1 axis, the two state the same value or the same range on the parameter's scale, the anchoring claims can all hold, and the governing figures rest on two or more independent roots. Otherwise the cell is `pending_assessment` (two or more axes) or `single_axis` (one), and its rationale states why in words that are true of it: no Co-1 evidence, or floors that differ but can all be met (the spread in the value note), or values not yet compared; never "queued" for a cell whose evidence cannot meet the definition. A clinical and Co-2 cell is never `convergent`. The validator checks the same conditions.
+
+**What decided it.** It applies the ratified definition ("Tier 1–3 clinical evidence and Co-1 evidence agree on the parameter value or range", `governance/evidence-methodology.md`) and its rendered sentence, which names Co-1 sources; H1 (roots, not documents); OR-6b (differing floors that can all be met are not divergent, which is not agreement). Criterion 1: the book says the evidence agrees only when it does. The looser options would extend the definition, which is new methodology and the owner's.
+
+**Reversal condition.** The owner extends `convergent` to agreement between any two tiers (as OR-6 and OR-6c extended `divergent`), or to agreement within a stated tolerance.
+
+**For the owner (from the independent check).** The owner's OR-6 and OR-6c already call a disagreement between any two tiers `divergent`, which the ratified definition does not; this resolution keeps `convergent` to the definition's words. So two clinical sources, or a clinical and a Co-2 source, can be called divergent but never convergent. That asymmetry predates this resolution and is the owner's to remove.
+
+CONDITION: any session building or reading the convergence status.
+ACTION: (1) Write `convergent` only on all four conditions. (2) Keep differing floors that can all be met `pending_assessment`, with the spread in the note. (3) Write a rationale true of the cell; never "queued" where the definition cannot be met. (4) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-43 STATUS: RESOLVED UNDER DELEGATION
+OD-43 CHECK: confirmed with corrections applied
+
+
+## Delegated resolution 2026-11-13 — OD-45 a logged search whose request never returned results
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. Checked under condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-45): confirmed with corrections, which are applied here. Reasoning: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-45).
+
+OD-45: a search not run, deferred
+
+**The resolution.** A logged search whose request returned no result list (a 403 or bot challenge, a 429, a connection reset, a stub page) is a search not run: recorded with `deferred_reason` naming the failure, with no absence class, and owed a re-run, including the Internet Archive route.
+
+**What decided it.** R14 (absence is evidence only for a well-formed query), the operative instrument ("`deferred_reason` is for searches *not run*, never a findings channel"), the principle of the owner's 2026-09-18 ruling on deferred citation mining ('deferred is okay so long as it runs eventually'), applied by analogy. Criterion 1: the book never reports absence where nothing was searched.
+
+**Reversal condition.** The owner wants a blocked request kept as a finding about a source's reachability.
+
+CONDITION: any session logging, classifying or re-running a search.
+ACTION: (1) Log a request with no result list as deferred, with its reason. (2) Give it no absence class. (3) Re-run it. (4) Read a zero-result search as a finding only where `deferred_reason` is NULL. (5) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-45 STATUS: RESOLVED UNDER DELEGATION
+OD-45 CHECK: confirmed with corrections applied
+
+
+## Delegated resolution 2026-11-13 — OD-49 building type, a figure's other circumstances, and where an element lives
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. Checked under condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-49): confirmed with corrections, which are applied here (building types minted from instruments' phrases, not from the owner's examples; no within-level parent for an element; the headline measurement; the reversal stated as retirement). Reasoning: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-49).
+
+OD-49: (a1); (b2)
+
+**The resolution.** (a1) Building type (use), new or existing work, and interior or exterior are each a typed circumstance on the figure, one value per cell, shown as branches within one determination per parameter and lens set. Building type points at the first of the owner's three building levels (2026-08-27). Each building type is minted from an instrument's own scope phrase, in its jurisdiction and language, in a data pull request the owner reads (OR-17, E1); the owner's examples ("eg residential, commercial") show what the level holds, and are not minted as names. "Public" is adjudicated per instrument. Before stored figures are re-tagged, the design measures how many cells' headlines OR-2 would empty and says how a circumstance shared by every figure of a cell is shown. (b2) The owner's 2026-08-27 "three tables" ruling stands; an element row, when a reader needs it, points at its term and holds no name of its own; any relation between elements is decided in that design, not here.
+
+**What decided it.** The other options override standing owner rulings: (a2) the determination key (2026-08-26, 2026-08-28); (a3) one value per cell (2026-11-06) and the building levels (2026-08-27); (b1) "5 is three" (2026-08-27), which OR-14 on element pages does not name. Criterion 1: figures for different building uses no longer compose into one headline; the key is unchanged.
+
+**Reversal condition.** The owner wants building type in the key, or elements as terms only; or the measured headlines show that branching hides a group's difference. Reversal retires the vocabulary rows and NULLs the typed cells forward; nothing written can be dropped.
+
+CONDITION: any session designing a figure's circumstance, a building-type vocabulary, or the element level.
+ACTION: (1) Type each circumstance in its own cell and branch on it. (2) Point building type at the ruled first level; mint each building type from an instrument's own scope phrase, in its jurisdiction and language, never from the owner's examples. (3) Measure, on a scratch copy, how many headlines OR-2 would empty before any stored figure is re-tagged. (4) Build element rows as pointers to terms when a reader needs them; decide any relation between elements in the design. (5) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-49 STATUS: RESOLVED UNDER DELEGATION
+OD-49 CHECK: confirmed with corrections applied
+
+
+## Delegated resolution 2026-11-13 — OD-50 a source that is not a code adding a parameter
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. Checked under condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-50): confirmed with corrections, which are applied here. Reasoning: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-50).
+
+OD-50: any admitted source
+
+**The resolution.** Any admitted source may promote a quantity it states to a parameter in its data pull request, under the standing conditions: the source's own phrase (OR-17), minted from an observation, a quantity with a kind (T-020), the owner reading the pull request.
+
+**What decided it.** OR-13 chose between seeding from the codes held and seeding slug by slug; it does not limit later growth. The owner's stated intent of 2026-10-09, never put as a choice: "pull from the major codes, literature and advocacy from major countries". Criterion 3 also: under the other options a disabled people's organisation's document could never add a question the book asks. Criterion 1: a parameter is a question, not a value. Criterion 3: quantities codes rarely state can be asked about.
+
+**Reversal condition.** The owner wants parameters only from codes or standards, or from two independent sources. Reversal retires the parameters added under it; none is deleted.
+
+CONDITION: any session promoting a parameter from a source that is not a code or standard.
+ACTION: (1) Promote under the standing conditions, in a data pull request. (2) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-50 STATUS: RESOLVED UNDER DELEGATION
+OD-50 CHECK: confirmed with corrections applied
+
+
+## Delegated resolution 2026-11-13 — OD-53 declining held terms in a single-source batch
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. Checked under condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-53): confirmed with corrections, which are applied here. Reasoning: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-53).
+
+OD-53: any batch, for a term its own adjudications name, one stated reason per term, element or method only
+
+**The resolution.** A research batch may decline a held term that an adjudication of its own observations names, when the term is an element, a lens term or a method, with one stated reason per term, listed in its data pull request. It may not decline a quantity. T-072's catalogue pass reviews these declinations and may revoke any.
+
+**What decided it.** The research gate's own design ("A disposition is per term and corpus-wide, so that costs one call per term once"; "the rule does not hold red a batch that did its judging"); the verb takes no approval flag and approval is the data pull request (OR-17); E12 (which names functional-axis and method terms); elements are declined because the owner's 2026-08-27 ruling places them in their own building level, not among quantities, and a parameter need not belong to an element (OD-24, delegated). Criterion 1: each declination is reasoned, attributed, revocable and reviewed twice, and a gate red by construction is avoided.
+
+**Reversal condition.** Batch declinations prove inconsistent under the catalogue review, or a declined element hides a group no coverage read reports.
+
+**For the owner (from the independent check).** Declining a provision of presence (a hearing loop, a tactile indicator) as "not a quantity" is consistent with the owner's rulings, and it means no determination will ever be written for it. That coverage gap comes from OD-24's quantity kinds, not from this resolution, and has not been shown to the owner before.
+
+CONDITION: any research batch whose adjudications name held terms that are neither parameters nor declined.
+ACTION: (1) Decline only elements, lens terms and methods, one reason each. (2) List them in the pull request. (3) Leave T-072 item 6 to review them. (4) Never decline a quantity term; promote it (OD-50) or leave it for T-072. (5) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-53 STATUS: RESOLVED UNDER DELEGATION
+OD-53 CHECK: confirmed with corrections applied
+
+
+## Delegated resolution 2026-11-13 — OD-55 the stored row after a second reading of a bare-`ratio` gradient (conditional on OD-41)
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. **It is conditional on OD-41**: it is not reached while OD-41 stands as a reformat (entry above). Checked under condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-55): confirmed with corrections applied, the one correction being the authority sentence above. Reasoning: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-55).
+
+OD-55: not reached while OD-41 stands as a reformat; if OD-41 is reversed, retire the stored row in place once its second reading is written, naming its successor
+
+**The resolution.** Under the resolution of OD-41 no second row is written. If OD-41 is reversed to a new reading, the stored row is retired in place with its successor named, and the note and the engine count one claim per pair.
+
+**What decided it.** The owner's "retire in place then" (2026-09-16) and rule 5 (one live home per statement).
+
+**Reversal condition.** The owner says a second reading must leave the first live.
+
+CONDITION: any session writing a second reading of a bare-`ratio` row.
+ACTION: (1) Retire the stored row in place, naming its successor. (2) Act on this only if OD-41 is reversed. (3) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-55 STATUS: RESOLVED UNDER DELEGATION
+OD-55 CHECK: confirmed with corrections applied
+
+
+## Referral 2026-11-13 — OD-44 the second source for the blind double extraction
+
+Recorded in the pass under the owner's question of 2026-11-13 (entry above). **Not the owner's words.** Referred back, and the referral upheld by the independent check (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-44). **Why.** It turns on what the owner's own earlier answer (OR-15, "Yes, use batch 23's material") covered, the kind the 2026-11-12 delegation reserved (OD-04, OD-28), and T-070 needs the owner to launch the raters anyway, so the referral costs no time. A fact the first pass left out, which favours option A: the option the owner selected carried the effect "D-5 as written" (`grep -n 'id: OR-15' -A16 governance/owner-browser.yaml`), and D-5 as written picks the research source by a corpus-wide query for the T1 or T2 source with the most findings, not from batch 23. Plain question: `OWNER-SHEET-PLAIN.md`, question 1.
+
+OD-44 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session asking whether OD-44 is answered, or preparing T-070.
+ACTION: (1) Treat OD-44 as the owner's, CLOSED by the gate. (2) Ask it in the plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`.
+DATE: 2026-11-13 — referral, not an owner statement.
+
+
+## Referral 2026-11-13 — OD-46 the language-map codes missing from the jurisdiction registry
+
+Recorded in the same pass. **Not the owner's words.** Referred back, and upheld by the independent check (OD-46). **Why.** Inclusion or exclusion of jurisdictions is always DG-NON (`governance/decision-protocol.md` §2.4 item 4); the recorder of the owner's 2026-09-18 enum ruling also noted that admitting a map-only code is a scope decision. (The owner's own words in that entry are only "UK is canonical, add BE HR INT ES IT to the enum".) Plain question: `OWNER-SHEET-PLAIN.md`, question 2.
+
+OD-46 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session asking whether OD-46 is answered, or preparing T-084 or T-085.
+ACTION: (1) Treat OD-46 as the owner's, CLOSED by the gate. (2) Ask it in the plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`.
+DATE: 2026-11-13 — referral, not an owner statement.
+
+
+## Referral 2026-11-13 — OD-47 the lens of a figure whose clause names no person, function or need
+
+Recorded in the same pass. **Not the owner's words.** Referred back, and upheld by the independent check (OD-47). **Why.** It decides, for most code figures at once, which people a figure is said to serve: population taxonomy, including proxy decisions, is always DG-NON (§2.4 item 2; the owner's fourteenth statement: "The population taxonomy remains the owner's"). Option A would also put on the parameter a property that holds for every figure, a schema choice hard to reverse. A fact the first pass left out: the owner's OD-31 answer already says a provision under a general disability heading carries "no identity, only its ICF and access-need lenses"; the block today is the lens writer's warrant rule, which is code, not an owner ruling. Plain question: `OWNER-SHEET-PLAIN.md`, question 3.
+
+OD-47 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session asking whether OD-47 is answered, or replaying the Edmonton batch's parked figures.
+ACTION: (1) Treat OD-47 as the owner's, CLOSED by the gate. (2) Ask it in the plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`.
+DATE: 2026-11-13 — referral, not an owner statement.
+
+
+## Referral 2026-11-13 — OD-48 what `design_scale = 'universal'` states
+
+Recorded in the same pass. **Not the owner's words.** Referred back, and upheld by the independent check (OD-48). **Why.** Design Modes are mission doctrine, and two owner records conflict: DR-2026-07-12 item G1(a), ratified by owner directive 2026-07-13 ("T4–6-only determinations are Universal-Mode regulatory determinations"), and the OD-31 option of 2026-11-12, chosen on a premise the engine contradicts. The first Design Modes rule itself carries both readings ("Universal Mode = Universal Design / Code Compliance"). OD-31 does not name G1, and treating a ratified record as superseded by implication is the act the OD-14 correction reserved. Plain question: `OWNER-SHEET-PLAIN.md`, question 4.
+
+OD-48 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session asking whether OD-48 is answered, or preparing T-056 or T-115.
+ACTION: (1) Treat OD-48 as the owner's, CLOSED by the gate. (2) Ask it in the plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`.
+DATE: 2026-11-13 — referral, not an owner statement.
+
+
+## Referral 2026-11-13 — OD-51 a municipal advisory committee's document and Co-1 standing
+
+Recorded in the same pass. **Not the owner's words.** Referred back, and upheld by the independent check (OD-51). **Why.** Evidence-tier definitions and the Co-1 source corpus are always DG-NON (§2.4 items 3 and 6). The Co-1 row of `governance/tier-system.md` names both organisations of disabled people and "CRPD Art. 4.3 consultation outputs", and a city advisory committee may be the second kind; the second edge of OR-5b, how the soundness test applies to a document that is not a study, is open. Plain question: `OWNER-SHEET-PLAIN.md`, question 5.
+
+OD-51 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session asking whether OD-51 is answered, or re-tiering the Edmonton checklist.
+ACTION: (1) Treat OD-51 as the owner's, CLOSED by the gate. (2) Ask it in the plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`.
+DATE: 2026-11-13 — referral, not an owner statement.
+
+
+## Referral 2026-11-13 — OD-52 "barrier-free path of travel" as the Edmonton checklist uses it
+
+Recorded in the same pass. **Not the owner's words.** Referred back, and upheld by the independent check (OD-52). **Why.** The term's definition, "a circulation route through a building", is the owner's own approved words (OT-2), and catalogue terms are approved by the owner; every option either applies that definition or widens it. The source the scope note cites for the phrase (the Ontario code, REF-01013) applies it to "floors or walks", which was not before the owner when OT-2 was approved. Plain question: `OWNER-SHEET-PLAIN.md`, question 6.
+
+OD-52 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session asking whether OD-52 is answered, or adjudicating the Edmonton path phrases.
+ACTION: (1) Treat OD-52 as the owner's, CLOSED by the gate. (2) Ask it in the plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`.
+DATE: 2026-11-13 — referral, not an owner statement.
+
+
+## Referral 2026-11-13 — OD-54 writing a canonical row by hand when a writer cannot hold content
+
+Recorded in the same pass. **Not the owner's words.** Referred back, and upheld by the independent check (OD-54). **Why.** Option B sets aside `CLAUDE.md` rules 3 and 10, which only the owner can do. The eleventh set's [ASSUMPTION] already reads "by hand" as option A and acts on nothing else, and no task waits on it, so it can be asked last. Plain question: `OWNER-SHEET-PLAIN.md`, question 7.
+
+OD-54 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session asking whether OD-54 is answered.
+ACTION: (1) Treat OD-54 as the owner's, CLOSED by the gate. (2) Ask it in the plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`.
+DATE: 2026-11-13 — referral, not an owner statement.
+
+
+## Owner answers 2026-11-14 (thirteenth set) — the four things the independent check asked the owner to see
+
+Given in the coordinating session of the Edmonton case study (`session_2026-11-13-edmonton-checklist-pass`; https://claude.ai/code/session_01Ub36iQaXrsGs27PBykEgY7), in one user message dated 2026-11-14T03:16:39Z by the server clock, UTC (found with `git grep -n -F "hearing loops and other similar provisions should be included" -- transcripts/harness_5dbc61f3/main.jsonl`), in reply to the section "Four things to see first" of `workplan/2026-11-12-bidirectional-pipeline/OWNER-SHEET-PLAIN.md` as written on 2026-11-13. The owner numbered the answers 1 to 4, which is the order of the four items. Recorded on contact per `CLAUDE.md` rule 0. Each answer is quoted verbatim; a reading by the recorder is marked [ASSUMPTION] and is not the owner's.
+
+**Answer 1, to item 1 ("The book can say the evidence disagrees more often than it can say it agrees").** The item offered: leave it as it stands, or "say that agreement between any two kinds of evidence also counts, as you did for disagreement". The owner wrote:
+
+> "yes convergence is possible too, and it helps define most common practice (which isn't same as best practice)"
+
+[ASSUMPTION: "convergence is possible too" selects the item's second offer: agreement between any two kinds of evidence counts as convergence, symmetric with the owner's OR-6 and OR-6c use of "divergent" for any two tiers, and including the item's own examples of what could until now only disagree ("two research studies, or a research study and a professional guideline") — basis: the item offered exactly this as the alternative to leaving it, and "too" answers its "as you did for disagreement"; unratified.] [ASSUMPTION: the other conditions of the written definition and of the OD-43 delegated resolution stand, because the owner's words remove only the limit to the clinical and Co-1 axes: the evidence states the same value or the same range on the parameter's scale; the anchoring claims can all hold (OR-6b: differing floors that can all be met are not divergent, which is not agreement); and the governing figures rest on two or more independent roots, sources that share a root counting as one source (H1: `grep -n -F 'precedent counts documents; evidence counts roots' governance/evidence-architecture.md`) — basis: the answer names none of them; unratified.] [ASSUMPTION: "it helps define most common practice (which isn't same as best practice)" is read as: a convergent assessment states the most common practice (the value or range the agreeing evidence holds), and a convergence output is never labelled, stored or rendered as best practice; best practice stays the most accommodating value found in the parameter's recorded direction — basis: the owner's own parenthesis, and the owner's earlier words `grep -n -F 'best practice =/= most common or agreed upon' references/project-standards.md` (2026-10-30) and `grep -n -F 'is NOT evidence of best practice but most common practice' references/project-standards.md` (2026-11-06); unratified.]
+
+**What answer 1 does to OD-43.** The delegated resolution "Delegated resolution 2026-11-13 — OD-43 when the engine may call a cell `convergent`" (above) limited `convergent` to agreement between the clinical axis (Tier 1 to 3) and the Co-1 axis, and named its own reversal condition: "The owner extends `convergent` to agreement between any two tiers (as OR-6 and OR-6c extended `divergent`)". That limit is superseded on contact by answer 1; the delegated entry is not edited and stays as history, and its remaining conditions are carried by the second [ASSUMPTION] above. The ratified definition in `governance/evidence-methodology.md` (`grep -n -F 'agree on the parameter value or range' governance/evidence-methodology.md`) and its rendered sentence for voice pattern Co-1-C (`grep -n -F '| `convergent` | Co-1-C |' governance/evidence-methodology.md`), both of which name Tier 1 and Co-1 sources only, are touched by the same answer; this entry does not edit them, and T-068's caller sweep lists them. **No machine pair is written for this supersession:** the superseded clause's home is this ledger, which the supersession audit cannot anchor (its citation line becomes a second occurrence of the target quote, and no marker may be added beside an append-only entry: `grep -n -F "Correction 2026-11-12 — to the fifth set" references/project-standards.md`); a pair whose target is the governance file needs its marker written there, in the pull request that corrects that file.
+
+**What answer 1 does not decide.** (1) Whether agreement among regulatory sources alone (T4 to T6) is convergence; roots already limit it (OR-19 presumes a grey figure that repeats a code's value to echo it). (2) Whether agreement within a stated tolerance counts (the delegated reversal condition's second limb); "the same value or the same range" stands. (3) How most common practice is shown on a page, and whether it is stored as a value of its own (render's, T-037 under OD-12; T-068 writes the status and its rationale only).
+
+OD-43: agreement between any two kinds of evidence counts as convergence; convergence defines most common practice, which is not best practice
+OD-43 STATUS: ANSWERED BY THE OWNER
+
+**Answer 2, to item 2 ("The second document for the reading test (question 1 below)").** The item offered: "answer question 1". The owner wrote:
+
+> "apply recommendations"
+
+[ASSUMPTION: read as selecting the assistant's recommendation printed with question 1 of the sheet (OD-44), option A: one of the two research studies with the most findings in the whole collection, the 2015 study of wheelchair users pushing up ramps, fetched again first because its text is not saved — basis: question 1 carries one printed recommendation, "Assistant's recommendation (not a ruling): A", and item 2 asked for an answer to question 1; unratified.] The source is the one `workplan/2026-11-12-bidirectional-pipeline/tasks/T-070-blind-double-extraction.md` section 3's query prints for "T1/T2 source with the most finding rows, corpus-wide" (on 2026-11-14 it printed REF-01033, tied on finding rows with REF-01034 and taken by the query's own order; re-run it, do not trust the id).
+
+OD-44: A
+OD-44 STATUS: ANSWERED BY THE OWNER
+
+**Answer 3, to item 3 ("Recording 'new or existing building' may leave many values without a headline figure").** The item offered: "leave it until the measurement is shown to you, or say now how a value whose every figure carries a condition should be headed". The owner wrote:
+
+> "noted. apply recommendations. do not worry about existing/renovating and code as we are only concerned about design itself"
+
+[ASSUMPTION: "apply recommendations" selects the item's first offer: the headline measurement is made on a scratch copy before any stored figure is re-labelled and its result is shown to the owner; no heading rule is set now — basis: that offer is the course the delegated OD-49 already prescribes (its ACTION (3)); unratified.] [ASSUMPTION: "do not worry about existing/renovating and code as we are only concerned about design itself" is a scope statement: the guidebook concerns the design of the environment itself, not renovation or retrofit and not code-compliance status; so whether work is new or existing (renovation, alteration and retrofit included) and a figure's code-compliance status are not circumstances a figure carries, and the circumstances OD-49 types narrow to building use (the owner's own examples of 2026-08-27 were "eg residential, commercial") and interior or exterior — basis: the item named "new or existing" as the circumstance at issue, and "design itself" excludes the state of a building being altered; unratified.] [ASSUMPTION: "code" is read as a figure's code-compliance status as a circumstance only; it is not read as touching the derivation of code floor against above code floor (eleventh set, Q1), the regulatory tiers T4 to T6, or the weak-band flag of a determination resting on codes alone, none of which item 3 raised — basis: item 3 asked only about circumstances on a figure; unratified.]
+
+**What answer 3 does to OD-49.** The delegated resolution of OD-49 (above) keeps its shape — (a1) a typed circumstance on the figure, shown as branches within one determination per parameter and lens set; (b2) the owner's three tables — but its scope narrows: of the three circumstances it typed, "new or existing work" leaves; building use and interior or exterior remain; no code-status circumstance is added. Its ACTION (3), the measurement before any re-tag, stands and counts only the headlines the two remaining circumstances would empty. OD-49 stays RESOLVED UNDER DELEGATION, in the scope this entry gives it; no status line is written for it.
+
+**What answer 3 does not decide.** What becomes of a figure that a source states only for existing or altered buildings (a relaxation for renovation): whether it is read into the corpus at all, or read and shown without that circumstance. T-091's design reports how many stored figures are of that kind, and decides nothing on them.
+
+**Answer 4, to item 4 ("Provisions such as hearing loops never get a value").** The item offered: "leave it as it stands (such provisions are discussed but get no value), or say you want provisions that are present or absent covered, and the options will be put to you". The owner wrote:
+
+> "hearing loops and other similar provisions should be included"
+
+[ASSUMPTION: read as the item's second offer: provisions whose question is whether they are present (a hearing loop, a visual alarm, a tactile walking surface indicator, a TTY, tactile signage and the like) are included in the book with a determination or mark of their own; how is not decided — basis: "should be included" rejects "discussed but get no value", and the item promised that the options would be put; unratified.] This is the owner's scope statement of inclusion. The mechanism is register decision OD-56 (`grep -n -F '### OD-56' workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`), OPEN, for a delegated Opus-class resolution under the owner's twelfth instruction of 2026-11-12 as applied at the owner's question of 2026-11-13, to be independently checked; nothing in this entry resolves it.
+
+**What answer 4 does to OD-53.** The delegated resolution of OD-53 (above) lets a research batch decline an element, a lens term or a method as not a parameter, and its independent check noted that a provision of presence declined that way would never get a determination. For provisions whose question is presence, that allowance is overtaken by answer 4: such a term is not declined as "not a measurement". OD-53 otherwise stands, RESOLVED UNDER DELEGATION; no status line is written for it. No such term is declined today: `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute('select d.term_id, t.canonical_en from parameter_declinations d join terms t using(term_id) where d.revoked_at is null').fetchall())"`.
+
+**The earlier records this set affects, none of them edited.** OD-43's limit of `convergent` to the clinical and Co-1 axes is superseded on contact by answer 1 (the delegated entry stays as history); OD-49's circumstances are narrowed by answer 3 to building use and interior or exterior; OD-53's allowance to decline is overtaken by answer 4 for provisions whose question is presence.
+
+CONDITION: any session building, reading or rendering the convergence status; preparing or executing the blind double extraction; designing or re-tagging a figure's circumstance; declining a held term in a research batch; or deciding how a provision of presence appears in the book.
+ACTION: (1) T-068 carries answer 1: `convergent` on agreement between any two kinds of evidence, with the remaining conditions, its output read as most common practice and never labelled or rendered as best practice; T-037 and T-032 carry the render note. (2) T-070 carries answer 2: option A, the source its section 3 query prints, retrieved first; the owner still launches the raters. (3) T-091 and T-092 carry answer 3: building use and interior or exterior only; the headline measurement counts those two and is shown to the owner before any re-tag. (4) Answer 4 is carried by OD-56, resolved under delegation and independently checked before any task builds its mechanism; meanwhile no research batch declines a provision of presence. (5) Read OD-43 and OD-44 through the gate; OD-49 and OD-53 keep their status lines, in the scope this entry gives them. (6) Treat every [ASSUMPTION] above as unratified.
+DATE: 2026-11-14 — owner answers (typed words, quoted above).
+
+## Owner answer 2026-11-14 — OD-56: how a provision whose question is whether it is present is included
+
+Given in the coordinating session of the Edmonton case study (`session_2026-11-13-edmonton-checklist-pass`; https://claude.ai/code/session_01Ub36iQaXrsGs27PBykEgY7), in one user message dated 2026-11-14T03:18:32Z by the server clock, UTC (line 4169 of `transcripts/harness_5dbc61f3/main.jsonl` at recording; find it again with `python3 -I -c "import json;[print(i+1,d.get('timestamp')) for i,d in enumerate(map(json.loads,open('transcripts/harness_5dbc61f3/main.jsonl'))) if d.get('type')=='user' and d.get('message',{}).get('content')=='b']"`), in reply to the assistant's message of 2026-11-14T03:18:14Z, which ended by listing OD-56's four options: "(a) a presence quantity, so such a provision becomes a parameter with its own determination; (b) an element-level list of the provisions an element should carry; (c) a separate typed register of provisions; (d) prose only, which your answer 4 rules out." Recorded on contact per `CLAUDE.md` rule 0. The answer is quoted verbatim; a reading by the recorder is marked [ASSUMPTION] and is not the owner's.
+
+The owner wrote:
+
+> "b"
+
+[ASSUMPTION: the bare "b" is read as the owner's selection of option (b) of OD-56 (`grep -n -F '### OD-56' workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`): an element-level determination (OR-14b, T-060) lists the provisions an element should carry — basis: it followed that list within twenty seconds, and the owner had just said such provisions should be included (answer 4 of the thirteenth set, above); the assistant told the owner this reading in its next message (2026-11-14T03:18:43Z: "I've read "b" as your choice of option (b) for OD-56 … If you meant something else, tell me and I'll undo it") and the owner did not correct it before this entry was written; unratified. If the owner meant otherwise, this entry is to be superseded on contact.]
+
+**What the answer does.** (1) A provision whose question is whether it is present — a hearing loop, a visual alarm, a tactile walking surface indicator, a TTY, tactile signage and the like — is **not a parameter**, and **no value is computed for it**: OR-14b holds that the element is never a container figures are filed into (`grep -n -F 'The element is still never a container that figures are filed into' references/project-standards.md`), and OD-24 holds that a parameter is one measured quantity with a kind (`grep -n -F 'OD-24: flat and coarse' references/project-standards.md`). (2) The element-level determination that T-060 builds points at the **provision terms** the element should carry (`terms.term_id`), together with the **source statements** that say it should (observation rows, `observed_terms.observation_id`, or extraction rows, `source_value_extractions.extraction_id`), as well as at its parameters' determinations (`specifications.specification_id`) and at the relation rows that cross them, as T-060's design constraint already requires; it holds **no value column**. The provision gets its mark only through that pointer, on the element's page. (3) It overtakes OD-53's allowance to decline such a provision term as "not a measurement" **only in this sense**: the provision term is kept and pointed at by the element determination instead of being left unreferenced. A declination of such a term *as a parameter* stays lawful under OD-53 — under option (b) the term is not a parameter; it is a provision reached by pointer — but a declination that would leave the term with no pointer possible is not made. (4) Options (a), (c) and (d) are not taken: no quantity kind of presence is added, no separate register of provisions is built, and prose alone is not the mechanism. (5) OD-56 needs no delegated resolution and no independent check; the delegated route registered in the thirteenth set (its ACTION (4)) is not run.
+
+**What the answer does not decide.** (1) How a source's statement "a hearing loop should be provided" is typed — a relation between the observation and the element term, or a term-to-term pointer with the observation as its warrant: that is for T-060's design file (`workplan/2026-11-12-bidirectional-pipeline/tasks/T-060-design.md`, not yet written) and the pointer kinds of T-029 (`grep -n -i 'kind' workplan/2026-11-12-bidirectional-pipeline/tasks/T-029-term-relations.md`). (2) Where a provision that belongs to no one element is reached (a TTY at a service counter, a building's alarm system), which the register entry's option (b) named as its hard case: T-060's design names the element it hangs from or reports that it has none. (3) What mark a provision carries on the element's page, and whether ●, ◐ and ○ read for it as they do for a value: render's (T-037, after T-060), from the evidence of the source statements pointed at. (4) Which held terms are provisions of presence: judged term by term by the session that writes the pointer, never by a list maintained beside the terms (`CLAUDE.md` rule 8).
+
+**The earlier records this answer affects, none of them edited.** The thirteenth set's statement that OD-56 is open for a delegated resolution (its answer 4 and ACTION (4)) is overtaken: OD-56 is answered by the owner. OD-53's allowance is read as in (3) above; OD-53 keeps its status line. The register entry's options and their consequences stay as they were put.
+
+CONDITION: any session designing or building the element-level determination (T-060) or the typed pointers between terms (T-029); declining, deferring or reviewing a held term that names a provision whose question is presence (T-072 item 6, T-087, or any research batch); or deciding how such a provision appears in the book.
+ACTION: (1) T-060 carries the answer: its element determination row also points at the provision terms the element should carry and at the source statements (observations or extraction rows) that say it should, still with no value column, and its design names the test that the table has none. (2) T-029 carries the pointer kind: its CHECK includes an element-to-provision kind (`element has provision`) with a test that it is accepted and that an undeclared kind is refused; it is the carrier T-060 reads. (3) T-072 item 6 and T-087 treat a provision term as reached by pointer: such a term is not declined without that pointer being possible ("a provision of presence is reached by an element pointer (OD-56), not declined away"). (4) Read OD-56 through the gate; it needs no delegated resolution and no check line. (5) Treat the [ASSUMPTION] above as unratified.
+DATE: 2026-11-14 — owner answer (typed word, quoted above).
+
+OD-56: (b) an element-level determination lists the provisions an element should carry; a provision is not a parameter
+OD-56 STATUS: ANSWERED BY THE OWNER
+
+## Owner statement 2026-11-14 — convergence means values coming together
+
+Given in the coordinating session of the Edmonton case study (`session_2026-11-13-edmonton-checklist-pass`; https://claude.ai/code/session_01Ub36iQaXrsGs27PBykEgY7), in eleven user messages: six by the server clock, UTC, at 2026-11-14T04:23:22Z, 04:24:32Z (one message, two paragraphs), 04:25:30Z, 04:27:43Z (one message, two paragraphs), 04:28:43Z (one message, two paragraphs) and 04:29:31Z, and five more relayed to the recorder by the coordinating session the same day, in the order quoted, whose timestamps were not yet in the session's transcript when this entry was written. The first two were found with `git grep -n -F "convergence just means values coming together" -- transcripts/harness_5dbc61f3/main.jsonl` and `git grep -n -F "tier 1 item convergence is more significant" -- transcripts/harness_5dbc61f3/main.jsonl`; the last four were not yet preserved into `transcripts/` when this entry was written (find them, once `scripts/preserve_transcripts.py` has run, with `git grep -n -F "this is why we differentiate most common practice" -- transcripts/harness_5dbc61f3/main.jsonl`, `git grep -n -F "divergence between two sets of converged values" -- transcripts/harness_5dbc61f3/main.jsonl`, `git grep -n -F "is it step-based? triggered?" -- transcripts/harness_5dbc61f3/main.jsonl` `git grep -n -F "tolerance should be within 5%" -- transcripts/harness_5dbc61f3/main.jsonl` `git grep -n -F "residential vs non-residential" -- transcripts/harness_5dbc61f3/main.jsonl`, `git grep -n -F "speak towards RANGES of values" -- transcripts/harness_5dbc61f3/main.jsonl` `git grep -n -F "we need to include ranges" -- transcripts/harness_5dbc61f3/main.jsonl` and, for the list of four words, `git grep -n -F '"at most"' -- transcripts/harness_5dbc61f3/main.jsonl`). The first was in reply to the assistant's report that the integrator recording the thirteenth set had kept agreement among Tier 4 to 6 sources alone as `pending_assessment` as a conservative choice, and that the written definition of `convergent` limits it to clinical and Co-1 evidence; the others followed it unprompted. Recorded on contact per `CLAUDE.md` rule 0. Each statement is quoted verbatim, in the order given; a reading by the recorder is marked [ASSUMPTION] and is not the owner's.
+
+The owner wrote:
+
+> "convergence just means values coming together. why wouldn't that make sense for evidence methodology intuitively"
+
+> "it's just that different tiers of evidence have different importance, so tier 1 item convergence is more significant than tier 4 item convergence
+>
+> but you can still converge across tiers like a tier 1 and a tier 6 proposing same value"
+
+> "this is why we differentiate most common practice versus best practice. convergence is not evidence of best practice but most common practice"
+
+> "and if a different set of evidence for a parameter converge together on the same value but there are other sets of evidence for a parameter  converge together on a different value, then we have divergence between two sets of converged values
+>
+> and that itself should cue further investigation/analysis to see what is happening for that parameter"
+
+> "different values because different ICF/access need/identity targeted?
+>
+> or is there a clause somewhere that hasn't been picked up that modifies the parameter? are there conditions? is it step-based? triggered?"
+
+> "tolerance should be within 5%, I think, but given the strictness of application it's often the same values"
+
+> "other reasons for divergence vs convergence may be residential vs non-residential, fully universal design vs limited mobility design, etc"
+
+> "it may also speak towards RANGES of values / eg a mirror mounted between 1000mm aff to 1200mm"
+
+> "oh God we need to include ranges"
+
+> "at most"
+> "minimum"
+> "maximum"
+> "within"
+
+> "etc"
+
+**On convergence (statements 1 to 3).** [ASSUMPTION: the owner's meaning of convergence is descriptive: values coming together, whatever the sources, as in the thirteenth set's answer 1 ("convergence is possible too, and it helps define most common practice (which isn't same as best practice)") — basis: "convergence just means values coming together", and "why wouldn't that make sense" answers a report that the word had been withheld from agreement among codes; unratified.] [ASSUMPTION: the written definition of `convergent` in `governance/evidence-methodology.md` §3.2 joins two facts in one word: whether values come together (descriptive), and whether the agreement is corroboration by independent evidence (a confidence claim: "The converged claim carries higher confidence than either dimension alone", against the doctrine `grep -n -F 'precedent counts documents; evidence counts roots' governance/evidence-architecture.md`, under which agreeing codes are one fact about transmission, not many facts). The owner's reading separates them: convergence is the first; the second is the independent-roots count, shown beside every convergence statement and never implied by the word — basis: the first statement defines the word by the first fact only, and H1 already holds the second as a count of roots; unratified.] [ASSUMPTION: therefore agreement among codes alone (Tier 4 to 6) is convergence, and it is most common practice, shown with its source count and its independent-roots count; the T-068 carve-out that left it `pending_assessment` ("agreement among regulatory sources only; not decided") is withdrawn; and the `single_axis` clause "Tier 4–6 only … No convergence or divergence assessment is possible" and the `convergent` clause "carries higher confidence than either dimension alone" do not stand as written — basis: statements 1 and 3; unratified.] [ASSUMPTION: convergence stays descriptive and its significance is weighted by the tiers of the converging sources: agreement among Tier 1 items is more significant than agreement among Tier 4 items — basis: "different tiers of evidence have different importance, so tier 1 item convergence is more significant than tier 4 item convergence"; unratified.] [ASSUMPTION: convergence across tiers is allowed and is not a separate or lesser status: a Tier 1 and a Tier 6 source giving the same value converge — basis: "you can still converge across tiers like a tier 1 and a tier 6 proposing same value"; unratified.] [ASSUMPTION: the significance is shown by the tiers and weight bands of the converging sources (the weighted-strength anchor model, `governance/tier-system.md` §8: ● full for T1, Co-1, T2, Co-2 and T3-clinical; ◐ partial for T4 and T5; ○ weak for T3-grey and T6; computed per source by `schemas/tier_derivation.py` `band(tier, evidence_type)`), beside the source count and the independent-roots count. `governance/evidence-methodology.md` §3.2 already says "The convergence assessment is not a confidence score" and produces no number, so no numeric score is introduced: significance is read from the tiers listed, not computed as a figure — basis: statement 2 names tiers as what carries importance and names no figure; unratified.] [ASSUMPTION: the roots count still stands: a Tier 1 and a Tier 6 source in agreement show two sources, two tiers and as many independent roots as they truly have (one, if the code took its figure from the study) — basis: H1, which none of the statements touches; unratified.] [ASSUMPTION: convergence, as a status or as any output of the convergence assessment, is not an input to selecting the best-practice value or to strengthening its marker: best practice is selected by the specification pass as the most accommodating value in the parameter's recorded direction (the rulings of 2026-10-30, `grep -n -F 'best practice =/= most common or agreed upon' references/project-standards.md`; tests 1 and 2 of `skills/run-pipeline_SKILL.md` §6), and convergence only describes where values cluster, which is most common practice — basis: "convergence is not evidence of best practice but most common practice", which repeats the owner's words of 2026-11-06 (`grep -n -F 'is NOT evidence of best practice but most common practice' references/project-standards.md`); unratified.]
+
+**On divergence between clusters (statement 4).** [ASSUMPTION: a parameter's evidence can form several clusters, each a set of sources whose values come together; when two or more clusters sit on different values or ranges, the assessment is divergence between sets of converged values, shown with each cluster's sources, tiers and weight bands, its source count and its independent-roots count; significance is read from the tiers, and no numeric score is introduced — basis: "divergence between two sets of converged values", read with statements 1 to 3; unratified.] [ASSUMPTION: divergence between clusters is a cue: the parameter is queued for investigation or analysis of what is happening for it, and is not resolved by the engine, and never by choosing the larger cluster (frequency is never evidence; best practice stays the most accommodating value in the parameter's recorded direction, not the biggest cluster) — basis: "that itself should cue further investigation/analysis to see what is happening for that parameter"; unratified.] [ASSUMPTION: this is additive to the owner's OR-6 and OR-6c answers (a disagreement between any two tiers is divergent; between different ranks the higher rank states the value and the lower rank's dispute is noted; Co-1 and T1 are one rank; a same-rank divergence waits for an approach written by an Opus-class session), which T-059 builds: the cluster-level cue does not replace the tier-level rule — basis: statement 4 names a new case and withdraws nothing; unratified.] **One earlier ruling it meets and does not plainly settle:** OR-6b (`grep -n -F 'OR-6b: "No, the spread is printed in the note"' references/project-standards.md`) holds that floors which differ but can all be met are not divergent, the spread being printed in the note. Two clusters on different floors that can all be met (one cluster at a minimum of 1500 mm, another at 1800 mm) are "divergence between two sets of converged values" by statement 4 and "not divergent" by OR-6b. [ASSUMPTION: the cue (statement 4's second paragraph) applies to such clusters whatever the status word, because it asks only that the parameter be investigated; whether the status of such a cell is `divergent` (and so needs a synthesis approach, `grep -n -F "status 'divergent' requires synthesis_approach" scripts/validate_evidence_state.py`) or stays as OR-6b leaves it with the spread in the note is not decided by this entry, and is put to the owner through T-068 — basis: statement 4 is later and names this case, OR-6b is ratified and narrower, and applying either one silently would decide what the other leaves open; unratified.]
+
+**On what the investigation looks at (statement 5).** These are questions, not rulings. [ASSUMPTION: read as the owner's own checklist of the likely causes of a divergence between clusters, which the investigation the cue starts should test: different groups targeted (ICF code, access need, identity); an uncaptured clause that modifies the parameter; conditions; a stepped series; a trigger — basis: it followed statement 4 and asks which causes to look for; unratified.]
+
+**On further causes (statement 7).** [ASSUMPTION: it extends statement 5's list of causes the investigation checks when two clusters sit on different values, with two more: building use (residential against non-residential, and public or commercial), carried as the typed circumstance OD-49 and the thirteenth set's answer 3 keep (building use and interior or exterior; T-091's carrier, `grep -n -F 'A figure' workplan/2026-11-12-bidirectional-pipeline/tasks/T-091-typed-circumstance-carrier.md`); and design mode, fully universal design against a design for limited mobility or another named group, read from `specifications.design_scale` (`universal`, `population`, `person`) on the determination's side and from the extraction's lens links on the evidence's side (T-018, T-019). Two sources can differ because one targets everyone and the other a named group; that is a reason to read the clusters apart, not a defect in either — basis: the statement names exactly these two and calls them reasons for divergence; unratified.] [ASSUMPTION: "etc" leaves the list open: statements 5 and 7 together are a starting list the investigation prints, not a closed vocabulary, and a divergence that no listed check separates is reported as "undetermined", which is itself the cue for a human read — basis: "etc", and CLAUDE.md rule 8 (no curated list beside the typed columns); unratified.]
+
+**On ranges (statements 8 and 9).** [ASSUMPTION: "it" is the convergence and divergence discussion: a range can itself be the value a source states, and two point values that look divergent (1000 mm and 1200 mm) may be the two ends of one permitted range another source states (a mirror mounted 1000 to 1200 mm above finished floor) — basis: the example names exactly such a range, and the statement followed the list of causes; unratified.] [ASSUMPTION: "we need to include ranges" makes the range the general case and the point its special case: cluster membership is defined over the interval each figure states, not over bare point values. The intervals are already derived, from `claimed_value`, `claimed_unit`, `comparator` and `claim_type`, by `grep -n -F 'def bound_on_scale' scripts/dbcore.py`: a point is (v, v); a floor ("at least 1200") is (v, open) for `>=` and `>`; a ceiling ("no more than 1200") is (open, v) for `<=` and `<`; a range or `between` written "a to b" is (a, b); strictness (`>` against `>=`) is deliberately not modelled. No bound column is missing — basis: the follow-up statement, and the function that already exists; unratified.] [ASSUMPTION: a range is never reduced to a point or its midpoint for grouping; both bounds are kept, as statement 6's reading keeps stored values exact — basis: statement 6's reading, and "include ranges"; unratified.] [ASSUMPTION: two relations over intervals are needed and are kept apart. **Consistent:** two intervals overlap, or come within the tolerance of overlapping (a point inside a range is consistent with it; two overlapping ranges are consistent; a floor and a ceiling are consistent where the floor is not above the ceiling) — the fact OR-6b calls claims that can all hold. **The same:** each finite bound within the tolerance of the other's, with the same sides open — values coming together. The recorder's working reading groups clusters by **the same**, and reports **consistent** beside it (a range that spans two clusters is printed as spanning them), because grouping by overlap would make every floor converge with every higher floor and a broad range converge with everything inside it, so that "convergent" would say only "can all hold", which OR-6b already names, and 1000 mm and 1200 mm would merge through the 1000 to 1200 mm range that statement 8 asks to see as spanning them. The alternative (group by consistency) is the owner's to choose; the question put is that choice only — basis: the two relations are different facts, and statement 8's example needs the second reported, not merged; unratified.]
+
+**On bound words (the list of four, and "etc").** [ASSUMPTION: the owner is listing wordings sources use to state bounds, which must land as bounds alongside ranges, not asking for new comparator values: the comparator vocabulary is symbolic and is the column's own CHECK (re-derive it with `dbcore.check_values`; never quote it), and every comparator already maps to an interval through `bound_on_scale` — basis: a bare list of bound words following "we need to include ranges"; unratified.] [ASSUMPTION: the working mapping is: "at most" and "maximum" are a ceiling, `<=`; "minimum" (and "at least") a floor, `>=`; "within" is ambiguous and is never mapped silently: followed by two figures ("within 1000 to 1200 mm") it states both ends, `between`; followed by one figure ("within 5 mm", "within 5 %") it states a ceiling on a deviation, `<=` on that figure's own quantity. No live figure was found where the two readings of "within" change a cluster (the one stored claim text containing the word uses it of space, not of a bound: `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select extraction_id, comparator, claim_text from source_value_extractions where lower(coalesce(claim_text,'')||coalesce(value_as_written,'')) like '%within%'\").fetchall())"`), so it is not put to the owner — basis: the words' plain direction, and the live rows; unratified.] [ASSUMPTION: "etc" makes the list a starting list, not a closed vocabulary: any other wording is mapped by what it says about direction (a ceiling, a floor, both ends, a point, a deviation); where the wording does not make the direction clear, the figure is kept as written (`value_as_written`, `claim_text`), no comparator is guessed, and the writer's refusal of a value-supplying numerical row without a comparator stops it — basis: "etc", and CLAUDE.md rule 8 (no list of synonyms in code); unratified.] The mapping lives in prose only, where the comparator is explained to an extracting session (`grep -n -F 'the comparator is read from what the wording says about direction' skills/run-pipeline_SKILL.md`), one home, and no code reads a word list. **Two uses of "within" are kept apart:** the bound word of a source ("within 5 mm", a ceiling on a deviation) and the owner's own tolerance for grouping values ("tolerance should be within 5%", statement 6), which is not a figure any source states.
+
+**On what counts as the same value (statement 6).** It answers the question this entry first left open (what counts as "the same value" when values are grouped into clusters). [ASSUMPTION: two values belong to the same cluster when they are within 5% of each other; "I think" marks it as the owner's working view, reversible, not a settled ruling — basis: "tolerance should be within 5%, I think"; unratified.] [ASSUMPTION: 5% is read as a relative tolerance on a common scale (the notation arithmetic of `grep -n -F 'def bound_on_scale' scripts/dbcore.py`, which works in exact fractions): |a − b| divided by the larger of the two is at most 5%, applied to point values and, for a range, to each bound. The owner did not say relative to what; the one alternative is relative to the smaller value (stricter at the edge). The choice between them is left open to the owner — basis: the statement names a percentage and no base; unratified.] [ASSUMPTION: "given the strictness of application it's often the same values" is an observation that exact equality is the usual case, not a second rule — basis: it is introduced by "but" and states what is usual; unratified.] [ASSUMPTION: the tolerance governs cluster membership only: stored and displayed values stay exact (no rounding, no averaging), and the tolerance is one value in one home read by the engine and the validator (`CLAUDE.md` rule 5) — basis: the statement is about when values count as the same, not about what value is shown; unratified.] Also open, and named for the first measurement on live data to show: whether one relative tolerance serves every quantity kind (5% of a 1:20 gradient and 5% of a 2 m width differ in practice).
+
+**What the statements do.** (000) Bound words land as the comparator their direction names (the reading above), written in the extraction guidance, with no code. (00) Ranges are included: every figure is grouped as the interval it states, points being the special case, and no figure is reduced to a point. (0) Statement 6 sets the working tolerance for cluster membership at 5%, in the reading above. (1) OD-43's answer line of the thirteenth set is **refined, not withdrawn**: `OD-43: agreement between any two kinds of evidence counts as convergence; convergence defines most common practice, which is not best practice` stands, and its reach widens to agreement among any sources, codes alone included, and across any tiers (a Tier 1 and a Tier 6 source). No new status line is written: OD-43's latest status line already reads ANSWERED BY THE OWNER, and the answer line is the one this entry refines. (2) The thirteenth set's "What answer 1 does not decide", item (1) (whether agreement among regulatory sources alone is convergence) is decided: it is. Its item (2) (tolerance) is answered by statement 6, as the owner's working view; its item (3) (how most common practice is shown on a page) stays open. (3) The integrator's "conservative choice" in T-068 (agreement among codes alone kept `pending_assessment`) and, to the same extent, the delegated OD-43 resolution of 2026-11-13 are overtaken on contact; the delegated entry stays as history. (4) Every convergent statement carries, beside the word: the number of sources, the number of independent roots (counted as H1 counts them), and each converging source with its tier and weight band, so a code-only convergence reads as one root where the codes share one (or none, where their figure traces to no measured root), and a cross-tier convergence shows each tier. A convergence among codes alone is labelled most common practice and carries the code-derived flag the ledger already requires for regulatory-only bases (`regulatory_stratum_only`, with the convergence-not-evidence caveat); it is never labelled best practice and never raises confidence. (5) The status `convergent` no longer asserts higher confidence; whatever confidence statement is made attaches to the roots count and the tiers listed, not to the word. (6) A convergent assessment changes neither which value is named best practice nor the determination's marker (●, ◐, ○). **No code path lets it today**, read 2026-11-14 and to be re-read, not trusted: the engine's marker is the floor mean of the governing sources' bands and never reads the convergence (`grep -n -A14 '^    marker = None' scripts/assess/assess_cell.py`); its state comes from the tiers present, before the convergence row is built; the value comes from the governing claims and the parameter's direction; the only views that read `convergence_assessment` are `v_divergence` and `v_convergence_sources`, which feed no state, marker or value (`python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select type,name from sqlite_master where sql like '%convergence%' and type in ('view','trigger')\").fetchall())"`); and the validator reads the convergence status only to refuse a `stated` cell resting on Tier 3 alone, which lowers a state and never raises one. T-068's test guards it. Two prose callers tie convergence to best practice or to state and are T-068's to sweep: the voice-pattern row for `single_axis` (Tier 4–6 only) (`grep -n -F "jurisdictions' standards converge on [value] — best practice as currently known" governance/evidence-methodology.md`), which joins a code convergence to "best practice" in one sentence (the weak-band value is named best practice as the most accommodating value under Option A, not because the codes agree); and §2.3's richness criteria (`grep -n -F 'converging on the same value or range, establishing code consensus' governance/evidence-methodology.md`), where code convergence decides `provisional` against `pending`, a state of evidence sufficiency rather than a marker or a value, which the engine does not check (`grep -n -F 'value-level convergence unverified' scripts/assess/assess_cell.py`). (7) A parameter whose evidence forms two or more clusters on different values is an investigation cue: the engine records it as an open gap row that someone must disposition, through the existing gaps mechanism and an existing category (no vocabulary is added), naming the clusters by the command that lists them; `v_divergence` and `/batch-done`'s report list such parameters as the investigation queue. (8) What the investigation looks at is the owner's starting list of statements 5 and 7, made a derived, read-only comparison of the typed attributes that differ between the clusters (T-068's section "What the investigation looks at"); a task to build its reader is owed (`OPEN-ITEMS-PLAN.md` OI-57).
+
+**The doctrine files are not edited here.** `governance/evidence-methodology.md`'s `convergent`, `divergent` and `single_axis` definitions and its voice-pattern sentences (Co-1-C, "Tier 1 OT evidence ([sources]) and Co-1 sources ([sources]) converge on [claim]", and the `single_axis` Tier 4–6 row) are corrected by T-068's caller sweep, each with a marked supersession and its machine pair written in that pull request; no machine pair is written here, for the reason the thirteenth set gives (the superseded clause of the earlier OD-43 records lives in this append-only ledger).
+
+**What the statements do not decide.** (1) Of the tolerance (statement 6): relative to the larger or to the smaller value; and whether one tolerance serves every quantity kind; and, of intervals (statements 8 and 9), whether clusters are grouped by the same or by consistent. The thirteenth set's open item (2) (whether a tolerance counts) is answered by statement 6, as the owner's working view. (2) How most common practice, the listed tiers and the clusters are shown on a page (render's, T-037). (3) Whether the converging regulatory sources are also recorded in `convergence_sources`, whose role CHECK today names only `clinical`, `co1`, `co2`, `down_weighted` and `discounted` (`python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select sql from sqlite_master where name='convergence_sources'\").fetchone()[0])"`): T-068 derives the sources, tiers and roots from the governing extraction links instead, and adds no column, role or score. (4) The status of two clusters whose differing floors can all be met (OR-6b, above). (5) How a cluster is ranked for T-059's rank rule when its sources span ranks.
+
+CONDITION: any session building, reading, validating or rendering the convergence status, its rationale, or the sentence a convergent or divergent cell renders; selecting the best-practice value or the marker of a determination; or investigating a divergent parameter.
+ACTION: (0) T-068 groups intervals, not points (`bound_on_scale`), keeps both bounds, reports a range spanning two clusters, puts the grouping relation (the same against consistent) to the owner with the recorder's working reading, and tests the tolerance and the ranges at their edges (4.9% apart clusters; 5.1% apart does not; an exact match clusters; a stepped series 1:20, 1:16, 1:12 stays three clusters; a point inside a range is consistent with it; a point outside by more than 5% of the nearer bound is not; two overlapping ranges are consistent; 1000 and 1200 as points sit in two clusters while a 1000 to 1200 range is reported as spanning them) and lists, by command, the live cells where it changes a cluster against exact equality. (1) T-068 withdraws its carve-out for agreement among codes alone: such agreement is `convergent` where the other conditions hold (the same value or range; claims that can all hold). (2) Every convergent statement the engine writes carries the number of sources, the number of independent roots (from `v_value_independence_rows`, as T-068 builds it) and each converging source with its tier and band, derived from the sources already linked; no column and no score is added. (3) A convergence among codes alone is labelled most common practice with the code-derived flag (`regulatory_stratum_only`) and the convergence-not-evidence caveat; never best practice, never as raising confidence. (4) `convergent` asserts no higher confidence. (5) A convergent assessment changes neither the best-practice value nor the marker; no code path lets it today, and T-068's test guards that; the prose callers named above are swept by T-068. (6) T-068 builds the cluster step (values within the owner's working tolerance of 5%, relative to the larger value until the owner says otherwise, or overlapping ranges, on a common scale; values stored and shown exact; the tolerance in one home), writes `divergent` for two or more clusters where T-059's rule applies and an open gap row as the investigation cue in every case of two or more clusters, lists the divergent parameters as the investigation queue (`v_divergence`, `/batch-done`), and puts item (4) above to the owner. (7) T-068's caller sweep corrects `governance/evidence-methodology.md` (the `convergent`, `divergent` and `single_axis` definitions, the Co-1-C sentence and the `single_axis` Tier 4–6 voice row) with marked supersessions, the engine branch that hard-codes `single_axis` for a regulatory-only cell, and the validator's rule that `convergent` requires two or more axes (which counts only the clinical, Co-1 and Co-2 roles and so refuses two Tier 1 sources and any code-only agreement). (8) T-068's section "What the investigation looks at" is the specification of a read-only diagnostics reader; the task to build it is owed (`OPEN-ITEMS-PLAN.md` OI-57). (9) Read OD-43 through the gate; its status line is unchanged. (10) Treat every [ASSUMPTION] above as unratified.
+DATE: 2026-11-14 — owner statements (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 — what "best practice" is, and how the term is swept
+
+**Owner's words, quoted (typed, same day, in order):**
+
+> "best practice is the best/most forgiving/etc of all values/approaches for a given term" (2026-11-13, eleventh set)
+>
+> "but how many errors and issues are occurring because your understanding of best practice, which can be found all across our tools and doctrines etc, keeps understanding it as the most common figure"
+>
+> "I think we need to run this sweep carefully and comprehensively, which means we ensure that our grep etc is paired with a contextual reading of the term. The most accommodating value is one that has been identified in our research, which in turn means that it is based in the evidence that we have collected enough if the research source itself simply asserts the value"
+
+**Readings.** [ASSUMPTION: best practice is the most accommodating of the values our research has identified for a parameter; it is chosen from values already held as extractions, and is not computed outside them — basis: "identified in our research"]. [ASSUMPTION: a source that merely asserts a value is enough for that value to be eligible; the source's tier sets the marker and the weight, not eligibility — basis: "if the research source itself simply asserts the value"]. [ASSUMPTION: most common practice (convergence) and best practice are different quantities; the first counts values coming together, the second picks the most accommodating value — basis: the convergence statements of the same day].
+
+**What this does.** Orders a sweep of the live surface (`git grep -i -E 'best[ _-]?practice'`, excluding frozen records and data migrations), each hit paired with a reading of its paragraph and classified by sense, with a flag where the passage conflicts with the statement above. Method and results: `scratchpad/session_2026-11-13-edmonton-checklist-pass/sweep/`.
+
+**What it does not decide.** Whether the term is renamed (the owner asked on 2026-11-14 whether "ideal" would serve; not answered). Which passages are amended: that follows the sweep's list, each amendment through this ledger.
+
+CONDITION: any session reading, writing or rendering the phrase "best practice", the `best_practice_synthesis` table or the `v_best_practice` view.
+ACTION: read the phrase as the most accommodating identified value, never as the most common figure; where a passage says otherwise, name the conflict and do not copy the wording.
+DATE: 2026-11-14 — owner statements (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (later) — the most accommodating value is relative to the lens and the context
+
+**Owner's words, quoted (typed):**
+
+> "The most accommodating, then, is the one that best responds to an ICF/access need/identity within whatever context, and that means it is the ideal from what we have found"
+
+**Readings.** [ASSUMPTION: "most accommodating" is read per cell and per context, never as one figure for a parameter across every lens and circumstance — basis: "best responds to an ICF/access need/identity within whatever context"; the cell's key is already a parameter by at least one lens, and the circumstances (use, indoor/outdoor, new/existing, design scale) are the context]. [ASSUMPTION: "the ideal from what we have found" says the value is the ideal among the values our research has identified, not an ideal beyond them — basis: "from what we have found", with the statement above that it is identified in our research]. [ASSUMPTION: the sentence uses "ideal" as a description and does not answer the owner's own question of 2026-11-14 whether the term should be renamed "ideal" — basis: no instruction to rename; the question stands open].
+
+**What this does.** Adds to the sweep brief a fifth component of the definition (relative to lens and context) and a `TENSION` flag for any passage that gives one best-practice figure for a parameter with no lens or context.
+
+**What it does not decide.** The rename; and how a cell's context is stored (T-091's typed circumstances is the working home, not a ruling).
+
+CONDITION: any session choosing, rendering or reading a best-practice value for a cell.
+ACTION: a best-practice value belongs to a cell and its context; a figure offered without either is incomplete, not wrong.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (later still) — best practice, ideal and most accommodating are one definition
+
+**Owner's words, quoted (typed):**
+
+> "This means that my definition of best practice IS the same as ideal IS the same as most accommodating"
+
+**Readings.** [ASSUMPTION: the three terms name one quantity — the value, for a cell and its context, that best responds to the lens among the values our research has identified — basis: the owner's three-way "IS the same as"]. [ASSUMPTION: this makes any passage that ranks "ideal" and "best practice" as different rungs (the prose register's Ideal → Best Practice → Acceptable → Minimum, in `skills/prose-style-checker_SKILL.md`) a conflict with the owner's definition, to be amended through this ledger and not by a sweep — basis: the statement]. [ASSUMPTION: the owner's question of 2026-11-14 whether to use "ideal" instead of "best practice" is left open as to which word the project writes; it is no longer open as to meaning — basis: the statement says they are the same, and does not instruct a rename].
+
+**What this does.** Widens the sweep: a second pass reads "ideal" and "most accommodating" the same way as "best practice"; passages that treat the three as different are flagged.
+
+**What it does not decide.** Which one word the project writes; whether the prose register's four-rung sequence is kept, collapsed to three, or re-based; the rename of `best_practice_synthesis` and `v_best_practice`.
+
+CONDITION: any session reading or writing any of the three words as a value tier.
+ACTION: read the three as one; name a passage that ranks them apart; do not rewrite it without a ledger entry.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — three terms: best, most common and floor
+
+**Owner's words, quoted (typed):**
+
+> "we have best, most common, and floor"
+
+**Readings.** [ASSUMPTION: the three name three different quantities over the values our research has identified for a cell and its context — *best* (also written ideal, best practice, most accommodating: the value that best responds to the lens), *most common* (where values come together: convergence), *floor* (the code floor: the lowest value the regulatory stratum requires) — basis: the statement, with the earlier statements of the same day]. [ASSUMPTION: a passage using any one of the three words for another is a conflict, for example "best practice" for the code floor or for the most common figure — basis: the statement keeps them distinct]. [ASSUMPTION: this does not rank them by strength of evidence, which is the marker's job — basis: no such statement].
+
+**What this does.** Adds the sense `FLOOR` to the sweep (a passage using best practice for the floor, the minimum or the code baseline is a conflict); the three terms are the sweep's classification, derived from the owner's words and not coined.
+
+**What it does not decide.** Which of these the prose register's Acceptable and Minimum rungs correspond to; how `code_floor_only` and `v_best_practice` are named; any rename.
+
+CONDITION: any session writing a value tier in prose, a schema name, a render sentence or a check.
+ACTION: name which of the three a value is; do not use one word for another.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (after the three terms) — the guidebook shows data and does not determine; minimum is a fact, acceptable is a judgment
+
+**Owner's words, quoted (typed):**
+
+> "remember that we are showing data, not determining. the minimum is a factual data point. acceptable isn't relevant as that's a value judgment. our ideals are simply data points"
+
+**Readings.** [ASSUMPTION: the best (ideal), most common and floor values are each shown as a data point drawn from what the research identified; none is presented as a verdict on what a design should be — basis: "our ideals are simply data points"]. [ASSUMPTION: "minimum" is the floor, a stated figure, and carries no judgment — basis: "the minimum is a factual data point"]. [ASSUMPTION: "acceptable" is not a quantity the project holds, and the prose register's rung of that name has no place — basis: "acceptable isn't relevant as that's a value judgment"; this answers the question left open by the entry on the three terms for the prose register's Acceptable rung, and leaves its Ideal and Minimum rungs standing as the owner's best and floor]. [ASSUMPTION: "showing data, not determining" governs how a value is worded and presented; it is not read as retiring the specification stage's determination, which the owner ruled at element level (OD-56 (b)) — basis: no statement retiring it; the tension with the specification stage's name is recorded, not resolved].
+
+**What this does.** Adds to the sweep a flag: a passage that ranks "acceptable" as a tier, or presents best practice, the minimum or a convergent value as what a design must, should or may do rather than as a figure the research shows, is a conflict with this statement.
+
+**What it does not decide.** Whether "determination" as the specification stage's word is kept, nor how the render sentences are re-worded; those follow the sweep's list, each through this ledger.
+
+CONDITION: any session writing a value tier, a render sentence, a specification state or a check message.
+ACTION: show the value and what it rests on; do not say it is acceptable, adequate or required unless a source states a requirement, and then attribute it.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (after "acceptable") — the project holds four data points: minimum, mode, median, maximum
+
+**Owner's words, quoted (typed):**
+
+> "we just have minimum, mode, median, maximum"
+
+**Readings.** [ASSUMPTION: for a cell and its context the guidebook shows four descriptive figures over the values our research has identified: the minimum, the mode, the median and the maximum — basis: the statement, with "we are showing data, not determining"]. [ASSUMPTION: the earlier names map onto them: *floor* is the minimum; *most common* is the mode (the value or cluster where values come together, which T-068's cluster step finds); *best*, *ideal* and *most accommodating* is not a fifth figure but whichever end, minimum or maximum, is the more accommodating for that parameter, the direction being the one OD-24's split test already asks of each parameter (a wider doorway is more accommodating at the maximum, a lower operating force at the minimum) — basis: "best/most forgiving of all values" together with this statement; the median has no earlier name]. [ASSUMPTION: a figure that is an interval contributes both bounds to the minimum and the maximum, and the 5% tolerance of the earlier statement applies to the mode only — basis: the earlier statements on ranges and tolerance; not stated here].
+
+**What this does.** Replaces the sweep's three-way classification (best, most common, floor) with four named figures plus the accommodating direction, for the synthesis of its results; a passage that uses one of the four words for another, or that names a fifth tier, is a conflict.
+
+**What it does not decide.** Whether the minimum is taken over every identified value for the cell or only over the regulatory stratum (the code floor in the doctrine's sense); whether the median is shown wherever the mode is; how a cell with one value is shown (all four coincide); and the names of schema objects and render sentences, which follow the sweep's list through this ledger.
+
+CONDITION: any session choosing, computing, rendering or checking a value figure for a cell.
+ACTION: show the four figures as data with what each rests on; do not add a fifth tier or call any of them acceptable, required or recommended.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner answer 2026-11-14 — the minimum is the code stratum's lowest value, or the lowest identified value where there is no code data
+
+**Owner's words, quoted (typed), answering the question put after the four-figure statement:**
+
+> "minimum is code stratum unless there is no code data"
+
+**Readings.** [ASSUMPTION: "code stratum" is the regulatory stratum of the tier system (T4–T6, ruled as the code floor's home); the minimum of a cell is the lowest value any code in that stratum states for it — basis: the tier system's walled-off stratum and the doctrine's "Tier 6 codes are the compliance floor"]. [ASSUMPTION: where the cell has no code value, the minimum is the lowest value among the other identified values, and is shown as research-derived, never as a code floor — basis: "unless there is no code data"; the source stratum is a fact the reader needs and travels with the figure]. [ASSUMPTION: a research value lower than the code minimum is a value shown among the identified values; it does not replace the minimum — basis: the answer places the minimum in the code stratum when code data exist]. [ASSUMPTION: an interval or a floor-only code claim ("at least 1200") contributes its lower bound, and a ceiling-only claim ("at most 38 N") contributes nothing to the minimum of a parameter whose direction is a floor, using the bounds already read by `dbcore.bound_on_scale` — basis: the earlier statement on ranges; not stated here].
+
+**What this does.** Settles the scope of the minimum; so floor stays a figure distinct from the research values, and the sweep's `FLOOR` sense is the code stratum's lowest value, not the lowest of everything found.
+
+**What it does not decide.** The scope of the maximum, the mode and the median (all identified values, or only some stratum); how a cell with code data from several jurisdictions presents the lowest (one jurisdiction's figure or the set); whether a minimum drawn from research is marked differently from one drawn from code in the render.
+
+CONDITION: any session computing, rendering or checking the minimum of a cell.
+ACTION: take the minimum from the code stratum when it holds a value for the cell; otherwise from the identified values and say so; leave the maximum, mode and median scopes to the owner.
+DATE: 2026-11-14 — owner answer (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — the project is radically transparent: it shows every value and source and claims no authority over the design
+
+**Owner's words, quoted (typed):**
+
+> "remember our project is radically transparent, presents all values/approaches/data for comparative purposes, provides citations for values/approaches/data, does not claim with own authority that something is the correct way to design but instead simply showcases the best/ideal value/approach/datum for the parameter in whatever context it's in"
+
+**Readings.** [ASSUMPTION: this restates, in one sentence, the thinking-tool-not-authority doctrine already fixed in `CLAUDE.md` §9 and `governance/mission-and-epistemics.md`; it adds no new status and is a ruling only on how the best value is worded — basis: it names no change of mission, and the doctrine it echoes is already ratified]. [ASSUMPTION: "presents all values" means a cell shows every identified value, each with its citation, and the minimum, mode, median and maximum are summaries of that set, not a replacement for it — basis: "all values/approaches/data for comparative purposes" with the four-figure statement]. [ASSUMPTION: the best value is *showcased*, not *recommended*: the guidebook says it is the most accommodating identified value for the lens and context, with its citation, and does not say a design must or should use it — basis: "does not claim with own authority that something is the correct way to design"]. [ASSUMPTION: "approach" is held as a value-bearing item alongside a figure, so approaches (a method, a provision such as a hearing loop) are shown and cited as figures are — basis: "values/approaches/data" used three times; no schema consequence is drawn here].
+
+**What this does.** Fixes the wording test for the sweep's results: a passage conflicts if it claims authority for a design choice, hides a value from view, or presents a figure without a citation; it does not conflict merely for naming the most accommodating identified value best, provided the citation travels with it.
+
+**What it does not decide.** Whether a value resting on the code stratum alone may be showcased as best (the sweep's disputed Option A passages): this statement asks that every value be shown with its citation and says nothing on who may be named best by tier; the question is held.
+
+CONDITION: any session writing, rendering or reviewing a sentence that names a best, ideal or most accommodating value.
+ACTION: show the value with its citation and context; say it is the most accommodating identified value; do not say it is correct, required or recommended on the project's own authority.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — "we gather and show"
+
+**Owner's words, quoted (typed):**
+
+> "we gather and show"
+
+**Readings.** [ASSUMPTION: the project's two acts are gathering (research, evidence) and showing (render); the stages between them organise what was gathered and decide nothing about the design — basis: the statement, with "we are showing data, not determining" and the transparency statement of the same day]. [ASSUMPTION: this puts the specification stage's name, "determination", and the doctrine's "best-practice determination", in the same tension already recorded under the "showing data, not determining" entry; it is recorded, not resolved — basis: no instruction to rename the stage].
+
+**What it does not decide.** Anything about the stages' tables or the spine; the spine is checked and is changed only through the ledger.
+
+CONDITION: any session describing what the guidebook does, or naming what a stage produces.
+ACTION: describe the project as gathering and showing; do not describe any stage as deciding how to design.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — where the only values are code, the code determines the best
+
+**Owner's words, quoted (typed):**
+
+> "if the only values are from code then code determines the ideal/best"
+
+**Readings.** [ASSUMPTION: for a cell whose identified values all come from the code stratum, the best (ideal, most accommodating) value is the most accommodating of those code values, for the parameter's direction; it is shown with its citation and marked as code-sourced — basis: the statement, with the entries of the same day on best, the four figures and transparency]. [ASSUMPTION: this is not the minimum, which stays the code stratum's lowest value (its own entry), and not the mode; where code values differ, the best is the one that best responds to the lens, the minimum is the lowest, the mode is where they come together — basis: best, most common and floor are three quantities]. [ASSUMPTION: this answers the question held after the sweep (whether a value resting on the code stratum alone may be named best): yes, with its source shown; it does not make agreement among codes the best, which stays the mode — basis: the statement and "convergence is not evidence of best practice"].
+
+**What this does.** Settles for the sweep that a passage naming the most accommodating code value best in a code-only cell, with its source, is not a conflict; a passage naming the code figure best because jurisdictions agree on it, or naming the floor best, remains one.
+
+**What it does not decide.** The marker or wording shown for a code-sourced best (the doctrine's weak band, ○, and "best practice as currently known" are the present wording; whether they stand is a separate question); the passages already flagged are not re-sorted by this entry.
+
+CONDITION: any session choosing, rendering or reviewing the best value of a cell whose identified values are all code values.
+ACTION: take the most accommodating code value for the parameter's direction as the best, show its code source with it, and keep the minimum and the mode as their own figures.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — the figures run in the parameter's accessibility direction; the minimum may be the highest number
+
+**Owner's words, quoted (typed):**
+
+> "remember that value direction of parameter matters. the minimum in some contexts may be the highest allowable number in absolute terms"
+
+**Readings.** [ASSUMPTION: the minimum and the maximum are ordered by accommodation, not by numeric size: the minimum is the least accommodating value the code stratum allows (for an operating force or a gradient, the highest number: "no more than 38 N"), the maximum is the most accommodating identified value (the lowest number for that force, the widest for a doorway) — basis: the statement; the parameter's `accessibility_direction` column (`higher_is_better` or the reverse) is the existing record of the direction, and `assess_cell.py` already selects the most accommodating value by it]. [ASSUMPTION: the best (ideal, most accommodating) figure is therefore the maximum in accommodation order, and the earlier reading that it is "whichever numeric end is more accommodating" is the same thing said in numeric terms — basis: the two statements together]. [ASSUMPTION: the mode and the median are taken over the values as ordered by accommodation, so the median is the middle value in that order — basis: the direction statement]. [ASSUMPTION: a parameter with no recorded direction, or one recorded as contested, gets no minimum or maximum, only the identified values, until a direction is recorded — basis: the engine's own refusal for the same case; not stated here].
+
+**[CORRECTION: the minimum's scope entry above — a ceiling-only code claim ("at most 38 N") contributes nothing to the minimum of a parameter whose direction is a floor.]** That reading counted the minimum numerically. Under this statement a ceiling-only code claim is the least accommodating allowed value of a lower-is-better parameter and is its minimum; a floor-only claim ("at least 1200") is the minimum of a higher-is-better parameter. The earlier entries are not edited; this one supersedes the reading.
+
+**What this does.** Fixes the order the four figures are read in; ties them to the recorded accessibility direction; withdraws the numeric reading of the minimum.
+
+**What it does not decide.** How a parameter whose direction depends on context is shown; whether the figures are labelled by accommodation or by their numeric names in the render.
+
+CONDITION: any session computing, rendering or checking the minimum, maximum, median or best of a cell.
+ACTION: order the identified values by the parameter's accessibility direction before taking any of the four; never take the numerically smallest value as the minimum without that order.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — the marker, not the word, says how a best value is derived
+
+**Owner's words, quoted (typed):**
+
+> "that's why we have the circles: we can say something is best practice but the empty circle makes it clear that it's not academically or clinically derived"
+
+**Readings.** [ASSUMPTION: the evidence marker carries provenance, so the words "best practice" need not; a value named best practice from the code stratum alone is shown with the empty circle (○), which tells the reader it is not academically or clinically derived — basis: the statement, with "if the only values are from code then code determines the ideal/best"]. [ASSUMPTION: "the empty circle" is ○; the doctrine already renders a determination resting on T4–T6 alone as "○ weak, code-derived" (`governance/evidence-architecture.md` §§2.2, 5), while `CLAUDE.md` §6 glosses ◐ as "policy/standards only" and ○ as "grey, thin or unverified"; the two glosses are not reconciled here — basis: the passages named; flagged for the owner and not decided]. [ASSUMPTION: this makes the wording "best practice" with a ○ marker and a shown code source consistent with the definition; it does not make a ○ best practice equal to a ● one, since the marker is the difference — basis: the statement].
+
+**What this does.** For the sweep: a passage that names the most accommodating code value best practice, with the ○ marker or an equivalent statement of its code source, is not a conflict on that ground; one that names it best practice with no marker or source, or at ● strength, remains one. Together with the code-only entry this settles the Option A wording for the sweep's disputed passages in principle; the passages themselves are not yet re-sorted.
+
+**What it does not decide.** Which circle a code-only best carries where `CLAUDE.md` and the doctrine differ (○ or ◐); the marker rule for a best resting on research that is itself thin.
+
+CONDITION: any session writing, rendering or reviewing a best-practice sentence or its marker.
+ACTION: let the marker carry the provenance; do not drop the marker, and do not use ● for a value resting only on code.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — "grey, thin or unverified" may not belong in the empty circle's meaning
+
+**Owner's words, quoted (typed):**
+
+> "grey thin or unverified maybe shouldn't be included"
+
+**Readings.** [ASSUMPTION: the statement is about the gloss of ○ in `CLAUDE.md` §6 and the governance files ("grey, thin or unverified (the source could not be retrieved)"), following the owner's reading of ○ as "not academically or clinically derived"; it is read as a tentative proposal ("maybe"), not a ruling — basis: the wording, and that the preceding statement defined ○ by derivation, not by retrievability]. [ASSUMPTION, the other reading, held open: the owner means such sources (grey literature, thin base, unretrievable) should not be admitted at all — basis: the sentence is ambiguous between a gloss and an admission rule; it is not taken as a ruling on admission, which would reach the research contract and the tier system, both on the decision-protocol's reserved list].
+
+**What this does.** Records the proposal and its two readings. Nothing in `CLAUDE.md`, the governance files, `skills/evidence-auditor_SKILL.md` or `scripts/audit/research_batch_dod.py` is changed by it. The gloss of ○ is stated in `CLAUDE.md` §6, `governance/mission-and-epistemics.md`, `governance/owner-browser.yaml`, `governance/tier-system.md` (which also puts T6 code-floor at ○) and the evidence-auditor skill (derive: `git grep -n -E '○.{0,40}(grey|thin|unverified)' -- CLAUDE.md governance skills scripts`).
+
+**What it does not decide.** Whether ○ means "not academically or clinically derived" (code, consensus, grey), with unverifiability marked some other way (the source's verification status already records it); or the marker keeps its present meaning; or such sources are not admitted. Held for the owner.
+
+CONDITION: any session writing or checking the meaning of ○, or admitting a grey, thin or unretrievable source.
+ACTION: keep the present gloss until the owner rules; say which reading a passage assumes.
+DATE: 2026-11-14 — owner statement (typed words, quoted above), tentative.
+
+---
+
+## Owner proposal 2026-11-14 (last) — the three circles by tier: empty for code, half for tiers 3 and 4, full for tiers 1 and 2
+
+**Owner's words, quoted (typed):**
+
+> "i think empty for code, half for tier 3/4 as 4 is above jurisdiction code, full for tier 1/2?"
+
+**Readings.** [ASSUMPTION: a proposal ("i think", closed with a question mark), not a ruling — basis: the wording]. [ASSUMPTION: "code" is T6, the statutory code; "tier 4 is above jurisdiction code" refers to T4 international standards sitting above the national and sub-national codes of T6 — basis: `governance/tier-system.md` §1]. The proposal against the present `band()` in `schemas/tier_derivation.py` (derive: `sed -n 100,115p schemas/tier_derivation.py`):
+
+| Tier | Present band | Proposal | Change |
+|---|---|---|---|
+| T1, T2 | ● | ● | none |
+| T3 clinical | ● | ◐ | lowered |
+| T3 grey | ○ | ◐ | raised |
+| T4 | ◐ | ◐ | none |
+| T6 (code) | ○ | ○ | none |
+| T5, Co-1, Co-2 | ◐, ●, ● | not named | open |
+
+[ASSUMPTION: Co-1 stays ● (co-primary with T1 under CRPD Art. 4.3, a ruled position), and Co-2 and T5 are not read into the proposal — basis: the proposal names only T1–T4 and code; the owner's earlier statement on the gloss of ○ ("grey, thin or unverified maybe shouldn't be included") agrees with moving T3 grey off ○, and it agrees with ○ meaning "not academically or clinically derived"].
+
+**What this does.** Records the proposal and the table. It changes no code, schema or governance file; `band()`, `tier-system.md` §5 and the evidence-tier definitions are not edited, since evidence-tier definitions are on the decision-protocol's reserved list and the proposal is tentative.
+
+**What it does not decide.** The bands of T5, Co-1 and Co-2; where an unretrievable (`UNVERIFIED`) source sits; whether lowering T3 clinical to ◐ is intended, since `evidence-methodology.md` §2.2's threshold treats T3 clinical as able to carry a `provisional` state and not a `stated` one, which the proposal would agree with.
+
+CONDITION: any session deriving, rendering or auditing an evidence marker.
+ACTION: keep `band()` as it is until the owner rules; say which table a passage assumes.
+DATE: 2026-11-14 — owner proposal (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — tiers 5 and 6 take the empty circle
+
+**Owner's words, quoted (typed), completing the proposal above:**
+
+> "empty for 5/6"
+
+**Readings.** [ASSUMPTION: with the proposal above, the table reads: T1, T2 ●; T3, T4 ◐; T5, T6 ○ — basis: the two statements read together; still the owner's working view, as the proposal was put with "i think"]. [ASSUMPTION: against the present `band()`, T5 moves from ◐ to ○ (T5 national beyond-code frameworks, for example BS 8300 and DIN 18040); the other changes are those in the proposal's table — basis: `schemas/tier_derivation.py` `band()`]. [ASSUMPTION: the "code stratum" used for the minimum (the owner's answer on the minimum's scope) is not changed by the circles: the stratum stays T4–T6, T4 carrying ◐ and T5 and T6 ○ — basis: that answer is about where values come from, and this one is about how they are marked; if the owner means T4 to leave the stratum, it is a separate statement].
+
+**What this does not decide.** The bands of Co-1 and Co-2 (both ● at present, not named by the proposal); where an unretrievable source sits; any edit to `band()` or the governance files, which is held.
+
+CONDITION: as for the proposal above.
+ACTION: as for the proposal above.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner answer 2026-11-14 (last) — Co-1 and Co-2 take the full circle
+
+**Owner's words, quoted (typed), answering the question left open by the circles-by-tier entries above:**
+
+> "Co-1 stays full, Co-2 full too"
+
+**Readings.** [ASSUMPTION: the full table reads: ● for T1, T2, Co-1 and Co-2; ◐ for T3 and T4; ○ for T5 and T6 — basis: this answer with the two entries above; Co-1 and Co-2 are unchanged from the present `band()`]. [ASSUMPTION: the table remains the owner's working view and the code and governance files are not changed by it, as the proposal that opened it was put with "i think"; a later "yes" or an instruction to apply would end the hold — basis: no instruction to change `band()`].
+
+**What this does not decide.** Where an unretrievable (`UNVERIFIED`) source sits; the sources between T3 clinical and T3 grey (the proposal puts both at ◐); any edit to `band()`, `tier-system.md` §5, `CLAUDE.md` §6 or the evidence-auditor skill, which are held.
+
+CONDITION: as for the circles entries above.
+ACTION: as for the circles entries above.
+DATE: 2026-11-14 — owner answer (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — grey, thin and unverified sources are kept, and carry a triangle warning
+
+**Owner's words, quoted (typed):**
+
+> "what are grey or thin or unverified sources? let's return to keeping them but they get a triangle warning"
+
+**What the three are, from the record (not the owner's words).** *Grey*: T3 grey, grey-literature primary research, `evidence_type` `grey` (`governance/tier-system.md` §§1, 5). *Unverified*: a source that could not be retrieved, stored with `verification_status` `UNVERIFIED` (the owner's 2026-10-21 ruling in `tier-system.md` §5: it cannot be claimed as primary evidence or at a top tier). *Thin*: not a property of a source: the doctrine's `[THIN BASE]` flag marks a cell or population where the identified evidence is sparse (the IntD proxy is its worked case, `governance/armature_v4.md`); no column or check derives it today, so its definition is open. Derive the live counts: `select verification_status, count(*) from evidence_sources group by 1`, and the same on `evidence_type`.
+
+**Readings.** [ASSUMPTION: "keeping them" ends the question held after the proposal on the gloss of ○ (read that as option 2 of its three: they are admitted, and not excluded) — basis: "return to keeping them"]. [ASSUMPTION: the triangle is a warning shown beside the circle and does not replace it: the circle still follows the tier table of the entries above (a grey T3 source ◐, an unverified source the circle of its tier), and the triangle says the source is grey, unverified or thin — basis: the owner's earlier "the empty circle makes it clear that it's not academically or clinically derived", which gives the circle the derivation role and leaves the warning role to the triangle]. [ASSUMPTION: the triangle is derived, never stored beside its cause (rule 5, rule 8): grey from `evidence_type`, unverified from `verification_status`, thin from a rule not yet written — basis: CLAUDE.md rules 5 and 8].
+
+**What this does.** Records that such sources stay in the guidebook with a visible warning; ends the meaning "grey, thin or unverified" for ○ in the proposal on the gloss.
+
+**What it does not decide.** What counts as thin; whether an unverified source's circle is capped (the 2026-10-21 ruling says it cannot sit at a top tier); the triangle's glyph and where it is shown (a source, a figure, a cell); any edit to `band()`, `CLAUDE.md` §6, the governance files or the render, which are held with the circle table.
+
+CONDITION: any session rendering, deriving or auditing a marker, or admitting a grey, thin or unretrievable source.
+ACTION: admit such a source; do not exclude it; mark it with the warning once the rule is written; keep the circle by tier.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — the warning glyph is ⚠️
+
+**Owner's words, quoted (typed), answering the glyph left open in the entry above:**
+
+> "⚠️"
+
+**Readings.** [ASSUMPTION: ⚠️ is the glyph of the triangle warning for grey, thin and unverified sources — basis: it follows the entry that asks for a "triangle warning" and names no glyph]. Where it is shown, what causes it for thin, and any edit to the render remain held, as in the entry above.
+
+CONDITION: any session rendering or describing the warning for a grey, thin or unverified source.
+ACTION: name the warning ⚠️; do not add another glyph for it.
+DATE: 2026-11-14 — owner statement (typed glyph, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — the warning glyph is the plain Unicode character, not the emoji
+
+**Owner's words, quoted (typed):**
+
+> "except use the Unicode one"
+
+**Readings.** [ASSUMPTION: the glyph is U+26A0 WARNING SIGN written alone, in text presentation (⚠), the same kind of character as the circles ● ◐ ○; it is not the emoji form, which is U+26A0 followed by U+FE0F (VARIATION SELECTOR-16) and which the entry above carried — basis: the statement, against the glyph the owner typed before it; the pair of code points is the only difference between the two]. [CORRECTION: the entry above names the glyph as the emoji form; this entry replaces that glyph with U+26A0 alone; nothing else in it changes.]
+
+CONDITION: any session writing or rendering the warning for a grey, thin or unverified source.
+ACTION: write U+26A0 with no U+FE0F after it; if a renderer draws it as an emoji, say so and do not switch glyph.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner correction 2026-11-14 (last) — the warning triangle replaces the circle for a value from a grey or unverified source
+
+**Owner's words, quoted (typed), correcting the reading recorded above that the warning sits beside the circle:**
+
+> "no, triangle instead if the value is coming from grey or unverified"
+
+**Readings.** [CORRECTION: the entry on the warning triangle read the warning as shown beside the circle, not instead of it. That reading is withdrawn. The ⚠ takes the circle's place where the value comes from a grey or an unverified source — basis: the statement]. [ASSUMPTION: the triangle is therefore a fourth state of the marker (●, ◐, ○, ⚠): a marker that says the value rests on a grey or unverified source, so that no circle claims a derivation the source cannot bear — basis: "instead"]. [ASSUMPTION: "thin" is not named in this statement; it is read as no longer a cause of the triangle until the owner says otherwise, and is held with the question of what counts as thin — basis: the statement names only grey and unverified]. [ASSUMPTION: "the value is coming from" a grey or unverified source means the figure's governing source (the source its extraction rests on), as the engine already reads the governing sources of a cell; where a cell rests on both grey and other sources, how the triangle and the circle combine is not stated — basis: the wording].
+
+**What this does.** Replaces the earlier arrangement (circle by tier plus a beside-warning) with: circle by tier, triangle instead of circle for a grey or unverified source. The earlier entry's other points stand: such sources are kept; the glyph is the plain Unicode U+26A0.
+
+**What it does not decide.** How a cell resting on a grey or unverified source together with others is marked (the triangle, the circle of the others, or the floor of the two); the place of "thin"; any edit to `band()`, `CLAUDE.md` §6, the governance files or the render, which are held with the circle table.
+
+CONDITION: any session deriving, rendering or auditing a marker.
+ACTION: a figure whose governing source is grey or unverified carries ⚠ and no circle; do not write both.
+DATE: 2026-11-14 — owner correction (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — thin also takes the triangle
+
+**Owner's words, quoted (typed), completing the correction above:**
+
+> "thin too"
+
+**Readings.** [ASSUMPTION: a value whose basis is thin takes the ⚠ in place of the circle, as one from a grey or unverified source does — basis: the statement; this withdraws the reading in the entry above that thin was no longer a cause]. The causes of the triangle are then grey, thin and unverified, as the owner first named them. [ASSUMPTION: thin remains a property of a cell or population (the doctrine's `[THIN BASE]` flag), not of a source, so the triangle for thin attaches to the value and not to a source — basis: `governance/tier-system.md` §5 and `governance/armature_v4.md`].
+
+**What it does not decide.** What counts as thin (no column or check derives it; open); how a cell resting on grey, thin or unverified together with other sources is marked; any edit to `band()`, `CLAUDE.md` §6, the governance files or the render.
+
+CONDITION: any session deriving, rendering or auditing a marker.
+ACTION: ⚠ in place of the circle for a grey, thin or unverified basis; do not write both.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — thin means the evidence does not directly concern the people served and is conjecture
+
+**Owner's words, quoted (typed), answering the question left open in the entry on the triangle:**
+
+> "I think thin is when the evidence doesn't directly concern someone but is conjecture"
+
+**Readings.** [ASSUMPTION: a value is thin when what supports it was not gathered about the people or situation it is shown for (a proxy population, an extrapolation, an inference from another group) and the step across is conjecture, not a measurement or a finding — basis: the statement; it is the owner's working view ("I think")]. [ASSUMPTION: thin is read per value, not per source, and is derived from the records already kept for it: the study-versus-served population match (research contract R13; `db.py add-population-match`, graded PROXY where the study is of children, the general population or no participants) and `specifications.rests_on_proxy_inference` — basis: those are the existing records of an indirect basis; no new column]. [ASSUMPTION: a count of independent roots is not the test of thin: the reading offered earlier in the session (fewer than two roots) was the assistant's, not the owner's, and is withdrawn — basis: the statement names directness, not number of sources]. [ASSUMPTION: "conjecture" is read as the absence of a source's own finding for that group at that step, so that a value from a direct study of the people it concerns is not thin however few the studies — basis: the statement; whether an inference with a stated rationale (a clinician's argument, a derivation) counts as conjecture is held].
+
+**What this does.** Gives the triangle's third cause a definition (grey and unverified are the source's; thin is the basis's directness), with its derivation from records the project already keeps.
+
+**What it does not decide.** Whether any PROXY grade makes a value thin or only some grades; how a cell resting on a direct value and a proxy value is marked; any edit to `band()`, `CLAUDE.md` §6, the governance files or the render.
+
+CONDITION: any session deriving, rendering or auditing the triangle.
+ACTION: derive thin from the population match and the proxy-inference record; do not count roots to decide it; do not store it beside them.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner answer 2026-11-14 (last) — a clinician's vetted professional judgment is not thin
+
+**Owner's words, quoted (typed), answering the question left open in the entry on thin:**
+
+> "this is not thin. a clinician has rendered a professional judgment that has been vetted by colleagues based upon available information"
+
+**Readings.** [ASSUMPTION: an inference rendered as a professional judgment by a clinician, and vetted by colleagues on the information available, is not conjecture and so does not make a value thin — basis: the statement]. [ASSUMPTION: conjecture is then an inference that has not been rendered or vetted as a professional judgment: a transfer from a proxy group, or an extrapolation, with no professional judgment behind it — basis: the statement set against the earlier one on thin]. [ASSUMPTION: the owner answered for the clinician's argument; a derivation (an engineered or calculated figure with a stated rationale) was named in the same question and is not separately answered, so it is not read as covered — held]. [ASSUMPTION: the vetting is what separates the judgment from conjecture, so the record of it (the source is a professional-body guideline, a peer-reviewed clinical argument, or similar) is what the project would derive it from; a single clinician's unvetted opinion is not covered — basis: "vetted by colleagues"].
+
+**What this does.** Narrows the entry on thin: a vetted professional judgment is a direct basis. It sits in the evidence model where Co-2 (professional-body practice guidelines) and clinical peer-reviewed argument already sit, so no new category is drawn here.
+
+**What it does not decide.** How the vetting is recorded or derived; whether a derivation counts; the single unvetted opinion.
+
+CONDITION: any session deciding whether a value is thin.
+ACTION: do not mark a value thin because its basis is a vetted professional judgment; ask of an inference whether it was rendered and vetted as a judgment or is a bare transfer or extrapolation.
+DATE: 2026-11-14 — owner answer (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — the project's own inferences are conjecture and carry the triangle
+
+**Owner's words, quoted (typed):**
+
+> "when we do cross referential analyses in synthesis and pair testing etc, we can make conjectures based on evidence about what makes sense but we aren't clinicians so it is flagged as thin"
+
+**Readings.** [ASSUMPTION: a figure or conclusion that the project itself reaches by inference (cross-referential analysis, pair testing, a synthesis step that goes beyond what any one source states) is conjecture and takes the ⚠ as thin, however sensible it is, because the project's inference is not a clinician's vetted professional judgment — basis: the statement, with the entry above that a clinician's vetted judgment is not thin]. [ASSUMPTION: this answers the question held in the previous entry for a derivation the project performs: a derivation made by the project is thin; a derivation a source itself publishes (an engineering or clinical derivation in the source) is read as that source's, and takes the marker its own source gives — basis: "we aren't clinicians"; the owner did not separately address a published derivation]. [ASSUMPTION: the project may still make the conjecture and show it, with the evidence it rests on (the guidebook shows and cites, and claims no authority); the triangle is how the reader sees that it is the project's own inference — basis: the transparency statement of the same day]. [ASSUMPTION: the existing records of a derivation (`specifications.derivation_paths`, `derivation_rationale`, `rests_on_proxy_inference` and the cross-parameter connection tables) are where this is derived from, and no new column is added — basis: rule 5; the columns exist, and what each holds has not been re-read for this entry].
+
+**What this does.** Completes the definition of thin: a basis that is indirect (a proxy), or conjecture with no vetted professional judgment behind it, including the project's own inferences.
+
+**What it does not decide.** Which records mark a value as the project's own inference in each stage; how a cell mixing a source's finding with a project inference is marked; any edit to the marker code, `CLAUDE.md` §6, the governance files or the render.
+
+CONDITION: any session writing a synthesis, a connection, a pair test or a specification that goes beyond what a source states.
+ACTION: show the inference with the evidence it rests on and mark it ⚠; do not present a project inference as a source's finding or as a professional judgment.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner answer 2026-11-14 (last) — a derivation by a clinician or an academic is not thin
+
+**Owner's words, quoted (typed), answering the question held in the entries on thin:**
+
+> "derivation by a clinician or academic counts"
+
+**Readings.** [ASSUMPTION: "counts" means counts as direct evidence, as a clinician's vetted judgment does: a derivation made and published by a clinician or an academic is not conjecture and does not make a value thin — basis: the statement set against the entries on thin, where a vetted clinical judgment "is not thin" and the project's own inference is]. [ASSUMPTION: a derivation the project itself performs stays thin, as the previous entry says, because the project is neither clinician nor academic — basis: "we aren't clinicians"]. [ASSUMPTION: the source's tier and marker still apply to the derivation; "not thin" removes only the triangle's thin cause, and a derivation in a grey or unverified source still takes ⚠ for that cause — basis: the three causes of the triangle are separate].
+
+**What this does.** Closes the question of whether a derivation counts: by who made it, not by whether it is a derivation.
+
+**What it does not decide.** How the author's standing (clinician or academic) is recorded or derived; the single unvetted opinion of the earlier entry; whether an academic's derivation needs the vetting a clinician's judgment is said to have (publication in a peer-reviewed venue is the nearest existing record).
+
+CONDITION: any session deciding whether a value is thin.
+ACTION: do not mark a value thin because it rests on a clinician's or an academic's derivation; do mark the project's own.
+DATE: 2026-11-14 — owner answer (typed words, quoted above).
+
+---
+
+## Owner answer 2026-11-14 (last) — a value that mixes a source's finding with a project inference is a new proposed value and takes the triangle
+
+**Owner's words, quoted (typed), answering the question left open in the entry on the project's own inferences:**
+
+> "because if it mixes then it's a new value proposed for something so it's conjecture because we don't have authority"
+
+**Readings.** [ASSUMPTION: where a value rests on a source's finding together with an inference the project adds, the value is a new value proposed by the project, is conjecture, and takes ⚠ in place of the circle, whatever the circle of the finding it uses — basis: the statement]. [ASSUMPTION: the source's own finding, shown by itself as one of the values identified for the cell, keeps its circle and its citation; only the mixed value takes the triangle, so every value stays shown and cited — basis: the transparency statement of the same day ("presents all values ... provides citations")]. [ASSUMPTION: this is the same rule as the entry on the project's own inferences, stated for the mixed case, and it rests on the project having no authority to propose a design value — basis: "we don't have authority" with "does not claim with own authority"].
+
+**What this does.** Closes the mixed-cell question: a mix is the project's proposal, so ⚠.
+
+**What it does not decide.** How the engine tells that a value mixes a finding with an inference (which stage writes the flag, and which records show it); any edit to the marker code, `CLAUDE.md` §6, the governance files or the render.
+
+CONDITION: any session writing a value that combines a finding with an inference.
+ACTION: show the findings with their circles; mark the combined value ⚠; do not give a mixed value the circle of its best source.
+DATE: 2026-11-14 — owner answer (typed words, quoted above).
+
+---
+
+## Owner answer 2026-11-14 (last) — the most accommodating value stands unless research shows it leads to worse results
+
+**Owner's words, quoted (typed), answering the question raised by the adjudication of the sweeps (a code value more accommodating than every research value; and OR-4 and OR-6c against the definition of best):**
+
+> "does the research prove that the more accommodating value leads to worse results? if so, research wins. if no, code wins"
+
+**Readings.** [ASSUMPTION: the test for which value is shown as the best, where a code value and a research value differ and the code value is the more accommodating, is whether research shows the more accommodating value leads to worse results for the same lens and context: if it does, the research value is the best; if it does not, the more accommodating value is the best, and it is the code value — basis: the statement]. [ASSUMPTION: the test is general, not only for code against research: it states the one condition under which the most accommodating identified value is not the best, namely identified evidence of worse results from it — basis: the definition of best as the most accommodating identified value, with this single exception]. [ASSUMPTION: "worse results" is harm, failure or inadequacy for the people the cell concerns, the kind of finding the research contract already requires to be captured as first-class (R7), and the project already records a finding of that kind on an extraction (`harm_finding`) and as an `insufficient` relation between extractions; no new record is drawn here — basis: R7 and the existing columns, which are named from memory of this session's digest work and were not re-read for this entry]. [ASSUMPTION: "prove" is read as a recorded finding from a source that measured or reported the outcome; whether any tier suffices, or a stated tier is needed, is not stated and is held — basis: the word, and no stated threshold].
+
+**What this does.** Resolves, for the adjudication, the question of OR-4 (the best chosen only from T1, Co-1, T2 and Co-2 values) and of OR-6c (the higher tier states the value): neither the tier nor the stratum of a value decides which value is best; the exception is evidence of worse results. The tier still sets the marker.
+
+**What it does not decide.** The standard of proof; how two research values with opposing outcomes are shown (both are shown with their citations, as the transparency statement requires); any edit to OR-4, OR-6c or the engine, which follow the adjudication through this ledger and a tooling PR.
+
+CONDITION: any session choosing the best value of a cell where a code value and a research value differ.
+ACTION: take the most accommodating value as the best; replace it only with a recorded finding of worse results for the same lens and context, and show both with their citations.
+DATE: 2026-11-14 — owner answer (typed words, quoted above).
+
+---
+
+## Owner answer 2026-11-14 (last) — a cell resting on tier 4 only takes the half circle
+
+**Owner's words, quoted (typed), answering the question raised by the adjudication (does a T4-only basis take ○ or ◐):**
+
+> "T4 only half circle"
+
+**Readings.** [ASSUMPTION: a determination or cell whose basis is T4 sources only takes ◐, and one whose basis is T5 or T6 only takes ○, in line with the circles-by-tier proposal (● T1, T2, Co-1, Co-2; ◐ T3, T4; ○ T5, T6) — basis: the statement; the doctrine's present rule gives every T4–T6-only basis ○, so this answers the held question in favour of the proposal for T4]. [ASSUMPTION: where a cell's basis mixes tiers, the marker is still the floor of the mean of the governing sources' bands (the present `floor_mean` in `schemas/tier_derivation.py`), unchanged by this answer — basis: no statement on the mixed case]. [ASSUMPTION: the table is still not applied to `band()`, the governance files or CHECK 116 until the owner says so; this answer removes the T4 question from the held list and not the whole table — basis: the earlier entries hold the application].
+
+**What it does not decide.** The application of the table to code and documents; T3 clinical (● now, ◐ in the proposal) and T3 grey (○ now, ◐ in the proposal) are covered by the proposal and not re-asked here.
+
+CONDITION: any session deriving, rendering or auditing the marker of a code-only cell.
+ACTION: read a T4-only basis as ◐ and a T5- or T6-only basis as ○, when the table is applied; do not apply it before.
+DATE: 2026-11-14 — owner answer (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — what "determination" means
+
+**Owner's words, quoted (typed), on the tension the ledger recorded between "showing data, not determining" and the specification stage's word "determination":**
+
+> "determination means to determine the ideal within the context of all evidence factors and consequently what to choose and how to grade quality of evidence for it"
+
+**Readings.** [ASSUMPTION: a determination is the act of identifying the ideal (the best, the most accommodating identified value) for a cell and its context from all the evidence factors, and of choosing which value to showcase on that basis, together with grading the quality of the evidence behind it (the marker) — basis: the statement]. [ASSUMPTION: "what to choose" is the choice of which identified value is shown as the ideal; it is not a choice of how anyone should design, so a determination makes no claim of the project's own authority over a design — basis: the statement with the transparency and "we gather and show" entries of the same day]. [ASSUMPTION: the word "determination" for the specification stage, and "best-practice determination" in the doctrine, therefore stand; the tension recorded between them and "showing data, not determining" is resolved by this definition, in which "determining" is the choice of the ideal and the grading of its evidence, and not a verdict on a design — basis: the statement; the entry on "showing data, not determining" says it is not read as retiring the stage]. [ASSUMPTION: the evidence factors are those the pipeline already records (tier, directness, independence, direction, lens and context, harm findings); the entry names none — basis: none stated].
+
+**What this does.** Ends the held question of whether the specification stage's name, or the doctrine's phrase "best-practice determination", conflicts with "showing data, not determining": it does not.
+
+**What it does not decide.** The list of evidence factors; any renaming; the sweep's passages that use "determine" or "determination" as a verdict on a design (a passage saying a design must or should is still a verdict).
+
+CONDITION: any session describing what a specification or a determination is or does.
+ACTION: describe a determination as identifying the ideal for a cell and its context and grading the evidence for it; do not describe it as the project deciding how to design.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — a stage's tools carry the stage's own name
+
+**Owner's words, quoted (typed), after the question of renaming "determine" to "specify":**
+
+> "the pipeline stage tools should match the actual name of the stage"
+
+**Readings.** [ASSUMPTION: a table, view, script, check or function that belongs to one pipeline stage is named with that stage's id (research, evidence, judgment, synthesis, specification, render; base for the vocabulary layer), and the stage's output is called by the stage's name, so the noun for what the specification stage writes is "specification", not "determination" — basis: the statement, with the spine's stage ids]. [ASSUMPTION: the three schema objects now named for a determination (`determination_gates`, `v_open_determination_gates`, `v_determination_provenance`) and the library function `determinations_resting_on` are the first mismatches; the sweep of the whole tool surface for others is not done here — basis: a search of `sqlite_master` and `scripts/` for the word; the stage of each object was not re-derived for this entry]. [ASSUMPTION: this is a naming rule and an instruction to bring the names into line, not an instruction to start renaming now: a rename of a schema object is a migration with a caller sweep (CLAUDE.md rule 4, a view is a caller, and prose callers are not gated) and ships apart from research rows (rule 10) — basis: the rules; the owner did not say when].
+
+**What this does.** Settles the word question raised by the previous exchange in favour of "specification" for the stage's output and tools; "specify" as a verb is not ruled, and the owner's definition of the act (to identify the ideal and grade its evidence) is unchanged.
+
+**What it does not decide.** The list of objects to rename, the sequence, whether the old names stay as aliases for a period, the verb used for the act, and the stage of any object whose stage is not obvious from its name (derive the assignment from `governance/stage-map.yaml` and `pipeline-contract.yaml`, not from the name).
+
+CONDITION: any session naming a new table, view, script, check or function, or describing a stage's output.
+ACTION: name a stage's tools and output with the stage's own id; do not coin a second word for the stage's product; do not rename existing objects until a tooling task is opened for it.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner instruction 2026-11-14 (last) — fold the term-resolution plan into the remediation plan; the newer plan wins where they conflict
+
+**Owner's words, quoted (typed):**
+
+> "and then we need to fold plan into remediation plan and ensure they are commensurate with this newest plan having priority in conflicts"
+
+**Readings.** [ASSUMPTION: "plan" is the unified resolution plan the Opus unifier produces from the seven adjudications of the best-practice sweeps (canonical definitions, amendments, supersession entries, tooling tasks, deletions, held questions, sequence), and "remediation plan" is `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md` with its task files, `OPEN-ITEMS-PLAN.md`, `DECISION-CLOSURE.md` and the generated `REMEDIATION-PLAN.md` — basis: the sequence of the session]. [ASSUMPTION: "commensurate" means the two agree: no task, dependency, decision or open item in the remediation plan contradicts the new plan, and the new plan's tasks appear in the remediation plan with numbers, dependencies and gates — basis: the word]. [ASSUMPTION: "priority in conflicts" is a precedence rule for the plans, below the owner's rulings in the ledger (CLAUDE.md rule 0, which no plan outranks): where a remediation-plan task or decision disagrees with the new plan, the remediation plan is changed to match and the supersession is recorded in the task file — basis: the statement and rule 0].
+
+**What this does.** Orders the integration after the unifier's plan, to be done by an integrator in the manner of the earlier integrations (ledger first, task files, the workplan, the generator, then the checks).
+
+**What it does not decide.** The content of the unified plan, which the unifier writes and which the owner has not yet read; the held questions in it.
+
+CONDITION: any session reading or editing the remediation plan or its task files.
+ACTION: where a remediation-plan statement conflicts with the unified term-resolution plan, follow the unified plan and name the supersession; where either conflicts with a ledger ruling, follow the ledger.
+DATE: 2026-11-14 — owner instruction (typed words, quoted above).
+
+---
+
+## Registration 2026-11-14 — OD-57 to OD-62: the term-resolution plan's open questions, referred to the owner
+
+Recorded by the integrator folding `workplan/2026-11-12-bidirectional-pipeline/TERM-RESOLUTION-PLAN.md` into the remediation plan, under the owner instruction of 2026-11-14 above ("fold plan into remediation plan … this newest plan having priority in conflicts"). **Not the owner's words.** The term-resolution plan's section 6 lists six questions still for the owner, Q1 to Q6; each is registered here under the next free register number (derive: `grep -o -E '^### OD-[0-9]+' workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md | tail -1`, which printed OD-56 before this entry) and referred to the owner. **None is resolved under delegation:** Q1 and Q3 set how an evidence tier is marked, and Q2 whether a tier gates which value is shown, which reach the evidence-tier definitions on the decision protocol's always-DG-NON list (`grep -n -F 'Evidence-tier definitions' governance/decision-protocol.md`); Q4 is the prose register, the owner's voice; Q5 is gated by the owner's own cold-storage record (`decisions/DR-2026-08-06-cold-storage-search-scope.md`); Q6 is a rename the owner asked about and left open, and is optional. Each recommendation is the unifier's, not a decision. Register entries: `grep -n -E '^### OD-(57|58|59|60|61|62)' workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`; plain questions: `OWNER-SHEET-PLAIN.md`, questions 8 to 13.
+
+- **OD-57 (the plan's Q1): apply the circle table now?** The table the owner's entries of 2026-11-14 built (● T1, T2, Co-1, Co-2; ◐ T3, T4; ○ T5, T6; ⚠ in place of the circle for a grey, unverified or thin basis), including lowering T3 clinical from ● to ◐, raising T3 grey from ○ to ◐, lowering T5 from ◐ to ○, and replacing the ○ gloss in `CLAUDE.md` §6. Recommended: yes, because every tier is now answered and `governance/evidence-methodology.md` §2.2 already holds T3 clinical at `provisional`. Holds T-117.
+
+OD-57 STATUS: REFERRED BACK TO THE OWNER
+
+- **OD-58 (Q2): what proves "worse results" under the harm test?** Recommended: a recorded finding (`source_value_extractions.harm_finding`, or an `extraction_relations` row marking `insufficient`) from a source that measured or reported the outcome for the same lens and context, at any tier, shown with that source's marker; never a project inference; the tier grades, it does not gate. The owner's harm-test entry holds the standard of proof open. Holds T-059 (selection, the plan's TT-2).
+
+OD-58 STATUS: REFERRED BACK TO THE OWNER
+
+- **OD-59 (Q3): when a cell's sources differ, does the showcased value carry the grade of its own source, or the floor of the mean of all governing sources?** Recommended: its own, because the owner's definition of determination asks "how to grade quality of evidence for it", the chosen value; ⚠ applies only where that value's basis is grey, unverified or thin. The entry "T4 only half circle" read the mixed case as the floor mean, unchanged; that reading is an [ASSUMPTION] and this question puts it. Holds T-117.
+
+OD-59 STATUS: REFERRED BACK TO THE OWNER
+
+- **OD-60 (Q4): does the prose register's "to be + [value]" survive?** Recommended: keep it for process prose; state values as attributed data. Holds T-035 (its prose-register item only, but the gate holds the task).
+
+OD-60 STATUS: REFERRED BACK TO THE OWNER
+
+- **OD-61 (Q5): add `references/bpc/` to `.ignore`?** Recommended: yes; the corpus is frozen, quarantined, and floods every search for "best practice"; `git grep` and `grep -r` still see it. Holds T-121.
+
+OD-61 STATUS: REFERRED BACK TO THE OWNER
+
+- **OD-62 (Q6, optional): rename "best practice" to "ideal"?** Recommended: no rename; the meaning is fixed ("best practice IS the same as ideal IS the same as most accommodating") and a rename costs a migration and a caller sweep. **If unanswered, the default stands: no rename.** Holds no task.
+
+OD-62 STATUS: REFERRED BACK TO THE OWNER
+
+**Resolved by default, not registered** (the term-resolution plan's section 6, from the owner's "whatever doesn't matter" and the rulings above): no aliases after a rename; the verb for the act is "states the ideal and grades its evidence"; the stage stays "specification". These are the plan's readings of the owner's words, [ASSUMPTION], and stand until the owner says otherwise.
+
+CONDITION: any session asking whether OD-57 to OD-62 are answered, or preparing T-035, T-059, T-117 or T-121.
+ACTION: (1) Treat OD-57 to OD-62 as the owner's, CLOSED by the gate. (2) Ask each in its plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`. (4) Do not resolve any of them under delegation.
+DATE: 2026-11-14 — registration and referral, not an owner statement.

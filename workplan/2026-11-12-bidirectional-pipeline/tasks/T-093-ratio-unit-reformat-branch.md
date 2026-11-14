@@ -1,15 +1,15 @@
-# T-093  `amend-extraction` accepts `ratio` to `rise:run ratio` as a reformat, if the owner rules it one
+# T-093  `amend-extraction` accepts `ratio` to `rise:run ratio` as a reformat (OD-41, resolved under delegation)
 
 _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self-contained. Index, order and the owner decision register: `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`. Source: the follow-up `tasks/T-061-amend-extraction-reformat.md` names and does not build (`grep -n -F 'Not built here' workplan/2026-11-12-bidirectional-pipeline/tasks/T-061-amend-extraction-reformat.md`), and `tasks/T-086-bare-ratio-rows.md` section 2. Every number in this file was read on 2026-11-13 on commit `66a5ba8a` and is given with the command that produces it: re-run the command; do not trust the number._
 
-**Pilot status.** Not piloted. Authored 2026-11-13 by the fold of the Edmonton case study, finishing an open item of the previous integration (T-086 had no id for this branch). **Held on OD-41, and built only under its answer (a).** Expect to find a defect in this file, and report it rather than work around it.
+**Pilot status.** Not piloted. Authored 2026-11-13 by the fold of the Edmonton case study, finishing an open item of the previous integration (T-086 had no id for this branch). **Built: OD-41 is resolved as answer (a), a reformat, under delegation (section 2).** Expect to find a defect in this file, and report it rather than work around it.
 
 ## 1. Identity
 
 | | |
 |---|---|
 | Task | T-093 |
-| Title | `amend-extraction` accepts `ratio` to `rise:run ratio` as a reformat, if the owner rules it one |
+| Title | `amend-extraction` accepts `ratio` to `rise:run ratio` as a reformat (OD-41, resolved under delegation) |
 | Wave | 1 |
 | Layer (CLAUDE.md §3) | 2 |
 | Kind | **TOOLING** (CLAUDE.md rule 10: tooling and research never share a pull request) |
@@ -20,7 +20,12 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 
 - **The integration base.** `origin/main` once the workplan's pull request is merged, otherwise the remote branch carrying the newest commit to this folder (the set-up block's first line finds it).
 - **Tasks that must be merged to the integration base first:** T-061 merged (it adds `_refuse_unless_reformat`, which this task gives one more branch). Check by running: `git grep -n 'def _refuse_unless_reformat' -- scripts/db.py` prints one line.
-- **Owner decisions:** OD-41 (OPEN, registered 2026-11-13, not yet asked): is changing the unit `ratio` to `rise:run ratio` on the stored rows a reformat (OR-3) or a new reading (a second row, D-0168)? Read it by `grep -F "OD-41 STATUS:" references/project-standards.md | tail -1` and the answer line `grep -n -F "OD-41:" references/project-standards.md | tail -1`. **Only under answer (a) is this task built.** Under (b) it is declined: stop at once (section 9), and the coordinator records the decline in the plan and removes T-093 from T-086's "Tasks that must be merged" bullet. The plan's generator cannot tell the two answers apart: it shows this task OWNER-held until OD-41 is answered by the owner and READY after either answer, so the answer line, not the generator, decides whether it is done.
+- **Owner decisions:** none. The one decision this task needed, registered as OD-41 (is changing the unit `ratio` to `rise:run ratio` on the stored rows a reformat or a new reading?), is resolved under delegation (next bullet).
+- **Delegated resolutions this task rests on.** OD-41: `ratio` to `rise:run ratio` is a reformat (OR-3, whose prompt named this case): the stored rows are amended in place, and `amend-extraction` gains the one branch this task builds. A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12, applied at the owner's question of 2026-11-13 (ledger: `grep -n -F "Delegated resolution 2026-11-13 — OD-41" references/project-standards.md`): not the owner's words, reversible by the owner, checked by a second, independent Opus-class instance and confirmed with corrections applied, and read only through the ledger's gate (`grep -n -F "Convention 2026-11-12 — how a delegated resolution" references/project-standards.md`). Run it before you start and again before you open the pull request; if any line prints CLOSED, stop (section 9):
+```
+gate(){ s=$(grep -F "$1 STATUS:" references/project-standards.md | tail -1); c=$(grep -F "$1 CHECK:" references/project-standards.md | tail -1); case "$s" in *"ANSWERED BY THE OWNER"*) echo "$1 OPEN (owner)";; *"RESOLVED UNDER DELEGATION"*) case "$c" in *"not required"*|*confirmed*) echo "$1 OPEN (delegated; ${c#*CHECK: })";; *) echo "$1 CLOSED (check: ${c:-none})";; esac;; *) echo "$1 CLOSED (${s:-no status line})";; esac; }
+for n in OD-41; do gate $n; done
+```
 - **Tests that must be red before you start:** `T093-01` (section 6): the dry run below is refused.
 - **Set-up.**
 
@@ -51,7 +56,7 @@ GUIDEBOOK_DB_PATH="$SCRATCH/t.db" python3 scripts/db.py amend-extraction --extra
 
 ## 4. The change
 
-Order of preference, from CLAUDE.md §8: do nothing (the owner's answer (b) makes this the choice); otherwise one branch in the existing rule, no new function.
+Order of preference, from CLAUDE.md §8: do nothing (an answer (b), a new reading, would have made this the choice; OD-41 is resolved as (a)); otherwise one branch in the existing rule, no new function.
 
 1. **In `_refuse_unless_reformat`, unit branch** (`scripts/db.py`): when the new unit does not stand in the old cell, accept it if and only if (i) the new unit is a member of one of `dbcore.NOTATION_FAMILIES`' tuples (read from the constant, never typed), (ii) the old cell, stripped, stands on word boundaries in the new unit (`_as_whole_words(row["claimed_unit"], value)`, the helper T-061 already calls the other way round), and (iii) the stored figure reads under the new unit (`dbcore.figure_refusal(...)` is None, the check that already follows). Otherwise the existing refusal stands, word for word.
 2. **Its comment.** One sentence in the docstring's `claimed_unit` entry: "Or, under OD-41 (a), a family member of `dbcore.NOTATION_FAMILIES` that contains the old cell on word boundaries (`ratio` -> `rise:run ratio`), when the figure reads under it."
@@ -59,7 +64,7 @@ Order of preference, from CLAUDE.md §8: do nothing (the owner's answer (b) make
 
 **Chosen (authoring 2026-11-13):** the condition is "a notation-family member that contains the old cell", as T-061 named it. Rejected: a pair list (`{'ratio': 'rise:run ratio'}`), a second home for what the notation families already declare (rule 8).
 
-**What reads what this task adds:** `amend-extraction`; T-086 under (a). **What wrong thing reaches the guidebook without it (under (a)):** the bare-`ratio` gradients stay out of every ramp-gradient cell. **What it makes deletable:** nothing.
+**What reads what this task adds:** `amend-extraction`; T-086. **What wrong thing reaches the guidebook without it:** the bare-`ratio` gradients stay out of every ramp-gradient cell. **What it makes deletable:** nothing.
 
 **Code size.** Report `git diff --shortstat "$(git merge-base HEAD "$BASE")" -- scripts schemas .github skills ':!scripts/migrations'` after `git add`.
 
@@ -97,18 +102,18 @@ scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "
 
 ```
 git add -A . ':!transcripts' ':!*commands.jsonl'
-git commit -m "governance: a bare ratio unit reformats to rise:run ratio (OD-41 (a)) [$(date -u '+%Y-%m-%d %H:%M')]" -m "<body: the owner's answer and its ledger line; evidence before and after; callers; checks with EXAMINED>" -m "<the attribution trailers your own session instructions give>"
+git commit -m "governance: a bare ratio unit reformats to rise:run ratio (OD-41 (a)) [$(date -u '+%Y-%m-%d %H:%M')]" -m "<body: OD-41's delegated resolution and its ledger lines (the resolution, its status and its check); evidence before and after; callers; checks with EXAMINED>" -m "<the attribution trailers your own session instructions give>"
 ```
 
 ## 8. What you must NOT do
 
-- Do not build this under answer (b), or before OD-41 is answered.
+- Do not build this while section 2's gate prints CLOSED for OD-41.
 - Do not type a unit pair; read the families. Do not change T-061's other refusals or their text.
 - Do not amend any row (T-086). Do not write `data/guidebook.db`. Do not run `run_checks.py --all`, `bootstrap.sh` or `pip install -r requirements.txt`. Do not push to `main`, rebase or force-push; do not subscribe to pull-request activity.
 
 ## 9. Stop conditions
 
-Stop and report when: OD-41 is unanswered, or answered (b) (then the task is declined: report so); T-061 is not merged; the dry run of section 3 is already accepted; a check green before is red after; `sha256sum data/guidebook.db` changes.
+Stop and report when: section 2's gate prints CLOSED for OD-41 (if the owner has reversed it to a new reading, the task is declined: report so); T-061 is not merged; the dry run of section 3 is already accepted; a check green before is red after; `sha256sum data/guidebook.db` changes.
 
 ## 10. Rollback
 

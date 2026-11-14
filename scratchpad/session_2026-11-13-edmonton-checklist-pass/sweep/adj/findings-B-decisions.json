@@ -1,0 +1,1320 @@
+[
+{
+"file": "decisions/DR-2026-05-24-best-practice-supersession-protocol.md",
+"line": 12,
+"text": "PI standing rule #6 (canonical workplan) and mission doctrinal commitments 2, 3, and 5 hold that best practice for the guidebook is determined by the evidence h",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Context: best practice 'determined by the evidence hierarchy, not by code consensus'. Rejecting consensus is consistent; 'by evidence hierarchy' invites tier-eligibility reading (ruling 4)."
+}
+]
+},
+{
+"file": "decisions/DR-2026-05-24-best-practice-supersession-protocol.md",
+"line": 14,
+"text": "A slug closed under the old citation_mining_complete=1 bar can have all anchor sources protocol-mined and still rest on stale best evidence — for example, citin",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Quotes doctrine 2 ('best-practice claim derived solely from code consensus is in error') as authority and extends it to superseded T3; frames eligibility by tier/recency, not accommodation."
+}
+]
+},
+{
+"file": "decisions/DR-2026-05-24-best-practice-supersession-protocol.md",
+"line": 85,
+"text": "3. **Grounds best practice in evidence hierarchy?** Yes — supersession searches are tier-prioritized; a Tier-1 candidate supersedes a Tier-3 anchor regardless o",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Mission test: 'Grounds best practice in evidence hierarchy? Yes — a Tier-1 candidate supersedes a Tier-3 anchor regardless of recency'; best practice tied to tier rank of source."
+}
+]
+},
+{
+"file": "decisions/DR-2026-05-24-best-practice-supersession-protocol.md",
+"line": 117,
+"text": "- governance/mission-and-epistemics.md doctrinal commitment 2 (best practice from evidence hierarchy, not code consensus)",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Reference gloss of doctrine 2: 'best practice from evidence hierarchy, not code consensus'; consensus part fine, hierarchy part invites code/tier ineligibility."
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-05-26-gap-driven-mining-protocol.md",
+"line": 169,
+"text": "- `governance/mission-and-epistemics.md` doctrinal commitment 2 (best practice from evidence hierarchy, not code consensus)",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Reference gloss of doctrine 2: 'best practice from evidence hierarchy, not code consensus'; hierarchy part invites code/tier ineligibility reading."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-12-evidence-architecture-unification-impact-appendix.md",
+"line": 25,
+"text": "**Governance/references.** Beyond the canonical six: `references/project-standards.md` (**highest-risk single file** — standing-rules register agents load, rest",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Impact appendix lists legal-regulatory.md 'lumps T4–5 into best-practice synthesis' as an (a) conflict, i.e. treats lower-tier inclusion as an error (eligibility by tier)."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Impact census calls legal-regulatory L29 lumping T4–5 into best-practice synthesis an \"(a) conflict\" - treats code-stratum best practice as ineligible (historical census)."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-12-evidence-architecture-unification.md",
+"line": 22,
+"text": "**Problem.** `evidence-methodology.md` §2.3 allows a cell to reach `provisional` on T4–6 convergence alone, and §3.4 supplies rendering language for it, while `",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "G1 problem: T4–6 forbidden from 'anchoring best-practice claims'; anti-laundering of code-convergence is consistent (C1) but the stratum wall is C6. Later superseded by Option A."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-12-evidence-architecture-unification.md",
+"line": 24,
+"text": "**Recommendation.** (a) **Scale-tagging:** every determination is tagged with the design scale its claim speaks to; T4–6-only determinations are Universal-Mode ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "T4-6-only determinations \"never rendered as best practice\": keeps floor apart, but excludes T4/T5 standards by tier rather than by whether the value is the most accommodating."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Recommends T4–6-only determinations 'never rendered as best practice in any register'; code-only cells barred from best practice (ruling 4). Historically superseded by DR-2026-07-21 Option A."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "T4-6-only determinations 'never rendered as best practice in any register'; v_best_practice excludes them: eligibility by tier against ruling 4."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-12-evidence-architecture-unification.md",
+"line": 93,
+"text": "6. Follow-on migration 027: `regulatory_stratum_only` column + `v_best_practice` exclusion + `weighting_profile` seed rows for the four audience use-patterns + ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "LABEL",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Execution item: migration 027 adds the 'v_best_practice exclusion' of regulatory_stratum_only cells, the mechanism barring code-only values from best practice; later repealed."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-12-evidence-architecture-unification.md",
+"line": 117,
+"text": "- v1.1 (same day): (a) full-repo impact sweep completed → `…-impact-appendix.md`; execution section extended with items 8–13 (project-standards.md, stated-thres",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "LABEL",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Revision note: I3 'deliberately a total phrase ban' on best practice for regulatory-stratum rows; code-only cells barred from best-practice language (C6). Later amended."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-12-evidence-architecture-unification.md",
+"line": 118,
+"text": "- v2 (same day): **independent adversarial review returned 18 findings (1 CRITICAL, 8 MAJOR); all corrected.** Highlights, with the fixed artifacts as evidence:",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "LABEL",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Revision note calls a regulatory-stratum cell appearing in v_best_practice a CRITICAL defect; treats code-only best practice as an error (C6). Later repealed by Option A."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Revision history: CRITICAL fix that excluded the regulatory-stratum cell from v_best_practice - records tier-based exclusion as correct (historical, pre-Option A)."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md",
+"line": 22,
+"text": "2. **Do not add a `jurisdiction` dimension to this table at all.** `governance/tier-system.md`'s corridor-width worked example is explicit that \"best practice\" ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "Keeps best practice (2440mm) apart from regulatory floor (1800mm), consistent; but states one corridor best-practice figure with no lens or context."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Keeps best practice, floor and convergence apart (consistent) but defines best practice as 'evidence-anchored' vs code and labels the floor 'code convergence', mixing quantities."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md",
+"line": 29,
+"text": "9. **Add the derived views**, with one correction to B's own sketch: `v_best_practice` must exclude `code_floor_only = 1` rows. `best-practices-assessment-syste",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "v_best_practice 'must exclude code_floor_only' rows: a Tier-6-only cell is 'never the evidence basis for best practice'; code-only ineligibility against ruling 4."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "v_best_practice must exclude code_floor_only rows; a Tier-6-only cell is 'never the evidence basis for best practice': eligibility by tier."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md",
+"line": 43,
+"text": "- **v1 (initial draft):** added `jurisdiction` to the table's `UNIQUE` key, added an unspecified `confidence_bucket` column, used unstructured `value_range TEXT",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Revision history records not filtering code_floor_only out of v_best_practice as a v1 shortcoming; presumes code-only cells cannot be best practice."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md",
+"line": 44,
+"text": "- **v2 (this version):** independent adversarial review found the jurisdiction-in-key choice reproduces the exact best-practice/code-floor conflation `tier-syst",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Calls code_floor_only rows surfacing as best practice 'a live bug'; asserts code-only values cannot be best practice (C6)."
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-12-tier3-stated-threshold.md",
+"line": 11,
+"text": "`decisions/DR-2026-05-29-evidence-hierarchy-reconciliation.md` redefined Tier 3 as \"rarely the sole basis\" for best-practice claims (now codified in `governance",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "T3 \"rarely the sole basis for best-practice claims\": can read as a tier rule on eligibility, not only on marker/state; owner says mere assertion suffices for eligibility."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Tier 3 'rarely the sole basis' for best-practice claims; eligibility-by-tier wording, though the DR then acts on cell state (marker-like), not on best-practice eligibility."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-13-value-genealogy-and-derivation-handshake.md",
+"line": 11,
+"text": "**Problem 1 (genealogy).** The project's central adjudication — best practice (dignity-bearing, most accommodating) vs consensus/precedent — currently has no co",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Defines best practice as 'most accommodating' vs consensus (consistent), then 'evidence counts roots' — invites deriving best practice by counting independent roots."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-13-value-genealogy-and-derivation-handshake.md",
+"line": 21,
+"text": "Extend the (empty) B6 substrate with: `root_id` (shared identifier for one evidentiary root), `root_type` CHECK (`measurement_primary` / `participatory_finding`",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "v_value_independence: COUNT(DISTINCT root_id) per (parameter,population) named \"the computable best-practice-vs-consensus discriminator\": best practice decided by counting independent roots."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "v_value_independence COUNT(DISTINCT root_id) named 'the computable best-practice-vs-consensus discriminator': best practice decided by counting independent agreeing roots, not most accommodating"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "v_value_independence = COUNT(DISTINCT root_id), named 'the computable best-practice-vs-consensus discriminator'; derives best practice by counting agreeing roots (C1)."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "v_value_independence COUNT(DISTINCT root_id) called \"the computable best-practice-vs-consensus discriminator\" - best practice decided by counting independent roots."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md",
+"line": 3,
+"text": "**Status:** SUPERSEDED-BY `decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md` — owner ruled **Option A** (with direction-aware most-accommodat",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C2"
+],
+"sense": null,
+"reason": "Status names the ruling 'direction-aware most-accommodating floor selection'; direction-aware is right, but calling the chosen best value a 'floor' invites best = floor (ruling 2)."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md",
+"line": 22,
+"text": "| §2 (:44) | regulatory stratum sources \"do not anchor best-practice claims … convergence of codes is convergence-not-evidence\" |",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "Quoted pre-reconciliation wall: keeps convergence apart (consistent) but excludes all T4-T6 sources from anchoring by tier, while owner says assertion suffices for eligibility."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md",
+"line": 24,
+"text": "| §5 (:103) | a `regulatory_stratum_only` determination \"is never rendered as best practice, in any register, for any audience. `v_best_practice` excludes it.\" ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "Quoted old rule bars any regulatory-stratum-only cell from best practice: keeps floor apart (consistent) but sets eligibility by tier (T4/T5 standards too), not by the value."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md",
+"line": 25,
+"text": "| §6 invariant **I3** (:139) | \"No best-practice language on regulatory-stratum-only cells, in any register, under any weighting profile.\" |",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "Quoted old rule bars any regulatory-stratum-only cell from best practice: keeps floor apart (consistent) but sets eligibility by tier (T4/T5 standards too), not by the value."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md",
+"line": 42,
+"text": "### Option A — Weak-anchor: regulatory-stratum cells enter the best-practice surface at the weak band, with mandatory honesty flags",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Option A: a regulatory_stratum_only (code-only) cell becomes a ○ best-practice determination: best practice used for the code floor/consensus figure."
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Option A heading: regulatory-stratum cells enter the best-practice surface; next line labels them weak/code-floor, inviting best practice = floor reading."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md",
+"line": 43,
+"text": "§8 is read as fully repealing the anchoring gate. A `regulatory_stratum_only` cell becomes a `○`-strength best-practice determination — surfaced, but always lab",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Option A: a regulatory_stratum_only (code-only) cell becomes a ○ best-practice determination: best practice used for the code floor/consensus figure."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "A regulatory_stratum_only cell becomes a best-practice determination 'labelled weak/code-floor'; best practice used for the floor (owner add. 2)."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C2"
+],
+"sense": null,
+"reason": "Option A: code-only cell becomes a ○ best-practice determination 'always labelled weak/code-floor'; consistent with ruling 4 but the 'code-floor' label conflates best with floor."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md",
+"line": 48,
+"text": "- `evidence-architecture.md §5` (:103): drop \"never rendered as best practice, in any register\"; replace with the weak-band rendering rule.",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Option A edit list: permits (weak-band, flagged) best-practice language on code-only cells, next to convergence caveat: best practice used for floor/common figure."
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Drops 'never rendered as best practice' for code-only cells; code value named best practice at weak band"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md",
+"line": 49,
+"text": "- `evidence-architecture.md §6` **I3** (:139): **repeal the absolute form** — I3 becomes \"no *unflagged* / no *strong-band* best-practice language on regulatory",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Option A edit list: permits (weak-band, flagged) best-practice language on code-only cells, next to convergence caveat: best practice used for floor/common figure."
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "I3 repeal: weak-band best-practice language allowed on regulatory-stratum-only cells (code value named best practice)"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md",
+"line": 50,
+"text": "- Register map row 3 (:130): allow weak-band best-practice phrasing alongside the convergence-not-evidence caveat.",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Option A edit list: permits (weak-band, flagged) best-practice language on code-only cells, next to convergence caveat: best practice used for floor/common figure."
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Allows weak-band best-practice phrasing for regulatory-stratum cells beside the convergence caveat"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md",
+"line": 51,
+"text": "- `assess_cell.py` `v_best_practice`: drop (or reweight) the `regulatory_stratum_only` exclusion; add a strength-band column so the weak band is queryably disti",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "LABEL",
+"reason": "Drops the regulatory_stratum_only exclusion from v_best_practice: code-only (floor) cells enter the best-practice view at weak band."
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "LABEL",
+"reason": "Option A: regulatory-stratum cells 'enter the best-practice surface'; v_best_practice drops the RSO exclusion"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md",
+"line": 53,
+"text": "### Option B — Rendering-strength-only: §8 governs *how strongly* an already-anchored cell is rendered, and regulatory-stratum-only cells stay excluded from `v_",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "Option B (not chosen): code-only cells are not best practice, keeping floor apart (consistent); but excludes T4/T5 standards by tier, not by value accommodation."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md",
+"line": 54,
+"text": "§8's \"every tier can anchor\" is read as applying within the evidence-anchored population determination (grading confidence of T1/T2/T3-backed values), while a c",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "Option B (not chosen): code-only cells are not best practice, keeping floor apart (consistent); but excludes T4/T5 standards by tier, not by value accommodation."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md",
+"line": 58,
+"text": "- `tier-system.md §8`: add a scoping sentence that T4/T5's `◐` \"current standards practice\" rendering is *standards-practice* framing, not *best-practice* frami",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "T4/T5 ◐ rendering is \"standards-practice, not best-practice\" framing: keeps standards practice apart, but bars a standard asserting the most accommodating value by tier."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md",
+"line": 62,
+"text": "Both options edit a **ratified canonical document** (`evidence-architecture.md`) and one repeals or rescopes a **ratified integrity invariant** (I3) and changes",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "Frames whether a code-only requirement may wear best-practice language as the convergence concern; blurs floor, convergence and eligibility vs marker."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-20-intra-category-cross-test.md",
+"line": 93,
+"text": "So, on readiness: the *method* for cross-mode best-practice adjudication is ratified (DR-2026-07-13) and demonstrated on the hardest cell (E-08); the *substrate",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Cross-mode best-practice adjudication said ratified via genealogy + v_value_independence, i.e. the root-counting discriminator; invites deciding best by count of roots."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Says cross-mode best-practice adjudication rests on genealogy + v_value_independence (root counting); invites deriving best practice by counting independent roots."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md",
+"line": 7,
+"text": "**Option A** (weak-anchor), plus **direction-aware most-accommodating floor selection**.",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C2"
+],
+"sense": null,
+"reason": "Ruling named 'direction-aware most-accommodating floor selection'; direction handling matches ruling 2, but naming the selected best value a floor invites C2."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md",
+"line": 14,
+"text": "**Repeals:** invariant **I3's absolute form** (\"no best-practice language on regulatory-stratum-only",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Amended I3 allows flagged weak-band best-practice language on regulatory-stratum-only cells: best practice used for the code floor (only above-band is barred)."
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Repeals I3's absolute form; flagged weak-band best-practice language allowed on regulatory-stratum-only cells."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md",
+"line": 15,
+"text": "cells\"). I3 survives in amended form: no *unflagged* and no *above-weak-band* best-practice language",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Amended I3 allows flagged weak-band best-practice language on regulatory-stratum-only cells: best practice used for the code floor (only above-band is barred)."
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Amended I3 permits flagged weak-band best-practice language on regulatory-stratum-only cells; code-derived value as best practice."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md",
+"line": 24,
+"text": "regulatory stratum (T4–T6, `regulatory_stratum_only`) **is a best-practice determination at the",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "Code-only cell \"is a best-practice determination at the weak band\", best \"as currently known\"; picks the most accommodating floor and names it best practice: floor called best."
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Option A: code-only (T4-T6) value named weak-band best practice; not tied to the most accommodating identified value, invites reading the code/convergent figure as best; convergence-not-evidence kept "
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md",
+"line": 30,
+"text": "2. **Direction-aware most-accommodating floor selection.** Where jurisdictions' code floors differ",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C2"
+],
+"sense": null,
+"reason": "Heading 'Direction-aware most-accommodating floor selection' over code floors; selection is direction-aware (consistent) but labels the best code value a floor."
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md",
+"line": 39,
+"text": "1. **Render/state layer only.** Option A changes rendering and best-practice-surface membership.",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Option A changes \"best-practice-surface membership\" to admit code-only cells: membership of floor values in best practice."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md",
+"line": 75,
+"text": "by mandatory flagging, not suppression); §6 register map row 3 (weak-band best-practice phrasing",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Register map row 3 given weak-band best-practice phrasing at ○ for regulatory-stratum cells, caveat retained: best practice for floor/convergence figure."
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "DR lists 'weak-band best-practice phrasing at ○' for the regulatory-only register row; invites common reading"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md",
+"line": 85,
+"text": "§8 closing paragraph + §2 T6 row (removed \"never relabelled 'best practice'\"; added the determination-level",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Removed tier-system \"never relabelled best practice\" for T6/convergence and added ○-band determination rule: code floors may be called best practice."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Edit record: removed 'never relabelled best practice' from the T6 (floor) row and added the weak-band rule; the floor stratum may be called best practice."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md",
+"line": 102,
+"text": "1. **`v_best_practice`** — migration 029 + `scripts/assess/assess_cell.py` interim view (NB: migration 028 already exists — value-genealogy H1; use 029): drop t",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "LABEL",
+"reason": "Drops the regulatory_stratum_only exclusion from v_best_practice: code-only (floor) cells enter the best-practice view at weak band."
+},
+{
+"src": "sweep1-second",
+"flag": "none",
+"tests": [],
+"sense": "LABEL",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md",
+"line": 106,
+"text": "2. **Most-accommodating selection** — implement direction-aware floor selection in",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C2"
+],
+"sense": null,
+"reason": "Engine item 'Most-accommodating selection — implement direction-aware floor selection'; best value labelled as floor selection."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md",
+"line": 128,
+"text": "`governance/mission-and-epistemics.md` doctrine #2 previously stated: *\"A best-practice claim derived solely",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Mission doctrine #2 rewritten: a best-practice claim derived solely from code consensus is \"not in error, just weak\" (○): best practice used for the most common / code figure."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Records the owner ruling that a best-practice claim derived solely from code consensus is a valid weak-band best-practice claim; best practice from consensus (owner add. 2)."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md",
+"line": 130,
+"text": "in error — it is a weak-band (○) best-practice claim**, valid only when flagged code-derived with the",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Mission doctrine #2 rewritten: a best-practice claim derived solely from code consensus is \"not in error, just weak\" (○): best practice used for the most common / code figure."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Code-consensus claim ruled 'not in error' but a weak-band best-practice claim: consensus figure named best practice"
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Owner 2026-07-21 amendment: claim 'derived solely from code consensus' is a weak ○ best-practice claim; consistent with ruling 4; names consensus as its derivation (ruling 2: consensus = most common)."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Ruling 2026-07-21: a best-practice claim from code consensus is weak-band, flagged. Code-only best is allowed (R4), but tying it to code consensus invites best = convergent figure."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md",
+"line": 132,
+"text": "above-weak-band code-consensus best-practice claim *is* still in error). Applied to the mission's doctrine #2",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Mission doctrine #2 rewritten: a best-practice claim derived solely from code consensus is \"not in error, just weak\" (○): best practice used for the most common / code figure."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Only an above-weak-band code-consensus best-practice claim is in error; a weak-band code-consensus best-practice claim is valid"
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "'An unflagged or above-weak-band code-consensus best-practice claim is still in error' implies a flagged code-consensus figure may be best practice; consensus ≠ best (ruling 2)."
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-21-product-posture-thinking-tool-not-authority.md",
+"line": 20,
+"text": "architecture-option-a-execution` (weak-band best-practice rendering — the adjudication-plus-flag",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Cites Option A \"weak-band best-practice rendering\" as the mechanism this posture depends on, endorsing code-only cells as weak best practice."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-21-product-posture-thinking-tool-not-authority.md",
+"line": 45,
+"text": "it cannot determine any 'best' when it comes to best practices.\"* **The adjudication is the product.**",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "\"Best-supported\" value per item x population at a strength band: reads best as most evidentially supported, not most accommodating; lens present."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/DR-2026-07-21-product-posture-thinking-tool-not-authority.md",
+"line": 66,
+"text": "declines-authority*. \"Best practice\" reads throughout as **\"the practice the evidence best supports,",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Defines best practice as \"the practice the evidence best supports\": selects by support, not by most accommodating; invites a most-corroborated (common) reading."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Defines best practice as 'the practice the evidence best supports', i.e. strength of support, not the most accommodating identified value; readable as weight of agreement."
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "decisions/RATIFICATION-PACKAGE-2026-07-12.md",
+"line": 8,
+"text": "**The demonstration to look at first:** `working/pilot/pilot-renderings.html` — the same determinations rendered for designer, OT, policymaker, disabled person,",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Showcase: 15 converging codes, machinery refuses best practice in any register and excludes the cell from v_best_practice; refusing convergence fine; code-only cell gets no best value (C6)."
+}
+]
+},
+{
+"file": "decisions/RATIFICATION-PACKAGE-2026-07-12.md",
+"line": 45,
+"text": "The adjudication engine for best-practice-vs-consensus, made computable: genealogy fields on the B6 extraction substrate (root/echo, measurement paradigm, devic",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Best-practice-vs-consensus \"made computable\" by root counts (1800mm zero roots vs 2440/2400mm two roots): best practice chosen by count of corroborating roots; single corridor figure, no lens."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Engine for 'best-practice-vs-consensus' adjudicates by root counts (1800 zero roots vs 2440 two independent roots): agreement counts decide the value, not accommodation"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Adjudication engine 'for best-practice-vs-consensus' made computable by counting independent roots (1800mm zero vs 2440/2400mm two); best practice by counting roots (C1)."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Adjudication of best-practice-vs-consensus made computable by counting independent roots (1800mm zero roots vs 2440/2400 two roots); invites deriving best by counting roots"
+}
+]
+}
+]
