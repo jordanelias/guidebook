@@ -6963,3 +6963,19 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above), tentative.
 CONDITION: any session deriving, rendering or auditing an evidence marker.
 ACTION: keep `band()` as it is until the owner rules; say which table a passage assumes.
 DATE: 2026-11-14 — owner proposal (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — tiers 5 and 6 take the empty circle
+
+**Owner's words, quoted (typed), completing the proposal above:**
+
+> "empty for 5/6"
+
+**Readings.** [ASSUMPTION: with the proposal above, the table reads: T1, T2 ●; T3, T4 ◐; T5, T6 ○ — basis: the two statements read together; still the owner's working view, as the proposal was put with "i think"]. [ASSUMPTION: against the present `band()`, T5 moves from ◐ to ○ (T5 national beyond-code frameworks, for example BS 8300 and DIN 18040); the other changes are those in the proposal's table — basis: `schemas/tier_derivation.py` `band()`]. [ASSUMPTION: the "code stratum" used for the minimum (the owner's answer on the minimum's scope) is not changed by the circles: the stratum stays T4–T6, T4 carrying ◐ and T5 and T6 ○ — basis: that answer is about where values come from, and this one is about how they are marked; if the owner means T4 to leave the stratum, it is a separate statement].
+
+**What this does not decide.** The bands of Co-1 and Co-2 (both ● at present, not named by the proposal); where an unretrievable source sits; any edit to `band()` or the governance files, which is held.
+
+CONDITION: as for the proposal above.
+ACTION: as for the proposal above.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
