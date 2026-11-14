@@ -7291,3 +7291,73 @@ OD-62 STATUS: REFERRED BACK TO THE OWNER
 CONDITION: any session asking whether OD-57 to OD-62 are answered, or preparing T-035, T-059, T-117 or T-121.
 ACTION: (1) Treat OD-57 to OD-62 as the owner's, CLOSED by the gate. (2) Ask each in its plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`. (4) Do not resolve any of them under delegation.
 DATE: 2026-11-14 — registration and referral, not an owner statement.
+
+---
+
+## Owner answers 2026-11-14 (fourteenth set) — OD-57 to OD-61: the term-resolution plan's questions
+
+Given in the coordinating session of the Edmonton case study (`session_2026-11-13-edmonton-checklist-pass`; https://claude.ai/code/session_01Ub36iQaXrsGs27PBykEgY7), in one user message after the registration of OD-57 to OD-62 (the server-clock time of the message was not captured; derive it from the session transcript once preserved: `git grep -n -F "od58 research publication" -- transcripts`).
+
+The owner wrote, six lines:
+
+> "od57 yes"
+>
+> "od58 research publication or clinical guidelines state that a person with disability struggles more or has more difficulties or some kind of negative statement with a parameter being at a certain value compared to the one it proposes"
+>
+> "od59 yes"
+>
+> "od60 prose register needs to be rewritten according to doctrine mission etc it is stale"
+>
+> "od60 yes"
+>
+> "od61 ignore. we just needed to clean up all definitions"
+
+**Readings, each marked.**
+
+- [ASSUMPTION: OD-57 "yes" is the owner's answer to the question as registered: apply the circle table now (● T1, T2, Co-1, Co-2; ◐ T3, T4; ○ T5, T6; ⚠ in place of the circle for a grey, unverified or thin basis), including lowering T3 clinical from ● to ◐, raising T3 grey from ○ to ◐, lowering T5 from ◐ to ○, and replacing the ○ gloss in `CLAUDE.md` §6 — basis: the registered question and "yes"; this ends the hold on the circle table that every earlier entry of 2026-11-14 kept, and opens T-117 and the waiting (W) rows of the term plan].
+- [ASSUMPTION: OD-58 is answered by a standard: the "worse results" that make research win over the more accommodating value are shown when a research publication or a clinical guideline states that a person with a disability struggles more, has more difficulty, or makes some negative statement about the parameter being at a certain value (the more accommodating one) compared with the value that source itself proposes; a statement of that kind is enough, and no measured outcome is required; it is a statement by a source, never by the project's own inference — basis: the words; this loosens the standard the assistant proposed ("a source that measured the outcome") and replaces it; whether a statement from a lived-experience source (Co-1) also counts is not stated and is read as yes, since Co-1 is a research and a co-primary evidence stream and the owner wrote "research publication or clinical guidelines" as examples of sources, not as a closed list — flagged].
+- [ASSUMPTION: OD-59 "yes" is the answer to the question as registered: where a cell's sources differ, the showcased value carries the grade of its own source, with ⚠ only when that value's own basis is grey, unverified or thin — basis: the registered recommendation and "yes"].
+- [ASSUMPTION: the two lines on OD-60 are read together: the prose register (`skills/prose-style-checker_SKILL.md` and the register it states) is stale and is to be rewritten according to the doctrine and the mission, which answers the question of whether "to be + [value]" survives as no, not as it stands; the second line, "od60 yes", is read as the owner's yes to the registered recommendation (keep the subjunctive for process prose and state values as attributed data) as the shape of the rewrite — basis: the two lines taken in order; if the second line was meant for another decision, it is not an answer to OD-62 here, and the owner can say so].
+- [ASSUMPTION: OD-61 "ignore" withdraws the question: `references/bpc/` is not added to `.ignore`, and T-121 is not needed; "we just needed to clean up all definitions" says the point of the exercise was the definitions, which the plan's other PRs carry — basis: the words; the alternative reading, "yes, add it to `.ignore`", is not taken, because the owner's sentence gives a reason for not needing it].
+
+OD-62 (rename "best practice" to "ideal", optional) is not answered here; the default (no rename) stands, as the registration says.
+
+**What the answers do.** OD-57, OD-59 and OD-60 open their gates; OD-58 supplies the standard that the selection change (T-059) is built on; OD-61 withdraws T-121. **What they do not decide.** Whether Co-1 statements count under OD-58 beyond the reading above; how a statement of difficulty is recorded (the harm finding and the insufficient relation already exist for outcomes; a statement of difficulty may need the same shape or a typed observation, for the task to design); OD-62.
+
+OD-57: yes
+OD-57 STATUS: ANSWERED BY THE OWNER
+
+OD-58: a research publication or a clinical guideline states that a person with a disability struggles more, has more difficulty, or makes some negative statement about the parameter being at a certain value compared with the value that source proposes
+OD-58 STATUS: ANSWERED BY THE OWNER
+
+OD-59: yes
+OD-59 STATUS: ANSWERED BY THE OWNER
+
+OD-60: rewrite the prose register according to the doctrine and the mission; yes to the recommended shape
+OD-60 STATUS: ANSWERED BY THE OWNER
+
+OD-61: ignore; no `.ignore` change
+OD-61 STATUS: ANSWERED BY THE OWNER
+
+CONDITION: any session preparing or running T-035, T-059, T-117, T-120 or T-121, or asking whether OD-57 to OD-61 are answered.
+ACTION: (1) Treat OD-57, OD-58, OD-59, OD-60 and OD-61 as answered by the owner and read the gate lines. (2) T-117 may apply the circle table. (3) T-059 builds the selection with the OD-58 standard: a source's statement that people struggle more at the more accommodating value than at the value that source proposes makes that research value win; nothing else does. (4) T-035 rewrites the prose register from the doctrine and the mission, not from the stale text. (5) T-121 is withdrawn. (6) Leave OD-62 as the registration says.
+DATE: 2026-11-14 — owner answers (typed words, quoted above).
+
+---
+
+## Owner correction 2026-11-14 (fourteenth set, later) — OD-61: add `references/bpc/` to `.ignore`
+
+The owner wrote, typed, after the entry above:
+
+> "od61 incorrect. ignore the references/bpc folder as suggested"
+
+[CORRECTION: the reading in the entry above, that OD-61 "ignore" withdraws the question and T-121 is not needed, was wrong. "ignore" was the instruction: `references/bpc/` is added to `.ignore`, as the registered recommendation proposed. The assistant read the word as "disregard the question"; the owner meant "put the folder in `.ignore`".] T-121 is not withdrawn; its precondition, OD-61, is answered. The earlier reading of "we just needed to clean up all definitions" no longer stands as a reason; it is the owner's remark that the definitions were the main point.
+
+**What it does not decide.** Whether other frozen corpora join `.ignore` (not asked); the form of the line in `.ignore` and the trap line in `CLAUDE.md` §7 (T-121 designs them, and CLAUDE.md §7 already warns that `.ignore` hides frozen records from ripgrep and the Grep tool, so adding the folder follows its existing convention).
+
+OD-61: yes, add `references/bpc/` to `.ignore`
+OD-61 STATUS: ANSWERED BY THE OWNER
+
+CONDITION: any session preparing or running T-121, or asking whether OD-61 is answered.
+ACTION: (1) The last OD-61 line wins: answered, yes. (2) T-121 is open: it adds `references/bpc/` to `.ignore` and says so in `CLAUDE.md` §7. (3) The withdrawal in the entry above is reversed.
+DATE: 2026-11-14 — owner correction (typed words, quoted above).

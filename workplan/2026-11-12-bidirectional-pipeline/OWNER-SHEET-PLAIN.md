@@ -6,6 +6,8 @@ _**Updated 2026-11-14.** You answered the four things to see first, and through 
 
 _**Updated 2026-11-14, later.** The plan written that day to settle "best practice", "most common" and "minimum" across the project (`TERM-RESOLUTION-PLAN.md`) now takes priority over the remediation plan where they disagree, as you instructed. It left six questions for you; they are questions 8 to 13 at the end (OD-57 to OD-62). None has been settled by an assistant. Two sentences above were corrected to match your later rulings: question 4's sentence about values that rest only on codes, and the note on agreement under the first of the four things._
 
+_**Updated 2026-11-14, latest.** You answered questions 8 to 12 (OD-57 to OD-61); each is marked answered below with your words, and the question is kept as it was put. Your answers are in the ledger under "Owner answers 2026-11-14 (fourteenth set)", and question 12's under your correction of the same day. Two readings are the assistant's and yours to correct: under question 9, that a statement from lived-experience evidence counts too; under question 11, that your second line ("od60 yes") was a yes to answer A as the shape of the rewrite. **Still open:** question 13 (optional; nothing is renamed if you leave it), and questions 2, 3, 4, 5, 6 and 7 above._
+
 ---
 
 ## Four things to see first (answered 2026-11-14)
@@ -125,7 +127,9 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 ---
 
-## 8. Should the circles now follow the table you built? (OD-57)
+## 8. Should the circles now follow the table you built? (OD-57) — answered 2026-11-14
+
+**Your answer:** "od57 yes". Read as A: the circles follow your table now.
 
 **The situation.** On 14 November you set out which circle each kind of evidence gets: a full circle for controlled research, research reviews, lived-experience evidence (work made with disabled people) and occupational therapy guidelines; a half circle for clinical studies and international standards ("T4 only half circle"; grey studies too, but they show the triangle instead, below); an empty circle for national frameworks and building codes; and a warning triangle (⚠) instead of a circle when a value comes from grey material, from a source that could not be retrieved, or from guesswork (a value that does not directly concern the people it is shown for, including the project's own inferences). Each time you said "I think", so none of it has been applied yet.
 
@@ -139,7 +143,9 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 ---
 
-## 9. What counts as proof that the more accommodating value gives worse results? (OD-58)
+## 9. What counts as proof that the more accommodating value gives worse results? (OD-58) — answered 2026-11-14
+
+**Your answer:** "od58 research publication or clinical guidelines state that a person with disability struggles more or has more difficulties or some kind of negative statement with a parameter being at a certain value compared to the one it proposes". None of A to C as written: a research paper or a clinical guideline only has to **say** that disabled people struggle more, or have more difficulty, at the more accommodating value than at the value it proposes; no measurement is needed, and the project's own reasoning never counts. Read by the assistant (yours to correct): a statement from lived-experience evidence counts too.
 
 **The situation.** You ruled: "does the research prove that the more accommodating value leads to worse results? if so, research wins. if no, code wins." The book needs to know what counts as that proof before it can choose a value this way.
 
@@ -153,7 +159,9 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 ---
 
-## 10. When a value's sources differ in strength, whose circle does it carry? (OD-59)
+## 10. When a value's sources differ in strength, whose circle does it carry? (OD-59) — answered 2026-11-14
+
+**Your answer:** "od59 yes". Read as A: a value carries its own source's circle.
 
 **The situation.** Today, when the value shown as best comes from a strong study but other sources for the same cell are building codes, the book averages them and rounds down, so the value shows a weaker circle than its own source has. You defined determining as choosing the ideal and "how to grade quality of evidence for it".
 
@@ -166,7 +174,9 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 ---
 
-## 11. Should the house style still write values as "to be 1200 mm"? (OD-60)
+## 11. Should the house style still write values as "to be 1200 mm"? (OD-60) — answered 2026-11-14
+
+**Your answer:** "od60 prose register needs to be rewritten according to doctrine mission etc it is stale", then "od60 yes". The style guide is rewritten from the project's doctrine and mission, not patched; read by the assistant (yours to correct): in the shape of A, "to be" kept for describing the process and values written as what a source gives.
 
 **The situation.** The style guide writes a value as what something is "to be". You said the project gathers and shows, and does not tell anyone how to design.
 
@@ -180,7 +190,9 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 ---
 
-## 12. Should the old best-practice notes be hidden from the assistants' searches? (OD-61)
+## 12. Should the old best-practice notes be hidden from the assistants' searches? (OD-61) — answered 2026-11-14
+
+**Your answer:** "od61 incorrect. ignore the references/bpc folder as suggested" (your correction of "od61 ignore", which the assistant had first read as dropping the question). A: the old notes are hidden from the assistants' search.
 
 **The situation.** An old collection of best-practice notes is frozen and no longer used. Every search an assistant makes for "best practice" turns it up first, in the old meaning. It can be hidden from the assistants' search tool without deleting or moving anything; the project's own tools and its history still see it.
 

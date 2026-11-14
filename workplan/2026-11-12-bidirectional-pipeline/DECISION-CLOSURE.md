@@ -35,6 +35,8 @@ The generator gives the same split: a copy of `scratchpad/session_2026-11-12-pip
 
 **After the term-resolution fold (2026-11-14).** The term-resolution plan (`TERM-RESOLUTION-PLAN.md`, which governs this plan where they conflict) left six questions for you; they are registered as OD-57 to OD-62 and referred to you, none resolved by an assistant (ledger: `grep -n -F "## Registration 2026-11-14" references/project-standards.md`): OD-57 (apply the circle table now; holds T-117), OD-58 (what proves "worse results"; holds T-059, and through it T-068, T-110, T-117, T-118), OD-59 (the grade of a value whose sources differ; holds T-117), OD-60 (the prose register's "to be + [value]"; holds T-035), OD-61 (`.ignore` for the frozen compendium; holds T-121), OD-62 (rename best practice to ideal; optional, holds nothing; no rename if unanswered). Prompts 19 to 24 below; the plain forms are `OWNER-SHEET-PLAIN.md` questions 8 to 13. **OD-58 now sits on the path to the first live determinations** (T-059 is a dependency of T-110), so it releases the most work; re-run the generator's owner-decision queue to confirm.
 
+**After the fourteenth set (2026-11-14).** You answered OD-57 to OD-61 (`grep -n -F "Owner answers 2026-11-14 (fourteenth set)" references/project-standards.md`): OD-57 yes (the circle table is applied; T-117 opens, and the doctrine's table rows move into T-120); OD-58 by a standard (a research publication or a clinical guideline states that a person with a disability struggles more, has more difficulty, or makes some negative statement about the parameter at the more accommodating value compared with the value the source proposes; no measured outcome needed; T-059 opens); OD-59 yes (a value carries its own source's grade); OD-60 (the prose register is stale and is rewritten from the doctrine and the mission, in the recommended shape; T-035 opens); OD-61 yes, by your correction of the same day ("od61 incorrect. ignore the references/bpc folder as suggested"; `grep -n -F "Owner correction 2026-11-14 (fourteenth set, later) — OD-61" references/project-standards.md`; T-121 opens). **Still referred to you:** OD-62 (optional; no rename while unanswered), and the earlier open ones (prompts 1, 8, 9, 10, 13, 14, 16). Two readings of your words are flagged in the ledger entry and are yours to correct: whether a lived-experience (Co-1) source's statement counts under OD-58 (read as yes), and that the second "od60" line was your yes to the recommended shape.
+
 ## 1. Every register decision, confirmed
 
 Searches: `git grep` and `grep -r` over `references/project-standards.md`, `decisions/`, `governance/` and `sessions/` (the Grep tool cannot see `sessions/`), plus the committed transcripts where a wording was in question. Gate: the function of `REMEDIATION-WORKPLAN.md` §13. "Blocks" is read from the task files' section 2 by the generator.
@@ -329,7 +331,8 @@ OD-17 blocks nothing; ask it after T-022 merges. **Added 2026-11-13:** OD-40 to 
 **To answer yourself, in one line.** "OD-56: a" · "OD-56: b" · "OD-56: c" · "OD-56: <other>"
 
 
-### 19. OD-57: apply the circle table now? (holds T-117, and through it T-118) — REFERRED TO YOU 2026-11-14
+### 19. OD-57: apply the circle table now? (holds T-117, and through it T-118) — ANSWERED BY YOU 2026-11-14; earlier: referred to you 2026-11-14
+**Answered by you, 2026-11-14:** "od57 yes" (`OD-57: yes`; `grep -n -F "Owner answers 2026-11-14 (fourteenth set)" references/project-standards.md`). Read as option (a), the table applied as asked. The prompt below is kept as it was put.
 **Question.** Your entries of 2026-11-14 built a table: ● T1, T2, Co-1, Co-2; ◐ T3, T4; ○ T5, T6; ⚠ in place of the circle for a grey, unverified or thin basis. Each entry holds its application until you say so. Apply it now, including lowering T3 clinical from ● to ◐ and replacing the ○ gloss in `CLAUDE.md` §6?
 **Why it is yours.** It changes how every evidence tier is marked: an evidence-tier definition (always yours).
 **Options.** (a) Apply. (b) Apply except one row. (c) Not yet.
@@ -337,7 +340,8 @@ OD-17 blocks nothing; ask it after T-022 merges. **Added 2026-11-13:** OD-40 to 
 **Evidence.** `sed -n '/^def band(/,/^def floor_mean/p' schemas/tier_derivation.py`; `tasks/T-117-marker-table-applied.md`.
 **Answer in one line.** `OD-57: apply` · `OD-57: apply except <row>` · `OD-57: not yet`
 
-### 20. OD-58: what proves "worse results"? (holds T-059, and through it T-068, T-110, T-117, T-118) — REFERRED TO YOU 2026-11-14
+### 20. OD-58: what proves "worse results"? (holds T-059, and through it T-068, T-110, T-117, T-118) — ANSWERED BY YOU 2026-11-14; earlier: referred to you 2026-11-14
+**Answered by you, 2026-11-14,** by a standard, not one of the options below: "od58 research publication or clinical guidelines state that a person with disability struggles more or has more difficulties or some kind of negative statement with a parameter being at a certain value compared to the one it proposes" (`grep -n -F "Owner answers 2026-11-14 (fourteenth set)" references/project-standards.md`). A statement is enough; no measured outcome is required; never the project's own inference. It replaces option (a)'s "measured or reported the outcome". Read (flagged, yours to correct): a lived-experience (Co-1) source's statement counts too. The prompt below is kept as it was put.
 **Question.** You ruled that the most accommodating value stands unless research proves it leads to worse results. What counts as that proof?
 **Why it is yours.** It decides whether a tier gates which value is shown, and the standard of proof your entry left open.
 **Options.** (a) A recorded finding from a source that measured or reported the outcome for the same group and context, at any tier, shown with that source's mark; never the project's own inference. (b) As (a), only from T1, T2, Co-1 or Co-2. (c) Any recorded finding, whatever its group.
@@ -345,7 +349,8 @@ OD-17 blocks nothing; ask it after T-022 merges. **Added 2026-11-13:** OD-40 to 
 **Evidence.** `grep -n -F 'the most accommodating value stands unless research shows' references/project-standards.md`; `tasks/T-059-wp-t4-agreement.md` §4 item 6.
 **Answer in one line.** `OD-58: a recorded finding, same group and context, any tier` · `OD-58: only from T1, T2, Co-1 or Co-2` · `OD-58: <other>`
 
-### 21. OD-59: does a showcased value carry its own source's grade, or the grade of all governing sources? (holds T-117) — REFERRED TO YOU 2026-11-14
+### 21. OD-59: does a showcased value carry its own source's grade, or the grade of all governing sources? (holds T-117) — ANSWERED BY YOU 2026-11-14; earlier: referred to you 2026-11-14
+**Answered by you, 2026-11-14:** "od59 yes" (`OD-59: yes`; `grep -n -F "Owner answers 2026-11-14 (fourteenth set)" references/project-standards.md`). Read as option (a), its own source's grade. The prompt below is kept as it was put.
 **Question.** Today the engine marks a cell with the floor of the mean of every governing source's mark. Does the value shown as best carry its own source's grade instead?
 **Why it is yours.** It sets what a determination's mark says; your definition includes "how to grade quality of evidence for it".
 **Options.** (a) Its own. (b) The floor mean, as now.
@@ -353,7 +358,8 @@ OD-17 blocks nothing; ask it after T-022 merges. **Added 2026-11-13:** OD-40 to 
 **Evidence.** `grep -n -A14 '^    marker = None' scripts/assess/assess_cell.py`.
 **Answer in one line.** `OD-59: its own` · `OD-59: the floor mean`
 
-### 22. OD-60: does the prose register's "to be + [value]" survive? (holds T-035) — REFERRED TO YOU 2026-11-14
+### 22. OD-60: does the prose register's "to be + [value]" survive? (holds T-035) — ANSWERED BY YOU 2026-11-14; earlier: referred to you 2026-11-14
+**Answered by you, 2026-11-14:** "od60 prose register needs to be rewritten according to doctrine mission etc it is stale" and "od60 yes" (`grep -n -F "Owner answers 2026-11-14 (fourteenth set)" references/project-standards.md`). Read together (flagged, yours to correct): the register is rewritten from the doctrine and the mission, in the shape of option (a). The prompt below is kept as it was put.
 **Question.** The register writes values as "to be 1200 mm". You ruled "we gather and show". Does the subjunctive stay?
 **Why it is yours.** It is the book's voice.
 **Options.** (a) For process prose only; values stated as attributed data. (b) Keep everywhere. (c) Drop.
@@ -361,7 +367,8 @@ OD-17 blocks nothing; ask it after T-022 merges. **Added 2026-11-13:** OD-40 to 
 **Evidence.** `skills/prose-style-checker_SKILL.md`.
 **Answer in one line.** `OD-60: process prose only` · `OD-60: keep` · `OD-60: drop`
 
-### 23. OD-61: add `references/bpc/` to `.ignore`? (holds T-121) — REFERRED TO YOU 2026-11-14
+### 23. OD-61: add `references/bpc/` to `.ignore`? (holds T-121) — ANSWERED BY YOU 2026-11-14; earlier: referred to you 2026-11-14
+**Answered by you, 2026-11-14:** yes, by your correction "od61 incorrect. ignore the references/bpc folder as suggested" (`grep -n -F "Owner correction 2026-11-14 (fourteenth set, later) — OD-61" references/project-standards.md`), which reverses the first reading of "od61 ignore" as a withdrawal. T-121 opens. The prompt below is kept as it was put.
 **Question.** The frozen compendium floods every search for "best practice". Hide it from agent search (git and the tools still see it)?
 **Why it is yours.** Your cold-storage record sets `.ignore`'s scope.
 **Options.** (a) Yes. (b) No.
