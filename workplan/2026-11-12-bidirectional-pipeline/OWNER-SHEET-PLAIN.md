@@ -1,34 +1,36 @@
-# Four things to see, and seven questions only you can answer, in plain words
+# Four things to see (answered), and six questions only you can answer, in plain words
 
 _Written 2026-11-13 by an Opus-class assistant, and corrected the same day after an independent check. On 2026-11-13 you asked whether these decisions could be settled from your earlier rulings, the mission and the project's goal, and you said you don't know the machinery or the code. Nine of the sixteen open questions were settled that way. They are recorded as the assistant's decisions, not yours, and a second, independent assistant has checked each one: it confirmed all nine, with corrections, and agreed that the seven below are yours. Each of the seven either belongs to you under the project's own rules (who the book is for, what counts as lived-experience evidence, which countries are covered, the book's own vocabulary, the rule against writing records by hand), or turns on what you meant by an earlier answer. Each recommendation below is the assistant's, not a ruling. You can answer in one line._
 
+_**Updated 2026-11-14.** You answered the four things to see first, and through the second of them question 1. Your words and what was done with each are under each item below; question 1 is removed, and the other six keep their numbers. Your answers are recorded in the project's ledger, under "Owner answers 2026-11-14 (thirteenth set)". Where the assistant had to read your words a certain way, the ledger marks that reading as the assistant's, not yours._
+
 ---
 
-## Four things to see first
+## Four things to see first (answered 2026-11-14)
 
-The independent check found four things you have not been shown. None needs an answer; each says what you can do.
+The independent check found four things you had not been shown. You answered all four on 2026-11-14.
 
 **1. The book can say the evidence disagrees more often than it can say it agrees.** Your earlier answers say that whenever two kinds of evidence of different strength give different values, the book calls them in disagreement. The settled decision on agreement (OD-43) keeps to the book's written definition: the book says the evidence agrees only when controlled research (studies with measured results) and lived-experience evidence (work made with disabled people) give the same value or range. So two research studies, or a research study and a professional guideline, can be called in disagreement but never in agreement. The settled decision did not create this; it was already there. *What you can do:* leave it as it stands, or say that agreement between any two kinds of evidence also counts, as you did for disagreement (for example "OD-43: agreement between any two kinds counts").
 
+**You answered:** "yes convergence is possible too, and it helps define most common practice (which isn't same as best practice)". **What was done:** agreement between any two kinds of evidence now counts, as disagreement does, still only when the sources give the same value or range, can all hold, and rest on at least two independent sources (two sources that repeat one study count as one). Agreement is shown as the most common practice, never as best practice: best practice stays the most accommodating value found. The decision on agreement (OD-43) is now yours, and the plan's task for it was rewritten to match.
+
 **2. The second document for the reading test (question 1 below).** The option you chose earlier also said to run the test "as written" in the plan, and the plan picks its research study by searching the whole collection, not only batch 23 (a set of documents gathered earlier). So option A in question 1 is what that part of your answer already says. The study it finds is from 2015, not from late October: late October is when it was added to the collection. *What you can do:* answer question 1.
+
+**You answered:** "apply recommendations". **What was done:** read as the recommendation in question 1, option A. The reading test will use the research study with the most findings in the whole collection (the 2015 study of wheelchair users pushing up a slope), fetched again first. You will still be asked to start the two reading sessions. Question 1 is removed below.
 
 **3. Recording "new or existing building" may leave many values without a headline figure.** A settled decision (OD-49) records the type of building, whether the work is new or existing, and indoor or outdoor on each figure, and shows them as separate cases of one value. You ruled earlier that when every figure of a value carries such a condition, the value has no single headline figure and only its cases are shown. Building codes state most of their figures for new work or for existing work, so many values that rest on codes could lose their headline figure. This will be measured on a copy before any stored figure is re-labelled, and the result will be in the work you review. *What you can do:* leave it until the measurement is shown to you, or say now how a value whose every figure carries a condition should be headed.
 
+**You answered:** "noted. apply recommendations. do not worry about existing/renovating and code as we are only concerned about design itself". **What was done:** the measurement will be made first and shown to you before anything is re-labelled. The book is about the design itself, so whether a building is new or being renovated, and whether something meets a code, are no longer recorded as conditions on a figure. Only the type of building and indoor or outdoor remain, and the measurement counts only those two. One thing is left open and will be reported to you, not decided: what to do with a figure a document gives only for existing or renovated buildings.
+
 **4. Provisions such as hearing loops never get a value.** A settled decision (OD-53) lets a research pass mark things such as a hearing loop or a tactile walking surface as "not a measurement". That follows your rules: the book works out a value only for something measured, such as a length, a height or a contrast. But a provision whose question is whether it is there at all is then never given a value or a mark in the book. The gap falls mainly on people who are Deaf or hard of hearing and on blind people. It comes from the rule about what can be measured, not from the settled decision, and it has not been put to you before. *What you can do:* leave it as it stands (such provisions are discussed but get no value), or say you want provisions that are present or absent covered, and the options will be put to you.
+
+**You answered:** "hearing loops and other similar provisions should be included". **What was done:** such provisions (hearing loops, visual alarms, tactile walking surfaces, text telephones, tactile signs and the like) will be included with a value or mark of their own. A research pass no longer marks them "not a measurement". How they are included is a new decision, OD-56, with four options. Because it is about the machinery, an assistant will settle it on your earlier rulings and a second assistant will check it, as you allowed on 13 November; you can answer it yourself instead (`DECISION-CLOSURE.md` §4, prompt 18).
 
 ---
 
-## 1. Which second document should two readers test themselves on?
+## 1. (Answered 2026-11-14 and removed: OD-44: A)
 
-**The situation.** The project plans a test. Two assistants each read the same document separately, and we check whether they write down the same figures. This tells readers of the guidebook how much of each figure comes from the source and how much from whoever read it. You approved using "the material from batch 23", because you were told it held one building code and one controlled research study. It holds no research study. It holds only codes, national guidance documents and grey material (reports and guidance outside peer-reviewed research). Two readers agreeing about a table in a building code proves little, because the numbers are printed plainly. The option you chose also said to run the test "as written" in the plan, and the plan picks the research study by a search of the whole collection, not of batch 23. So option A is what that part of your answer already says.
-
-- **A. Use one of the two research studies with the most findings anywhere in the collection** (a 2015 study of wheelchair users pushing up ramps; the tie between the two is broken by the project's own order), fetched again first because its text is not saved. *What it means:* the test tells us how reliably research findings are read, which is where readers most often disagree. It departs from the words "batch 23's material", and keeps to the "as written" part of your answer.
-- **B. Use batch 23's national guidance document with the most figures.** *What it means:* this keeps to the words "batch 23's material" and can start at once. But the test then mostly shows that two readers can copy a table, and says little about the harder case.
-- **C. You name the document.**
-
-**Assistant's recommendation (not a ruling): A.** It tests the case that matters for the book's honesty, and it is what the "as written" part of your earlier answer says. You will be asked to start the two reading sessions either way.
-
-**To answer:** "OD-44: A", "OD-44: B" or "OD-44: <the document>".
+You answered this through the second of the four things above. Its text is in this file's history.
 
 ---
 
@@ -120,13 +122,13 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 ---
 
-_The nine decisions the assistant settled, for your information. Each was confirmed, with corrections, by the independent check. Any of them can be reversed with a line such as "OD-43: no, …":_
+_The nine decisions the assistant settled, for your information (one of them, OD-43, is now yours). Each was confirmed, with corrections, by the independent check. Any of them can be reversed with a line such as "OD-43: no, …":_
 - **OD-40:** a figure the project calculates from two source figures shows those sources' own words, never a sentence of ours. A figure a source states in words is recorded as that source's own figure, not as a calculation.
 - **OD-41:** a ramp slope written "1:12" is labelled rise over horizontal run in place. Your earlier answer on tidying stored figures already listed this exact case.
 - **OD-42:** a figure moved between metric units (centimetres to millimetres) is shown exactly. Rounding to the nearest 5 mm or quarter inch, never on the unsafe side, stays for conversions between inches or feet and metric units.
-- **OD-43:** the book says the evidence "agrees" only when controlled research and lived-experience evidence give the same value or range, resting on at least two independent sources. (See the first of the four things above.)
+- **OD-43:** settled by you on 2026-11-14 (the first of the four things above): any two kinds of evidence may agree, resting on at least two independent sources, and agreement is most common practice, not best practice. The assistant's earlier decision, which allowed agreement only between controlled research and lived-experience evidence, is replaced.
 - **OD-45:** a search that a website blocked is recorded as not yet done and is owed again. It is never recorded as "nothing found".
-- **OD-49:** the type of building, whether the work is new or existing, and indoor or outdoor are each recorded on the figure and shown as separate cases of one value. Building types are named from the documents' own words, not invented. Your three building levels stand. (See the third of the four things above.)
+- **OD-49:** the type of building, whether the work is new or existing, and indoor or outdoor are each recorded on the figure and shown as separate cases of one value. Building types are named from the documents' own words, not invented. Your three building levels stand. (See the third of the four things above.) **Narrowed by you on 2026-11-14:** new or existing work is no longer recorded; the type of building and indoor or outdoor remain.
 - **OD-50:** any document the project admits, not only a code, may add a new measurement for the book to ask about. You still read each addition.
-- **OD-53:** a research pass may mark terms it meets as "not a measurement" (a thing such as a hearing loop, a word for a group or an activity, or a method), with a reason each, and never a measurement itself. The catalogue-wide pass reviews them. (See the fourth of the four things above.)
+- **OD-53:** a research pass may mark terms it meets as "not a measurement" (a thing such as a hearing loop, a word for a group or an activity, or a method), with a reason each, and never a measurement itself. The catalogue-wide pass reviews them. (See the fourth of the four things above.) **Changed by you on 2026-11-14:** a provision that is either there or not, such as a hearing loop, is no longer marked "not a measurement"; it is to be included (OD-56).
 - **OD-55:** this only arises if OD-41 is reversed. A replaced record is then kept but retired, never counted twice.
