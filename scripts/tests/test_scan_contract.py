@@ -237,7 +237,8 @@ try:
         "WHERE p.term_id = t.term_id) AND NOT EXISTS (SELECT 1 FROM parameter_declinations "
         "d WHERE d.term_id = t.term_id) ORDER BY term_id")
         if not db._VALUE_BEARING.search(q("SELECT canonical_en FROM terms WHERE term_id=?",
-                                          t)[0][0])]
+                                          t)[0][0])
+        and q("SELECT domain FROM terms WHERE term_id=?", t)[0][0] not in dbcore.NON_QUANTITY_DOMAINS]
     PAGES = ["Fixture page one: the clear width of a door leaf is measured here.",
              "Fixture page two: the clear width of a corridor route is measured here.",
              "Fixture page three: the turnwise clearance zone of a wheelchair."]

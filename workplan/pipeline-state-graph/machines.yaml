@@ -150,6 +150,7 @@ machines:
     via: "db.py add-parameter"
     guards:
       - "refused for a DECLINED term; refused for a value-bearing name; one parameter per term"
+      - "refused (T-010) for a term filed under a domain in dbcore.NON_QUANTITY_DOMAINS, before the declination test; the way out is decline-parameter (a lens or a method) or amend-term --field domain (a quantity filed wrongly)"
       - "DELIBERATELY NOT refused: a term with no adjudication (the base vocabulary predates observe/adjudicate)"
       - "created active; there is no --status and no --merged-into"
     evidence:
