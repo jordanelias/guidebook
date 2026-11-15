@@ -2283,6 +2283,19 @@ def main():
     p_amid.add_argument("--session", required=True)
     p_amid.add_argument("--dry-run", action="store_true")
 
+    p_rr = sub.add_parser("register-root",
+                          help="Register an external root of a figure (a source that is not an admitted source here)")
+    p_rr.add_argument("--root-id", dest="root_id", required=True, help="no space; the key a figure's --root-id names")
+    p_rr.add_argument("--description", required=True)
+    p_rr.add_argument("--root-type", dest="root_type", required=True,
+                      choices=dbcore.schema_choices("external_root_registry", "root_type"),
+                      help="Live vocabulary, read from the column's own CHECK")
+    p_rr.add_argument("--provenance", required=True, help="the warrant: where the root comes from and how that is known")
+    p_rr.add_argument("--population-note", dest="population_note")
+    p_rr.add_argument("--notes")
+    p_rr.add_argument("--session", required=True)
+    p_rr.add_argument("--dry-run", action="store_true")
+
     p_rfu = sub.add_parser("raise-follow-up",
                            help="Tag an extraction for a reviewer to re-check "
                                 "(extraction_follow_ups; owner D1, 2026-10-09)")
@@ -3635,6 +3648,10 @@ def main():
     elif args.command == "amend-identity":
         _emit(amend_identity(args.code, args.display_name, args.description, args.category, args.approval_ref,
                              args.reason, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "register-root":
+        _emit(register_root(args.root_id, args.description, args.root_type, args.provenance,
+                            args.population_note, args.notes, session=args.session, dry_run=args.dry_run))
 
     elif args.command == "raise-follow-up":
         _emit(raise_follow_up(args.extraction_id, args.reason, args.warrant,
@@ -10269,8 +10286,8 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 conn, "external_root_registry", "root_id", row["root_id"]):
             raise Refusal(
                 f"root_id {row['root_id']!r} is not in external_root_registry. A root_id names an "
-                f"external root; a root held in this corpus is --root-ref-id. The registry has no "
-                f"writer yet, so until one exists a root_id cannot be written here.")
+                f"external root; a root held in this corpus is --root-ref-id. Register the root "
+                f"first with `db.py register-root`, then give its id here.")
 
         # --- the subject -----------------------------------------------------
         pid = row.get("parameter_id")
@@ -10783,10 +10800,47 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
 # jurisdiction. Gated by dbcore.check_jurisdiction, so it widens WHO, not WHAT to. Like
 # add-extraction it holds no relation to the source's jurisdiction, and a value cannot be
 # cleared here (a blank is refused).
+def register_root(root_id: str, description: str, root_type: str, provenance: str, population_note: str,
+                  notes: str, session: str, dry_run: bool = False):
+    """Register an EXTERNAL root: a source of a figure that is not an admitted source of this corpus.
+
+    Convergence counts independent roots, never documents or jurisdictions, and a figure's `root_id` is a
+    foreign key into this registry, so a root that was never registered could never be named. Writes only the
+    columns the table has; the root type is read from the table's own CHECK; `--provenance` is the warrant
+    (where the root comes from and how that is known) and may not be blank."""
+    root_id = (root_id or "").strip()
+    if not root_id or re.search(r"\s", root_id):
+        raise Refusal("register-root: --root-id must be non-blank and contain no space. Nothing was written.")
+    if not (description or "").strip():
+        raise Refusal("register-root: --description may not be blank: a root that cannot be described cannot be "
+                      "told from another. Nothing was written.")
+    if not (provenance or "").strip():
+        raise Refusal("register-root: --provenance is required and may not be blank. It is the warrant: where "
+                      "this root comes from and how that is known. Nothing was written.")
+    with connect(dry_run) as conn:
+        dbcore.check_declared(conn, "external_root_registry", "root_type", root_type, "register-root --root-type")
+        if dbcore.exists(conn, "external_root_registry", "root_id", root_id):
+            raise Refusal(f"register-root: {root_id!r} is already registered. Point a figure at it with "
+                          f"`db.py add-extraction --root-id` or `db.py amend-extraction --field root_id`. "
+                          f"Nothing was written.")
+        row = {"root_id": root_id, "description": description.strip(), "root_type": root_type,
+               "provenance": provenance.strip(), "root_population_note": population_note or None,
+               "notes": notes or None}
+        row.update(dbcore.stamp_for(conn, "external_root_registry", session))
+        row = {k: v for k, v in row.items() if k in dbcore.columns(conn, "external_root_registry")}
+        conn.execute(f"INSERT INTO external_root_registry ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
+                     list(row.values()))
+    return {"root_id": root_id, "root_type": root_type, "dry_run": dry_run}
+
+
 _AMENDABLE_SVE_FIELDS = frozenset({"figure_role", "comparator",
                                    "extraction_method", "extraction_status",
                                    "root_type", "root_ref_id", "value_as_written",
-                                   "jurisdiction"})
+                                   "jurisdiction",
+                                   # root_id, added 2026-11-15 (T-048): a figure already written can point at a root
+                                   # registered after it (`db.py register-root`). The registry-existence refusal is
+                                   # the generic dbcore.fk_declared below; the old value is kept in notes by the writer.
+                                   "root_id"})
 
 
 def amend_extraction(extraction_id: int, field: str, value: str, reason: str,

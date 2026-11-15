@@ -492,6 +492,7 @@ database:
   - evidence_population_match
   - evidence_source_authors
   - evidence_sources
+  - external_root_registry
   - extraction_follow_ups
   - extraction_lens_links
   - extraction_relations
@@ -523,7 +524,6 @@ database:
   - terms
   - weighting_profile
   tables_with_no_writer_at_all:
-  - external_root_registry
   - reasoning_doc_citations
 writers:
   _note: 'direct_python lists every .py under scripts/ containing an INSERT/UPDATE/DELETE naming the table.
@@ -582,6 +582,7 @@ writers:
     - evidence_population_match
     - evidence_source_authors
     - evidence_sources
+    - external_root_registry
     - extraction_follow_ups
     - extraction_lens_links
     - extraction_relations

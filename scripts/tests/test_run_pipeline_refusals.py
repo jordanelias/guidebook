@@ -1164,6 +1164,41 @@ else:
         record("T034-06", "a pair never searched is reported by its recorded scope: scoped out = never examined, in scope = owed, NULL = scope unrecorded",
                _seen == {"scoped-out": (True, False, False), "in-scope": (False, True, False), None: (False, False, True)}, _seen)
 
+print("Section T048: an external root is registered by a verb, and a figure already written can point at it")
+_RT = next(iter(sorted(dbcore.schema_choices("external_root_registry", "root_type"))), None)
+_EID = scalar("SELECT extraction_id FROM source_value_extractions WHERE root_id IS NULL ORDER BY extraction_id LIMIT 1")
+if _RT is None or _EID is None:
+    skip("T048", "no root type in the CHECK or no figure without a root on the live database")
+else:
+    with scratch() as c:
+        _n0 = c.execute("SELECT COUNT(*) FROM external_root_registry").fetchone()[0]
+        res, err = ok(db.register_root, "T048-ROOT-A", "a fixture root", _RT, "TASK-FIXTURE: a warrant", "n", None, session=S, dry_run=False)
+        _row = c.execute("SELECT description, root_type, provenance, root_population_note, created_by_session FROM external_root_registry "
+                         "WHERE root_id=?", ("T048-ROOT-A",)).fetchone()
+        record("T048-01", "register-root writes one row with its type, its warrant and the session stamp, and the table is then in the captured set",
+               err is None and tuple(_row) == ("a fixture root", _RT, "TASK-FIXTURE: a warrant", "n", S)
+               and c.execute("SELECT COUNT(*) FROM external_root_registry").fetchone()[0] == _n0 + 1
+               and "external_root_registry" in set(dbcore.writable_tables(c)), (err, _row))
+        _rs = {"blank description": refusal(db.register_root, "T048-B", " ", _RT, "w", None, None, session=S, dry_run=True),
+               "blank warrant": refusal(db.register_root, "T048-B", "d", _RT, "", None, None, session=S, dry_run=True),
+               "type outside the CHECK": refusal(db.register_root, "T048-B", "d", "BANANA", "w", None, None, session=S, dry_run=True),
+               "space in the id": refusal(db.register_root, "T048 B", "d", _RT, "w", None, None, session=S, dry_run=True),
+               "already registered": refusal(db.register_root, "T048-ROOT-A", "d", _RT, "w", None, None, session=S, dry_run=True)}
+        record("T048-02", "register-root refuses a blank description, a blank warrant, a type outside the CHECK, a space in the id and a root already registered, "
+               "each by name", all(_rs.values()) and "--description" in _rs["blank description"] and "--provenance" in _rs["blank warrant"]
+               and "CHECK" in _rs["type outside the CHECK"] and "--root-id" in _rs["space in the id"]
+               and "already registered" in _rs["already registered"], _rs)
+        res, err = ok(db.amend_extraction, _EID, "root_id", "T048-ROOT-A", "T048 fixture", session=S, dry_run=False)
+        _now = c.execute("SELECT root_id FROM source_value_extractions WHERE extraction_id=?", (_EID,)).fetchone()[0]
+        _notes = c.execute("SELECT notes FROM source_value_extractions WHERE extraction_id=?", (_EID,)).fetchone()[0] or ""
+        record("T048-03", "amend-extraction --field root_id points a figure at a registered root and the writer's marker keeps the change in notes",
+               err is None and _now == "T048-ROOT-A" and "root_id" in _notes, (err, _now, _notes[-160:]))
+        _bad = refusal(db.amend_extraction, _EID, "root_id", "T048-NOT-REGISTERED", "T048 fixture", session=S, dry_run=True)
+        record("T048-04", "an id absent from the registry is refused by the foreign-key check, naming the table", bool(_bad) and "external_root_registry" in _bad, _bad)
+    _src = pathlib.Path(db.__file__).read_text(encoding="utf-8")
+    record("T048-05", "add-extraction's refusal for an unregistered root names the verb that registers one and no longer says no writer exists",
+           "db.py register-root" in _src and "has no writer yet" not in _src, None)
+
 print("Section B4/B5/D4/R3-14: conflicts -- keyed on the parameter, an unordered pair, two real populations")
 CODES = [r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "
                          "ORDER BY identity_code DESC LIMIT 2")]
