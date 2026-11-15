@@ -72,6 +72,7 @@ def log_search(query, session=S, engine="web"):
     r = subprocess.run([sys.executable, str(REPO / "scripts" / "db.py"), "log-search",
                         "--slug", SLUG, "--language", "EN", "--query-text", query,
                         "--engine", engine, "--depth-method", "scoping",
+                        "--results-found", "1",
                         "--session", session,
                         "--prior-expectation", "test fixture: no expectation"],
                        cwd=REPO, env=ENV, capture_output=True, text=True, timeout=120)

@@ -919,6 +919,16 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
     if absence_class is not None and results_found != 0:
         raise Refusal(f"--absence-class {absence_class!r} with --results-found {results_found}: only a "
                       "search that found nothing can be classed as an absence (R14). Nothing was written.")
+    if results_found == 0 and absence_class is None and not deferred_reason:
+        # An empty result is evidence that nothing exists only if the query was well formed and the index the right
+        # one (R14), so a search that found nothing states which. A request that returned no result list at all (a
+        # block, a rate limit, a reset, a stub page) was not RUN: log it with --deferred-reason naming the failure, as a
+        # search owed a re-run (OD-45, resolved under delegation), never as a zero-result search.
+        raise Refusal("log-search: --results-found 0 needs --absence-class (R14: query malformed, index wrong, or "
+                      "genuinely absent; the values are the column's own CHECK: "
+                      + ", ".join(dbcore.schema_choices("search_executions", "absence_class") or [])
+                      + "). If the request returned no result list (blocked, rate-limited, reset, a stub page) the search "
+                        "was not run: log it with --deferred-reason naming the failure instead. Nothing was written.")
     with connect(dry_run) as conn:
         if absence_class is not None:
             dbcore.check_declared(conn, "search_executions", "absence_class", absence_class,
@@ -2925,8 +2935,8 @@ def main():
     p_ls.add_argument("--absence-class",
                       choices=dbcore.schema_choices("search_executions", "absence_class"),
                       help="R14, for a search that found nothing: was the query malformed, the index "
-                           "wrong, or is the evidence genuinely absent. Omit until judged; set later "
-                           "with amend-search --set-absence-class.")
+                           "wrong, or is the evidence genuinely absent. REQUIRED when --results-found is 0 "
+                           "(unless --deferred-reason says the search was not run); refused otherwise.")
     p_ls.add_argument("--deferred-reason",
                       help="a search DELIBERATELY not run. This is what makes "
                            "'not looked for' different from 'nothing found'.")

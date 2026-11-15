@@ -101,8 +101,9 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   (repeatable) links a persisted payload whose URL carries the query's host and identifying value; the path is the
   manifest's own pointer shape, resolved against the repository's `retrieval-log/` whatever `GUIDEBOOK_RETRIEVAL_LOG`
   says. A WebSearch has no payload, and `scripts/audit/search_log_completeness.py --session <STEM>` reads the harness
-  ledger for those. Keep empties. R14's class (query-shape / wrong index / genuine absence) is a column:
-  `--absence-class` (or `amend-search --exec-id N --append-note … --set-absence-class` once judged; `--append-note` is
+  ledger for those. Keep empties. R14's class (query-shape / wrong index / genuine absence) is a column,
+  REQUIRED by `log-search` when `--results-found` is 0 (a request that returned no result list was not run: log it with
+  `--deferred-reason` instead, T-080): `--absence-class` (or, for a row already written, `amend-search --exec-id N --append-note … --set-absence-class`; `--append-note` is
   required on every `amend-search`, the class is write-once, and only a search that found nothing takes it); the batch
   gate reads the column. `coverage --slug` and `v_coverage_priority` (the unsearched language × jurisdiction anti-join)
   show what is unsearched.

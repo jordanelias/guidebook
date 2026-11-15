@@ -195,7 +195,7 @@ try:
 
     def search(label):
         return db.log_search(slug=A, language="EN", query_text=f"fixture: {label}",
-                             engine="manual", depth_method="scoping", session=S,
+                             engine="manual", depth_method="scoping", session=S, results_found=1,
                              prior_expectation="fixture prior, written before the call")
 
     def candidate(exec_id, title, disposition="PENDING-VERIFICATION", **extra):
@@ -618,10 +618,10 @@ try:
                r.returncode == 1 and r2.returncode == 1 and not q(
                    "SELECT 1 FROM connections WHERE con_id IN ('CON-9991','CON-9992')"),
                f"rc={r.returncode},{r2.returncode} {r.stderr[-200:]!r}")
-        r = run_cli("log-search", "--slug", plain, "--language", "EN", "--query-text", "fixture zero-yield",
+        r = run_cli("log-search", "--results-found", "1", "--slug", plain, "--language", "EN", "--query-text", "fixture zero-yield",
                     "--engine", "manual", "--depth-method", "scoping", "--prior-expectation", "none",
                     "--results-found", "0", "--absence-class", "genuine_absence", "--session", S)
-        r2 = run_cli("log-search", "--slug", plain, "--language", "EN", "--query-text", "fixture found",
+        r2 = run_cli("log-search", "--results-found", "1", "--slug", plain, "--language", "EN", "--query-text", "fixture found",
                      "--engine", "manual", "--depth-method", "scoping", "--prior-expectation", "some",
                      "--results-found", "3", "--absence-class", "genuine_absence", "--session", S)
         record("S13", "log-search --absence-class lands on a zero-yield search and is refused on one that "
@@ -1586,7 +1586,7 @@ try:
                  "--needs": q("SELECT need_code FROM access_needs ORDER BY 1 LIMIT 1")[0][0]}
 
     def ls_lens(label, *extra):
-        return run_cli("log-search", "--slug", A, "--language", "EN", "--query-text", f"fixture M: {label}",
+        return run_cli("log-search", "--results-found", "1", "--slug", A, "--language", "EN", "--query-text", f"fixture M: {label}",
                        "--engine", "manual", "--depth-method", "scoping", "--session", S,
                        "--prior-expectation", "fixture prior, written before the call", *extra)
 
@@ -1627,7 +1627,7 @@ try:
     (PARAM,) = q("SELECT parameter_id FROM base_parameters ORDER BY parameter_id LIMIT 1")[0]
 
     def ls_bare(label, *extra):
-        return run_cli("log-search", "--language", "EN", "--query-text", f"fixture N: {label}",
+        return run_cli("log-search", "--results-found", "1", "--language", "EN", "--query-text", f"fixture N: {label}",
                        "--engine", "manual", "--depth-method", "scoping", "--session", S,
                        "--prior-expectation", "fixture prior, written before the call", *extra)
 
@@ -2468,7 +2468,7 @@ try:
                     "FROM base_jurisdictions WHERE jurisdiction_code=?", ADM)
             record("T024-20", "add-jurisdiction admits the probe as a country with the pointer "
                    "stored and the session", row == [("country", None, H_OK, S)], f"{out} {row}")
-            ls = run_cli("log-search", "--slug", SLUG24, "--language", LANG24, "--query-text",
+            ls = run_cli("log-search", "--results-found", "1", "--slug", SLUG24, "--language", LANG24, "--query-text",
                          "fixture T024: a search in an admitted code", "--engine", "manual",
                          "--depth-method", "scoping", "--session", S, "--prior-expectation",
                          "fixture prior, written before the call", "--jurisdiction", ADM)
@@ -2487,7 +2487,7 @@ try:
             # Roll-up (OD-04): a search under a sub-national code counts toward its country.
             pre = db.get_coverage_completeness(SLUG24)
             db.add_jurisdiction(SUB24, "sub-national", COUNTRY24, H_OK, S)
-            ls = run_cli("log-search", "--slug", SLUG24, "--language", LANG24, "--query-text",
+            ls = run_cli("log-search", "--results-found", "1", "--slug", SLUG24, "--language", LANG24, "--query-text",
                          "fixture T024: a search in a sub-national code", "--engine", "manual",
                          "--depth-method", "scoping", "--session", S, "--prior-expectation",
                          "fixture prior, written before the call", "--jurisdiction", SUB24)

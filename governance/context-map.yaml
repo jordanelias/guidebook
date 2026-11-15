@@ -17,6 +17,7 @@ search_visibility:
   - _archived/
   - audits/
   - references/audits/
+  - references/bpc/
   - references/search-log/
   - sessions/**
   - transcripts/**/*.jsonl

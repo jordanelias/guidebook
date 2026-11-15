@@ -770,7 +770,7 @@ db.retire_parameter(P_RET, "fixture: a retired target", session=S)
 def search(**over):
     base = {"slug": SLUG, "language": LANG, "query_text": "q", "engine": "web",
             "depth_method": "scoping", "session": S, "prior_expectation": "nothing",
-            "jurisdiction": JUR, "dry_run": True}
+            "jurisdiction": JUR, "dry_run": True, "results_found": 1}
     base.update(over)
     return base
 
@@ -784,7 +784,7 @@ record("J01", "log-search refuses a language lang_jur_map does not hold", r and 
 
 def scope_flag(lang):
     """`in_research_scope` as the operator reads it: the JSON `log-search --dry-run` prints."""
-    p = cli("log-search", "--slug", SLUG, "--language", lang, "--jurisdiction", JUR, "--query-text", "q",
+    p = cli("log-search", "--results-found", "1", "--slug", SLUG, "--language", lang, "--jurisdiction", JUR, "--query-text", "q",
             "--engine", "web", "--depth-method", "scoping", "--prior-expectation", "nothing",
             "--session", S, "--dry-run")
     try:
@@ -1335,6 +1335,20 @@ else:
         _bad = refusal(db.amend_extraction, _EID55, "device_class", "BANANA", "T055 fixture", session=S, dry_run=True)
         record("T055-06", "amend-extraction --field device_class accepts each new value and refuses one outside the CHECK, naming the set",
                all(e is None and now == v for v, (e, now) in _out.items()) and bool(_bad) and "power_chair" in _bad, (_out, _bad))
+
+print("Section T080: a search that found nothing states its cause, or was not run")
+_cls80 = sorted(dbcore.schema_choices("search_executions", "absence_class"))
+_r0 = refusal(db.log_search, **search(results_found=0))
+_r0b = refusal(db.log_search, **search(results_found=0, backfill=1))
+record("T080-01", "log-search refuses a zero-result search with no cause, backfill included, naming every value of the column's CHECK and the deferral for a request that returned no result list",
+       all(_r0) and all(c in _r0 for c in _cls80) and "--deferred-reason" in _r0 and _r0b and all(c in _r0b for c in _cls80), (_r0, _r0b))
+_ok0, _e0 = ok(db.log_search, **search(results_found=0, absence_class=_cls80[0]))
+_ok1, _e1 = ok(db.log_search, **search(results_found=0, deferred_reason="TASK-FIXTURE the request returned no result list (403)"))
+_ok2, _e2 = ok(db.log_search, **search(results_found=3))
+record("T080-02", "a zero-result search carrying a cause, a deferred search, and a search that found something are all accepted (dry run)",
+       _e0 is None and _e1 is None and _e2 is None, (_e0, _e1, _e2))
+_r3 = refusal(db.log_search, **search(results_found=2, absence_class=_cls80[0]))
+record("T080-03", "an absence class on a search that found something is still refused", bool(_r3) and "only a search that found nothing" in _r3, _r3)
 
 print("Section B4/B5/D4/R3-14: conflicts -- keyed on the parameter, an unordered pair, two real populations")
 CODES = [r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "
@@ -2213,7 +2227,7 @@ else:
                (rb.stderr + rb.stdout)[-200:])
 
         # log-search --gap-id
-        ls = lambda gap, *a: cli("log-search", "--parameter", str(A_PAR), "--language", LANG, "--query-text",  # noqa: E731
+        ls = lambda gap, *a: cli("log-search", "--results-found", "1", "--parameter", str(A_PAR), "--language", LANG, "--query-text",  # noqa: E731
                                  "TASK-FIXTURE probe", "--engine", "manual", "--depth-method", "scoping",
                                  "--prior-expectation", "TASK-FIXTURE: none expected", "--session", S,
                                  "--gap-id", gap, *a)
@@ -2233,7 +2247,7 @@ else:
                and unheld in ru.stderr + ru.stdout and unheld in rw.stderr + rw.stdout and n_se(c) == e1
                and "unrecognized arguments" not in ru.stderr + rw.stderr,
                ((ru.stderr + ru.stdout)[-250:], n_se(c) - e1))
-        rn = cli("log-search", "--parameter", str(A_PAR), "--language", LANG, "--query-text", "TASK-FIXTURE probe",
+        rn = cli("log-search", "--results-found", "1", "--parameter", str(A_PAR), "--language", LANG, "--query-text", "TASK-FIXTURE probe",
                  "--engine", "manual", "--depth-method", "scoping", "--prior-expectation", "TASK-FIXTURE: none expected",
                  "--session", S)
         enull = json.loads(rn.stdout)["exec_id"] if rn.returncode == 0 and rn.stdout.strip() else None
@@ -2315,7 +2329,7 @@ else:
             # A search for the engine gap must agree with the cell's subject (its subject comes from v_gap_subject).
             other_p = scalar("SELECT parameter_id FROM base_parameters WHERE status='active' AND parameter_id<>? "
                              "ORDER BY 1 LIMIT 1", P_ENG)
-            base_ls = ["log-search", "--language", LANG, "--query-text", "TASK-FIXTURE probe", "--engine", "manual",
+            base_ls = ["log-search", "--results-found", "1", "--language", LANG, "--query-text", "TASK-FIXTURE probe", "--engine", "manual",
                        "--depth-method", "scoping", "--prior-expectation", "TASK-FIXTURE: none expected", "--session", S]
             r1 = cli(*base_ls, "--parameter", str(other_p), "--gap-id", gid_e)
             r2 = cli(*base_ls, "--parameter", str(P_ENG), "--identity", CELL_IDENT, "--gap-id", gid_e)
@@ -2341,7 +2355,7 @@ else:
             ga = json.loads(cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE typed gap",
                                 "--session", S, *typed).stdout or "{}").get("gap_id")
             ls_ = lambda gap, **o: cli(*(  # noqa: E731
-                ["log-search", "--query-text", "TASK-FIXTURE probe", "--engine", "manual", "--depth-method", "scoping",
+                ["log-search", "--results-found", "1", "--query-text", "TASK-FIXTURE probe", "--engine", "manual", "--depth-method", "scoping",
                  "--prior-expectation", "TASK-FIXTURE: none expected", "--session", S, "--gap-id", gap]
                 + [x for k_, v_ in {"--parameter": str(A_PAR), "--identity": IDENT, "--jurisdiction": JUR,
                                     "--language": LANG, **o}.items() if v_ is not None for x in (k_, v_)]))
@@ -2390,7 +2404,7 @@ else:
                    held_m is not None and held_m[0] == "MD-TASK-FIXTURE" and rm2.returncode != 0 and "medical_code" in rm2.stderr,
                    (rm_.stderr + rm2.stderr)[-250:])
 
-h_ls, h_ag = cli("log-search", "--help").stdout, cli("add-gap", "--help").stdout
+h_ls, h_ag = cli("log-search", "--results-found", "1", "--help").stdout, cli("add-gap", "--help").stdout
 record("T013-12", "log-search --help lists --gap-id; add-gap --help lists the seven subject flags",
        "--gap-id" in h_ls and all(f_ in h_ag for f_ in ("--parameter", "--identity", "--icf", "--needs", "--medical",
                                                           "--jurisdiction", "--language")), (h_ls[-100:], h_ag[-100:]))
@@ -2532,7 +2546,7 @@ with scratch() as c:
         record("ST2", "log-mining --session x.md stores x in citation_mining.updated_by_session", p.returncode == 0
                and bool(got) and all(g[0] == S for g in got), (p.stdout + p.stderr)[-200:] or [tuple(g) for g in got])
     if PAIR and slug_ref:
-        p = cli("log-search", "--slug", SLUG, "--language", LANG, "--jurisdiction", JUR, "--query-text", "stem probe",
+        p = cli("log-search", "--results-found", "1", "--slug", SLUG, "--language", LANG, "--jurisdiction", JUR, "--query-text", "stem probe",
                 "--engine", "web", "--depth-method", "scoping", "--prior-expectation", "nothing",
                 "--admitted-ref-id", slug_ref[1], "--session", S + ".md")
         try:
