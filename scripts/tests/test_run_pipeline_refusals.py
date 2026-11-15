@@ -2670,4 +2670,68 @@ if feature("T010-01", "the rule dbcore.NON_QUANTITY_DOMAINS exists, holds at lea
                bool(_rs) and all(v and "already a parameter" in v for v in _rs.values()), _rs)
 
 
+# ───────────── T-015: a language is one of the map's, whatever its letter case ─────────────
+print("Section T015: the coverage views fold a language to the map's case; observe-term and add-source refuse a language the "
+      "map does not hold and store the map's spelling; an English source sorts as English in any case")
+_MAP = [r[0] for r in q("SELECT DISTINCT language FROM lang_jur_map ORDER BY 1")]
+_n_lang = lambda c, sql: c.execute(sql).fetchone()[0]  # noqa: E731
+record("T015-01", "the coverage views hold one row per slug and language: the distinct languages of v_coverage_language equal the "
+       "folded distinct languages of the searches, and no (slug, language) pair is split by case in either view",
+       scalar("SELECT COUNT(DISTINCT language) FROM v_coverage_language")
+       == scalar("SELECT COUNT(DISTINCT UPPER(language)) FROM search_executions WHERE deferred_reason IS NULL")
+       and scalar("SELECT COUNT(*) FROM (SELECT slug, UPPER(language) FROM v_coverage_language GROUP BY 1, 2 HAVING COUNT(*) > 1)") == 0
+       and scalar("SELECT COUNT(*) FROM (SELECT slug, parameter_id, jurisdiction, UPPER(language), identity_code, icf_code, needs_code, "
+                  "medical_code FROM v_coverage_lens GROUP BY 1,2,3,4,5,6,7,8 HAVING COUNT(*) > 1)") == 0
+       and scalar("SELECT COUNT(*) FROM v_coverage_language WHERE language <> UPPER(language)") == 0, None)
+with scratch() as c:                   # a search stored under the other spelling must not split the pair (the live log holds both)
+    _row = c.execute("SELECT exec_id, slug, language FROM search_executions WHERE deferred_reason IS NULL AND language = UPPER(language) "
+                     "AND NOT EXISTS (SELECT 1 FROM search_executions o WHERE o.slug=search_executions.slug AND o.language=LOWER(search_executions.language) "
+                     "AND o.deferred_reason IS NULL) ORDER BY exec_id LIMIT 1").fetchone()
+    if _row is None:
+        skip("T015-02", "no search whose slug has no lower-case twin to split")
+    else:
+        _before = c.execute("SELECT language, searches FROM v_coverage_language WHERE slug=? ORDER BY language", (_row["slug"],)).fetchall()
+        hand("UPDATE search_executions SET language=LOWER(language) WHERE exec_id=?", _row["exec_id"])
+        _after = c.execute("SELECT language, searches FROM v_coverage_language WHERE slug=? ORDER BY language", (_row["slug"],)).fetchall()
+        record("T015-02", "storing one search of a slug as `en` rather than `EN` changes neither view's row count nor any figure: the view "
+               "reads the spelling, not the language", [tuple(r) for r in _before] == [tuple(r) for r in _after], (_before, _after))
+_absent = next("".join(p) for p in itertools.product("ABCDEFGHIJKLMNOPQRSTUVWXYZ", repeat=2) if "".join(p) not in _MAP)
+_ref15 = new_source()
+_obs15 = {"ref_id": _ref15, "surface_form": "clause", "locator": "p1", "context_quote": "a clause read off paper",
+          "verbatim_exempt": "scanned PDF, no text layer"}
+r = refusal(db.observe_term, {**_obs15, "language": _absent.lower()}, S, dry_run=True)
+record("T015-03", "observe-term refuses a language lang_jur_map does not hold, whatever its case, naming the map",
+       r and "lang_jur_map" in r and repr(_absent) in r, r)
+_held = next((l for l in _MAP if l != "EN"), None)
+with scratch() as c:
+    _r15 = new_source()
+    res, err = ok(db.observe_term, {**_obs15, "ref_id": _r15, "language": _held.lower()}, S, dry_run=False)
+    record("T015-04", "observe-term stores a held language in the map's spelling, however it was typed",
+           err is None and c.execute("SELECT language FROM observed_terms WHERE ref_id=?", (_r15,)).fetchone()[0] == _held, err)
+    _src = {**SRC, "title": "Fixture on handrail finial profiles and a T015 probe"}
+    _bad = refusal(db.insert_evidence_source, {**_src, "lang_detected": _absent.lower()}, S, dry_run=True, authors=AUTH)
+    _id15, _e15 = ok(db.insert_evidence_source, {**_src, "title": _src["title"] + " two", "lang_detected": _held.lower()}, S,
+                     dry_run=False, authors=AUTH)
+    record("T015-05", "add-source refuses a --lang-detected the map does not hold, and stores a held one in the map's spelling",
+           _bad and "lang_jur_map" in _bad and _e15 is None
+           and c.execute("SELECT lang_detected FROM evidence_sources WHERE ref_id=?", (_id15,)).fetchone()[0] == _held, (_bad, _e15))
+    # An English source is English whatever its spelling: of two unmined sources of one tier, the Japanese one comes first and the
+    # English one after it, `EN` or `en`, though the English one sorts earlier by slug and label.
+    _un = [r for r in db.get_unmined_for_all_slugs(6)]
+    _tier = next((t for t in sorted({r["tier"] for r in _un}) if len([r for r in _un if r["tier"] == t]) >= 2), None)
+    if _tier is None:
+        skip("T015-06", "no tier with two unmined sources")
+    else:
+        _two = sorted((r for r in _un if r["tier"] == _tier), key=lambda r: (r["slug"], r["local_ref_id"]))[:2]
+        _ids = [c.execute("SELECT ref_id FROM source_slug_links WHERE slug=? AND local_ref_id=?", (r["slug"], r["local_ref_id"])).fetchone()[0]
+                for r in _two]
+        _res = []
+        for _spelling in ("EN", "en"):
+            hand("UPDATE evidence_sources SET lang_detected=?, language=NULL WHERE ref_id=?", _spelling, _ids[0])
+            hand("UPDATE evidence_sources SET lang_detected='ja', language=NULL WHERE ref_id=?", _ids[1])
+            _order = [r["local_ref_id"] for r in db.get_unmined_for_all_slugs(6) if r["tier"] == _tier]
+            _res.append(_order.index(_two[1]["local_ref_id"]) < _order.index(_two[0]["local_ref_id"]))
+        record("T015-06", "an English source sorts after a non-English one of its tier whether it is stored `EN` or `en`", all(_res), _res)
+
+
 finish()

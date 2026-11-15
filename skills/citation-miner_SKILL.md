@@ -276,7 +276,7 @@ python3 scripts/db.py add-source \
   #   sources admitted before this carry scope NULL for exactly that reason.
   --doi {doi} \
   --jurisdiction {jur} \
-  --lang-detected {iso_639_1_code} \
+  --lang-detected {iso_639_1_code} \   # folded to upper case; refused unless lang_jur_map holds it
   --lang-detection-method {how the language was known} \
   --slug {slug} \
   --local-ref-id {local_ref_id} \   # the per-slug LABEL (RAP-04). A different thing.

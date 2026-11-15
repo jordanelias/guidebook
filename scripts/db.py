@@ -2861,7 +2861,8 @@ def main():
     # is the exact artefact the field exists to prevent. It now lives on `log-search`,
     # where the fact exists, and migration 069 gives search_executions the column.
     p_as.add_argument("--synthesis-attribution-required", type=int, choices=[0, 1])
-    p_as.add_argument("--lang-detected", help="ISO 639-1 code for the source's actual publication language")
+    p_as.add_argument("--lang-detected", help="ISO 639-1 code for the source's actual publication language; folded to the "
+                                              "letter case lang_jur_map holds, and refused if the map does not hold it")
     p_as.add_argument("--lang-detection-method",
                       help="How --lang-detected was determined, e.g. 'native_title_verified', "
                            "'journal_family_inference', 'citing_document_language'")
@@ -4287,6 +4288,11 @@ def insert_evidence_source(data: dict, session: str,
 
     row = {**data, **audit(session)}
     with _txn(conn, dry_run) as conn:
+        # THE SOURCE'S LANGUAGE IS ONE OF THE MAP'S (T-015): folded to the letter case lang_jur_map holds, and refused if the
+        # map does not hold it (a new language is a doctrine change, not a flag), as log-search refuses its own.
+        if data.get("lang_detected"):
+            data["lang_detected"] = row["lang_detected"] = data["lang_detected"].strip().upper()
+            _check_language(conn, data["lang_detected"], "source")
         _refuse_copied_block_reason(conn, data.get("processing_blocked_reason"),
                                     "add-source --processing-blocked-reason")
         # THE ID IS DERIVED FROM THE DOCUMENT'S IDENTITY, never from the flag: the id of the
@@ -6513,6 +6519,7 @@ def observe_term(data: dict, session: str, dry_run: bool = False):
                 f"observed IN a source; observe it after the source is filed.")
         _refuse_tombstone(conn, ref, "observe-term")
         language = (data.get("language") or "EN").strip().upper()
+        _check_language(conn, language, "observation")
         prior = conn.execute(
             "SELECT observation_id FROM observed_terms "
             "WHERE ref_id=? AND surface_form=? AND language=? "
@@ -11048,7 +11055,7 @@ def supersede_source(ref_id: str, by: str, reason: str, session: str,
 def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:
     """Return all unmined Tier 1–N sources across all slugs.
 
-    Non-English sources (lang_detected/language not in {'en', NULL}) sort first
+    Non-English sources (lang_detected/language not EN in any letter case, or NULL) sort first
     within each tier, per the citation-mining non-English priority ordering.
     """
     with connect(readonly=True) as conn:
@@ -11084,7 +11091,7 @@ def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:
             -- "what is unmined" differently is how a backlog goes half-invisible.
             AND COALESCE(es.citation_mining_status, '') <> 'mined'
             ORDER BY es.tier ASC,
-                     CASE WHEN COALESCE(es.lang_detected, es.language, 'en') = 'en' THEN 1 ELSE 0 END,
+                     CASE WHEN UPPER(COALESCE(es.lang_detected, es.language, 'EN')) = 'EN' THEN 1 ELSE 0 END,
                      ssl.slug, ssl.local_ref_id
         """, [tier_max]).fetchall()
     return [dict(r) for r in rows]
