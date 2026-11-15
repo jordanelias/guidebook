@@ -2343,26 +2343,24 @@ def main():
         # pilot-3, so the pilot-2 hashing path is dead.
         # THE RETIRED ROW IT FOLLOWS POINTS AT IT (T-011). Re-determining a cell is retire, then run this engine
         # again; nothing linked the old value to the one that replaced it, so a reader at the old value could not
-        # reach the current one. The most recently retired row of this cell that has no pointer gets one, by the
+        # reach the current one. The most recently retired row of this cell gets one, if it has none, by the
         # statement `db.py retire-specification --superseded-by` uses (dbcore.SUPERSEDE_SQL), here and in the
-        # emitted SQL. Older retired rows with no pointer stay as they are (history is not back-filled); they are
-        # named on stderr so they are not silent.
-        _prior = [r[0] for r in conn.execute(
-            f"SELECT specification_id FROM specifications WHERE {CELL_WHERE} AND retired_at IS NOT NULL "
-            "AND superseded_by_specification_id IS NULL AND specification_id<>? "
-            "ORDER BY retired_at DESC, specification_id DESC",
-            _cell_vals(det["parameter_id"], det["lens"]) + (specification_id,))]
-        if _prior:
-            _sup = (specification_id, STAMP, SESSION, _prior[0])
+        # emitted SQL. Older retired rows with no pointer stay as they are (history is not back-filled), and so
+        # does a newest retired row that already has one; the unpointed ones are named on stderr, not silent.
+        _retired = conn.execute(
+            f"SELECT specification_id, superseded_by_specification_id FROM specifications WHERE {CELL_WHERE} "
+            "AND retired_at IS NOT NULL AND specification_id<>? ORDER BY retired_at DESC, specification_id DESC",
+            _cell_vals(det["parameter_id"], det["lens"]) + (specification_id,)).fetchall()
+        _bare = [r[0] for r in _retired if r[1] is None]
+        if _retired and _retired[0][1] is None:        # the newest retired row has no successor yet
+            _sup = (specification_id, STAMP, SESSION, _retired[0][0])
             conn.execute(dbcore.SUPERSEDE_SQL, _sup)
-            _text = dbcore.SUPERSEDE_SQL
-            for _v in _sup:
-                _text = _text.replace("?", q(_v), 1)
-            sql_lines.append(_text + ";")
-            if len(_prior) > 1:
-                print(f"NOTE: specification {_prior[0]} now points at {specification_id}; {len(_prior) - 1} older "
-                      f"retired row(s) of this cell hold no pointer and are left as history: {_prior[1:]}",
-                      file=sys.stderr)
+            _vals = iter(q(v) for v in _sup)           # one pass over the template: a `?` inside a value is data
+            sql_lines.append(re.sub(r"\?", lambda _m: next(_vals), dbcore.SUPERSEDE_SQL) + ";")
+            _bare = _bare[1:]
+        if _bare:
+            print(f"NOTE: {len(_bare)} older retired row(s) of this cell hold no pointer and are left as history "
+                  f"(history is not back-filled): {_bare}", file=sys.stderr)
         for _ref in det["governing_refs"]:
             _link = (specification_id, _ref, "governing", STAMP, SESSION)
             _lcols = ("specification_id, ref_id, role, created_at, created_by_session")

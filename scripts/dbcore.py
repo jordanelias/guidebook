@@ -634,7 +634,9 @@ def domain_key(domain) -> str:
 
 #: The one UPDATE that points a retired determination at the one that replaced it (T-011). `db.py
 #: retire-specification --superseded-by` runs it on a row retired earlier; the engine runs it, and emits it, when it
-#: writes the determination that follows a retired row of the same cell. No other statement writes the column.
+#: writes the determination that follows a retired row of the same cell. (`retire-specification --reason` may also
+#: set the pointer in the same statement that retires a live row, when `--superseded-by` is given with it; that
+#: statement is the retirement itself.) `updated_at` and `updated_by_session` take the run's stamp and session.
 SUPERSEDE_SQL = ("UPDATE specifications SET superseded_by_specification_id=?, updated_at=?, "
                  "updated_by_session=? WHERE specification_id=?")
 

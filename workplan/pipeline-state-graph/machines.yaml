@@ -296,7 +296,7 @@ machines:
     guards:
       - "a reason is required (a trigger also refuses a retirement without one)"
       - "retired twice is refused; --superseded-by may fill an empty pointer later; a determination is superseded once"
-      - "the replacement does not exist at retirement: the order is retire, re-determine, then link"
+      - "the replacement does not exist at retirement: the order is retire, re-determine, link; the engine writes the link itself when it determines the cell again (T-011, assess_cell.py)"
     evidence:
       - {file: scripts/db.py, func: retire_specification, needle: "Retiring it twice records nothing new"}
       - {file: scripts/db.py, func: retire_specification, needle: "LINKING IS A SECOND CALL BY DESIGN"}

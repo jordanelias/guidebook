@@ -1135,7 +1135,7 @@ checks:
   level: advisory
   basis: hygiene
   cost: fast
-  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
+  no_floor: selftest — most cases build their own fixtures, and the T011 cases derive a cell from data/guidebook.db and prepare copies of it; the file prints its case count as EXAMINED, and a floor would count the wrong thing
 - id: test_evidence_cell_state_2_3
   cmd:
   - python3

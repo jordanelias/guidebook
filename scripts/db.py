@@ -1862,9 +1862,10 @@ def main():
                       help="REQUIRED to retire: why this determination no longer stands. "
                            "The trigger on the table refuses without it.")
     p_rs.add_argument("--superseded-by", type=int,
-                      help="The specification that replaced it. May be supplied on a "
-                           "LATER call, once the replacement exists — which is the real "
-                           "order of events: retire, re-determine, then link.")
+                      help="The specification that replaced it. The engine writes this "
+                           "pointer itself when the cell is determined again (T-011), so a "
+                           "later call is needed only for a row it did not link: a "
+                           "replacement that exists but is not the next determination.")
     p_rs.add_argument("--session", required=True)
     p_rs.add_argument("--dry-run", action="store_true")
 
@@ -6343,11 +6344,12 @@ def retire_specification(specification_id: int, session: str, reason: str = None
     What changes is that it is no longer the cell's answer. That is the difference
     between a history the project can audit and a hole where a determination used to be.
 
-    LINKING IS A SECOND CALL BY DESIGN. The replacement does not exist at the moment of
-    retirement — the engine refuses to run while a live row stands, so the real order is
-    retire, re-determine, then link. Passing --superseded-by on a later call fills the
-    pointer on an already-retired row; that is the one amendment this writer allows,
-    and only while the pointer is still empty.
+    LINKING IS A SECOND CALL BY DESIGN, and since T-011 the engine makes it. The replacement does not
+    exist at the moment of retirement — the engine refuses to run while a live row stands, so the real
+    order is retire, re-determine, link; the engine's second step writes the link itself (the most
+    recently retired row of the cell, if it has no pointer). Passing --superseded-by on a later call
+    fills the pointer on an already-retired row the engine did not link; that is the one amendment this
+    writer allows, and only while the pointer is still empty.
     """
     with connect(dry_run) as conn:
         row = conn.execute(
