@@ -7627,3 +7627,45 @@ The same 2026-03-19 entry's provisional-until-covered clause (a best-practice en
 CONDITION: any session that meets one of the three March 2026 rules, or a restatement of one in a skill, schema comment or governance file.
 ACTION: (1) Treat each as superseded, by the ruling named against it. (2) Do not add a `SUPERSEDES` pair for a ledger target. (3) A restatement outside the ledger is marked where it stands (T-001 marked the ones its sweep found).
 DATE: 2026-11-15 — record by the recorder of rulings the owner gave on the dates named; not a new owner statement.
+
+## Owner statements 2026-10-12 — eight sentences on the idealized state graph, entered on the owner's answer to OD-28 (2026-11-12)
+
+Eight messages of the owner, in the main session of `transcripts/harness_db856d85/main.jsonl` (outside every sidechain; O1 to O3 are queued commands, O4 to O8 delivered messages with origin human), timestamped by the transcript's own clock in UTC. They had been cited from a relay (`workplan/pipeline-state-graph/IDEAL-GRAPH.md`, line 11) that trims the openings of O1 ("use Opus to") and O7 ("yeah, and") and keeps nothing of when they were said. They are quoted here **verbatim from the transcript**, trailing whitespace dropped, and entered because the owner answered OD-28 on 2026-11-12 ("OD-28: enter the eight sentences verbatim from the committed transcript", above).
+
+**O1** — 2026-10-12T01:51:55.394Z UTC (queued command):
+
+> "use Opus to create an idealized new state graph that has as little infrastructure and code as possible that still meets all conditions required of project for a walkable pipeline all directions that can dynamically scrape mine organize and sort all relevant information from any source for any parameter regardless of search slug"
+
+**O2** — 2026-10-12T01:54:09.304Z UTC (queued command):
+
+> "ideal state graph just be code architecture compliant"
+
+**O3** — 2026-10-12T02:05:50.269Z UTC (queued command):
+
+> "wherever there is a conflict, adjudicate to ensure 100% accuracy, code compliance and logic for ensuring walkability in pipeline as well as dynamic information collection"
+
+**O4** — 2026-10-12T02:09:02.696Z UTC (delivered message, origin human):
+
+> "ensure that you strive to minimize amount of code so that it is as distilled and clean as possible as well as deduplicating and reconciling all conflicts"
+
+**O5** — 2026-10-12T02:10:40.361Z UTC (delivered message, origin human):
+
+> "centralized where possible and rely on pointers and injectable code"
+
+**O6** — 2026-10-12T02:10:51.805Z UTC (delivered message, origin human):
+
+> "the less hard coded, the better"
+
+**O7** — 2026-10-12T02:11:45.907Z UTC (delivered message, origin human):
+
+> "yeah, and we need to ensure handshakes both top-down and bottom-up, and we need to ensure walkability across all tables with references and ids"
+
+**O8** — 2026-10-12T02:12:19.870Z UTC (delivered message, origin human):
+
+> "handshake ALL directions"
+
+**What they record.** The owner's instructions of 2026-10-12 for the idealized state graph and the conditions it is to meet: as little infrastructure and code as will do, centralised with pointers and injectable code, as little hard coding as possible, conflicts adjudicated, and walkability and handshakes in all directions across tables that carry references and ids. Nothing is read into them here beyond what they say; the relay's reading of O2 as "must" is the relay's, not the owner's.
+
+CONDITION: any session citing the owner's instructions for the idealized state graph, or reading `IDEAL-GRAPH.md` line 11.
+ACTION: (1) Cite this entry for the eight sentences, not the relay. (2) Do not read a further meaning into a sentence that it does not state. (3) Where the relay and this entry differ, this entry's text governs.
+DATE: 2026-11-15 — entered on the owner's answer to OD-28 (2026-11-12); the sentences are the owner's, of 2026-10-12.
