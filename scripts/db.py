@@ -1342,8 +1342,15 @@ def get_conflicts(domain: str = None,
 
 
 def delete_connection(con_id: str, session: str, dry_run: bool = False):
-    """Hard-delete a connection and its targets. Use sparingly — for data corrections only."""
+    """Hard-delete a connection and its targets. Use sparingly — for data corrections only.
+
+    REFUSES an id that is not a connection (T-006): the two DELETEs match nothing for a mistyped id, and the
+    verb used to answer `{"deleted": ...}` all the same, so a session believed the wrong link was gone while it
+    could still reach the discussion a reader sees."""
     with connect(dry_run) as conn:
+        if not dbcore.exists(conn, "connections", "con_id", con_id):
+            raise Refusal(f"delete-connection: {con_id} is not a connection. Nothing was written. "
+                          f"`db.py connections` lists the ids that exist.")
         conn.execute("DELETE FROM connection_targets WHERE con_id=?", [con_id])
         conn.execute("DELETE FROM connections WHERE con_id=?", [con_id])
 

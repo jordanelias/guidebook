@@ -851,6 +851,15 @@ r = refusal(db.update_connection_status, ABSENT_CON, "CONSUMED", session=S, dry_
 record("N08", "update-connection refuses an unknown con_id", r and ABSENT_CON in r, r)
 res, err = ok(db.update_connection_status, NEXT_CON, "CONSUMED", session=S, dry_run=True)
 record("N09", "a CHECK status on a live connection is accepted", err is None, err)
+r = refusal(db.delete_connection, ABSENT_CON, session=S, dry_run=True)
+record("T006-01", "delete-connection refuses an id that is not a connection, naming it, saying nothing was written, and "
+       "pointing at `db.py connections`", r and ABSENT_CON in r and "Nothing was written" in r and "db.py connections" in r, r)
+with scratch() as c:                   # the copy holds NEXT_CON, written above; the main copy keeps it for later cases
+    res, err = ok(db.delete_connection, NEXT_CON, session=S, dry_run=False)
+    left = [c.execute(f"SELECT COUNT(*) FROM {t} WHERE con_id=?", (NEXT_CON,)).fetchone()[0]
+            for t in ("connections", "connection_targets")]
+    record("T006-02", "delete-connection still deletes a connection that exists, and its targets", err is None and left == [0, 0],
+           err or left)
 
 print("Section B4/B5/D4/R3-14: conflicts -- keyed on the parameter, an unordered pair, two real populations")
 CODES = [r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "
