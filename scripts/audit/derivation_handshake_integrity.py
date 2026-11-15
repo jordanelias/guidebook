@@ -44,8 +44,8 @@ which is about the book and not the apparatus):
      (`assess_cell.stale_determinations`).
 
 ADVISORY, WITH THE RATCHET NAMED. House norm: a newly-wired check starts advisory. It is
-also vacuous today — `specifications` holds 0 rows, because no parameter has been minted
-since the 2026-09-13 circulation clear — and adding a SIXTH blocking-and-vacuous gate to
+also vacuous while no determination is LIVE (the `determinations read:` line it prints says how
+many are; retired rows are history and are not read) — and adding a SIXTH blocking-and-vacuous gate to
 the list `run_checks.py` already prints as a defect would make the battery worse, not
 safer. Ratchet to `blocking` with `min_items: 1` in the same change that writes the first
 determination; determinations are never deleted, so the floor holds once set.
@@ -64,9 +64,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 # would be a second implementation of a ratified rule, which is the finding that made
 # grain_for() the single home in the first place.
 from schemas.directness import GRAIN_AGGREGATE, grain_for      # noqa: E402
-
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import dbcore                                                    # noqa: E402
 
 # HONOURS GUIDEBOOK_DB_PATH — the blocking db_path_env_audit requires it, and its reason
 # is the one that matters here: a script that ignores the variable reads the committed
@@ -97,7 +94,7 @@ def _engine_pending(con, s):
 
 def main(argv=None):
     # --db EXISTS SO THIS CHECK CAN BE FAULT-INJECTED. A gate nobody has seen go red is a
-    # gate nobody has tested, and every subject below is unreachable on today's corpus.
+    # gate nobody has tested, and every subject below is unreachable while no determination is live.
     import argparse
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--db", default=str(DB), help="database to read (default: canonical)")
@@ -272,12 +269,14 @@ def main(argv=None):
         print(f"  [NOTE] {n}")
 
     unresolved = sum(1 for g in gates if g["resolved_at"] is None)
-    print(f"  {dbcore.determinations_read(con)}")
+    _retired = (con.execute("SELECT COUNT(*) FROM specifications WHERE retired_at IS NOT NULL").fetchone()[0]
+                if _table(con, "specifications") else 0)
+    print(f"  determinations read: {len(specs)} live, 0 retired ({_retired} retired row(s) in the table are history and "
+          f"are not read here)")
     if not specs:
-        print("  No LIVE determination: the stored-answer comparison above had nothing to compare. It is the")
-        print("  corpus state, not a check with nothing to say: retired rows stay as history and are not read")
-        print("  here, and the failure paths are exercised by fault injection against a scratch copy")
-        print("  (--db) rather than by the live corpus.")
+        print("  No LIVE determination: the stored-answer comparison above had nothing to compare. That is the")
+        print("  corpus state, not a check with nothing to say, and the failure paths are exercised by fault")
+        print("  injection against a scratch copy (--db) rather than by the live corpus.")
     print(f"\n  determinations: {len(specs)}  "
           f"gates: {len(gates)} ({unresolved} open)  "
           f"distinct (population, ICF code) pairs: {len(links)}")

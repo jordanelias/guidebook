@@ -386,6 +386,21 @@ def validate_convergence_db(conn):
     return errors, n
 
 
+def _determinations_read(db_path: str) -> str:
+    """`determinations read: <live> live, <retired> retired` over every `specifications` row, which is the
+    subject of validate_db (T-004): this check reads retired determinations as well as live ones, and says so.
+    Its own SQL, not a library's: a gate computes what it reports for itself."""
+    conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+    try:
+        if not conn.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='specifications'").fetchone():
+            return "determinations read: 0 live, 0 retired (no specifications table)"
+        live, retired = conn.execute("SELECT COALESCE(SUM(retired_at IS NULL), 0), "
+                                     "COALESCE(SUM(retired_at IS NOT NULL), 0) FROM specifications").fetchone()
+        return f"determinations read: {live} live, {retired} retired"
+    finally:
+        conn.close()
+
+
 def validate_db(db_path: str):
     """Validate the cell-state machine in the DB. Returns (errors, n_cells, n_conv)."""
     if not os.path.exists(db_path):
@@ -488,12 +503,11 @@ def main():
                 print(f"FAIL specifications machine ({os.path.basename(db_path)}):")
                 for e in db_errors:
                     print(f"  {e}")
+                print(_determinations_read(db_path))
             else:
                 print(f"OK cell-state machine: {n_cells} cells, {n_conv} convergence rows "
                       f"validated from {os.path.basename(db_path)}", file=sys.stderr)
-                _ro = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
-                print(dbcore.determinations_read(_ro), file=sys.stderr)
-                _ro.close()
+                print(_determinations_read(db_path), file=sys.stderr)
 
         # Scan data directories
         source_dir = os.path.join(repo_root, "data", "sources")

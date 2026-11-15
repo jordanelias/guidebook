@@ -1161,7 +1161,7 @@ checks:
   level: advisory
   basis: hygiene
   cost: fast
-  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
+  no_floor: selftest — most cases build their own fixtures; the T004 cases derive their expectations from data/guidebook.db and run the four specification checks on copies of it; the file prints its case count as EXAMINED, and a floor would count the wrong thing
 - id: test_directness_2_2
   cmd:
   - python3

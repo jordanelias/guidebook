@@ -48,9 +48,6 @@ sys.path.insert(0, str(REPO))
 
 from schemas.tier_derivation import derive_tier, TierDerivationError  # noqa: E402
 
-sys.path.insert(0, str(REPO / "scripts"))
-import dbcore  # noqa: E402
-
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", str(REPO / "data" / "guidebook.db")))
 SEP = "=" * 70
 
@@ -83,7 +80,9 @@ def _readiness(cur):
     lines = []
     n_cells = cur.execute("SELECT COUNT(*) FROM specifications").fetchone()[0]
     lines.append(f"specifications: {n_cells} determination(s)")
-    lines.append(dbcore.determinations_read(cur.connection))
+    live, retired = cur.execute("SELECT COALESCE(SUM(retired_at IS NULL), 0), COALESCE(SUM(retired_at IS NOT NULL), 0) "
+                                "FROM specifications").fetchone()
+    lines.append(f"determinations read: {live} live, {retired} retired")
     if n_cells:
         dist = {str(s): n for s, n in cur.execute(
             "SELECT state, COUNT(*) FROM specifications GROUP BY state ORDER BY state")}

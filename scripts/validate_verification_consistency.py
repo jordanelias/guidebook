@@ -133,6 +133,14 @@ def selftest() -> int:
     return 0 if ok else 1
 
 
+def _determinations_read(con) -> str:
+    """`determinations read: <live> live, <retired> retired` over the rows this check reads: the stated and provisional
+    ones (T-004). Its own SQL, not a library's: a gate computes what it reports for itself."""
+    live, retired = con.execute("SELECT COALESCE(SUM(retired_at IS NULL), 0), COALESCE(SUM(retired_at IS NOT NULL), 0) "
+                                "FROM specifications WHERE state IN ('stated','provisional')").fetchone()
+    return f"determinations read: {live} live, {retired} retired"
+
+
 def main() -> int:
     if "--selftest" in sys.argv:
         return selftest()
@@ -143,11 +151,11 @@ def main() -> int:
         for e in errors:
             print(f"  {e}")
         print(f"\nFAIL: {n} specifications checked, {len(errors)} violations")
-        print(dbcore.determinations_read(con))
+        print(_determinations_read(con))
         print(f"EXAMINED: {n}")
         return 1
     print(f"OK verification-consistency: {n} stated/provisional specification(s) consistent ({DB})")
-    print(dbcore.determinations_read(con))
+    print(_determinations_read(con))
     print(f"EXAMINED: {n}")
     return 0
 
