@@ -561,6 +561,9 @@ _BIBLIO_FIELDS = (
     # payload (print and electronic); the first is compared, so a stored second value reads as a mismatch
     # to be looked at, never as a silent pass.
     ("isbn",           lambda m: next((v for v in (m.get("ISBN") or []) if v), None)),
+    # ADDED 2026-11-15 (T-027 critic): Crossref's `original-title` is the work's title in its own language; ten logged
+    # payloads carry one. The first is compared, as for isbn.
+    ("original_title", lambda m: next((v for v in (m.get("original-title") or []) if v), None)),
     ("issn",           lambda m: next((v for v in (m.get("ISSN") or []) if v), None)),
     ("edition",        lambda m: m.get("edition-number")),
 )

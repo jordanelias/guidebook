@@ -1151,6 +1151,14 @@ _CELL_LENS_TABLES = (("identity_code", "base_taxonomy_identity", "identity_code"
                      ("needs_code", "access_needs", "need_code"), ("medical_code", "base_taxonomy_medical", "medical_code"))
 
 
+def _gap_applies(row, lens, jurisdiction, lang):
+    """A gap names the subject it is about; it is skipped for a cell only when it names a DIFFERENT code in a lens the cell
+    states, or a different jurisdiction or language than the one asked for (the rule the engine applies to a gate)."""
+    return not (any(row[c] and lens.get(c) and row[c] != lens[c] for c in ("identity_code", "icf_code", "needs_code", "medical_code"))
+                or (jurisdiction and row["jurisdiction"] and row["jurisdiction"] != jurisdiction)
+                or (lang and row["language"] and row["language"].upper() != lang))
+
+
 def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs: str = None,
                 medical: str = None, jurisdiction: str = None, language: str = None) -> dict:
     """Where one cell stands, stage by stage, read from the tables and nothing else (T-034).
@@ -1181,9 +1189,13 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
         lang = _check_language(conn, language, "cell-status") if language else None
         # ---- research: the searches logged against this parameter, and the pairs the scope owes ----------
         pj = "COALESCE(b.parent_code, se.jurisdiction)"
-        sfilter = ("se.parameter_id = ?" + (f" AND {pj} = ?" if jurisdiction else "")
+        # Searches are keyed on a SLUG (most rows have no parameter_id): a parameter's searches are those logged against
+        # it directly and those logged against any slug its figures carry.
+        slugs = ids("SELECT DISTINCT slug FROM source_value_extractions WHERE parameter_id = ? AND slug IS NOT NULL", parameter_id)
+        sfilter = (f"(se.parameter_id = ?{' OR se.slug IN (' + ','.join('?' * len(slugs)) + ')' if slugs else ''})"
+                   + (f" AND {pj} = ?" if jurisdiction else "")
                    + (" AND UPPER(se.language) = ?" if lang else ""))
-        sargs = [parameter_id] + ([jurisdiction] if jurisdiction else []) + ([lang] if lang else [])
+        sargs = [parameter_id, *slugs] + ([jurisdiction] if jurisdiction else []) + ([lang] if lang else [])
         base = ("SELECT se.exec_id FROM search_executions se LEFT JOIN base_jurisdictions b "
                 "ON b.jurisdiction_code = se.jurisdiction WHERE " + sfilter)
         searched = {(r[0], r[1]) for r in conn.execute(
@@ -1215,6 +1227,13 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
                                % ",".join("?" * len(st)), parameter_id, *st)
         evidence = {"held": scan("EXTRACTED", "STATED-ABSENT"), "examined_empty": scan("READ-NOTHING-FOUND"),
                     "never_examined": scan("NOT-READ"), "owed": {"read_in_part_only": scan("READ-PARTIAL")}}
+        if lens or jurisdiction:
+            # `held` is narrowed to the sources of the figures that survived the filter; the other three lists are per
+            # (source, parameter) in the scan ledger and are NOT narrowed by a lens or a jurisdiction.
+            _qs = ",".join("?" * len(extractions)) or "NULL"
+            _kept = set(ids(f"SELECT DISTINCT ref_id FROM source_value_extractions WHERE extraction_id IN ({_qs})", *extractions))
+            evidence["held"] = [r for r in evidence["held"] if r in _kept]
+            evidence["not_narrowed"] = ["examined_empty", "never_examined", "owed"]
         qs = ",".join("?" * len(extractions)) or "NULL"
         judgment = {"held": extractions, "examined_empty": [], "never_examined": [],
                     "owed": {"open_follow_ups": ids(f"SELECT follow_up_id FROM extraction_follow_ups WHERE resolved_at "
@@ -1223,11 +1242,17 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
         synthesis = {"held": {"conflicts": ids("SELECT conflict_id FROM conflicts WHERE parameter_id = ? ORDER BY conflict_id", parameter_id),
                               "connections": ids("SELECT DISTINCT con_id FROM connection_targets WHERE parameter_id = ? ORDER BY con_id", parameter_id)},
                      "examined_empty": [], "never_examined": [],
-                     "owed": {"open_gaps": ids("SELECT gap_id FROM gaps WHERE parameter_id = ? AND status LIKE 'OPEN%' ORDER BY gap_id", parameter_id)}}
+                     "owed": {"open_gaps": [r["gap_id"] for r in conn.execute(
+                         "SELECT gap_id, identity_code, icf_code, needs_code, medical_code, jurisdiction, language FROM gaps "
+                         "WHERE parameter_id = ? AND status LIKE 'OPEN%' ORDER BY gap_id", (parameter_id,))
+                         if _gap_applies(r, lens, jurisdiction, lang)]}}
         # ---- specification: the live determination(s) of the cell, their history, and the open gates ------
         sp = "SELECT specification_id FROM specifications WHERE parameter_id = ?" + "".join(f" AND {c} = ?" for c in lens)
         sp_args = [parameter_id, *lens.values()]
-        gates = ids("SELECT gate_id FROM v_open_determination_gates WHERE parameter_id = ? ORDER BY gate_id", parameter_id)
+        _lensed = lambda r: not any(r[c] and lens.get(c) and r[c] != lens[c] for c in given)          # noqa: E731
+        gates = [r["gate_id"] for r in conn.execute(
+            "SELECT gate_id, identity_code, icf_code, needs_code, medical_code FROM v_open_determination_gates "
+            "WHERE parameter_id = ? ORDER BY gate_id", (parameter_id,)) if _lensed(r)]
         specification = {"held": [{"specification_id": r[0], "state": r[1]} for r in conn.execute(
                              sp.replace("SELECT specification_id", "SELECT specification_id, state")
                              + " AND retired_at IS NULL ORDER BY specification_id", sp_args)],
@@ -6461,6 +6486,16 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
             if replacement not in _cv:
                 raise Refusal(f"{ref_id}: code_currency_status {replacement!r} is not in the enum "
                               f"governance/tier-system.md ratifies: {_cv}. Pass one of them. Nothing was written.")
+        if field in ("code_currency_status", "code_currency_notes"):
+            # Currency is a T4-T6 fact (governance/tier-system.md section 4: the cited edition must be the one in force) and
+            # a tombstone is never read again.
+            _cur = conn.execute("SELECT tier, superseded_by_ref_id FROM evidence_sources WHERE ref_id=?", (ref_id,)).fetchone()
+            if _cur["superseded_by_ref_id"]:
+                raise Refusal(f"{ref_id}: is superseded by {_cur['superseded_by_ref_id']}; a tombstone carries no currency. "
+                              f"State it on the replacement. Nothing was written.")
+            if _cur["tier"] is None or int(_cur["tier"]) < 4:
+                raise Refusal(f"{ref_id}: is tier {_cur['tier']}; code currency is stated for T4-T6 sources (a code, a standard, "
+                              f"a regulation: is the cited edition the one in force). Nothing was written.")
         if field == "verification_status":
             # The live vocabulary, read from the column rather than retyped beside it
             # (rule 8). This column carries no CHECK, so check_vocab falls back to the
@@ -6593,7 +6628,10 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
             f"UPDATE evidence_sources SET {', '.join(_sets)}, "
             f"metadata_integrity_status=?, metadata_integrity_detail=?, "
             f"updated_at=?, updated_by_session=? WHERE ref_id=?",
-            _vals + ["CORRECTED", ledger.lstrip(" |"),
+            _vals + [("CORRECTED" if field not in ("code_currency_status", "code_currency_notes")
+                      else conn.execute("SELECT metadata_integrity_status FROM evidence_sources WHERE ref_id=?",
+                                        (ref_id,)).fetchone()[0]),     # a currency statement is not a metadata correction
+                     ledger.lstrip(" |"),
                      stamp["created_at"], stamp["created_by_session"], ref_id])
         out = {"ref_id": ref_id, "field": field, "changed": True,
                "was_chars": len(was or ""), "now_chars": len(replacement)}
@@ -7280,6 +7318,7 @@ def insert_medical(code: str, display_name: str, icd11: str, session: str,
         # message, which is still the difference between a user fixing a typo and a user
         # filing a bug.
         if identity:
+            dbcore.check_identity_live(conn, identity, "add-medical --identity")
             if not conn.execute("SELECT 1 FROM base_taxonomy_identity WHERE identity_code = ?",
                                 (identity,)).fetchone():
                 near = [r[0] for r in conn.execute(
@@ -8899,6 +8938,21 @@ def amend_identity(code: str, display_name: str, description: str, category: str
             "reason": reason, "approval_ref": heading, "dry_run": dry_run}
 
 
+#: Tables whose identity codes are RECORDS of what was logged or graded, not live subjects a retirement must move.
+_IDENTITY_RECORD_TABLES = ("search_executions", "evidence_population_match")
+
+
+def _identity_records(conn, code):
+    """How many records name `code` and stay as history across a retirement: (table.column, n)."""
+    out = []
+    for t, col in (("search_executions", "identity_code"), ("evidence_population_match", "target_population")):
+        if col in set(dbcore.columns(conn, t)):
+            n = conn.execute(f'SELECT COUNT(*) FROM "{t}" WHERE "{col}" = ?', (code,)).fetchone()[0]
+            if n:
+                out.append((f"{t}.{col}", n))
+    return out
+
+
 def _identity_carriers(conn, code):
     """Every live row that still carries identity `code`: (table.column, n). DERIVED from the foreign keys into
     base_taxonomy_identity (never listed), plus the one identity-bearing column that declares no foreign key,
@@ -8906,9 +8960,11 @@ def _identity_carriers(conn, code):
     a code's own successor pointers and a retired child's parent_code are not carriers."""
     out = []
     tables = [r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")]
+    # RECORDS are not carriers: a logged search and a graded population match say what happened and were true when
+    # written, and no verb re-tags either, so counting them would make a retirement impossible (the 2026-11-15
+    # critic showed SCI could not be retired). They are counted apart by `_identity_records`.
     pairs = [(t, f[3]) for t in tables for f in conn.execute(f'PRAGMA foreign_key_list("{t}")')
-             if f[2] == "base_taxonomy_identity" and not (t == "base_taxonomy_identity" and f[3] == "superseded_by_identity")]
-    pairs.append(("evidence_population_match", "target_population"))
+             if f[2] == "base_taxonomy_identity" and t not in _IDENTITY_RECORD_TABLES]
     for t, col in pairs:
         cols = set(dbcore.columns(conn, t))
         if col not in cols:
@@ -8916,8 +8972,14 @@ def _identity_carriers(conn, code):
         where = f'"{col}" = ?'
         if "retired_at" in cols:
             where += " AND retired_at IS NULL"
-        if t == "base_taxonomy_identity":
+        if "resolved_at" in cols:                      # a resolved gate is history
+            where += " AND resolved_at IS NULL"
+        if t == "gaps":                                # a closed gap is history
+            where += " AND status LIKE 'OPEN%'"
+        if t == "base_taxonomy_identity" and col == "parent_code":
             where += " AND status = 'active'"
+        if t == "base_taxonomy_identity" and col == "superseded_by_identity":
+            where += " AND status = 'deprecated'"      # a code another deprecated code names as its successor
         n = conn.execute(f'SELECT COUNT(*) FROM "{t}" WHERE {where}', (code,)).fetchone()[0]
         if n:
             out.append((f"{t}.{col}", n))
@@ -8931,7 +8993,8 @@ def retire_identity(code: str, need: str, to_identity: str, approval_ref: str, r
     Sets status 'deprecated' and ONE successor column; deletes nothing and renames nothing (the 2026-09-16 ruling).
     Refused while any live row still carries the code, naming each carrier and the count: those rows are re-tagged
     first (T-114), and `evidence_population_match.target_population`, which declares no foreign key, is re-graded by
-    judgment, never fanned out."""
+    judgment, never fanned out. A logged search and a graded population match are RECORDS, kept as history (listed in the
+    result, never blocking), and a code another deprecated code names as its successor cannot be retired."""
     if bool(need) == bool(to_identity):
         raise Refusal("retire-identity: give exactly one of --need (an access-need code) and --to-identity (an "
                       "identity code). Nothing was written.")
@@ -8955,21 +9018,27 @@ def retire_identity(code: str, need: str, to_identity: str, approval_ref: str, r
                 raise Refusal(f"retire-identity: --to-identity {to_identity!r} is "
                               f"{'not held' if tgt is None else tgt['status']}; a code retires only to a live one. "
                               f"Nothing was written.")
+        if not dbcore.ledger_entry_names(heading, code):
+            raise Refusal(f"retire-identity: the ledger entry {heading!r} does not name {code!r}. Record the owner's "
+                          f"words retiring this code in a dated entry that names it, then give that entry's heading. "
+                          f"Nothing was written.")
         carriers = _identity_carriers(conn, code)
         if carriers:
             raise Refusal(
                 f"retire-identity: {code!r} is still carried by live rows: "
                 + ", ".join(f"{c} ({n})" for c, n in carriers)
                 + ". Re-tag them first (T-114's re-tag moves a figure's lens; a crossing row moves with "
-                  "`db.py add-population-icf-link` then `db.py retire-population-icf-link`); "
-                  "evidence_population_match.target_population is re-graded by judgment, one source at a time, "
-                  "never fanned out. Nothing was written.")
+                  "`db.py add-population-icf-link` then `db.py retire-population-icf-link`; a code that is "
+                  "another deprecated code's successor stays live). Logged searches and population matches "
+                  "that name the code are history and do not block. Nothing was written.")
         sets = {"status": "deprecated", "superseded_by_need": need or None, "superseded_by_identity": to_identity or None,
                 "updated_at": dbcore.now()}
         conn.execute("UPDATE base_taxonomy_identity SET " + ", ".join(f"{c}=?" for c in sets) + " WHERE identity_code=?",
                      [*sets.values(), code])
+        records = _identity_records(conn, code)
     return {"identity_code": code, "status": "deprecated", "superseded_by_need": need or None,
-            "superseded_by_identity": to_identity or None, "approval_ref": heading, "reason": reason, "dry_run": dry_run}
+            "superseded_by_identity": to_identity or None, "approval_ref": heading, "reason": reason,
+            "records_kept_as_history": [{"where": w, "rows": n} for w, n in records], "dry_run": dry_run}
 
 
 def retire_population_icf_link(link_id: int, reason: str, session: str, dry_run: bool = False):
@@ -9164,8 +9233,12 @@ def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str
             "WHERE identity_code=? AND icf_code=? AND mechanism=?",
             [population, icf_code, mechanism]).fetchone()
         if clash:
+            _ret = conn.execute("SELECT retired_at, retired_reason FROM identity_icf_map WHERE link_id=?",
+                                [clash["link_id"]]).fetchone()
             raise Refusal(
-                f"link {clash['link_id']} already maps {population} -> {icf_code} by "
+                (f"link {clash['link_id']} was RETIRED {_ret['retired_at']} ({_ret['retired_reason']!r}) and is never "
+                 f"un-retired; " if _ret and _ret["retired_at"] else "")
+                + f"link {clash['link_id']} already maps {population} -> {icf_code} by "
                 f"this mechanism (provenance {clash['provenance']!r}). One row per "
                 f"(population, code, mechanism) -- a second is the dual home rule 5 "
                 f"forbids. A DIFFERENT mechanism is a different row and is allowed.")
@@ -10959,6 +11032,15 @@ def register_root(root_id: str, description: str, root_type: str, provenance: st
                       "this root comes from and how that is known. Nothing was written.")
     with connect(dry_run) as conn:
         dbcore.check_declared(conn, "external_root_registry", "root_type", root_type, "register-root --root-type")
+        if dbcore.exists(conn, "evidence_sources", "ref_id", root_id):
+            raise Refusal(f"register-root: {root_id!r} is an admitted source of this corpus; a root held here is "
+                          f"--root-ref-id, never an external root. Nothing was written.")
+        _same = conn.execute("SELECT root_id FROM external_root_registry WHERE LOWER(root_id) = LOWER(?) "
+                             "OR LOWER(TRIM(description)) = LOWER(TRIM(?))", (root_id, description)).fetchone()
+        if _same and _same[0] != root_id:
+            raise Refusal(f"register-root: {root_id!r} (or its description) is the registered root {_same[0]!r} under "
+                          f"another spelling; one root is one row, and counting it twice raises the independent-root "
+                          f"count. Point figures at {_same[0]!r}. Nothing was written.")
         if dbcore.exists(conn, "external_root_registry", "root_id", root_id):
             raise Refusal(f"register-root: {root_id!r} is already registered. Point a figure at it with "
                           f"`db.py add-extraction --root-id` or `db.py amend-extraction --field root_id`. "

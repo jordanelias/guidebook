@@ -673,6 +673,7 @@ writers:
     - base_taxonomy_medical
     - connection_targets
     - determination_gates
+    - evidence_population_match
     - evidence_source_authors
     - evidence_sources
     - lang_jur_map
