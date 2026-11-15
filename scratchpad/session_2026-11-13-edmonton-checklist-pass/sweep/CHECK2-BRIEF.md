@@ -1,0 +1,3 @@
+# Blind second reader (resweep)
+
+Read `BRIEF-2.md` in this folder in full and follow it exactly: the rulings, the tests C1–C7, the not-a-conflict list, the record format and the method rules. You are given `check2-in-N.jsonl`: hits (file, line, text) with **no labels**; another reader has already classified them and you must not see their labels (do not open `rout-*`, `rpart-*`, `rall.json`, `out-*`, `check-*` or `CONFLICTS.md`; a repository file named CONFLICTS.md elsewhere may be read if a hit is in it). Classify each from its paragraph, section and file and write `check2-out-N.jsonl` in this folder: one record per input line, same order, the BRIEF-2 record format. Report under 100 words: both counts and the number you flagged CONFLICT.

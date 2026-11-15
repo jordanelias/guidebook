@@ -1,0 +1,2335 @@
+[
+{
+"file": "workplan/pipeline-state-graph/AMBIGUITIES.tsv",
+"line": 155,
+"text": "EVI-035\tACTIVE\tgovernance/tier-system.md:45\tLabelling converged code value best practice\tRead absolutely this conflicts with Option A (section 8), which permits",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "MIXED",
+"reason": "records a doctrine split: one side bars best-practice language on T4-T6/converged values, the other (Option A) calls the code-floor/consensus value weak-band best practice; the split is unresolved"
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Ambiguity entry treats Option A as permitting a converged code value to be labelled weak-band best practice; best must be the most accommodating value, not the converged one."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/AMBIGUITIES.tsv",
+"line": 169,
+"text": "EVI-094\tACTIVE\tgovernance/evidence-architecture.md:44\tRegulatory value as best practice when no anchoring evidence\tUnclear whether T4-T6 still anchor (weakly) w",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "subject 'Regulatory value as best practice when no anchoring evidence': the code-floor value is named best practice; owner keeps best, most common and floor apart"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "'Regulatory value as best practice when no anchoring evidence': code value named best practice"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/AMBIGUITIES.tsv",
+"line": 188,
+"text": "EVI-280\tACTIVE\tgovernance/evidence-methodology.md:41\tTier 6 encoding\t\"reference baseline only\" predates Option A, under which T6 anchors a weak-band best-practi",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "says under Option A a T6 statutory code (the floor, 'reference baseline') anchors a weak-band best-practice claim; floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Ambiguity note: T6 anchors a weak-band best-practice claim; code value carried as best practice"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/AMBIGUITIES.tsv",
+"line": 196,
+"text": "EVI-338\tACTIVE\tgovernance/evidence-methodology.md:150\tThin T6 cell\ttier-system.md section 8 says every tier can anchor a best-practice claim, including T6 (weak",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "says T6 (statutory code floor) can anchor a weak-band best-practice claim; owner separates floor from best"
+},
+{
+"src": "sweep1-second",
+"flag": "none",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/AMBIGUITIES.tsv",
+"line": 204,
+"text": "EVI-428\tACTIVE\tgovernance/evidence-methodology.md:406\tJurisdictional challenge response\tOption A permits flagged weak-band best practice derived from code conse",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "states Option A permits weak-band best practice derived from code consensus; owner: convergence/consensus is most common practice, not best"
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "'flagged weak-band best practice derived from code consensus': consensus used to derive best practice"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Characterises Option A as permitting \"weak-band best practice derived from code consensus\": best derived by agreement among codes, not as most accommodating value."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Ambiguity register: Option A permits weak-band best practice 'derived from code consensus'; best practice derived from agreement rather than most accommodating code value"
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 73,
+"text": "PIP-02\tACTIVE\tMUST_NOT\tRATIFIED_DOC\t\tgovernance/pipeline-contract.yaml:224\tspecification\tregulatory stratum stated\tA cell flagged code_floor_only or regulatory_",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "a code_floor_only/regulatory_stratum_only cell 'renders as weak-band best practice'; the rule restricts the marker but still calls the floor value best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "code_floor_only / regulatory_stratum_only cell 'renders as weak-band best practice': the floor-named cell takes best-practice wording"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 703,
+"text": "ENT-349\tACTIVE\tMUST_NOT\tRATIFIED_DOC\t2026-04-29\tgovernance/jurisdiction-philosophy.md:74\tsynthesis\tcode value as best practice\tA code value establishes only the",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep1-second",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Atom ENT-349 (ACTIVE): a code value establishes only the legal minimum and must not be treated as establishing best practice; ruling 4 lets code determine best in code-only cells."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Atom ENT-349 (ACTIVE): a code value establishes only the legal minimum and must not be treated as establishing best practice - against R4 (code-only cells: code determines the ideal)."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 705,
+"text": "ENT-351\tAMENDED\tMUST\tRATIFIED_DOC\t2026-07-21\tgovernance/jurisdiction-philosophy.md:76\tsynthesis,specification\tcode-consensus-only best practice\tA best_practice_",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "a best_practice_synthesis 'derived solely from code consensus' is a weak-band 'best practice as currently known' claim; owner: consensus = most common, not best"
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "A best_practice_synthesis derived solely from code consensus is a weak-band 'best practice as currently known' claim; best practice from consensus."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Atom ENT-351: a best_practice_synthesis \"derived solely from code consensus\" is weak-band best practice: best derived by counting code agreement, not most accommodating value."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Atom ENT-351: best_practice_synthesis derived solely from code consensus is a weak-band claim. Marker part fine; deriving best from code consensus invites C1."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 904,
+"text": "EVI-017\tACTIVE\tDEFINES\tRATIFIED_DOC\t\tgovernance/tier-system.md:19\tevidence,judgment\tT3 anchoring scope\tT3 is supporting evidence for best-practice claims and is",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Atom EVI-017: T3 is supporting evidence and rarely the sole basis for best-practice claims: invites eligibility-by-tier reading against ruling 4."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 907,
+"text": "EVI-020\tACTIVE\tDEFINES\tRATIFIED_DOC\t\tgovernance/tier-system.md:20\tevidence,judgment\tT4 anchoring scope\tT4 supports code-baseline citations, and supports best-pr",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "makes a T4/T5 source's own assertion insufficient to support a best-practice claim unless resting on T1/T2; owner (c): assertion suffices for eligibility, tier sets marker/weight (T5 is beyond-code, n"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Atom EVI-020: T4 supports best-practice claims only if the standard rests on T1/T2 evidence: eligibility by tier, against ruling 4."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Active atom: T4 supports best-practice claims only if the standard itself rests on T1/T2 evidence; eligibility by tier"
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 910,
+"text": "EVI-023\tACTIVE\tDEFINES\tRATIFIED_DOC\t\tgovernance/tier-system.md:21\tevidence,judgment\tT5 anchoring scope\tT5 supports code-baseline citations, and supports best-pr",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "makes a T4/T5 source's own assertion insufficient to support a best-practice claim unless resting on T1/T2; owner (c): assertion suffices for eligibility, tier sets marker/weight (T5 is beyond-code, n"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Atom EVI-023: T5 supports best-practice claims only if the framework rests on T1/T2 evidence: eligibility by tier, against ruling 4."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Atom EVI-023 (ACTIVE): T5 supports best-practice claims only if the framework rests on T1/T2 - eligibility by tier."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 913,
+"text": "EVI-026\tACTIVE\tDEFINES\tOWNER_RELAYED\t2026-07-21\tgovernance/tier-system.md:22\tevidence,judgment\tT6 anchoring scope (Option A)\tT6 anchors a weak-band (circle) \"be",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "T6 (statutory code floor) anchors a weak-band 'best practice as currently known' claim flagged code-derived; floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "T6 anchors weak-band 'best practice as currently known', flagged code-derived: code value carried as best practice"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 924,
+"text": "EVI-037\tSUPERSEDED\tMUST\tRATIFIED_DOC\t2026-05-25\tgovernance/tier-system.md:49\tevidence,synthesis\tBinary anchoring rule\tBest-practice claims require T1, Co-1, T2 ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "(superseded) best-practice claims require T1/Co-1/T2/Co-2 evidence; makes tier, not the identified value, decide eligibility; owner (c): assertion suffices, tier sets marker"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": "Atom EVI-037 is marked SUPERSEDED by the file itself; recorded as history, not a live claim."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 941,
+"text": "EVI-058\tACTIVE\tMUST\tOWNER_RELAYED\t2026-07-21\tgovernance/tier-system.md:96\tsynthesis,specification,render\tOption A: T4-T6-only determination\tA determination whos",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "Option A: labels a T4-T6/regulatory-stratum (code floor) value 'best practice as currently known'; owner: best, most common and floor are three quantities - floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Option A: code-only (T4-T6) value named weak-band best practice; not tied to the most accommodating identified value, invites reading the code/convergent figure as best"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 943,
+"text": "EVI-060\tACTIVE\tMUST\tOWNER_RELAYED\t2026-07-21\tgovernance/tier-system.md:96\tsynthesis,specification,render\tOption A: no suppression\tWhen no stronger evidence exis",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "T4-T6-only claim stated as weak-band best practice, 'not merely labelled regulatory floor': explicitly names the floor best practice; owner keeps floor and best apart"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "T4-T6-only claim 'stated-and-flagged as weak-band best practice, not ... merely labelled regulatory floor': the floor stratum's value named best practice."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 977,
+"text": "EVI-094\tACTIVE\tMUST\tOWNER_RELAYED\t2026-07-21\tgovernance/evidence-architecture.md:44\tsynthesis,render\tRegulatory value as best practice when no anchoring evidenc",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "where no anchoring evidence, 'the regulatory value is stated as best practice as currently known'; the code floor named best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "'The regulatory value is stated as best practice as currently known' (EA:44): a regulatory value, not the most accommodating identified, invites floor reading."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 978,
+"text": "EVI-095\tACTIVE\tMUST\tOWNER_RELAYED\t2026-07-21\tgovernance/evidence-architecture.md:44\tsynthesis,render\tFlag on regulatory-stratum anchoring\tRegulatory-stratum bes",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "MIXED",
+"reason": "'regulatory-stratum best-practice anchoring' flagged code-derived with convergence-not-evidence caveat: marker rule, but presupposes the code value is best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Option A: code-only (T4-T6) value named weak-band best practice; not tied to the most accommodating identified value, invites reading the code/convergent figure as best"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1014,
+"text": "EVI-131\tACTIVE\tEQUATES\tRATIFIED_DOC\t\tgovernance/evidence-architecture.md:77\tjudgment,synthesis\tMatrix: T4-T5 standards/frameworks x Population Mode\tT4-T5 standa",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "T4-T5 standards: non-anchoring (convergence-not-evidence) yet 'renders as weak-band best practice' when no anchoring evidence; code value called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Regulatory-stratum value named weak-band best practice; §5 selects the most accommodating code value (consistent), but code-derived/convergence-caveat wording invites the common/floor reading"
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Atom EVI-131: T4-T5 render as best practice \"only when no anchoring evidence exists\": a more accommodating code value would be ineligible where research exists (ruling 1: best of all values)."
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1017,
+"text": "EVI-134\tACTIVE\tEQUATES\tRATIFIED_DOC\t\tgovernance/evidence-architecture.md:78\tjudgment,synthesis\tMatrix: T6 statutory code x Population Mode\tT6 statutory code: At",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "T6 statutory code 'renders as weak-band best practice' when no anchoring evidence; floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Option A: code-only (T4-T6) value named weak-band best practice; not tied to the most accommodating identified value, invites reading the code/convergent figure as best"
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Atom EVI-134: T6 renders as best practice \"only when no anchoring evidence exists\": excludes a more accommodating code value by tier where research exists."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1022,
+"text": "EVI-139\tACTIVE\tMUST\tOWNER_RELAYED\t2026-07-21\tgovernance/evidence-architecture.md:82\tspecification,render\tRender-anchoring at weak strength\tA determination whose",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "regulatory-stratum-only basis renders as a 'code-derived best-practice determination'; floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "COMMON",
+"reason": "Atom: T4-6-only determination renders as code-derived best practice with convergence caveat; source §5 picks most accommodating code value, but wording invites common/floor reading"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1060,
+"text": "EVI-178\tACTIVE\tDEFINES\tOWNER_RELAYED\t2026-07-21\tgovernance/evidence-architecture.md:118\tspecification,render\tBest-practice phrase after Option A\tThe phrase \"bes",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "'best practice' phrase extended to the weak band (code-derived determinations); owner: floor is a different quantity from best"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "'best practice' phrase extended to non-anchored (code-only) determinations via the weak band"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1062,
+"text": "EVI-180\tACTIVE\tMUST\tOWNER_RELAYED\t2026-07-21\tgovernance/evidence-architecture.md:119\tspecification,render\tRegulatory determination is weak-band best practice\tA ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "a regulatory_stratum_only determination 'is a best-practice determination at the weak band'; floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "T4-T6-only determination called (weak-band) best practice; not via consensus here, but 'best practice as currently known' from the regulatory stratum invites the floor/common-figure reading (owner add"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1064,
+"text": "EVI-182\tAMENDED\tMUST\tRATIFIED_DOC\t2026-07-21\tgovernance/evidence-architecture.md:119\tspecification,render\tv_best_practice weak-band row\tv_best_practice includes",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "LABEL",
+"reason": "v_best_practice (the best-practice view) carries regulatory_stratum_only (code-floor) rows as weak-band best practice; floor folded into best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "none",
+"tests": [],
+"sense": "LABEL",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1076,
+"text": "EVI-194\tACTIVE\tMUST\tOWNER_RELAYED\t2026-07-21\tgovernance/evidence-architecture.md:123\trender\tFlag binds every rendering\tThe flag-and-caveat requirement binds eve",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": ""
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Presumes best-practice-phrased renderings of regulatory-stratum values"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1106,
+"text": "EVI-224\tACTIVE\tMUST\tRATIFIED_DOC\t2026-07-21\tgovernance/evidence-architecture.md:175\trender\tRegister map row: provisional regulatory_stratum_only\tFor (provisiona",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "register template for regulatory_stratum_only reads 'Best practice as currently known: X [weak, code-derived]'; floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Register row: '(provisional, regulatory_stratum_only)' renders 'Best practice as currently known: X [weak, code-derived]'; code-derived value named best practice."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1184,
+"text": "EVI-307\tAMENDED\tMUST\tOWNER_RELAYED\t2026-07-21\tgovernance/evidence-methodology.md:96\tjudgment,specification,render\tT4-T6 at Population scale\tAt Population scale ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "T4-6 at Population scale rendered as flagged 'best practice as currently known'; code/floor value called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Option A: code-only (T4-T6) value named weak-band best practice; not tied to the most accommodating identified value, invites reading the code/convergent figure as best"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1209,
+"text": "EVI-332\tACTIVE\tMUST\tOWNER_RELAYED\t2026-07-21\tgovernance/evidence-methodology.md:144\tspecification,render\tT4-6-only determination rendering\tA T4-6-only determina",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "T4-6-only determination 'is a weak-band best-practice determination' (flagged code-derived); floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Option A: code-only (T4-T6) value named weak-band best practice; not tied to the most accommodating identified value, invites reading the code/convergent figure as best"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1210,
+"text": "EVI-333\tAMENDED\tMUST\tRATIFIED_DOC\t2026-07-21\tgovernance/evidence-methodology.md:144\tspecification,render\tv_best_practice weak-band row\tA T4-6-only determination",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "LABEL",
+"reason": "v_best_practice (the best-practice view) carries regulatory_stratum_only (code-floor) rows as weak-band best practice; floor folded into best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "none",
+"tests": [],
+"sense": "LABEL",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1260,
+"text": "EVI-394\tACTIVE\tMAY\tRATIFIED_DOC\t2026-07-21\tgovernance/evidence-methodology.md:287\trender\tVoice for single_axis Tier 4-6\tA single_axis (Tier 4-6 only) cell is re",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "voice line '[N] jurisdictions' standards converge on [value] ... best practice as currently known': convergence named best practice (the brief's own example)"
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Atom: '[N] jurisdictions' standards converge on [value] ... best practice as currently known': convergent value named best practice"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Atom EVI-394: single_axis T4-6 cell rendered \"[N] jurisdictions' standards converge on [value] ... best practice as currently known\": names the convergent figure best practice."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Active atom: Tier 4-6-only cell rendered '[N] jurisdictions' standards converge on [value] ... best practice as currently known'; best practice from convergence"
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1294,
+"text": "EVI-428\tACTIVE\tMUST\tRATIFIED_DOC\t\tgovernance/evidence-methodology.md:406\trender\tJurisdictional challenge response\tIn a jurisdictional challenge response, note t",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Atom EVI-428: \"best practice is determined by the evidence hierarchy, not by code consensus\": anti-consensus is consistent, but hierarchy framing invites code-ineligibility reading."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1314,
+"text": "LED-009\tACTIVE\tMUST_NOT\tRATIFIED_DOC\t2026-03-19\treferences/project-standards.md:17\tjudgment,synthesis,specification\ttiers 4-6 anchoring\tTier 4-6 (regulatory str",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Atom LED-009 (ACTIVE): Tier 4-6 sources must not anchor best practice: code-only cells barred from a best value, against ruling 4."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Active atom LED-009: Tier 4-6 (regulatory stratum) sources must not anchor best practice; code basis ineligible"
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1318,
+"text": "LED-013\tACTIVE\tMUST_NOT\tRATIFIED_DOC\t2026-07-21\treferences/project-standards.md:20\tspecification,render\tcode-derived best practice rendering\tA code-consensus-on",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "MIXED",
+"reason": "a 'code-consensus-only best-practice claim' must never render unflagged/above weak band: a marker rule, but it admits consensus as a best-practice claim; owner: consensus = most common"
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Presupposes a valid 'code-consensus-only best-practice claim' at the weak band (amended project-standards L20); best practice from consensus."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Atom LED-013: \"code-consensus-only best-practice claim\" kept to weak band: marker rule is fine, but naming its basis \"code consensus\" invites deriving best by agreement."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1319,
+"text": "LED-014\tACTIVE\tMUST_NOT\tRATIFIED_DOC\t2026-07-21\treferences/project-standards.md:20\tspecification,render\tcode-consensus claim strength\tAn unflagged or full-stren",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "MIXED",
+"reason": "only an unflagged/full-strength code-consensus best-practice claim is an error: implies a flagged weak one is valid; owner: consensus = most common, not best"
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Atom implies a flagged weak code-consensus best-practice claim is valid: consensus figure carried as best practice"
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Atom LED-014: \"code-consensus best-practice claim\" unflagged is an error: marker rule fine, wording invites best-by-code-agreement reading."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1323,
+"text": "LED-018\tACTIVE\tMUST_NOT\tRATIFIED_DOC\t2026-07-13\treferences/project-standards.md:26\trender\tT4-6-only rendering\tA basis consisting only of T4-T6 never renders bes",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Atom LED-018 (ACTIVE): a T4-T6-only basis never renders best-practice language in any register: against ruling 4 (code-only best with empty circle)."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "LED-018 (ACTIVE, ATOMS.tsv): T4-T6-only basis never renders best-practice language in any register: eligibility by tier."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/ATOMS.tsv",
+"line": 1987,
+"text": "PRC-016\tACTIVE\tMUST_NOT\tRATIFIED_DOC\t2026-04-07\treferences/project-standards.md:351\tspecification\tAmbient above 24 C\tAmbient temperature above 24 C is not accep",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Atom PRC-016 (MUST_NOT): ambient above 24 C \"is not acceptable\" for thermoregulation-impaired occupants: project-authority verdict using acceptable as value judgment."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Atom: ambient above 24 C 'not acceptable' (MUST_NOT, specification); a project verdict/value judgment, though the quote ties it to the WHO threshold."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/CONFLICTS.md",
+"line": 12,
+"text": "| C-005 | S1 | RULING-RULING | OWNER | -- | A T4-T6-only basis: never best-practice language, or weak-band best practice 'as currently known' |",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "MIXED",
+"reason": "records a doctrine split: one side bars best-practice language on T4-T6/converged values, the other (Option A) calls the code-floor/consensus value weak-band best practice; the split is unresolved"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": "Not opened (brief bars CONFLICTS.md files; classifier enforced it). Text is identical to conflicts.yaml, which I read. Title of a ruling-vs-ruling conflict record; names both sides, asserts neither."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/CONFLICTS.md",
+"line": 68,
+"text": "- DR-2026-07-20 weighted-strength anchor model (owner directive 2026-07-20: 'all evidence tiers can be used to anchor a best practice claim ... T3-grey/T6 weak'",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "MIXED",
+"reason": "owner directive 'all tiers can anchor a best practice claim' glossed as the weak band anchoring 'only a floor/convergence claim': floor and most common folded into best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Weak band (T3-grey/T6) 'anchors only a floor/convergence claim' under 'all tiers can anchor a best practice claim': weak-band best practice equated with the floor/convergence figure."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C1",
+"C2"
+],
+"sense": null,
+"reason": "Not opened (brief bars CONFLICTS.md); same text as conflicts.yaml:34. Reported side: weak band 'anchors only a floor/convergence claim', equating it with floor/convergence."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/CONFLICTS.md",
+"line": 75,
+"text": "## C-005 [S1] A T4-T6-only basis: never best-practice language, or weak-band best practice 'as currently known'",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "MIXED",
+"reason": "records a doctrine split: one side bars best-practice language on T4-T6/converged values, the other (Option A) calls the code-floor/consensus value weak-band best practice; the split is unresolved"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": "Not opened (brief bars CONFLICTS.md files; classifier enforced it). Text is identical to conflicts.yaml, which I read. Heading of conflict record C-005; neutral title."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/RULINGS.md",
+"line": 143,
+"text": "PREMISES: LED-018 (2026-07-13); LED-013/014, EVI-058/094 (Option A, owner directive 2026-07-21); EVI-241 (anchored cells: floor value never \"best practice\"); EV",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "ruling R10: 'Option A governs' - code-consensus/regulatory value may be weak-band best practice; EVI-034/035 limited to anchored cells; floor/most common called best"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "FLOOR",
+"reason": "'floor value never best practice' only for anchored cells; Option A premises let code-only values be best practice"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": "R10 premise cites EVI-241 'floor value never best practice' for anchored cells; keeps floor apart from best, consistent."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/STATE-GRAPH.md",
+"line": 169,
+"text": "| M05.t2 | (none) | provisional | assess_cell.determine | T3-clinical is the only anchoring axis (tier3-stated-threshold DR, 2026-07-12); or: a derivation-hands",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6",
+"C2"
+],
+"sense": null,
+"reason": "Generated state-graph guard: a regulatory-stratum-only basis is 'a floor claim, never best practice'; ruling 4 says code-only values determine the best, marked by provenance."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "State graph of live engine: a regulatory-stratum-only basis is 'a floor claim, never best practice'; code-only cell barred from best practice, against ruling 4"
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-contracts.jsonl",
+"line": 20,
+"text": "{\"id\": \"PIP-02\", \"quote\": \"A cell flagged code_floor_only or regulatory_stratum_only is never `stated`\", \"modality\": \"MUST_NOT\", \"subject\": \"regulatory stratum ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "a code_floor_only/regulatory_stratum_only cell 'renders as weak-band best practice'; the rule restricts the marker but still calls the floor value best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Calls a value best practice while the same passage says it is the code floor (T6 'is the floor' / code_floor_only / labelled code-floor); best practice used for the floor (owner add. 2). (PIP-02: code"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": "PIP-02: code-only cell never stated, renders as weak-band best practice; best practice allowed, only state/marker weaker."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-contracts.jsonl",
+"line": 40,
+"text": "{\"id\": \"MIS-04\", \"quote\": \"| `stated` | normal | Best practice derived from evidence meeting `governance/evidence-methodology.md` §2.2\", \"modality\": \"DEFINES\", ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "MIS-04: 'stated' = best practice derived from evidence meeting methodology 2.2; ties best practice to an evidence threshold, inviting eligibility-by-tier reading."
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-ent.jsonl",
+"line": 306,
+"text": "{\"id\": \"ENT-349\", \"source\": \"governance/jurisdiction-philosophy.md:74\", \"quote\": \"A code value does NOT establish best practice\", \"modality\": \"MUST_NOT\", \"subje",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6",
+"C2"
+],
+"sense": null,
+"reason": "ENT-349 (ACTIVE): a code value does NOT establish best practice, only the minimum legal standard; against ruling 4 (code-only cell: code determines the ideal)."
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-ent.jsonl",
+"line": 308,
+"text": "{\"id\": \"ENT-351\", \"source\": \"governance/jurisdiction-philosophy.md:76\", \"quote\": \"A BPC best_practice_synthesis derived solely from code consensus is a weak-ban",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "a best_practice_synthesis 'derived solely from code consensus' is a weak-band 'best practice as currently known' claim; owner: consensus = most common, not best"
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "A BPC best_practice_synthesis derived solely from code consensus is a weak-band 'best practice as currently known' claim; best practice from consensus."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "ENT-351 (AMENDED): best_practice_synthesis 'derived solely from code consensus' is weak-band best practice; allowed per ruling 4 but derivation by consensus invites C1."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 17,
+"text": "{\"id\": \"EVI-017\", \"source\": \"governance/tier-system.md:19\", \"quote\": \"Supporting evidence for best-practice claims; rarely the sole basis\", \"modality\": \"DEFINES",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "EVI-017: T3 is supporting evidence for best-practice claims, 'rarely the sole basis'; soft eligibility-by-tier."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 20,
+"text": "{\"id\": \"EVI-020\", \"source\": \"governance/tier-system.md:20\", \"quote\": \"Code-baseline citations of international harmonisation; supporting evidence for best-pract",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "makes a T4/T5 source's own assertion insufficient to support a best-practice claim unless resting on T1/T2; owner (c): assertion suffices for eligibility, tier sets marker/weight (T5 is beyond-code, n"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "EVI-020 (ACTIVE): T4 supports best-practice claims only if the standard rests on T1/T2 evidence; eligibility by tier, against ruling 4."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Atom EVI-020 (ACTIVE): T4 supports best-practice claims only if the standard rests on T1/T2 - eligibility by tier."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 23,
+"text": "{\"id\": \"EVI-023\", \"source\": \"governance/tier-system.md:21\", \"quote\": \"Code-baseline citations at national best-practice tier; supporting evidence for best-pract",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "makes a T4/T5 source's own assertion insufficient to support a best-practice claim unless resting on T1/T2; owner (c): assertion suffices for eligibility, tier sets marker/weight (T5 is beyond-code, n"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "EVI-023 (ACTIVE): T5 supports best-practice claims only if the framework rests on T1/T2 evidence; eligibility by tier, against ruling 4."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "EVI-023 (ACTIVE): T5 supports best-practice claims 'only if the framework rests on T1/T2 evidence': eligibility by tier."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 26,
+"text": "{\"id\": \"EVI-026\", \"source\": \"governance/tier-system.md:22\", \"quote\": \"T6 anchors a **weak-band (○) \\\"best practice as currently known\\\"** claim, flagged code-de",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "T6 (statutory code floor) anchors a weak-band 'best practice as currently known' claim flagged code-derived; floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Option A: code-only (T4-T6) value named weak-band best practice; not tied to the most accommodating identified value, invites reading the code/convergent figure as best"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 35,
+"text": "{\"id\": \"EVI-035\", \"source\": \"governance/tier-system.md:45\", \"quote\": \"Labelling 1800mm \\\"preferred\\\" or \\\"best practice\\\" because it converges across T5/T6 juri",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "quote bars calling converged 1800mm best practice (consistent), but its ambiguity field records Option A permitting weak-band 'best practice as currently known'"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 37,
+"text": "{\"id\": \"EVI-037\", \"source\": \"governance/tier-system.md:49\", \"quote\": \"\\\"they do not — by themselves — anchor best-practice claims. Best-practice claims require ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "(superseded) best-practice claims require T1/Co-1/T2/Co-2 evidence; makes tier, not the identified value, decide eligibility; owner (c): assertion suffices, tier sets marker"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": "EVI-037 tier ban on best practice recorded as SUPERSEDED (2026-07-20); the atom does not assert it."
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": "EVI-037 states the old binary tier rule (C6 wording) but its record is marked SUPERSEDED by tier-system §8; recorded, not asserted."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 54,
+"text": "{\"id\": \"EVI-058\", \"source\": \"governance/tier-system.md:96\", \"quote\": \"a T4–T6-only determination *is* rendered as **weak-band (○) \\\"best practice as currently k",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "Option A: labels a T4-T6/regulatory-stratum (code floor) value 'best practice as currently known'; owner: best, most common and floor are three quantities - floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Option A: code-only (T4-T6) value named weak-band best practice; not tied to the most accommodating identified value, invites reading the code/convergent figure as best"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 56,
+"text": "{\"id\": \"EVI-060\", \"source\": \"governance/tier-system.md:96\", \"quote\": \"such a claim is now stated-and-flagged as weak-band best practice, not suppressed and not ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "T4-T6-only claim stated as weak-band best practice, 'not merely labelled regulatory floor': explicitly names the floor best practice; owner keeps floor and best apart"
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "T4-T6-only claim 'stated-and-flagged as weak-band best practice, not ... merely labelled regulatory floor': floor value named best practice"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 89,
+"text": "{\"id\": \"EVI-093\", \"source\": \"governance/evidence-architecture.md:44\", \"quote\": \"**they anchor best-practice claims only at weak weighted strength**\", \"modality\"",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": ""
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Option A: code-only (T4-T6) value named weak-band best practice; not tied to the most accommodating identified value, invites reading the code/convergent figure as best"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 90,
+"text": "{\"id\": \"EVI-094\", \"source\": \"governance/evidence-architecture.md:44\", \"quote\": \"the regulatory value is stated as best practice *as currently known, given that ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "where no anchoring evidence, 'the regulatory value is stated as best practice as currently known'; the code floor named best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "'the regulatory value is stated as best practice as currently known': code value named best practice, not the most accommodating identified value"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 91,
+"text": "{\"id\": \"EVI-095\", \"source\": \"governance/evidence-architecture.md:44\", \"quote\": \"always flagged weak/code-derived, never unflagged, with the convergence-not-evid",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "MIXED",
+"reason": "'regulatory-stratum best-practice anchoring' flagged code-derived with convergence-not-evidence caveat: marker rule, but presupposes the code value is best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Option A: code-only (T4-T6) value named weak-band best practice; not tied to the most accommodating identified value, invites reading the code/convergent figure as best"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 127,
+"text": "{\"id\": \"EVI-131\", \"source\": \"governance/evidence-architecture.md:77\", \"quote\": \"Grain-directness NON-ANCHORING (convergence-not-evidence) unless re-grained per ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "T4-T5 standards: non-anchoring (convergence-not-evidence) yet 'renders as weak-band best practice' when no anchoring evidence; code value called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Regulatory-stratum value named weak-band best practice; §5 selects the most accommodating code value (consistent), but code-derived/convergence-caveat wording invites the common/floor reading"
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "EVI-131: T4-T5 render weak-band best practice 'only when no anchoring evidence exists'; matches ruling 4 for code-only cells but bars code values by tier where higher tiers exist."
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 130,
+"text": "{\"id\": \"EVI-134\", \"source\": \"governance/evidence-architecture.md:78\", \"quote\": \"Grain-directness NON-ANCHORING; renders as weak-band best practice only when no ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "T6 statutory code 'renders as weak-band best practice' when no anchoring evidence; floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Option A: code-only (T4-T6) value named weak-band best practice; not tied to the most accommodating identified value, invites reading the code/convergent figure as best"
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "EVI-134: T6 renders weak-band best practice only when no anchoring evidence exists; tier-gated eligibility beyond ruling 4's code-only case."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 135,
+"text": "{\"id\": \"EVI-139\", \"source\": \"governance/evidence-architecture.md:82\", \"quote\": \"a determination whose entire basis is the regulatory stratum renders as a weak-b",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "regulatory-stratum-only basis renders as a 'code-derived best-practice determination'; floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "T4-T6-only determination called (weak-band) best practice; not via consensus here, but 'best practice as currently known' from the regulatory stratum invites the floor/common-figure reading (owner add"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 173,
+"text": "{\"id\": \"EVI-178\", \"source\": \"governance/evidence-architecture.md:118\", \"quote\": \"the phrase \\\"best practice\\\" is no longer exclusive to it: the weak band below ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "'best practice' phrase extended to the weak band (code-derived determinations); owner: floor is a different quantity from best"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Phrase 'best practice' extended to the code-only weak band; source §5 selects most accommodating code value, but extension invites code/common reading"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 175,
+"text": "{\"id\": \"EVI-180\", \"source\": \"governance/evidence-architecture.md:119\", \"quote\": \"it **is a best-practice determination at the weak band (○)**: best available *a",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "a regulatory_stratum_only determination 'is a best-practice determination at the weak band'; floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Option A: code-only (T4-T6) value named weak-band best practice; not tied to the most accommodating identified value, invites reading the code/convergent figure as best"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 177,
+"text": "{\"id\": \"EVI-182\", \"source\": \"governance/evidence-architecture.md:119\", \"quote\": \"`v_best_practice` includes it as a queryably distinct weak-band row, carrying t",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "LABEL",
+"reason": "v_best_practice (the best-practice view) carries regulatory_stratum_only (code-floor) rows as weak-band best practice; floor folded into best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "none",
+"tests": [],
+"sense": "LABEL",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 189,
+"text": "{\"id\": \"EVI-194\", \"source\": \"governance/evidence-architecture.md:123\", \"quote\": \"that flag-and-caveat requirement binds **every** rendering of the value, not on",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": ""
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Flag-and-caveat binds regulatory values 'not only best-practice-phrased ones': presumes code values are best-practice-phrased"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 219,
+"text": "{\"id\": \"EVI-224\", \"source\": \"governance/evidence-architecture.md:175\", \"quote\": \"Best practice as currently known: X [○ weak, code-derived].\", \"modality\": \"MUST",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "register template for regulatory_stratum_only reads 'Best practice as currently known: X [weak, code-derived]'; floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Register row 'Best practice as currently known: X [○ code-derived]' sits beside 'Standards converge' in the source row; selection is most accommodating per §5 but wording invites common reading"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 273,
+"text": "{\"id\": \"EVI-280\", \"source\": \"governance/evidence-methodology.md:41\", \"quote\": \"| Tier 6 | `tier: 6` | `evidence_type: code` | Statutory codes (reference baselin",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "ambiguity field: under Option A T6 (statutory code, 'reference baseline') anchors a weak-band best-practice claim; floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Ambiguity note: under Option A 'T6 anchors a weak-band best-practice claim'; statutory code (floor stratum) as best practice without most-accommodating framing."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "EVI-280: T6 statutory codes 'reference baseline only'; atom's own ambiguity note says this predates Option A, under which T6 can anchor best practice."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 297,
+"text": "{\"id\": \"EVI-307\", \"source\": \"governance/evidence-methodology.md:96\", \"quote\": \"Tier 4–6 anchor only at weak (○) weighted strength, rendered as flagged \\\"best pr",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "T4-6 at Population scale rendered as flagged 'best practice as currently known'; code/floor value called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "T4-T6-only determination called (weak-band) best practice; not via consensus here, but 'best practice as currently known' from the regulatory stratum invites the floor/common-figure reading (owner add"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 305,
+"text": "{\"id\": \"EVI-315\", \"source\": \"governance/evidence-methodology.md:120\", \"quote\": \"| `stated` | Normal rendering | Best-practice claim derived from sufficient evid",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "EVI-315: 'stated' = best-practice claim derived from sufficient evidence; equates best practice with evidence sufficiency, inviting tier eligibility reading."
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 322,
+"text": "{\"id\": \"EVI-332\", \"source\": \"governance/evidence-methodology.md:144\", \"quote\": \"it is a best-practice determination at the weak band (○): rendered in every regi",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "T4-6-only determination 'is a weak-band best-practice determination' (flagged code-derived); floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Option A: code-only (T4-T6) value named weak-band best practice; not tied to the most accommodating identified value, invites reading the code/convergent figure as best"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 323,
+"text": "{\"id\": \"EVI-333\", \"source\": \"governance/evidence-methodology.md:144\", \"quote\": \"it is a queryably distinct weak-band row of `v_best_practice`\", \"modality\": \"MUS",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "LABEL",
+"reason": "v_best_practice (the best-practice view) carries regulatory_stratum_only (code-floor) rows as weak-band best practice; floor folded into best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "none",
+"tests": [],
+"sense": "LABEL",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 328,
+"text": "{\"id\": \"EVI-338\", \"source\": \"governance/evidence-methodology.md:150\", \"quote\": \"A cell with only a single Tier 6 source, or with multiple Tier 6 sources that di",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "ambiguity field: every tier incl. T6 (statutory code floor) can anchor a weak-band best-practice claim; floor called best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Atom ambiguity: T6 can anchor best practice, yet a single T6 value is pending while >=3 converging codes qualify: agreement count gates the value, assertion insufficient"
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "EVI-338: a single T6 source is pending (no claim); ruling 4 says a code-only cell's code value is the best. Atom notes the tension with tier-system s8."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 373,
+"text": "{\"id\": \"EVI-394\", \"source\": \"governance/evidence-methodology.md:287\", \"quote\": \"\\\"[N] jurisdictions' standards converge on [value]\", \"modality\": \"MAY\", \"subject",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "voice line '[N] jurisdictions' standards converge on [value] ... best practice as currently known': convergence named best practice (the brief's own example)"
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Voice '[N] jurisdictions' standards converge on [value] ... best practice as currently known': the convergent value named best practice"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "EVI-394: T4-6 cell rendered '[N] jurisdictions' standards converge on [value] ... best practice as currently known'; names the convergent figure best practice by counting jurisdictions."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Active atom: a Tier 4-6-only cell renders '[N] jurisdictions' standards converge on [value] ... best practice as currently known'; best practice from a convergence count"
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-evi.jsonl",
+"line": 407,
+"text": "{\"id\": \"EVI-428\", \"source\": \"governance/evidence-methodology.md:406\", \"quote\": \"Note that best practice is determined by the evidence hierarchy, not by code con",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "quote: best practice set by evidence hierarchy, not code consensus (consistent); ambiguity field: Option A permits weak-band best practice derived from code consensus"
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "EVI-428: best practice is 'determined by the evidence hierarchy, not by code consensus'; not-convergence is fine, but hierarchy-determined invites eligibility by tier over most accommodating."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Atom EVI-428: \"best practice is determined by the evidence hierarchy, not by code consensus\". Not-convergence fine; \"determined by hierarchy\" implies tier eligibility (its own ambiguity notes Option A"
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-led1.jsonl",
+"line": 9,
+"text": "{\"id\": \"LED-009\", \"quote\": \"walled off from best-practice anchoring; convergence-not-evidence\", \"modality\": \"MUST_NOT\", \"subject\": \"tiers 4-6 anchoring\", \"claim",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "T4-6 must not anchor best practice, convergence not evidence (consistent); ambiguity notes the 2026-07-21 weak band lets code-derived claims be stated as best practice"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "LED-009 (ACTIVE): Tier 4-6 sources must not anchor best practice ('walled off'); eligibility by tier, against ruling 4."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Active atom LED-009: Tier 4-6 sources must not anchor best practice; code basis ineligible for best practice, against ruling 4"
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-led1.jsonl",
+"line": 13,
+"text": "{\"id\": \"LED-013\", \"quote\": \"never rendered unflagged or above the weak band\", \"modality\": \"MUST_NOT\", \"subject\": \"code-derived best practice rendering\", \"claim\"",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "MIXED",
+"reason": "a 'code-consensus-only best-practice claim' must never render unflagged/above weak band: a marker rule, but it admits consensus as a best-practice claim; owner: consensus = most common"
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Presupposes a valid code-consensus-only best-practice claim at the weak band; best practice from consensus."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-led1.jsonl",
+"line": 14,
+"text": "{\"id\": \"LED-014\", \"quote\": \"An unflagged or full-strength code-consensus best-practice claim is in error.\", \"modality\": \"MUST_NOT\", \"subject\": \"code-consensus c",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "MIXED",
+"reason": "only an unflagged/full-strength code-consensus best-practice claim is an error: implies a flagged weak one is valid; owner: consensus = most common, not best"
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Atom implies a flagged weak code-consensus best-practice claim is valid: consensus figure carried as best practice (only strength limited)"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-led1.jsonl",
+"line": 18,
+"text": "{\"id\": \"LED-018\", \"quote\": \"A T4–6-only basis never renders best-practice language in any register\", \"modality\": \"MUST_NOT\", \"subject\": \"T4-6-only rendering\", \"",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "LED-018 (ACTIVE in atom): a T4-T6-only basis never renders best-practice language; against ruling 4. RULINGS R10 marks it amended, atom status not updated."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "LED-018 (status ACTIVE): 'A T4-6-only basis never renders best-practice language in any register': eligibility by tier, against ruling 4."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/atoms/atoms-prc.jsonl",
+"line": 16,
+"text": "{\"id\": \"PRC-016\", \"source\": \"references/project-standards.md:351\", \"quote\": \"Above 24°C exceeds WHO vulnerable individual threshold — not acceptable for thermor",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4",
+"C3"
+],
+"sense": null,
+"reason": "PRC-016: above 24 C is 'not acceptable' for thermoregulation-impaired occupants; project's own value verdict using 'acceptable', beyond the WHO threshold it cites."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Same PRC-016 atom: above 24 C 'not acceptable' for thermoregulation-impaired occupants; a verdict, partly attributed to WHO threshold."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/conflicts.yaml",
+"line": 34,
+"text": "    - {atoms: [EVI-049, EVI-055], says: \"DR-2026-07-20 weighted-strength anchor model (owner directive 2026-07-20: 'all evidence tiers can be used to anchor a b",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "MIXED",
+"reason": "owner directive 'all tiers can anchor a best practice claim' glossed as the weak band anchoring 'only a floor/convergence claim': floor and most common folded into best practice"
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "MIXED",
+"reason": "Weak-band 'best practice claim' anchored by T3-grey/T6 equated with 'a floor/convergence claim': best practice merged with floor and convergence"
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C1",
+"C2"
+],
+"sense": null,
+"reason": "Conflict-register side quoting DR-2026-07-20: the weak band 'anchors only a floor/convergence claim'; equates weak-band best practice with floor/convergence. Reported side."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/conflicts.yaml",
+"line": 44,
+"text": "  title: \"A T4-T6-only basis: never best-practice language, or weak-band best practice 'as currently known'\"",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "MIXED",
+"reason": "records a doctrine split: one side bars best-practice language on T4-T6/converged values, the other (Option A) calls the code-floor/consensus value weak-band best practice; the split is unresolved"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": "Title of conflict C-005; names both sides."
+}
+]
+},
+{
+"file": "workplan/pipeline-state-graph/machines.yaml",
+"line": 277,
+"text": "      - \"or: a regulatory-stratum-only basis (a floor claim, never best practice)\"",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6",
+"C2"
+],
+"sense": null,
+"reason": "State-machine guard: 'a regulatory-stratum-only basis (a floor claim, never best practice)'; ruling 4 lets code-only values be best, with marker."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Guard: \"a regulatory-stratum-only basis (a floor claim, never best practice)\" - code-only basis can never be best practice, against ruling 4; also treats it as floor."
+}
+]
+}
+]

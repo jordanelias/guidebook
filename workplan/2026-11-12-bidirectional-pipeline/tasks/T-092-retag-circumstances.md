@@ -2,7 +2,7 @@
 
 _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self-contained. Index, order and the owner decision register: `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`. Source: the adjudication of the Edmonton digest, Q7 and proposal P8 (`scratchpad/session_2026-11-13-edmonton-checklist-pass/ADJUDICATION.md`). Every number in this file was read on 2026-11-13 on commit `66a5ba8a` and is given with the command that produces it: re-run the command; do not trust the number._
 
-**Pilot status.** Not piloted. Authored 2026-11-13 by the fold of the Edmonton case study. **Held on OD-49** and on T-091. Expect to find a defect in this file, and report it rather than work around it.
+**Pilot status.** Not piloted. Authored 2026-11-13 by the fold of the Edmonton case study. **Held on T-091** (OD-49 is resolved under delegation, confirmed with corrections by its independent check, 2026-11-13, and read through section 2's gate). Expect to find a defect in this file, and report it rather than work around it.
 
 ## 1. Identity
 
@@ -13,14 +13,19 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 | Wave | research |
 | Layer (CLAUDE.md §3) | 3 |
 | Kind | **RESEARCH** (CLAUDE.md rule 10: tooling and research never share a pull request) |
-| Executor | NOT FOR SONNET: which building use, which kind of work and which side of the envelope a clause addresses is read from the clause and its instrument's own scope words (a "public" building differs by instrument: ADJUDICATION Q7) |
+| Executor | NOT FOR SONNET: which building use and which side of the envelope a clause addresses is read from the clause and its instrument's own scope words (a "public" building differs by instrument: ADJUDICATION Q7) |
 | Traces to | ADJUDICATION Q7, P8; T-091 (the carrier); OD-49 |
 
 ## 2. Preconditions
 
 - **The integration base.** `origin/main` once the workplan's pull request is merged, otherwise the remote branch carrying the newest commit to this folder (the set-up block's first line finds it).
 - **Tasks that must be merged to the integration base first:** T-091 merged (the typed carrier and its writer flags). Check by running: the after-test of `tasks/T-091-typed-circumstance-carrier.md` section 6 on `$BASE`.
-- **Owner decisions:** OD-49 (the adjudication's AQ-3; OPEN, registered 2026-11-13, not yet asked). Read the answer by `grep -F "OD-49 STATUS:" references/project-standards.md | tail -1`. Under (a3) "leave it in `setting`" this task is declined with T-091.
+- **Owner decisions:** none. The one decision this task needed (the adjudication's AQ-3, registered as OD-49) is resolved under delegation (next bullet).
+- **Delegated resolutions this task rests on.** OD-49: (a1) building type (use) and interior or exterior are each a typed circumstance on the figure (the resolution of 2026-11-13 also typed new or existing work, which the owner's design-only scope of 2026-11-14 removes), one value per cell, shown as branches within one determination per parameter and lens set; building type points at the first of the owner's three building levels (2026-08-27), each building type minted from an instrument's own scope phrase, in its jurisdiction and language, in a data pull request the owner reads (OR-17, E1), never from the owner's examples; "public" adjudicated per instrument; (b2) the "three tables" ruling stands, and an element row, when a reader needs it, points at its term and holds no name of its own. A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12, applied at the owner's question of 2026-11-13 (ledger: `grep -n -F "Delegated resolution 2026-11-13 — OD-49" references/project-standards.md`): not the owner's words, reversible by the owner, checked by a second, independent Opus-class instance and confirmed with corrections applied, and read only through the ledger's gate (`grep -n -F "Convention 2026-11-12 — how a delegated resolution" references/project-standards.md`). **Narrowed by the owner on 2026-11-14** (answer 3 of the thirteenth set, ledger: `grep -n -F "Owner answers 2026-11-14 (thirteenth set)" references/project-standards.md`): "do not worry about existing/renovating and code as we are only concerned about design itself". Read by the recorder [ASSUMPTION, unratified] as a scope statement: the guidebook concerns the design itself, so whether work is new or existing (renovation, alteration and retrofit included) and a figure's code-compliance status are **not** circumstances a figure carries; the typed circumstances are **building use and interior or exterior only**. The headline measurement stands, counts only those two, and its result is shown to the owner before any stored figure is re-tagged (answer 3's "apply recommendations", read as the sheet's first offer). OD-49 keeps its status line (RESOLVED UNDER DELEGATION) in that narrower scope. Run it before you start and again before you open the pull request; if any line prints CLOSED, stop (section 9):
+```
+gate(){ s=$(grep -F "$1 STATUS:" references/project-standards.md | tail -1); c=$(grep -F "$1 CHECK:" references/project-standards.md | tail -1); case "$s" in *"ANSWERED BY THE OWNER"*) echo "$1 OPEN (owner)";; *"RESOLVED UNDER DELEGATION"*) case "$c" in *"not required"*|*confirmed*) echo "$1 OPEN (delegated; ${c#*CHECK: })";; *) echo "$1 CLOSED (check: ${c:-none})";; esac;; *) echo "$1 CLOSED (${s:-no status line})";; esac; }
+for n in OD-49; do gate $n; done
+```
 - **Tests that must be red before you start:** section 6's count of figures with a non-NULL `setting` and no typed circumstance is above 0.
 - **Set-up.**
 
@@ -45,7 +50,7 @@ python3 scripts/migrate_db.py --rebuild "$SCRATCH/rebuilt.db"      # must exit 0
 
 ## 3. The problem, in the guidebook's terms
 
-Once T-091 gives a figure typed cells for its circumstance, the stored figures still hold theirs only in free text, so the engine's new branch (or key) sees none of them. Each must be read back from its clause and its instrument's scope words and typed, or the carrier changes nothing that is already held.
+Once T-091 gives a figure typed cells for its circumstance, the stored figures still hold theirs only in free text, so the engine's new branch sees none of them. Each must be read back from its clause and its instrument's scope words and typed, or the carrier changes nothing that is already held.
 
 **Evidence command** (read-only, on `$SCRATCH/t.db`): the subject, measured as P8 asked:
 
@@ -59,8 +64,8 @@ python3 -I -c "import sqlite3,sys;c=sqlite3.connect('file:'+sys.argv[1]+'?mode=r
 
 Order of preference, from CLAUDE.md §8. Every verb this task needs is T-091's; it adds no code.
 
-1. For each figure with a non-NULL `setting` (and each with NULL whose clause or heading states a circumstance), read the clause and the instrument's own scope words, and write each facet the owner's answer typed through T-091's writer (`amend-extraction --field <facet>` or the verb its design names), with a `--reason` quoting the words. A facet the clause does not state is left empty, never inferred from the instrument's general scope.
-2. A scope phrase is adjudicated to the vocabulary per instrument (ADJUDICATION Q7: "public" is a legal scope phrase that differs by instrument); a phrase that names no value of the vocabulary is a gap, not a new value (a value is added by data with a warrant, under the owner's answer).
+1. For each figure with a non-NULL `setting` (and each with NULL whose clause or heading states a circumstance), read the clause and the instrument's own scope words, and write each facet OD-49 types in the scope the owner narrowed on 2026-11-14 (building use; interior or exterior; never new or existing work, renovation or retrofit, or code-compliance status: section 2), through T-091's writer (`amend-extraction --field <facet>` or the verb its design names), with a `--reason` quoting the words. A facet the clause does not state is left empty, never inferred from the instrument's general scope.
+2. A scope phrase is adjudicated to the vocabulary per instrument (ADJUDICATION Q7: "public" is a legal scope phrase that differs by instrument); a phrase that names no value of the vocabulary is a gap, not a new value (a value is added by data with a warrant, minted from an instrument's own scope phrase in its jurisdiction and language, in a data pull request the owner reads: OD-49 as resolved, OR-17, E1).
 3. `setting` itself is not changed here (T-091's design says when it is retired).
 
 **What reads what this task changes:** the engine (branches or keys by circumstance); render. **Data migration.** Rows land through `scripts/emit_data_migration.py` only.
@@ -74,7 +79,7 @@ git grep -n -i -e 'building type' -e 'setting' -- governance architecture refere
 
 ## 6. Verification
 
-**Red before, green after:** the count of figures with a non-NULL `setting` and every typed facet empty (the query uses the column names of T-091's design) is above 0 before, and after is 0 or every remaining row is listed in the pull request with what was read. The engine, before and after, on one parameter whose figures differ by building use (chosen by query): its report shows them composed together before and apart after. The gates, once each:
+**Red before, green after:** the count of figures with a non-NULL `setting` and every typed facet empty (the query uses the column names of T-091's design) is above 0 before, and after is 0 or every remaining row is listed in the pull request with what was read. The engine, before and after, on one parameter whose figures differ by building use (chosen by query): its report shows them composed together before and apart after. The headline measurement of T-091's design (over building use and interior or exterior only) has been shown to the owner before this batch writes a row. The gates, once each:
 ```
 W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1)
 python3 scripts/audit/research_batch_dod.py --session "$STEM" > "$SCRATCH/dod.txt" 2>&1; echo "rc=$?"; grep -E 'EXAMINED|BLOCKED|PASS|FAIL' "$SCRATCH/dod.txt" | tail -8
@@ -87,18 +92,19 @@ python3 scripts/audit/migration_reproducibility.py --deep      # every amendment
 
 ```
 git add -A . ':!transcripts' ':!*commands.jsonl'
-git commit -m "run-pipeline: type each stored figure's circumstance from its setting (OD-49) [$(date -u '+%Y-%m-%d %H:%M')]" -m "<body: the owner's answer; the rule per facet; rows left and why; the engine before and after>" -m "<the attribution trailers your own session instructions give>"
+git commit -m "run-pipeline: type each stored figure's circumstance from its setting (OD-49) [$(date -u '+%Y-%m-%d %H:%M')]" -m "<body: OD-49's delegated resolution and its ledger lines; the rule per facet; rows left and why; the engine before and after>" -m "<the attribution trailers your own session instructions give>"
 ```
 
 ## 8. What you must NOT do
 
-- Do not start before OD-49 is answered and T-091 is merged. Do not infer a facet the clause does not state. Do not add a vocabulary value without a warrant and the owner's answer.
+- Do not start while section 2's gate prints CLOSED for OD-49, or before T-091 is merged. Do not infer a facet the clause does not state. Do not add a vocabulary value without a warrant from an instrument's own scope phrase, and never one from the owner's English examples.
+- Do not type new or existing work, renovation or retrofit, or a code-compliance status on any figure (the owner's design-only scope, 2026-11-14); a `setting` that states only that is left untyped and listed in the pull request.
 - Do not change `claimed_value`, `claim_text` or `setting`. Do not write `data/guidebook.db` directly. Do not put tooling in this pull request (rule 10).
 - Do not run `run_checks.py --all`, `bootstrap.sh` or `pip install -r requirements.txt`. Do not push to `main`, rebase or force-push; do not subscribe to pull-request activity. Do not hand-type a count.
 
 ## 9. Stop conditions
 
-Stop and report when: OD-49 is unanswered, or answered (a3); T-091 is not merged; a clause's scope phrase names no value of the vocabulary and the answer gives no rule for it (file a gap; do not invent); a check green before is red after; the rebuild does not reproduce the database.
+Stop and report when: section 2's gate prints CLOSED for OD-49; T-091 is not merged; a clause's scope phrase names no value of the vocabulary and T-091's design gives no rule for it (file a gap; do not invent); a check green before is red after; the rebuild does not reproduce the database.
 
 ## 10. Rollback
 

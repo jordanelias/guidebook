@@ -50,7 +50,7 @@ Research batches are serial: if another research batch merged after you copied t
 
 ## 3. The problem, in the guidebook's terms
 
-A published value may not rest on a source nobody re-retrieved. Parameter 3 cannot be determined for publication while some of its governing sources are unverified.
+A published value that rests on a source nobody re-retrieved must say so. *Amended 2026-11-14 by the adversarial repair, on the owner's rulings "let's return to keeping them but they get a triangle warning" and "triangle instead if the value is coming from grey or unverified" (`grep -n -F 'triangle instead if the value is coming from grey or unverified' references/project-standards.md`):* an unverified source is kept, and a value resting on it is shown with ⚠ in place of the circle (T-117), no longer refused. Re-retrieving it still matters: a verified source carries the circle of its tier, so every source this task verifies lifts its values from ⚠ to their circle, and a bibliographic field wrong in the stored row is corrected from the payload.
 
 **Evidence command** (run from the repository root, after the set-up block so that `$SCRATCH` exists; it reads the canonical database read-only or works on a copy):
 
@@ -68,9 +68,9 @@ Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule o
 
 1. For each listed source: re-retrieve it and persist what comes back through `scripts/research/retrieval_log.py` (a publisher block is not final: try the Internet Archive route of CLAUDE.md §7 once); diff the stored authors against the payload (`python3 scripts/research/retrieval_log.py --session "$STEM" --verify-authors`); correct any bibliographic field that differs with `db.py correct-source`, from the payload and never from memory.
 2. Record the standing with `db.py amend-source --ref-id <id> --field verification_status --replacement VERIFIED --reason '<what was retrieved, where it is persisted>'`. The verb refuses `VERIFIED` without the verification method it requires: read the refusal and `python3 scripts/db.py amend-source --help`, and supply what it asks for. Do not go round it.
-3. A source that cannot be retrieved keeps `UNVERIFIED`, with the blocking reason the column's CHECK offers. It is not marked verified, and the cell it governs stays refused by the integrity test, as the ledger intends.
+3. A source that cannot be retrieved keeps `UNVERIFIED`, with the blocking reason the column's CHECK offers. It is not marked verified. The cell it governs is no longer refused by the integrity test: T-117 item 4a changes C10 so that such a cell passes when its marker is ⚠, and fails with a circle (the owner's "keeping them" with the triangle; the earlier sentence here, "stays refused by the integrity test, as the ledger intends", is withdrawn).
 
-**What reads what this task adds or changes:** C10; the engine's marker
+**What reads what this task adds or changes:** the engine's marker (⚠ for an unverified basis, the tier's circle once verified, T-117); C10 as T-117 item 4a rewrites it
 
 **Data migration.** This task lands rows through `scripts/emit_data_migration.py`, which names the file itself; never type a migration name or number, and never edit the file it writes. The pull request contains no schema migration and no file under `scripts/` other than that one `scripts/migrations/data_*` file.
 
@@ -87,7 +87,7 @@ Structures this task touches, for orientation: `verification_status`, `verificat
 
 ## 6. Verification
 
-**Red before, green after.** The evidence list shrinks; where it is empty, `test_db_integrity` on a fresh scratch determination exits 0.
+**Red before, green after.** The evidence list shrinks; where it is empty, `test_db_integrity` on a fresh scratch determination exits 0. The evidence list is the measure: once T-117 has merged, C10 passes a cell resting on an unverified source when its marker is ⚠ (T-117 item 4a), so C10 alone no longer shows what this task verified.
 
 **Fixtures.** Probes run on `$SCRATCH/t.db`; the batch's own rows are written on `$SCRATCH/s.db` and reach `data/guidebook.db` only through the write path of section 2.
 
@@ -117,7 +117,7 @@ The format is `{skill-name}: {action} [YYYY-MM-DD HH:MM]`, timestamp last, taken
 - Do not put tooling in this pull request: no schema migration, no new verb, no new check, no edit under `scripts/`, `schemas/`, `.github/` or `skills/` (CLAUDE.md rule 10). A writer gap found on the way is filed and left.
 - Do not write a bibliographic field from memory when a payload is in hand; do not mark a source verified that was not re-retrieved; never leave `verification_status` NULL.
 - Do not move, round or re-key an adjudicated figure. Do not back-translate a term. Do not delete an empty search.
-- Do not author `best_practice_synthesis` or synthesis prose below the Opus floor.
+- Do not author a specification row (`specifications`, read through `v_best_practice`; CLAUDE.md §6's `best_practice_synthesis` names a table not in the schema: superseded in part by TERM-RESOLUTION-PLAN §2, 2026-11-14) or synthesis prose below the Opus floor.
 - Do not decide doctrine (mission, audience, CRPD posture, population taxonomy, evidence-tier definitions, jurisdiction scope, licensing, trajectory). Stop instead.
 - Do not treat any `[A-Z]-NN` code as a container, an example or a name.
 - Do not run `scripts/run_checks.py --all`, `scripts/bootstrap.sh`, or `pip install -r requirements.txt`. Do not push to `main`, rebase or force-push. Do not subscribe to pull-request activity or schedule check-ins.

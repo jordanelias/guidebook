@@ -1,0 +1,645 @@
+[
+{
+"file": "scripts/assess/assess_cell.py",
+"line": 1368,
+"text": "# G1: a regulatory-stratum determination. It may be NAMED best practice (owner",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "Regulatory-stratum determination (same comment calls it a Universal-Mode FLOOR CLAIM) 'may be NAMED best practice' at weak band: uses best practice for the floor."
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Regulatory-stratum determination 'may be NAMED best practice' at weak band; code value as best practice regardless of whether it is the most accommodating identified"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "scripts/assess/assess_cell.py",
+"line": 1469,
+"text": "\"value is selected most-accommodatingly within what the \"",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [],
+"sense": null,
+"reason": "Proxy branch: value 'selected most-accommodatingly within what the threshold permits; no source states it' - best/headline chosen from a value research did not identify (ruling 1); no C-test fits exac"
+}
+]
+},
+{
+"file": "scripts/assess/assess_cell.py",
+"line": 1480,
+"text": "\"and not a best-practice claim\"],",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Proxy is 'not a best-practice claim' as no source states a value AT AN ANCHORING TIER: ties eligibility to tier, not marker (c). The no-stated-value part is consistent."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Proxy determination labelled 'not a best-practice claim' because threshold is regulatory and no anchoring-tier source states a value - eligibility partly by tier."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Engine text: regulatory threshold with inferred direction 'is a PROXY determination and not a best-practice claim' because no anchoring tier states a value; partly tier-based"
+}
+]
+},
+{
+"file": "scripts/assess/assess_cell.py",
+"line": 1488,
+"text": "\"are superseded. It does NOT become a best-practice claim by \"",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "Says a proxy never becomes best practice by more codes agreeing (consistent), but the cure named is an anchoring-tier source, tying best-practice status to tier rather than marker."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "scripts/assess/assess_cell.py",
+"line": 1506,
+"text": "\"evidence-anchored best practice: no anchoring dimension \"",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "FLOOR",
+"reason": "Keeps floor apart ('floor synthesis... NOT an evidence-anchored best practice'), but phrasing ties best-practice status to anchoring tier, not marker/weight (c)."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6",
+"C2"
+],
+"sense": null,
+"reason": "Code-only branch basis: 'Regulatory-stratum floor synthesis ... NOT an evidence-anchored best practice' - calls a code-only cell a floor rather than its best, against ruling 4."
+}
+]
+},
+{
+"file": "scripts/assess/assess_cell.py",
+"line": 1509,
+"text": "\"superseded. It never becomes a best-practice claim by more \"",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "'never becomes a best-practice claim by more codes agreeing' keeps floor/common apart, but 'only T1/Co-1/T2/Co-2 evidence can do that' sets tier as eligibility, not marker (c)."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Falsification text for code-only cell: 'never becomes a best-practice claim by more codes agreeing; only T1/Co-1/T2/Co-2 evidence can do that' - best practice eligibility by tier, against ruling 4."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Falsification text: a floor claim 'never becomes a best-practice claim by more codes agreeing; only T1/Co-1/T2/Co-2 evidence can do that': tier eligibility (anti-C1 part fine)."
+}
+]
+},
+{
+"file": "scripts/audit/adherence_log_audit.py",
+"line": 101,
+"text": "\"best-practice-synthesis-routing\",           # mission doctrine #2 — best-practice vs code-consensus routing",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "LABEL",
+"reason": "Identifier glossed 'best-practice vs code-consensus routing' (NOT-COMMON in spirit); label only, but meaning lives in mission doctrine #2 not read here."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "scripts/audit/adjudication_integrity.py",
+"line": 92,
+"text": "lines.append(f\"    excluded from best-practice: regulatory_stratum_only={rso}, \"",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "FLOOR",
+"reason": "Counts code_floor_only rows as excluded from best practice (keeps floor apart), but also regulatory_stratum_only by tier, which (c) says sets marker not eligibility; later rulings show these at ○."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Readiness report prints 'excluded from best-practice: regulatory_stratum_only=, code_floor_only=' - stale since migration 117 shows code-only cells in v_best_practice; says code-only cannot be best."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Script report labels regulatory_stratum_only and code_floor_only cells 'excluded from best-practice': code-only basis treated as ineligible, against ruling 4"
+}
+]
+},
+{
+"file": "scripts/migrations/057_baseline_2026-08-12.sql",
+"line": 1595,
+"text": "INSERT INTO \"decisions\" (rowid, \"decision_id\", \"category\", \"delegation\", \"delegation_rationale\", \"summary\", \"outcome\", \"rationale\", \"decision_date\", \"decided_by",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "D-0004: 'evidence hierarchy determines what constitutes best practice... higher-tier evidence governs': tier picks the value instead of setting marker/weight (c)."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "D-0004: 'The evidence hierarchy determines what constitutes best practice ... Where higher-tier evidence exists, it governs' - tier decides best, not most accommodating identified value."
+}
+]
+},
+{
+"file": "scripts/migrations/057_baseline_2026-08-12.sql",
+"line": 1596,
+"text": "INSERT INTO \"decisions\" (rowid, \"decision_id\", \"category\", \"delegation\", \"delegation_rationale\", \"summary\", \"outcome\", \"rationale\", \"decision_date\", \"decided_by",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "D-0005: best practice = most accommodating (ok) but 'determined by the evidence hierarchy ... not by code'; 'synthesis that derives its value solely from code consensus is in error' - clashes with rul"
+}
+]
+},
+{
+"file": "scripts/migrations/057_baseline_2026-08-12.sql",
+"line": 1633,
+"text": "INSERT INTO \"decisions\" (rowid, \"decision_id\", \"category\", \"delegation\", \"delegation_rationale\", \"summary\", \"outcome\", \"rationale\", \"decision_date\", \"decided_by",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "D-0042 template 'Best practice based on [N] jurisdictions and [tier] evidence is [value]' names the best-practice value by a count of jurisdictions, inviting the most-common reading (d)."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "D-0042 construction 'Best practice based on [N] jurisdictions and [tier] evidence is [value]': jurisdiction count names the best-practice value"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Decision row voice template: 'Best practice based on [N] jurisdictions and [tier] evidence is [value]' - derives best practice by counting jurisdictions."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Active decision record voice: 'Best practice based on [N] jurisdictions and [tier] evidence is [value]'; best practice derived by counting jurisdictions"
+}
+]
+},
+{
+"file": "scripts/migrations/057_baseline_2026-08-12.sql",
+"line": 1667,
+"text": "INSERT INTO \"decisions\" (rowid, \"decision_id\", \"category\", \"delegation\", \"delegation_rationale\", \"summary\", \"outcome\", \"rationale\", \"decision_date\", \"decided_by",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Thermal decision: 'Working target 18-22C ... Above 24C ... not acceptable for thermoregulation-impaired occupants' - project's own acceptability verdict; ruling 3 says acceptable is a value judgment."
+}
+]
+},
+{
+"file": "scripts/migrations/117_best_practice_view_shows_code_floor.sql",
+"line": 1,
+"text": "-- 117_best_practice_view_shows_code_floor.sql",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "LABEL",
+"reason": "Filename states the best-practice view shows the code floor: the floor surfaces under the best-practice label (see line 2)."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "scripts/migrations/117_best_practice_view_shows_code_floor.sql",
+"line": 2,
+"text": "-- SCHEMA migration -- a determination resting only on the regulatory stratum is shown in the best-practice",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "FLOOR",
+"reason": "A determination resting only on the regulatory stratum (floor) is shown IN the best-practice view, flagged ○: floor presented under best practice, against best/common/floor kept apart."
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "LABEL",
+"reason": "Migration title/comment: code-floor determination shown, flagged, in the best-practice view; places the floor under the best-practice label"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "scripts/migrations/117_best_practice_view_shows_code_floor.sql",
+"line": 19,
+"text": "-- migrations 027/029: it kept a code floor from reading as a best-practice claim. The marker CHECK of 116",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "FLOOR",
+"reason": ""
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "LABEL",
+"reason": "Migration admits code-floor rows into the best-practice view (owner OR-7: show flagged); the guard moves to the marker, so floor values sit under the best-practice label"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "skills/prose-style-checker_SKILL.md",
+"line": 6,
+"text": "sequencing (Ideal → Best Practice → Acceptable → Minimum) at item level, concise evidentiary",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "MIXED",
+"reason": "ranks ideal apart from best practice: 'Ideal → Best Practice → Acceptable → Minimum' as different rungs; acceptable is a value judgment ranked as a tier."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "MIXED",
+"reason": "'Ideal → Best Practice → Acceptable → Minimum' ranks ideal apart from best practice, and acceptable is a value judgment"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "Skill description: prose register 'qualitative sequencing (Ideal -> Best Practice -> Acceptable -> Minimum)' - the known C3 case."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "Skill description enforces \"qualitative sequencing (Ideal → Best Practice → Acceptable → Minimum)\" - the known C3 case."
+}
+]
+},
+{
+"file": "skills/prose-style-checker_SKILL.md",
+"line": 53,
+"text": "**Ideal → Best Practice → Acceptable → Minimum**",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "MIXED",
+"reason": "ranks ideal apart from best practice: item-level 'Ideal → Best Practice → Acceptable → Minimum' tiers of provision; acceptable is a value judgment ranked as a tier."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "MIXED",
+"reason": "'Ideal → Best Practice → Acceptable → Minimum' ranks ideal apart from best practice; acceptable is a value judgment"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "Qualitative Sequencing rule: 'Ideal -> Best Practice -> Acceptable -> Minimum' ranks ideal apart from best practice and acceptable as a tier."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "Prose register 'Ideal -> Best Practice -> Acceptable -> Minimum': ranks ideal apart from best practice and acceptable as a tier (the known case)."
+}
+]
+},
+{
+"file": "skills/prose-style-checker_SKILL.md",
+"line": 61,
+"text": "> 1200 mm acceptable in retrofit of existing fabric only.",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C3",
+"C4"
+],
+"sense": null,
+"reason": "Worked example: '1800 mm to be', '1200 mm acceptable in retrofit', '900 mm absolute minimum; not to be used in new build' - acceptable tier and project-authority verdicts."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C3",
+"C4"
+],
+"sense": null,
+"reason": "Example sequence '1200 mm acceptable in retrofit of existing fabric only': acceptable as a value tier, in project imperative voice."
+}
+]
+},
+{
+"file": "skills/prose-style-checker_SKILL.md",
+"line": 100,
+"text": "| SEQUENCE_VIOLATION | Tiers out of order or better-than-minimum stated last | Minimum stated before Ideal |",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "Flag SEQUENCE_VIOLATION enforces the tier ladder ('Minimum stated before Ideal') - operationalises the Ideal/Best/Acceptable/Minimum ranking."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "SEQUENCE_VIOLATION flag enforces the Ideal -> Best Practice -> Acceptable -> Minimum tier order ('Minimum stated before Ideal')."
+}
+]
+},
+{
+"file": "skills/run-pipeline_SKILL.md",
+"line": 322,
+"text": "- **Sources of rows:** `v_best_practice` (the live `stated`/`provisional` determinations; it shows a code-only one at ○",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "LABEL",
+"reason": "v_best_practice 'shows a code-only one at ○ since migration 117': the code-floor determination is read as a best-practice row, blurring best and floor."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "skills/voice-style_SKILL.md",
+"line": 215,
+"text": "| \"best-practice standard set by this guidebook\" | \"best-practice level recommended by this guidebook\" |",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "verdict, not data point: replacement phrase 'best-practice level recommended by this guidebook' presents best practice as the guidebook's recommendation."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Replacement phrase table prescribes 'best-practice level recommended by this guidebook' - best practice as the guidebook's own recommendation, not a sourced data point."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Voice table replaces 'standard set by this guidebook' with 'best-practice level recommended by this guidebook': still the project recommending on own authority."
+}
+]
+},
+{
+"file": "skills/voice-style_SKILL.md",
+"line": 229,
+"text": "| **Population Mode** (Population-Informed Inclusive Design) | The evidence | \"[Evidence tier] evidence supports [value]\" · \"Best practice based on [N] jurisdic",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Population Mode template 'Best practice based on [N] jurisdictions and [evidence tier] evidence is [value]' names the value by a count of jurisdictions (most-common reading)."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Template 'Best practice based on [N] jurisdictions and [tier] evidence is [value]': count of jurisdictions used to name the best-practice value"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Population Mode construction: 'Best practice based on [N] jurisdictions and [evidence tier] evidence is [value]' - best derived by counting jurisdictions."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Voice table: 'Best practice based on [N] jurisdictions and [tier] evidence is [value]' and 'population-informed median'; best practice by counting jurisdictions"
+}
+]
+},
+{
+"file": "skills/voice-style_SKILL.md",
+"line": 243,
+"text": "**When mode location can be implicit:** within a sustained Population Mode passage where every value is Population-Mode-evidence-located, the construction can c",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "'best practice for corridor width is 1500 mm; the population envelope is 1200–1800 mm': a mid-envelope default, not the most accommodating found (1800); one figure, no lens/context."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Example 'best practice for corridor width is 1500 mm; envelope 1200–1800 mm': best practice mid-envelope, not the most accommodating end; also no lens"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Example: 'Population Mode best practice for corridor width is 1500 mm; the population envelope is 1200-1800 mm' - best is a central/default figure below the most accommodating 1800."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Example: 'Population Mode best practice for corridor width is 1500 mm; envelope 1200-1800 mm': best set mid-envelope, not the most accommodating identified."
+}
+]
+}
+]

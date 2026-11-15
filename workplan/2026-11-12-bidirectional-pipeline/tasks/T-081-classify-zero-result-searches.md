@@ -1,6 +1,6 @@
 # T-081  Each stored zero-result search states its cause
 
-> **NOT FOR SONNET, and HELD.** Opus-class: deciding from a search's own note whether an empty result was a malformed query, the wrong index or a genuine absence is a reading of research, not a mechanical step (several notes argue for one cause in words that fit another). Held until the owner has answered T-080's question (whether a blocked, refused or cut-off request is a zero-result search, and under which cause) and T-080 is merged. An executor that opens this file before then does not start it: it reports that the task is waiting, and for what.
+> **NOT FOR SONNET, and HELD.** Opus-class: deciding from a search's own note whether an empty result was a malformed query, the wrong index or a genuine absence is a reading of research, not a mechanical step (several notes argue for one cause in words that fit another). Held until T-080 is merged. T-080's question (OD-45: whether a blocked, refused or cut-off request is a zero-result search, and under which cause) is resolved under delegation (2026-11-13, confirmed by its independent check) and read through section 2's gate. An executor that opens this file before then does not start it: it reports that the task is waiting, and for what.
 
 _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self-contained. Index, order and the owner decision register: `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`. Source: `workplan/2026-11-12-bidirectional-pipeline/OPEN-ITEMS-PLAN.md` row OI-56 (AT-16). Every number in this file was read on 2026-11-13 on commit `66a5ba8a` and is given with the command that produces it: re-run the command; do not trust the number._
 
@@ -21,8 +21,13 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 ## 2. Preconditions
 
 - **The integration base.** `origin/main` once the workplan's pull request is merged, otherwise the remote branch carrying the newest commit to this folder (the set-up block's first line finds it).
-- **Tasks that must be merged to the integration base first:** T-080 merged (it carries the owner's answer into the writer, and under answer (b) adds the fourth cause to the column's CHECK). Check: `git log "$BASE" --oneline | grep -F 'zero-result search states its cause'`.
-- **Owner decisions:** OD-45, the question T-080 holds on (OPEN, registered 2026-11-13; read T-080 section 2 for its text and the lines it rests on). Also OI-55 (1), how a carry-only research batch (it searches nothing and admits nothing) is gated: this batch is one, and `research_dod_session` may be red on it by construction, exactly as for T-102 and T-111. Follow the coordinator's ruling on OI-55 (1) when it exists; until then, report the gate's lines and do not treat its red as this batch's defect.
+- **Tasks that must be merged to the integration base first:** T-080 merged (it carries OD-45, as resolved under delegation, into the writer; option (c) adds no cause to the column's CHECK). Check: `git log "$BASE" --oneline | grep -F 'zero-result search states its cause'`.
+- **Owner decisions:** none in the register. Also OI-55 (1), how a carry-only research batch (it searches nothing and admits nothing) is gated: this batch is one, and `research_dod_session` may be red on it by construction, exactly as for T-102 and T-111. Follow the coordinator's ruling on OI-55 (1) when it exists; until then, report the gate's lines and do not treat its red as this batch's defect.
+- **Delegated resolutions this task rests on.** OD-45 (the question T-080 carries into the writer): a logged search whose request never returned a result list is a search not run, deferred, with no absence class, and owed a re-run (option (c)). A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12, applied at the owner's question of 2026-11-13 (ledger: `grep -n -F "Delegated resolution 2026-11-13 — OD-45" references/project-standards.md`): not the owner's words, reversible by the owner, checked by a second, independent Opus-class instance and confirmed with corrections applied, and read only through the ledger's gate (`grep -n -F "Convention 2026-11-12 — how a delegated resolution" references/project-standards.md`). Run it before you start and again before you open the pull request; if any line prints CLOSED, stop (section 9):
+```
+gate(){ s=$(grep -F "$1 STATUS:" references/project-standards.md | tail -1); c=$(grep -F "$1 CHECK:" references/project-standards.md | tail -1); case "$s" in *"ANSWERED BY THE OWNER"*) echo "$1 OPEN (owner)";; *"RESOLVED UNDER DELEGATION"*) case "$c" in *"not required"*|*confirmed*) echo "$1 OPEN (delegated; ${c#*CHECK: })";; *) echo "$1 CLOSED (check: ${c:-none})";; esac;; *) echo "$1 CLOSED (${s:-no status line})";; esac; }
+for n in OD-45; do gate $n; done
+```
 - **Tests that must be red before you start:** AT-16's third clause on the stored rows: `select count(*) from search_executions where results_found=0 and deferred_reason is null and absence_class is null` is above 0.
 - **Set-up.**
 
@@ -61,16 +66,16 @@ for r in c.execute("select exec_id, engine, absence_class, findings_note from se
 PY
 ```
 
-**Output on 2026-11-13:** the CHECK lists `query_shape_failure`, `wrong_index`, `genuine_absence` (plus the owner's addition, if T-080 made one); twelve rows (exec ids 26, 27, 28, 29, 81, 82, 84, 85, 87, 133, 138, 191), `absence_class` None on each, each with a note.
+**Output on 2026-11-13:** the CHECK lists `query_shape_failure`, `wrong_index`, `genuine_absence` (OD-45's option (c) adds none); twelve rows (exec ids 26, 27, 28, 29, 81, 82, 84, 85, 87, 133, 138, 191), `absence_class` None on each, each with a note.
 
 If the output differs (other than a value T-080 added), the ground has moved: stop (section 9).
 
 ## 4. The change
 
-1. **For each row the command prints, read its whole `findings_note` and its `query_text`, and decide its cause under R14 and the owner's answer to T-080's question.** Write it with `db.py amend-search --exec-id N --set-absence-class <value> --append-note "<one sentence: which words of the note decide it>" --session "$STEM"`. The verb refuses a value outside the column's CHECK and a row already classed.
+1. **For each row the command prints, read its whole `findings_note` and its `query_text`, and decide its cause under R14 and OD-45 as resolved under delegation (section 2).** Write it with `db.py amend-search --exec-id N --set-absence-class <value> --append-note "<one sentence: which words of the note decide it>" --session "$STEM"`. The verb refuses a value outside the column's CHECK and a row already classed.
    - A note that names the cause in R14's own words decides it (for example a note that calls the zero "GENUINE WELL-FORMED" with the anchor resolved, or "ZERO FROM THIS INDEX, NOT ABSENCE" because another index holds citations).
    - A note that names one cause in words that describe another (a "genuine absence from this index" because the catalogue does not hold that kind of document reads as the wrong index) is decided by what the note says happened, and the appended sentence quotes those words.
-   - A request that never returned a result list (blocked, quota, cut off: on 2026-11-13 exec ids 81, 87, 133, 138, 191 by their notes) takes what the owner's answer says: a cause, a fourth cause, or (answer (c)) nothing in this column. Under (c) the row is not amended here: a search logged as run cannot become a deferral by amendment; list it in the pull request as a row the answer says was never a search, for the owner.
+   - A request that never returned a result list (blocked, quota, cut off: on 2026-11-13 exec ids 87, 133, 138 and 191 by their notes) is, under OD-45 as resolved, a search not run: a deferral owed a re-run, with nothing in this column. A search logged as run cannot become a deferral by amendment (`amend-search` has no deferred-reason flag: `python3 scripts/db.py amend-search --help`), so the row is not amended here: list it in the pull request as a deferral owed a re-run, with its reason in the note's words. Exec id 81 calls itself "an R14 query-shape failure of a kind R14 does not name": judge it on its own words, not as one of these.
 2. **A row whose note does not let you decide** is not classed: list it in the pull request with the note's words and leave it. Do not guess a cause.
 3. Nothing else changes: no new search, no deletion, no edit of `results_found` or of a note's existing text.
 
@@ -107,7 +112,7 @@ git commit -m "research-log-manager: state the R14 cause on each stored zero-res
 
 ## 8. What you must NOT do
 
-- Do not start before T-080 is merged and the owner's answer is in the ledger.
+- Do not start before T-080 is merged and the delegated resolution is confirmed (the gate of section 2 prints OPEN).
 - Do not class a row whose note does not decide it; do not delete or re-run a search; do not rewrite a note.
 - No tooling in this pull request (rule 10). Do not write `data/guidebook.db` except by the write path. Do not run `run_checks.py --all`, `bootstrap.sh` or `pip install -r requirements.txt`. Do not push to `main`, rebase or force-push; do not subscribe to pull-request activity.
 
