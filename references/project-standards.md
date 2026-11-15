@@ -7566,3 +7566,22 @@ OD-67 STATUS: REFERRED BACK TO THE OWNER
 CONDITION: any session asking whether OD-67 is answered, building the writer's proposals (T-126), or running the batch that writes the population-to-ICF rows.
 ACTION: (1) The lens of a code value is judged and written at recording; the maps propose. (2) Treat OD-67 as the owner's, CLOSED by the gate. (3) Ask it in its plain form. (4) Do not resolve it under delegation.
 DATE: 2026-11-15 — correction and registration, not an owner statement.
+
+
+---
+
+## Owner instruction 2026-11-15 — tasks of the remediation plan are stacked into a single pull request, not one pull request each
+
+**Owner's words, quoted (typed):**
+
+> "going forward, we will stack branches into single PR instead of one item per PR"
+
+**Readings.** [ASSUMPTION: "branches" means the task branches the remediation plan assigns one to a task, and "single PR" means one pull request that carries several tasks as separate commits on one branch, so a task no longer waits for the previous task's pull request to merge — basis: the statement, given while pull request 235 was open on the working branch and T-006 was the next task]. [ASSUMPTION: each task still keeps its own commits, its own caller sweep, before-and-after check run, gate and adversarial pass, and its own entry in the pull request body; only the unit of merge changes — basis: the statement says nothing that loosens them, and the plan's tests are what make a stacked pull request reviewable].
+
+**What it supersedes.** The sentences "One task, one pull request" (every task file, section 2 and section 11 step 5), "One pull request merges at a time" (`workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md` section 2 item 2; the prior workplan's WR-1) and the "Do not start batch n until every READY task of batch n-1 is merged" of `REMEDIATION-PLAN.md` section 1 item 2, as to the unit of merge only. Dependencies between tasks are unchanged: a task still follows the tasks it depends on, now as an earlier commit on the same branch, not a merged pull request.
+
+**What it does not decide.** Whether CLAUDE.md rule 10 (tooling and research never share a pull request) is relaxed: it is not, and a stacked pull request carries tooling tasks only; a research task still goes in its own pull request. How large a stacked pull request may grow before the owner wants it split.
+
+CONDITION: any session executing a task of the remediation plan, or asking whether a task waits for the previous pull request to merge.
+ACTION: (1) Commit each task on the working branch as it is finished, after its own gate and adversarial pass; open one pull request for the branch and add each task to its body; do not wait for a merge between tasks. (2) Keep tooling and research apart (rule 10). (3) The generated `REMEDIATION-PLAN.md` is not edited by hand; its "merged" test reads merge commits and will count a stacked task as merged only when the pull request merges.
+DATE: 2026-11-15 — owner instruction (typed words, quoted above).
