@@ -2530,4 +2530,64 @@ else:
     record("T009-11", "_near_terms finds a term through an alias in a language other than English",
            any(h[0] == _t for h in db._near_terms(con, _a + " zzprobe")), (_t, _a))
 
+# ───────────── T-010: add-parameter refuses a term filed under a lens, method or legal domain ─────────────
+print("Section T010: add-parameter refuses a term whose domain holds lenses, methods or bodies of law, and names both ways out; "
+      "amend-term can correct a term's domain")
+_NQ = getattr(dbcore, "NON_QUANTITY_DOMAINS", None)
+if feature("T010-01", "the rule dbcore.NON_QUANTITY_DOMAINS exists and every member is a domain some term carries (a member no term "
+           "carries is stale)", _NQ is not None and all(scalar("SELECT COUNT(*) FROM terms WHERE domain=?", d) for d in _NQ),
+           "dbcore.NON_QUANTITY_DOMAINS"):
+    record("T010-01", "the rule exists and every member is a domain some term carries",
+           _NQ is not None and all(scalar("SELECT COUNT(*) FROM terms WHERE domain=?", d) for d in _NQ), sorted(_NQ or []))
+
+    def _free(domain):
+        """The first term of `domain` that is not a parameter, not declined (standing) and has no digit in its name."""
+        return scalar("SELECT t.term_id FROM terms t WHERE t.domain=? AND t.term_id NOT IN (SELECT term_id FROM base_parameters) "
+                      "AND t.term_id NOT IN (SELECT term_id FROM parameter_declinations WHERE revoked_at IS NULL) "
+                      "AND t.canonical_en NOT GLOB '*[0-9]*' ORDER BY t.term_id", domain)
+
+    for _tid, _dom in (("T010-02", "functional_axis"), ("T010-03", "legal")):
+        _t = _free(_dom)
+        if _t is None:
+            skip(_tid, f"no free term in domain {_dom!r}")
+            continue
+        _r = refusal(db.insert_parameter, _t, S, dry_run=True)
+        record(_tid, f"add-parameter refuses a {_dom} term, naming the domain, decline-parameter and amend-term, and writes nothing",
+               _r and repr(_dom) in _r and "decline-parameter" in _r and "amend-term --term-id" in _r and "Nothing was written" in _r
+               and scalar("SELECT COUNT(*) FROM base_parameters WHERE term_id=?", _t) == 0, _r)
+    _live = [r[0] for r in q("SELECT DISTINCT t.domain FROM base_parameters p JOIN terms t USING (term_id) ORDER BY 1")]
+    _ok_dom = next((d for d in _live if _free(d)), None)
+    if _ok_dom is None:
+        skip("T010-04", "no free term in a domain a live parameter has")
+    else:
+        _res, _err = ok(db.insert_parameter, _free(_ok_dom), S, dry_run=True)
+        record("T010-04", f"a free term of a live parameter's domain ({_ok_dom}) is still promoted (dry run)", _err is None, _err)
+    record("T010-05", "no live parameter sits in a refused domain", not set(_live) & set(_NQ), sorted(set(_live) & set(_NQ)))
+    _mis = _free("functional_axis")
+    if _mis is None or _ok_dom is None:
+        skip("T010-06", "no free functional_axis term or no live parameter domain to move it to")
+    else:
+        _held = [r[0] for r in q("SELECT DISTINCT domain FROM terms WHERE domain IS NOT NULL")]
+        _none = "zz_" + _ok_dom
+        _r = refusal(db.amend_term, _mis, "domain", _none, "T010 probe", S, dry_run=True)
+        record("T010-06", "amend-term --field domain to a domain no term carries is refused and lists the domains held",
+               _none not in _held and _r and all(d in _r for d in _held if d != q("SELECT domain FROM terms WHERE term_id=?", _mis)[0][0])
+               and "Nothing was written" in _r, _r)
+        _res, _err = ok(db.amend_term, _mis, "domain", _ok_dom, "T010 probe", S, dry_run=True)
+        record("T010-07", "amend-term --field domain to a domain another term carries is accepted (dry run)",
+               _err is None and _res and _res["changed"], _err or _res)
+        # the way out is a way out: correct the domain on this copy, then the same term promotes
+        db.amend_term(_mis, "domain", _ok_dom, "T010 probe: a quantity filed under the wrong domain", S)
+        _res, _err = ok(db.insert_parameter, _mis, S, dry_run=True)
+        record("T010-08", "after amend-term moves it to a quantity domain, the term the refusal turned away is promoted (dry run)",
+               _err is None and q("SELECT domain FROM terms WHERE term_id=?", _mis)[0][0] == _ok_dom, _err)
+    _p = scalar("SELECT p.term_id FROM base_parameters p JOIN terms t USING (term_id) WHERE t.domain NOT IN (%s) ORDER BY 1"
+                % ",".join("?" * len(_NQ)), *sorted(_NQ))
+    if _p is None:
+        skip("T010-09", "no live parameter outside the refused domains")
+    else:
+        _r = refusal(db.amend_term, _p, "domain", sorted(_NQ)[0], "T010 probe", S, dry_run=True)
+        record("T010-09", "amend-term refuses to move a term that is already a parameter into a refused domain", _r and "already a parameter" in _r, _r)
+
+
 finish()

@@ -1763,8 +1763,8 @@ def main():
     p_apm.add_argument("--dry-run", action="store_true")
 
     p_amt = sub.add_parser("amend-term",
-                           help="Replace a term's definition or scope_note, recording the "
-                                "text it replaces (canonical_en is not amendable)")
+                           help="Replace a term's definition, scope_note or domain, recording the "
+                                "value it replaces (canonical_en is not amendable)")
     p_amt.add_argument("--term-id", required=True)
     p_amt.add_argument("--field", required=True, choices=list(_AMENDABLE_TERM_FIELDS))
     p_amt.add_argument("--replacement", required=True)
@@ -1936,7 +1936,9 @@ def main():
                           help="Promote an adjudicated term into base_parameters "
                                "(THE SUBJECT of a determination)")
     p_ap.add_argument("--term-id", dest="term_id", required=True,
-                      help="terms.term_id. Refused if absent, declined, value-bearing or "
+                      help="terms.term_id. Refused if absent, filed under a domain that holds "
+                           "lenses, methods or bodies of law (dbcore.NON_QUANTITY_DOMAINS: decline "
+                           "it, or amend-term --field domain), declined, value-bearing or "
                            "already a parameter. A NAMES-NEW/NAMES-EXISTING adjudication is "
                            "REPORTED as provenance, not required (insert_parameter)")
     p_ap.add_argument("--notes")
@@ -5718,13 +5720,18 @@ def amend_population_match(match_id: str, match_grade: str, reason: str, session
                 "now": match_grade}
 
 
-_AMENDABLE_TERM_FIELDS = ("definition", "scope_note")
+_AMENDABLE_TERM_FIELDS = ("definition", "scope_note", "domain")
 _TERM_TRAILER = "AMENDED"
 
 
 def amend_term(term_id: str, field: str, replacement: str, reason: str, session: str,
                dry_run: bool = False):
-    """Replace a term's definition or scope note, recording the text it replaces.
+    """Replace a term's definition, scope note or domain, recording the value it replaces.
+
+    `domain` (T-010) is the way out of add-parameter's domain refusal for a quantity filed under
+    the wrong domain. `terms.domain` has no CHECK, so there is no vocabulary to read; the guard is
+    that the replacement is a domain another term already carries (refused otherwise, listing them),
+    and that a term which is already a parameter is never moved into a domain add-parameter refuses.
 
     ADDED 2026-09-25 (batch 20) to apply an owner ruling that narrowed TERM-089's
     definition; nothing could write `terms` after add-term minted a row. canonical_en is
@@ -5754,7 +5761,7 @@ def amend_term(term_id: str, field: str, replacement: str, reason: str, session:
                       f"which would make the body and its history inseparable.")
     reason = dbcore.require_reason(reason, term_id)
     with connect(dry_run) as conn:
-        row = conn.execute("SELECT term_id, definition, scope_note FROM terms "
+        row = conn.execute("SELECT term_id, definition, scope_note, domain FROM terms "
                            "WHERE term_id=?", [term_id]).fetchone()
         if row is None:
             raise Refusal(f"{term_id}: no such term.")
@@ -5767,7 +5774,27 @@ def amend_term(term_id: str, field: str, replacement: str, reason: str, session:
                               f"amend-term --field {field}")
         stamp = dbcore.upd(session)
         old_note = row["scope_note"] or ""
-        if field == "definition":
+        domain = row["domain"]
+        if field == "domain":
+            held = [r[0] for r in conn.execute(
+                "SELECT DISTINCT domain FROM terms WHERE domain IS NOT NULL AND term_id<>? "
+                "ORDER BY 1", [term_id])]
+            if replacement not in held:
+                raise Refusal(f"{term_id}: --replacement {replacement!r} is not a domain another term "
+                              f"carries. The domains held: {held}. Nothing was written.")
+            if replacement == domain:
+                return {"term_id": term_id, "field": field, "changed": False}
+            if replacement in dbcore.NON_QUANTITY_DOMAINS and conn.execute(
+                    "SELECT 1 FROM base_parameters WHERE term_id=?", [term_id]).fetchone():
+                raise Refusal(f"{term_id} is already a parameter, and {replacement!r} is a domain "
+                              f"add-parameter refuses (lenses, methods, bodies of law): moving it there "
+                              f"would leave a parameter that could not be promoted. Nothing was written.")
+            definition = row["definition"]
+            domain = replacement
+            scope_note = dbcore.append_dated_note(
+                old_note, _TERM_TRAILER, session,
+                f"domain was: '{row['domain'] or ''}'. {reason}", stamp["updated_at"])
+        elif field == "definition":
             if (row["definition"] or "").strip() == replacement:
                 return {"term_id": term_id, "field": field, "changed": False}
             definition = replacement
@@ -5781,9 +5808,9 @@ def amend_term(term_id: str, field: str, replacement: str, reason: str, session:
             scope_note = dbcore.append_dated_note(
                 replacement + old_note[len(body):], _TERM_TRAILER, session,
                 f"scope_note was: '{body.strip()}'. {reason}", stamp["updated_at"])
-        conn.execute("UPDATE terms SET definition=?, scope_note=?, updated_at=?, "
+        conn.execute("UPDATE terms SET definition=?, scope_note=?, domain=?, updated_at=?, "
                      "updated_by_session=? WHERE term_id=?",
-                     [definition, scope_note, stamp["updated_at"],
+                     [definition, scope_note, domain, stamp["updated_at"],
                       stamp["updated_by_session"], term_id])
         return {"term_id": term_id, "field": field, "changed": True}
 
@@ -7074,7 +7101,7 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
     if not term_id:
         raise Refusal("--term-id is required: a parameter is a pointer at a term.")
     with connect(dry_run) as conn:
-        term = conn.execute("SELECT term_id, canonical_en FROM terms WHERE term_id=?",
+        term = conn.execute("SELECT term_id, canonical_en, domain FROM terms WHERE term_id=?",
                             [term_id]).fetchone()
         if term is None:
             raise Refusal(
@@ -7082,6 +7109,20 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 f"comes from an observed phrase:\n"
                 f"  db.py observe-term ...   then   db.py add-term --from-observation N "
                 f"--canonical-en '...' --rationale '...'")
+        if term["domain"] in dbcore.NON_QUANTITY_DOMAINS:
+            live = [r[0] for r in conn.execute(
+                "SELECT DISTINCT t.domain FROM base_parameters p JOIN terms t USING (term_id) "
+                "WHERE t.domain IS NOT NULL ORDER BY 1")]
+            raise Refusal(
+                f"{term_id} ({term['canonical_en']!r}) is filed under the domain {term['domain']!r}, "
+                f"where lenses, methods and bodies of law are kept ({sorted(dbcore.NON_QUANTITY_DOMAINS)}); "
+                f"a parameter is a quantity under determination. The domains of the live parameters "
+                f"are {live}. Nothing was written.\n"
+                f"If it is a lens, a method or a body of law, dispose of it truthfully: "
+                f"db.py decline-parameter --term-id {term_id} --reason '<why it is not a design quantity>'\n"
+                f"If it is a quantity filed under the wrong domain, correct the domain and promote it again: "
+                f"db.py amend-term --term-id {term_id} --field domain --replacement <domain> "
+                f"--reason '<why>'")
         declined = conn.execute(
             "SELECT reason, created_at, created_by_session FROM parameter_declinations "
             "WHERE term_id=? AND revoked_at IS NULL", [term_id]).fetchone()

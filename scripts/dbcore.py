@@ -610,6 +610,19 @@ def bound_on_scale(claimed_value, unit, comparator, claim_type):
 #: from `db.py` (which keeps `_VALUE_BEARING = dbcore.VALUE_BEARING`): one definition for both screens.
 VALUE_BEARING = re.compile(r"[0-9\u2265\u2264<>=]|\b(min|max|minimum|maximum)\b", re.I)
 
+#: The `terms.domain` values under which lenses, methods and bodies of law are filed, not quantities under
+#: determination (T-010). `add-parameter` refuses a term in one of them: promoted, it would become a
+#: "parameter" every held source owes a reading for, which the engine determines as a pending cell with a gap
+#: for any group named (the stress runs promoted a functional axis and a legal concept in one command each).
+#: A JUDGED RULE DECLARED ONCE, in this stated place, which the owner's tenth statement of 2026-11-12 allows
+#: (`grep -n -F "isn't hardcoding necessarily" references/project-standards.md`): which domains name a lens or a
+#: body of law cannot be computed. Measured 2026-11-15, the two queries that justify it: `select domain,
+#: count(*) from terms group by 1` (each member below is a domain some term carries), and `select distinct
+#: t.domain from base_parameters p join terms t using(term_id)` (no live parameter is in any of them).
+#: It stays when a parameter states its quantity kind (T-020): the domain is a fact of the term, the kind a
+#: fact of the parameter.
+NON_QUANTITY_DOMAINS = frozenset({"functional_axis", "population", "medical", "methodology", "legal", "economics"})
+
 #: Which figure_role values supply a value to a determination. ONE HOME (migration 077; moved here from
 #: `assess_cell`, which imports it back): `gather_sources` filters on it, `gather_extraction_links` grades
 #: on it, K01 recomputes the sha from the links this produces, and the writers read it for the comparator rule.
