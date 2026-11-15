@@ -1415,6 +1415,35 @@ record("T080-02", "a zero-result search carrying a cause, a deferred search, and
        _e0 is None and _e1 is None and _e2 is None, (_e0, _e1, _e2))
 _r3 = refusal(db.log_search, **search(results_found=2, absence_class=_cls80[0]))
 record("T080-03", "an absence class on a search that found something is still refused", bool(_r3) and "only a search that found nothing" in _r3, _r3)
+_rb = refusal(db.log_search, **search(results_found=0, deferred_reason="  "))
+_rn = refusal(db.log_search, **search(results_found=-1))
+_rs = refusal(db.log_search, **search(results_found="0"))
+_rboth = refusal(db.log_search, **search(results_found=0, absence_class=_cls80[0], deferred_reason="TASK-FIXTURE not run"))
+record("T080-04", "a blank deferral, a negative count, a count that is not a whole number, and a class beside a deferral are each refused before a row is written",
+       bool(_rb) and "--results-found 0 needs" in _rb and bool(_rn) and "whole number" in _rn and bool(_rs) and "whole number" in _rs
+       and bool(_rboth) and "cannot assert both" in _rboth, (_rb, _rn, _rs, _rboth))
+_cli80 = cli("log-search", "--slug", SLUG, "--language", LANG, "--jurisdiction", JUR, "--query-text", "q", "--engine", "web",
+             "--depth-method", "scoping", "--prior-expectation", "nothing", "--session", S, "--dry-run")
+record("T080-05", "through the CLI, a search that states no count (so 0) and no cause is refused with the REFUSING prefix",
+       _cli80.returncode != 0 and _cli80.stderr.lstrip().startswith("REFUSING") and "--results-found 0 needs" in _cli80.stderr,
+       (_cli80.returncode, _cli80.stderr[:200]))
+with scratch() as c:
+    _cell = c.execute("SELECT slug, language, jurisdiction FROM v_coverage_priority WHERE jurisdiction IN (SELECT jurisdiction_code FROM base_jurisdictions) AND language IN (SELECT language FROM lang_jur_map) ORDER BY priority_score DESC, slug LIMIT 1").fetchone()
+    if _cell is None:
+        skip("T080-06", "no owed cell on the live database")
+    else:
+        _q = lambda: c.execute("SELECT COUNT(*) FROM v_coverage_priority WHERE slug=? AND language=? AND jurisdiction=?", tuple(_cell)).fetchone()[0]
+        _n0 = _q()
+        _o, _e = ok(db.log_search, **search(slug=_cell[0], language=_cell[1], jurisdiction=_cell[2], results_found=0,
+                                            deferred_reason="TASK-FIXTURE the request returned 403", dry_run=False))
+        c.commit()
+        _n1 = _q()
+        _o2, _e2 = ok(db.log_search, **search(slug=_cell[0], language=_cell[1], jurisdiction=_cell[2], results_found=0,
+                                              absence_class=_cls80[0], dry_run=False))
+        c.commit()
+        _n2 = _q()
+        record("T080-06", "a deferred search (not run) leaves its cell on the owed list and a search that ran takes it off (migration 137)",
+               _e is None and _e2 is None and _n0 == 1 and _n1 == 1 and _n2 == 0, (_e, _e2, _n0, _n1, _n2))
 
 print("Section T073: a fixture retrieval root leaves out a folder filed under an id the database has not minted")
 import io as _io

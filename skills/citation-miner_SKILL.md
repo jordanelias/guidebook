@@ -99,6 +99,7 @@ confirms a Tier 1–3 source:
    python3 scripts/db.py log-search --slug {slug} --language en --engine crossref \
      --depth-method systematic --query-text '...' --mined-ref-id {global_ref_id} \
      --mining-direction backward --origin planned --prior-expectation '...' \
+     --results-found {N} \
      --result-artefact retrieval-log/{session}/{payload}.json --session {session_stem}
    #    (or amend-search --add-result-artefact PATH on a search already logged --
    #    this is what links the payload into search_execution_artefacts; add-candidate

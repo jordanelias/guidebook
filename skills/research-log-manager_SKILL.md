@@ -81,9 +81,13 @@ After multilingual-research completes:
    ```
    Once per query. **Keep the empties** — a zero-yield search with a well-formed
    query is a completed unit of work and evidence about the world (R8, R14).
-   Never delete one, never backfill one silently.
+   Never delete one, never backfill one silently. A search that found nothing
+   says which empty it is: `--results-found 0` is refused without
+   `--absence-class` (the values are the column's own CHECK). A request that
+   returned no result list at all (a 403, a bot challenge, a rate limit, a
+   reset, a stub page) was **not run**; step 3 is its form.
 
-3. **A search you deliberately did NOT run is also a row:**
+3. **A search that was NOT run is also a row** — one you declined to run, or one whose request returned no result list (OD-45):
    ```bash
    python3 scripts/db.py log-search \
      --prior-expectation '<what you expect and why>' \
@@ -94,7 +98,8 @@ After multilingual-research completes:
      --session {session_stem}
    ```
    `deferred_reason` is what makes **"not looked for"** different from
-   **"nothing found"**. That distinction is the thing the whole pipeline exists
+   **"nothing found"**. A deferred row does not count its pair as searched:
+   the pair stays on the owed list (`coverage --slug`, `v_coverage_priority`). That distinction is the thing the whole pipeline exists
    to preserve; a missing row erases it.
 
    > Coverage is derived from the log (`v_coverage_jurisdiction` / `v_coverage_language` / `v_coverage_lens`); read it with

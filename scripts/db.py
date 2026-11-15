@@ -916,6 +916,18 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         # The gap this search was run to close (nullable: most searches are not for a gap).
         "gap_id": gap_id,
     }
+    # A count is a whole number of results, never a string, a bool or a negative: `"0"` and `-1` each slip past every
+    # test of `== 0` below and every reader of results_found = 0 (T-080 critic, 2026-11-15).
+    if isinstance(results_found, bool) or not isinstance(results_found, int) or results_found < 0:
+        raise Refusal(f"log-search: --results-found must be a whole number of results, 0 or more (got "
+                      f"{results_found!r}). Nothing was written.")
+    # A blank reason is no reason: it would make the row read as deferred (not run) to every zero-yield reader
+    # while stating no cause.
+    deferred_reason = (deferred_reason or "").strip() or None
+    row["deferred_reason"] = deferred_reason
+    if deferred_reason and absence_class is not None:
+        raise Refusal(f"log-search: --deferred-reason says the search was not run, and --absence-class "
+                      f"{absence_class!r} says it ran and found nothing. A row cannot assert both. Nothing was written.")
     if absence_class is not None and results_found != 0:
         raise Refusal(f"--absence-class {absence_class!r} with --results-found {results_found}: only a "
                       "search that found nothing can be classed as an absence (R14). Nothing was written.")
@@ -1309,11 +1321,11 @@ def get_coverage_completeness(slug: str) -> dict:
         # SEARCHED IS READ FROM THE LOG, not taken as required-minus-unsearched: the view lists
         # unsearched pairs only for the slugs it covers, so for any other slug that subtraction
         # reads every pair searched and `complete` true over a slug nothing was logged for.
-        # Same anti-join as the view (a logged row, deferred or not, names the pair).
+        # Same anti-join as the view (migration 137): a row that RAN names the pair; a deferred one (not run) does not.
         searched = conn.execute(
             "SELECT COUNT(*) AS n FROM v_research_scope v WHERE EXISTS (SELECT 1 FROM "
             "search_executions se LEFT JOIN base_jurisdictions b "
-            "ON b.jurisdiction_code = se.jurisdiction WHERE se.slug=? "
+            "ON b.jurisdiction_code = se.jurisdiction WHERE se.slug=? AND se.deferred_reason IS NULL "
             "AND COALESCE(b.parent_code, se.jurisdiction) = v.jurisdiction "
             "AND UPPER(se.language) = v.language)", [slug]).fetchone()["n"]
         # A search is a search whatever its spelling: the log holds `en` beside `EN`.
@@ -5042,8 +5054,9 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
         absence_set = None
         if set_absence_class:
             # WRITE-ONCE, and only for a search that found nothing (R14; the column's CHECK says the
-            # second half too). The class is a judgment made after the results exist, so it cannot be
-            # a log-time prior; correcting a wrong one costs a compensating migration, as with a lens.
+            # second half too). log-search now takes the class at log time (T-080); this amends a search
+            # logged before that, or one whose class was judged later. Correcting a wrong one costs a
+            # compensating migration, as with a lens.
             dbcore.check_declared(conn, "search_executions", "absence_class", set_absence_class,
                                   "amend-search --set-absence-class")
             if row["results_found"] != 0:
