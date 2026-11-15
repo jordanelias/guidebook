@@ -2683,38 +2683,52 @@ record("T015-01", "the coverage views hold one row per slug and language: the di
        and scalar("SELECT COUNT(*) FROM (SELECT slug, parameter_id, jurisdiction, UPPER(language), identity_code, icf_code, needs_code, "
                   "medical_code FROM v_coverage_lens GROUP BY 1,2,3,4,5,6,7,8 HAVING COUNT(*) > 1)") == 0
        and scalar("SELECT COUNT(*) FROM v_coverage_language WHERE language <> UPPER(language)") == 0, None)
-with scratch() as c:                   # a search stored under the other spelling must not split the pair (the live log holds both)
-    _row = c.execute("SELECT exec_id, slug, language FROM search_executions WHERE deferred_reason IS NULL AND language = UPPER(language) "
-                     "AND NOT EXISTS (SELECT 1 FROM search_executions o WHERE o.slug=search_executions.slug AND o.language=LOWER(search_executions.language) "
-                     "AND o.deferred_reason IS NULL) ORDER BY exec_id LIMIT 1").fetchone()
-    if _row is None:
-        skip("T015-02", "no search whose slug has no lower-case twin to split")
-    else:
-        _before = c.execute("SELECT language, searches FROM v_coverage_language WHERE slug=? ORDER BY language", (_row["slug"],)).fetchall()
-        hand("UPDATE search_executions SET language=LOWER(language) WHERE exec_id=?", _row["exec_id"])
-        _after = c.execute("SELECT language, searches FROM v_coverage_language WHERE slug=? ORDER BY language", (_row["slug"],)).fetchall()
-        record("T015-02", "storing one search of a slug as `en` rather than `EN` changes neither view's row count nor any figure: the view "
-               "reads the spelling, not the language", [tuple(r) for r in _before] == [tuple(r) for r in _after], (_before, _after))
+with scratch() as c:                   # every search stored in lower case: neither view may notice (the live log holds both spellings)
+    _snap = lambda: ([tuple(r) for r in c.execute("SELECT slug, language, searches, admitted FROM v_coverage_language ORDER BY 1, 2")],  # noqa: E731
+                     [tuple(r) for r in c.execute("SELECT slug, parameter_id, jurisdiction, language, identity_code, icf_code, needs_code, "
+                                                  "medical_code, searches, deferred FROM v_coverage_lens ORDER BY 1, 2, 3, 4, 5, 6, 7, 8")])
+    _before = _snap()
+    hand("UPDATE search_executions SET language=LOWER(language)")
+    _after = _snap()
+    hand("UPDATE search_executions SET language=UPPER(language)")
+    _upper = _snap()
+    record("T015-02", "storing EVERY search as lower case, and then as upper case, changes neither view in any row or figure: both "
+           "views read the language, not its spelling", bool(_before[0]) and bool(_before[1]) and _before == _after == _upper,
+           (len(_before[0]), len(_after[0]), len(_before[1]), len(_after[1])))
 _absent = next("".join(p) for p in itertools.product("ABCDEFGHIJKLMNOPQRSTUVWXYZ", repeat=2) if "".join(p) not in _MAP)
 _ref15 = new_source()
 _obs15 = {"ref_id": _ref15, "surface_form": "clause", "locator": "p1", "context_quote": "a clause read off paper",
           "verbatim_exempt": "scanned PDF, no text layer"}
 r = refusal(db.observe_term, {**_obs15, "language": _absent.lower()}, S, dry_run=True)
 record("T015-03", "observe-term refuses a language lang_jur_map does not hold, whatever its case, naming the map",
-       r and "lang_jur_map" in r and repr(_absent) in r, r)
+       r and "lang_jur_map" in r and repr(_absent.lower()) in r and "--language" in r, r)
 _held = next((l for l in _MAP if l != "EN"), None)
 with scratch() as c:
-    _r15 = new_source()
-    res, err = ok(db.observe_term, {**_obs15, "ref_id": _r15, "language": _held.lower()}, S, dry_run=False)
-    record("T015-04", "observe-term stores a held language in the map's spelling, however it was typed",
-           err is None and c.execute("SELECT language FROM observed_terms WHERE ref_id=?", (_r15,)).fetchone()[0] == _held, err)
-    _src = {**SRC, "title": "Fixture on handrail finial profiles and a T015 probe"}
-    _bad = refusal(db.insert_evidence_source, {**_src, "lang_detected": _absent.lower()}, S, dry_run=True, authors=AUTH)
-    _id15, _e15 = ok(db.insert_evidence_source, {**_src, "title": _src["title"] + " two", "lang_detected": _held.lower()}, S,
-                     dry_run=False, authors=AUTH)
-    record("T015-05", "add-source refuses a --lang-detected the map does not hold, and stores a held one in the map's spelling",
-           _bad and "lang_jur_map" in _bad and _e15 is None
-           and c.execute("SELECT lang_detected FROM evidence_sources WHERE ref_id=?", (_id15,)).fetchone()[0] == _held, (_bad, _e15))
+    if _held is None:
+        for _t in ("T015-04", "T015-05", "T015-07"):
+            skip(_t, "lang_jur_map holds no language besides EN")
+    else:
+        _r15 = new_source()
+        res, err = ok(db.observe_term, {**_obs15, "ref_id": _r15, "language": _held.lower()}, S, dry_run=False)
+        record("T015-04", "observe-term stores a held language in the map's spelling, however it was typed",
+               err is None and c.execute("SELECT language FROM observed_terms WHERE ref_id=?", (_r15,)).fetchone()[0] == _held, err)
+        _src = {**SRC, "title": "Fixture on handrail finial profiles and a T015 probe"}
+        _bad = refusal(db.insert_evidence_source, {**_src, "lang_detected": _absent.lower()}, S, dry_run=True, authors=AUTH)
+        _id15, _e15 = ok(db.insert_evidence_source, {**_src, "title": _src["title"] + " two", "lang_detected": _held.lower()}, S,
+                         dry_run=False, authors=AUTH)
+        record("T015-05", "add-source refuses a --lang-detected the map does not hold, naming that flag and the map, and stores a held "
+               "one in the map's spelling", _bad and "lang_jur_map" in _bad and "--lang-detected" in _bad and _e15 is None
+               and c.execute("SELECT lang_detected FROM evidence_sources WHERE ref_id=?", (_id15,)).fetchone()[0] == _held, (_bad, _e15))
+        # The map's spelling is READ, not assumed upper: with the map holding the language in lower case, both spellings are accepted
+        # and the stored value is the map's.
+        hand("UPDATE lang_jur_map SET language=LOWER(language) WHERE language=?", _held)
+        _id16, _e16 = ok(db.insert_evidence_source, {**_src, "title": _src["title"] + " three", "lang_detected": _held}, S,
+                         dry_run=False, authors=AUTH)
+        record("T015-07", "the writers store the map's own spelling: with the map holding the language in lower case, an upper-case "
+               "--lang-detected is accepted and stored in lower case",
+               _e16 is None and c.execute("SELECT lang_detected FROM evidence_sources WHERE ref_id=?", (_id16,)).fetchone()[0] == _held.lower(),
+               _e16)
+        hand("UPDATE lang_jur_map SET language=UPPER(language) WHERE language=?", _held.lower())
     # An English source is English whatever its spelling: of two unmined sources of one tier, the Japanese one comes first and the
     # English one after it, `EN` or `en`, though the English one sorts earlier by slug and label.
     _un = [r for r in db.get_unmined_for_all_slugs(6)]

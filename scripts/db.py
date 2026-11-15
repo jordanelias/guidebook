@@ -280,15 +280,22 @@ def next_gap_id() -> str:
 _OPEN_GAP = "status LIKE 'OPEN%'"
 
 
-def _check_language(conn, language: str, noun: str) -> None:
+def _check_language(conn, language: str, noun: str, flag: str = "--language") -> str:
     """Refuse a language `lang_jur_map` does not hold; a new language is a doctrine change, not a
-    flag. One home for `log-search` and `add-gap`; `noun` names the record the refusal is about."""
+    flag. Returns the language in the map's OWN spelling, found case-insensitively (T-015), so a writer
+    stores what the map holds without assuming its letter case. One home for `log-search`, `add-gap`,
+    `observe-term`, `add-source --lang-detected` and `add-alias`; `noun` names the record the refusal is about
+    and `flag` the option the operator typed."""
     _langs = dbcore.live_vocab(conn, "lang_jur_map", "language")
-    if _langs and language not in _langs:
+    if not _langs:
+        return language
+    held = {v.upper(): v for v in _langs}
+    if (language or "").strip().upper() not in held:
         raise Refusal(
-            f"--language {language!r} is not a language lang_jur_map holds "
+            f"{flag} {language!r} is not a language lang_jur_map holds "
             f"({', '.join(sorted(_langs))}). The map is the vocabulary of research "
             f"languages (rule 8); a language is added there, not at the {noun}.")
+    return held[language.strip().upper()]
 
 
 def insert_gap(data: dict, session: str, dry_run: bool = False) -> str:
@@ -1877,7 +1884,8 @@ def main():
                             "translated, not mapped to one of our terms.")
     p_obs.add_argument("--language", default="EN",
                        help="The language the phrase APPEARS IN, which need not be the "
-                            "source's own language")
+                            "source's own language; one lang_jur_map holds (refused otherwise), "
+                            "stored in the map's spelling")
     p_obs.add_argument("--locator",
                        help="R3: where in the source it appears. REQUIRED for a new "
                             "observation: an observation is one SIGHTING, keyed on the "
@@ -4291,8 +4299,8 @@ def insert_evidence_source(data: dict, session: str,
         # THE SOURCE'S LANGUAGE IS ONE OF THE MAP'S (T-015): folded to the letter case lang_jur_map holds, and refused if the
         # map does not hold it (a new language is a doctrine change, not a flag), as log-search refuses its own.
         if data.get("lang_detected"):
-            data["lang_detected"] = row["lang_detected"] = data["lang_detected"].strip().upper()
-            _check_language(conn, data["lang_detected"], "source")
+            data["lang_detected"] = row["lang_detected"] = _check_language(conn, data["lang_detected"], "source",
+                                                                           "--lang-detected")
         _refuse_copied_block_reason(conn, data.get("processing_blocked_reason"),
                                     "add-source --processing-blocked-reason")
         # THE ID IS DERIVED FROM THE DOCUMENT'S IDENTITY, never from the flag: the id of the
@@ -6518,8 +6526,7 @@ def observe_term(data: dict, session: str, dry_run: bool = False):
                 f"ref_id {data.get('ref_id')!r} is not an admitted source. A term is "
                 f"observed IN a source; observe it after the source is filed.")
         _refuse_tombstone(conn, ref, "observe-term")
-        language = (data.get("language") or "EN").strip().upper()
-        _check_language(conn, language, "observation")
+        language = _check_language(conn, data.get("language") or "EN", "observation")
         prior = conn.execute(
             "SELECT observation_id FROM observed_terms "
             "WHERE ref_id=? AND surface_form=? AND language=? "
@@ -7986,6 +7993,7 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
                 raise Refusal("add-alias: --alias is empty. Nothing was written.")
             # lang_jur_map is the vocabulary of research languages and their pairs; compared
             # case-insensitively, the same refusal add-term --first-form gives (T-028).
+            _check_language(conn, language, "alias")
             want_j = jurisdiction.strip().upper() if jurisdiction else None
             pairs = conn.execute("SELECT jurisdiction FROM lang_jur_map WHERE upper(language) = ? "
                                  "AND (? IS NULL OR upper(jurisdiction) = ?)",

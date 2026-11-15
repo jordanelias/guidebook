@@ -276,7 +276,8 @@ python3 scripts/db.py add-source \
   #   sources admitted before this carry scope NULL for exactly that reason.
   --doi {doi} \
   --jurisdiction {jur} \
-  --lang-detected {iso_639_1_code} \   # folded to upper case; refused unless lang_jur_map holds it
+  # --lang-detected is stored in lang_jur_map's spelling and refused unless the map holds the language
+  --lang-detected {iso_639_1_code} \
   --lang-detection-method {how the language was known} \
   --slug {slug} \
   --local-ref-id {local_ref_id} \   # the per-slug LABEL (RAP-04). A different thing.
@@ -299,7 +300,7 @@ This is the same copy-versus-pointer confusion that put `RAP-F61/F69/F70` in
 `citation_mining` while `source_slug_links` held `RAP-06/09/10` for the same three
 sources, and reported them UNMINED after they had been fully mined.
 
-**`--lang-detected` is optional in the writer; set it whenever the publication language is known**, not only when the slug's focus is non-English. A source with no language is invisible to any language-prioritised query, which silently defeats a non-English-focused pass. `--lang-detection-method` is free text with no CHECK; say how the language was known (derive the strings in use: `SELECT DISTINCT lang_detection_method FROM evidence_sources`; `add-source --help` gives examples): the title or text read in that language, inferred from the venue of a confirmed-language source (lower confidence: say so), or taken from the language of the citing bibliography.
+**`--lang-detected` is optional in the writer; set it whenever the publication language is known and `lang_jur_map` holds it** (a language the map does not hold is refused, and a source with no language is read as English), not only when the slug's focus is non-English. A source with no language is invisible to any language-prioritised query, which silently defeats a non-English-focused pass. `--lang-detection-method` is free text with no CHECK; say how the language was known (derive the strings in use: `SELECT DISTINCT lang_detection_method FROM evidence_sources`; `add-source --help` gives examples): the title or text read in that language, inferred from the venue of a confirmed-language source (lower confidence: say so), or taken from the language of the citing bibliography.
 
 ---
 
