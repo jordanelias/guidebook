@@ -35,6 +35,7 @@ CLI usage:
 import json
 import os
 import re
+import unicodedata
 import zipfile
 import sqlite3
 import sys
@@ -6633,18 +6634,34 @@ _VALUE_BEARING = dbcore.VALUE_BEARING          # one definition (T-016): the uni
 # and gains nothing; every NAME field uses `_VALUE_BEARING_NAME`.
 _VALUE_BEARING_NAME = re.compile(
     _VALUE_BEARING.pattern + r"|\bthan\b|\bat (least|most)\b|\bno (more|less|fewer|greater)\b"
-    r"|\bnot exceeding\b|\bexceed(s|ing)?\b", re.I)
+    r"|\bnot exceeding\b|\bexceed(s|ing)?\b"
+    # T-009: a digit of any script (\d is Unicode's Nd) and the comparator signs that are not
+    # ASCII: the full-width < = > and the slanted and double-line forms of <= and >=.
+    r"|\d|[\uFF1C\uFF1D\uFF1E\u2266\u2267\u2A7D\u2A7E]", re.I)
 
 
 def _name_tokens(name: str) -> frozenset:
-    """The content tokens of a name, lower-cased, a trailing plural 's' dropped -- the
-    one normalisation `_near_terms` compares on. 'Ramp runs' -> {ramp, run}."""
-    toks = re.findall(r"[a-z0-9]+", (name or "").lower())
+    """The content tokens of a name, case-folded, a trailing plural 's' dropped -- the
+    one normalisation `_near_terms` compares on. 'Ramp runs' -> {ramp, run}.
+
+    A token is a run of Unicode letters, digits and combining marks (T-009): the ASCII
+    pattern this replaced gave 勾配 and 경사로 an EMPTY set, so a name in any other script
+    was never compared with anything. No language is named; a script written without spaces
+    is one token."""
+    toks, cur = [], []
+    for ch in unicodedata.normalize("NFKC", name or "").casefold():
+        if ch.isalnum() or unicodedata.category(ch).startswith("M"):
+            cur.append(ch)
+        elif cur:
+            toks.append("".join(cur))
+            cur = []
+    if cur:
+        toks.append("".join(cur))
     return frozenset(t[:-1] if len(t) > 3 and t.endswith("s") else t for t in toks)
 
 
 def _near_terms(conn, name: str) -> list:
-    """Terms whose canonical name or ATTESTED English alias shares a token set with `name` one
+    """Terms whose canonical name or ATTESTED alias, in any language (T-009), shares a token set with `name` one
     way or the other (subset or superset): 'ramp runs' beside 'ramp run length',
     'reverberations' beside 'reverberation time'. The equivalence search the skill tells an
     operator to do before minting, done by the writer and refused unless each is named
@@ -6662,8 +6679,7 @@ def _near_terms(conn, name: str) -> list:
     out, seen = [], set()
     for term_id, held in conn.execute(
             "SELECT term_id, canonical_en FROM terms UNION ALL "
-            "SELECT term_id, alias FROM term_aliases WHERE upper(language)='EN' "
-            "AND attestation <> 'model_seed'"):
+            "SELECT term_id, alias FROM term_aliases WHERE attestation <> 'model_seed'"):
         have = _name_tokens(held)
         # Near: the new name's tokens sit inside an existing name's ('ramp runs' in 'ramp run
         # length'), or an existing name of TWO OR MORE tokens sits inside the new one. A

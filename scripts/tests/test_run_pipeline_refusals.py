@@ -2458,6 +2458,53 @@ with scratch() as c:
     ok(db.amend_extraction, fnum, "comparator", "<=", "T016 probe", session=S)
     res, err = ok(db.amend_extraction, fnum, "figure_role", "claim", "T016 probe", session=S)
     record("T016-N19c", "control: ...and with the comparator set it is accepted", err is None, err)
+# ───────────── T-009: quote normalisation and name screens outside Latin script ─────────────
+print("Section T009: normalise_quote keeps a mark that is part of a word outside Latin, Greek and Cyrillic and folds every "
+      "decimal digit; the name screens read any script")
+_PROBES = REPO / "scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/results3/probes/log.jsonl"
+_per = None
+try:
+    _first = json.loads(_PROBES.read_text(encoding="utf-8").splitlines()[0])
+    _per = json.loads(_first["argv"][-1])                      # the probe strings, read from the retained log
+except Exception as _exc:  # noqa: BLE001
+    skip("T009-01", f"the retained probe log is unreadable ({type(_exc).__name__})")
+if _per:
+    _nq = retrieval_log.normalise_quote
+    _NUMERIC = ("dec", "indian", "swiss", "german")             # the probe keys that are numbers, not words
+    _marked = {}
+    for _k, _v in _per.items():
+        if not _k.startswith(_NUMERIC):
+            _marked.setdefault(_k.split("-")[0], []).append((_k, _v))
+    _clash = [(a, b) for g, m in _marked.items() for i, (a, x) in enumerate(m) for b, y in m[i + 1:] if _nq(x) == _nq(y)]
+    record("T009-01", "strings of one script that differ only in a mark (Devanagari, Thai, Hebrew, Arabic, kana, Hangul) normalise differently",
+           _marked and not _clash, _clash)
+    _dec = {k: _nq(v) for k, v in _per.items() if k.startswith("dec-")}
+    _digits = {k: re.sub(r"\D", "", v) for k, v in _dec.items()}
+    record("T009-02", "every decimal digit folds to ASCII: 0.6, 0,6, full-width, Arabic-Indic and Devanagari spellings share one digit run, 6.0 does not",
+           len({d for k, d in _digits.items() if k != "dec-6.0"}) == 1 and _digits["dec-6.0"] not in {d for k, d in _digits.items() if k != "dec-6.0"},
+           _digits)
+    _nt = retrieval_log.number_tokens
+    record("T009-03", "0.6 s and 0,6 s still read as the same number through T-008's reader",
+           _nt(_per["dec-0.6"]) == _nt(_per["dec-comma"]) and bool(_nt(_per["dec-0.6"])), (_nt(_per["dec-0.6"]), _nt(_per["dec-comma"])))
+    _names = [v for k, v in _per.items() if not k.startswith(_NUMERIC)]
+    _empty = [v for v in _names if not db._name_tokens(v)]
+    record("T009-04", "a name in any script yields a non-empty token set", _names and not _empty, _empty)
+    _vb = [k for k in ("dec-fullwidth", "dec-arabic-indic", "dec-devanagari") if not db._VALUE_BEARING_NAME.search(_per[k])]
+    record("T009-05", "a name carrying a full-width, Arabic-Indic or Devanagari digit is value-bearing", not _vb, _vb)
+record("T009-06", "an accent on a Latin letter still folds (Pérez meets Perez) and the voicing mark of か が still differs",
+       retrieval_log.normalise_quote("Pérez") == retrieval_log.normalise_quote("Perez")
+       and retrieval_log.normalise_quote("\u304b") != retrieval_log.normalise_quote("\u304c"), None)
+# _near_terms compares against an alias of ANY language: take a live, non-seed, non-English alias of two or more
+# tokens and offer a name that contains it.
+_al = q("SELECT term_id, alias FROM term_aliases WHERE upper(language)<>'EN' AND attestation<>'model_seed' "
+        "ORDER BY term_id, alias")
+_al = [(t, a) for t, a in _al if len(db._name_tokens(a)) >= 2]
+if not _al:
+    skip("T009-07", "no live non-English, non-seed alias of two or more tokens")
+else:
+    _t, _a = _al[0]
+    _hit = [h for h in db._near_terms(con, _a + " zzprobe") if h[0] == _t]
+    record("T009-07", "_near_terms finds a term through an alias in a language other than English", bool(_hit), (_t, _a))
 
 
 finish()

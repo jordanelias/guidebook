@@ -54,6 +54,7 @@ has since been corrected upstream, nor can it run when the API is unreachable.
 
 import argparse
 import codecs
+import functools
 import hashlib
 import html
 import json
@@ -603,6 +604,19 @@ _TAG = re.compile(r"<[^>]{0,200}>")
 # ---------------------------------------------------------------------------
 
 
+@functools.lru_cache(maxsize=None)
+def _quote_char(ch):
+    """(kind, kept text) of one character for `normalise_quote`: kind is `mark`, `folding` (a base letter
+    of Latin, Greek or Cyrillic, whose accents fold away) or `other`; kept text is what a base character
+    contributes (its ASCII value for a decimal digit, itself for a letter or digit, nothing otherwise)."""
+    if unicodedata.category(ch).startswith("M"):
+        return "mark", ch
+    kind = "folding" if unicodedata.name(ch, "").startswith(("LATIN", "GREEK", "CYRILLIC")) else "other"
+    if unicodedata.category(ch) == "Nd":
+        return kind, str(unicodedata.decimal(ch))        # every decimal digit folds to ASCII
+    return kind, ch if ch.isalnum() else ""
+
+
 def normalise_quote(text):
     """Reduce prose to the letters and digits it contains, in order.
 
@@ -633,16 +647,32 @@ def normalise_quote(text):
         `re.findall(r"\\d+", ...)` in db.py extracted the full-width １ as a digit (Python's
         \\d is Unicode-aware) while this function deleted it (this one was not), so the two
         halves of one check disagreed and no CJK numeral could ever pass.
+      * MARKS ARE KEPT OUTSIDE LATIN, GREEK AND CYRILLIC (T-009, 2026-11-15). The loop below drops
+        a combining mark only after a base letter of those three scripts. Everywhere else it is
+        the difference between two words: Hindi कि and की, Thai ไม่ and ไม้, Arabic كَتَبَ and
+        كُتُبٌ, Japanese か and が verified as one quote when every mark was stripped. The test is
+        the base character's Unicode name, never a list of languages. Every Unicode decimal
+        digit folds to its ASCII value (NFKC folded only the full-width ones).
       * ACCENTS FOLD rather than vanish. `Pérez` now normalises to `perez`, not `prez`:
         the old filter DELETED the é, so a quote typed `Perez` (-> `perez`) could not match
         an artefact reading `Pérez` (-> `prez`). That asymmetry was silent.
       * Markup, whitespace and punctuation are still discarded, which is the whole reason
         this replaced a raw byte substring.
     """
-    s = unicodedata.normalize("NFKC", _TAG.sub(" ", text or "")).lower()
-    s = unicodedata.normalize("NFKD", s)
-    s = "".join(ch for ch in s if not unicodedata.combining(ch))
-    return "".join(ch for ch in s if ch.isalnum())
+    s = unicodedata.normalize("NFKD", unicodedata.normalize("NFKC", _TAG.sub(" ", text or "")).lower())
+    out, base_folds = [], False
+    for ch in s:
+        kind, keep = _quote_char(ch)
+        if kind == "mark":
+            # A mark is dropped only where it is an accent on a Latin, Greek or Cyrillic letter, so
+            # `Pérez` and `Perez` still meet. On any other base it is part of the word: an Indic
+            # vowel sign, a Thai tone, Arabic or Hebrew pointing, the voicing mark that makes か が.
+            if not base_folds:
+                out.append(ch)
+        else:
+            base_folds = kind == "folding"
+            out.append(keep)
+    return unicodedata.normalize("NFC", "".join(out))        # recompose kana and Hangul
 
 
 # One head (a plain digit run, or 1-3 digits grouped in threes by spaces or apostrophes), then any
