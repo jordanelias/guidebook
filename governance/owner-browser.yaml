@@ -667,6 +667,7 @@ decisions:
 
   - id: OR-17b
     gates: false
+    answered: {on: '2026-11-06', ledger: "Owner statement 2026-11-06 (second)"}
     title: What becomes of the model-generated aliases already stored?
     question: "Your ruling says the model may not generate its own phrases, names or aliases. What should happen to the aliases the model generated before, and may a flagged search still use a term the model recalls?"
     why_yours: "Your answers to OR-12b and OR-17 point different ways, and the stored aliases are 1,163 rows (the audit counts them) that were model-generated."

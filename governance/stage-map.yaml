@@ -114,7 +114,7 @@ tables:
   extraction_lens_links: judgment
   extraction_relations: judgment
   gap_mining: research
-  gaps: cross-stage
+  gaps: cross-stage          # resolved, no longer disputed: ledger "Delegated resolution 2026-11-12 — OD-11"
   icf_medical_map: base
   identity_icf_map: base
   identity_medical_map: base
@@ -144,12 +144,7 @@ tables:
   terms: base
   weighting_profile: render
 
-# Where the repository contradicts ITSELF about a table's stage. The map still has
-# to place these, and `tables:` above records where — but taking a side silently
-# is curating a fact nothing can check, so both readings are kept with their
-# citations. This is a Layer 0 vs Layer 1 conflict (CLAUDE.md §3 against
-# pipeline-contract.yaml), so under rule 0 an owner ruling settles it and the
-# contract is what gets corrected. Until then this file is the only record, which
-# is itself a reason to resolve it in a DR rather than here.
-disputed:
-  gaps: 'Resolved under delegation, not disputed: see the ledger entry "Delegated resolution 2026-11-12 — OD-11" in references/project-standards.md. The register is cross-stage.'
+# Where the repository contradicts ITSELF about a table's stage, name the table here with BOTH readings and their
+# citations (taking a side silently is curating a fact nothing can check; under rule 0 an owner ruling settles it).
+# Empty today: the one entry, the gap register, was resolved cross-stage (delegated resolution OD-11, 2026-11-12).
+disputed: {}

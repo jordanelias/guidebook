@@ -804,7 +804,7 @@ def render_state_graph(T, atoms, probes, machines, cmp_info, stamp):
     by_stage = collections.defaultdict(list)
     for t in T.tables: by_stage[T.stage(t)].append(t)
     rows = []
-    for s in T.stages + ["infrastructure"]:
+    for s in T.stages + ["cross-stage", "infrastructure"]:
         ts = by_stage.get(s, [])
         rows.append((s, len(ts), sum(T.rows[t] for t in ts), len([t for t in ts if T.rows[t] == 0]), len([t for t in ts if t not in T.writers])))
     L.append(mdtable(["stage", "tables", "rows", "empty tables", "tables no db.py verb writes"], rows)); L.append("")

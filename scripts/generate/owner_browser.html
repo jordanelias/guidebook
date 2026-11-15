@@ -438,7 +438,7 @@ const queueRows = () => META.queue.map((e) => {
   return { e, rows: got.filter((r) => !ruled[String(r.id)]),
     ruled: Object.keys(ruled).map((id) => ({ id, label: (got.find((r) => String(r.id) === id) || {}).label || "Row " + id })) };
 });
-const openDecisions = () => META.decisions.filter((d) => !d.answered);
+const openDecisions = () => META.decisions.filter((d) => !d.answered && !d.resolved_under_delegation);
 function promptKeys() { return [...openDecisions().map((d) => d.id), ...queueRows().flatMap(({ e, rows }) => rows.map((r) => e.id + "-" + r.id))]; }
 function updateCounts() {
   const keys = promptKeys(), done = keys.filter((k) => ANSWERS[k]).length;
@@ -514,15 +514,37 @@ function rowContext(e, id) {
 // What the owner said and what it changed, taken from the ledger entry that records it (its single home).
 function rulingParts(id, text) {
   const lines = text.split("\n"), words = [], clean = (x) => x.replace(/\*\*/g, "").replace(/`/g, "");
+  const unq = (x) => x.replace(/^>\s?/, "").replace(/^"|"$/g, "");
+  // Shape 1: a line `ID: "words"` (optionally numbered), or `ID:` followed by quoted `>` lines.
   for (let i = 0; i < lines.length; i++) {
-    if (!lines[i].startsWith(id + ":")) continue;
-    const rest = lines[i].slice(id.length + 1).trim();
-    if (rest) words.push(rest.replace(/^"|"$/g, ""));
-    else for (let j = i + 1; j < lines.length && (lines[j].trim() === "" || lines[j].startsWith(">")); j++) if (lines[j].startsWith(">")) words.push(lines[j].replace(/^>\s?/, "").replace(/^"|"$/g, ""));
+    const m = lines[i].match(new RegExp("^(?:\\d+\\.\\s*)?" + id + ":\\s*(.*)$"));
+    if (!m) continue;
+    if (m[1]) words.push(m[1].replace(/^"|"$/g, ""));
+    else for (let j = i + 1; j < lines.length && (lines[j].trim() === "" || lines[j].startsWith(">")); j++) if (lines[j].startsWith(">")) words.push(unq(lines[j]));
     break;
+  }
+  // Shape 2: a bold title `**ID — what it asks.**`, then the owner's selection or quotation, up to `ID STATUS:`.
+  if (!words.length) {
+    const t = lines.findIndex((l) => new RegExp("^\\*\\*" + id + " [\u2014-]").test(l));
+    if (t >= 0) { const tail = lines[t].replace(/^\*\*[^*]*\*\*\s*/, "").trim(); if (tail) words.push(unq(tail)); }
+    if (t >= 0) for (let j = t + 1; j < lines.length && !lines[j].startsWith(id + " STATUS:") && !lines[j].startsWith("**"); j++) if (lines[j].trim()) words.push(unq(lines[j]));
   }
   const item = lines.find((l) => new RegExp("^\\d+\\. \\*\\*" + id + "\\.\\*\\*").test(l));
   return { words: words.map(clean), change: item ? clean(item.replace(/^\d+\.\s*/, "")) : null };
+}
+// A prompt settled under the owner's delegation of 2026-11-12: a model's resolution, not the owner's words, reversible.
+function delegatedCard(d) {
+  const r = d.resolved_under_delegation, text = META.rulings[r.ledger] || "";
+  const line = text.split("\n").find((l) => l.startsWith("**The resolution.**"));
+  const fix = r.corrected_by ? META.rulings[r.corrected_by] : null;
+  return h("details", { class: "prompt", id: "p-" + d.id },
+    h("summary", null, h("span", { class: "sum" }, h("span", { class: "tag" }, d.id), h("span", { class: "lab" }, d.title), h("span", { class: "chip" }, "Resolved under delegation"))),
+    h("div", { class: "body" },
+      h("p", null, h("strong", null, d.question)),
+      h("p", { class: "gl" }, "Resolved by a model under your delegation of 2026-11-12. These are not your words, and you can reverse the resolution."),
+      h("div", { class: "stack" }, h("h2", null, "The resolution"), h("p", null, line ? line.replace(/\*\*/g, "").replace(/`/g, "") : "The ledger entry could not be read here.")),
+      fix ? h("p", { class: "gl" }, "Corrected later, in the entry that begins \"" + r.corrected_by + "\".") : null,
+      h("p", { class: "gl" }, "Recorded in references/project-standards.md, in the entry that begins \"" + r.ledger + "\".")));
 }
 // s: {key, tag, title, question, ledger, rid}. rid is the id the ledger entry quotes the owner's words under.
 function answeredCard(s) {
@@ -551,6 +573,8 @@ function waitingPage() {
     group("Ruled and recorded in the ledger", "Your answers, in your words, with what each one changes.", [
       ...META.decisions.filter((d) => d.answered).map((d) => answeredCard({ key: d.id, tag: d.id, title: d.title, question: d.question, ledger: d.answered.ledger, rid: d.id })),
       ...queueRows().flatMap(({ e, ruled }) => ruled.map((r) => answeredCard({ key: e.id + "-" + r.id, tag: e.table + " " + r.id, title: r.label, question: e.question, ledger: e.ruled[String(r.id)], rid: e.table + " " + r.id })))]),
+    group("Resolved under delegation, not your words", "Each was settled by a model under your delegation; reverse any of them by telling Claude.",
+      META.decisions.filter((d) => d.resolved_under_delegation).map(delegatedCard)),
     ...queueRows().map(({ e, rows }) => group(e.title, e.why, rows.length
       ? rows.map((r) => promptCard({ key: e.id + "-" + r.id, tag: e.table + " " + r.id, title: r.label, question: e.question, why: e.why_yours, options: e.options, body: rowContext(e, r.id) }))
       : [h("p", { class: "gl" }, "Nothing waiting.")], rows.length)),

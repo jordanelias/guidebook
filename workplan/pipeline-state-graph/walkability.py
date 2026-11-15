@@ -54,13 +54,7 @@ def view_reads(v, seen=()):
     for n in names & set(V) - set(seen) - {v}: out |= view_reads(n, seen + (v,))
     return out
 vedge = {v: sorted(view_reads(v)) for v in V}
-# A `cross-stage` table (the gap register, OD-11) is a member of every spine stage that owns a table sharing an FK with it:
-# derived from the FK graph, never listed. Every other table is a member of its own stage only.
-memb = {t: {stage[t]} for t in T}
-for t in T:
-    if stage[t] == 'cross-stage':
-        memb[t] = {stage[n] for ch, pa, *_ in fk for n in (ch, pa) if t in (ch, pa) and n != t and stage[n] in idx}
-def vstages(v): return sorted({s for t in vedge[v] for s in memb[t] if s in idx}, key=idx.get)
+def vstages(v): return sorted({stage[t] for t in vedge[v] if stage[t] in idx}, key=idx.get)
 
 # adjacency (table graph)
 up_adj = collections.defaultdict(set)     # child -> parents
@@ -79,8 +73,7 @@ def reach(src_tables, adj, allowed=None):
     return seen
 
 by_stage = collections.defaultdict(list)
-for t in T:
-    for s in memb[t]: by_stage[s].append(t)
+for t in T: by_stage[stage[t]].append(t)
 
 out = {'spine': spine, 'tables': len(T), 'views': len(V), 'fk': len(fk)}
 
@@ -97,11 +90,11 @@ for a, b in itertools.combinations(spine, 2):
     inter = set(spine[idx[a] + 1: idx[b]])
     skip = None
     if inter:
-        allowed = lambda m: not (memb[m] & inter)
+        allowed = lambda m: stage[m] not in inter
         skip = [t for t in B if reach([t], up_adj, allowed) & set(A)]
     # direct (adjacent FK) count
-    direct = [e for e in fk if b in memb[e[0]] and a in memb[e[1]]]
-    send = [e for e in fk if a in memb[e[0]] and b in memb[e[1]]]
+    direct = [e for e in fk if stage[e[0]] == b and stage[e[1]] == a]
+    send = [e for e in fk if stage[e[0]] == a and stage[e[1]] == b]
     pairs[f'{a}->{b}'] = dict(up=len(up), down=len(down), skip=(None if skip is None else len(skip)),
                               direct_fk=len(direct), send_fk=len(send), views=[v for v in vedge if {a, b} <= set(vstages(v))])
 out['pairs'] = pairs
@@ -129,7 +122,7 @@ for s in spine + ['infrastructure', 'UNMAPPED']:
 out['lateral'] = lat
 
 # --- re-entrant: FK edges and view spans going backwards
-re_fk = [(ch, pa, cc) for ch, pa, cc, _ in fk if any(idx[x] < idx[y] for x in memb[ch] if x in idx for y in memb[pa] if y in idx)]
+re_fk = [(ch, pa, cc) for ch, pa, cc, _ in fk if stage[ch] in idx and stage[pa] in idx and idx[stage[ch]] < idx[stage[pa]]]
 out['reentrant_fk'] = [dict(child=ch, parent=pa, col=cc, rows=c.execute(f'select count(*) from "{ch}" where "{cc}" is not null').fetchone()[0]) for ch, pa, cc in re_fk]
 
 # --- population of every FK: rows pointing / childless parents
