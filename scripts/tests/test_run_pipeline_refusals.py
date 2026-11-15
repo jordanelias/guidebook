@@ -79,24 +79,23 @@ DB = os.path.join(TMP, "guidebook.db")
 shutil.copy(REPO / "data" / "guidebook.db", DB)
 
 
+sys.path.insert(0, str(REPO / "scripts"))
+sys.path.insert(0, str(REPO / "scripts" / "research"))
+sys.path.insert(0, str(REPO))
+from _fixture_log import fixture_log_root  # noqa: E402
+
+
 def farm(name):
-    """A scratch retrieval-log root of symlinks to the tracked sessions: fixtures written to it leave the
-    tracked log (and every other root) as it was."""
+    """A scratch retrieval-log root of symlinks to the tracked sessions, leaving out a pre-admission folder (T-073): a
+    fixture source takes the copy's next id, and a folder filed under that id would hand it saved text it never fetched.
+    Fixtures written to it leave the tracked log (and every other root) as it was."""
     path = os.path.join(TMP, name)
-    if not os.path.isdir(path):
-        os.makedirs(path)
-        for d in (REPO / "retrieval-log").iterdir():
-            if d.is_dir():
-                os.symlink(d.resolve(), os.path.join(path, d.name))
-    return path
+    return path if os.path.isdir(path) else fixture_log_root(path, DB)
 
 
 FARM = farm("retrieval-log")
 os.environ["GUIDEBOOK_DB_PATH"] = DB
 os.environ["GUIDEBOOK_RETRIEVAL_LOG"] = FARM
-sys.path.insert(0, str(REPO / "scripts"))
-sys.path.insert(0, str(REPO / "scripts" / "research"))
-sys.path.insert(0, str(REPO))
 from schemas.enums import EvidenceMarker  # noqa: E402
 import db        # noqa: E402
 import dbcore    # noqa: E402
@@ -1416,6 +1415,25 @@ record("T080-02", "a zero-result search carrying a cause, a deferred search, and
        _e0 is None and _e1 is None and _e2 is None, (_e0, _e1, _e2))
 _r3 = refusal(db.log_search, **search(results_found=2, absence_class=_cls80[0]))
 record("T080-03", "an absence class on a search that found something is still refused", bool(_r3) and "only a search that found nothing" in _r3, _r3)
+
+print("Section T073: a fixture retrieval root leaves out a folder filed under an id the database has not minted")
+import io as _io
+_hw = dbcore.ref_id_high_water(sqlite3.connect(f"file:{DB}?mode=ro", uri=True))
+_src = pathlib.Path(TMP) / "t073-source"
+for _name, _ref in (("session-below", f"REF-{max(_hw - 1, 1):05d}"), ("session-at", f"REF-{_hw:05d}"), ("session-ahead", f"REF-{_hw + 1:05d}")):
+    (_src / _name).mkdir(parents=True, exist_ok=True)
+    (_src / _name / "manifest.jsonl").write_text(json.dumps({"ref_id": _ref}) + "\n", encoding="utf-8")
+(_src / "session-no-manifest").mkdir(exist_ok=True)
+with contextlib.redirect_stdout(_io.StringIO()) as _out:
+    _root = pathlib.Path(fixture_log_root(os.path.join(TMP, "t073-root"), DB, source=_src))
+_kept = sorted(x.name for x in _root.iterdir())
+record("T073-01", "the fixture root links every folder whose ids the database has minted (below and AT its high-water mark) and one with no manifest, and leaves out only the folder "
+       "above it, saying so in one line that names the folder, the id and the mark",
+       _kept == ["session-at", "session-below", "session-no-manifest"] and "left out session-ahead" in _out.getvalue()
+       and f"REF-{_hw + 1:05d}" in _out.getvalue() and str(_hw) in _out.getvalue(), (_kept, _out.getvalue()))
+record("T073-02", "the fixture root of this very suite holds no folder above the copy's high-water mark",
+       not any(dbcore._MINTABLE.fullmatch((json.loads(l).get("ref_id") or "")) and int(json.loads(l)["ref_id"][4:]) > _hw
+               for m in pathlib.Path(FARM).glob("*/manifest.jsonl") for l in m.open() if l.strip()), None)
 
 print("Section B4/B5/D4/R3-14: conflicts -- keyed on the parameter, an unordered pair, two real populations")
 CODES = [r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "

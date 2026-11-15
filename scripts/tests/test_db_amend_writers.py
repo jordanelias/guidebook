@@ -90,6 +90,10 @@ DB = os.path.join(TMP, "guidebook.db")
 shutil.copy(REPO / "data" / "guidebook.db", DB)
 os.environ["GUIDEBOOK_DB_PATH"] = DB          # before db/dbcore resolve a path
 sys.path.insert(0, str(REPO / "scripts"))
+sys.path.insert(0, str(REPO / "scripts" / "tests"))
+from _fixture_log import fixture_log_root  # noqa: E402
+# T-073: read an isolated root, not the working tree's retrieval log (an untracked pre-admission folder would change a verdict)
+os.environ["GUIDEBOOK_RETRIEVAL_LOG"] = fixture_log_root(os.path.join(TMP, "retrieval-log"), DB)
 import db        # noqa: E402
 import dbcore    # noqa: E402
 from dbcore import Refusal  # noqa: E402
