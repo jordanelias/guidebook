@@ -1670,6 +1670,20 @@ def main():
         _gcc.close()
         expect("T011-10: a '?' in --session does not corrupt the emitted UPDATE: replaying it reproduces the engine's rows",
                _rg.returncode == 0 and _full(_gc) == _full(_g), _rg.stderr[-200:])
+        # --- T-021: a QUESTION on the cell appears in what the engine prints, and does not change the answer
+        _Qtext = "TASK-FIXTURE: a reader asks whether this value suits a person who uses a long cane"
+        _q0, _ = _prep("q0", clear=(0,))
+        _q1, _ = _prep("q1", clear=(0,))
+        _sql_on(_q1, "INSERT INTO determination_gates (parameter_id, identity_code, verdict, detail, raised_at, raised_by_session) "
+                     "VALUES (?, ?, 'QUESTION', ?, '2026-11-15', 'syn')", _cell[0], _cell[1], _Qtext)
+        _r0, _ = _engine(_q0, "q0", "2026-01-01 00:00")
+        _r1, _ = _engine(_q1, "q1", "2026-01-01 00:00")
+        _pl = lambda r: next((l.split() for l in r.stdout.splitlines() if l.startswith("param ")), [])  # noqa: E731
+        expect("T021-06: the engine prints the question beside the cell (QUESTIONED, the gate id and the words) and a run without it prints none",
+               _r0.returncode == 0 and _r1.returncode == 0 and "QUESTIONED" not in _r0.stdout
+               and "QUESTIONED: gate" in _r1.stdout and _Qtext[:60] in _r1.stdout, f"{_r1.stdout[-300:]} {_r1.stderr[-200:]}")
+        expect("T021-07: the question does not change the determination: the printed state of the cell is the same with and without it",
+               len(_pl(_r0)) > 2 and _pl(_r0)[2] == _pl(_r1)[2], f"{_pl(_r0)[:3]} {_pl(_r1)[:3]}")
         shutil.rmtree(_tmp, ignore_errors=True)
 
     if FAILED:

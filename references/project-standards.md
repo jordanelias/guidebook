@@ -7669,3 +7669,18 @@ Eight messages of the owner, in the main session of `transcripts/harness_db856d8
 CONDITION: any session citing the owner's instructions for the idealized state graph, or reading `IDEAL-GRAPH.md` line 11.
 ACTION: (1) Cite this entry for the eight sentences, not the relay. (2) Do not read a further meaning into a sentence that it does not state. (3) Where the relay and this entry differ, this entry's text governs.
 DATE: 2026-11-15 — entered on the owner's answer to OD-28 (2026-11-12); the sentences are the owner's, of 2026-10-12.
+
+## Owner statement 2026-10-12 — a ninth sentence found beside the eight, and corrections to the entry that enters them
+
+Found by the adversarial pass on the entry "Owner statements 2026-10-12 — eight sentences on the idealized state graph" (above), by listing every human-origin message of that run rather than the eight patterns the plan searched for. It is the owner's, queued at 2026-10-12T02:05:02.301Z UTC (`transcripts/harness_db856d85/main.jsonl`, the enqueue line and its `queued_command` attachment), 48 seconds before O3:
+
+> "upon completion, perform a comparative analysis between workplan v2 and ideal state graph"
+
+It is not one of the eight OD-28 named; it is entered here because the owner's words are recorded on contact (CLAUDE.md rule 0), and O3's "wherever there is a conflict" follows it.
+
+**Corrections to the entry above, which is not edited.** (1) Its paragraph "What they record" says the sentences are about tables "that carry references and ids"; O7 says "across all tables with references and ids", and the paragraph is not a restatement to cite. (2) It assigns all eight to "the idealized state graph"; only O1 and O2 name it, O3 concerns adjudicating conflicts, and O4 to O8 name no object. (3) It summarises O1 and O3 without O1's "dynamically scrape mine organize and sort all relevant information from any source for any parameter regardless of search slug" or O3's "100% accuracy, code compliance". (4) Where it quotes the answer to OD-28 as "OD-28: enter the eight sentences verbatim from the committed transcript", the ledger line reads "OD-28: enter the eight sentences of 2026-10-12 verbatim from the committed transcript", the owner's selection being "Enter them verbatim from the transcript". The eight sentences themselves are quoted exactly. Cite the sentences, not the paragraph.
+
+CONDITION: any session citing the owner's 2026-10-12 sentences or the paragraph "What they record".
+ACTION: (1) Cite the quoted sentences, O1 to O8 and the ninth above, and nothing the paragraph adds. (2) Read no sentence as naming an object it does not name.
+DATE: 2026-11-15 — corrections by the recorder; the ninth sentence is the owner's, of 2026-10-12.
+

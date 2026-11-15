@@ -53,7 +53,7 @@ glossary:
   convergence_sources: "Which sources took part in each convergence verdict, and the role each played."
   data_migrations: "The ledger of every change applied to the database. Append-only; nothing here is edited."
   decisions: "The project's recorded decisions (D-numbers): what was decided, by whom, why, and whether it still stands."
-  determination_gates: "A flag raised against a determination when new evidence may overturn it. It stays open until someone resolves it."
+  determination_gates: "A flag raised against a determination when new evidence may overturn it, or a question a reader or you asked about a published value (verdict QUESTION: the cell is shown as questioned, never as wrong). It stays open until someone resolves it."
   economics_entries: "Cost and funding facts, such as grants and construction costs, with the source each came from."
   evidence_population_match: "For each source, how closely the people studied match the people the guidebook serves: exact, partial, proxy or mismatch."
   evidence_source_authors: "The authors of each source, one row per author in order, so credit and co-production can be checked."
@@ -1116,10 +1116,10 @@ queue:
     table: determination_gates
     key: gate_id
     sql: |
-      SELECT gate_id AS id, 'parameter ' || parameter_id || ' · ' || coalesce(identity_code, 'every lens') || ' · ' || verdict AS label
+      SELECT gate_id AS id, 'parameter ' || parameter_id || ' · ' || coalesce(identity_code, icf_code, needs_code, medical_code, 'every lens') || ' · ' || verdict AS label
         FROM v_open_determination_gates ORDER BY gate_id
     question: "Resolve this gate, or leave it open?"
-    why_yours: "A gate means a determination may rest on the wrong evidence. Its own text names a resolution path."
+    why_yours: "A gate means a determination may rest on the wrong evidence, or, for a QUESTION, that someone has asked about it. Its own text names a resolution path."
     options:
       - key: open
         label: "Leave it open until the full text is read"

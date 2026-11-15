@@ -27,7 +27,7 @@ CREATE TABLE "_133_new_determination_gates" (
     parameter_id        INTEGER NOT NULL REFERENCES base_parameters(parameter_id),
     -- The lens the finding applies to, NULL meaning every lens on this parameter. Not an FK set like
     -- specifications' four, because a gate is raised against a parameter by an audit that may not know which cells
-    -- exist yet. A gate is skipped for a cell only when the cell carries a DIFFERENT code in a lens the gate names; a lens the cell does not carry never skips it (the rule the identity column always had).
+    -- exist yet. A gate that names several lens columns applies to a cell that carries ALL of them.
     identity_code       TEXT REFERENCES "base_taxonomy_identity"(identity_code),
     icf_code            TEXT REFERENCES base_icf(icf_code),
     needs_code          TEXT REFERENCES access_needs(need_code),

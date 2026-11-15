@@ -420,6 +420,11 @@ ATTESTED_FORMS = ("instrument", "other_source")
 #: owner's delegation of 2026-11-12). A typed prefix of the ledger, not a vocabulary list.
 LEDGER_DELEGATED_PREFIX = "Delegated resolution"
 
+#: The ledger's convention for an entry that records the OWNER's own words or answer: its heading begins "Owner"
+#: ("Owner answers", "Owner statements", "Owner rulings", "Owner instruction"). A verb that makes a decision the owner
+#: holds (base vocabulary, scope, the population taxonomy) points at one of these and at nothing else.
+LEDGER_OWNER_PREFIX = "Owner"
+
 
 def ledger_entry_names(heading: str, token: str) -> bool:
     """Does the ledger entry under `## <heading>` name `token` as a whole token?

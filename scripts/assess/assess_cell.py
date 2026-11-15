@@ -657,12 +657,24 @@ def derivation_handshake(conn, parameter_id, lens, sources):
         rationale = ("no governing population evidence for this cell; the determination "
                      "rests on the functional mapping alone")
     else:
-        return functional_basis, None, None, cultural_anchor, []
+        # No governing evidence and no function path: nothing to derive and no anchor for a gate to cap, but a
+        # QUESTION about the cell is still reported with it.
+        return functional_basis, None, None, cultural_anchor, _open_gates(conn, parameter_id, lens, 6, questions_only=True)
 
     # --- H4 ---------------------------------------------------------------------
+    best = min((r["tier"] for r in sources if r.get("tier")), default=6)
+    gates = _open_gates(conn, parameter_id, lens, best)
+    return functional_basis, paths, rationale, cultural_anchor, gates
+
+
+def _open_gates(conn, parameter_id, lens, best, questions_only=False):
+    """The open determination gates that reach this cell, as the engine reports them.
+
+    A gate is skipped when the cell carries a DIFFERENT code in a lens the gate names (a lens the cell does not carry
+    never skips it). A QUESTION (OD-21) is reported, never binding. Any other gate binds only when its trigger is at
+    least as strong as the cell's best anchor `best` (the ladder-inversion guard)."""
     gates = []
     if _table_exists(conn, "determination_gates"):
-        best = min((r["tier"] for r in sources if r.get("tier")), default=6)
         for g in conn.execute(
                 "SELECT gate_id, verdict, trigger_tier, trigger_evidence_type, "
                 "trigger_ref_id, detail, identity_code, icf_code, needs_code, medical_code "
@@ -671,12 +683,14 @@ def derivation_handshake(conn, parameter_id, lens, sources):
                    for col, gv in zip(("identity_code", "icf_code", "needs_code", "medical_code"), g[6:10])):
                 continue                      # a gate on another lens
             if g[1] == "QUESTION":
-                # A QUESTION is an objection to a published value, recorded as an open gate (OD-21). It FLAGS
-                # the cell as questioned and never caps it: it states no tier, so there is no strength to
-                # weigh against the cell's anchors, and the book does not call a value wrong because someone
-                # asked. It closes with a recorded answer (resolve-determination-gate) or a re-derivation.
+                # An objection to a published value, recorded as an open gate (OD-21). It FLAGS the cell and never
+                # caps it: it states no tier, so there is no strength to weigh against the cell's anchors, and the
+                # book does not call a value wrong because someone asked. It closes with a recorded answer
+                # (resolve-determination-gate) or a re-derivation.
                 gates.append({"gate_id": g[0], "verdict": g[1], "trigger_tier": None, "binds": False,
                               "question": True, "why": g[5]})
+                continue
+            if questions_only:
                 continue
             if g[2] > best:
                 # LADDER-INVERSION GUARD. The trigger is weaker than the cell's best
@@ -689,7 +703,7 @@ def derivation_handshake(conn, parameter_id, lens, sources):
                 continue
             gates.append({"gate_id": g[0], "verdict": g[1], "trigger_tier": g[2],
                           "binds": True, "why": g[5]})
-    return functional_basis, paths, rationale, cultural_anchor, gates
+    return gates
 
 
 def _table_exists(conn, name):
@@ -2406,7 +2420,7 @@ def main():
                         "all_sources_disqualified", "derivation_sha", "n_sources",
                         "n_extractions_in_lens", "n_extractions_outside_lens", "unkeyed_models",
                         "non_anchoring_on_tier",
-                        "needs_population_assessment", "tier_inconsistent", "falsification")}
+                        "needs_population_assessment", "tier_inconsistent", "falsification", "gates")}
                       | {"convergence": det["convergence"], "confidence": det["confidence"],
                          "gap_register_id": gap_id, "specification_id": specification_id,
                          "convergence_id": this_conv,
@@ -2445,6 +2459,9 @@ def main():
               f"nonanchor={len(r['non_anchoring_on_tier'])} "
               f"rso={r['regulatory_stratum_only']} marker={r['marker'] or '-'} "
               f"cfo={r['code_floor_only']} sha={r['derivation_sha'][:12]}")
+        for _g in r["gates"]:
+            print(f"    {'QUESTIONED' if _g.get('question') else ('GATE binds' if _g['binds'] else 'gate does not bind')}: "
+                  f"gate {_g['gate_id']} ({_g['verdict']}): {(_g.get('why') or '')[:200]}")
         if r["unkeyed_models"]:
             print(f"    lens model(s) its governing figures also carry, which the cell key leaves "
                   f"NULL: {', '.join(r['unkeyed_models'])}")

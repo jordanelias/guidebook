@@ -2387,9 +2387,9 @@ def main():
                         help="base_taxonomy_identity.identity_code. OMIT to gate every lens on "
                              "this parameter — what an audit that does not yet know "
                              "which cells exist should do")
-    p_gate.add_argument("--icf", help="base_icf.icf_code: gate only cells that carry this ICF code")
-    p_gate.add_argument("--needs", help="access_needs.need_code: gate only cells that carry this need")
-    p_gate.add_argument("--medical", help="base_taxonomy_medical.medical_code: gate only cells that carry it")
+    p_gate.add_argument("--icf", help="base_icf.icf_code. The gate reaches every cell that does not carry a DIFFERENT ICF code (a cell with no ICF code is reached too, as an identity-keyed gate always was)")
+    p_gate.add_argument("--needs", help="access_needs.need_code. Reaches every cell that does not carry a DIFFERENT need code")
+    p_gate.add_argument("--medical", help="base_taxonomy_medical.medical_code. Reaches every cell that does not carry a DIFFERENT medical code")
     p_gate.add_argument("--verdict", required=True,
                         choices=dbcore.schema_choices("determination_gates", "verdict"),
                         help="QUESTION records an objection to a published value: no source, no tier "
@@ -8727,13 +8727,20 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
 
 
 def _owner_approval(approval_ref: str, subject: str) -> str:
-    """The approval heading for a base-vocabulary admission: one dated ledger entry, and the owner's own
-    (an entry under the delegated-resolution prefix is a model's, and admits nothing)."""
+    """The approval heading for a base-vocabulary admission: one dated ledger entry whose heading begins "Owner"
+    (the owner's own words). A delegated resolution is a model's, and any other entry (a session, a referral, a
+    correction, a supersession record) is not an approval, so each admits nothing."""
     heading = dbcore.require_approval_heading(approval_ref, subject)
     if heading.startswith(dbcore.LEDGER_DELEGATED_PREFIX):
         raise Refusal(f"{subject}: --approval-ref {heading!r} is a delegated resolution (a model's, under the "
                       f"owner's delegation), not the owner's words. This is a decision on research scope or "
                       f"the population taxonomy, and the owner's. Nothing was written.")
+    if not heading.startswith(dbcore.LEDGER_OWNER_PREFIX):
+        raise Refusal(f"{subject}: --approval-ref {heading!r} is not an entry that records the owner's own words "
+                      f"(the ledger's owner entries begin {dbcore.LEDGER_OWNER_PREFIX!r}: Owner answers, Owner "
+                      f"statements, Owner rulings). A session heading, a referral to the owner, a correction or "
+                      f"a supersession record approves nothing. List them with grep -n '^## Owner' "
+                      f"references/project-standards.md. Nothing was written.")
     return heading
 
 
@@ -8749,6 +8756,13 @@ def add_lang_jur_pair(language: str, jurisdiction: str, role: str, notes: str, a
     with connect(dry_run) as conn:
         dbcore.check_jurisdiction(jurisdiction, "add-lang-jur-pair --jurisdiction")
         dbcore.check_declared(conn, "lang_jur_map", "role", role, "add-lang-jur-pair --role")
+        _kind = conn.execute("SELECT kind, parent_code FROM base_jurisdictions WHERE jurisdiction_code=?",
+                             (jurisdiction,)).fetchone()
+        if _kind and _kind["kind"] == "sub-national":
+            raise Refusal(f"add-lang-jur-pair: {jurisdiction!r} is a sub-national code. A pair is keyed on the "
+                          f"country: coverage counts a search under a sub-national code toward its parent, so a "
+                          f"pair on {jurisdiction!r} could never be satisfied. Use --jurisdiction "
+                          f"{_kind['parent_code']!r}. Nothing was written.")
         if conn.execute("SELECT 1 FROM lang_jur_map WHERE language=? AND jurisdiction=?",
                         (language, jurisdiction)).fetchone():
             raise Refusal(f"add-lang-jur-pair: the pair {language}/{jurisdiction} is already held. A held pair's "
