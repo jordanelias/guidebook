@@ -7585,3 +7585,20 @@ DATE: 2026-11-15 — correction and registration, not an owner statement.
 CONDITION: any session executing a task of the remediation plan, or asking whether a task waits for the previous pull request to merge.
 ACTION: (1) Finish each task on the working branch (its own gate, adversarial pass and repairs, each a commit) before the next; open one pull request for the branch and add each task to its body; do not wait for a merge between tasks. (2) Keep tooling and research apart (rule 10). (3) The generated `REMEDIATION-PLAN.md` is not edited by hand; its "merged" test reads merge commits and will count a stacked task as merged only when the pull request merges.
 DATE: 2026-11-15 — owner instruction (typed words, quoted above).
+
+
+---
+
+## Owner instruction 2026-11-15 (later) — at the end of each batch, sweep the changes forward and backward and repair what was left, so nothing hangs
+
+**Owner's words, quoted (typed):**
+
+> "for unrepaired items: please sweep your changes at end of each batch both forward and backward to assess compatibility with existing work and proposed work, and then rectify accoridngly. we do not want to leave hanging unfixed work"
+
+**Readings.** [ASSUMPTION: "unrepaired items" are the findings an adversarial pass raised and the executor reported without repairing, and every limit a task's own report states; "batch" is a batch of `REMEDIATION-PLAN.md`; "forward" is the proposed work (the task files of later tasks and batches that name anything the batch changed) and "backward" is existing work (the code, tests, skills, governance and derived files that already stood, and the earlier tasks of the same stack) — basis: the statement]. [ASSUMPTION: "rectify" means repair it in the batch's pull request where the repair is code or text within the executor's reach, and where it is a decision the owner holds (doctrine, taxonomy, a delegated resolution) put the question to the owner in the pull request and amend the affected task files so the question is not silently carried; a reported item is not an acceptable end state — basis: "we do not want to leave hanging unfixed work"].
+
+**What it adds to the per-task process.** After the last task of a batch: (1) list every reported-and-not-repaired item of the batch; (2) read every task file of later work that names anything the batch changed and correct it; (3) re-run the checks of every earlier task of the stack against the final tree and re-grep the callers of everything changed; (4) regenerate derived files; (5) commit, push, and say in the pull request what was repaired and what is now the owner's question.
+
+CONDITION: any session that has finished the last task of a batch of the remediation plan.
+ACTION: run the sweep above before reporting the batch finished; do not report an item as "not repaired" without either repairing it in the sweep or naming the owner question and the task files amended for it.
+DATE: 2026-11-15 — owner instruction (typed words, quoted above).
