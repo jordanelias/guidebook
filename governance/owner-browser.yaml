@@ -160,6 +160,7 @@ decisions:
 
   - id: OR-1c
     gates: true
+    answered: {on: '2026-11-06', ledger: "Owner rulings 2026-11-06 (second)"}
     title: How does a figure or a determination carry several codes of one model?
     question: "A figure holds one code for each model, yet a fact can concern several codes of one model, such as two ICF codes. How should figures and determinations carry them?"
     why_yours: "Your answer to OR-1 requires every relevant model to be filled out, and the present columns cannot hold more than one code per model. The choice changes the schema."
@@ -323,6 +324,7 @@ decisions:
 
   - id: OR-6c
     gates: true
+    answered: {on: '2026-11-13', ledger: "Owner answers 2026-11-13 (tenth set)"}
     title: Does 'the T1 source states the value, the T2 dispute is noted' cover every divergence?
     question: "Does your approach, the T1 figure stated and the T2 dispute noted in the item's discussion, apply to every divergence or only to a T1 source against a T2 source?"
     why_yours: "Your sentence gave the approach for one pairing. Other pairings exist, and section 3.3 of the evidence methodology says something different about the design range."
@@ -444,6 +446,7 @@ decisions:
 
   - id: OR-10b
     gates: false
+    resolved_under_delegation: {on: '2026-11-12', ledger: "Delegated resolution 2026-11-12 — OD-22"}
     title: Which way does a rounded conversion move?
     question: "When a converted length is rounded to the nearest quarter inch or 5 mm, should a minimum never round down and a maximum never round up?"
     why_yours: "Rounding to the nearest can put a shown figure on the wrong side of what the source requires."
@@ -582,6 +585,7 @@ decisions:
 
   - id: OR-14b
     gates: false
+    answered: {on: '2026-11-13', ledger: "Owner answers 2026-11-13 (tenth set)"}
     title: Does the specifications pass write the element page, or is it derived when read?
     question: "Should the specifications pass itself write an element-level determination (a ramp as a whole), or should the page be derived at read time from the parameters' determinations?"
     why_yours: "You said the derivation is what you expect the specifications pass to be doing: adjudicating, deriving and synthesizing across rows of related evidence. That can mean either."
@@ -789,6 +793,7 @@ decisions:
 
   - id: OR-22b
     gates: false
+    answered: {on: '2026-11-13', ledger: "Owner answers 2026-11-13 (tenth set)"}
     title: Which marker does a floor claim read when a study confirms it?
     question: "When a study confirms a regulation's value by finding no reason to change it, which marker does the determination read?"
     why_yours: "Your ruling makes the study's absence a confirmation. The marker is what a reader sees, and the present rule holds a regulation-only claim at the empty circle."
@@ -832,6 +837,7 @@ decisions:
 
   - id: OR-23b
     gates: false
+    answered: {on: '2026-11-13', ledger: "Owner answers 2026-11-13 (tenth set)"}
     title: Does the academic-route condition apply to codes and standards?
     question: "Your ruling lets an unretrievable source keep its tier and anchor only when it has a valid academic route. Does a registry citation (jurisdiction, standard number, clause) count as a valid route for a code or a standard?"
     why_yours: "Read literally, the condition removes the tier and the anchoring of every unretrievable code and standard, because codes are not cited in academic literature."
@@ -875,6 +881,7 @@ decisions:
 
   - id: OR-25
     gates: false
+    answered: {on: '2026-11-13', ledger: "Owner answers 2026-11-13 (tenth set)"}
     title: Does batch 23's extraction cap carry over to scans?
     question: "Does batch 23's pilot extraction cap carry over to the scan contract (2026-10-09 ACTION 5)?"
     why_yours: "The 2026-10-09 recommendation is unratified."
@@ -914,6 +921,7 @@ decisions:
 
   - id: OW-1b
     gates: false
+    resolved_under_delegation: {on: '2026-11-12', ledger: "Delegated resolution 2026-11-12 — OD-12", corrected_by: "Correction 2026-11-12 — to the delegated resolution of OD-12"}
     title: How is the render table's prose produced?
     question: "Is the prose in the render table assembled by fixed templates from the specification and its sources, or written by a model?"
     why_yours: "You expect complete prose. Complete prose is a synthesis in the book's voice, and only an Opus-class session writes best-practice synthesis."
@@ -941,6 +949,7 @@ decisions:
 
   - id: OW-1c
     gates: false
+    resolved_under_delegation: {on: '2026-11-12', ledger: "Delegated resolution 2026-11-12 — OD-12", corrected_by: "Correction 2026-11-12 — to the delegated resolution of OD-12"}
     title: Is the render table stored, or rebuilt each time?
     question: "Is the render table stored and rewritten when a specification or its sources change, or rebuilt in full each time the site is built?"
     why_yours: "A stored table is a second home for what the specifications and sources already say, and a rebuilt one is not a record."
@@ -1009,6 +1018,7 @@ decisions:
 
   - id: OT-2
     gates: false
+    answered: {on: '2026-11-13', ledger: "Owner answers 2026-11-13 (tenth set)"}
     title: Approve the definition of "barrier-free path of travel"
     question: "Is this the definition and scope note the catalogue should hold for barrier-free path of travel?"
     why_yours: "A catalogue term is approved by you before it is added (ledger, 2026-10-09), and a staged description is a hypothesis until it is checked against the sources."
