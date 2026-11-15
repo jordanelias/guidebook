@@ -1104,6 +1104,66 @@ else:
                err is None and _n[0] == "checked against the issuing body's page" and _n[1] == _stamp0, (err, tuple(_n)))
     record("T027-05", "edition is a field correct-source takes from the logged payload", "edition" in db._CORRECTABLE, sorted(db._CORRECTABLE))
 
+print("Section T034: cell-status answers where a cell stands, from the tables, and writes nothing")
+_tabs = [r[0] for r in q("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")]
+_P_none = scalar("SELECT parameter_id FROM base_parameters WHERE parameter_id NOT IN "
+                 "(SELECT parameter_id FROM source_value_extractions) ORDER BY parameter_id LIMIT 1")
+_P_fig = scalar("SELECT parameter_id FROM source_value_extractions GROUP BY parameter_id ORDER BY COUNT(*) DESC LIMIT 1")
+if _P_none is None or _P_fig is None:
+    skip("T034", "the live database has no parameter without figures and one with")
+else:
+    _cnt = lambda: [scalar(f'SELECT COUNT(*) FROM "{t}"') for t in _tabs]          # noqa: E731
+    _n0 = _cnt()
+    d_none, e1 = ok(db.cell_status, _P_none)
+    d_fig, e2 = ok(db.cell_status, _P_fig)
+    record("T034-01", "a parameter with no figures reports nothing held at judgment and evidence and no determination, and its owed pairs are read "
+           "from the scope",
+           e1 is None and d_none["stages"]["judgment"]["held"] == [] and d_none["stages"]["evidence"]["held"] == []
+           and d_none["stages"]["specification"]["held"] == []
+           and sorted(d_none["stages"]["research"]["owed"]["scope_unrecorded"] + d_none["stages"]["research"]["owed"]["pairs_in_scope"])
+           == sorted(f"{a}/{b}" for a, b in q("SELECT language, jurisdiction FROM lang_jur_map WHERE COALESCE(scope_status, 'in-scope') <> 'scoped-out' "
+                                              "AND NOT (language, jurisdiction) IN (SELECT UPPER(language), jurisdiction FROM search_executions "
+                                              "WHERE parameter_id = ? AND deferred_reason IS NULL)", _P_none)), e1)
+    _judged = [r[0] for r in q("SELECT extraction_id FROM source_value_extractions WHERE parameter_id=? ORDER BY extraction_id", _P_fig)]
+    _led = {st: [r[0] for r in q("SELECT ref_id FROM v_scan_ledger WHERE parameter_id=? AND status=? ORDER BY ref_id", _P_fig, st)]
+            for st in ("EXTRACTED", "STATED-ABSENT", "READ-NOTHING-FOUND", "NOT-READ", "READ-PARTIAL")}
+    _st = d_fig["stages"] if d_fig else {}
+    record("T034-02", "a parameter with figures lists every extraction id at judgment, and the scan ledger's statuses at evidence "
+           "(held = extracted or stated absent, examined empty = read nothing found, never examined = not read, owed = read in part only)",
+           e2 is None and _st["judgment"]["held"] == _judged
+           and _st["evidence"]["held"] == sorted(_led["EXTRACTED"] + _led["STATED-ABSENT"])
+           and _st["evidence"]["examined_empty"] == _led["READ-NOTHING-FOUND"]
+           and _st["evidence"]["never_examined"] == _led["NOT-READ"]
+           and _st["evidence"]["owed"]["read_in_part_only"] == _led["READ-PARTIAL"], (e2, len(_judged)))
+    _lens = q("SELECT l.identity_code, l.extraction_id FROM v_live_lens_links l JOIN source_value_extractions e ON e.extraction_id = l.extraction_id "
+              "WHERE e.parameter_id=? AND l.identity_code IS NOT NULL ORDER BY l.extraction_id", _P_fig)
+    if _lens:
+        _code = _lens[0][0]
+        d_l, e3 = ok(db.cell_status, _P_fig, identity=_code)
+        _want = [r[0] for r in q("SELECT e.extraction_id FROM source_value_extractions e WHERE e.parameter_id=? AND EXISTS (SELECT 1 FROM "
+                                 "v_live_lens_links l WHERE l.extraction_id=e.extraction_id AND l.identity_code=?) ORDER BY 1", _P_fig, _code)]
+        record("T034-03", "a lens narrows the figures to those carrying that code, and no other stage's list is made up",
+               e3 is None and d_l["stages"]["judgment"]["held"] == _want and 0 < len(_want) <= len(_judged), (e3, _want[:5]))
+    else:
+        skip("T034-03", "no figure of the chosen parameter carries an identity code")
+    _rs = [refusal(db.cell_status, 2 ** 30), refusal(db.cell_status, _P_fig, identity="NO-SUCH-CODE"),
+           refusal(db.cell_status, _P_fig, jurisdiction="ZZ-NOT-A-CODE"), refusal(db.cell_status, _P_fig, language="ZZNOLANG")]
+    record("T034-04", "an unknown parameter, lens code, jurisdiction or language is refused, naming the listing query or table",
+           all(_rs) and "SELECT parameter_id" in _rs[0] and "base_taxonomy_identity" in _rs[1] and "ZZ-NOT-A-CODE" in _rs[2] and "lang_jur_map" in _rs[3], _rs)
+    record("T034-05", "the verb writes nothing: every table holds as many rows after the calls as before", _n0 == _cnt(), (_n0, _cnt()))
+    with scratch() as c:
+        _pr = c.execute("SELECT language, jurisdiction FROM lang_jur_map WHERE NOT (language, jurisdiction) IN (SELECT UPPER(language), "
+                        "jurisdiction FROM search_executions WHERE parameter_id=? AND deferred_reason IS NULL) ORDER BY 1, 2 LIMIT 1", (_P_none,)).fetchone()
+        _key = f"{_pr[0]}/{_pr[1]}"
+        _seen = {}
+        for st in ("scoped-out", "in-scope", None):
+            c.execute("UPDATE lang_jur_map SET scope_status=? WHERE language=? AND jurisdiction=?", (st, *_pr))
+            c.commit()
+            r = db.cell_status(_P_none)["stages"]["research"]
+            _seen[st] = (_key in r["never_examined"]["pairs_scoped_out"], _key in r["owed"]["pairs_in_scope"], _key in r["owed"]["scope_unrecorded"])
+        record("T034-06", "a pair never searched is reported by its recorded scope: scoped out = never examined, in scope = owed, NULL = scope unrecorded",
+               _seen == {"scoped-out": (True, False, False), "in-scope": (False, True, False), None: (False, False, True)}, _seen)
+
 print("Section B4/B5/D4/R3-14: conflicts -- keyed on the parameter, an unordered pair, two real populations")
 CODES = [r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "
                          "ORDER BY identity_code DESC LIMIT 2")]

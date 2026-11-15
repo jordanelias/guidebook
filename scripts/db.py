@@ -1137,6 +1137,100 @@ def get_unmined_sources(slug: str) -> list[dict]:
     return [dict(r) for r in rows]
 
 
+_CELL_LENS_TABLES = (("identity_code", "base_taxonomy_identity", "identity_code"), ("icf_code", "base_icf", "icf_code"),
+                     ("needs_code", "access_needs", "need_code"), ("medical_code", "base_taxonomy_medical", "medical_code"))
+
+
+def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs: str = None,
+                medical: str = None, jurisdiction: str = None, language: str = None) -> dict:
+    """Where one cell stands, stage by stage, read from the tables and nothing else (T-034).
+
+    For a parameter, and optionally a lens, a jurisdiction and a language, each stage reports four lists of
+    row ids: `held` (what is there), `examined_empty` (looked at and found nothing), `never_examined` (not
+    looked at) and `owed` (what the record says is still to be done). Every list is computed from the live
+    tables and views (`v_research_scope`, `v_scan_ledger`, `v_live_lens_links`, ...), never typed, so a run
+    started mid-pipeline can read what to skip and what to do. Read-only: nothing is written.
+
+    A pair's scope is reported as it stands in `lang_jur_map.scope_status`: a NULL is reported as
+    `scope_unrecorded` (owed, as `v_research_scope` reads it), never as in scope or out of it."""
+    given = {"identity_code": identity, "icf_code": icf, "needs_code": needs, "medical_code": medical}
+    lens = {k: v for k, v in given.items() if v}
+    with connect(readonly=True) as conn:
+        param = conn.execute("SELECT parameter_id, status FROM base_parameters WHERE parameter_id=?",
+                             (parameter_id,)).fetchone()
+        if param is None:
+            raise Refusal(f"cell-status: parameter_id {parameter_id}: no such parameter. List them with SELECT "
+                          f"parameter_id FROM base_parameters.")
+        for col, tbl, key in _CELL_LENS_TABLES:
+            if lens.get(col) and not dbcore.exists(conn, tbl, key, lens[col]):
+                raise Refusal(f"cell-status: {col} {lens[col]!r} is not in {tbl}. List the codes with SELECT "
+                              f"{key} FROM {tbl}.")
+        ids = lambda sql, *a: [r[0] for r in conn.execute(sql, a)]          # noqa: E731
+        if jurisdiction:
+            dbcore.check_jurisdiction(jurisdiction, "cell-status --jurisdiction")
+        lang = _check_language(conn, language, "cell-status") if language else None
+        # ---- research: the searches logged against this parameter, and the pairs the scope owes ----------
+        pj = "COALESCE(b.parent_code, se.jurisdiction)"
+        sfilter = ("se.parameter_id = ?" + (f" AND {pj} = ?" if jurisdiction else "")
+                   + (" AND UPPER(se.language) = ?" if lang else ""))
+        sargs = [parameter_id] + ([jurisdiction] if jurisdiction else []) + ([lang] if lang else [])
+        base = ("SELECT se.exec_id FROM search_executions se LEFT JOIN base_jurisdictions b "
+                "ON b.jurisdiction_code = se.jurisdiction WHERE " + sfilter)
+        searched = {(r[0], r[1]) for r in conn.execute(
+            f"SELECT UPPER(se.language), {pj} FROM search_executions se LEFT JOIN base_jurisdictions b "
+            f"ON b.jurisdiction_code = se.jurisdiction WHERE {sfilter} AND se.deferred_reason IS NULL", sargs)}
+        pairs = [dict(r) for r in conn.execute("SELECT language, jurisdiction, role, scope_status FROM lang_jur_map "
+                                               "ORDER BY language, jurisdiction")
+                 if (not jurisdiction or r["jurisdiction"] == jurisdiction) and (not lang or r["language"] == lang)]
+        unsearched = [p for p in pairs if (p["language"], p["jurisdiction"]) not in searched]
+        research = {
+            "held": ids(base + " AND se.deferred_reason IS NULL AND COALESCE(se.results_admitted, 0) > 0", *sargs),
+            "examined_empty": ids(base + " AND se.deferred_reason IS NULL AND COALESCE(se.results_admitted, 0) = 0", *sargs),
+            "never_examined": {"deferred_searches": ids(base + " AND se.deferred_reason IS NOT NULL", *sargs),
+                               "pairs_scoped_out": [f"{p['language']}/{p['jurisdiction']}" for p in unsearched
+                                                    if p["scope_status"] == "scoped-out"]},
+            "owed": {"pairs_in_scope": [f"{p['language']}/{p['jurisdiction']}" for p in unsearched
+                                        if p["scope_status"] == "in-scope"],
+                     "scope_unrecorded": [f"{p['language']}/{p['jurisdiction']}" for p in unsearched
+                                          if p["scope_status"] is None]}}
+        # ---- evidence and judgment: the extractions of this parameter, and the scan ledger ----------------
+        ex_sql, ex_args = "SELECT e.extraction_id FROM source_value_extractions e WHERE e.parameter_id = ?", [parameter_id]
+        if jurisdiction:
+            ex_sql += " AND e.jurisdiction = ?"; ex_args.append(jurisdiction)
+        for col, val in lens.items():
+            ex_sql += (f" AND EXISTS (SELECT 1 FROM v_live_lens_links l WHERE l.extraction_id = e.extraction_id "
+                       f"AND l.{col} = ?)"); ex_args.append(val)
+        extractions = ids(ex_sql + " ORDER BY e.extraction_id", *ex_args)
+        scan = lambda *st: ids("SELECT ref_id FROM v_scan_ledger WHERE parameter_id = ? AND status IN (%s) ORDER BY ref_id"  # noqa: E731
+                               % ",".join("?" * len(st)), parameter_id, *st)
+        evidence = {"held": scan("EXTRACTED", "STATED-ABSENT"), "examined_empty": scan("READ-NOTHING-FOUND"),
+                    "never_examined": scan("NOT-READ"), "owed": {"read_in_part_only": scan("READ-PARTIAL")}}
+        qs = ",".join("?" * len(extractions)) or "NULL"
+        judgment = {"held": extractions, "examined_empty": [], "never_examined": [],
+                    "owed": {"open_follow_ups": ids(f"SELECT follow_up_id FROM extraction_follow_ups WHERE resolved_at "
+                                                    f"IS NULL AND extraction_id IN ({qs}) ORDER BY follow_up_id", *extractions)}}
+        # ---- synthesis: what weighs these figures together, and the gaps still open on the parameter -------
+        synthesis = {"held": {"conflicts": ids("SELECT conflict_id FROM conflicts WHERE parameter_id = ? ORDER BY conflict_id", parameter_id),
+                              "connections": ids("SELECT DISTINCT con_id FROM connection_targets WHERE parameter_id = ? ORDER BY con_id", parameter_id)},
+                     "examined_empty": [], "never_examined": [],
+                     "owed": {"open_gaps": ids("SELECT gap_id FROM gaps WHERE parameter_id = ? AND status LIKE 'OPEN%' ORDER BY gap_id", parameter_id)}}
+        # ---- specification: the live determination(s) of the cell, their history, and the open gates ------
+        sp = "SELECT specification_id FROM specifications WHERE parameter_id = ?" + "".join(f" AND {c} = ?" for c in lens)
+        sp_args = [parameter_id, *lens.values()]
+        gates = ids("SELECT gate_id FROM v_open_determination_gates WHERE parameter_id = ? ORDER BY gate_id", parameter_id)
+        specification = {"held": [{"specification_id": r[0], "state": r[1]} for r in conn.execute(
+                             sp.replace("SELECT specification_id", "SELECT specification_id, state")
+                             + " AND retired_at IS NULL ORDER BY specification_id", sp_args)],
+                         "retired": ids(sp + " AND retired_at IS NOT NULL ORDER BY specification_id", *sp_args),
+                         "examined_empty": [], "never_examined": [], "owed": {"open_gates": gates}}
+    return {"parameter_id": parameter_id, "parameter_status": param["status"], "lens": lens,
+            "jurisdiction": jurisdiction, "language": lang,
+            "stages": {"research": research, "evidence": evidence, "judgment": judgment, "synthesis": synthesis,
+                       "specification": specification},
+            "note": "Lists are row ids read from the live tables. `scope_unrecorded` pairs are owed until a scope is "
+                    "recorded (set-pair-scope); render holds no rows of its own."}
+
+
 def get_coverage_completeness(slug: str) -> dict:
     """Coverage for a slug, answered from the search LOG.
 
@@ -2659,6 +2753,14 @@ def main():
                        choices=["connections", "gaps", "terms", "conflicts", "ref"])
 
     # coverage
+    p_cs2 = sub.add_parser("cell-status",
+                           help="Read-only: where a cell stands at every stage (held, examined empty, never examined, "
+                                "owed), each as row ids")
+    p_cs2.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
+    p_cs2.add_argument("--identity"); p_cs2.add_argument("--icf"); p_cs2.add_argument("--needs"); p_cs2.add_argument("--medical")
+    p_cs2.add_argument("--jurisdiction", help="a code base_jurisdictions holds; narrows searches, pairs and figures")
+    p_cs2.add_argument("--language", help="narrows searches and pairs")
+
     p_cov = sub.add_parser("coverage", help="Check search coverage")
     p_cov.add_argument("--slug", required=True)
 
@@ -3189,6 +3291,10 @@ def main():
 
     elif args.command == "coverage":
         _emit(get_coverage_completeness(args.slug))
+
+    elif args.command == "cell-status":
+        _emit(cell_status(args.parameter_id, args.identity, args.icf, args.needs, args.medical,
+                          args.jurisdiction, args.language))
 
     elif args.command == "add-gap":
         gap_id = next_gap_id()

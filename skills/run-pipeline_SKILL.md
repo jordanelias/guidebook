@@ -21,6 +21,8 @@ run. Derive every figure; paste no counts.
 | `full` (default) | stage 1 | nothing |
 | `from-evidence` | stage 3 | discovery searching only; every later gate still applies |
 
+**Where a cell stands:** a run started mid-pipeline reads `python3 scripts/db.py cell-status --parameter-id <id> [--identity|--icf|--needs|--medical <code>] [--jurisdiction <code>] [--language <L>]` first (read-only): per stage, row ids held, examined and found empty, never examined and owed, so work already done is not repeated and work owed is not skipped.
+
 **Open once:** `/session-open` first (it sets `CURRENT` before the first Bash call), then
 `bash .claude/hooks/ensure-deps.sh`, then `/orient`. Work on a scratch DB (CLAUDE.md §4): `cp data/guidebook.db $S/guidebook.db`
 and `GUIDEBOOK_DB_PATH=$S/guidebook.db` inline on every call. `--session` takes the bare stem, the content of
