@@ -1395,6 +1395,12 @@ def read_artefact_bytes(rel_path):
 
 
 def _is_tracked(rel_path):
+    """True iff `rel_path` (repo-relative) is a tracked file at HEAD.
+
+    An untracked transcript is not an artefact (CLAUDE.md rule 6): its entire
+    contents live in ephemeral container storage until committed, so a session
+    could name a file that a later clone will never see. `db.py` calls this one.
+    """
     result = subprocess.run(
         ["git", "-C", str(dbcore_module().REPO_ROOT), "ls-files", "--error-unmatch", rel_path],
         capture_output=True)

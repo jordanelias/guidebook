@@ -35,7 +35,6 @@ CLI usage:
 import json
 import os
 import re
-import subprocess
 import zipfile
 import sqlite3
 import sys
@@ -350,19 +349,6 @@ def close_gap(gap_id: str, status: str,
             "UPDATE gaps SET status=?, updated_at=?, updated_by_session=? "
             "WHERE gap_id=?",
             [status, u["updated_at"], u["updated_by_session"], gap_id]
-        )
-
-
-def update_gap_priority(gap_id: str, priority: str,
-                        session: str, dry_run: bool = False):
-    if priority not in ("P1", "P2", "P3"):
-        raise Refusal(f"Invalid priority: {priority}")
-    u = _upd(session)
-    with connect(dry_run) as conn:
-        conn.execute(
-            "UPDATE gaps SET priority=?, updated_at=?, updated_by_session=? "
-            "WHERE gap_id=?",
-            [priority, u["updated_at"], u["updated_by_session"], gap_id]
         )
 
 
@@ -4949,19 +4935,6 @@ _FINDINGS_BLOCK_RE = re.compile(
 _HANDBACK_TOOL_NAMES = frozenset({"SubagentHandback"})
 
 
-def _is_tracked(rel_path: str) -> bool:
-    """True iff `rel_path` (repo-relative) is a tracked file at HEAD.
-
-    An untracked transcript is not an artefact (CLAUDE.md rule 6): its entire
-    contents live in ephemeral container storage until committed, so a session
-    could name a file that a later clone will never see.
-    """
-    result = subprocess.run(
-        ["git", "-C", str(dbcore.REPO_ROOT), "ls-files", "--error-unmatch", rel_path],
-        capture_output=True)
-    return result.returncode == 0
-
-
 def _resolve_transcript_path(rel_path: str, label: str) -> tuple:
     """(resolved absolute Path, normalised repo-relative str), confirmed under transcripts/.
 
@@ -5080,7 +5053,7 @@ def record_adversarial_pass(subject_session: str, subject_commit: str,
             "self-administered pass is not a pass -- batch 20 section 0 says this "
             "about its own.")
     for label, rel in (("reviewer_transcript", reviewer_rel), ("author_transcript", author_rel)):
-        if not _is_tracked(rel):
+        if not _retrieval_log()._is_tracked(rel):
             raise Refusal(
                 f"{label} {rel!r} is not a tracked file. Commit it first (CLAUDE.md "
                 f"rule 6) -- an untracked transcript is not an artefact.")

@@ -182,11 +182,6 @@ def rebuild(target, cache=True):
     return ok, (proc.stdout + proc.stderr).strip()
 
 
-def _tables(conn):
-    return {r[0] for r in conn.execute(
-        "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")}
-
-
 def compare(committed_path, rebuilt_path):
     """C2/C3 — compare schema version and EVERY table's row count.
 
@@ -205,7 +200,7 @@ def compare(committed_path, rebuilt_path):
     if c != r:
         mismatches.append((label, c, r))
 
-    ct, rt = _tables(committed), _tables(rebuilt)
+    ct, rt = user_tables(committed), user_tables(rebuilt)
     for name in sorted(ct | rt):
         label = f"{name} count"
         if name not in ct or name not in rt:
