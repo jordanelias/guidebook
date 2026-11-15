@@ -678,7 +678,7 @@ def check_all(T, atoms, probes, conflicts, machines, caps):
     examined["probes linted for a reachable PASS"] = len(PROBE_DEFS)
     # 6 stage coverage and spine
     miss = sorted(set(T.tables) - set(T.t2s)); stale = sorted(set(T.t2s) - set(T.tables))
-    unk = sorted({s for s in T.t2s.values() if s not in T.stages and s != "infrastructure"})
+    unk = sorted({s for s in T.t2s.values() if s not in T.stages and s not in ("infrastructure", "cross-stage")})
     if miss: fails.append(f"tables in the schema but not in stage-map: {miss}")
     if stale: fails.append(f"tables in stage-map but not in the schema: {stale}")
     if unk: fails.append(f"stage ids in stage-map that the contract does not define: {unk}")

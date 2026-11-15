@@ -81,7 +81,7 @@ def meta(conn, db_file):
         sha = hashlib.sha256(f.read()).hexdigest()
     return {
         "stamp": {"sha256": sha, "user_version": conn.execute("PRAGMA user_version").fetchone()[0], "commit": commit or "unknown"},
-        "stage_order": order + ["infrastructure"], "stage": stages["tables"],
+        "stage_order": order + ["cross-stage", "infrastructure"], "stage": stages["tables"],
         "stage_judged": {"by": stages["judged_by"], "on": stages["judged_on"]},
         "vocab": vocab, "shape": shape, "holds": holds,
         "glossary": owner["glossary"], "words": owner["words"], "decisions": owner["decisions"], "rulings": rulings, "queue": owner["queue"],

@@ -25,6 +25,9 @@
 # apparatus (plan step 1.1); no registered check reads this file until step 4.4 registers
 # its successor. A new table is mapped here in the PR that adds it, by review until then.
 #
+# `cross-stage` is not a stage either. It marks a table written by several stages and pointed at by several,
+# which has no single home (the gap register: delegated resolution OD-11, 2026-11-12).
+#
 # `infrastructure` is not a stage. It marks tables recording the repository's own
 # operation — migration ledgers, run records — rather than pipeline content.
 #
@@ -111,7 +114,7 @@ tables:
   extraction_lens_links: judgment
   extraction_relations: judgment
   gap_mining: research
-  gaps: synthesis
+  gaps: cross-stage
   icf_medical_map: base
   identity_icf_map: base
   identity_medical_map: base
@@ -149,11 +152,4 @@ tables:
 # contract is what gets corrected. Until then this file is the only record, which
 # is itself a reason to resolve it in a DR rather than here.
 disputed:
-  gaps: >-
-    SYNTHESIS IS THE ONE STAGE WITH NO SUPPORT, and it is where this map put it. The contrac
-    t makes "an OPEN gap" the RESEARCH stage's entry; most live rows were written by researc
-    h-batch sessions (derive, never quote: SELECT created_by_session, COUNT(*) FROM gaps GRO
-    UP BY 1); evidence_population_match.gap_id is a FK from judgment INTO gaps; and §3 defin
-    es synthesis as weighing, convergence and cross-slug findings, which a gap is none of. a
-    ssess_cell also writes it at specification. The honest answer is a cross-stage register 
-    with no single home.
+  gaps: 'Resolved under delegation, not disputed: see the ledger entry "Delegated resolution 2026-11-12 — OD-11" in references/project-standards.md. The register is cross-stage.'
