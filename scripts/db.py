@@ -5741,7 +5741,7 @@ def amend_term(term_id: str, field: str, replacement: str, reason: str, session:
     free-text column on the row -- as ' || AMENDED <date> by <session>: ...' lines, and
     the stamp goes in updated_*.
 
-    NO-OP DETECTION IS FOR `definition` ONLY (corrected 2026-09-26). The first version
+    NO-OP DETECTION IS FOR `definition` AND `domain` (corrected 2026-09-26; `domain` added by T-010). The first version
     compared the stored scope_note with the replacement -- but the stored value carries
     the previous trailers, so an identical second call never matched, and it quoted the
     whole old column (trailers included) inside the new trailer, nesting one audit line
@@ -5776,15 +5776,15 @@ def amend_term(term_id: str, field: str, replacement: str, reason: str, session:
         old_note = row["scope_note"] or ""
         domain = row["domain"]
         if field == "domain":
+            if replacement == domain:
+                return {"term_id": term_id, "field": field, "changed": False}
             held = [r[0] for r in conn.execute(
                 "SELECT DISTINCT domain FROM terms WHERE domain IS NOT NULL AND term_id<>? "
                 "ORDER BY 1", [term_id])]
             if replacement not in held:
                 raise Refusal(f"{term_id}: --replacement {replacement!r} is not a domain another term "
                               f"carries. The domains held: {held}. Nothing was written.")
-            if replacement == domain:
-                return {"term_id": term_id, "field": field, "changed": False}
-            if replacement in dbcore.NON_QUANTITY_DOMAINS and conn.execute(
+            if dbcore.domain_key(replacement) in dbcore.NON_QUANTITY_DOMAINS and conn.execute(
                     "SELECT 1 FROM base_parameters WHERE term_id=?", [term_id]).fetchone():
                 raise Refusal(f"{term_id} is already a parameter, and {replacement!r} is a domain "
                               f"add-parameter refuses (lenses, methods, bodies of law): moving it there "
@@ -7066,6 +7066,13 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
 
     * A term that does not exist. The FK would say `FOREIGN KEY constraint failed`,
       which names neither the term nor the fix.
+    * A term filed under a domain in `dbcore.NON_QUANTITY_DOMAINS` (T-010: functional axes, populations,
+      medical conditions, methods, bodies of law, economics). Checked BEFORE the declination test, read through
+      `dbcore.domain_key` because the column is free text. The refusal names the way out for each case: a
+      standing declination is already the disposal, a revoked one cannot be repeated (so the domain is
+      corrected), a lens or a method is declined, and a quantity filed under the wrong domain is moved with
+      `amend-term --field domain`. A term whose declination was revoked and whose domain is refused therefore
+      needs the domain corrected before it can be promoted.
     * A DECLINED term (`parameter_declinations`, migration 101). Someone judged it not a
       design parameter and said why; promoting it would leave two answers to one
       question. Reversing a declination is a recorded decision, not a promotion, so the
@@ -7109,19 +7116,30 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 f"comes from an observed phrase:\n"
                 f"  db.py observe-term ...   then   db.py add-term --from-observation N "
                 f"--canonical-en '...' --rationale '...'")
-        if term["domain"] in dbcore.NON_QUANTITY_DOMAINS:
+        if dbcore.domain_key(term["domain"]) in dbcore.NON_QUANTITY_DOMAINS:
             live = [r[0] for r in conn.execute(
                 "SELECT DISTINCT t.domain FROM base_parameters p JOIN terms t USING (term_id) "
                 "WHERE t.domain IS NOT NULL ORDER BY 1")]
+            prior = conn.execute("SELECT reason, created_by_session, revoked_at FROM parameter_declinations "
+                                 "WHERE term_id=?", [term_id]).fetchone()
+            if prior and prior["revoked_at"] is None:
+                step = (f"It already carries a standing declination by {prior['created_by_session']} "
+                        f"({prior['reason']!r}), so there is nothing to decline; that is the disposal. ")
+            elif prior:
+                step = ("Its declination was REVOKED, and a revoked row holds the key (one per term), so "
+                        "decline-parameter cannot record a second one. ")
+            else:
+                step = (f"If it is a lens or a method, decline it, with the reason: db.py decline-parameter "
+                        f"--term-id {term_id} --reason '<why it is not a design quantity>'. (A research "
+                        f"batch declines only elements, lens terms and methods, never a quantity; OD-53. "
+                        f"For anything else, file a GAP.) ")
             raise Refusal(
-                f"{term_id} ({term['canonical_en']!r}) is filed under the domain {term['domain']!r}, "
-                f"where lenses, methods and bodies of law are kept ({sorted(dbcore.NON_QUANTITY_DOMAINS)}); "
-                f"a parameter is a quantity under determination. The domains of the live parameters "
-                f"are {live}. Nothing was written.\n"
-                f"If it is a lens, a method or a body of law, dispose of it truthfully: "
-                f"db.py decline-parameter --term-id {term_id} --reason '<why it is not a design quantity>'\n"
-                f"If it is a quantity filed under the wrong domain, correct the domain and promote it again: "
-                f"db.py amend-term --term-id {term_id} --field domain --replacement <domain> "
+                f"{term_id} ({term['canonical_en']!r}) is filed under the domain {term['domain']!r}, one of "
+                f"the domains where lenses, methods and bodies of law are kept "
+                f"({sorted(dbcore.NON_QUANTITY_DOMAINS)}); a parameter is a quantity under determination. "
+                f"The domains of the live parameters are {live}. Nothing was written.\n"
+                f"{step}If it is a quantity filed under the wrong domain, correct the domain and promote it "
+                f"again: db.py amend-term --term-id {term_id} --field domain --replacement <domain> "
                 f"--reason '<why>'")
         declined = conn.execute(
             "SELECT reason, created_at, created_by_session FROM parameter_declinations "
@@ -8048,14 +8066,15 @@ def _decision_reference(ref: str) -> str:
 
 def revoke_declination(term_id: str, reason: str, decision_ref: str, session: str,
                        dry_run: bool = False):
-    """Revoke a declination: the term may be promoted after all. The row stays.
+    """Revoke a declination: the term may be promoted after all, unless its domain is one add-parameter
+    refuses (dbcore.NON_QUANTITY_DOMAINS), in which case the domain is corrected first (T-010). The row stays.
 
     Migration 101 shipped no un-decline verb, "nothing reads an un-decline yet". The
     reader now exists: the cohort's vocabulary review (catalogue-plan-v2 section 3.4),
     which may find a declined term is a quantity after all. Retire in place (owner
     2026-09-16): revoked_at / revoked_by_session / revocation_reason are set (migration
     104) and every reader treats a revoked declination as absent -- add-parameter's
-    declined-term refusal, research_batch_dod R16's 'disposed', the adversarial skill's
+    declined-term refusal (its domain refusal, T-010, still applies), research_batch_dod R16's 'disposed', the adversarial skill's
     declination query.
 
     REFUSES: a blank reason; a decision reference that does not resolve

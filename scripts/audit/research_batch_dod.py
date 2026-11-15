@@ -1001,9 +1001,10 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # add-term refuses those names, and no live term carries one; re-derive by matching
     # `select canonical_en from terms` against _VALUE_BEARING. Meeting one is a GAP to file.
     # A SECOND, since T-010: add-parameter refuses a term filed under a domain in
-    # dbcore.NON_QUANTITY_DOMAINS (a lens, a method, a body of law). That one is disposed of
-    # by decline-parameter, which is true of it, or by amend-term --field domain when it is a
-    # quantity filed under the wrong domain; neither is a gap.
+    # dbcore.NON_QUANTITY_DOMAINS (a lens, a method, a body of law, economics). A lens or a method is
+    # disposed of by decline-parameter; a quantity filed under the wrong domain by amend-term --field
+    # domain. A body of law or a cost term is neither: OD-53 lets a batch decline only elements, lens
+    # terms and methods, never a quantity, so for those the term stays undisposed and a GAP is filed.
     # THE PREDICATE IS WIDER THAN THE RULE'S TITLE. Nothing here can tell whether a source
     # states a figure for a named concept, so every named term must be disposed of, figure
     # or none. A disposition is per term and corpus-wide, so that costs one call per term

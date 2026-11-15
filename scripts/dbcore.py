@@ -614,14 +614,23 @@ VALUE_BEARING = re.compile(r"[0-9\u2265\u2264<>=]|\b(min|max|minimum|maximum)\b"
 #: determination (T-010). `add-parameter` refuses a term in one of them: promoted, it would become a
 #: "parameter" every held source owes a reading for, which the engine determines as a pending cell with a gap
 #: for any group named (the stress runs promoted a functional axis and a legal concept in one command each).
-#: A JUDGED RULE DECLARED ONCE, in this stated place, which the owner's tenth statement of 2026-11-12 allows
-#: (`grep -n -F "isn't hardcoding necessarily" references/project-standards.md`): which domains name a lens or a
-#: body of law cannot be computed. Measured 2026-11-15, the two queries that justify it: `select domain,
+#: A JUDGED RULE DECLARED ONCE, in this stated place, as the owner's tenth statement of 2026-11-12 allows a rule
+#: held in one place (`grep -n -F "isn't hardcoding necessarily" references/project-standards.md`; it can still be
+#: hard-coding if restated, so nothing else types these names): which domains name a lens, a method or a body of
+#: law cannot be computed. THE JUDGE is the T-010 task file's reading, not an owner statement; the owner may
+#: amend the set. Measured 2026-11-15, the two queries that justify it: `select domain,
 #: count(*) from terms group by 1` (each member below is a domain some term carries), and `select distinct
 #: t.domain from base_parameters p join terms t using(term_id)` (no live parameter is in any of them).
 #: It stays when a parameter states its quantity kind (T-020): the domain is a fact of the term, the kind a
 #: fact of the parameter.
 NON_QUANTITY_DOMAINS = frozenset({"functional_axis", "population", "medical", "methodology", "legal", "economics"})
+
+
+def domain_key(domain) -> str:
+    """A `terms.domain` as the rule reads it: trimmed, case-folded, hyphen and space as underscore. The column
+    is free text (no CHECK, and `add-term --domain` stores any string), so an exact match would let `Legal`,
+    ` legal` or `functional-axis` through. A NULL or blank domain is '' and is not in the rule."""
+    return (domain or "").strip().casefold().replace("-", "_").replace(" ", "_")
 
 #: Which figure_role values supply a value to a determination. ONE HOME (migration 077; moved here from
 #: `assess_cell`, which imports it back): `gather_sources` filters on it, `gather_extraction_links` grades
