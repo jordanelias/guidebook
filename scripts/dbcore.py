@@ -380,6 +380,17 @@ def ledger_heading_count(heading: str) -> int:
                if l.startswith("## ") and normalise_quote_text(l[3:]) == want)
 
 
+def code_currency_vocabulary() -> list:
+    """The `code_currency_status` values, read from the ratified enum line of governance/tier-system.md.
+
+    The column carries no CHECK, so its vocabulary's one home is the governance sentence that ratified it
+    ("`code_currency_status` enum: `A`, `B` ..."): read at call time, never retyped (rule 8). Empty if the
+    sentence is gone, and the caller then refuses to guess."""
+    text = (REPO_ROOT / "governance" / "tier-system.md").read_text(encoding="utf-8")
+    m = re.search(r"`code_currency_status` enum:([^\n]*)", text)
+    return re.findall(r"`([A-Z][A-Z-]+)`", m.group(1)) if m else []
+
+
 def require_approval_heading(ref, subject: str) -> str:
     """The dated `## ` heading `ref` names, leading `## ` stripped, or a Refusal naming `subject`.
 

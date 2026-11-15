@@ -1072,6 +1072,38 @@ else:
         record("T025-10", "lang_jur_map and base_taxonomy_identity are in the captured set (a change to either reaches a migration)",
                {"lang_jur_map", "base_taxonomy_identity"} <= _wt, sorted(_wt))
 
+print("Section T027: a source's code currency is written by amend-source, stamped, and its edition by correct-source")
+_cv = dbcore.code_currency_vocabulary()
+_ref27 = scalar("SELECT ref_id FROM evidence_sources WHERE code_currency_status IS NULL ORDER BY ref_id LIMIT 1")
+if not _cv or not _ref27:
+    skip("T027", "no readable enum in governance/tier-system.md or no source without a currency status")
+else:
+    with scratch() as c:
+        _before = c.execute("SELECT code_currency_status, code_currency_verified_at, code_currency_verified_by_session "
+                            "FROM evidence_sources WHERE ref_id=?", (_ref27,)).fetchone()
+        res, err = ok(db.amend_source, _ref27, "code_currency_status", _cv[0], "T027 fixture: edition checked", session=S, dry_run=False)
+        _row = c.execute("SELECT code_currency_status, code_currency_verified_at, code_currency_verified_by_session, "
+                         "metadata_integrity_detail FROM evidence_sources WHERE ref_id=?", (_ref27,)).fetchone()
+        record("T027-01", "amend-source sets code_currency_status to a member of the enum governance/tier-system.md ratifies, stamps "
+               "code_currency_verified_at and _by_session itself, and ledgers the replaced value with the reason",
+               err is None and tuple(_before) == (None, None, None) and _row[0] == _cv[0] and bool(_row[1])
+               and _row[2] == dbcore.session_stem(S) and "code_currency_status CORRECTED (T027 fixture: edition checked)" in _row[3], (err, tuple(_row)))
+        res, err = ok(db.amend_source, _ref27, "code_currency_status", _cv[0], "again", session=S, dry_run=False)
+        record("T027-02", "the same value again changes nothing", err is None and res["changed"] is False, (err, res))
+        _rs = {"outside the enum": refusal(db.amend_source, _ref27, "code_currency_status", "CURRENT-ISH", "r", session=S, dry_run=True),
+               "stamp typed": refusal(db.amend_source, _ref27, "code_currency_verified_at", "2026-01-01", "r", session=S, dry_run=True),
+               "edition by hand": refusal(db.amend_source, _ref27, "edition", "2nd", "r", session=S, dry_run=True)}
+        record("T027-03", "a value outside the enum is refused naming the enum; the stamp columns are not amendable; edition is a bibliographic "
+               "field and is sent to correct-source",
+               all(_rs.values()) and all(v in _rs["outside the enum"] for v in _cv) and "not an amendable" in _rs["stamp typed"]
+               and "correct-source" in _rs["edition by hand"], _rs)
+        _stamp0 = c.execute("SELECT code_currency_verified_at FROM evidence_sources WHERE ref_id=?", (_ref27,)).fetchone()[0]
+        res, err = ok(db.amend_source, _ref27, "code_currency_notes", "checked against the issuing body's page", "T027 note", session=S, dry_run=False)
+        _n = c.execute("SELECT code_currency_notes, code_currency_verified_at FROM evidence_sources WHERE ref_id=?", (_ref27,)).fetchone()
+        record("T027-04", "code_currency_notes is amendable on its own and does not move the verification stamp",
+               err is None and _n[0] == "checked against the issuing body's page" and _n[1] == _stamp0, (err, tuple(_n)))
+    record("T027-05", "edition is a field correct-source takes from the logged payload", "edition" in db._CORRECTABLE, sorted(db._CORRECTABLE))
+
 print("Section B4/B5/D4/R3-14: conflicts -- keyed on the parameter, an unordered pair, two real populations")
 CODES = [r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "
                          "ORDER BY identity_code DESC LIMIT 2")]

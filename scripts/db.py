@@ -6023,6 +6023,11 @@ _AMENDABLE = (
     # clears it: it is the retrieval record, and v_scan_ledger (migration 124) decides whether a
     # later reading outranks it.
     "processing_blocked_reason",
+    # code_currency_status and code_currency_notes, added 2026-11-15 (T-027). Whether the edition cited is the
+    # one legally in force is a JUDGEMENT no payload settles (governance/tier-system.md). The status takes the
+    # enum that sentence ratifies; its two stamp columns (code_currency_verified_at / _by_session) are never
+    # typed: this verb writes them with the status, so the date and the session are the amendment's own.
+    "code_currency_status", "code_currency_notes",
 )
 
 
@@ -6290,6 +6295,14 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                     f"{ref_id}: --replacement {replacement!r} is not a member of "
                     f"schemas.enums.Co1SourceType: {sorted(m.value for m in Co1SourceType)}. "
                     f"Nothing was written.")
+        if field == "code_currency_status":
+            _cv = dbcore.code_currency_vocabulary()
+            if not _cv:
+                raise Refusal(f"{ref_id}: the code_currency_status enum could not be read from "
+                               f"governance/tier-system.md, so no value can be checked. Nothing was written.")
+            if replacement not in _cv:
+                raise Refusal(f"{ref_id}: code_currency_status {replacement!r} is not in the enum "
+                              f"governance/tier-system.md ratifies: {_cv}. Pass one of them. Nothing was written.")
         if field == "verification_status":
             # The live vocabulary, read from the column rather than retyped beside it
             # (rule 8). This column carries no CHECK, so check_vocab falls back to the
@@ -6415,6 +6428,9 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
             _sets.append("tier=?"); _vals.append(new_tier)
         for col, value in (retype or {}).get("sets", {}).items():
             _sets.append(f"{col}=?"); _vals.append(value)
+        if field == "code_currency_status":
+            _sets += ["code_currency_verified_at=?", "code_currency_verified_by_session=?"]
+            _vals += [stamp["created_at"], stamp["created_by_session"]]
         conn.execute(
             f"UPDATE evidence_sources SET {', '.join(_sets)}, "
             f"metadata_integrity_status=?, metadata_integrity_detail=?, "
