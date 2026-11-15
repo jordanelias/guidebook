@@ -110,7 +110,8 @@ def main(argv=None):
     links = set()
     if _table(con, "identity_icf_map"):
         links = {(r[0], r[1]) for r in con.execute(
-            "SELECT identity_code, icf_code FROM identity_icf_map")}
+            "SELECT identity_code, icf_code FROM identity_icf_map"
+            + (" WHERE retired_at IS NULL" if "retired_at" in {c[1] for c in con.execute("PRAGMA table_info(identity_icf_map)")} else ""))}
 
     # --- 1 + 5. THE H4 CAP, AND THE LADDER GUARD IT DEPENDS ON ----------------------
     open_by_param = {}

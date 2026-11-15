@@ -107,6 +107,7 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
       -- identity_icf_map is also the honest default -- it is what a cell whose
       -- identity lens has no promoted functional mapping actually looks like.
       CREATE TABLE identity_icf_map (
+        retired_at TEXT,
         link_id INTEGER PRIMARY KEY AUTOINCREMENT, identity_code TEXT, icf_code TEXT,
         mechanism TEXT, mapping_confidence TEXT, provenance TEXT, notes TEXT,
         created_at TEXT, created_by_session TEXT);
@@ -529,6 +530,14 @@ def main():
               "resolution_rationale='answered' WHERE detail = 'q-a'")
     expect("T021-05: a question closed with a rationale no longer flags the cell",
            "q-a" not in _flag({"icf_code": "ICF-A"}))
+
+    # 8g3. T-054: a RETIRED crossing row is history: the function path the engine reads leaves it out.
+    c = synth_db([dict(T1), dict(T1)], icf_links=MOB_LINK)
+    _fb_live = derivation_handshake(c, 1, {"identity_code": "MOB"}, [dict(T1)])[0]
+    c.execute("UPDATE identity_icf_map SET retired_at='2026-11-15'")
+    _fb_ret = derivation_handshake(c, 1, {"identity_code": "MOB"}, [dict(T1)])[0]
+    expect("T054-07: a live crossing row gives the cell a functional basis and a retired one does not",
+           _fb_live is not None and "d450" in _fb_live and _fb_ret is None, f"{_fb_live} / {_fb_ret}")
 
     # 8h. Resolution is a NAMED PATH, and the view is what enforces it: a resolved gate
     # stops binding, so no cell sits at provisional with no owner of resolution.

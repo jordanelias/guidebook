@@ -1134,6 +1134,25 @@ def check_declared(conn, table: str, column: str, value, context: str):
             % (context, table, column, value, sorted(allowed)))
 
 
+def check_identity_live(conn, code, context: str):
+    """Refuse an identity code that has been retired (deprecated), naming the successor to use instead (T-054).
+
+    A retired code is not newly stated: a writer given one is pointed at the access need or identity code that
+    carries it, read from whichever successor column is set. A code the registry does not hold is not this
+    function's business (the existence check says so). Tolerates a database that predates the successor columns."""
+    try:
+        r = conn.execute("SELECT status, superseded_by_need, superseded_by_identity FROM base_taxonomy_identity "
+                         "WHERE identity_code = ?", (code,)).fetchone()
+    except sqlite3.OperationalError:
+        return
+    if r is None or r[0] != "deprecated":
+        return
+    use = (f"the access need {r[1]!r} (--needs / a need lens)" if r[1]
+           else f"the identity code {r[2]!r}" if r[2] else "the live code that replaced it")
+    raise Refusal(f"{context}: identity code {code!r} is deprecated, so nothing is newly stated against it. Use {use} "
+                  f"instead. Nothing was written.")
+
+
 def fk_declared(conn, table: str, column: str, value, context: str, remedy: str = ""):
     """Refuse a value no row satisfies the column's own FOREIGN KEY, naming the target.
 
@@ -1158,6 +1177,8 @@ def fk_declared(conn, table: str, column: str, value, context: str, remedy: str 
         to_col = to_col or "rowid"
         if conn.execute('SELECT 1 FROM "%s" WHERE "%s"=?' % (parent, to_col),
                         (value,)).fetchone():
+            if parent == "base_taxonomy_identity":
+                check_identity_live(conn, value, context)
             return
         raise Refusal(
             "%s: %s.%s=%r has no matching row in %s.%s. A reference must point at "

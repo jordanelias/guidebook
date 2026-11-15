@@ -2296,6 +2296,24 @@ def main():
     p_rr.add_argument("--session", required=True)
     p_rr.add_argument("--dry-run", action="store_true")
 
+    p_ri = sub.add_parser("retire-identity",
+                          help="Retire an identity code in place to the access need or identity code that carries it")
+    p_ri.add_argument("--code", required=True)
+    p_ri.add_argument("--need", help="the access_needs code that carries it (exactly one of --need, --to-identity)")
+    p_ri.add_argument("--to-identity", dest="to_identity", help="the live identity code that carries it")
+    p_ri.add_argument("--approval-ref", dest="approval_ref", required=True,
+                      help="the dated `## ` heading of the owner's ledger entry, found exactly once")
+    p_ri.add_argument("--reason", required=True, help="printed, not stored")
+    p_ri.add_argument("--session", required=True)
+    p_ri.add_argument("--dry-run", action="store_true")
+
+    p_rpl = sub.add_parser("retire-population-icf-link",
+                           help="Retire one crossing row of identity_icf_map in place (never deleted, never un-retired)")
+    p_rpl.add_argument("--link-id", dest="link_id", type=int, required=True)
+    p_rpl.add_argument("--reason", required=True)
+    p_rpl.add_argument("--session", required=True)
+    p_rpl.add_argument("--dry-run", action="store_true")
+
     p_rfu = sub.add_parser("raise-follow-up",
                            help="Tag an extraction for a reviewer to re-check "
                                 "(extraction_follow_ups; owner D1, 2026-10-09)")
@@ -3652,6 +3670,13 @@ def main():
     elif args.command == "register-root":
         _emit(register_root(args.root_id, args.description, args.root_type, args.provenance,
                             args.population_note, args.notes, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "retire-identity":
+        _emit(retire_identity(args.code, args.need, args.to_identity, args.approval_ref, args.reason,
+                              session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "retire-population-icf-link":
+        _emit(retire_population_icf_link(args.link_id, args.reason, session=args.session, dry_run=args.dry_run))
 
     elif args.command == "raise-follow-up":
         _emit(raise_follow_up(args.extraction_id, args.reason, args.warrant,
@@ -8864,6 +8889,97 @@ def amend_identity(code: str, display_name: str, description: str, category: str
             "reason": reason, "approval_ref": heading, "dry_run": dry_run}
 
 
+def _identity_carriers(conn, code):
+    """Every live row that still carries identity `code`: (table.column, n). DERIVED from the foreign keys into
+    base_taxonomy_identity (never listed), plus the one identity-bearing column that declares no foreign key,
+    evidence_population_match.target_population. A row is live unless its table carries a retirement mark and it is set;
+    a code's own successor pointers and a retired child's parent_code are not carriers."""
+    out = []
+    tables = [r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")]
+    pairs = [(t, f[3]) for t in tables for f in conn.execute(f'PRAGMA foreign_key_list("{t}")')
+             if f[2] == "base_taxonomy_identity" and not (t == "base_taxonomy_identity" and f[3] == "superseded_by_identity")]
+    pairs.append(("evidence_population_match", "target_population"))
+    for t, col in pairs:
+        cols = set(dbcore.columns(conn, t))
+        if col not in cols:
+            continue
+        where = f'"{col}" = ?'
+        if "retired_at" in cols:
+            where += " AND retired_at IS NULL"
+        if t == "base_taxonomy_identity":
+            where += " AND status = 'active'"
+        n = conn.execute(f'SELECT COUNT(*) FROM "{t}" WHERE {where}', (code,)).fetchone()[0]
+        if n:
+            out.append((f"{t}.{col}", n))
+    return out
+
+
+def retire_identity(code: str, need: str, to_identity: str, approval_ref: str, reason: str, session: str,
+                    dry_run: bool = False):
+    """Retire an identity code in place to the access need or the identity code that carries it (OD-37).
+
+    Sets status 'deprecated' and ONE successor column; deletes nothing and renames nothing (the 2026-09-16 ruling).
+    Refused while any live row still carries the code, naming each carrier and the count: those rows are re-tagged
+    first (T-114), and `evidence_population_match.target_population`, which declares no foreign key, is re-graded by
+    judgment, never fanned out."""
+    if bool(need) == bool(to_identity):
+        raise Refusal("retire-identity: give exactly one of --need (an access-need code) and --to-identity (an "
+                      "identity code). Nothing was written.")
+    reason = dbcore.require_reason(reason, "retire-identity")
+    heading = _owner_approval(approval_ref, "retire-identity")
+    with connect(dry_run) as conn:
+        held = conn.execute("SELECT status FROM base_taxonomy_identity WHERE identity_code=?", (code,)).fetchone()
+        if held is None:
+            raise Refusal(f"retire-identity: {code!r} is not held. List the codes with SELECT identity_code FROM "
+                          f"base_taxonomy_identity. Nothing was written.")
+        if held["status"] == "deprecated":
+            raise Refusal(f"retire-identity: {code!r} is already deprecated. Nothing was written.")
+        if need and not dbcore.exists(conn, "access_needs", "need_code", need):
+            raise Refusal(f"retire-identity: --need {need!r} is not in access_needs. List the codes with SELECT "
+                          f"need_code FROM access_needs. Nothing was written.")
+        if to_identity:
+            tgt = conn.execute("SELECT status FROM base_taxonomy_identity WHERE identity_code=?", (to_identity,)).fetchone()
+            if to_identity == code:
+                raise Refusal(f"retire-identity: {code!r} cannot be retired to itself. Nothing was written.")
+            if tgt is None or tgt["status"] != "active":
+                raise Refusal(f"retire-identity: --to-identity {to_identity!r} is "
+                              f"{'not held' if tgt is None else tgt['status']}; a code retires only to a live one. "
+                              f"Nothing was written.")
+        carriers = _identity_carriers(conn, code)
+        if carriers:
+            raise Refusal(
+                f"retire-identity: {code!r} is still carried by live rows: "
+                + ", ".join(f"{c} ({n})" for c, n in carriers)
+                + ". Re-tag them first (T-114's re-tag moves a figure's lens; a crossing row moves with "
+                  "`db.py add-population-icf-link` then `db.py retire-population-icf-link`); "
+                  "evidence_population_match.target_population is re-graded by judgment, one source at a time, "
+                  "never fanned out. Nothing was written.")
+        sets = {"status": "deprecated", "superseded_by_need": need or None, "superseded_by_identity": to_identity or None,
+                "updated_at": dbcore.now()}
+        conn.execute("UPDATE base_taxonomy_identity SET " + ", ".join(f"{c}=?" for c in sets) + " WHERE identity_code=?",
+                     [*sets.values(), code])
+    return {"identity_code": code, "status": "deprecated", "superseded_by_need": need or None,
+            "superseded_by_identity": to_identity or None, "approval_ref": heading, "reason": reason, "dry_run": dry_run}
+
+
+def retire_population_icf_link(link_id: int, reason: str, session: str, dry_run: bool = False):
+    """Retire one crossing row of identity_icf_map in place (never deleted, never un-retired). A crossing moves to a
+    successor as a NEW row (`add-population-icf-link`, provenance naming this link_id), then this retires the old."""
+    reason = dbcore.require_reason(reason, "retire-population-icf-link")
+    with connect(dry_run) as conn:
+        row = conn.execute("SELECT link_id, retired_at FROM identity_icf_map WHERE link_id=?", (link_id,)).fetchone()
+        if row is None:
+            raise Refusal(f"retire-population-icf-link: link {link_id} is not in identity_icf_map. List the rows "
+                          f"with SELECT link_id, identity_code, icf_code FROM identity_icf_map. Nothing was written.")
+        if row["retired_at"]:
+            raise Refusal(f"retire-population-icf-link: link {link_id} is already retired ({row['retired_at']}); a "
+                          f"retired crossing is never un-retired. Nothing was written.")
+        stamp = dbcore.upd(session)
+        conn.execute("UPDATE identity_icf_map SET retired_at=?, retired_by_session=?, retired_reason=? WHERE link_id=?",
+                     (stamp["updated_at"], stamp["updated_by_session"], reason, link_id))
+    return {"link_id": link_id, "retired": True, "reason": reason, "dry_run": dry_run}
+
+
 def raise_follow_up(extraction_id: int, reason: str, warrant: str, session: str,
                     dry_run: bool = False):
     """Tag an extraction for a reviewer to re-check (migration 105).
@@ -9022,6 +9138,7 @@ def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str
                 f"  db.py add-icf-code --icf-code {icf_code} --session ...\n"
                 f"If it is an AX- demand code, it is not an ICF code and never was (owner "
                 f"ruling 2026-09-13).")
+        dbcore.check_identity_live(conn, population, "add-population-icf-link")
         if not dbcore.exists(conn, "base_taxonomy_identity", "identity_code", population):
             live = sorted(r[0] for r in
                           conn.execute("SELECT identity_code FROM base_taxonomy_identity"))
@@ -9253,6 +9370,8 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
                 + (f" (merged into {param['merged_into']})" if param["merged_into"] else "")
                 + ". Gating a parameter that no longer stands on its own pins cells "
                   "nobody will look at.")
+        if identity:
+            dbcore.check_identity_live(conn, identity, "raise-determination-gate --identity")
         if identity and not dbcore.exists(conn, "base_taxonomy_identity", "identity_code", identity):
             raise Refusal(
                 f"{identity!r} is not a live population code. Omit --identity to raise "
@@ -10054,11 +10173,8 @@ def _require_lens_code(conn, col: str, code: str):
         raise Refusal(
             f"{col} {code!r} is not a live {key} in `{table}`. The registry is the "
             f"vocabulary (CLAUDE.md §4); it is not extended from the CLI.")
-    if col == "identity_code" and conn.execute(
-            "SELECT status FROM base_taxonomy_identity WHERE identity_code=?", (code,)).fetchone()[0] == "deprecated":
-        raise Refusal(
-            f"{col} {code!r} is deprecated: a figure is not newly stated in a retired group; "
-            f"use the live code that replaced it. Nothing was written.")
+    if col == "identity_code":
+        dbcore.check_identity_live(conn, code, f"{col} (a figure is not newly stated in a retired group)")
 
 
 def _lens_basis_choices():
@@ -11820,6 +11936,7 @@ def insert_population_match(data: dict, session: str, dry_run: bool = False):
                 f"match AFTER admission -- a match row for a source that does not exist "
                 f"is a claim about nothing.")
         _refuse_tombstone(conn, ref, "add-population-match")
+        dbcore.check_identity_live(conn, data.get("target_population"), "add-population-match --target-population")
         if not dbcore.exists(conn, "base_taxonomy_identity", "identity_code", data.get("target_population")):
             raise Refusal(
                 f"target_population {data.get('target_population')!r} is not in `base_taxonomy_identity`. "

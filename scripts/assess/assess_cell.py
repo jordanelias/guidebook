@@ -604,7 +604,7 @@ def derivation_handshake(conn, parameter_id, lens, sources):
     if identity and _table_exists(conn, "identity_icf_map"):
         fb_rows = conn.execute(
             "SELECT icf_code, mechanism, mapping_confidence, provenance "
-            "FROM identity_icf_map WHERE identity_code = ? ORDER BY icf_code",
+            "FROM identity_icf_map WHERE identity_code = ? AND retired_at IS NULL ORDER BY icf_code",
             (identity,)).fetchall()
     functional_basis = json.dumps(
         [{"icf_code": r[0], "mechanism": r[1], "mapping_confidence": r[2],

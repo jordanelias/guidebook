@@ -1948,13 +1948,14 @@ try:
     # T018-12: a retired identity is not newly used, by either writer. The state is set by SQL on the copy and undone.
     (dep,) = q("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code NOT IN ('ALL', ?) "
                "ORDER BY identity_code LIMIT 1", POP)[0]
-    w("UPDATE base_taxonomy_identity SET status='deprecated' WHERE identity_code=?", dep)
+    w("UPDATE base_taxonomy_identity SET status='deprecated', superseded_by_need=(SELECT need_code FROM access_needs "
+      "ORDER BY need_code LIMIT 1) WHERE identity_code=?", dep)          # the table's CHECK now requires a successor (T-054)
     try:
         r12a = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--identity", dep, "--basis", "named_in_text",
                        "--basis-text", "TASK-FIXTURE", "--session", S)
         r12b = run_cli(*t018_cmd(ref09, "deprecated", "--identity", dep, *BASIS))
     finally:
-        w("UPDATE base_taxonomy_identity SET status='active' WHERE identity_code=?", dep)
+        w("UPDATE base_taxonomy_identity SET status='active', superseded_by_need=NULL WHERE identity_code=?", dep)
     record("T018-12", "add-lens-link and add-extraction refuse a deprecated identity code and write nothing",
            r12a.returncode != 0 and "deprecated" in out_of(r12a) and r12b.returncode != 0 and "deprecated" in out_of(r12b)
            and n_figures() == nf and n_links_now() == nl, f"{out_of(r12a)[-160:]!r} | {out_of(r12b)[-160:]!r}")

@@ -1065,10 +1065,11 @@ else:
                "and a delegated approval",
                all(_rs) and "upper case" in _rs[0] and "already held" in _rs[1] and "CHECK" in _rs[2] and "not held" in _rs[3]
                and "blank" in _rs[4] and "delegated" in _rs[5] and "no space" in _rs[6] and "blank" in _rs[7], _rs)
-        c.execute("UPDATE base_taxonomy_identity SET status='deprecated' WHERE identity_code=?", (_CODE,)); c.commit()
+        c.execute("UPDATE base_taxonomy_identity SET status='deprecated', superseded_by_need=(SELECT need_code FROM access_needs LIMIT 1) "
+                  "WHERE identity_code=?", (_CODE,)); c.commit()
         _dep = refusal(db.add_identity, "T025Y", "x", _CAT, "d", _CODE, _OWNER_H, session=S, dry_run=True)
         record("T025-07b", "add-identity refuses a parent that is held but not active", bool(_dep) and "deprecated" in _dep, _dep)
-        c.execute("UPDATE base_taxonomy_identity SET status='active' WHERE identity_code=?", (_CODE,)); c.commit()
+        c.execute("UPDATE base_taxonomy_identity SET status='active', superseded_by_need=NULL WHERE identity_code=?", (_CODE,)); c.commit()
         _no_owner = {"add-lang-jur-pair": refusal(db.add_lang_jur_pair, "ZZTR", _pair[1], "PRIMARY", None, _OTHER_H, session=S, dry_run=True),
                      "set-pair-scope": refusal(db.set_pair_scope, _pair[0], _pair[1], "scoped-out", _OTHER_H, session=S, dry_run=True),
                      "add-identity": refusal(db.add_identity, "T025Y", "x", _CAT, "d", None, _OTHER_H, session=S, dry_run=True),
@@ -1243,6 +1244,79 @@ else:
     _src = pathlib.Path(db.__file__).read_text(encoding="utf-8")
     record("T048-05", "add-extraction's refusal for an unregistered root names the verb that registers one and no longer says no writer exists",
            "db.py register-root" in _src and "has no writer yet" not in _src, None)
+
+print("Section T054: an identity code retires in place to the need or code that carries it, and a crossing row retires in place")
+_OH54 = next((h for h in [l[3:] for l in pathlib.Path(dbcore.LEDGER_PATH).read_text(encoding="utf-8").splitlines() if l.startswith("## ")]
+              if h.startswith(dbcore.LEDGER_OWNER_PREFIX) and re.search(r"\d{4}-\d{2}-\d{2}", h)), None)
+_codes54 = [r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' ORDER BY identity_code")]
+_NEED54 = scalar("SELECT need_code FROM access_needs ORDER BY need_code LIMIT 1")
+_LINK54 = q("SELECT link_id, identity_code FROM identity_icf_map WHERE retired_at IS NULL ORDER BY link_id LIMIT 1")
+with scratch() as c:
+    _free = [k for k in _codes54 if not db._identity_carriers(c, k)]
+    _carried = [k for k in _codes54 if db._identity_carriers(c, k)]
+    if not (_OH54 and _NEED54 and len(_free) >= 2 and _carried and _LINK54):
+        skip("T054", "the live ledger or database offers no owner heading, need, two free codes, a carried code and a live crossing row")
+    else:
+        _a, _b = _free[0], _free[1]
+        _R = dict(session=S, dry_run=False)
+        _n0 = c.execute("SELECT COUNT(*) FROM base_taxonomy_identity").fetchone()[0]
+        res, err = ok(db.retire_identity, _a, _NEED54, None, _OH54, "T054 fixture", **_R)
+        _r = c.execute("SELECT status, superseded_by_need, superseded_by_identity FROM base_taxonomy_identity WHERE identity_code=?", (_a,)).fetchone()
+        record("T054-01", "retire-identity --need deprecates the code in place with that need as its one successor, deletes nothing and reports the approval",
+               err is None and tuple(_r) == ("deprecated", _NEED54, None) and c.execute("SELECT COUNT(*) FROM base_taxonomy_identity").fetchone()[0] == _n0
+               and res["approval_ref"] == _OH54, (err, tuple(_r)))
+        res, err = ok(db.retire_identity, _b, None, _carried[0] if False else _free[2] if len(_free) > 2 else None, _OH54, "T054 fixture", **_R) if len(_free) > 2 else (None, "no third free code")
+        if len(_free) > 2:
+            _r2 = c.execute("SELECT status, superseded_by_need, superseded_by_identity FROM base_taxonomy_identity WHERE identity_code=?", (_b,)).fetchone()
+            record("T054-02", "retire-identity --to-identity deprecates the code with that identity as its one successor",
+                   err is None and tuple(_r2) == ("deprecated", None, _free[2]), (err, tuple(_r2)))
+        else:
+            skip("T054-02", "fewer than three codes without live carriers")
+        _c0 = _carried[0]
+        _rs = {"neither": refusal(db.retire_identity, _free[-1], None, None, _OH54, "r", session=S, dry_run=True),
+               "both": refusal(db.retire_identity, _free[-1], _NEED54, _free[0], _OH54, "r", session=S, dry_run=True),
+               "not held": refusal(db.retire_identity, "NO-SUCH-CODE", _NEED54, None, _OH54, "r", session=S, dry_run=True),
+               "already deprecated": refusal(db.retire_identity, _a, _NEED54, None, _OH54, "r", session=S, dry_run=True),
+               "need absent": refusal(db.retire_identity, _free[-1], "NO-SUCH-NEED", None, _OH54, "r", session=S, dry_run=True),
+               "to itself": refusal(db.retire_identity, _free[-1], None, _free[-1], _OH54, "r", session=S, dry_run=True),
+               "to a deprecated code": refusal(db.retire_identity, _free[-1], None, _a, _OH54, "r", session=S, dry_run=True),
+               "blank reason": refusal(db.retire_identity, _free[-1], _NEED54, None, _OH54, "", session=S, dry_run=True),
+               "not an owner entry": refusal(db.retire_identity, _free[-1], _NEED54, None, "Supersession record 2026-11-15 — x", "r", session=S, dry_run=True),
+               "carried": refusal(db.retire_identity, _c0, _NEED54, None, _OH54, "r", session=S, dry_run=True)}
+        record("T054-03", "retire-identity refuses neither or both successors, a code not held or already deprecated, a need that does not exist, a retirement "
+               "to itself or to a deprecated code, a blank reason, an approval that is not the owner's, and a code a live row still carries (naming the "
+               "carriers and the count)",
+               all(_rs.values()) and "exactly one" in _rs["neither"] and "exactly one" in _rs["both"] and "not held" in _rs["not held"]
+               and "already deprecated" in _rs["already deprecated"] and "access_needs" in _rs["need absent"] and "itself" in _rs["to itself"]
+               and "deprecated" in _rs["to a deprecated code"] and "--reason" in _rs["blank reason"] and "owner" in _rs["not an owner entry"]
+               and "still carried" in _rs["carried"] and re.search(r"\w+\.\w+ \(\d+\)", _rs["carried"]), _rs)
+        _w = {"add-population-icf-link": refusal(db.insert_population_icf_link, population=_a, icf_code="d450", mechanism="m", mapping_confidence="high_predictive",
+                                                provenance="p", session=S, dry_run=True),
+              "raise-determination-gate": refusal(db.raise_determination_gate, parameter_id=scalar("SELECT parameter_id FROM base_parameters WHERE status='active' LIMIT 1"),
+                                                 verdict="QUESTION", detail="x", identity=_a, session=S, dry_run=True),
+              "fk_declared": refusal(dbcore.fk_declared, c, "connection_targets", "identity_code", _a, "add-connection identity_code")}
+        record("T054-04", "a writer given the deprecated code refuses it and names the access need that replaced it",
+               all(v and "deprecated" in v and _NEED54 in v for v in _w.values()), _w)
+        _lid = _LINK54[0][0]
+        res, err = ok(db.retire_population_icf_link, _lid, "T054 fixture", **_R)
+        _lr = c.execute("SELECT retired_at, retired_by_session, retired_reason FROM identity_icf_map WHERE link_id=?", (_lid,)).fetchone()
+        _again = refusal(db.retire_population_icf_link, _lid, "again", session=S, dry_run=True)
+        _absent = refusal(db.retire_population_icf_link, 2 ** 30, "r", session=S, dry_run=True)
+        _blank = refusal(db.retire_population_icf_link, _lid, " ", session=S, dry_run=True)
+        record("T054-05", "retire-population-icf-link retires one crossing row in place with its session and reason; a second retirement, an absent id and a blank reason are refused",
+               err is None and all(_lr) and _lr[2] == "T054 fixture" and _again and "already retired" in _again and _absent and "not in identity_icf_map" in _absent
+               and _blank and "--reason" in _blank, (err, tuple(_lr), _again, _absent, _blank))
+        _bad = []
+        for sql in ("UPDATE base_taxonomy_identity SET status='deprecated' WHERE identity_code=?",
+                    "UPDATE base_taxonomy_identity SET superseded_by_need=? WHERE identity_code=?",
+                    "UPDATE base_taxonomy_identity SET status='deprecated', superseded_by_need=?, superseded_by_identity=? WHERE identity_code=?"):
+            try:
+                args = {1: (_free[-1],), 2: (_NEED54, _free[-1]), 3: (_NEED54, _free[0], _free[-1])}[sql.count("?")]
+                c.execute(sql, args); _bad.append(sql)
+            except sqlite3.IntegrityError:
+                pass
+        c.rollback()
+        record("T054-06", "the schema refuses a deprecated code with no successor, an active code with one, and a deprecated code with two", not _bad, _bad)
 
 print("Section B4/B5/D4/R3-14: conflicts -- keyed on the parameter, an unordered pair, two real populations")
 CODES = [r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "

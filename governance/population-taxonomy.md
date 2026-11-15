@@ -13,6 +13,7 @@
 > now the flat, community-organized **23 codes** (no parent codes, no containment):
 >
 > `BLIND DEAF DEAFBLIND MOB LMB SCI MOVE NDV AUT ADHD ID DEM BRAIN COM PAIN MS EPI VES MH LPA TALL BAR ALL`
+> *Note (T-054, OD-37): `MOVE` and `VES` are access needs, not populations (`A-PRECISION` and `A-STABLE` carry them); T-114 re-tags what names them and `db.py retire-identity` retires them in place to those needs.*
 >
 > **Crosswalk:** VIS→BLIND · UPL→LMB · DBL→DEAFBLIND · {NEU,PCS}→BRAIN ·
 > {OFS,CFS,MCAS,POTS}→COM · SENS→NDV · EXH→TALL · IntD→ID · ABI→BRAIN. New: MOVE, ID, VES,
