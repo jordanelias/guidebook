@@ -6632,12 +6632,28 @@ _VALUE_BEARING = dbcore.VALUE_BEARING          # one definition (T-016): the uni
 # Comparator WORDS are screened in NAMES only. A definition or description is ordinary
 # English ("rather than reflection"), so it keeps `_VALUE_BEARING` (digits, symbols, min/max)
 # and gains nothing; every NAME field uses `_VALUE_BEARING_NAME`.
-_VALUE_BEARING_NAME = re.compile(
-    _VALUE_BEARING.pattern + r"|\bthan\b|\bat (least|most)\b|\bno (more|less|fewer|greater)\b"
-    r"|\bnot exceeding\b|\bexceed(s|ing)?\b"
-    # T-009: a digit of any script (\d is Unicode's Nd) and the comparator signs that are not
-    # ASCII: the full-width < = > and the slanted and double-line forms of <= and >=.
-    r"|\d|[\uFF1C\uFF1D\uFF1E\u2266\u2267\u2A7D\u2A7E]", re.I)
+class _NameScreen:
+    """`_VALUE_BEARING_NAME`: the screen a NAME passes (T-009). It reads the NFKC form of the name, so a
+    full-width, circled or superscript digit and a full-width comparator are the ASCII ones, and any
+    other decimal digit is caught by `\\d` (Unicode's Nd). The comparator signs outside ASCII are DERIVED
+    from Unicode's own names (a math symbol named a less-than, a greater-than or an equals sign), once,
+    on first use, so no list of signs is typed here. A numeral written as a word (一二〇〇, 千二百) is a
+    word, not a digit, and is left to the owner's approval of each name, as the task says."""
+    _rx = None
+
+    def search(self, text):
+        if _NameScreen._rx is None:
+            signs = "".join(re.escape(c) for c in map(chr, range(0x10000))
+                            if unicodedata.category(c) == "Sm"
+                            and any(w in unicodedata.name(c, "")
+                                    for w in ("LESS-THAN", "GREATER-THAN", "EQUALS SIGN")))
+            _NameScreen._rx = re.compile(
+                _VALUE_BEARING.pattern + r"|\bthan\b|\bat (least|most)\b|\bno (more|less|fewer|greater)\b"
+                r"|\bnot exceeding\b|\bexceed(s|ing)?\b|\d|[" + signs + "]", re.I)
+        return _NameScreen._rx.search(unicodedata.normalize("NFKC", text or ""))
+
+
+_VALUE_BEARING_NAME = _NameScreen()
 
 
 def _name_tokens(name: str) -> frozenset:

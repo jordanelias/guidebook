@@ -604,21 +604,30 @@ _TAG = re.compile(r"<[^>]{0,200}>")
 # ---------------------------------------------------------------------------
 
 
-@functools.lru_cache(maxsize=None)
+@functools.lru_cache(maxsize=65536)
 def _quote_char(ch):
-    """(kind, kept text) of one character for `normalise_quote`: kind is `mark`, `folding` (a base letter
-    of Latin, Greek or Cyrillic, whose accents fold away) or `other`; kept text is what a base character
-    contributes (its ASCII value for a decimal digit, itself for a letter or digit, nothing otherwise)."""
-    if unicodedata.category(ch).startswith("M"):
-        return "mark", ch
-    kind = "folding" if unicodedata.name(ch, "").startswith(("LATIN", "GREEK", "CYRILLIC")) else "other"
-    if unicodedata.category(ch) == "Nd":
-        return kind, str(unicodedata.decimal(ch))        # every decimal digit folds to ASCII
-    return kind, ch if ch.isalnum() else ""
+    """(kind, kept text) of one character for `normalise_quote`. Kind says what a following combining
+    mark attaches to: `mark` (a mark itself); `ignore` (a space, a format character such as a joiner, or a
+    variation selector: it neither emits nor changes what a mark attaches to); `fold` (a letter of Latin,
+    Greek or Cyrillic, whose accents fold away); `word` (a letter of any other script, whose marks are part
+    of the word); `other` (a digit, a symbol, punctuation: a mark after it is stray). Kept text is what a
+    base character contributes: its ASCII value for a decimal digit, itself for a letter or digit."""
+    cat = unicodedata.category(ch)
+    name = unicodedata.name(ch, "")
+    if cat.startswith("M"):
+        return ("ignore", "") if name.startswith("VARIATION SELECTOR") else ("mark", ch)
+    if cat in ("Zs", "Cf"):
+        return "ignore", ""
+    if cat == "Nd":
+        return "other", str(unicodedata.decimal(ch))     # every decimal digit folds to ASCII
+    if cat.startswith("L"):
+        return ("fold" if name.startswith(("LATIN", "GREEK", "CYRILLIC")) else "word"), ch
+    return "other", ch if ch.isalnum() else ""
 
 
 def normalise_quote(text):
-    """Reduce prose to the letters and digits it contains, in order.
+    """Reduce prose to the letters and digits it contains, in order (and, outside Latin, Greek and
+    Cyrillic, the marks that belong to those letters).
 
     WHY NOT A RAW BYTE SUBSTRING, which is what this replaced. Measured across the ten
     committed extractions on 2026-09-13: TWO failed a byte-substring check and BOTH were
@@ -660,18 +669,22 @@ def normalise_quote(text):
         this replaced a raw byte substring.
     """
     s = unicodedata.normalize("NFKD", unicodedata.normalize("NFKC", _TAG.sub(" ", text or "")).lower())
-    out, base_folds = [], False
+    out, marks, word = [], [], False
     for ch in s:
-        kind, keep = _quote_char(ch)
+        kind, kept = _quote_char(ch)
         if kind == "mark":
-            # A mark is dropped only where it is an accent on a Latin, Greek or Cyrillic letter, so
-            # `Pérez` and `Perez` still meet. On any other base it is part of the word: an Indic
-            # vowel sign, a Thai tone, Arabic or Hebrew pointing, the voicing mark that makes か が.
-            if not base_folds:
-                out.append(ch)
-        else:
-            base_folds = kind == "folding"
-            out.append(keep)
+            # Kept only on a letter of a script other than Latin, Greek and Cyrillic (an Indic vowel
+            # sign, a Thai tone, Arabic or Hebrew pointing, the voicing mark that makes か が). On any
+            # other base it is an accent or a stray: `Pérez` meets `Perez`, and the space + accent that
+            # NFKC makes of a spacing `´` is nothing.
+            if word:
+                marks.append(ch)
+        elif kind != "ignore":
+            out.extend(sorted(marks))     # marks of one base in code order: PDF and HTML order them differently
+            marks = []
+            word = kind == "word"
+            out.append(kept)
+    out.extend(sorted(marks))
     return unicodedata.normalize("NFC", "".join(out))        # recompose kana and Hangul
 
 
