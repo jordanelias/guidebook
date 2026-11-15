@@ -408,7 +408,7 @@ open. Do not read `slug × population` as any part of the answer: `base_taxonomy
   `/__agentproxy/status`'s `recentRelayFailures`. Recorded here as a genuine limit of this technique,
   not a second success story — a prior version of this entry wrongly claimed both cases succeeded.
 - **`.ignore` hides frozen records from ripgrep and the Grep tool** — `_archived/`, `audits/`,
-  `sessions/`, `references/search-log/`, `versions/`, `workplan/_superseded/`, and the JSONL under
+  `sessions/`, `references/search-log/`, `references/bpc/`, `versions/`, `workplan/_superseded/`, and the JSONL under
   `transcripts/`. **Owner rulings live overwhelmingly in `sessions/`.** "No matches" ≠ absent:
   `grep -r` and `git grep` ignore `.ignore` and find them instantly. **Never report a ruling absent
   from a search that could not have seen it.**

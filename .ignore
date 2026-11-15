@@ -79,6 +79,9 @@ sessions/**
 !sessions/LATEST-RESEARCH
 
 references/search-log/
+# The frozen best-practices compendium: every record uses 'best practice' in a sense the owner has since ruled out (OD-61, 2026-11-14,
+# "ignore the references/bpc folder"; DR-2026-08-06 scope). Hidden from search only; git and the tooling still see it.
+references/bpc/
 
 # --- agent transcripts -----------------------------------------------------
 # Owner ruling 2026-09-03, on the measurement rather than on principle: with 19 MB of
