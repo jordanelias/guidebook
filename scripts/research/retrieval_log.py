@@ -1395,7 +1395,7 @@ def read_artefact_bytes(rel_path):
 
 
 def _is_tracked(rel_path):
-    """True iff `rel_path` (repo-relative) is a tracked file at HEAD.
+    """True iff `rel_path` (repo-relative) is in the git index (staged counts, committed or not).
 
     An untracked transcript is not an artefact (CLAUDE.md rule 6): its entire
     contents live in ephemeral container storage until committed, so a session

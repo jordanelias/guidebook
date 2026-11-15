@@ -55,7 +55,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. For `gap_mining` (with its verbs and audit), `reasoning_doc_citations` (with `promoted_to_rdc_id`), `connections.opus_reviewed`, and `update_gap_priority` in `db.py`: run the full sweep and write, per object, every caller and what would replace it. Delete only an object whose sweep is empty or whose every caller is removed in the same pull request; a column a committed migration INSERTs is never dropped.
+1. For `gap_mining` (with its verbs and audit), `reasoning_doc_citations` (with `promoted_to_rdc_id`), `connections.opus_reviewed`, and `update_gap_priority` in `db.py` (**already deleted by T-041**: sweep the other three and skip this one): run the full sweep and write, per object, every caller and what would replace it. Delete only an object whose sweep is empty or whose every caller is removed in the same pull request; a column a committed migration INSERTs is never dropped.
 2. Also read and report what `test_scan_contract`, `validate_schema_cross_check` and `research_dod` fail on at advisory level on `main`.
 
 **What reads what this task adds or changes:** nothing, which is the point
