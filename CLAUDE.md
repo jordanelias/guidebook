@@ -173,12 +173,13 @@ already in the failure state when that comment was written. It is now derived
 (`dbcore.writable_tables(conn)`), and the burden of proof moved to the exclusions.*
 → **PARTLY ENFORCED.** `dbcore.check_values()` holds it for vocabularies, `identifier_floor_audit`
 for identifiers, `dbcore.writable_tables()` for the capture set, `adjudication_integrity` for
-tiers. **As a general rule you are the gate**, and the known outstanding violation is an argparse `choices=` list that duplicates a column's CHECK. **Do not
+tiers. **As a general rule you are the gate**, and the violation to look for is a typed list that duplicates a column's CHECK. **Do not
 count them by grep**: `choices=` greps cannot see `dbcore.schema_choices`, `schema_range`, `check_values` or the helpers
-that call them. `python3 scripts/audit/derived_not_curated_audit.py` is the judge of whether a typed list mirrors
-a live CHECK; run it and read what it reports. Also outstanding: `amend-source --tier` asking for a value the machine
-can derive. A hand-typed "N today" count in the registry is a violation of the same rule; find one with
-`grep -c -E '[0-9]+ today' governance/check-registry.yaml`.
+that call them. `python3 scripts/audit/derived_not_curated_audit.py` is the judge for the shapes it covers (it reads
+`scripts/db.py` and the writer modules it names); run it and read what it reports, not this sentence. Also outstanding:
+`amend-source --tier` asking for a value the machine can derive. A hand-typed figure in the registry's `note:`,
+`floor_basis:` or `no_floor:` is a violation of the same rule in a shape no check reads: read those fields for a literal
+figure (`grep -n -E '[0-9]+ (today|on disk)|prints EXAMINED [0-9]+' governance/check-registry.yaml` finds two shapes only).
 **9. Do not watch PRs. Open the PR last** (owner instruction, 2026-09-23). Do not call
 `subscribe_pr_activity` (either server's) and do not schedule `send_later` or `create_trigger`
 check-ins: this is the owner saying the PR is not to be watched, which the harness's default-subscribe

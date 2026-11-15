@@ -719,8 +719,9 @@ checks:
   level: blocking
   basis: cross_stage/adherence-log
   cost: fast
-  no_floor: changeset-scoped — examines the SYNTHESIS files in HEAD~1..HEAD, not the 79 attestations on
-    disk, so 0 means this commit touched no synthesis path. Not an emptied corpus, and a floor would fail
+  no_floor: changeset-scoped — examines the SYNTHESIS files in the diff the check is given (merge-base with
+    origin/main by default, working tree and untracked files included), not every attestation on disk
+    (`ls attestations/*.json | wc -l`), so 0 means this change touched no synthesis path. Not an emptied corpus, and a floor would fail
     every non-synthesis commit.
 - id: attestation_schema
   cmd:
@@ -735,8 +736,9 @@ checks:
   level: blocking
   basis: cross_stage/adherence-log
   cost: fast
-  no_floor: changeset-scoped — examines the ATTESTATION files in HEAD~1..HEAD, not the 79 on disk, so
-    0 means this commit added or changed none. Not an emptied corpus, and a floor would fail every commit
+  no_floor: changeset-scoped — examines the ATTESTATION files in the diff the check is given (merge-base with
+    origin/main by default), not every attestation on disk (`ls attestations/*.json | wc -l`), so
+    0 means this change added or changed none. Not an emptied corpus, and a floor would fail every commit
     that owes no attestation.
 - id: attestation_evidence
   cmd:
@@ -751,8 +753,8 @@ checks:
   level: advisory
   basis: cross_stage/adherence-log
   cost: fast
-  no_floor: not-instrumented — this filter bundles checks 2-6 (attestations in the HEAD~1..HEAD diff,
-    counted by `git diff --name-only HEAD~1 HEAD -- attestations | wc -l`) with check 7 (every attestation on disk,
+  no_floor: not-instrumented — this filter bundles checks 2-6 (attestations in the diff the check is given,
+    counted by `python3 scripts/audit/adherence_log_audit.py --check evidence`, whose output line "changed files" carries the attestations count) with check 7 (every attestation on disk,
     counted by `ls attestations/*.json | wc -l`, for re-attestation-window materiality)
     — two different subjects with no single honest count. Left uninstrumented on 2026-08-14 (A5) rather
     than invent a combined figure. See attestation_presence / attestation_schema for the diff-scoped instrumentation
@@ -772,10 +774,10 @@ checks:
   level: informational
   basis: cross_stage/adherence-log
   cost: fast
-  no_floor: changeset-scoped — same subject as attestation_schema, namely attestation files in HEAD~1..HEAD,
-    not the 79 on disk. 0 means none in this commit, not an empty corpus.
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the attestations/*.json file count in the HEAD~1..HEAD
-    diff (check_8''s subject, same as attestation_schema). Diff-scoped by design, so 0 is not a broken
+  no_floor: changeset-scoped — same subject as attestation_schema, namely attestation files in the diff the check is given,
+    not every one on disk. 0 means none in this change, not an empty corpus.
+  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the attestations/*.json file count in the diff the check is given
+    (check_8''s subject, same as attestation_schema). Diff-scoped by design, so 0 is not a broken
     sweep. Surfaces NON-COMPLIANT verdicts. Never blocking by design.'
 - id: research_contract_baseline_ratchet
   cmd:
@@ -1020,8 +1022,8 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
-  floor_basis: RATCHETED 2026-09-16. Measured, this check prints EXAMINED 11. Floor is 1, never
-    the count.
+  floor_basis: RATCHETED 2026-09-16. The count is what EXAMINED prints (run the check). Floor is 1,
+    never the count.
 - id: graph_audit
   cmd:
   - python3
@@ -1215,8 +1217,8 @@ checks:
   basis: judgment/handoff-fanout-preserved
   cost: fast
   min_items: 1
-  note: 'Pins the 1:N evidence->judgment hand-off ruled 2026-08-27. The subject table holds 0 rows, so
-    every other gate is blind to a regression here (CLAUDE.md rule 4). Mutation-tested 2026-08-27: injecting
+  note: 'Pins the 1:N evidence->judgment hand-off ruled 2026-08-27. When this was written (2026-08-27) the subject table held no rows, so
+    every other gate was blind to a regression here (CLAUDE.md rule 4); `SELECT COUNT(*) FROM source_value_extractions` says what it holds now. Mutation-tested 2026-08-27: injecting
     UNIQUE(ref_id) on a scratch copy turns it red.'
 - id: extraction_relations_integrity
   cmd:
@@ -1302,7 +1304,7 @@ checks:
     zero rows and so re-instates the deferral the owner had overruled hours earlier — and its
     demand count was taken against the committed table while the session''s own scratch already
     held REF-00979, MB56 in its title. THE RULING AS CORRECTED: populate by CORRESPONDENCE from
-    the registries already held — 17 axes and 23 populations, less the identity-first and umbrella
+    the registries already held — the rows of access_needs and base_taxonomy_identity, less the identity-first and umbrella
     codes taking no anchor — bounding the lens at roughly 15-20 rows, then on demand after that.
     So 0 is now an UNWRITTEN VOCABULARY, not a measurement, and it is a floor-less state only
     because the rows are owed rather than absent. RATCHET TO min_items: 1 in the same change that
