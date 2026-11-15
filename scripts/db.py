@@ -206,7 +206,7 @@ def insert_connection(data: dict, targets: list[tuple[str, object]],
             if kind not in _CONNECTION_TARGET_KINDS:
                 raise Refusal(f"unknown connection target kind {kind!r}.")
             dbcore.fk_declared(conn, "connection_targets", kind, value, f"add-connection {kind}",
-                               remedy=("SELECT parameter_id FROM base_parameters"
+                               remedy=("SELECT parameter_id FROM base_parameters WHERE status = 'active'"
                                        if kind == "parameter_id" else ""))
             if kind == "parameter_id":
                 st = conn.execute("SELECT status FROM base_parameters WHERE parameter_id=?",
@@ -2221,14 +2221,22 @@ def main():
 
     p_gate = sub.add_parser(
         "raise-determination-gate",
-        help="Raise an H4 gate: cap a cell at provisional until it is resolved")
+        help="Raise an H4 gate (cap a cell at provisional until it is resolved), or, with "
+             "--verdict QUESTION, record a question about a published cell that flags it "
+             "without capping it")
     p_gate.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
     p_gate.add_argument("--identity",
                         help="base_taxonomy_identity.identity_code. OMIT to gate every lens on "
                              "this parameter — what an audit that does not yet know "
                              "which cells exist should do")
+    p_gate.add_argument("--icf", help="base_icf.icf_code: gate only cells that carry this ICF code")
+    p_gate.add_argument("--needs", help="access_needs.need_code: gate only cells that carry this need")
+    p_gate.add_argument("--medical", help="base_taxonomy_medical.medical_code: gate only cells that carry it")
     p_gate.add_argument("--verdict", required=True,
-                        choices=dbcore.schema_choices("determination_gates", "verdict"))
+                        choices=dbcore.schema_choices("determination_gates", "verdict"),
+                        help="QUESTION records an objection to a published value: no source, no tier "
+                             "(refused if given); it flags the cell as questioned, never as wrong, and "
+                             "is closed with resolve-determination-gate")
     p_gate.add_argument("--trigger-ref-id", dest="trigger_ref_id",
                         help="the source that raised it. Its tier and evidence_type are "
                              "READ from it; passing them too is refused")
@@ -3484,6 +3492,7 @@ def main():
     elif args.command == "raise-determination-gate":
         _emit(raise_determination_gate(
             parameter_id=args.parameter_id, identity=args.identity,
+            icf=args.icf, needs=args.needs, medical=args.medical,
             verdict=args.verdict, trigger_ref_id=args.trigger_ref_id,
             trigger_tier=args.trigger_tier,
             trigger_evidence_type=args.trigger_evidence_type,
@@ -8471,7 +8480,7 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
         held = retrieval_log.artefacts_for_source(ref, src["url"])
         match = [h for h in held if (h["sha256"] or "").lower() == sha]
         if not match:
-            listed = "; ".join(f"{h['artefact']} {(h['sha256'] or '?')[:16]} ({h['via']})"
+            listed = "; ".join(f"{h['artefact']} {h['sha256'] or '?'} ({h['via']})"
                                for h in held) or "nothing"
             raise Refusal(
                 f"record-scan: no file saved for {ref} has sha256 {sha[:16]}... The reading "
@@ -8843,7 +8852,8 @@ def set_icf_title(*, icf_code: str, title: str, title_source: str = None,
 
 
 def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
-                             identity: str = None, trigger_ref_id: str = None,
+                             identity: str = None, icf: str = None, needs: str = None,
+                             medical: str = None, trigger_ref_id: str = None,
                              trigger_tier: int = None, trigger_evidence_type: str = None,
                              session: str, dry_run: bool = False):
     """Raise an H4 gate: a finding that caps a cell at `provisional` until resolved.
@@ -8882,13 +8892,22 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
             "--detail is required and may not be blank. A gate that cannot say what it "
             "found is a cell pinned at provisional for no stated reason, which is the "
             "deadlock the resolution discipline exists to prevent.")
-    if trigger_ref_id and (trigger_tier is not None or trigger_evidence_type):
+    if verdict == "QUESTION":
+        # A question states no strength: no source raised it, so no tier is invented for it (OD-21). The
+        # engine reports it beside the cell and never lets it cap the cell.
+        if trigger_ref_id or trigger_tier is not None or trigger_evidence_type:
+            raise Refusal(
+                "a QUESTION carries no --trigger-ref-id, --trigger-tier or --trigger-evidence-type: it is an "
+                "objection to a published value, not a finding with a strength, and a tier typed onto it "
+                "would let it pin a cell, or fail to, on a strength nobody established. Put the objection "
+                "in --detail. To raise a finding that a source supports, use a verdict other than QUESTION.")
+    elif trigger_ref_id and (trigger_tier is not None or trigger_evidence_type):
         raise Refusal(
             "--trigger-tier / --trigger-evidence-type are refused alongside "
             "--trigger-ref-id. The source states both, and this row POINTS at the "
             "source (rule 5); they are read from it. A typed tier is a tier that can be "
             "typed wrong, and a wrong one inverts the ladder the gate exists to protect.")
-    if not trigger_ref_id and (trigger_tier is None or not trigger_evidence_type):
+    if verdict != "QUESTION" and not trigger_ref_id and (trigger_tier is None or not trigger_evidence_type):
         raise Refusal(
             "a gate with no --trigger-ref-id must state --trigger-tier and "
             "--trigger-evidence-type. Doctrine requires every gate to carry the strength "
@@ -8914,6 +8933,13 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
                 f"{identity!r} is not a live population code. Omit --identity to raise "
                 f"the gate against EVERY lens on this parameter, which is what an audit "
                 f"that does not yet know which cells exist should do.")
+        for _flag, _val, _tbl, _col in (("--icf", icf, "base_icf", "icf_code"),
+                                        ("--needs", needs, "access_needs", "need_code"),
+                                        ("--medical", medical, "base_taxonomy_medical", "medical_code")):
+            if _val and not dbcore.exists(conn, _tbl, _col, _val):
+                raise Refusal(
+                    f"{_flag} {_val!r} is not in {_tbl}. List the codes with SELECT {_col} FROM {_tbl}; "
+                    f"omit {_flag} to gate every lens of that kind on this parameter.")
         dbcore.check_declared(conn, "determination_gates", "verdict", verdict,
                               "raise-determination-gate")
         if trigger_ref_id:
@@ -8931,7 +8957,8 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
                     f"established. Fix the source, or raise the gate without a ref_id and "
                     f"state the strength as your own finding.")
             trigger_tier, trigger_evidence_type = src["tier"], src["evidence_type"]
-        row = {"parameter_id": parameter_id, "identity_code": identity,
+        row = {"parameter_id": parameter_id, "identity_code": identity, "icf_code": icf,
+               "needs_code": needs, "medical_code": medical,
                "verdict": verdict, "trigger_ref_id": trigger_ref_id,
                "trigger_tier": trigger_tier,
                "trigger_evidence_type": trigger_evidence_type, "detail": detail,
@@ -8939,11 +8966,13 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
         cur = conn.execute(f"INSERT INTO determination_gates ({','.join(row)}) "
                            f"VALUES ({','.join('?'*len(row))})", list(row.values()))
         return {"gate_id": cur.lastrowid, "parameter_id": parameter_id,
-                "identity_code": identity, "verdict": verdict,
+                "identity_code": identity, "icf_code": icf, "needs_code": needs,
+                "medical_code": medical, "verdict": verdict,
                 "trigger_tier": trigger_tier,
                 "trigger_evidence_type": trigger_evidence_type,
-                "trigger_strength_source": ("read from " + trigger_ref_id
-                                            if trigger_ref_id else "asserted by operator"),
+                "trigger_strength_source": ("none: a question states no strength" if verdict == "QUESTION"
+                                            else "read from " + trigger_ref_id if trigger_ref_id
+                                            else "asserted by operator"),
                 "dry_run": dry_run}
 
 

@@ -665,10 +665,19 @@ def derivation_handshake(conn, parameter_id, lens, sources):
         best = min((r["tier"] for r in sources if r.get("tier")), default=6)
         for g in conn.execute(
                 "SELECT gate_id, verdict, trigger_tier, trigger_evidence_type, "
-                "trigger_ref_id, detail, identity_code FROM v_open_determination_gates "
-                "WHERE parameter_id = ?", (parameter_id,)):
-            if g[6] and identity and g[6] != identity:
+                "trigger_ref_id, detail, identity_code, icf_code, needs_code, medical_code "
+                "FROM v_open_determination_gates WHERE parameter_id = ?", (parameter_id,)):
+            if any(gv and lens.get(col) and lens[col] != gv
+                   for col, gv in zip(("identity_code", "icf_code", "needs_code", "medical_code"), g[6:10])):
                 continue                      # a gate on another lens
+            if g[1] == "QUESTION":
+                # A QUESTION is an objection to a published value, recorded as an open gate (OD-21). It FLAGS
+                # the cell as questioned and never caps it: it states no tier, so there is no strength to
+                # weigh against the cell's anchors, and the book does not call a value wrong because someone
+                # asked. It closes with a recorded answer (resolve-determination-gate) or a re-derivation.
+                gates.append({"gate_id": g[0], "verdict": g[1], "trigger_tier": None, "binds": False,
+                              "question": True, "why": g[5]})
+                continue
             if g[2] > best:
                 # LADDER-INVERSION GUARD. The trigger is weaker than the cell's best
                 # anchor; recorded as not-binding rather than dropped, so a reader can

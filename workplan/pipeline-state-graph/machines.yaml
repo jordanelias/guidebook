@@ -325,14 +325,14 @@ machines:
   states: [OPEN, RESOLVED]
   abstract: true
   vocabs:
-    - {holder: determination_gates.verdict, values: [UNLINKED, MISLINKED, UNDER-CONSERVATIVE, CONTRADICTS]}
+    - {holder: determination_gates.verdict, values: [UNLINKED, MISLINKED, UNDER-CONSERVATIVE, CONTRADICTS, QUESTION]}
   atoms: [PIP-05, LED-128]
   transitions:
   - id: M06.t1
     from: "(none)"
-    to: "OPEN (verdict UNLINKED | MISLINKED | UNDER-CONSERVATIVE | CONTRADICTS)"
+    to: "OPEN (verdict UNLINKED | MISLINKED | UNDER-CONSERVATIVE | CONTRADICTS | QUESTION)"
     via: "db.py raise-determination-gate"
-    guards: ["verdict is in the column's own CHECK; the row carries identity_code only (P-GT)"]
+    guards: ["verdict is in the column's own CHECK; the row carries the four lens columns (P-GT); a QUESTION carries no tier, evidence type or source and never caps a cell, every other verdict carries its tier"]
     evidence:
       - {file: scripts/db.py, func: raise_determination_gate, needle: "def raise_determination_gate"}
   - id: M06.t2

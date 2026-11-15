@@ -285,7 +285,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
      research, clinical guidelines, advocacy and lived-experience work) replaces it and earns the stronger band. If
      the engine labels a code-only cell otherwise, that is an engine defect: tooling PR.
   3. The recorded rationale is the derivation (which sources, what they state, the rule version), not an endorsement.
-- `raise-determination-gate` caps a cell at provisional.
+- `raise-determination-gate` caps a cell at provisional; with `--verdict QUESTION` (no source, no tier) it records an objection to a published cell, which flags the cell and never caps it.
 - Checks: `scripts/validate_evidence_state.py`, `scripts/audit/derivation_handshake_integrity.py`,
   `scripts/audit/medical_lens_integrity.py`.
 

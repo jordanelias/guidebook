@@ -922,12 +922,71 @@ if _a_fnd and _a_ref:
     _t043.append(("dispose-adversarial-finding, already disposed", refusal(db.dispose_adversarial_finding, _a_fnd, "REPAIRED",
                                                                            _a_ref, session=S, dry_run=True),
                   "SELECT disposition FROM adversarial_findings"))
+_verb_ok = {}
+def _verb_exists(msg):
+    """Every `db.py <verb>` a message names is a verb the CLI has (its --help exits 0)."""
+    for v in re.findall(r"db\.py ([a-z][a-z-]+)", msg or ""):
+        if v not in _verb_ok:
+            _verb_ok[v] = subprocess.run([sys.executable, str(REPO / "scripts" / "db.py"), v, "--help"],
+                                         capture_output=True, text=True).returncode == 0
+    return all(_verb_ok[v] for v in re.findall(r"db\.py ([a-z][a-z-]+)", msg or ""))
 for _i, (_what, _msg, _tok) in enumerate(_t043, 1):
-    record(f"T043-{_i:02d}", f"{_what}: the refusal names the way forward ({_tok!r}) and says nothing was written or refuses before writing",
-           bool(_msg) and _tok in _msg and bool(_CUE.search(_msg)), _msg)
+    record(f"T043-{_i:02d}", f"{_what}: the refusal names the way forward ({_tok!r}), and every `db.py` verb it names exists",
+           bool(_msg) and _tok in _msg and bool(_CUE.search(_msg)) and _verb_exists(_msg), _msg)
 for _need, _label in ((_a_exec and _a_ref, "unlink-admission"), (_a_term, "decline-parameter"), (_a_fnd and _a_ref, "dispose-adversarial-finding")):
     if not _need:
         skip("T043", f"{_label}: the live database offers no row to build the refusal on")
+
+print("Section T021: a question about a published cell is an open gate with no tier")
+_P_Q = next((p for p in P_ACTIVE), None)
+_ICF = scalar("SELECT icf_code FROM base_icf ORDER BY icf_code LIMIT 1")
+_NEED = scalar("SELECT need_code FROM access_needs ORDER BY need_code LIMIT 1")
+_MED = scalar("SELECT medical_code FROM base_taxonomy_medical ORDER BY medical_code LIMIT 1")
+if _P_Q is None or _ICF is None:
+    skip("T021", "no active parameter or ICF code on the live database to build the question on")
+else:
+    _text = "a reader asks whether this value suits a person who uses a long cane"
+    with scratch() as c:
+        _n0 = c.execute("SELECT COUNT(*) FROM determination_gates").fetchone()[0]
+        res, err = ok(db.raise_determination_gate, parameter_id=_P_Q, verdict="QUESTION", detail=_text, icf=_ICF,
+                      needs=_NEED, medical=_MED, session=S, dry_run=False)
+        row = c.execute("SELECT verdict, trigger_tier, trigger_evidence_type, trigger_ref_id, icf_code, needs_code, "
+                        "medical_code, detail, raised_by_session FROM determination_gates WHERE gate_id=?",
+                        (res["gate_id"] if res else -1,)).fetchone()
+        record("T021-06", "a QUESTION is raised with no tier, no evidence type and no source, names the lens codes it was given, "
+               "keeps the objection's words and the session, and is listed by v_open_determination_gates",
+               err is None and row is not None and tuple(row) == ("QUESTION", None, None, None, _ICF, _NEED, _MED, _text, S)
+               and c.execute("SELECT COUNT(*) FROM v_open_determination_gates WHERE gate_id=?", (res["gate_id"],)).fetchone()[0] == 1
+               and c.execute("SELECT COUNT(*) FROM determination_gates").fetchone()[0] == _n0 + 1, (err, row))
+        _rs = {
+            "a tier": refusal(db.raise_determination_gate, parameter_id=_P_Q, verdict="QUESTION", detail=_text,
+                              trigger_tier=1, session=S, dry_run=True),
+            "an evidence type": refusal(db.raise_determination_gate, parameter_id=_P_Q, verdict="QUESTION", detail=_text,
+                                        trigger_evidence_type="clinical", session=S, dry_run=True),
+            "a source": refusal(db.raise_determination_gate, parameter_id=_P_Q, verdict="QUESTION", detail=_text,
+                                trigger_ref_id=_a_ref, session=S, dry_run=True)}
+        record("T021-07", "a QUESTION is refused a tier, an evidence type or a source, naming what to do instead",
+               all(v and "QUESTION" in v and "--detail" in v for v in _rs.values()), _rs)
+        _other = refusal(db.raise_determination_gate, parameter_id=_P_Q, verdict="CONTRADICTS", detail=_text,
+                         session=S, dry_run=True)
+        record("T021-08", "every other verdict still needs its tier (or a source to read it from)",
+               _other and "--trigger-tier" in _other, _other)
+        _bad = refusal(db.raise_determination_gate, parameter_id=_P_Q, verdict="QUESTION", detail=_text,
+                       icf="ICF-NO-SUCH", session=S, dry_run=True)
+        record("T021-09", "a lens code that does not exist is refused, naming the table and the listing query",
+               _bad and "--icf" in _bad and "base_icf" in _bad and "SELECT icf_code FROM base_icf" in _bad, _bad)
+        res2, err2 = ok(db.resolve_determination_gate, gate_id=res["gate_id"], rationale="answered in the ledger",
+                        session=S, dry_run=False)
+        record("T021-10", "a question is closed only through resolve-determination-gate with a rationale, and then leaves the open view",
+               err2 is None and c.execute("SELECT COUNT(*) FROM v_open_determination_gates WHERE gate_id=?",
+                                          (res["gate_id"],)).fetchone()[0] == 0, err2)
+        _hand = None
+        try:
+            c.execute("INSERT INTO determination_gates (parameter_id, verdict, trigger_tier, trigger_evidence_type, detail, "
+                      "raised_at, raised_by_session) VALUES (?, 'QUESTION', 1, 'clinical', 'x', 'now', 'x')", (_P_Q,))
+        except sqlite3.IntegrityError as exc:
+            _hand = str(exc)
+        record("T021-11", "the schema itself refuses a QUESTION that carries a tier", _hand is not None, _hand)
 
 print("Section B4/B5/D4/R3-14: conflicts -- keyed on the parameter, an unordered pair, two real populations")
 CODES = [r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "

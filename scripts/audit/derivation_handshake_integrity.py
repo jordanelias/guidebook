@@ -151,9 +151,11 @@ def main(argv=None):
             if row and row[0] is not None:
                 best = row[0]
         for g in open_by_param.get(pid, []):
-            if g["identity_code"] and s["identity_code"] and \
-                    g["identity_code"] != s["identity_code"]:
-                continue
+            if g["verdict"] == "QUESTION":
+                continue                       # flags the cell, never caps it (OD-21): no tier to weigh
+            if any(g[c] and s.get(c) and g[c] != s[c]
+                   for c in ("identity_code", "icf_code", "needs_code", "medical_code") if c in g):
+                continue                       # a gate on another lens
             if g["trigger_tier"] > best:
                 continue                       # correctly non-binding: see the guard above
             if s["state"] == "stated":

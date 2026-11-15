@@ -28,7 +28,7 @@ sys.path.insert(0, REPO_ROOT)
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "assess"))
 
 from assess_cell import (  # noqa: E402
-    NOT_PUBLISHABLE_METHODS, RULE_VERSION, STORED_ANSWER, Refusal, determine, gap_account,
+    NOT_PUBLISHABLE_METHODS, RULE_VERSION, STORED_ANSWER, Refusal, derivation_handshake, determine, gap_account,
     scan_command, stale_determinations, validate_lens)
 from schemas.enums import EvidenceMarker  # noqa: E402
 from schemas.evidence_state import ConvergenceAssessment, EvidenceStateRecord  # noqa: E402
@@ -120,11 +120,13 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
         accessibility_direction TEXT, direction_rationale TEXT);
       CREATE TABLE determination_gates (
         gate_id INTEGER PRIMARY KEY AUTOINCREMENT, parameter_id INTEGER,
-        identity_code TEXT, verdict TEXT, trigger_ref_id TEXT, trigger_tier INT,
+        identity_code TEXT, icf_code TEXT, needs_code TEXT, medical_code TEXT,
+        verdict TEXT, trigger_ref_id TEXT, trigger_tier INT,
         trigger_evidence_type TEXT, detail TEXT, raised_at TEXT, raised_by_session TEXT,
         resolved_at TEXT, resolved_by_session TEXT, resolution_rationale TEXT);
       CREATE VIEW v_open_determination_gates AS
-        SELECT g.gate_id, g.parameter_id, g.identity_code, g.verdict, g.trigger_ref_id,
+        SELECT g.gate_id, g.parameter_id, g.identity_code, g.icf_code, g.needs_code,
+               g.medical_code, g.verdict, g.trigger_ref_id,
                g.trigger_tier, g.trigger_evidence_type, g.detail, g.raised_at,
                g.raised_by_session
           FROM determination_gates g WHERE g.resolved_at IS NULL;
@@ -483,6 +485,50 @@ def main():
                            gates=[(1, "DEAF", "UNLINKED", 1, "primary_research", "other lens")]),
                   1, {"identity_code": "MOB"}, "syn-slug", "other-lens")
     expect("H4: a gate on another lens does not bind", d["state"] == "stated", d["state"])
+
+    # 8g2. T-021 (OD-21): a QUESTION about a published cell is an open gate that FLAGS the cell and never caps it.
+    _Q = "a reader asks whether the 5% in this cell is right for a user of a long cane"
+    def _gate_rows(conn, *rows):
+        for lens_cols, verdict, tier, etype, detail in rows:
+            cols = ["parameter_id", "verdict", "trigger_tier", "trigger_evidence_type", "detail", "raised_at",
+                    "raised_by_session", *lens_cols]
+            conn.execute(f"INSERT INTO determination_gates ({','.join(cols)}) VALUES "
+                         f"({','.join('?' * len(cols))})",
+                         [1, verdict, tier, etype, detail, "2026-11-15", "syn", *lens_cols.values()])
+    c = synth_db([dict(T1), dict(T1)], icf_links=MOB_LINK)
+    _gate_rows(c, ({"identity_code": "MOB"}, "QUESTION", None, None, _Q))
+    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "question")
+    _qs = [g for g in d["gates"] if g.get("question")]
+    expect("T021-01: a QUESTION on the cell leaves a stated cell stated", d["state"] == "stated", d["state"])
+    expect("T021-02: the cell's report carries the question, not binding, with its words and no tier",
+           len(d["gates"]) == 1 and len(_qs) == 1 and not _qs[0]["binds"] and _qs[0]["why"] == _Q
+           and _qs[0]["trigger_tier"] is None and _qs[0]["verdict"] == "QUESTION", str(d["gates"]))
+    c = synth_db([dict(T1), dict(T1)], icf_links=MOB_LINK)
+    _gate_rows(c, ({"identity_code": "MOB"}, "QUESTION", None, None, _Q),
+               ({"identity_code": "MOB"}, "MISLINKED", 1, "primary_research", "population links omit DEAF"))
+    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "question+binding")
+    expect("T021-03: a QUESTION beside a binding gate does not stop the binding gate capping the cell, and both are reported",
+           d["state"] == "provisional" and sorted((g["verdict"], g["binds"]) for g in d["gates"])
+           == [("MISLINKED", True), ("QUESTION", False)], str(d["gates"]))
+    c = synth_db([dict(T1), dict(T1)], icf_links=MOB_LINK)
+    _gate_rows(c, ({"icf_code": "ICF-A"}, "QUESTION", None, None, "q-a"),
+               ({"needs_code": "NEED-A"}, "QUESTION", None, None, "q-n"),
+               ({"medical_code": "MD-A"}, "QUESTION", None, None, "q-m"),
+               ({"identity_code": "MOB", "icf_code": "ICF-A"}, "QUESTION", None, None, "q-ma"))
+    _flag = lambda lens: sorted(g["why"] for g in derivation_handshake(c, 1, lens, [dict(T1)])[4])  # noqa: E731
+    _all = ["q-a", "q-m", "q-ma", "q-n"]
+    expect("T021-04: a gate is skipped only when the cell carries a DIFFERENT code in a lens the gate names "
+           "(a lens the cell does not carry never skips it, as before)",
+           _flag({"icf_code": "ICF-A"}) == _all and _flag({"icf_code": "ICF-B"}) == ["q-m", "q-n"]
+           and _flag({"needs_code": "NEED-B"}) == ["q-a", "q-m", "q-ma"]
+           and _flag({"medical_code": "MD-B"}) == ["q-a", "q-ma", "q-n"]
+           and _flag({"identity_code": "MOB", "icf_code": "ICF-A"}) == _all
+           and _flag({"identity_code": "OTHER"}) == ["q-a", "q-m", "q-n"],
+           str([_flag({"icf_code": "ICF-A"}), _flag({"icf_code": "ICF-B"}), _flag({"needs_code": "NEED-B"})]))
+    c.execute("UPDATE determination_gates SET resolved_at='2026-11-15', resolved_by_session='syn', "
+              "resolution_rationale='answered' WHERE detail = 'q-a'")
+    expect("T021-05: a question closed with a rationale no longer flags the cell",
+           "q-a" not in _flag({"icf_code": "ICF-A"}))
 
     # 8h. Resolution is a NAMED PATH, and the view is what enforces it: a resolved gate
     # stops binding, so no cell sits at provisional with no owner of resolution.
