@@ -1,7 +1,7 @@
 """
 schemas/pipeline_contract.py — Pydantic model for governance/pipeline-contract.yaml.
 
-Validates the machine-checkable stage contract (the PROPOSED pipeline handshake
+Validates the machine-checkable stage contract (the pipeline handshake
 spec, DR-2026-07-13-pipeline-contract). Plain pydantic v2 BaseModel with
 extra='forbid', matching the repo's config-schema style. No DB coupling.
 """

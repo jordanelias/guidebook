@@ -1,8 +1,10 @@
 version: 1
 status: ACCEPTED
-ratified: true
-# Header follows decisions/DR-2026-07-13-pipeline-contract.md: accepted on the owner's ratification of
-# 2026-07-21; the owner-action precondition named in the DR (stage-id reconciliation, doctrine_sha gate) is outstanding.
+ratified: false
+# Header follows decisions/DR-2026-07-13-pipeline-contract.md: status ACCEPTED (doctrine) on the owner's
+# ratification of 2026-07-21. `ratified` stays false: the DR names owner-action preconditions that are still
+# outstanding (stage-id reconciliation against the deployed audit trail; the blob-vs-commit doctrine_sha
+# convention; the ci.yml doctrine-gate mismatch). Ratifying the corrected contract is owner decision OD-17.
 authored_by: Claude
 dr: decisions/DR-2026-07-13-pipeline-contract.md
 enforcement_level: 2
@@ -106,7 +108,7 @@ stages:
 - id: research
   anchor: 'PI rule #7 (adversarial-research); rule #8 (PMP); workplan phase B'
   entry:
-  - an OPEN gap or an item/parameter lacking sufficient evidence
+  - an OPEN gap or a parameter lacking sufficient evidence
   criteria:
   - id: adversarial-fields-complete
     kind: integrity
@@ -121,7 +123,7 @@ stages:
   criteria:
   - id: evidence-verification-gate
     kind: integrity
-    criterion: 'No BPC synthesis claim cites a source with metadata_quality=AUTHOR-TITLE-ONLY or verification_status
+    criterion: 'No source the work rests on has metadata_quality=AUTHOR-TITLE-ONLY or verification_status
       NULL (rule #10 existence gate).'
     references: 'PI rule #10; DR-2026-05-13; DR-2026-05-20 (metadata_integrity_status)'
     check: scripts/audit/metadata_integrity_audit.py
@@ -227,7 +229,7 @@ stages:
 - id: synthesis
   anchor: 'best_practice_synthesis / ISW; PI rule #9 (9-step); Opus-only (rule #2)'
   entry:
-  - a determination with a resolved value, ready for cross-jurisdictional synthesis
+  - one or more judgment rows for a parameter, ready to be weighed together across jurisdictions
   criteria:
   - id: opus-routing
     kind: completeness
@@ -239,7 +241,7 @@ stages:
   anchor: the determination — "therefore 1200 mm, marked ●". conceptual-model.md:90 ("BPC synthesis produces
     specifications"), restored by D-0167
   entry:
-  - a synthesis with a resolved value, ready for determination
+  - the syntheses and governing figures for a parameter and lens, ready for the determination
   criteria:
   - id: governing-refs-nonempty
     kind: integrity

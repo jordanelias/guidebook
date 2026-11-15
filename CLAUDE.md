@@ -34,7 +34,8 @@ python3 scripts/run_checks.py --selftest                   # AFTER ANY RENAME �
 ```
 
 Never re-run a check when nothing it reads has changed since its last run. Use `--battery <name> --kinds <kinds>`
-(or `--battery <name> --changed-from origin/main`) to answer a targeted question; `--battery` alone exits 2. Before trusting a green result, ask whether that check could have gone
+(or `--battery <name> --changed-from origin/main`) to answer a targeted question: `--battery` alone exits 2, the form runs the
+battery's checks of those kinds only (read `selected N of M`: a misspelt name selects 0 and still prints PASS), and `--all --battery <name>` runs the whole battery. Before trusting a green result, ask whether that check could have gone
 red on the defect in front of you. A check that is red on untouched `main`, or one that examined
 nothing, tells you nothing about your diff.
 
@@ -172,14 +173,12 @@ already in the failure state when that comment was written. It is now derived
 (`dbcore.writable_tables(conn)`), and the burden of proof moved to the exclusions.*
 → **PARTLY ENFORCED.** `dbcore.check_values()` holds it for vocabularies, `identifier_floor_audit`
 for identifiers, `dbcore.writable_tables()` for the capture set, `adjudication_integrity` for
-tiers. **As a general rule you are the gate**, and the known outstanding violations are: the
-argparse `choices=` lists that duplicate a column's CHECK — **count them, never quote the count**:
-`grep -c 'choices=' scripts/db.py` against
-`grep -c 'choices=dbcore\.\(schema_choices\|check_values\)' scripts/db.py`, and
-`derived_not_curated_audit.py` reports how many of the remainder mirror a live CHECK —
-`amend-source --tier` asking for a value the machine can derive,
-and the hand-written "N today" counts
-throughout `governance/check-registry.yaml`.
+tiers. **As a general rule you are the gate**, and the known outstanding violation is an argparse `choices=` list that duplicates a column's CHECK. **Do not
+count them by grep**: `choices=` greps cannot see `dbcore.schema_choices`, `schema_range`, `check_values` or the helpers
+that call them. `python3 scripts/audit/derived_not_curated_audit.py` is the judge of whether a typed list mirrors
+a live CHECK; run it and read what it reports. Also outstanding: `amend-source --tier` asking for a value the machine
+can derive. A hand-typed "N today" count in the registry is a violation of the same rule; find one with
+`grep -c -E '[0-9]+ today' governance/check-registry.yaml`.
 **9. Do not watch PRs. Open the PR last** (owner instruction, 2026-09-23). Do not call
 `subscribe_pr_activity` (either server's) and do not schedule `send_later` or `create_trigger`
 check-ins: this is the owner saying the PR is not to be watched, which the harness's default-subscribe
@@ -342,8 +341,10 @@ manifests and in audits have all drifted.
 research batch were stored with **invented co-authors** — including the deletion of autistic
 community co-authors from a Co-1 paper whose Co-1 warrant *is* their co-authorship. Six gates passed
 it, because each asked whether the author fields were *populated*, never whether they were *true*.
-**Verification must leave an artefact:** `scripts/research/retrieval_log.py` keeps the manifest line of every retrieval (URL, time, status, byte count, sha256);
-a small structured payload such as an API response stays committed, a large PDF, page or extracted text is logged by where it was retrieved from (owner, 2026-11-06, fifth statement). `--verify-authors` diffs stored data against the logged payload.
+**Verification must leave an artefact:** `scripts/research/retrieval_log.py` logs every retrieval as a manifest line (URL, time, status, byte count, sha256); a large PDF, page or extracted text
+is logged by where it was retrieved from, not committed, while an artefact a search-execution or admission gate must find is
+(owner, 2026-11-06, fifth statement; the ledger reads the small-payload carve-out as unratified). `--verify-authors` diffs stored data
+against the logged payload.
 **Never write a bibliographic field from memory when a payload is in hand.**
 
 ---
@@ -468,7 +469,7 @@ open. Do not read `slug × population` as any part of the answer: `base_taxonomy
   runs it or approves it when the agent asks.
 - **`run_checks.py --all` over `--changed-from origin/main` is the expensive
   default.** `--all` runs every battery and prints every subject; §1's gate is the
-  diff-scoped form, and `--battery <name> --kinds <kinds>` answers a targeted question. Reach for
+  diff-scoped form, and `--battery <name> --kinds <kinds>` answers a targeted question (§1 says what it selects). Reach for
   `--all` when the question really is corpus-wide, not to re-confirm a result the
   scoped run already gave.
 

@@ -132,7 +132,7 @@ The slash notation for sub-codes (MOB/AMB) is distinct from the slash notation f
 
 ### 3.3 One slug, one population
 
-Per project-standards: "Each slug covers exactly one population." A BPC slug addresses a single population code (top-level or sub-code). Combined slugs are not permitted. If a design parameter needs research for both MOB and VIS, two slugs are created.
+Per project-standards: "Each slug covers exactly one population." A BPC slug addresses a single population code (top-level or sub-code). Combined slugs are not permitted. If a design parameter needs research for both MOB and VIS, two slugs are created. [Superseded by the owner's statement of 2026-08-24: every slug is crossed with every population code, access need and ICF code; see "Supersession record 2026-11-15" in `references/project-standards.md`.]
 
 ### 3.4 Population variability acknowledgment
 

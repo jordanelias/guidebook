@@ -139,12 +139,7 @@ def main() -> int:
             findings.append(f"{where}: target file does not exist.")
             continue
         target_text, paras, lines = cached
-        # A citation line quotes its own target, so a target in the LEDGER is counted on the
-        # ledger's prose with the citation pairs removed, as the BY quote is below; the marker
-        # search keeps the raw text, where the pair sits in the target's own paragraph.
-        counted = (dbcore.strip_supersedes_citations(target_text)
-                   if (REPO_ROOT / target_rel).resolve() == LEDGER.resolve() else target_text)
-        n_target = dbcore.count_ledger_quote(counted, target_quote)
+        n_target = dbcore.count_ledger_quote(target_text, target_quote)
         if n_target != 1:
             findings.append(
                 f"{where}: target quote occurs {n_target} time(s) in {target_rel} "

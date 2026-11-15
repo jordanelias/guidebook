@@ -207,8 +207,8 @@ LED-009	ACTIVE	references/project-standards.md:17	tiers 4-6 anchoring	Softened b
 LED-015	AMENDED	references/project-standards.md:26	marker ●	Mapping for derived figures follows floor(mean(ordinal)).
 LED-024	ACTIVE	references/project-standards.md:53	teaching professional judgment	Direct textual negation of mission-and-epistemics.md commitment 7 ('The guidebook teaches professional judgment').
 LED-028	ACTIVE	references/project-standards.md:73	unverifiable value handling	Tension with 'retire in place, never hard-delete' (2026-09-16): is CLOSED-DELETED a status or a row deletion?
-LED-029	ACTIVE	references/project-standards.md:118	slug-population cardinality	Predates slugs-as-topics and the 2026-08-24 rule that every slug is searched against every population/need/ICF code.
-LED-031	ACTIVE	references/project-standards.md:127	language coverage	research skill obliges 19 languages; jurisdiction scope later limited to Bucket 1-2 (2026-09-28).
+LED-029	SUPERSEDED	references/project-standards.md:118	slug-population cardinality	Predates slugs-as-topics and the 2026-08-24 rule that every slug is searched against every population/need/ICF code.
+LED-031	SUPERSEDED	references/project-standards.md:127	language coverage	research skill obliges 19 languages; jurisdiction scope later limited to Bucket 1-2 (2026-09-28).
 LED-033	ACTIVE	references/project-standards.md:140	BPC precedence	BPC layer predates the seven-stage spine and the clean-room reset; bpc_metadata is now INFRASTRUCTURE in stage-map.
 LED-034	ACTIVE	references/project-standards.md:143	endnote propagation	Uses [REF:{slug}:{NN}] marker scheme; current identifier is ref_id REF-NNNNN.
 LED-039	ACTIVE	references/project-standards.md:229	session start protocol (GitHub GraphQL)	Predates the container/MCP/CLAUDE.md workflow; CLAUDE.md §1 prescribes a different start.

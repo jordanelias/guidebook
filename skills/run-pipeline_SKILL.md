@@ -24,8 +24,9 @@ run. Derive every figure; paste no counts.
 **Open once:** `/session-open` first (it sets `CURRENT` before the first Bash call), then
 `bash .claude/hooks/ensure-deps.sh`, then `/orient`. Work on a scratch DB (CLAUDE.md §4): `cp data/guidebook.db $S/guidebook.db`
 and `GUIDEBOOK_DB_PATH=$S/guidebook.db` inline on every call. `--session` takes the bare stem, the content of
-`scratchpad/CURRENT` (the writer strips a trailing `.md`). Research batches are serial: a batch captured from an older base is refused by
-`emit_batch_sql.py` (rows exist in the canonical DB that the scratch lacks) and is regenerated from the new `main`. This file orders the work; the research contract
+`scratchpad/CURRENT` (the writer strips a trailing `.md`). Research batches are serial: copy the scratch from the current `main`, not from an older base. `emit_batch_sql.py` refuses a scratch that
+lacks rows the canonical DB holds, but it does NOT see a value `main` has since corrected, and it emits an UPDATE that reverts it; a batch captured from an
+older base is regenerated from the new `main`, never emitted as it stands. This file orders the work; the research contract
 (`governance/research-contract.yaml`, rule ids `R1`…`R17`, rendered by the SessionStart hook), CLAUDE.md §2 and
 `governance/pipeline-contract.yaml` are the law. **`python3 scripts/db.py <verb> --help` is the one home of a verb's
 flags and vocabularies** (rule 8: every `choices=` is read from the column's own CHECK); this file names only the flags

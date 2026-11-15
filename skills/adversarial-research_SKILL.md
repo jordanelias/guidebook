@@ -150,8 +150,8 @@ findings, including when you find nothing.
    an observed, parameterised concept that no extraction carries — the row that would be checked
    was never written. That is how every figure batches stated for any concept but the one
    parameter that existed was lost while the gate read green. Take one sample per admitted
-   source, not one per figure: open the persisted payload under `retrieval-log/<session>/` (the
-   `-text.txt` where one exists), list the figures it states and the concept each is stated
+   source, not one per figure: open the logged payload under `retrieval-log/<session>/` (the
+   `-text.txt` where one exists; a large file is logged by its URL and not committed, so retrieve it again), list the figures it states and the concept each is stated
    for, then read the record side for that `ref_id`:
 
    ```sql

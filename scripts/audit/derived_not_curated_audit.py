@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""
+r"""
 scripts/audit/derived_not_curated_audit.py — CLAUDE.md rule 8, mechanised.
 
 THE RULE: derive it, or name who judged it. Never curate a fact the machine can compute.
@@ -63,7 +63,7 @@ THREE MORE CLASSES, added 2026-09-27 (RC2, DR-2026-09-26-recurring-defect-shapes
 section 3). The first pass above sees only a bracketed `choices=[...]` literal; the
 detector was blind to every OTHER shape the same shortcut takes. `grep -c 'choices='
 scripts/db.py` against `grep -c 'choices=dbcore\.\(schema_choices\|check_values\)'
-scripts/db.py` (CLAUDE.md rule 8) names the gap this closes.
+scripts/db.py` (the pair CLAUDE.md rule 8 named until it pointed here instead) names the gap this closes.
 
   * CLASS 3 — a module-level string collection (frozenset/set/list/tuple literal) in a
     writer module that EQUALS a live CHECK IN-list. FAILS. A collection that is a proper

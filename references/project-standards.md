@@ -119,24 +119,15 @@ DATE: 2026-03-28 21:30
 
 RULE: Each slug covers exactly one population. Combined slugs not permitted.
 DATE: 2026-03-18 23:30
-SUPERSEDES: references/project-standards.md :: "Each slug covers exactly one population. Combined slugs not permitted."
-  BY: references/project-standards.md :: "Every research slug gets cross-referenced against a population code, access need or ICF code because there is always the chance that there is an unexpected connection between them."
-SUPERSEDED 2026-11-15 (back-pointer added by T-001; no line above is edited): owner statement quoted above (REQ-032): a slug is crossed with every population, access need and ICF code.
 
 RULE: 24 jurisdictions canonical (per jurisdiction-tracker §4.7.3). Language and jurisdiction coverage are distinct axes — both satisfied independently. Per-jurisdiction tier coverage record required: status (SEARCHED|THIN|NO-DATA|NOT-RUN), co1_attempted, tier5_attempted, tier6_attempted. Pre-LOG completeness check mandatory (24 jurisdictions, co1_pass_summary, best_practice_synthesis, citation_mining, native_aliases for 14 languages) — fail = BLOCKER. BPC entry PROVISIONAL until all 24 recorded + co1_pass ≥9 languages.
 DATE: 2026-03-19 19:28
-SUPERSEDES: references/project-standards.md :: "Language and jurisdiction coverage are distinct axes — both satisfied independently."
-  BY: references/project-standards.md :: "Yes, per parameter and bucket so long as the bucket is not just jurisdiction but associated language."
-SUPERSEDED 2026-11-15 (back-pointer added by T-001; no line above is edited): owner answer OR-8, 2026-10-29: the unit of coverage is the bucket member, a jurisdiction with its associated language.
 
 RULE: Forward + backward citation mining mandatory for every confirmed Tier 1-2 source. Use citation-miner skill (inline = fallback only).
 DATE: 2026-03-18 23:00; consolidated 2026-03-29
 
 RULE: Early-close gate permanently removed. All 14 languages searched to completion on every run. Exception: IntD only — early-close active (literature confirmed absent in non-English).
 DATE: 2026-03-18 23:00; updated 2026-03-18 15:00
-SUPERSEDES: references/project-standards.md :: "All 14 languages searched to completion on every run."
-  BY: references/project-standards.md :: "Yes, per parameter and bucket so long as the bucket is not just jurisdiction but associated language."
-SUPERSEDED 2026-11-15 (back-pointer added by T-001; no line above is edited): owner answer OR-8, 2026-10-29: exhaustion is judged per parameter and bucket member, and the language set is scoped.
 
 RULE: PICO framing begins with population need and functional outcome evidence — not standard values. Standards at Step 2.
 DATE: 2026-03-19 04:08
@@ -7622,3 +7613,17 @@ SUPERSEDES: governance/jurisdiction-philosophy.md :: "A BPC entry is PROVISIONAL
 CONDITION: any session meeting the sentence "A BPC entry is PROVISIONAL until the Co-1 pass covers ≥9 languages" or the March 2026 rules marked in place above (one population per slug; language and jurisdiction as distinct axes; all 14 languages on every run).
 ACTION: treat each as superseded; coverage is judged per parameter and bucket member (a jurisdiction with its associated language).
 DATE: 2026-11-15 — marks added; the rulings are the owner's, quoted where they stand.
+
+## Supersession record 2026-11-15 — three March 2026 rules overtaken, recorded by this entry (T-001)
+
+Three rules of the 2026-03-18 and 2026-03-19 entries under "Research and Evidence Pipeline" no longer bind. A `SUPERSEDES`/`BY` pair cannot be added for a target that lives in this ledger (the audit would count the quoted target twice, and a marker inside a committed entry is an in-place edit, which `decisions/DR-2026-09-26-recurring-defect-shapes-remediation.md` forbids), so this entry is the record, by the same reasoning as "Correction 2026-11-12 — to the fifth set of owner answers: how OD-39's supersession is recorded". No line above is edited.
+
+1. **One population per slug.** The rule that each slug covers exactly one population, and that combined slugs are not permitted, is overtaken by the owner's statement of 2026-08-24 in "RULES 2026-08-25 — the four owner rulings of 2026-08-24, entered as operative rules": every research slug is crossed with a population code, access need or ICF code, because an unexpected connection may exist. A slug names a topic; it is not a population.
+2. **Language and jurisdiction as independent axes.** The rule that language coverage and jurisdiction coverage are distinct axes, both satisfied independently, is overtaken by the owner's answer to OR-8 in "Owner rulings 2026-10-29 (second)": exhaustion is judged per parameter and per bucket member, where a bucket member is a jurisdiction with its associated language.
+3. **All languages on every run.** The rule that every language is searched to completion on every run is overtaken by the same OR-8 answer, with the scope the bucket table sets, and by the 2026-11-12 answer to OD-13 above.
+
+The same 2026-03-19 entry's provisional-until-covered clause (a best-practice entry stays provisional until a number of recorded jurisdictions and Co-1 languages are covered) is the clause OD-13 supersedes; its second copy is marked in `governance/jurisdiction-philosophy.md`.
+
+CONDITION: any session that meets one of the three March 2026 rules, or a restatement of one in a skill, schema comment or governance file.
+ACTION: (1) Treat each as superseded, by the ruling named against it. (2) Do not add a `SUPERSEDES` pair for a ledger target. (3) A restatement outside the ledger is marked where it stands (T-001 marked the ones its sweep found).
+DATE: 2026-11-15 — record by the recorder of rulings the owner gave on the dates named; not a new owner statement.

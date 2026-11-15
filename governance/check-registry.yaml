@@ -554,7 +554,7 @@ checks:
   cost: fast
   min_items: 1
   note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the count of real registry blocks + source-jurisdiction
-    fields actually resolved (111 today). min_items:1 — standards-registry.md and data/sources/ are repo
+    fields actually resolved. min_items:1 — standards-registry.md and data/sources/ are repo
     content, not a corpus that legitimately empties.'
 - id: validate_verification_consistency
   cmd:
@@ -752,7 +752,8 @@ checks:
   basis: cross_stage/adherence-log
   cost: fast
   no_floor: not-instrumented — this filter bundles checks 2-6 (attestations in the HEAD~1..HEAD diff,
-    0 today) with check 7 (every attestation on disk, 79 today, for re-attestation-window materiality)
+    counted by `git diff --name-only HEAD~1 HEAD -- attestations | wc -l`) with check 7 (every attestation on disk,
+    counted by `ls attestations/*.json | wc -l`, for re-attestation-window materiality)
     — two different subjects with no single honest count. Left uninstrumented on 2026-08-14 (A5) rather
     than invent a combined figure. See attestation_presence / attestation_schema for the diff-scoped instrumentation
     this one can't honestly share.
@@ -774,7 +775,7 @@ checks:
   no_floor: changeset-scoped — same subject as attestation_schema, namely attestation files in HEAD~1..HEAD,
     not the 79 on disk. 0 means none in this commit, not an empty corpus.
   note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the attestations/*.json file count in the HEAD~1..HEAD
-    diff (check_8''s subject, same as attestation_schema). 0 today — diff-scoped by design, not a broken
+    diff (check_8''s subject, same as attestation_schema). Diff-scoped by design, so 0 is not a broken
     sweep. Surfaces NON-COMPLIANT verdicts. Never blocking by design.'
 - id: research_contract_baseline_ratchet
   cmd:
@@ -1003,12 +1004,10 @@ checks:
   basis: evidence/evidence-verification-gate
   cost: fast
   min_items: 1
-  floor_basis: RATCHETED 2026-09-16. The note below says evidence_sources is 0 today; it holds 5
-    rows, admitted by research batch 08 on 2026-09-16, and this check prints EXAMINED 5. Floor is
-    1, never the count.
+  floor_basis: RATCHETED 2026-09-16, when evidence_sources first held rows. Floor is 1, never the
+    count; the count is what EXAMINED prints.
   note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints COUNT(*) FROM evidence_sources — the single table
-    all three checks in this script read. 0 today (clean-room reset, 2026-08-06). empty-by-decision. RED
-    on main. Advisory, as it was in research-contract.yml.'
+    all three checks in this script read. Advisory, as it was in research-contract.yml.'
 - id: gap_mining_audit
   cmd:
   - python3
@@ -1035,7 +1034,7 @@ checks:
   basis: unattributed
   cost: slow
   min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the graph node count (847 today). min_items:1 —
+  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the graph node count. min_items:1 —
     items/connections/sources feed the graph, so 0 nodes would mean the graph builder broke, not a legitimate
     DB state. ~2s locally; resolves its DB path via graph/build.py (documented exemption).'
 - id: test_graph_audit

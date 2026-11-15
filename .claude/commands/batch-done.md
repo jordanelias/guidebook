@@ -14,7 +14,7 @@ python3 scripts/audit/search_log_completeness.py --session "$(cat scratchpad/CUR
 The second line is RC4 (advisory): it FAILs if this session wrote to any of the 2026-08-19
 RULE's research tables and no closed adversarial pass names it. That FAIL is not a reason to
 close pass 1; LED-192 holds it open (`/adversarial` step 3). Run it on `CURRENT`, not via
-`run_checks.py --battery research` — that battery's other session-scoped checks
+`run_checks.py --all --battery research` — that battery's other session-scoped checks
 (`research_dod_session`, `author_fidelity`, `citation_mining_session`) are still pointed
 at `LATEST-RESEARCH`, which names the PREVIOUS session for the whole life of this one.
 
