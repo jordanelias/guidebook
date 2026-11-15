@@ -93,6 +93,11 @@ sys.path.insert(0, str(REPO / "scripts"))
 import db        # noqa: E402
 import dbcore    # noqa: E402
 from dbcore import Refusal  # noqa: E402
+
+# T-007: add-source refuses a source with no standing or no type. Both values are read from
+# the columns' own CHECKs; UNVERIFIED needs no verification method, so no other refusal fires.
+SRC_STANDING = ("--verification-status", "UNVERIFIED",
+                "--source-type", dbcore.schema_choices("evidence_sources", "source_type")[0])
 sys.path.insert(0, str(REPO))
 from schemas.enums import EvidenceMarker  # noqa: E402
 
@@ -470,7 +475,7 @@ try:
         return run_cli("add-source", "--ref-id", ref_id, "--author", "corp|Fixture Body",
                        "--year", "2020", "--title", title or f"fixture source {ref_id}",
                        "--tier", GREY_TIER, "--evidence-type", "grey", "--session", S,
-                       *extra)
+                       *SRC_STANDING, *extra)
 
     def readable(ref_id):
         """Give a fixture source the two states add-extraction has demanded since
@@ -1026,7 +1031,7 @@ try:
         args = ["add-source", "--ref-id", ref_id, "--author", "corp|Fixture Body",
                 "--year", "2021", "--title", f"fixture retype {ref_id}", "--evidence-type",
                 etype, "--tier", str(TIER_MAP[(etype, scope or next(iter(
-                    VALID_SCOPES_BY_TYPE[etype])))]), "--session", S, *extra]
+                    VALID_SCOPES_BY_TYPE[etype])))]), "--session", S, *SRC_STANDING, *extra]
         if scope:
             args += ["--scope", scope]
         return run_cli(*args)
@@ -1680,7 +1685,7 @@ try:
     def add_o(label, *extra):
         ref = next_ref()
         r = run_cli("add-source", "--ref-id", ref, "--author", "corp|Fixture Body", "--year", "2020",
-                    "--title", f"fixture O {label}", "--session", S, *extra)
+                    "--title", f"fixture O {label}", "--session", S, *SRC_STANDING, *extra)
         return ref, r
 
     def tier_of(ref):
@@ -1721,6 +1726,24 @@ try:
            and r_am_ok.returncode == 0
            and q("SELECT co1_source_type FROM evidence_sources WHERE ref_id=?", ref_live) == [("participatory_research",)],
            f"old rc={r_am_old.returncode} {(r_am_old.stdout + r_am_old.stderr)[-150:]} ok rc={r_am_ok.returncode} {r_am_ok.stderr[-150:]}")
+
+    # ── T-007: add-source through argparse refuses a source with no standing or no type ─────────
+    def _bare_add(*standing):
+        return run_cli("add-source", "--ref-id", next_ref(), "--author", "corp|Fixture Body", "--year", "2020",
+                       "--title", "fixture T007 bare add-source", "--tier", GREY_TIER,
+                       "--evidence-type", "grey", "--session", S, *standing)
+    n_t7 = counts("evidence_sources")[0]
+    r_t7a, r_t7b = _bare_add(), _bare_add(SRC_STANDING[0], SRC_STANDING[1])
+    record("T007-05", "add-source with no --verification-status, or with no --source-type, exits non-zero, "
+           "names the missing flag and writes no row",
+           r_t7a.returncode != 0 and "--verification-status" in r_t7a.stderr
+           and r_t7b.returncode != 0 and "--source-type" in r_t7b.stderr
+           and counts("evidence_sources")[0] == n_t7,
+           f"{r_t7a.returncode} {r_t7a.stderr[-150:]} | {r_t7b.returncode} {r_t7b.stderr[-150:]}")
+    r_t7c = _bare_add(*SRC_STANDING)
+    record("T007-06", "the same call with both flags lands exactly one row",
+           r_t7c.returncode == 0 and counts("evidence_sources")[0] == n_t7 + 1,
+           f"{r_t7c.returncode} {r_t7c.stderr[-200:]}")
 
     # ── V: an extraction asks for no slug, and a root_id must be registered (step 3 judgment) ───────
     ref_p, _ = add_o("extraction, admitted to no slug", "--evidence-type", "grey")
