@@ -1346,10 +1346,11 @@ def delete_connection(con_id: str, session: str, dry_run: bool = False):
 
     REFUSES an id that is not a connection (T-006): the two DELETEs match nothing for a mistyped id, and the
     verb used to answer `{"deleted": ...}` all the same, so a session believed the wrong link was gone while it
-    could still reach the discussion a reader sees."""
+    was still there. The id is looked up in `connections` itself, so `connection_targets` rows with no
+    connection (not constructible through db.py) are refused too."""
     with connect(dry_run) as conn:
         if not dbcore.exists(conn, "connections", "con_id", con_id):
-            raise Refusal(f"delete-connection: {con_id} is not a connection. Nothing was written. "
+            raise Refusal(f"delete-connection: {con_id!r} is not a connection. Nothing was written. "
                           f"`db.py connections` lists the ids that exist.")
         conn.execute("DELETE FROM connection_targets WHERE con_id=?", [con_id])
         conn.execute("DELETE FROM connections WHERE con_id=?", [con_id])

@@ -851,15 +851,38 @@ r = refusal(db.update_connection_status, ABSENT_CON, "CONSUMED", session=S, dry_
 record("N08", "update-connection refuses an unknown con_id", r and ABSENT_CON in r, r)
 res, err = ok(db.update_connection_status, NEXT_CON, "CONSUMED", session=S, dry_run=True)
 record("N09", "a CHECK status on a live connection is accepted", err is None, err)
-r = refusal(db.delete_connection, ABSENT_CON, session=S, dry_run=True)
-record("T006-01", "delete-connection refuses an id that is not a connection, naming it, saying nothing was written, and "
-       "pointing at `db.py connections`", r and ABSENT_CON in r and "Nothing was written" in r and "db.py connections" in r, r)
+_n_con = [scalar(f"SELECT COUNT(*) FROM {t}") for t in ("connections", "connection_targets")]
+_rs = {how: refusal(db.delete_connection, who, session=S, dry_run=dry)
+       for how, who, dry in (("absent, dry", ABSENT_CON, True), ("absent, for real", ABSENT_CON, False),
+                             ("lower case", NEXT_CON.lower(), False), ("padded", f" {NEXT_CON} ", False))}
+record("T006-01", "delete-connection refuses an id that is not a connection, for real and under --dry-run and for a case or "
+       "whitespace variant of one that is: it names the verb and the id, says nothing was written, points at `db.py connections`, "
+       "and the tables are unchanged",
+       all(v and "delete-connection:" in v and "Nothing was written" in v and "db.py connections" in v for v in _rs.values())
+       and ABSENT_CON in _rs["absent, dry"] and _n_con == [scalar(f"SELECT COUNT(*) FROM {t}")
+                                                          for t in ("connections", "connection_targets")], _rs)
 with scratch() as c:                   # the copy holds NEXT_CON, written above; the main copy keeps it for later cases
+    _P3 = next((p for p in P_ACTIVE if p not in (P1, P2)), None)
+    _other, _e2 = ok(db.insert_connection, conn_(description="T006 second connection"),
+                     [("parameter_id", P1), ("parameter_id", _P3)], session=S, dry_run=False) if _P3 else (None, "no third parameter")
+    _tot = lambda: [c.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0] for t in ("connections", "connection_targets")]  # noqa: E731
+    _before = _tot()
     res, err = ok(db.delete_connection, NEXT_CON, session=S, dry_run=False)
     left = [c.execute(f"SELECT COUNT(*) FROM {t} WHERE con_id=?", (NEXT_CON,)).fetchone()[0]
             for t in ("connections", "connection_targets")]
-    record("T006-02", "delete-connection still deletes a connection that exists, and its targets", err is None and left == [0, 0],
-           err or left)
+    kept = [c.execute(f"SELECT COUNT(*) FROM {t} WHERE con_id=?", (_other,)).fetchone()[0]
+            for t in ("connections", "connection_targets")] if _other else None
+    record("T006-02", "delete-connection deletes the connection it is given and its targets, and only those: a second connection "
+           "and its targets are still there", err is None and _e2 is None and left == [0, 0] and kept == [1, 2]
+           and _tot() == [_before[0] - 1, _before[1] - 2], (err, _e2, left, kept, _before, _tot()))
+    # A connection whose target rows are gone is still a connection: the lookup is in `connections`, not in its targets.
+    if _other:
+        hand("DELETE FROM connection_targets WHERE con_id=?", _other)
+        _res, _e3 = ok(db.delete_connection, _other, session=S, dry_run=False)
+        record("T006-03", "a connection with no target rows is still found, and deleted",
+               _e3 is None and scalar("SELECT COUNT(*) FROM connections WHERE con_id=?", _other) == 0, _e3)
+    else:
+        skip("T006-03", "no second connection could be built on the copy")
 
 print("Section B4/B5/D4/R3-14: conflicts -- keyed on the parameter, an unordered pair, two real populations")
 CODES = [r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "

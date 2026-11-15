@@ -654,6 +654,7 @@ writers:
     scripts/tests/test_run_pipeline_refusals.py:
     - base_parameters
     - base_taxonomy_medical
+    - connection_targets
     - evidence_source_authors
     - evidence_sources
     - lang_jur_map
