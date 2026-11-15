@@ -1740,9 +1740,10 @@ try:
            and r_t7b.returncode != 0 and "--source-type" in r_t7b.stderr
            and counts("evidence_sources")[0] == n_t7,
            f"{r_t7a.returncode} {r_t7a.stderr[-150:]} | {r_t7b.returncode} {r_t7b.stderr[-150:]}")
+    n_t7c = counts("evidence_sources")[0]
     r_t7c = _bare_add(*SRC_STANDING)
-    record("T007-06", "the same call with both flags lands exactly one row",
-           r_t7c.returncode == 0 and counts("evidence_sources")[0] == n_t7 + 1,
+    record("T007-06", "the same call with both flags lands exactly one row (a positive control: no defect of the refusal turns it red)",
+           r_t7c.returncode == 0 and counts("evidence_sources")[0] == n_t7c + 1,
            f"{r_t7c.returncode} {r_t7c.stderr[-200:]}")
 
     # ── V: an extraction asks for no slug, and a root_id must be registered (step 3 judgment) ───────

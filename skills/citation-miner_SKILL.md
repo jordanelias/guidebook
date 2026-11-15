@@ -267,7 +267,7 @@ python3 scripts/db.py add-source \
   --tier {tier} \
   --evidence-type {clinical|co1|co2|sr_meta|grey|standard_eb|national_fw|code} \
 --source-type {from the column's CHECK: `python3 scripts/db.py add-source --help`} \   # REQUIRED since T-007
---verification-status {VERIFIED|UNVERIFIED} \   # REQUIRED since T-007; UNVERIFIED is a real value
+--verification-status UNVERIFIED \   # REQUIRED since T-007; VERIFIED also needs --verification-method (and --verified-by-tool for `tool`)
   --scope {high_control|lower_control}   # clinical only; standard_eb takes
   #   national|international. Every other type is `intrinsic` and is FILLED IN.
   #   REQUIRED since 2026-09-10: the tier is DERIVED from (evidence_type, scope) via

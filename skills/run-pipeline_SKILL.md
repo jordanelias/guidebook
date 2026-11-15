@@ -121,7 +121,7 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   duplicate lead with `update-locator --status RETIRED`). A given id must equal what omitting it yields, and any other
   id, another staged lead's included, is refused naming the lead it was staged for. Then `update-locator --ref-id …
   --status PROMOTED`.
-  **Unretrievable:** admit with `--verification-status UNVERIFIED --processing-blocked-reason <from the CHECK>` and
+  **Unretrievable:** admit with `--verification-status UNVERIFIED --source-type <from the CHECK> --processing-blocked-reason <from the CHECK>` and
   marker ○. The reason is for text that could not be obtained or read, and only the values the BLOCKED case of
   `v_scan_ledger` lists count as that (derive: `SELECT sql FROM sqlite_master WHERE name = 'v_scan_ledger'`, the header
   and the BLOCKED case); the view is the one home of that classification, and the writers and gates read its status,
@@ -140,7 +140,7 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   reason, so the source still owes its reading (open owner question 8, extended, of the 2026-11-06 round-3
   adjudication). Log the admission as a search (R17): `log-search --origin owner-supplied` or `lead-index`.
 - **Bibliographic data.** `add-source` takes authors, year, title, standard number, institution, report and series
-  number, publisher, book title, pages, DOI/PMID, URL, tier, evidence type, Co-1 provenance and verification.
+  number, publisher, book title, pages, DOI/PMID, URL, tier, evidence type, Co-1 provenance and verification; it requires `--source-type` and `--verification-status` and refuses without them (T-007).
   `correct-source --field <f> --log-session <retrieval-log session>` then sets the payload-backed fields **from the
   persisted payload** (the list is `correct-source --help`, derived from the payload-field table in
   `scripts/research/retrieval_log.py`), and `scripts/research/retrieval_log.py --verify-authors --session <that session>` diffs authors and those fields for

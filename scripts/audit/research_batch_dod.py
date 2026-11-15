@@ -85,7 +85,7 @@ CHECKS (each maps to a documented rule and to the observed violation that motiva
   R10b NO SILENTLY-NULL VERIFICATION STATUS ON A URL-BEARING ADMISSION.  R10 above examines
       VERIFIED sources only, so it cannot see a source with a URL and verification_status left
       NULL, which `add-source` permitted until T-007 and a row
-      already stored may still carry. The scheduled verify-urls cron that polled exactly that
+      written outside db.py may still carry. The scheduled verify-urls cron that polled exactly that
       pool was deleted on 2026-10-14; the rule stays because the research contract's R10 still
       says never to leave the status NULL on a source carrying a URL.
 
@@ -831,7 +831,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # R10 above examines VERIFIED sources ONLY (its own comment, above), so it is blind to a
     # source with a URL and verification_status left NULL. `add-source` accepted a NULL
     # --verification-status until T-007 (it now refuses), so a batch could admit exactly this
-    # row and pass every other rule; a stored row or another writer can still leave it. The scheduled cron that polled this pool was deleted on
+    # row and pass every other rule; a row written outside db.py can still carry it. The scheduled cron that polled this pool was deleted on
     # 2026-10-14 (plan step 1.5); the rule is kept because the research contract's R10 still
     # forbids the NULL, and it has no other rationale left.
     unverified_url = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE "

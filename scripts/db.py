@@ -4220,7 +4220,8 @@ def insert_evidence_source(data: dict, session: str,
 
     # A SOURCE WITH NO STANDING OR NO TYPE (T-007). Both columns admit NULL, and a NULL
     # standing is neither "verified" nor "unverified": assess_cell._verified and the blocking
-    # integrity check read it to decide whether a value may rest on the source. So REFUSE,
+    # integrity check read it to decide whether a value may rest on the source, and research_batch_dod R5
+    # reads source_type. So REFUSE,
     # and never default -- a default would be an invented fact. The vocabulary is read from
     # the column's own CHECK, not restated here (CLAUDE.md rule 8).
     for _col, _flag, _meaning in (
@@ -4231,7 +4232,7 @@ def insert_evidence_source(data: dict, session: str,
         if not data.get(_col):
             raise Refusal(
                 f"add-source needs {_flag} ({_meaning}). Live vocabulary, from the column's "
-                f"own CHECK: {', '.join(dbcore.schema_choices('evidence_sources', _col))}. "
+                f"own CHECK: {', '.join(dbcore.schema_choices('evidence_sources', _col) or ('(could not be read)',))}. "
                 f"Nothing was written.")
 
     # A verification standing implies its evidence — so REFUSE the write when the

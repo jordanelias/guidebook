@@ -972,8 +972,8 @@ for _tid, _col, _flag in (("T007-01", "verification_status", "--verification-sta
     _row = {k: v for k, v in {**SRC, **_T7}.items() if k != _col}
     _r = refusal(db.insert_evidence_source, _row, S, dry_run=True, authors=AUTH)
     _vocab = dbcore.schema_choices("evidence_sources", _col)
-    record(_tid, f"add-source without {_flag} refuses, names it and every value of the column's CHECK",
-           _r and _flag in _r and all(v in _r for v in _vocab) and "Nothing was written" in _r, _r)
+    record(_tid, f"add-source without {_flag} refuses, names it and the column's CHECK vocabulary, joined as the refusal prints it",
+           _r and _flag in _r and ", ".join(_vocab) in _r and "Nothing was written" in _r, _r)
 _n = scalar("SELECT COUNT(*) FROM evidence_sources")
 _r = refusal(db.insert_evidence_source, {**SRC, **_T7, "verification_status": None}, S,
              dry_run=False, authors=AUTH)
