@@ -1094,7 +1094,7 @@ def check_declared(conn, table: str, column: str, value, context: str):
     if allowed and value not in allowed:
         raise Refusal(
             "%s: %s.%s does not accept %r. The schema's own CHECK declares: %s. "
-            "Nothing was written."
+            "Pass one of them. Nothing was written."
             % (context, table, column, value, sorted(allowed)))
 
 
@@ -1250,7 +1250,7 @@ def check_vocab(conn, table: str, column: str, value, context: str):
         if value not in declared:
             raise Refusal(
                 "%s: %s.%s does not accept %r. The schema's own CHECK declares: %s. "
-                "Nothing was written." % (context, table, column, value, sorted(declared)))
+                "Pass one of them. Nothing was written." % (context, table, column, value, sorted(declared)))
         return
 
     vocab = live_vocab(conn, table, column)

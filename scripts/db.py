@@ -205,7 +205,9 @@ def insert_connection(data: dict, targets: list[tuple[str, object]],
         for kind, value in targets:
             if kind not in _CONNECTION_TARGET_KINDS:
                 raise Refusal(f"unknown connection target kind {kind!r}.")
-            dbcore.fk_declared(conn, "connection_targets", kind, value, f"add-connection {kind}")
+            dbcore.fk_declared(conn, "connection_targets", kind, value, f"add-connection {kind}",
+                               remedy=("SELECT parameter_id FROM base_parameters"
+                                       if kind == "parameter_id" else ""))
             if kind == "parameter_id":
                 st = conn.execute("SELECT status FROM base_parameters WHERE parameter_id=?",
                                   (value,)).fetchone()[0]
@@ -254,7 +256,8 @@ def update_connection_status(con_id: str, status: str,
     u = _upd(session)
     with connect(dry_run) as conn:
         if not dbcore.exists(conn, "connections", "con_id", con_id):
-            raise Refusal(f"update-connection: {con_id} is not a connection. Nothing was written.")
+            raise Refusal(f"update-connection: {con_id} is not a connection. Nothing was written. "
+                          f"`db.py connections` lists the ids; `db.py add-connection` writes a new one.")
         dbcore.check_declared(conn, "connections", "status", status, "update-connection --status")
         conn.execute(
             "UPDATE connections SET status=?, updated_at=?, updated_by_session=? WHERE con_id=?",
@@ -350,7 +353,8 @@ def insert_gap(data: dict, session: str, dry_run: bool = False) -> str:
 def close_gap(gap_id: str, status: str,
               session: str, dry_run: bool = False):
     if not status.startswith("CLOSED"):
-        raise Refusal(f"status must start with CLOSED, got '{status}'")
+        raise Refusal(f"status must start with CLOSED, got '{status}'. The closing statuses in use: "
+                      f"SELECT DISTINCT status FROM gaps WHERE status LIKE 'CLOSED%'.")
     u = _upd(session)
     with connect(dry_run) as conn:
         conn.execute(
@@ -1318,7 +1322,8 @@ def update_conflict(conflict_id: str, session: str,
     vals.append(conflict_id)
     with connect(dry_run) as conn:
         if not dbcore.exists(conn, "conflicts", "conflict_id", conflict_id):
-            raise Refusal(f"update-conflict: {conflict_id} is not a conflict. Nothing was written.")
+            raise Refusal(f"update-conflict: {conflict_id} is not a conflict. Nothing was written. "
+                          f"`db.py conflicts` lists the ids; `db.py add-conflict` writes a new one.")
         if status is not None:
             dbcore.check_declared(conn, "conflicts", "status", status, "update_conflict")
         # Named, not the bare FOREIGN KEY constraint failed a walk-through met on GAP-99999.
@@ -2490,7 +2495,7 @@ def main():
                        required=True)
     # DERIVED from _AMENDABLE_SVE_FIELDS, not retyped. This list said
     # ["figure_role", "comparator"] and went stale the moment the constant grew,
-    # which is rule 8's "twelve argparse choices= lists that duplicate a column's
+    # which was rule 8's count of argparse choices= lists that duplicate a column's
     # CHECK" in miniature -- one list fewer.
     p_amx.add_argument("--field", required=True,
                        choices=sorted(_AMENDABLE_SVE_FIELDS),
@@ -4986,7 +4991,8 @@ def _resolve_transcript_path(rel_path: str, label: str) -> tuple:
     """
     resolved = dbcore.resolve_under(dbcore.REPO_ROOT / "transcripts", rel_path)
     if resolved is None:
-        raise Refusal(f"{label} {rel_path!r} does not resolve under transcripts/.")
+        raise Refusal(f"{label} {rel_path!r} does not resolve under transcripts/. Give a path of a "
+                      f"tracked file relative to the repository root (git ls-files transcripts/).")
     return resolved, os.path.normpath(rel_path).replace(os.sep, "/")
 
 
@@ -5214,7 +5220,9 @@ def dispose_adversarial_finding(finding_id: int, disposition: str, ref: str, ses
         if row["disposition"] is not None:
             raise Refusal(
                 f"finding {finding_id}: already disposed as {row['disposition']!r}. "
-                f"A disposition is not amended by a second call.")
+                f"A disposition is not amended by a second call: read the recorded one with SELECT "
+                f"disposition FROM adversarial_findings WHERE finding_id = {finding_id!r}, and "
+                f"record any correction in the pull request.")
         dbcore.check_declared(conn, "adversarial_findings", "disposition", disposition,
                               f"finding {finding_id}")
         if disposition == "REPAIRED":
@@ -5682,7 +5690,9 @@ def unlink_admission(exec_id: int, ref_id: str, reason: str, session: str,
             raise Refusal(f"exec {exec_id}: no such search execution.")
         if not conn.execute("SELECT 1 FROM search_admissions WHERE exec_id=? AND ref_id=?",
                             [exec_id, ref]).fetchone():
-            raise Refusal(f"exec {exec_id} -> {ref}: no such admission edge to remove.")
+            raise Refusal(f"exec {exec_id} -> {ref}: no such admission edge to remove. List the "
+                          f"edges a source holds with SELECT exec_id FROM search_admissions "
+                          f"WHERE ref_id = '{ref}'.")
         conn.execute("DELETE FROM search_admissions WHERE exec_id=? AND ref_id=?",
                      [exec_id, ref])
         edges = conn.execute("SELECT COUNT(*) FROM search_admissions WHERE exec_id=?",
@@ -5727,7 +5737,9 @@ def amend_population_match(match_id: str, match_grade: str, reason: str, session
                            "evidence_population_match WHERE match_id=?",
                            [match_id]).fetchone()
         if row is None:
-            raise Refusal(f"{match_id}: no such population match.")
+            raise Refusal(f"{match_id}: no such population match. List a source's with SELECT match_id, "
+                           f"target_population FROM evidence_population_match WHERE ref_id = '<REF>' "
+                           f"(read-only); a new one is written with `db.py add-population-match`.")
         dbcore.check_vocab(conn, "evidence_population_match", "match_grade",
                            match_grade, "--match-grade")
         if row["match_grade"] == match_grade:
@@ -6103,7 +6115,8 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
     if field not in _AMENDABLE:
         raise Refusal(
             f"{ref_id}: {field!r} is not an amendable judgement field. "
-            f"Amendable: {', '.join(_AMENDABLE)}.")
+            f"Amendable: {', '.join(_AMENDABLE)}. Give one of them as --field; a "
+            f"bibliographic field is corrected with `db.py correct-source`.")
     if not replacement:
         raise Refusal(f"{ref_id}: refusing to blank {field!r}. Give the corrected text.")
     if not reason:
@@ -6433,7 +6446,8 @@ def update_locator(ref_id: str, status: str, session: str, reason: str = None,
         row = conn.execute("SELECT ref_id, status FROM source_locators WHERE ref_id=?",
                            [ref_id]).fetchone()
         if row is None:
-            raise Refusal(f"{ref_id}: not in source_locators.")
+            raise Refusal(f"{ref_id}: not in source_locators. A lead is written with `db.py add-locator`; "
+                           f"a source already admitted is in evidence_sources (`db.py amend-source`).")
         dbcore.check_vocab(conn, "source_locators", "status", status, "--status")
         if status == "PROMOTED" and not dbcore.exists(conn, "evidence_sources",
                                                       "ref_id", ref_id):
@@ -7272,7 +7286,8 @@ def decline_parameter(term_id: str, reason: str, session: str, dry_run: bool = F
                 f"leave that parameter_id standing beside a record saying the term is not "
                 f"a parameter.\n"
                 f"Retiring a parameter is a different act on parameter "
-                f"{param['parameter_id']}'s own row, not a declination. Nothing was written.")
+                f"{param['parameter_id']}'s own row, not a declination: use `db.py retire-parameter` "
+                f"if the parameter is wrong. Nothing was written.")
         prior = conn.execute(
             "SELECT reason, created_at, created_by_session, revoked_at, revoked_by_session "
             "FROM parameter_declinations WHERE term_id=?", [term_id]).fetchone()
@@ -8461,7 +8476,7 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
             raise Refusal(
                 f"record-scan: no file saved for {ref} has sha256 {sha[:16]}... The reading "
                 f"must name bytes the retrieval-log holds FOR this source. Saved for it: "
-                f"{listed}. Nothing was written.")
+                f"{listed}. Give the --file-sha256 of one of them. Nothing was written.")
         h = next((m for m in match if m["exists"]), match[0])
         if not h["exists"]:
             raise Refusal(f"record-scan: {h['session']}/{h['artefact']} is in the manifest "
@@ -8585,7 +8600,9 @@ def resolve_follow_up(follow_up_id: int, resolution: str, session: str,
                            "extraction_follow_ups WHERE follow_up_id = ?",
                            (follow_up_id,)).fetchone()
         if row is None:
-            raise Refusal(f"resolve-follow-up: follow-up {follow_up_id}: no such row.")
+            raise Refusal(f"resolve-follow-up: follow-up {follow_up_id}: no such row. Open ones: SELECT "
+                          f"follow_up_id FROM extraction_follow_ups WHERE resolved_at IS NULL; "
+                          f"`db.py raise-follow-up` writes a new one.")
         if row["resolved_at"]:
             raise Refusal(f"resolve-follow-up: follow-up {follow_up_id} was resolved by "
                           f"{row['resolved_by_session']} at {row['resolved_at']}. Nothing "
@@ -11414,7 +11431,8 @@ def insert_population_match(data: dict, session: str, dry_run: bool = False):
         _refuse_tombstone(conn, ref, "add-population-match")
         if not dbcore.exists(conn, "base_taxonomy_identity", "identity_code", data.get("target_population")):
             raise Refusal(
-                f"target_population {data.get('target_population')!r} is not in `base_taxonomy_identity`.")
+                f"target_population {data.get('target_population')!r} is not in `base_taxonomy_identity`. "
+                f"The codes it holds: SELECT identity_code FROM base_taxonomy_identity.")
         dbcore.check_vocab(conn, "evidence_population_match", "match_grade",
                            data.get("match_grade"), "insert_population_match")
         if data.get("match_grade") == "MISMATCH" and not (data.get("mismatch_note") or "").strip():

@@ -1483,7 +1483,8 @@ def check_surfaced_in(exec_id, surfaced_in, surfaced_quote, locator, conn=None):
     quote = (surfaced_quote or "").strip()
     identifiers = [i for i in (doi, quote) if i]
     if not identifiers:
-        raise ValueError("locator carries no single DOI, so surfaced_quote is required.")
+        raise ValueError("locator carries no single DOI, so surfaced_quote is required: pass "
+                         "--surfaced-quote with a verbatim string from --surfaced-in.")
     # CONTAINMENT ON THE RESOLVED PATH, never a string prefix test -- a bare
     # `surfaced_in.startswith("transcripts/")` accepts `transcripts/../governance/x`,
     # exactly the bypass RC4's own adversarial review demonstrated against a prefix

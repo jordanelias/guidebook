@@ -884,6 +884,51 @@ with scratch() as c:                   # the copy holds NEXT_CON, written above;
     else:
         skip("T006-03", "no second connection could be built on the copy")
 
+print("Section T043: a refusal says what to do next")
+_CUE = re.compile(r"db\.py |SELECT |--[a-z]|git ls-files")      # a verb, a query, a flag or a listing command
+_NOID = "T043-NO-SUCH-ID"
+_a_ref = scalar("SELECT ref_id FROM evidence_sources ORDER BY ref_id LIMIT 1")
+_a_exec = scalar("SELECT exec_id FROM search_executions e WHERE NOT EXISTS (SELECT 1 FROM search_admissions a "
+                 "WHERE a.exec_id = e.exec_id AND a.ref_id = ?) ORDER BY exec_id LIMIT 1", _a_ref)
+_a_term = scalar("SELECT term_id FROM base_parameters WHERE status = 'active' ORDER BY parameter_id LIMIT 1")
+_a_fnd = scalar("SELECT finding_id FROM adversarial_findings WHERE verdict = 'SUSTAINED' AND disposition IS NOT NULL "
+                "ORDER BY finding_id LIMIT 1")
+_t043 = [
+    ("update-connection, absent id", refusal(db.update_connection_status, ABSENT_CON, "CONSUMED", session=S, dry_run=True),
+     "db.py connections"),
+    ("update-connection, status outside the CHECK", refusal(db.update_connection_status, NEXT_CON, "BANANA", session=S,
+                                                           dry_run=True), "Pass one of them"),
+    ("update-conflict, absent id", refusal(db.update_conflict, _NOID, session=S, status="RESOLVED", dry_run=True),
+     "db.py conflicts"),
+    ("close-gap, status not CLOSED", refusal(db.close_gap, _NOID, "NOT-CLOSED", session=S, dry_run=True), "SELECT DISTINCT status"),
+    ("resolve-follow-up, absent id", refusal(db.resolve_follow_up, 2 ** 31, "x", session=S, dry_run=True), "db.py raise-follow-up"),
+    ("amend-population-match, absent id", refusal(db.amend_population_match, _NOID, "x", "reason", session=S, dry_run=True),
+     "db.py add-population-match"),
+    ("update-locator, absent ref", refusal(db.update_locator, _NOID, "RETIRED", session=S, reason="reason", dry_run=True),
+     "db.py add-locator"),
+    ("a transcript path outside transcripts/", refusal(db._resolve_transcript_path, "../governance/x", "reviewer_transcript"),
+     "git ls-files transcripts/"),
+    ("add-connection, a parameter that does not exist", refusal(db.insert_connection, conn_(),
+                                                                [("parameter_id", 2 ** 30), ("parameter_id", P1)],
+                                                                session=S, dry_run=True), "SELECT parameter_id FROM base_parameters"),
+]
+if _a_exec and _a_ref:
+    _t043.append(("unlink-admission, no such edge", refusal(db.unlink_admission, _a_exec, _a_ref, "reason", session=S, dry_run=True),
+                  "SELECT exec_id FROM search_admissions"))
+if _a_term:
+    _t043.append(("decline-parameter on a term that is a parameter", refusal(db.decline_parameter, _a_term, "reason", session=S,
+                                                                             dry_run=True), "db.py retire-parameter"))
+if _a_fnd and _a_ref:
+    _t043.append(("dispose-adversarial-finding, already disposed", refusal(db.dispose_adversarial_finding, _a_fnd, "REPAIRED",
+                                                                           _a_ref, session=S, dry_run=True),
+                  "SELECT disposition FROM adversarial_findings"))
+for _i, (_what, _msg, _tok) in enumerate(_t043, 1):
+    record(f"T043-{_i:02d}", f"{_what}: the refusal names the way forward ({_tok!r}) and says nothing was written or refuses before writing",
+           bool(_msg) and _tok in _msg and bool(_CUE.search(_msg)), _msg)
+for _need, _label in ((_a_exec and _a_ref, "unlink-admission"), (_a_term, "decline-parameter"), (_a_fnd and _a_ref, "dispose-adversarial-finding")):
+    if not _need:
+        skip("T043", f"{_label}: the live database offers no row to build the refusal on")
+
 print("Section B4/B5/D4/R3-14: conflicts -- keyed on the parameter, an unordered pair, two real populations")
 CODES = [r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "
                          "ORDER BY identity_code DESC LIMIT 2")]
