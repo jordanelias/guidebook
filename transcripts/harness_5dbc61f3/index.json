@@ -803,5 +803,26 @@
     "bytes": 895071,
     "agent_id_prefix": "a2794694",
     "file": "2026-11-14T23-09-30_other_a2794694.jsonl"
+  },
+  {
+    "started": "2026-11-15T00:46:50",
+    "role": "other",
+    "bytes": 1151055,
+    "agent_id_prefix": "a6e3d43a",
+    "file": "2026-11-15T00-46-50_other_a6e3d43a.jsonl"
+  },
+  {
+    "started": "2026-11-15T00:53:19",
+    "role": "adversarial-critic",
+    "bytes": 683006,
+    "agent_id_prefix": "acda1faa",
+    "file": "2026-11-15T00-53-19_adversarial-critic_acda1faa.jsonl"
+  },
+  {
+    "started": "2026-11-15T01:05:48",
+    "role": "other",
+    "bytes": 1740568,
+    "agent_id_prefix": "a142713b",
+    "file": "2026-11-15T01-05-48_other_a142713b.jsonl"
   }
 ]

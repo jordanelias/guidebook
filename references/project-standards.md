@@ -7546,3 +7546,23 @@ DATE: 2026-11-14 — owner answer (typed words, quoted above).
 CONDITION: any session assigning a lens to a code value, or reading the populations a code value serves.
 ACTION: write the ICF and access-need lens in the recording call; reach the populations through the mapping; do not store the derived identity beside them.
 DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Correction and registration 2026-11-15 — the lens of a code value is judged and written at recording; the maps propose; OD-67 referred to the owner
+
+Written by the coordinator after an Opus design of the mapping between codes and identities (`workplan/2026-11-12-bidirectional-pipeline/MAPPING-DESIGN.md`) was attacked by an independent critic and revised. **Not the owner's words.** It corrects two readings recorded earlier in this ledger, on contact (CLAUDE.md rule 0), and registers one question.
+
+**[CORRECTION: the ACTION of the entry 'populations are still coded, through the ICF and access-need lenses' (2026-11-14, sixteenth set, last) says to "reach the populations through the mapping" and not to "store the derived identity beside them". That was the recorder's reading, marked [ASSUMPTION] in that entry, and not the owner's words ("ICF and access needs are supposed to be mapped to populations too so populations still get coded as a result"). It is replaced by: the recording session judges and writes the identity link of a code value, with its basis `context` and its warrant, in the same call as the ICF and access-need links ("at the moment of recording the row is when you will have best idea of context"; "use contextual judgment"); the maps (`identity_icf_map`, and the b/d rows of `access_need_icf`) are the writer's source of proposals, shown with their mapping confidence and provenance, never a lookup the engine consults at read time.]** The critic's evidence for the correction: a read-time crossing intersecting an ICF and a need link reached no group at all for the owner's own mounting-height default, ten identities have no ICF map row, and the live figure 166 (rollator walking, one d450 link) would reach five groups; and the lens table already allows several lens rows per figure (extractions 33 and 165 carry an identity row beside a need row), so writing the identity breaks no check.
+
+**[CORRECTION: the option text of OD-31, "under a general disability heading, no identity, only its ICF and access-need lenses", is superseded, for a code value whose context the recording session judges, by "typically anything to do concerning mounting height will concern wheelchair users", which names a group.]** It still holds where the lens comes from a heading (the `heading` basis). Prose supersession only: the ledger cannot carry a marker beside its own earlier text.
+
+**What this does not change.** D-0184 and OR-1 stand: a figure reaches a determination only through the lens tags written on it; the engine is not edited; no supersession of OR-1 is made.
+
+- **OD-67: may the batch's full list of new population-to-ICF rows be confirmed in one answer?** The batch (the research task that mints the ICF codes d4452, d4153, d4154, titles d415, and writes the rows that map wheelchair users to reaching and to a seated or standing posture, and the five groups with no ICF row, ADHD, DeafBlind, epilepsy, MS and vestibular, re-derived from the retired axis map) judges each row; because these rows decide which groups are proposed for every code value, they are population taxonomy and the owner's (OD-47 referral; the mobility crossings went to the owner as OI-03). Recommended: yes, in one answer from the batch's full list before its pull request merges. Holds the research task that writes the rows.
+
+OD-67 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session asking whether OD-67 is answered, building the writer's proposals (T-126), or running the batch that writes the population-to-ICF rows.
+ACTION: (1) The lens of a code value is judged and written at recording; the maps propose. (2) Treat OD-67 as the owner's, CLOSED by the gate. (3) Ask it in its plain form. (4) Do not resolve it under delegation.
+DATE: 2026-11-15 — correction and registration, not an owner statement.
