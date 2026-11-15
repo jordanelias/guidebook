@@ -380,6 +380,26 @@ def ledger_heading_count(heading: str) -> int:
                if l.startswith("## ") and normalise_quote_text(l[3:]) == want)
 
 
+def require_approval_heading(ref, subject: str) -> str:
+    """The dated `## ` heading `ref` names, leading `## ` stripped, or a Refusal naming `subject`.
+
+    ONE HOME for the check every base-vocabulary admission makes (T-025): the pointer must carry a date and
+    be the heading of exactly ONE ledger entry. It proves a unique dated entry exists, not that the entry
+    approves this act; the operator answers for the match. Reads LEDGER_PATH at call time (through
+    ledger_heading_count), so a test can swap the ledger."""
+    heading = re.sub(r"^##\s+", "", (ref or "").strip())
+    if not re.search(r"\d{4}-\d{2}-\d{2}", heading):
+        raise Refusal(f"{subject}: --approval-ref {heading!r} carries no date. Give the dated `## ` heading of "
+                      f"the approving ledger entry.")
+    n = ledger_heading_count(heading)
+    if n != 1:
+        raise Refusal(
+            f"{subject}: --approval-ref {heading!r} is the heading of {n} ledger entries; it must be exactly "
+            f"one. Record the owner's approving words in a dated entry of references/project-standards.md "
+            f"first (CLAUDE.md rule 0), then give that entry's `## ` heading as written.")
+    return heading
+
+
 #: The two `term_aliases.attestation` values that say a source uses the form (migration 130).
 #: The other three (owner_supplied, model_seed, unrecorded) are seeds or unknowns: search aids.
 ATTESTED_FORMS = ("instrument", "other_source")

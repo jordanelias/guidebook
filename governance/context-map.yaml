@@ -570,6 +570,7 @@ writers:
     - base_icf
     - base_jurisdictions
     - base_parameters
+    - base_taxonomy_identity
     - base_taxonomy_medical
     - case_studies
     - citation_mining
@@ -589,6 +590,7 @@ writers:
     - icf_medical_map
     - identity_icf_map
     - identity_medical_map
+    - lang_jur_map
     - observed_terms
     - parameter_declinations
     - research_code_leads

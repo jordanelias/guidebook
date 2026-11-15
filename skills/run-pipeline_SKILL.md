@@ -92,7 +92,7 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   (R8). A search names what it looked for (`--slug`, `--parameter` or `--mined-ref-id`); `--slug` must exist and
   `--parameter` must be active. `--language` is a two-letter code from `lang_jur_map` (derive: `SELECT DISTINCT
   language FROM lang_jur_map`), folded to upper case on write, and a language the map does not hold is refused (the map is the vocabulary of research
-  languages; a new one is a doctrine change, owner question 5; `observe-term --language` and `add-source --lang-detected` are held to the same map and stored in its spelling); `--jurisdiction` is a code `base_jurisdictions`
+  languages; a new one is a doctrine change, owner question 5: `add-lang-jur-pair --approval-ref <the owner's dated ledger entry>` admits it; `observe-term --language` and `add-source --lang-detected` are held to the same map and stored in its spelling); `--jurisdiction` is a code `base_jurisdictions`
   holds (a sub-national code counts toward its parent country in `coverage`; admit one with `add-jurisdiction`). The pair is not checked: a search in any declared jurisdiction is logged, and the result's
   in_research_scope says whether the pair counts toward what `coverage` owes (`v_research_scope`). A search outside it
   is counted apart (searches_outside_scope), never refused (R8). `--result-artefact retrieval-log/<session>/<file>`

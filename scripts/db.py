@@ -2138,6 +2138,57 @@ def main():
     p_aj.add_argument("--session", required=True)
     p_aj.add_argument("--dry-run", action="store_true")
 
+    p_alp = sub.add_parser("add-lang-jur-pair",
+                           help="Admit a language-and-jurisdiction pair to lang_jur_map, pointing at the ledger "
+                                "entry that records the owner's approval")
+    p_alp.add_argument("--language", required=True, help="upper case; a language new to the map is reported as new_language")
+    p_alp.add_argument("--jurisdiction", required=True, help="a code base_jurisdictions holds (admit one with add-jurisdiction)")
+    p_alp.add_argument("--role", required=True, choices=dbcore.schema_choices("lang_jur_map", "role"),
+                       help="Live vocabulary, read from the column's own CHECK")
+    p_alp.add_argument("--notes")
+    p_alp.add_argument("--approval-ref", dest="approval_ref", required=True,
+                       help="the dated `## ` heading of the ledger entry that records the approval, found exactly once")
+    p_alp.add_argument("--session", required=True)
+    p_alp.add_argument("--dry-run", action="store_true")
+
+    p_sps = sub.add_parser("set-pair-scope",
+                           help="Set scope_status of a held lang_jur_map pair, pointing at the ledger entry that records the answer")
+    p_sps.add_argument("--language", required=True)
+    p_sps.add_argument("--jurisdiction", required=True)
+    p_sps.add_argument("--scope-status", dest="scope_status", required=True,
+                       choices=dbcore.schema_choices("lang_jur_map", "scope_status"),
+                       help="Live vocabulary, read from the column's own CHECK")
+    p_sps.add_argument("--approval-ref", dest="approval_ref", required=True,
+                       help="the dated `## ` heading of the ledger entry that records the answer, found exactly once")
+    p_sps.add_argument("--session", required=True)
+    p_sps.add_argument("--dry-run", action="store_true")
+
+    p_aid = sub.add_parser("add-identity",
+                           help="Mint a base_taxonomy_identity code, pointing at the ledger entry that records the owner's approval")
+    p_aid.add_argument("--code", required=True, help="upper case, no space")
+    p_aid.add_argument("--display-name", dest="display_name", required=True)
+    p_aid.add_argument("--category", required=True, choices=dbcore.schema_choices("base_taxonomy_identity", "category"),
+                       help="Live vocabulary, read from the column's own CHECK")
+    p_aid.add_argument("--description", required=True)
+    p_aid.add_argument("--parent", help="a held active identity code this one decomposes")
+    p_aid.add_argument("--approval-ref", dest="approval_ref", required=True,
+                       help="the dated `## ` heading of the ledger entry that records the approval, found exactly once")
+    p_aid.add_argument("--session", required=True)
+    p_aid.add_argument("--dry-run", action="store_true")
+
+    p_amid = sub.add_parser("amend-identity",
+                            help="Correct the name, description or category of a held identity code, printing what it replaces")
+    p_amid.add_argument("--code", required=True)
+    p_amid.add_argument("--display-name", dest="display_name")
+    p_amid.add_argument("--description")
+    p_amid.add_argument("--category", choices=dbcore.schema_choices("base_taxonomy_identity", "category"),
+                        help="Live vocabulary, read from the column's own CHECK")
+    p_amid.add_argument("--approval-ref", dest="approval_ref", required=True,
+                        help="the dated `## ` heading of the ledger entry that records the approval, found exactly once")
+    p_amid.add_argument("--reason", required=True, help="printed, not stored")
+    p_amid.add_argument("--session", required=True)
+    p_amid.add_argument("--dry-run", action="store_true")
+
     p_rfu = sub.add_parser("raise-follow-up",
                            help="Tag an extraction for a reviewer to re-check "
                                 "(extraction_follow_ups; owner D1, 2026-10-09)")
@@ -3462,6 +3513,22 @@ def main():
     elif args.command == "add-jurisdiction":
         _emit(add_jurisdiction(args.code, args.kind, args.parent, args.approval_ref,
                                session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "add-lang-jur-pair":
+        _emit(add_lang_jur_pair(args.language, args.jurisdiction, args.role, args.notes, args.approval_ref,
+                                session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "set-pair-scope":
+        _emit(set_pair_scope(args.language, args.jurisdiction, args.scope_status, args.approval_ref,
+                             session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "add-identity":
+        _emit(add_identity(args.code, args.display_name, args.category, args.description, args.parent,
+                           args.approval_ref, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "amend-identity":
+        _emit(amend_identity(args.code, args.display_name, args.description, args.category, args.approval_ref,
+                             args.reason, session=args.session, dry_run=args.dry_run))
 
     elif args.command == "raise-follow-up":
         _emit(raise_follow_up(args.extraction_id, args.reason, args.warrant,
@@ -8276,16 +8343,7 @@ def mint_term_from_catalogue(catalogue: str, entry_ref: str, canonical_en: str,
                 f"mint-term-from-catalogue: {flag} {val!r} carries a number, a comparator "
                 f"or a min/max word ({vb.group(0)!r}). The owner asked for 'cleaned parameters without "
                 f"values': name and define the quantity, never its value.")
-    if not re.search(r"\d{4}-\d{2}-\d{2}", approval_ref):
-        raise Refusal(f"mint-term-from-catalogue: --approval-ref {approval_ref!r} carries no "
-                      f"date. Give the dated `## ` heading of the approving ledger entry.")
-    n = dbcore.ledger_heading_count(approval_ref)
-    if n != 1:
-        raise Refusal(
-            f"mint-term-from-catalogue: --approval-ref {approval_ref!r} is the heading of "
-            f"{n} ledger entries; it must be exactly one. Record the owner's approving words "
-            f"in a dated entry of references/project-standards.md first (CLAUDE.md rule 0), "
-            f"then give that entry's `## ` heading as written.")
+    approval_ref = dbcore.require_approval_heading(approval_ref, "mint-term-from-catalogue")
     with connect(dry_run) as conn:
         dbcore.check_declared(conn, "terms", "catalogue", catalogue,
                               "mint-term-from-catalogue --catalogue")
@@ -8338,7 +8396,6 @@ def add_jurisdiction(code: str, kind: str, parent: str, approval_ref: str,
     the table's CHECKs hold the same shapes for a row written any other way.
     """
     code = (code or "").strip()
-    approval_ref = re.sub(r"^##\s+", "", (approval_ref or "").strip())
     if not (session or "").strip():
         raise Refusal("add-jurisdiction: --session is required and may not be blank.")
     if code.startswith("GB"):
@@ -8348,16 +8405,7 @@ def add_jurisdiction(code: str, kind: str, parent: str, approval_ref: str,
         raise Refusal(f"add-jurisdiction: --code {code!r} must be upper-case letters and digits, "
                       f"a letter first, with at most one dash that is followed by a "
                       f"subdivision.")
-    if not re.search(r"\d{4}-\d{2}-\d{2}", approval_ref):
-        raise Refusal(f"add-jurisdiction: --approval-ref {approval_ref!r} carries no date. "
-                      f"Give the dated `## ` heading of the approving ledger entry.")
-    n = dbcore.ledger_heading_count(approval_ref)
-    if n != 1:
-        raise Refusal(
-            f"add-jurisdiction: --approval-ref {approval_ref!r} is the heading of {n} ledger "
-            f"entries; it must be exactly one. Record the approving words in a dated entry "
-            f"of references/project-standards.md first (CLAUDE.md rule 0), then give that "
-            f"entry's `## ` heading as written.")
+    approval_ref = dbcore.require_approval_heading(approval_ref, "add-jurisdiction")
     if approval_ref.startswith(dbcore.LEDGER_DELEGATED_PREFIX):
         raise Refusal(
             f"add-jurisdiction: --approval-ref {approval_ref!r} is a delegated resolution "
@@ -8537,6 +8585,130 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
         if scope == "full" and pages_read is None:
             out["uncounted"] = True
         return out
+
+
+def _owner_approval(approval_ref: str, subject: str) -> str:
+    """The approval heading for a base-vocabulary admission: one dated ledger entry, and the owner's own
+    (an entry under the delegated-resolution prefix is a model's, and admits nothing)."""
+    heading = dbcore.require_approval_heading(approval_ref, subject)
+    if heading.startswith(dbcore.LEDGER_DELEGATED_PREFIX):
+        raise Refusal(f"{subject}: --approval-ref {heading!r} is a delegated resolution (a model's, under the "
+                      f"owner's delegation), not the owner's words. This is a decision on research scope or "
+                      f"the population taxonomy, and the owner's. Nothing was written.")
+    return heading
+
+
+def add_lang_jur_pair(language: str, jurisdiction: str, role: str, notes: str, approval_ref: str,
+                      session: str, dry_run: bool = False):
+    """Admit one language-and-jurisdiction pair to `lang_jur_map`, pointing at the ledger entry that records
+    the owner's approval. `scope_status` stays NULL (owed): scoping a pair in or out is `set-pair-scope`."""
+    language, jurisdiction = (language or "").strip(), (jurisdiction or "").strip()
+    if not language or language != language.upper():
+        raise Refusal(f"add-lang-jur-pair: --language {language!r} must be non-blank and upper case (the letter "
+                      f"case lang_jur_map holds). Nothing was written.")
+    heading = _owner_approval(approval_ref, "add-lang-jur-pair")
+    with connect(dry_run) as conn:
+        dbcore.check_jurisdiction(jurisdiction, "add-lang-jur-pair --jurisdiction")
+        dbcore.check_declared(conn, "lang_jur_map", "role", role, "add-lang-jur-pair --role")
+        if conn.execute("SELECT 1 FROM lang_jur_map WHERE language=? AND jurisdiction=?",
+                        (language, jurisdiction)).fetchone():
+            raise Refusal(f"add-lang-jur-pair: the pair {language}/{jurisdiction} is already held. A held pair's "
+                          f"role is not rewritten here. Nothing was written.")
+        new_language = not conn.execute("SELECT 1 FROM lang_jur_map WHERE language=?", (language,)).fetchone()
+        row = {"language": language, "jurisdiction": jurisdiction, "role": role, "notes": notes or None}
+        row.update(dbcore.stamp_for(conn, "lang_jur_map", session))
+        row = {k: v for k, v in row.items() if k in dbcore.columns(conn, "lang_jur_map")}
+        conn.execute(f"INSERT INTO lang_jur_map ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
+                     list(row.values()))
+    return {"language": language, "jurisdiction": jurisdiction, "role": role, "new_language": new_language,
+            "approval_ref": heading, "dry_run": dry_run}
+
+
+def set_pair_scope(language: str, jurisdiction: str, scope_status: str, approval_ref: str, session: str,
+                   dry_run: bool = False):
+    """Set `scope_status` of one held pair, pointing at the ledger entry that records the owner's answer."""
+    heading = _owner_approval(approval_ref, "set-pair-scope")
+    with connect(dry_run) as conn:
+        row = conn.execute("SELECT scope_status FROM lang_jur_map WHERE language=? AND jurisdiction=?",
+                           (language, jurisdiction)).fetchone()
+        if row is None:
+            raise Refusal(f"set-pair-scope: the pair {language}/{jurisdiction} is not held. List the pairs with "
+                          f"SELECT language, jurisdiction FROM lang_jur_map; `db.py add-lang-jur-pair` admits "
+                          f"one. Nothing was written.")
+        dbcore.check_declared(conn, "lang_jur_map", "scope_status", scope_status, "set-pair-scope --scope-status")
+        if row["scope_status"] == scope_status:
+            raise Refusal(f"set-pair-scope: {language}/{jurisdiction} is already {scope_status!r}. Nothing was "
+                          f"written.")
+        conn.execute("UPDATE lang_jur_map SET scope_status=? WHERE language=? AND jurisdiction=?",
+                     (scope_status, language, jurisdiction))
+    return {"language": language, "jurisdiction": jurisdiction, "scope_status": scope_status,
+            "scope_status_was": row["scope_status"], "approval_ref": heading, "dry_run": dry_run}
+
+
+def add_identity(code: str, display_name: str, category: str, description: str, parent: str,
+                 approval_ref: str, session: str, dry_run: bool = False):
+    """Mint one `base_taxonomy_identity` code, pointing at the ledger entry that records the owner's approval.
+    The identity registry is the population taxonomy: a decision the owner holds."""
+    code = (code or "").strip()
+    if not code or code != code.upper() or re.search(r"\s", code):
+        raise Refusal(f"add-identity: --code {code!r} must be non-blank, upper case and contain no space. "
+                      f"Nothing was written.")
+    if not (display_name or "").strip() or not (description or "").strip():
+        raise Refusal("add-identity: --display-name and --description may not be blank. Nothing was written.")
+    heading = _owner_approval(approval_ref, "add-identity")
+    with connect(dry_run) as conn:
+        if dbcore.exists(conn, "base_taxonomy_identity", "identity_code", code):
+            raise Refusal(f"add-identity: {code!r} is already held (whatever its status); `db.py amend-identity` "
+                          f"changes its name, description or category. Nothing was written.")
+        dbcore.check_declared(conn, "base_taxonomy_identity", "category", category, "add-identity --category")
+        if parent:
+            held = conn.execute("SELECT status FROM base_taxonomy_identity WHERE identity_code=?",
+                                (parent,)).fetchone()
+            if held is None or held["status"] != "active":
+                raise Refusal(f"add-identity: --parent {parent!r} is not a held active code "
+                              f"({'not held' if held is None else held['status']}). The codes: SELECT "
+                              f"identity_code FROM base_taxonomy_identity WHERE status = 'active'. Nothing was "
+                              f"written.")
+        row = {"identity_code": code, "display_name": display_name.strip(), "category": category,
+               "description": description.strip(), "parent_code": parent or None}
+        row.update(dbcore.stamp_for(conn, "base_taxonomy_identity", session))
+        row = {k: v for k, v in row.items() if k in dbcore.columns(conn, "base_taxonomy_identity")}
+        conn.execute(f"INSERT INTO base_taxonomy_identity ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
+                     list(row.values()))
+    return {"identity_code": code, "parent_code": parent or None, "approval_ref": heading, "dry_run": dry_run}
+
+
+def amend_identity(code: str, display_name: str, description: str, category: str, approval_ref: str,
+                   reason: str, session: str, dry_run: bool = False):
+    """Correct the display name, description or category of a held identity code, printing what it replaces.
+    Never the code, the parent or the status (retiring a code is its own act)."""
+    given = {k: v for k, v in (("display_name", display_name), ("description", description),
+                               ("category", category)) if v is not None}
+    if not given:
+        raise Refusal("amend-identity: give at least one of --display-name, --description, --category. Nothing "
+                      "was written.")
+    if any(not v.strip() for v in given.values()):
+        raise Refusal("amend-identity: a given value may not be blank. Nothing was written.")
+    reason = dbcore.require_reason(reason, "amend-identity")
+    heading = _owner_approval(approval_ref, "amend-identity")
+    with connect(dry_run) as conn:
+        held = conn.execute("SELECT display_name, description, category FROM base_taxonomy_identity "
+                            "WHERE identity_code=?", (code,)).fetchone()
+        if held is None:
+            raise Refusal(f"amend-identity: {code!r} is not held. List the codes with SELECT identity_code FROM "
+                          f"base_taxonomy_identity; `db.py add-identity` mints one. Nothing was written.")
+        if "category" in given:
+            dbcore.check_declared(conn, "base_taxonomy_identity", "category", given["category"],
+                                  "amend-identity --category")
+        changed = {k: v.strip() for k, v in given.items() if v.strip() != held[k]}
+        replaced = {k: held[k] for k in changed}
+        if changed:
+            sets = {**changed, **{k: v for k, v in dbcore.upd(session).items()
+                                  if k in dbcore.columns(conn, "base_taxonomy_identity")}}
+            conn.execute("UPDATE base_taxonomy_identity SET " + ", ".join(f"{c}=?" for c in sets)
+                         + " WHERE identity_code=?", [*sets.values(), code])
+    return {"identity_code": code, "changed": bool(changed), "replaced": replaced, "now": changed,
+            "reason": reason, "approval_ref": heading, "dry_run": dry_run}
 
 
 def raise_follow_up(extraction_id: int, reason: str, warrant: str, session: str,

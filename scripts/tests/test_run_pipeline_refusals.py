@@ -988,6 +988,90 @@ else:
             _hand = str(exc)
         record("T021-11", "the schema itself refuses a QUESTION that carries a tier", _hand is not None, _hand)
 
+print("Section T025: language-jurisdiction pairs and identity codes are written by verbs, each pointing at an owner entry")
+_led = pathlib.Path(dbcore.LEDGER_PATH).read_text(encoding="utf-8").splitlines()
+_heads = [l[3:] for l in _led if l.startswith("## ")]
+_OWNER_H = next((h for h in _heads if re.search(r"\d{4}-\d{2}-\d{2}", h) and not h.startswith(dbcore.LEDGER_DELEGATED_PREFIX)
+                 and _heads.count(h) == 1), None)
+_DELEG_H = next((h for h in _heads if h.startswith(dbcore.LEDGER_DELEGATED_PREFIX) and _heads.count(h) == 1), None)
+_jur = [r[0] for r in q("SELECT jurisdiction_code FROM base_jurisdictions ORDER BY 1")]
+_pair = next(((l, j) for (l,) in q("SELECT DISTINCT language FROM lang_jur_map ORDER BY 1") for j in _jur
+              if not scalar("SELECT 1 FROM lang_jur_map WHERE language=? AND jurisdiction=?", l, j)), None)
+_held = q("SELECT language, jurisdiction FROM lang_jur_map ORDER BY 1, 2 LIMIT 1")[0]
+_PAR = scalar("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' ORDER BY identity_code LIMIT 1")
+_CAT = scalar("SELECT category FROM base_taxonomy_identity WHERE category IS NOT NULL ORDER BY 1 LIMIT 1")
+if not (_OWNER_H and _DELEG_H and _pair and _PAR and _CAT):
+    skip("T025", "the live ledger or database offers no owner heading, delegated heading, free pair or active code")
+else:
+    _R = dict(session=S, dry_run=False)
+    with scratch() as c:
+        res, err = ok(db.add_lang_jur_pair, _pair[0], _pair[1], "PRIMARY", "T025 fixture", _OWNER_H, **_R)
+        _r = c.execute("SELECT role, notes, scope_status, created_by_session FROM lang_jur_map WHERE language=? AND "
+                       "jurisdiction=?", _pair).fetchone()
+        record("T025-01", "add-lang-jur-pair writes one pair with scope_status NULL (owed), the notes and a session stamp, and reports "
+               "new_language false for a language the map holds and the approval it read",
+               err is None and tuple(_r) == ("PRIMARY", "T025 fixture", None, S) and res["new_language"] is False
+               and res["approval_ref"] == _OWNER_H, (err, _r, res))
+        _NEWLANG = "ZZTQ"
+        res, err = ok(db.add_lang_jur_pair, _NEWLANG, _pair[1], "SECONDARY", None, _OWNER_H, **_R)
+        record("T025-02", "a language the map does not hold is admitted only through the verb and reported as new_language true",
+               err is None and res["new_language"] is True and c.execute("SELECT COUNT(*) FROM lang_jur_map WHERE language=?", (_NEWLANG,)).fetchone()[0] == 1, err)
+        _rs = {
+            "lower case": refusal(db.add_lang_jur_pair, "zz", _pair[1], "PRIMARY", None, _OWNER_H, session=S, dry_run=True),
+            "jurisdiction not held": refusal(db.add_lang_jur_pair, "ZZTR", "ZZ-NOT-A-CODE", "PRIMARY", None, _OWNER_H, session=S, dry_run=True),
+            "role outside the CHECK": refusal(db.add_lang_jur_pair, "ZZTR", _pair[1], "BANANA", None, _OWNER_H, session=S, dry_run=True),
+            "pair held": refusal(db.add_lang_jur_pair, _held[0], _held[1], "PRIMARY", None, _OWNER_H, session=S, dry_run=True),
+            "no date": refusal(db.add_lang_jur_pair, "ZZTR", _pair[1], "PRIMARY", None, "no date here", session=S, dry_run=True),
+            "not exactly one": refusal(db.add_lang_jur_pair, "ZZTR", _pair[1], "PRIMARY", None, "2026-01-01 no such entry", session=S, dry_run=True),
+            "delegated": refusal(db.add_lang_jur_pair, "ZZTR", _pair[1], "PRIMARY", None, _DELEG_H, session=S, dry_run=True)}
+        record("T025-03", "add-lang-jur-pair refuses a lower-case language, a jurisdiction not held, a role outside the CHECK, a held pair, "
+               "an approval with no date, one that is not exactly one entry and a delegated resolution, each by name",
+               all(_rs.values()) and "upper case" in _rs["lower case"] and "ZZ-NOT-A-CODE" in _rs["jurisdiction not held"]
+               and "CHECK" in _rs["role outside the CHECK"] and "already held" in _rs["pair held"] and "no date" in _rs["no date"] and "exactly one" in _rs["not exactly one"]
+               and "delegated resolution" in _rs["delegated"], _rs)
+        _scope = c.execute("SELECT scope_status FROM lang_jur_map WHERE language=? AND jurisdiction=?", _pair).fetchone()[0]
+        res, err = ok(db.set_pair_scope, _pair[0], _pair[1], "in-scope", _OWNER_H, **_R)
+        _now = c.execute("SELECT scope_status FROM lang_jur_map WHERE language=? AND jurisdiction=?", _pair).fetchone()[0]
+        record("T025-04", "set-pair-scope moves one held pair's scope_status and reports the old value",
+               err is None and _scope is None and _now == "in-scope" and res["scope_status_was"] is None, (err, _scope, _now))
+        _rs = [refusal(db.set_pair_scope, _pair[0], _pair[1], "in-scope", _OWNER_H, session=S, dry_run=True),
+               refusal(db.set_pair_scope, "ZZTR", "ZZ", "in-scope", _OWNER_H, session=S, dry_run=True),
+               refusal(db.set_pair_scope, _pair[0], _pair[1], "BANANA", _OWNER_H, session=S, dry_run=True)]
+        record("T025-05", "set-pair-scope refuses the value the pair already has, a pair not held and a value outside the CHECK",
+               all(_rs) and "already" in _rs[0] and "not held" in _rs[1] and "CHECK" in _rs[2], _rs)
+        _CODE = "T025ZZ"
+        res, err = ok(db.add_identity, _CODE, "T025 fixture group", _CAT, "a fixture", _PAR, _OWNER_H, **_R)
+        _i = c.execute("SELECT display_name, category, description, parent_code, status, created_at, updated_at FROM "
+                       "base_taxonomy_identity WHERE identity_code=?", (_CODE,)).fetchone()
+        record("T025-06", "add-identity writes one active code under a held parent with its name, category, description and stamps",
+               err is None and _i["display_name"] == "T025 fixture group" and _i["category"] == _CAT and _i["parent_code"] == _PAR
+               and _i["status"] == "active" and _i["created_at"] and _i["updated_at"], (err, dict(_i) if _i else None))
+        _rs = [refusal(db.add_identity, "t025lower", "x", _CAT, "d", None, _OWNER_H, session=S, dry_run=True),
+               refusal(db.add_identity, _CODE, "x", _CAT, "d", None, _OWNER_H, session=S, dry_run=True),
+               refusal(db.add_identity, "T025Y", "x", "BANANA", "d", None, _OWNER_H, session=S, dry_run=True),
+               refusal(db.add_identity, "T025Y", "x", _CAT, "d", "NO-SUCH-PARENT", _OWNER_H, session=S, dry_run=True),
+               refusal(db.add_identity, "T025Y", "", _CAT, "d", None, _OWNER_H, session=S, dry_run=True),
+               refusal(db.add_identity, "T025Y", "x", _CAT, "d", None, _DELEG_H, session=S, dry_run=True)]
+        record("T025-07", "add-identity refuses a lower-case code, a held code, a category outside the CHECK, a parent not held, a blank name "
+               "and a delegated approval",
+               all(_rs) and "upper case" in _rs[0] and "already held" in _rs[1] and "CHECK" in _rs[2] and "not held" in _rs[3]
+               and "blank" in _rs[4] and "delegated" in _rs[5], _rs)
+        res, err = ok(db.amend_identity, _CODE, "T025 renamed", None, None, _OWNER_H, "T025 fixture", **_R)
+        _name = scalar("SELECT 1") and c.execute("SELECT display_name FROM base_taxonomy_identity WHERE identity_code=?", (_CODE,)).fetchone()[0]
+        res2, err2 = ok(db.amend_identity, _CODE, "T025 renamed", None, None, _OWNER_H, "again", **_R)
+        record("T025-08", "amend-identity changes the given field and prints the value it replaces; the same value again changes nothing",
+               err is None and res["changed"] and res["replaced"] == {"display_name": "T025 fixture group"} and _name == "T025 renamed"
+               and err2 is None and res2["changed"] is False, (err, res, err2, res2))
+        _rs = [refusal(db.amend_identity, _CODE, None, None, None, _OWNER_H, "r", session=S, dry_run=True),
+               refusal(db.amend_identity, _CODE, " ", None, None, _OWNER_H, "r", session=S, dry_run=True),
+               refusal(db.amend_identity, "NO-SUCH-CODE", "x", None, None, _OWNER_H, "r", session=S, dry_run=True),
+               refusal(db.amend_identity, _CODE, "x", None, None, _OWNER_H, "", session=S, dry_run=True)]
+        record("T025-09", "amend-identity refuses no field, a blank value, a code not held and a blank reason",
+               all(_rs) and "at least one" in _rs[0] and "blank" in _rs[1] and "not held" in _rs[2] and "--reason" in _rs[3], _rs)
+        _wt = set(dbcore.writable_tables(c))
+        record("T025-10", "lang_jur_map and base_taxonomy_identity are in the captured set (a change to either reaches a migration)",
+               {"lang_jur_map", "base_taxonomy_identity"} <= _wt, sorted(_wt))
+
 print("Section B4/B5/D4/R3-14: conflicts -- keyed on the parameter, an unordered pair, two real populations")
 CODES = [r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "
                          "ORDER BY identity_code DESC LIMIT 2")]
