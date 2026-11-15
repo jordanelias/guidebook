@@ -57,7 +57,7 @@ def _default_scope(evidence_type, tier):
 
 
 def synth_db(sources, parameter_id=1, extractions_per_source=1,
-             icf_links=(), gates=(), direction=None, row_lens=({"identity_code": "MOB"},)):
+             icf_links=(), gates=(), direction=None, row_lens=({"identity_code": "MOB"},), family=()):
     """Minimal in-memory schema for determine(): evidence_sources +
     source_value_extractions + evidence_population_match.
 
@@ -119,6 +119,8 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
       CREATE TABLE base_parameters (
         parameter_id INTEGER PRIMARY KEY, term_id TEXT, status TEXT,
         accessibility_direction TEXT, direction_rationale TEXT);
+      CREATE TABLE base_taxonomy_identity (identity_code TEXT PRIMARY KEY,
+        parent_code TEXT REFERENCES base_taxonomy_identity(identity_code));
       CREATE TABLE determination_gates (
         gate_id INTEGER PRIMARY KEY AUTOINCREMENT, parameter_id INTEGER,
         identity_code TEXT, icf_code TEXT, needs_code TEXT, medical_code TEXT,
@@ -144,6 +146,10 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
     for L in icf_links:
         conn.execute("INSERT INTO identity_icf_map (identity_code, icf_code, "
                      "mechanism, mapping_confidence, provenance) VALUES (?,?,?,?,?)", L)
+    for child, parent in family:             # (child, parent) identity codes; empty by default, so every code is a root
+        for code in (parent, child):
+            conn.execute("INSERT OR IGNORE INTO base_taxonomy_identity (identity_code) VALUES (?)", (code,))
+        conn.execute("UPDATE base_taxonomy_identity SET parent_code = ? WHERE identity_code = ?", (parent, child))
     for g in gates:
         conn.execute("INSERT INTO determination_gates (parameter_id, identity_code, verdict, "
                      "trigger_tier, trigger_evidence_type, detail, raised_at, "
@@ -1220,6 +1226,29 @@ def main():
     def _mob(code="MOB"):
         return {"identity_code": code}
 
+    # T-055: the identity lens counts through parent_code. A parent's cell gathers its descendants' figures, a child's only its
+    # own, and a figure linked to two codes of one family is gathered once.
+    _T55 = {"tier": 1, "evidence_type": "clinical"}
+    _fam = [("KIDA", "PAR"), ("KIDB", "PAR"), ("GRAND", "KIDA")]
+    _src = [dict(_T55, lenses=[{"identity_code": "KIDA"}]), dict(_T55, lenses=[{"identity_code": "KIDB"}]),
+            dict(_T55, lenses=[{"identity_code": "GRAND"}]), dict(_T55, lenses=[{"identity_code": "KIDA"}, {"identity_code": "GRAND"}]),
+            dict(_T55, lenses=[{"identity_code": "OTHER"}])]
+    _ids = lambda d: sorted(l["extraction_id"] for l in d["links"] if l["in_lens"])          # noqa: E731
+    _par19 = determine(synth_db(_src, family=_fam, direction="lower_is_better"), 1, _mob("PAR"), "syn-slug", "t055")
+    _a19 = determine(synth_db(_src, family=_fam, direction="lower_is_better"), 1, _mob("KIDA"), "syn-slug", "t055")
+    _g19 = determine(synth_db(_src, family=_fam, direction="lower_is_better"), 1, _mob("GRAND"), "syn-slug", "t055")
+    _root = determine(synth_db(_src, family=(), direction="lower_is_better"), 1, _mob("KIDA"), "syn-slug", "t055")
+    expect("T055-01: a parent's cell gathers the figures of every descendant (four of the five here, each once), not an unrelated code's",
+           _ids(_par19) == [1, 2, 3, 4] and len(_par19["links"]) == 5 and _par19["n_extractions_in_lens"] == 4,
+           f"{_ids(_par19)} {_par19.get('n_extractions_in_lens')}")
+    expect("T055-02: a child's cell gathers only itself and its own descendants, never its parent's other children or a sibling",
+           _ids(_a19) == [1, 3, 4] and _ids(_g19) == [3, 4], f"{_ids(_a19)} {_ids(_g19)}")
+    expect("T055-03: with no family declared every code is a root and the cell gathers only its own code's figures (the premise of "
+           "leaving RULE_VERSION alone)", _ids(_root) == [1, 4], str(_ids(_root)))
+    expect("T055-04: a figure linked to two codes of one family is one governing figure, not two (no count multiplied by its links)",
+           len({l["extraction_id"] for l in _par19["links"] if l["role"] == "governing"}) == len([l for l in _par19["links"] if l["role"] == "governing"]),
+           str([(l["extraction_id"], l["role"]) for l in _par19["links"]]))
+
     def _cell19(sources, cell, **kw):
         return determine(synth_db(sources, direction="lower_is_better", **kw), 1, cell,
                          "syn-slug", "t019")
@@ -1459,8 +1488,23 @@ def main():
         _live = sqlite3.connect(f"file:{live_db}?mode=ro", uri=True)
         if not _live.execute("SELECT 1 FROM sqlite_master WHERE name = 'v_live_lens_links'").fetchone():
             _live = None
-    _Q = ("SELECT DISTINCT x.extraction_id FROM source_value_extractions x JOIN v_live_lens_links l "
-          "USING (extraction_id) WHERE x.parameter_id = ? AND l.identity_code = ?")
+    _par = dict(_live.execute("SELECT identity_code, parent_code FROM base_taxonomy_identity").fetchall()) if _live else {}
+
+    def _family_py(code):
+        """The code and every descendant, computed in Python from the registry (independent of the engine's SQL)."""
+        fam, grew = {code}, True
+        while grew:
+            grew = False
+            for k, p in _par.items():
+                if p in fam and k not in fam:
+                    fam.add(k); grew = True
+        return fam
+
+    def _carries(pid, code):
+        fam = sorted(_family_py(code))
+        return {r[0] for r in _live.execute(
+            "SELECT DISTINCT x.extraction_id FROM source_value_extractions x JOIN v_live_lens_links l USING (extraction_id) "
+            f"WHERE x.parameter_id = ? AND l.identity_code IN ({','.join('?' * len(fam))})", (pid, *fam))}
     _pairs = _live.execute("SELECT DISTINCT x.parameter_id, l.identity_code FROM v_live_lens_links l "
                            "JOIN source_value_extractions x USING (extraction_id) "
                            "WHERE l.identity_code IS NOT NULL ORDER BY 1, 2").fetchall() if _live else []
@@ -1472,7 +1516,7 @@ def main():
             d = determine(_live, pid, _mob(code), "syn-slug", "t019-live")
             inl = {l["extraction_id"] for l in d["links"] if l["in_lens"]}
             _reached += len(inl)
-            carries = {r[0] for r in _live.execute(_Q, (pid, code))}
+            carries = _carries(pid, code)
             out_ok = all(l["role"] == "excluded" and (l["exclusion_reason"] or "").startswith(LENS_REASON)
                          for l in d["links"] if not l["in_lens"])
             gov_ok = all(l["extraction_id"] in carries for l in d["links"] if l["role"] != "excluded")
@@ -1501,9 +1545,10 @@ def main():
                 for code in ("ALL", other):
                     d = determine(_live, pid, _mob(code), "syn-slug", "t019-live")
                     inl = {l["extraction_id"] for l in d["links"] if l["in_lens"]}
-                    ok &= inl == {r[0] for r in _live.execute(_Q, (pid, code))} and bool(inl)
+                    ok &= inl == _carries(pid, code) and bool(inl)
+                    _fam = sorted(_family_py(code))
                     ok &= all(_live.execute("SELECT 1 FROM v_live_lens_links WHERE extraction_id = ? "
-                                            "AND identity_code = ?", (l["extraction_id"], code)).fetchone()
+                                            f"AND identity_code IN ({','.join('?' * len(_fam))})", (l["extraction_id"], *_fam)).fetchone()
                               for l in d["links"] if l["role"] != "excluded")
                     _played += code == "ALL" and any(l["role"] != "excluded" for l in d["links"])
             expect("T019-14 (AT-51, live): every ALL cell reaches exactly the figures carrying ALL, and every "
@@ -1515,12 +1560,9 @@ def main():
                       "row, so AT-51 is met on the fixture case only (the equality above is over reached "
                       "figures that supply nothing)")
 
-        _n = _live.execute("SELECT p.parameter_id, i.identity_code FROM (SELECT DISTINCT x.parameter_id "
-                           "FROM source_value_extractions x JOIN v_live_lens_links l USING (extraction_id)) p, "
-                           "base_taxonomy_identity i WHERE NOT EXISTS (SELECT 1 FROM "
-                           "source_value_extractions x JOIN v_live_lens_links l USING (extraction_id) "
-                           "WHERE x.parameter_id = p.parameter_id AND l.identity_code = i.identity_code) "
-                           "ORDER BY 1, 2 LIMIT 1").fetchone()
+        _n = next(((pid, code) for (pid,) in _live.execute("SELECT DISTINCT x.parameter_id FROM source_value_extractions x "
+                                                          "JOIN v_live_lens_links l USING (extraction_id) ORDER BY 1")
+                    for code in sorted(_par) if not _carries(pid, code)), None)
         if not _n:
             print("      SKIPPED-NO-FIXTURE: T019-15 needs a parameter with links and an identity "
                   "no figure of it carries")

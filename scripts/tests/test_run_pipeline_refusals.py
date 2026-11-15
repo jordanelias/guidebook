@@ -1318,6 +1318,24 @@ with scratch() as c:
         c.rollback()
         record("T054-06", "the schema refuses a deprecated code with no successor, an active code with one, and a deprecated code with two", not _bad, _bad)
 
+print("Section T055: device_class takes the mobility values and can be amended on a figure already written")
+_EID55 = scalar("SELECT extraction_id FROM source_value_extractions WHERE device_class IS NULL ORDER BY extraction_id LIMIT 1")
+_dv = {"lower_limb_prosthesis", "crutches", "cane"}
+if _EID55 is None:
+    skip("T055", "no figure without a device_class on the live database")
+else:
+    record("T055-05", "the column's own CHECK admits the three mobility values and keeps every earlier one",
+           _dv <= set(dbcore.schema_choices("source_value_extractions", "device_class")) and {"power_chair", "walker_rollator", "mixed", "not_device_scoped"}
+           <= set(dbcore.schema_choices("source_value_extractions", "device_class")), sorted(dbcore.schema_choices("source_value_extractions", "device_class")))
+    with scratch() as c:
+        _out = {}
+        for v in sorted(_dv):
+            res, err = ok(db.amend_extraction, _EID55, "device_class", v, "T055 fixture", session=S, dry_run=False)
+            _out[v] = (err, c.execute("SELECT device_class FROM source_value_extractions WHERE extraction_id=?", (_EID55,)).fetchone()[0])
+        _bad = refusal(db.amend_extraction, _EID55, "device_class", "BANANA", "T055 fixture", session=S, dry_run=True)
+        record("T055-06", "amend-extraction --field device_class accepts each new value and refuses one outside the CHECK, naming the set",
+               all(e is None and now == v for v, (e, now) in _out.items()) and bool(_bad) and "power_chair" in _bad, (_out, _bad))
+
 print("Section B4/B5/D4/R3-14: conflicts -- keyed on the parameter, an unordered pair, two real populations")
 CODES = [r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "
                          "ORDER BY identity_code DESC LIMIT 2")]

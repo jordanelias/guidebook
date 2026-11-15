@@ -262,7 +262,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   [--report-json <file>]` per cell on the scratch DB (it takes `--db`, not `GUIDEBOOK_DB_PATH`; it writes the convergence
   row and the determination together; `--slug` names an existing topic, `SELECT slug FROM slugs`, and selects no
   evidence, and a slug that does not exist is refused). **A cell** is a parameter × the lens codes given (`specifications`' unique
-  row identity); a figure reaches a cell only through the live lens links written on it (`v_live_lens_links`): every
+  row identity); a figure reaches a cell only through the live lens links written on it (`v_live_lens_links`; an identity code counts through its `parent_code` chain: a parent's cell gathers its descendants' figures, once each, and a child's only its own, T-055): every
   lens the cell states must be among them and a lens it leaves NULL imposes nothing; a lens no figure of the parameter
   carries has no cell (the engine refuses and writes nothing; if the lens is relevant, raise the gap at judgment with
   `add-gap`). Do not hand-assign. Review its output against these tests; a failure is a gate or a

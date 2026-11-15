@@ -10967,6 +10967,10 @@ _AMENDABLE_SVE_FIELDS = frozenset({"figure_role", "comparator",
                                    "extraction_method", "extraction_status",
                                    "root_type", "root_ref_id", "value_as_written",
                                    "jurisdiction",
+                                   # device_class, added 2026-11-15 (T-055): T-102 records the device a figure states on
+                                   # a row already written; the engine does not read the column. The column's own CHECK
+                                   # (dbcore.check_values) and --reason are its gates.
+                                   "device_class",
                                    # root_id, added 2026-11-15 (T-048): a figure already written can point at a root
                                    # registered after it (`db.py register-root`). The registry-existence refusal is
                                    # the generic dbcore.fk_declared below; the old value is kept in notes by the writer.

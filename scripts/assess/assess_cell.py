@@ -248,8 +248,20 @@ def lens_key(lens):
     return None
 
 
+# The identity lens is the one lens with a hierarchy (base_taxonomy_identity.parent_code): a cell keyed on a code
+# gathers the figures linked to that code or to any code whose parent_code chain reaches it (T-055). Derived from
+# the registry on every gather, never a list. UNION, not UNION ALL, so a cycle ends.
+_IDENTITY_FAMILY = ("(WITH RECURSIVE family AS (SELECT ? AS code UNION SELECT i.identity_code "
+                    "FROM base_taxonomy_identity i JOIN family f ON i.parent_code = f.code) "
+                    "SELECT code FROM family)")
+
+
 def _lens_clause(lens, alias):
     """`AND <every lens the cell states is among the figure's live links>` and its parameters.
+
+    The identity lens counts through `parent_code` (a parent's cell gathers its descendants' figures, a child's only
+    its own); the predicate stays inside the per-figure EXISTS, so a figure carrying two codes of one family is
+    gathered once and no count downstream multiplies by its number of links.
 
     A figure reaches a cell when, for each lens the cell states, it has a live link carrying that
     code; a lens the cell leaves NULL imposes nothing (T-018 design section 4). Read from
@@ -258,7 +270,8 @@ def _lens_clause(lens, alias):
     does not reach a cell that does not state that tag (OR-1b). A cell stating no lens would
     impose nothing and gather by parameter alone, which is the defect this closes, so it is refused."""
     parts = [(f"EXISTS (SELECT 1 FROM v_live_lens_links k WHERE "
-              f"k.extraction_id = {alias}.extraction_id AND k.{c} = ?)", lens[c])
+              f"k.extraction_id = {alias}.extraction_id AND k.{c} "
+              + (f"IN {_IDENTITY_FAMILY}" if c == "identity_code" else "= ?") + ")", lens[c])
              for c in LENS_ORDER if lens.get(c)]
     if not parts:
         raise Refusal("a cell states at least one lens (D-0182); gathering without one would "
