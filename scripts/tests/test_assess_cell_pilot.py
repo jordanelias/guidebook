@@ -28,7 +28,7 @@ sys.path.insert(0, REPO_ROOT)
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "assess"))
 
 from assess_cell import (  # noqa: E402
-    NOT_PUBLISHABLE_METHODS, RULE_VERSION, STORED_ANSWER, Refusal, derivation_handshake, determine, gap_account,
+    NOT_PUBLISHABLE_METHODS, RULE_VERSION, STORED_ANSWER, Refusal, derivation_handshake, determine, gap_account, population_match,
     scan_command, stale_determinations, validate_lens)
 from schemas.enums import EvidenceMarker  # noqa: E402
 from schemas.evidence_state import ConvergenceAssessment, EvidenceStateRecord  # noqa: E402
@@ -1234,10 +1234,14 @@ def main():
             dict(_T55, lenses=[{"identity_code": "GRAND"}]), dict(_T55, lenses=[{"identity_code": "KIDA"}, {"identity_code": "GRAND"}]),
             dict(_T55, lenses=[{"identity_code": "OTHER"}])]
     _ids = lambda d: sorted(l["extraction_id"] for l in d["links"] if l["in_lens"])          # noqa: E731
-    _par19 = determine(synth_db(_src, family=_fam, direction="lower_is_better"), 1, _mob("PAR"), "syn-slug", "t055")
-    _a19 = determine(synth_db(_src, family=_fam, direction="lower_is_better"), 1, _mob("KIDA"), "syn-slug", "t055")
-    _g19 = determine(synth_db(_src, family=_fam, direction="lower_is_better"), 1, _mob("GRAND"), "syn-slug", "t055")
-    _root = determine(synth_db(_src, family=(), direction="lower_is_better"), 1, _mob("KIDA"), "syn-slug", "t055")
+    def _t55(cell, family):
+        # A family defect makes a cell refuse for want of a figure; that is a failed case, not a crashed file that skips
+        # every case after it (T-055 critic, 2026-11-15).
+        try:
+            return determine(synth_db(_src, family=family, direction="lower_is_better"), 1, _mob(cell), "syn-slug", "t055")
+        except Refusal as e:
+            return {"links": [], "n_extractions_in_lens": -1, "n_sources": -1, "governing_refs": [], "refused": str(e)[:120]}
+    _par19, _a19, _g19, _root = _t55("PAR", _fam), _t55("KIDA", _fam), _t55("GRAND", _fam), _t55("KIDA", ())
     expect("T055-01: a parent's cell gathers the figures of every descendant (four of the five here, each once), not an unrelated code's",
            _ids(_par19) == [1, 2, 3, 4] and len(_par19["links"]) == 5 and _par19["n_extractions_in_lens"] == 4,
            f"{_ids(_par19)} {_par19.get('n_extractions_in_lens')}")
@@ -1245,9 +1249,43 @@ def main():
            _ids(_a19) == [1, 3, 4] and _ids(_g19) == [3, 4], f"{_ids(_a19)} {_ids(_g19)}")
     expect("T055-03: with no family declared every code is a root and the cell gathers only its own code's figures (the premise of "
            "leaving RULE_VERSION alone)", _ids(_root) == [1, 4], str(_ids(_root)))
-    expect("T055-04: a figure linked to two codes of one family is one governing figure, not two (no count multiplied by its links)",
-           len({l["extraction_id"] for l in _par19["links"] if l["role"] == "governing"}) == len([l for l in _par19["links"] if l["role"] == "governing"]),
-           str([(l["extraction_id"], l["role"]) for l in _par19["links"]]))
+    expect("T055-04: a figure linked to two codes of one family is one governing figure, not two (counts and refs are each once)",
+           _par19["n_extractions_in_lens"] == len(set(_ids(_par19))) == 4 and _par19["n_sources"] == 4
+           and len(_par19["governing_refs"]) == len(set(_par19["governing_refs"])),
+           f"{_par19.get('n_extractions_in_lens')} {_par19.get('n_sources')} {_par19.get('governing_refs')}")
+    # T055-05 (OD-08): a parent with no figure of its own is determined from its descendants' figures.
+    _own = determine(synth_db([dict(_T55, lenses=[{"identity_code": "KIDA"}])], family=_fam, direction="lower_is_better"),
+                     1, _mob("PAR"), "syn-slug", "t055")
+    expect("T055-05: a parent code no figure names is still a cell, and gathers the descendant's figure",
+           _own["n_extractions_in_lens"] == 1 and _own["n_sources"] == 1, f"{_own.get('n_extractions_in_lens')} {_own.get('n_sources')}")
+    # T055-06: a retired link carries nothing up to the parent.
+    _rc = synth_db([dict(_T55, lenses=[{"identity_code": "KIDA"}])], family=_fam, direction="lower_is_better")
+    _rc.execute("UPDATE extraction_lens_links SET retired_at = '2026-01-01'")
+    try:
+        _rr = determine(_rc, 1, _mob("PAR"), "syn-slug", "t055")
+        _rr_ok = _rr["n_extractions_in_lens"] == 0
+        _rr_msg = ""
+    except Exception as _e:                                                  # noqa: BLE001 - a refusal for no gatherable figure is the other right answer
+        _rr_ok, _rr_msg = "has no row" in str(_e), str(_e)[:160]
+    expect("T055-06: a figure whose only link is retired reaches neither its own code's cell nor its parent's", _rr_ok, _rr_msg)
+    # T055-07 (T-055 critic, 2026-11-15): an open gate on a descendant's code reaches the parent's cell, which gathers the figure.
+    def _gated(cell):
+        d_ = determine(synth_db([dict(_T55, lenses=[{"identity_code": "KIDA"}]), dict(_T55, lenses=[{"identity_code": "KIDB"}]),
+                                 dict(_T55, lenses=[{"identity_code": "GRAND"}])],
+                                family=_fam, direction="lower_is_better",
+                                gates=[(1, "KIDA", "CONTRADICTS", 1, "primary_research", "a trial disagrees")]),
+                       1, _mob(cell), "syn-slug", "t055")
+        return d_["state"], [g["gate_id"] for g in d_["gates"]]
+    _gp, _gc, _gs, _gg = _gated("PAR"), _gated("KIDA"), _gated("KIDB"), _gated("GRAND")
+    expect("T055-07: a gate on KIDA reaches KIDA's cell and its parent's, and not a sibling's or a grandchild's (a child's own figures are not the parent's)",
+           _gp[1] == [1] and _gc[1] == [1] and _gs[1] == [] and _gg[1] == [] and _gp[0] == _gc[0] == "provisional" and _gs[0] != "provisional",
+           f"{_gp} {_gc} {_gs} {_gg}")
+    # T055-08: the 2026-08-25 ruling "Not fanned out, ever": a match grade written against a child is not the parent's.
+    _pc = synth_db([dict(_T55, ref_id="REF-KID", lenses=[{"identity_code": "KIDA"}])], family=_fam, direction="lower_is_better")
+    _pc.execute("INSERT INTO evidence_population_match (match_id, ref_id, match_grade, target_population) VALUES ('M1','REF-KID','EXACT','KIDA')")
+    expect("T055-08: a population match graded against a child code is read for that child and never for its parent",
+           population_match(_pc, "REF-KID", "KIDA") is not None and population_match(_pc, "REF-KID", "PAR") is None,
+           f"{population_match(_pc, 'REF-KID', 'KIDA')} {population_match(_pc, 'REF-KID', 'PAR')}")
 
     def _cell19(sources, cell, **kw):
         return determine(synth_db(sources, direction="lower_is_better", **kw), 1, cell,

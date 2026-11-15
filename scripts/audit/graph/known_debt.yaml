@@ -22,7 +22,7 @@ entries:
   - id: c1-evidence-cell-state-pilot-only
     check_id: table.empty_mission_critical
     table: specifications
-    warrant: "DR-2026-07-12 A2 + C1 determination backfill pending (0 rows today — pilot rows cleared 2026-08-12 with the evidence-stage reset)"
+    warrant: "DR-2026-07-12 A2 + C1 determination backfill pending (live rows: SELECT COUNT(*) FROM specifications WHERE retired_at IS NULL — the pilot rows were retired with the evidence-stage reset of 2026-08-12)"
     lift_when_sql: "SELECT COUNT(*) FROM specifications"
     lift_when_ge: 20
 

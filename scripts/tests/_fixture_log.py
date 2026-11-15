@@ -7,7 +7,8 @@ has nothing to do with what it tests. The fix is to isolate the ROOT, not to cha
 the id its folder was filed under.
 
 `fixture_log_root(dest, db_path)` symlinks into `dest` each folder of the repository's retrieval log EXCEPT a folder whose
-manifest names a ref_id above the high-water mark of the database at `db_path`, and prints one line for each it leaves out.
+manifest names a ref_id above the high-water mark of the database at `db_path`; such a folder is linked file by file with
+only the lines and artefacts of those ids left out, and one line is printed for each.
 """
 import json
 import pathlib
@@ -32,18 +33,32 @@ def fixture_log_root(dest, db_path, source=None):
         if not d.is_dir():
             continue
         manifest = d / "manifest.jsonl"
-        ahead = set()
+        keep, ahead, stems = [], set(), set()
         if manifest.exists():
             for line in manifest.open(encoding="utf-8"):
-                if line.strip():
-                    ref = (json.loads(line).get("ref_id") or "").strip()
-                    m = dbcore._MINTABLE.fullmatch(ref)
-                    if m and int(m.group(1)) > high:
-                        ahead.add(ref)
-        if ahead:
-            print(f"fixture root: left out {d.name} (holds {sorted(ahead)}, above the copy's high-water mark {high})")
+                if not line.strip():
+                    continue
+                rec = json.loads(line)
+                ref = (rec.get("ref_id") or "").strip()
+                m = dbcore._MINTABLE.fullmatch(ref)
+                if m and int(m.group(1)) > high:
+                    ahead.add(ref)
+                    if rec.get("artefact"):
+                        stems.add(pathlib.Path(rec["artefact"]).stem)
+                else:
+                    keep.append(line)
+        if not ahead:
+            link = dest / d.name
+            if not link.exists():
+                link.symlink_to(d.resolve())
             continue
-        link = dest / d.name
-        if not link.exists():
-            link.symlink_to(d.resolve())
+        # A batch files several sources into one folder and admits them one at a time: leave out only the lines (and the
+        # files) of the ids above the mark, not the artefacts of the sources already admitted (T-073 critic, 2026-11-15).
+        print(f"fixture root: left out {sorted(ahead)} from {d.name} (above the copy's high-water mark {high})")
+        out = dest / d.name
+        out.mkdir(exist_ok=True)
+        (out / "manifest.jsonl").write_text("".join(keep), encoding="utf-8")
+        for f in d.iterdir():
+            if f.name != "manifest.jsonl" and not any(f.name.startswith(st) for st in stems) and not (out / f.name).exists():
+                (out / f.name).symlink_to(f.resolve())
     return str(dest)

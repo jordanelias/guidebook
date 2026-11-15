@@ -64,17 +64,20 @@ python3 -I - $ARGUMENTS <<'PY'
 import os, re, sys, sqlite3
 db = os.environ.get("GUIDEBOOK_DB_PATH") or "data/guidebook.db"
 c = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+if set(sys.argv[1:]) - {"--all"}: sys.exit(f"unknown argument(s) {sorted(set(sys.argv[1:]) - {'--all'})}: the only one is --all")
 all_sources = "--all" in sys.argv
 session = re.sub(r"\.md$", "", open("scratchpad/CURRENT").read().strip()) if os.path.exists("scratchpad/CURRENT") else ""
 VS = "x.figure_role IN ('claim','derived')"
 LENSES = (("identity_code", "SELECT identity_code FROM base_taxonomy_identity WHERE status='active'"),
           ("needs_code", "SELECT need_code FROM access_needs"), ("icf_code", "SELECT icf_code FROM base_icf"),
-          ("medical_code", "SELECT medical_code FROM base_taxonomy_medical"))
+          ("medical_code", "SELECT medical_code FROM base_taxonomy_medical WHERE status='active'"))
 params = [r[0] for r in c.execute("SELECT parameter_id FROM base_parameters WHERE status='active' ORDER BY 1")]
 print("(1) LENS BY PARAMETER: distinct live value-supplying figures per (lens code, active parameter)")
 for col, reg in LENSES:
     q = (f"SELECT COUNT(DISTINCT x.extraction_id) FROM source_value_extractions x JOIN v_live_lens_links l "
-         f"ON l.extraction_id = x.extraction_id WHERE {VS} AND x.parameter_id = ? AND l.{col} = ?")
+         f"ON l.extraction_id = x.extraction_id WHERE {VS} AND x.parameter_id = ? AND l.{col} "
+         + ("IN (WITH RECURSIVE f(c) AS (SELECT ? UNION SELECT i.identity_code FROM base_taxonomy_identity i JOIN f ON i.parent_code = f.c) SELECT c FROM f)"
+            if col == "identity_code" else "= ?"))   # a parent's cell counts its descendants' figures (T-055)
     codes = [r[0] for r in c.execute(reg)]
     zero, cells = [], []
     for code in codes:
@@ -102,7 +105,7 @@ for ref, oid, form, loc, out in c.execute(q3 + " ORDER BY o.ref_id, o.observatio
     if all_sources or ref in mine: by.setdefault(ref, []).append((oid, form, loc, out))
 for ref, obs in by.items():
     print(f"    {ref}: {len(obs)} observation(s)")
-    for oid, form, loc, out in obs[:25]: print(f"      #{oid} [{out}] {form!r} @ {loc}")
+    for oid, form, loc, out in obs: print(f"      #{oid} [{out}] {form!r} @ {loc}")
 PY
 ```
 

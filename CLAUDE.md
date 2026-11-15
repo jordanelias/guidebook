@@ -409,7 +409,8 @@ open. Do not read `slug × population` as any part of the answer: `base_taxonomy
   not a second success story — a prior version of this entry wrongly claimed both cases succeeded.
 - **`.ignore` hides frozen records from ripgrep and the Grep tool** — `_archived/`, `audits/`,
   `sessions/`, `references/search-log/`, `references/bpc/`, `versions/`, `workplan/_superseded/`, and the JSONL under
-  `transcripts/`. **Owner rulings live overwhelmingly in `sessions/`.** "No matches" ≠ absent:
+  `transcripts/`. **Owner rulings live overwhelmingly in `sessions/`.** A `glob` that names the directory
+  (`references/**`, `sessions/**`) overrides `.ignore` and returns them. "No matches" ≠ absent:
   `grep -r` and `git grep` ignore `.ignore` and find them instantly. **Never report a ruling absent
   from a search that could not have seen it.**
 - **`scratchpad/CURRENT` is the anchor for the running session, and it moves at OPEN.**
@@ -433,8 +434,8 @@ open. Do not read `slug × population` as any part of the answer: `base_taxonomy
   without rewriting anything — the branch carries a merge commit rather than a replay.
 - **THE ITEM LAYER IS GONE FROM THE DATABASE AND STILL LIVE ON THE READING SURFACE.** Its tables
   were dropped by migration `drop_item_layer_cluster` and a rebuild does not restore them (migration 121 dropped `conflicts.item_code`; `add-conflict` takes `--parameter-id`) — but the prior version's corpus still publishes the
-  codes and their names across `references/` and `working/`, which `.ignore` does **not** hide.
-  (`versions/` and `_archived/` carry them too and **are** hidden.)
+  codes and their names across `references/` and `working/`, which `.ignore` does **not** hide except under
+  `references/bpc/` and `references/search-log/`. (`versions/` and `_archived/` carry them too and **are** hidden.)
   So a session that greps for a topic still meets **`E-08 Corridor Clear Width
   (≥1200 mm Minimum on All Primary Routes)`** — a container whose name states its answer, which is
   the whole reason the owner deleted the layer: *if E-08 already exists then the work is predisposed

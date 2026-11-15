@@ -1390,7 +1390,7 @@ _dv = {"lower_limb_prosthesis", "crutches", "cane"}
 if _EID55 is None:
     skip("T055", "no figure without a device_class on the live database")
 else:
-    record("T055-05", "the column's own CHECK admits the three mobility values and keeps every earlier one",
+    record("T055-11", "the column's own CHECK admits the three mobility values and keeps every earlier one",
            _dv <= set(dbcore.schema_choices("source_value_extractions", "device_class")) and {"power_chair", "walker_rollator", "mixed", "not_device_scoped"}
            <= set(dbcore.schema_choices("source_value_extractions", "device_class")), sorted(dbcore.schema_choices("source_value_extractions", "device_class")))
     with scratch() as c:
@@ -1399,7 +1399,7 @@ else:
             res, err = ok(db.amend_extraction, _EID55, "device_class", v, "T055 fixture", session=S, dry_run=False)
             _out[v] = (err, c.execute("SELECT device_class FROM source_value_extractions WHERE extraction_id=?", (_EID55,)).fetchone()[0])
         _bad = refusal(db.amend_extraction, _EID55, "device_class", "BANANA", "T055 fixture", session=S, dry_run=True)
-        record("T055-06", "amend-extraction --field device_class accepts each new value and refuses one outside the CHECK, naming the set",
+        record("T055-12", "amend-extraction --field device_class accepts each new value and refuses one outside the CHECK, naming the set",
                all(e is None and now == v for v, (e, now) in _out.items()) and bool(_bad) and "power_chair" in _bad, (_out, _bad))
 
 print("Section T080: a search that found nothing states its cause, or was not run")
@@ -1453,13 +1453,22 @@ for _name, _ref in (("session-below", f"REF-{max(_hw - 1, 1):05d}"), ("session-a
     (_src / _name).mkdir(parents=True, exist_ok=True)
     (_src / _name / "manifest.jsonl").write_text(json.dumps({"ref_id": _ref}) + "\n", encoding="utf-8")
 (_src / "session-no-manifest").mkdir(exist_ok=True)
+_mx = _src / "session-mixed"                      # one folder, two sources: one admitted (at the mark), one not yet
+_mx.mkdir(exist_ok=True)
+(_mx / "manifest.jsonl").write_text(json.dumps({"ref_id": f"REF-{_hw:05d}", "artefact": "aaaa.html"}) + "\n"
+                                    + json.dumps({"ref_id": f"REF-{_hw + 1:05d}", "artefact": "bbbb.pdf"}) + "\n", encoding="utf-8")
+for _f in ("aaaa.html", "bbbb.pdf", "bbbb-full-text.txt"):
+    (_mx / _f).write_text("x", encoding="utf-8")
 with contextlib.redirect_stdout(_io.StringIO()) as _out:
     _root = pathlib.Path(fixture_log_root(os.path.join(TMP, "t073-root"), DB, source=_src))
 _kept = sorted(x.name for x in _root.iterdir())
-record("T073-01", "the fixture root links every folder whose ids the database has minted (below and AT its high-water mark) and one with no manifest, and leaves out only the folder "
-       "above it, saying so in one line that names the folder, the id and the mark",
-       _kept == ["session-at", "session-below", "session-no-manifest"] and "left out session-ahead" in _out.getvalue()
-       and f"REF-{_hw + 1:05d}" in _out.getvalue() and str(_hw) in _out.getvalue(), (_kept, _out.getvalue()))
+_mfiles = sorted(x.name for x in (_root / "session-mixed").iterdir())
+_mlines = [json.loads(l)["ref_id"] for l in (_root / "session-mixed" / "manifest.jsonl").open() if l.strip()]
+record("T073-01", "the fixture root links every folder whose ids the database has minted (below and AT its high-water mark) and one with no manifest, and keeps of a folder holding "
+       "an id above the mark only the lines and files of the ids below it, saying so in one line that names the id and the mark",
+       _kept == ["session-ahead", "session-at", "session-below", "session-mixed", "session-no-manifest"]
+       and _mfiles == ["aaaa.html", "manifest.jsonl"] and _mlines == [f"REF-{_hw:05d}"] and list((_root / "session-ahead").iterdir()) == [_root / "session-ahead" / "manifest.jsonl"]
+       and f"REF-{_hw + 1:05d}" in _out.getvalue() and str(_hw) in _out.getvalue(), (_kept, _mfiles, _mlines, _out.getvalue()))
 record("T073-02", "the fixture root of this very suite holds no folder above the copy's high-water mark",
        not any(dbcore._MINTABLE.fullmatch((json.loads(l).get("ref_id") or "")) and int(json.loads(l)["ref_id"][4:]) > _hw
                for m in pathlib.Path(FARM).glob("*/manifest.jsonl") for l in m.open() if l.strip()), None)

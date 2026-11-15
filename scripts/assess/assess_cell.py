@@ -519,8 +519,9 @@ def gather_extraction_links(conn, parameter_id, governing_refs, lens):
             # BEFORE every other branch: a figure the cell's lens does not reach played no part in it.
             role, why = "excluded", (
                 f"not stated in this cell's lens ({cell}): no live lens link of this figure carries "
-                f"every code the cell states; a figure reaches a cell only through the lens codes "
-                f"written on it")
+                f"every code the cell states (an identity code counts through its parent chain: a figure "
+                f"linked to a descendant reaches the parent's cell); a figure reaches a cell only through "
+                f"the lens codes written on it")
         elif frole in VALUE_SUPPLYING_ROLES and method in NOT_PUBLISHABLE_METHODS:
             # Checked BEFORE the governing branch: a skimmed row is left out even when its
             # source governs through another, fully read row (owner 2026-10-09).
@@ -684,15 +685,19 @@ def _open_gates(conn, parameter_id, lens, best, questions_only=False):
     """The open determination gates that reach this cell, as the engine reports them.
 
     A gate is skipped when the cell carries a DIFFERENT code in a lens the gate names (a lens the cell does not carry
-    never skips it). A QUESTION (OD-21) is reported, never binding. Any other gate binds only when its trigger is at
+    never skips it); for the identity lens "different" means outside the cell's code and its descendants. A QUESTION (OD-21) is reported, never binding. Any other gate binds only when its trigger is at
     least as strong as the cell's best anchor `best` (the ladder-inversion guard)."""
     gates = []
+    family = ({r[0] for r in conn.execute("SELECT code FROM " + _IDENTITY_FAMILY, (lens["identity_code"],))} if lens.get("identity_code") else set())
     if _table_exists(conn, "determination_gates"):
         for g in conn.execute(
                 "SELECT gate_id, verdict, trigger_tier, trigger_evidence_type, "
                 "trigger_ref_id, detail, identity_code, icf_code, needs_code, medical_code "
                 "FROM v_open_determination_gates WHERE parameter_id = ?", (parameter_id,)):
-            if any(gv and lens.get(col) and lens[col] != gv
+            # The identity lens counts through parent_code, as the figures do: a parent's cell gathers its descendants'
+            # figures, so a gate on a descendant's code reaches it (the gate caps the figure wherever it is read); a gate
+            # on the parent's code does not reach a child's cell, which does not gather the parent's own figures.
+            if any(gv and lens.get(col) and (lens[col] != gv if col != "identity_code" else gv not in family)
                    for col, gv in zip(("identity_code", "icf_code", "needs_code", "medical_code"), g[6:10])):
                 continue                      # a gate on another lens
             if g[1] == "QUESTION":
