@@ -54,6 +54,7 @@ has since been corrected upstream, nor can it run when the API is unreachable.
 
 import argparse
 import codecs
+import functools
 import hashlib
 import html
 import json
@@ -603,8 +604,30 @@ _TAG = re.compile(r"<[^>]{0,200}>")
 # ---------------------------------------------------------------------------
 
 
+@functools.lru_cache(maxsize=65536)
+def _quote_char(ch):
+    """(kind, kept text) of one character for `normalise_quote`. Kind says what a following combining
+    mark attaches to: `mark` (a mark itself); `ignore` (a space, a format character such as a joiner, or a
+    variation selector: it neither emits nor changes what a mark attaches to); `fold` (a letter of Latin,
+    Greek or Cyrillic, whose accents fold away); `word` (a letter of any other script, whose marks are part
+    of the word); `other` (a digit, a symbol, punctuation: a mark after it is stray). Kept text is what a
+    base character contributes: its ASCII value for a decimal digit, itself for a letter or digit."""
+    cat = unicodedata.category(ch)
+    name = unicodedata.name(ch, "")
+    if cat.startswith("M"):
+        return ("ignore", "") if name.startswith("VARIATION SELECTOR") else ("mark", ch)
+    if cat in ("Zs", "Cf"):
+        return "ignore", ""
+    if cat == "Nd":
+        return "other", str(unicodedata.decimal(ch))     # every decimal digit folds to ASCII
+    if cat.startswith("L"):
+        return ("fold" if name.startswith(("LATIN", "GREEK", "CYRILLIC")) else "word"), ch
+    return "other", ch if ch.isalnum() else ""
+
+
 def normalise_quote(text):
-    """Reduce prose to the letters and digits it contains, in order.
+    """Reduce prose to the letters and digits it contains, in order (and, outside Latin, Greek and
+    Cyrillic, the marks that belong to those letters).
 
     WHY NOT A RAW BYTE SUBSTRING, which is what this replaced. Measured across the ten
     committed extractions on 2026-09-13: TWO failed a byte-substring check and BOTH were
@@ -633,16 +656,36 @@ def normalise_quote(text):
         `re.findall(r"\\d+", ...)` in db.py extracted the full-width １ as a digit (Python's
         \\d is Unicode-aware) while this function deleted it (this one was not), so the two
         halves of one check disagreed and no CJK numeral could ever pass.
+      * MARKS ARE KEPT OUTSIDE LATIN, GREEK AND CYRILLIC (T-009, 2026-11-15). The loop below drops
+        a combining mark only after a base letter of those three scripts. Everywhere else it is
+        the difference between two words: Hindi कि and की, Thai ไม่ and ไม้, Arabic كَتَبَ and
+        كُتُبٌ, Japanese か and が verified as one quote when every mark was stripped. The test is
+        the base character's Unicode name, never a list of languages. Every Unicode decimal
+        digit folds to its ASCII value (NFKC folded only the full-width ones).
       * ACCENTS FOLD rather than vanish. `Pérez` now normalises to `perez`, not `prez`:
         the old filter DELETED the é, so a quote typed `Perez` (-> `perez`) could not match
         an artefact reading `Pérez` (-> `prez`). That asymmetry was silent.
       * Markup, whitespace and punctuation are still discarded, which is the whole reason
         this replaced a raw byte substring.
     """
-    s = unicodedata.normalize("NFKC", _TAG.sub(" ", text or "")).lower()
-    s = unicodedata.normalize("NFKD", s)
-    s = "".join(ch for ch in s if not unicodedata.combining(ch))
-    return "".join(ch for ch in s if ch.isalnum())
+    s = unicodedata.normalize("NFKD", unicodedata.normalize("NFKC", _TAG.sub(" ", text or "")).lower())
+    out, marks, word = [], [], False
+    for ch in s:
+        kind, kept = _quote_char(ch)
+        if kind == "mark":
+            # Kept only on a letter of a script other than Latin, Greek and Cyrillic (an Indic vowel
+            # sign, a Thai tone, Arabic or Hebrew pointing, the voicing mark that makes か が). On any
+            # other base it is an accent or a stray: `Pérez` meets `Perez`, and the space + accent that
+            # NFKC makes of a spacing `´` is nothing.
+            if word:
+                marks.append(ch)
+        elif kind != "ignore":
+            out.extend(sorted(marks))     # marks of one base in code order: PDF and HTML order them differently
+            marks = []
+            word = kind == "word"
+            out.append(kept)
+    out.extend(sorted(marks))
+    return unicodedata.normalize("NFC", "".join(out))        # recompose kana and Hangul
 
 
 # One head (a plain digit run, or 1-3 digits grouped in threes by spaces or apostrophes), then any

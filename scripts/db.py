@@ -35,6 +35,7 @@ CLI usage:
 import json
 import os
 import re
+import unicodedata
 import zipfile
 import sqlite3
 import sys
@@ -6631,20 +6632,52 @@ _VALUE_BEARING = dbcore.VALUE_BEARING          # one definition (T-016): the uni
 # Comparator WORDS are screened in NAMES only. A definition or description is ordinary
 # English ("rather than reflection"), so it keeps `_VALUE_BEARING` (digits, symbols, min/max)
 # and gains nothing; every NAME field uses `_VALUE_BEARING_NAME`.
-_VALUE_BEARING_NAME = re.compile(
-    _VALUE_BEARING.pattern + r"|\bthan\b|\bat (least|most)\b|\bno (more|less|fewer|greater)\b"
-    r"|\bnot exceeding\b|\bexceed(s|ing)?\b", re.I)
+class _NameScreen:
+    """`_VALUE_BEARING_NAME`: the screen a NAME passes (T-009). It reads the NFKC form of the name, so a
+    full-width, circled or superscript digit and a full-width comparator are the ASCII ones, and any
+    other decimal digit is caught by `\\d` (Unicode's Nd). The comparator signs outside ASCII are DERIVED
+    from Unicode's own names (a math symbol named a less-than, a greater-than or an equals sign), once,
+    on first use, so no list of signs is typed here. A numeral written as a word (一二〇〇, 千二百) is a
+    word, not a digit, and is left to the owner's approval of each name, as the task says."""
+    _rx = None
+
+    def search(self, text):
+        if _NameScreen._rx is None:
+            signs = "".join(re.escape(c) for c in map(chr, range(0x10000))
+                            if unicodedata.category(c) == "Sm"
+                            and any(w in unicodedata.name(c, "")
+                                    for w in ("LESS-THAN", "GREATER-THAN", "EQUALS SIGN")))
+            _NameScreen._rx = re.compile(
+                _VALUE_BEARING.pattern + r"|\bthan\b|\bat (least|most)\b|\bno (more|less|fewer|greater)\b"
+                r"|\bnot exceeding\b|\bexceed(s|ing)?\b|\d|[" + signs + "]", re.I)
+        return _NameScreen._rx.search(unicodedata.normalize("NFKC", text or ""))
+
+
+_VALUE_BEARING_NAME = _NameScreen()
 
 
 def _name_tokens(name: str) -> frozenset:
-    """The content tokens of a name, lower-cased, a trailing plural 's' dropped -- the
-    one normalisation `_near_terms` compares on. 'Ramp runs' -> {ramp, run}."""
-    toks = re.findall(r"[a-z0-9]+", (name or "").lower())
+    """The content tokens of a name, case-folded, a trailing plural 's' dropped -- the
+    one normalisation `_near_terms` compares on. 'Ramp runs' -> {ramp, run}.
+
+    A token is a run of Unicode letters, digits and combining marks (T-009): the ASCII
+    pattern this replaced gave 勾配 and 경사로 an EMPTY set, so a name in any other script
+    was never compared with anything. No language is named; a script written without spaces
+    is one token."""
+    toks, cur = [], []
+    for ch in unicodedata.normalize("NFKC", name or "").casefold():
+        if ch.isalnum() or unicodedata.category(ch).startswith("M"):
+            cur.append(ch)
+        elif cur:
+            toks.append("".join(cur))
+            cur = []
+    if cur:
+        toks.append("".join(cur))
     return frozenset(t[:-1] if len(t) > 3 and t.endswith("s") else t for t in toks)
 
 
 def _near_terms(conn, name: str) -> list:
-    """Terms whose canonical name or ATTESTED English alias shares a token set with `name` one
+    """Terms whose canonical name or ATTESTED alias, in any language (T-009), shares a token set with `name` one
     way or the other (subset or superset): 'ramp runs' beside 'ramp run length',
     'reverberations' beside 'reverberation time'. The equivalence search the skill tells an
     operator to do before minting, done by the writer and refused unless each is named
@@ -6662,8 +6695,7 @@ def _near_terms(conn, name: str) -> list:
     out, seen = [], set()
     for term_id, held in conn.execute(
             "SELECT term_id, canonical_en FROM terms UNION ALL "
-            "SELECT term_id, alias FROM term_aliases WHERE upper(language)='EN' "
-            "AND attestation <> 'model_seed'"):
+            "SELECT term_id, alias FROM term_aliases WHERE attestation <> 'model_seed'"):
         have = _name_tokens(held)
         # Near: the new name's tokens sit inside an existing name's ('ramp runs' in 'ramp run
         # length'), or an existing name of TWO OR MORE tokens sits inside the new one. A

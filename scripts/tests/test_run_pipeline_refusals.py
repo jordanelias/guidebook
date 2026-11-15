@@ -2458,6 +2458,76 @@ with scratch() as c:
     ok(db.amend_extraction, fnum, "comparator", "<=", "T016 probe", session=S)
     res, err = ok(db.amend_extraction, fnum, "figure_role", "claim", "T016 probe", session=S)
     record("T016-N19c", "control: ...and with the comparator set it is accepted", err is None, err)
-
+# ───────────── T-009: quote normalisation and name screens outside Latin script ─────────────
+print("Section T009: normalise_quote keeps a mark that is part of a word outside Latin, Greek and Cyrillic, drops a stray "
+      "one, and folds every decimal digit; the name screens read any script")
+import unicodedata  # noqa: E402
+_PROBES = REPO / "scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/results3/probes/log.jsonl"
+_NUMERIC = ("dec", "indian", "swiss", "german")                 # the probe keys that are numbers, not words
+_nq, _L = retrieval_log.normalise_quote, unicodedata.lookup
+try:
+    _per = json.loads(json.loads(_PROBES.read_text(encoding="utf-8").splitlines()[0])["argv"][-1])
+except Exception as _exc:  # noqa: BLE001
+    _per = None
+    for _t in ("T009-01", "T009-02", "T009-03", "T009-04", "T009-05"):
+        skip(_t, f"the retained probe log is unreadable ({type(_exc).__name__})")
+if _per is not None:
+    _marked = {}
+    for _k, _v in _per.items():
+        if not _k.startswith(_NUMERIC):
+            _marked.setdefault(_k.split("-")[0], []).append((_k, _v))
+    _clash = [(a, b) for m in _marked.values() for i, (a, x) in enumerate(m) for b, y in m[i + 1:] if _nq(x) == _nq(y)]
+    _lone = [g for g, m in _marked.items() if len(m) < 2]
+    record("T009-01", "strings of one script that differ only in a mark (Devanagari, Thai, Hebrew, Arabic, kana) normalise "
+           "differently, and every group has a pair to compare", len(_marked) >= 2 and not _lone and not _clash, (_lone, _clash))
+    _digits = {k: re.sub(r"\D", "", _nq(v)) for k, v in _per.items() if k.startswith("dec-")}
+    _same = {d for k, d in _digits.items() if k != "dec-6.0"}
+    record("T009-02", "every decimal digit folds to ASCII: 0.6, 0,6, full-width, Arabic-Indic and Devanagari spellings share one "
+           "digit run, 6.0 does not", len(_same) == 1 and _digits["dec-6.0"] not in _same, _digits)
+    _nt = retrieval_log.number_tokens
+    record("T009-03", "0.6 s and 0,6 s still read as the same number through T-008's reader",
+           bool(_nt(_per["dec-0.6"])) and _nt(_per["dec-0.6"]) == _nt(_per["dec-comma"]), (_nt(_per["dec-0.6"]), _nt(_per["dec-comma"])))
+    _names = [v for k, v in _per.items() if not k.startswith(_NUMERIC)]
+    _empty = [v for v in _names if not db._name_tokens(v)]
+    record("T009-04", "a name in any script yields a non-empty token set", bool(_names) and not _empty, _empty)
+    _vb = [k for k in ("dec-fullwidth", "dec-arabic-indic", "dec-devanagari") if not db._VALUE_BEARING_NAME.search(_per[k])]
+    record("T009-05", "a name carrying a full-width, Arabic-Indic or Devanagari digit is value-bearing", not _vb, _vb)
+_KA, _GA = _L("HIRAGANA LETTER KA"), _L("HIRAGANA LETTER GA")
+record("T009-06", "an accent on a Latin letter still folds (Pérez meets Perez) and the voicing mark of か が still differs",
+       _nq("P\u00e9rez") == _nq("Perez") and _nq(_KA) != _nq(_GA), (_nq(_KA), _nq(_GA)))
+# What a mark is attached to decides whether it stays (the adversarial pass on T-009 found each of these on a live artefact or by probe).
+_ACUTE = _L("ACUTE ACCENT")                                     # a SPACING accent: NFKC makes it a space and a combining mark
+record("T009-07", "a spacing accent used as an apostrophe is nothing (landlord´s meets landlord's), and a lone accent, "
+       "a lone vowel sign or an emoji selector leaves no text",
+       _nq("landlord" + _ACUTE + "s") == _nq("landlord's") and _nq(_ACUTE) == "" and _nq(" " + _ACUTE + " \n") == ""
+       and _nq(_L("HEBREW POINT HIRIQ")) == "" and _nq(_L("HEAVY CHECK MARK") + "\ufe0f") == "",
+       [_nq("landlord" + _ACUTE + "s"), _nq(_ACUTE), _nq(_L("HEBREW POINT HIRIQ"))])
+_THAI = (_L("THAI CHARACTER NO NEN"), _L("THAI CHARACTER MAI THO"), _L("THAI CHARACTER NIKHAHIT"), _L("THAI CHARACTER SARA AA"))
+record("T009-08", "Thai sara am typed as one letter (sara am) and as the extractor writes it (nikhahit, tone, sara aa) are one quote",
+       _nq(_THAI[0] + _THAI[1] + _L("THAI CHARACTER SARA AM")) == _nq(_THAI[0] + _THAI[2] + _THAI[1] + _THAI[3]),
+       [_nq(_THAI[0] + _THAI[1] + _L("THAI CHARACTER SARA AM")), _nq(_THAI[0] + _THAI[2] + _THAI[1] + _THAI[3])])
+_VS = chr(0xE0100)                                              # an ideographic variation selector
+record("T009-09", "a variation selector between two ideographs is not part of the word",
+       _nq("\u845b" + _VS + "\u98fe\u533a") == _nq("\u845b\u98fe\u533a"), None)
+_signs = [_L(n) for n in ("FULLWIDTH LESS-THAN SIGN", "SMALL EQUALS SIGN", "LESS-THAN OVER EQUAL TO", "NOT GREATER-THAN")]
+_digit_names = [_L("CIRCLED DIGIT ONE"), _L("SUPERSCRIPT TWO"), _L("VULGAR FRACTION ONE HALF")]
+_miss = [c for c in _signs + _digit_names if not db._VALUE_BEARING_NAME.search("width " + c)]
+record("T009-10", "a name carrying a non-ASCII comparator, a circled or superscript digit or a fraction is value-bearing; the ASCII "
+       "plain name is not", not _miss and not db._VALUE_BEARING_NAME.search("ramp gradient"), _miss)
+# _near_terms compares against an alias of ANY language: take a live, non-seed, non-English alias of two or more tokens whose own term
+# has no English form that would find it anyway, and offer a name that contains it.
+def _en_forms(tid):
+    return [r[0] for r in q("SELECT canonical_en FROM terms WHERE term_id=? UNION ALL SELECT alias FROM term_aliases "
+                            "WHERE term_id=? AND upper(language)='EN' AND attestation<>'model_seed'", tid, tid)]
+_al = [(t, a) for t, a in q("SELECT term_id, alias FROM term_aliases WHERE upper(language)<>'EN' AND attestation<>'model_seed' "
+                            "ORDER BY term_id, alias") if len(db._name_tokens(a)) >= 2]
+# A near match needs a shared token, so an alias none of whose tokens occurs in any English form of its own term can be found only through the alias.
+_al = [(t, a) for t, a in _al if not any(db._name_tokens(a) & db._name_tokens(f) for f in _en_forms(t))]
+if not _al:
+    skip("T009-11", "no live non-English, non-seed alias of two or more tokens that no English form of its term would also find")
+else:
+    _t, _a = _al[0]
+    record("T009-11", "_near_terms finds a term through an alias in a language other than English",
+           any(h[0] == _t for h in db._near_terms(con, _a + " zzprobe")), (_t, _a))
 
 finish()
