@@ -6374,8 +6374,7 @@ def retire_specification(specification_id: int, session: str, reason: str = None
                 raise Refusal(f"--superseded-by {superseded_by}: no such determination.")
             if superseded_by == specification_id:
                 raise Refusal("a determination cannot supersede itself.")
-            conn.execute("UPDATE specifications SET superseded_by_specification_id=?, "
-                         "updated_at=?, updated_by_session=? WHERE specification_id=?",
+            conn.execute(dbcore.SUPERSEDE_SQL,
                          [superseded_by, dbcore.now(), session, specification_id])
             return {"specification_id": specification_id, "superseded_by": superseded_by,
                     "linked": True}

@@ -603,6 +603,7 @@ writers:
     scripts/dbcore.py:
     - evidence_sources
     - source_locators
+    - specifications
     scripts/emit_data_migration.py:
     - evidence_sources
     - gaps

@@ -224,6 +224,15 @@ LENS_COLUMNS = {
 }
 # COALESCE order, matching the table's own CHECK and test_db_integrity K01's sha payload.
 LENS_ORDER = ("identity_code", "icf_code", "needs_code", "medical_code")
+# A cell's identity in SQL: the parameter and the four lens codes, blank and NULL alike (the COALESCE of
+# `idx_spec_row_identity`, migration 071). One text, read by the already-determined refusal and by the
+# supersession link; `_cell_vals` gives its parameters.
+CELL_WHERE = ("parameter_id=? AND COALESCE(identity_code,'')=? AND COALESCE(icf_code,'')=? "
+              "AND COALESCE(needs_code,'')=? AND COALESCE(medical_code,'')=?")
+
+
+def _cell_vals(parameter_id, lens):
+    return (parameter_id,) + tuple(lens.get(c) or "" for c in LENS_ORDER)
 
 
 def lens_key(lens):
@@ -2021,10 +2030,7 @@ def validate_cell_undetermined(conn, parameter_id, lens):
     retired ones behind it. The remedy named below is the owner's design, not this
     function's invention, and the retirement it points at refuses without a reason.
     """
-    where = ("parameter_id=? AND COALESCE(identity_code,'')=? "
-             "AND COALESCE(icf_code,'')=? AND COALESCE(needs_code,'')=? "
-             "AND COALESCE(medical_code,'')=?")
-    vals = (parameter_id,) + tuple(lens.get(c) or "" for c in LENS_ORDER)
+    where, vals = CELL_WHERE, _cell_vals(parameter_id, lens)
     # LIVE rows only. A retired determination is history, not an obstacle — that is the
     # whole point of retiring in place, and it must match idx_spec_row_identity's own
     # partial predicate (migration 083) or the two drift apart exactly as the COALESCE
@@ -2335,6 +2341,28 @@ def main():
         # comment then kept the retirement deferred for three migrations, and two
         # sessions rediscovered the blocker from it. Every live row is rule_version
         # pilot-3, so the pilot-2 hashing path is dead.
+        # THE RETIRED ROW IT FOLLOWS POINTS AT IT (T-011). Re-determining a cell is retire, then run this engine
+        # again; nothing linked the old value to the one that replaced it, so a reader at the old value could not
+        # reach the current one. The most recently retired row of this cell that has no pointer gets one, by the
+        # statement `db.py retire-specification --superseded-by` uses (dbcore.SUPERSEDE_SQL), here and in the
+        # emitted SQL. Older retired rows with no pointer stay as they are (history is not back-filled); they are
+        # named on stderr so they are not silent.
+        _prior = [r[0] for r in conn.execute(
+            f"SELECT specification_id FROM specifications WHERE {CELL_WHERE} AND retired_at IS NOT NULL "
+            "AND superseded_by_specification_id IS NULL AND specification_id<>? "
+            "ORDER BY retired_at DESC, specification_id DESC",
+            _cell_vals(det["parameter_id"], det["lens"]) + (specification_id,))]
+        if _prior:
+            _sup = (specification_id, STAMP, SESSION, _prior[0])
+            conn.execute(dbcore.SUPERSEDE_SQL, _sup)
+            _text = dbcore.SUPERSEDE_SQL
+            for _v in _sup:
+                _text = _text.replace("?", q(_v), 1)
+            sql_lines.append(_text + ";")
+            if len(_prior) > 1:
+                print(f"NOTE: specification {_prior[0]} now points at {specification_id}; {len(_prior) - 1} older "
+                      f"retired row(s) of this cell hold no pointer and are left as history: {_prior[1:]}",
+                      file=sys.stderr)
         for _ref in det["governing_refs"]:
             _link = (specification_id, _ref, "governing", STAMP, SESSION)
             _lcols = ("specification_id, ref_id, role, created_at, created_by_session")

@@ -632,6 +632,12 @@ def domain_key(domain) -> str:
     ` legal` or `functional-axis` through. A NULL or blank domain is '' and is not in the rule."""
     return (domain or "").strip().casefold().replace("-", "_").replace(" ", "_")
 
+#: The one UPDATE that points a retired determination at the one that replaced it (T-011). `db.py
+#: retire-specification --superseded-by` runs it on a row retired earlier; the engine runs it, and emits it, when it
+#: writes the determination that follows a retired row of the same cell. No other statement writes the column.
+SUPERSEDE_SQL = ("UPDATE specifications SET superseded_by_specification_id=?, updated_at=?, "
+                 "updated_by_session=? WHERE specification_id=?")
+
 #: Which figure_role values supply a value to a determination. ONE HOME (migration 077; moved here from
 #: `assess_cell`, which imports it back): `gather_sources` filters on it, `gather_extraction_links` grades
 #: on it, K01 recomputes the sha from the links this produces, and the writers read it for the comparator rule.

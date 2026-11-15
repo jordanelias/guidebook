@@ -1474,6 +1474,102 @@ def main():
             expect("T019-15 (AT-52): an identity no figure of the parameter carries has no row: refused",
                    _r is not None and "has no row" in _r, f"parameter {_n[0]} {_n[1]}: {_r}")
 
+    # T-011: a cell determined again after a retirement points its retired row at the new one. The engine runs as a
+    # subprocess on copies of the live database (it commits into the copy), the cell is derived by query: the lens is
+    # the identity alone, the cell has a retired row with no pointer and no live row.
+    import shutil
+    import subprocess
+    import tempfile
+    _ro = sqlite3.connect(f"file:{os.path.join(REPO_ROOT, 'data', 'guidebook.db')}?mode=ro", uri=True)
+    _cell = _ro.execute(
+        "SELECT s.parameter_id, s.identity_code FROM specifications s WHERE s.retired_at IS NOT NULL "
+        "AND s.superseded_by_specification_id IS NULL AND s.identity_code IS NOT NULL AND s.icf_code IS NULL "
+        "AND s.needs_code IS NULL AND s.medical_code IS NULL AND NOT EXISTS (SELECT 1 FROM specifications l "
+        "WHERE l.parameter_id=s.parameter_id AND l.identity_code=s.identity_code AND l.icf_code IS NULL "
+        "AND l.needs_code IS NULL AND l.medical_code IS NULL AND l.retired_at IS NULL) "
+        "ORDER BY s.parameter_id, s.identity_code LIMIT 1").fetchone()
+    _slug = _ro.execute("SELECT slug FROM slugs WHERE status='ACTIVE' ORDER BY slug LIMIT 1").fetchone()
+    _ro.close()
+    if not _cell or not _slug:
+        print("      SKIPPED-NO-FIXTURE: T011 needs a cell with a retired, unpointed row and no live row, and an active slug")
+    else:
+        _tmp = tempfile.mkdtemp(prefix="t011-")
+
+        def _engine(db_file, tag, stamp):
+            sql_file = os.path.join(_tmp, tag + ".sql")
+            r = subprocess.run([sys.executable, os.path.join(REPO_ROOT, "scripts", "assess", "assess_cell.py"),
+                                "--db", db_file, "--emit-sql", sql_file, "--parameter-id", str(_cell[0]),
+                                "--slug", _slug[0], "--identity", _cell[1], "--session", "session_t011-fixture",
+                                "--stamp", stamp], capture_output=True, text=True)
+            return r, sql_file
+
+        def _rows(db_file):
+            c = sqlite3.connect(f"file:{db_file}?mode=ro", uri=True)
+            out = c.execute("SELECT specification_id, retired_at IS NOT NULL, superseded_by_specification_id FROM "
+                            "specifications WHERE parameter_id=? AND identity_code=? AND icf_code IS NULL AND "
+                            "needs_code IS NULL AND medical_code IS NULL ORDER BY specification_id",
+                            (_cell[0], _cell[1])).fetchall()
+            c.close()
+            return out
+
+        _a, _b = os.path.join(_tmp, "a.db"), os.path.join(_tmp, "b.db")
+        shutil.copy(os.path.join(REPO_ROOT, "data", "guidebook.db"), _a)
+        shutil.copy(os.path.join(REPO_ROOT, "data", "guidebook.db"), _b)
+        _before = _rows(_a)
+        _prior = max(r[0] for r in _before if r[1] and r[2] is None)       # the most recently retired, unpointed row
+        _ra, _sa = _engine(_a, "a", "2026-01-01 00:00")
+        _rb, _sb = _engine(_b, "b", "2026-01-01 00:00")
+        _after = _rows(_a)
+        _new = max(r[0] for r in _after)
+        expect("T011-01: the most recently retired, unpointed row of the cell now points at the new determination, "
+               "which is live", _ra.returncode == 0 and (_prior, 1, _new) in _after and (_new, 0, None) in _after,
+               f"cell {_cell}, prior {_prior}, rows {_after[-3:]}, {_ra.stderr[-200:]}")
+        expect("T011-02: no other row of the cell changed (history is not back-filled)",
+               [r for r in _after if r[0] not in (_prior, _new)] == [r for r in _before if r[0] != _prior],
+               f"{_before[-3:]} -> {_after[-3:]}")
+        _sql = open(_sa).read()
+        expect("T011-03: the emitted SQL carries the same UPDATE, once, and replaying it on a fresh copy gives the same rows",
+               _sql.count("UPDATE specifications SET superseded_by_specification_id=") == 1, _sql.count("UPDATE specifications"))
+        _c = os.path.join(_tmp, "c.db")
+        shutil.copy(os.path.join(REPO_ROOT, "data", "guidebook.db"), _c)
+        _cc = sqlite3.connect(_c)
+        _cc.executescript(_sql)
+        _cc.commit()
+        _cc.close()
+        expect("T011-04: ...and replaying it reproduces the engine's rows", _rows(_c) == _after, (_rows(_c)[-3:], _after[-3:]))
+        expect("T011-05: the same inputs on a second fresh copy give byte-identical SQL",
+               _rb.returncode == 0 and open(_sa).read() == open(_sb).read())
+        # Retire the new row and determine again: the chain extends by one and the first link is untouched.
+        _rt = subprocess.run([sys.executable, os.path.join(REPO_ROOT, "scripts", "db.py"), "retire-specification",
+                              "--specification-id", str(_new), "--reason", "TASK-FIXTURE T011", "--session",
+                              "session_t011-fixture"], capture_output=True, text=True,
+                             env=dict(os.environ, GUIDEBOOK_DB_PATH=_a))
+        _r2, _s2 = _engine(_a, "a2", "2026-01-01 00:01")
+        _last = _rows(_a)
+        _new2 = max(r[0] for r in _last)
+        expect("T011-06: determining again after a second retirement links the second row and leaves the first link alone",
+               _rt.returncode == 0 and _r2.returncode == 0 and (_new, 1, _new2) in _last and (_prior, 1, _new) in _last,
+               f"{_rt.stderr[-150:]} {_r2.stderr[-150:]} {_last[-4:]}")
+        # Two retired rows with no pointer: only the most recently retired is linked, and the other is named, not back-filled.
+        _older = max((r[0] for r in _before if r[1] and r[2] is not None), default=None)
+        if _older is None:
+            print("      SKIPPED-NO-FIXTURE: T011-07 needs a second retired row in the cell")
+        else:
+            _d = os.path.join(_tmp, "d.db")
+            shutil.copy(os.path.join(REPO_ROOT, "data", "guidebook.db"), _d)
+            _dc = sqlite3.connect(_d)       # HAND: the state the task's stop condition describes (two retired rows, no pointer)
+            _dc.execute("UPDATE specifications SET superseded_by_specification_id=NULL WHERE specification_id=?", (_older,))
+            _dc.commit()
+            _dc.close()
+            _r7, _s7 = _engine(_d, "d", "2026-01-01 00:00")
+            _rows7 = _rows(_d)
+            _new7 = max(r[0] for r in _rows7)
+            expect("T011-07: with two retired rows holding no pointer only the most recently retired is linked, the other stays "
+                   "as history and is named on stderr",
+                   _r7.returncode == 0 and (_prior, 1, _new7) in _rows7 and (_older, 1, None) in _rows7
+                   and str(_older) in _r7.stderr and "older" in _r7.stderr, f"{_rows7[-3:]} {_r7.stderr[-250:]}")
+        shutil.rmtree(_tmp, ignore_errors=True)
+
     if FAILED:
         print(f"\nFAIL: {len(FAILED)} test(s): {FAILED}")
         sys.exit(1)
