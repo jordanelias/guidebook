@@ -38,6 +38,7 @@ import functools
 import os
 import re
 import sqlite3
+import subprocess
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from fractions import Fraction
@@ -79,6 +80,19 @@ class Refusal(ValueError):
 # ---------------------------------------------------------------------------
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+
+
+def is_tracked(rel_path: str) -> bool:
+    """True iff `rel_path` (repo-relative) is in the git index (staged counts, committed or not).
+
+    An untracked transcript is not an artefact (CLAUDE.md rule 6): its entire contents live in
+    ephemeral container storage until committed, so a session could name a file that a later
+    clone will never see. The one home of the test; `db.py` and `retrieval_log.py` call it.
+    """
+    result = subprocess.run(
+        ["git", "-C", str(REPO_ROOT), "ls-files", "--error-unmatch", rel_path],
+        capture_output=True)
+    return result.returncode == 0
 
 
 def db_path() -> Path:

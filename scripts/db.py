@@ -5053,7 +5053,7 @@ def record_adversarial_pass(subject_session: str, subject_commit: str,
             "self-administered pass is not a pass -- batch 20 section 0 says this "
             "about its own.")
     for label, rel in (("reviewer_transcript", reviewer_rel), ("author_transcript", author_rel)):
-        if not _retrieval_log()._is_tracked(rel):
+        if not dbcore.is_tracked(rel):
             raise Refusal(
                 f"{label} {rel!r} is not a tracked file. Commit it first (CLAUDE.md "
                 f"rule 6) -- an untracked transcript is not an artefact.")
