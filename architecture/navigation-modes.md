@@ -1,4 +1,7 @@
 # Navigation Modes — Website Architecture
+
+> **SUPERSEDED IN PART (marked 2026-11-15, T-001).** This file is superseded for routing by item code (the item layer was deleted; `CLAUDE.md` §7), for the table names it queries (`CLAUDE.md` §4 and the live schema) and for the marker meanings: `●` is *confirmed*, `◐` policy/standards only, `○` grey, thin or unverified (`CLAUDE.md` §6),, not the stated / provisional / pending readings given here. Read the live render contract in `workplan/2026-10-30-ramp-spec-pages/RENDER-CONTRACT-parameters-3-and-12.md`. The text below is kept as written.
+
 **Created:** 2026-05-04
 **Decision:** D-NAV-001 through D-NAV-014
 **Status:** ACTIVE

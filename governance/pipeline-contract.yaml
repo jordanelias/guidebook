@@ -1,6 +1,8 @@
 version: 1
-status: PROPOSED
-ratified: false
+status: ACCEPTED
+ratified: true
+# Header follows decisions/DR-2026-07-13-pipeline-contract.md: accepted on the owner's ratification of
+# 2026-07-21; the owner-action precondition named in the DR (stage-id reconciliation, doctrine_sha gate) is outstanding.
 authored_by: Claude
 dr: decisions/DR-2026-07-13-pipeline-contract.md
 enforcement_level: 2

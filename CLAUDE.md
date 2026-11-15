@@ -33,8 +33,8 @@ python3 scripts/run_checks.py --changed-from origin/main --explain
 python3 scripts/run_checks.py --selftest                   # AFTER ANY RENAME — see rule 4
 ```
 
-Never re-run a check when nothing it reads has changed since its last run. Use `--battery <name>`
-to answer a targeted question. Before trusting a green result, ask whether that check could have gone
+Never re-run a check when nothing it reads has changed since its last run. Use `--battery <name> --kinds <kinds>`
+(or `--battery <name> --changed-from origin/main`) to answer a targeted question; `--battery` alone exits 2. Before trusting a green result, ask whether that check could have gone
 red on the defect in front of you. A check that is red on untouched `main`, or one that examined
 nothing, tells you nothing about your diff.
 
@@ -342,8 +342,8 @@ manifests and in audits have all drifted.
 research batch were stored with **invented co-authors** — including the deletion of autistic
 community co-authors from a Co-1 paper whose Co-1 warrant *is* their co-authorship. Six gates passed
 it, because each asked whether the author fields were *populated*, never whether they were *true*.
-**Verification must leave an artefact:** `scripts/research/retrieval_log.py` persists every payload,
-and `--verify-authors` diffs stored data against the bytes actually received.
+**Verification must leave an artefact:** `scripts/research/retrieval_log.py` keeps the manifest line of every retrieval (URL, time, status, byte count, sha256);
+a small structured payload such as an API response stays committed, a large PDF, page or extracted text is logged by where it was retrieved from (owner, 2026-11-06, fifth statement). `--verify-authors` diffs stored data against the logged payload.
 **Never write a bibliographic field from memory when a payload is in hand.**
 
 ---
@@ -468,7 +468,7 @@ open. Do not read `slug × population` as any part of the answer: `base_taxonomy
   runs it or approves it when the agent asks.
 - **`run_checks.py --all` over `--changed-from origin/main` is the expensive
   default.** `--all` runs every battery and prints every subject; §1's gate is the
-  diff-scoped form, and `--battery <name>` answers a targeted question. Reach for
+  diff-scoped form, and `--battery <name> --kinds <kinds>` answers a targeted question. Reach for
   `--all` when the question really is corpus-wide, not to re-confirm a result the
   scoped run already gave.
 

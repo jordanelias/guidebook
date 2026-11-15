@@ -119,15 +119,24 @@ DATE: 2026-03-28 21:30
 
 RULE: Each slug covers exactly one population. Combined slugs not permitted.
 DATE: 2026-03-18 23:30
+SUPERSEDES: references/project-standards.md :: "Each slug covers exactly one population. Combined slugs not permitted."
+  BY: references/project-standards.md :: "Every research slug gets cross-referenced against a population code, access need or ICF code because there is always the chance that there is an unexpected connection between them."
+SUPERSEDED 2026-11-15 (back-pointer added by T-001; no line above is edited): owner statement quoted above (REQ-032): a slug is crossed with every population, access need and ICF code.
 
 RULE: 24 jurisdictions canonical (per jurisdiction-tracker §4.7.3). Language and jurisdiction coverage are distinct axes — both satisfied independently. Per-jurisdiction tier coverage record required: status (SEARCHED|THIN|NO-DATA|NOT-RUN), co1_attempted, tier5_attempted, tier6_attempted. Pre-LOG completeness check mandatory (24 jurisdictions, co1_pass_summary, best_practice_synthesis, citation_mining, native_aliases for 14 languages) — fail = BLOCKER. BPC entry PROVISIONAL until all 24 recorded + co1_pass ≥9 languages.
 DATE: 2026-03-19 19:28
+SUPERSEDES: references/project-standards.md :: "Language and jurisdiction coverage are distinct axes — both satisfied independently."
+  BY: references/project-standards.md :: "Yes, per parameter and bucket so long as the bucket is not just jurisdiction but associated language."
+SUPERSEDED 2026-11-15 (back-pointer added by T-001; no line above is edited): owner answer OR-8, 2026-10-29: the unit of coverage is the bucket member, a jurisdiction with its associated language.
 
 RULE: Forward + backward citation mining mandatory for every confirmed Tier 1-2 source. Use citation-miner skill (inline = fallback only).
 DATE: 2026-03-18 23:00; consolidated 2026-03-29
 
 RULE: Early-close gate permanently removed. All 14 languages searched to completion on every run. Exception: IntD only — early-close active (literature confirmed absent in non-English).
 DATE: 2026-03-18 23:00; updated 2026-03-18 15:00
+SUPERSEDES: references/project-standards.md :: "All 14 languages searched to completion on every run."
+  BY: references/project-standards.md :: "Yes, per parameter and bucket so long as the bucket is not just jurisdiction but associated language."
+SUPERSEDED 2026-11-15 (back-pointer added by T-001; no line above is edited): owner answer OR-8, 2026-10-29: exhaustion is judged per parameter and bucket member, and the language set is scoped.
 
 RULE: PICO framing begins with population need and functional outcome evidence — not standard values. Standards at Step 2.
 DATE: 2026-03-19 04:08
@@ -7602,3 +7611,14 @@ DATE: 2026-11-15 — owner instruction (typed words, quoted above).
 CONDITION: any session that has finished the last task of a batch of the remediation plan.
 ACTION: run the sweep above before reporting the batch finished; do not report an item as "not repaired" without either repairing it in the sweep or naming the owner question and the task files amended for it.
 DATE: 2026-11-15 — owner instruction (typed words, quoted above).
+
+## Supersession back-pointer 2026-11-15 — the nine-languages rule (OD-13)
+
+The owner's answer to OD-13 (2026-11-12, above) is that the 2026-03-19 "at least nine languages" rule no longer holds, the pair rulings having replaced it. The superseded sentence lives in `governance/jurisdiction-philosophy.md`; the back-pointer is the line below and a marker beside that sentence. Nothing in either is otherwise edited.
+
+SUPERSEDES: governance/jurisdiction-philosophy.md :: "A BPC entry is PROVISIONAL until the Co-1 pass covers ≥9 languages."
+  BY: references/project-standards.md :: "is superseded by the language–jurisdiction pair rulings"
+
+CONDITION: any session meeting the sentence "A BPC entry is PROVISIONAL until the Co-1 pass covers ≥9 languages" or the March 2026 rules marked in place above (one population per slug; language and jurisdiction as distinct axes; all 14 languages on every run).
+ACTION: treat each as superseded; coverage is judged per parameter and bucket member (a jurisdiction with its associated language).
+DATE: 2026-11-15 — marks added; the rulings are the owner's, quoted where they stand.
