@@ -640,6 +640,15 @@ def domain_key(domain) -> str:
 SUPERSEDE_SQL = ("UPDATE specifications SET superseded_by_specification_id=?, updated_at=?, "
                  "updated_by_session=? WHERE specification_id=?")
 
+def determinations_read(conn) -> str:
+    """`determinations read: <live> live, <retired> retired` over `specifications` (T-004). A check that counts
+    retired determinations as its subject reads as evidence about live ones; this line, printed beside its
+    EXAMINED count, says which. It does NOT begin with `EXAMINED:` or `VERDICT:`, so `run_checks.py` ignores it."""
+    live, retired = conn.execute("SELECT COALESCE(SUM(retired_at IS NULL), 0), "
+                                 "COALESCE(SUM(retired_at IS NOT NULL), 0) FROM specifications").fetchone()
+    return f"determinations read: {live} live, {retired} retired"
+
+
 #: Which figure_role values supply a value to a determination. ONE HOME (migration 077; moved here from
 #: `assess_cell`, which imports it back): `gather_sources` filters on it, `gather_extraction_links` grades
 #: on it, K01 recomputes the sha from the links this produces, and the writers read it for the comparator rule.

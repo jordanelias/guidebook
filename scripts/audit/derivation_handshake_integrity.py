@@ -65,6 +65,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 # grain_for() the single home in the first place.
 from schemas.directness import GRAIN_AGGREGATE, grain_for      # noqa: E402
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import dbcore                                                    # noqa: E402
+
 # HONOURS GUIDEBOOK_DB_PATH — the blocking db_path_env_audit requires it, and its reason
 # is the one that matters here: a script that ignores the variable reads the committed
 # database while a test believes it is reading a scratch copy, which would make this
@@ -269,14 +272,12 @@ def main(argv=None):
         print(f"  [NOTE] {n}")
 
     unresolved = sum(1 for g in gates if g["resolved_at"] is None)
+    print(f"  {dbcore.determinations_read(con)}")
     if not specs:
-        print("  specifications holds 0 rows.")
-        print("  NOT a check with nothing to say: it is the corpus state. `specifications`")
-        print("  cannot accept a row until a parameter is minted (CLAUDE.md §4), and none")
-        print("  has been since the 2026-09-13 circulation clear. Every subject here is")
-        print("  therefore unreachable today — which is why this check is advisory and why")
-        print("  its own failure paths are exercised by fault injection against a scratch")
-        print("  copy rather than by the live corpus.")
+        print("  No LIVE determination: the stored-answer comparison above had nothing to compare. It is the")
+        print("  corpus state, not a check with nothing to say: retired rows stay as history and are not read")
+        print("  here, and the failure paths are exercised by fault injection against a scratch copy")
+        print("  (--db) rather than by the live corpus.")
     print(f"\n  determinations: {len(specs)}  "
           f"gates: {len(gates)} ({unresolved} open)  "
           f"distinct (population, ICF code) pairs: {len(links)}")

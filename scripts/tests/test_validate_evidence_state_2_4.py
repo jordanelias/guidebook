@@ -247,6 +247,86 @@ check("malformed JSON source list caught",
       has(run(lambda c: c.execute("INSERT INTO convergence_assessment(convergence_id,status,clinical_sources,co1_sources) "
                                   "VALUES (1,'convergent','not json','[\"REF-2\"]')")), "not a valid JSON array"))
 
+# ── T-004: four checks say how many of the determinations they read are live ─────────────────────────────────
+import shutil  # noqa: E402
+import subprocess  # noqa: E402
+
+def _chk(name, cond, detail=None):
+    check(name, cond)
+    if not cond and detail is not None:
+        print(f"        {str(detail)[:300]}")
+
+
+_T004_LIVE = os.path.join(REPO, "data", "guidebook.db")
+_T004_CHECKS = ("scripts/validate_evidence_state.py", "scripts/validate_verification_consistency.py",
+                "scripts/audit/adjudication_integrity.py", "scripts/audit/derivation_handshake_integrity.py")
+_T004_LINE = re.compile(r"determinations read: (\d+) live, (\d+) retired")
+
+
+def _t004_counts(db_file):
+    c = sqlite3.connect(f"file:{db_file}?mode=ro", uri=True)
+    out = c.execute("SELECT COALESCE(SUM(retired_at IS NULL),0), COALESCE(SUM(retired_at IS NOT NULL),0) "
+                    "FROM specifications").fetchone()
+    c.close()
+    return tuple(out)
+
+
+def _t004_run(db_file):
+    """script -> (the (live, retired) pair its output states or None, its EXAMINED number or None, its whole output)."""
+    res = {}
+    for script in _T004_CHECKS:
+        argv = [sys.executable, os.path.join(REPO, script)] + (["--db", db_file] if script.endswith("handshake_integrity.py") else [])
+        r = subprocess.run(argv, capture_output=True, text=True, env=dict(os.environ, GUIDEBOOK_DB_PATH=db_file))
+        out = r.stdout + r.stderr
+        m = _T004_LINE.search(out)
+        e = re.search(r"^EXAMINED: (\d+)", out, re.M)
+        res[script] = ((int(m.group(1)), int(m.group(2))) if m else None, int(e.group(1)) if e else None, out)
+    return res
+
+
+_tmp4 = tempfile.mkdtemp(prefix="t004-")
+_a = os.path.join(_tmp4, "a.db")
+shutil.copy(_T004_LIVE, _a)
+_ra = _t004_run(_a)
+_chk("T004-01: each of the four checks states 'determinations read: <live> live, <retired> retired', and the numbers are the table's",
+      all(v[0] == _t004_counts(_a) for v in _ra.values()), {k: v[0] for k, v in _ra.items()})
+_chk("T004-02: the new line stands alone (it does not begin with EXAMINED: or VERDICT:) and every check still prints its EXAMINED number",
+      all(v[1] is not None and any(l.strip().startswith("determinations read:") for l in v[2].splitlines())
+          for v in _ra.values()), {k: v[1] for k, v in _ra.items()})
+_chk("T004-03: the handshake check no longer says the table 'holds 0 rows' on a table that holds rows",
+      _t004_counts(_a)[0] + _t004_counts(_a)[1] > 0 and "holds 0 rows" not in _ra["scripts/audit/derivation_handshake_integrity.py"][2],
+      "the sentence is still printed")
+# One live determination on a copy: the cell is derived (an identity-only cell with three or more determinations), its live
+# row retired by the verb, and the engine determines it again; the line must say one more live.
+_c4 = sqlite3.connect(f"file:{_T004_LIVE}?mode=ro", uri=True)
+_cell4 = _c4.execute("SELECT parameter_id, identity_code FROM specifications WHERE identity_code IS NOT NULL AND icf_code IS NULL "
+                     "AND needs_code IS NULL AND medical_code IS NULL GROUP BY 1, 2 HAVING COUNT(*) >= 3 ORDER BY 1, 2 LIMIT 1").fetchone()
+_slug4 = _c4.execute("SELECT slug FROM slugs WHERE status='ACTIVE' ORDER BY slug LIMIT 1").fetchone()
+_c4.close()
+if not _cell4 or not _slug4:
+    print("  [SKIP] T004-04: SKIPPED-NO-FIXTURE: no identity-only cell with three determinations, or no active slug")
+else:
+    _b = os.path.join(_tmp4, "b.db")
+    shutil.copy(_T004_LIVE, _b)
+    _live4 = sqlite3.connect(_b).execute("SELECT specification_id FROM specifications WHERE parameter_id=? AND identity_code=? "
+                                         "AND icf_code IS NULL AND needs_code IS NULL AND medical_code IS NULL AND retired_at IS NULL",
+                                         _cell4).fetchall()
+    for (_sid,) in _live4:
+        subprocess.run([sys.executable, os.path.join(REPO, "scripts", "db.py"), "retire-specification", "--specification-id",
+                        str(_sid), "--reason", "TASK-FIXTURE T004", "--session", "session_t004-fixture"],
+                       capture_output=True, text=True, check=True, env=dict(os.environ, GUIDEBOOK_DB_PATH=_b))
+    _before4 = _t004_counts(_b)
+    _eng = subprocess.run([sys.executable, os.path.join(REPO, "scripts", "assess", "assess_cell.py"), "--db", _b, "--emit-sql",
+                           os.path.join(_tmp4, "b.sql"), "--parameter-id", str(_cell4[0]), "--slug", _slug4[0], "--identity",
+                           _cell4[1], "--session", "session_t004-fixture", "--stamp", "2026-01-01 00:00"],
+                          capture_output=True, text=True)
+    _rb = _t004_run(_b)
+    _chk("T004-04: after one determination is written the line says one more live and the same retired, in all four checks",
+          _eng.returncode == 0 and _t004_counts(_b) == (_before4[0] + 1, _before4[1])
+          and all(v[0] == _t004_counts(_b) for v in _rb.values()), {k: v[0] for k, v in _rb.items()})
+shutil.rmtree(_tmp4, ignore_errors=True)
+print(f"EXAMINED: {len(_ra)} checks, 4 case(s) on the determinations line")
+
 if os.path.exists(DBP):
     os.remove(DBP)
 print(f"\n{'ALL PASS' if not fails else 'FAILURES: ' + ', '.join(fails)}  ({len(fails)} failed)")

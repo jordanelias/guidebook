@@ -491,6 +491,9 @@ def main():
             else:
                 print(f"OK cell-state machine: {n_cells} cells, {n_conv} convergence rows "
                       f"validated from {os.path.basename(db_path)}", file=sys.stderr)
+                _ro = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+                print(dbcore.determinations_read(_ro), file=sys.stderr)
+                _ro.close()
 
         # Scan data directories
         source_dir = os.path.join(repo_root, "data", "sources")
