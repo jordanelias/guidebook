@@ -304,9 +304,9 @@ def pass1_forward(R, T):
     doi = rows(R.db, "select doi from evidence_sources where doi is not null and doi<>'' limit 1")
     if doi:
         R.dbpy("evidence.add-source-duplicate-doi", "R9: a duplicate DOI cross-files or is refused", "add-source", "--doi", doi[0][0], "--year", "2020",
-               "--title", "STRESS-FIXTURE duplicate doi", "--authors", "Fixture A", "--source-type", "report", "--evidence-type", "grey", "--session", S)
+               "--title", "STRESS-FIXTURE duplicate doi", "--authors", "Fixture A", "--source-type", "report", "--verification-status", "UNVERIFIED", "--evidence-type", "grey", "--session", S)
     R.dbpy("evidence.add-source-fixture", "add a minimal fixture source (expect: refused for lacking retrieval/verification fields, or written UNVERIFIED)", "add-source",
-           "--year", "2020", "--title", "STRESS-FIXTURE source", "--authors", "Fixture A", "--source-type", "report", "--slug", slug,
+           "--year", "2020", "--title", "STRESS-FIXTURE source", "--authors", "Fixture A", "--source-type", "report", "--verification-status", "UNVERIFIED", "--slug", slug,
            "--verification-status", "UNVERIFIED", "--evidence-type", "grey", "--lang-detected", T["lang"], "--jurisdiction", T["jur"], "--session", S)
     # ---------------- JUDGMENT
     anyref = rows(R.db, "select ref_id from source_value_extractions order by extraction_id limit 1")[0][0]
@@ -383,7 +383,7 @@ def pass3_cold(R, T):
     probes = [
         ("base", "add-term-without-observation", ["add-term", "--canonical-en", "STRESS cold", "--rationale", "x", "--session", R.sess]),
         ("research", "log-search-without-slug", ["log-search", "--language", "en", "--query-text", "x", "--engine", "x", "--depth-method", "scoping", "--prior-expectation", "STRESS-FIXTURE", "--session", R.sess]),
-        ("evidence", "add-source-minimal", ["add-source", "--year", "2020", "--title", "STRESS cold", "--authors", "Fixture A", "--evidence-type", "grey", "--session", R.sess]),
+        ("evidence", "add-source-minimal", ["add-source", "--year", "2020", "--title", "STRESS cold", "--authors", "Fixture A", "--evidence-type", "grey", "--verification-status", "UNVERIFIED", "--source-type", "report", "--session", R.sess]),
         ("judgment", "add-extraction-absent-ref", ["add-extraction", "--ref-id", "REF-99999", "--parameter-id", "7", "--claim-type", "numerical", "--claim-text", "x", "--extraction-method", "skim", "--figure-role", "claim", "--relation", "none", "--session", R.sess]),
         ("synthesis", "add-connection-absent-parameter", ["add-connection", "--confidence", "HIGH", "--connection-type", "CROSS-PARAMETER", "--filed-in", T["slug"], "--description", "x", "--source-skill", "stress", "--parameter", "9999", "--session", R.sess]),
     ]
@@ -407,7 +407,7 @@ def pass4_lateral(R, T):
 
 
 def pass4b_vocab(R, T):
-    base = ["--year", "2020", "--title", "STRESS-FIXTURE jurisdiction probe", "--authors", "Fixture A", "--source-type", "report", "--evidence-type", "grey", "--session", R.sess]
+    base = ["--year", "2020", "--title", "STRESS-FIXTURE jurisdiction probe", "--authors", "Fixture A", "--source-type", "report", "--verification-status", "UNVERIFIED", "--evidence-type", "grey", "--session", R.sess]
     for j in ("UK", "CA-ON", "DE-NW", "XX"):
         R.dbpy(f"lateral.add-source-jurisdiction-{j}", f"jurisdiction vocabulary behaviour for {j}: national accepted, sub-national and unknown refused or accepted?", "add-source", "--jurisdiction", j, *base)
     for lg in ("zh-Hant", "zh", "ZZ", "ar"):

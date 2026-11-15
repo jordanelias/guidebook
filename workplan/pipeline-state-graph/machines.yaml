@@ -64,12 +64,12 @@ machines:
   transitions:
   - id: M02.t1
     from: "(none)"
-    to: "NULL | VERIFIED | UNVERIFIED"
+    to: "VERIFIED | UNVERIFIED"
     via: "db.py add-source"
     guards:
       - "a duplicate DOI is refused and the existing ref_id cross-filed (R9)"
       - "the source is admitted to at least one live slug (source_slug_links)"
-      - "NULL is representable, but R10 forbids leaving it on a URL-bearing source (the scheduled URL cron claims that pool)"
+      - "the writer refuses an absent standing (T-007); a NULL can exist only in a row written outside db.py, and R10 forbids leaving it on a URL-bearing source"
     evidence:
       - {file: scripts/db.py, func: insert_evidence_source, needle: "def insert_evidence_source"}
       - {file: scripts/db.py, func: _check_slug_filable, needle: "def _check_slug_filable"}

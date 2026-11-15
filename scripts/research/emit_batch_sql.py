@@ -86,10 +86,6 @@ def lit(v):
     return "'" + str(v).replace("'", "''") + "'"
 
 
-def columns(con, table):
-    return [r[1] for r in con.execute('PRAGMA table_info("%s")' % table)]
-
-
 def pk_columns(con, table):
     info = list(con.execute('PRAGMA table_info("%s")' % table))
     return [r[1] for r in sorted((r for r in info if r[5]), key=lambda r: r[5])]
@@ -151,10 +147,10 @@ def emit(scratch_path, canonical_path, out_path, allow_delete=(), replay_path=No
     lines, n_ins, n_upd, n_rest, missing = [], 0, 0, 0, []
     deletes, rc = {}, None
     for table in tables:
-        cols = columns(ca, table)
+        cols = dbcore.columns(ca, table)
         if not cols:
             sys.exit(f"ERROR: table {table} does not exist in the canonical DB.")
-        if columns(sc, table) != cols:
+        if dbcore.columns(sc, table) != cols:
             sys.exit(f"ERROR: column set for {table} differs between scratch and canonical. "
                      "Re-copy the scratch; do not hand-edit its schema.")
         pk = pk_columns(ca, table)
@@ -180,7 +176,7 @@ def emit(scratch_path, canonical_path, out_path, allow_delete=(), replay_path=No
         r_rows = {}
         if any(k not in c_rows for k in s_rows):
             rc = rc or ro(replay_path or replay_state())
-            if columns(rc, table) != cols:
+            if dbcore.columns(rc, table) != cols:
                 sys.exit(f"ERROR: column set for {table} differs between the migration chain and "
                          "the canonical DB, so the capture cannot be made replay-safe. The blocking "
                          "reproducibility gate reports this divergence; fix it first.")

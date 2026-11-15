@@ -68,7 +68,9 @@ def admit(session, title, authors, *extra):
     ref = next_ref()
     args = [sys.executable, str(REPO / "scripts" / "db.py"), "add-source",
             "--ref-id", ref, "--year", "2020", "--title", title,
-            "--tier", GREY_TIER, "--evidence-type", "grey", "--session", session]
+            "--tier", GREY_TIER, "--evidence-type", "grey", "--session", session,
+            "--verification-status", "UNVERIFIED",
+            "--source-type", dbcore.schema_choices("evidence_sources", "source_type")[0]]
     for a in authors:
         args += ["--author", a]
     r = subprocess.run(args + list(extra), env=ENV, capture_output=True, text=True)

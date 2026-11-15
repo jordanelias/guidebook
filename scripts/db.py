@@ -35,7 +35,6 @@ CLI usage:
 import json
 import os
 import re
-import subprocess
 import zipfile
 import sqlite3
 import sys
@@ -350,19 +349,6 @@ def close_gap(gap_id: str, status: str,
             "UPDATE gaps SET status=?, updated_at=?, updated_by_session=? "
             "WHERE gap_id=?",
             [status, u["updated_at"], u["updated_by_session"], gap_id]
-        )
-
-
-def update_gap_priority(gap_id: str, priority: str,
-                        session: str, dry_run: bool = False):
-    if priority not in ("P1", "P2", "P3"):
-        raise Refusal(f"Invalid priority: {priority}")
-    u = _upd(session)
-    with connect(dry_run) as conn:
-        conn.execute(
-            "UPDATE gaps SET priority=?, updated_at=?, updated_by_session=? "
-            "WHERE gap_id=?",
-            [priority, u["updated_at"], u["updated_by_session"], gap_id]
         )
 
 
@@ -2797,7 +2783,7 @@ def main():
     # `--help` cannot drift from the schema, because neither is written down here.
     p_as.add_argument("--source-type",
                       choices=dbcore.schema_choices("evidence_sources", "source_type"),
-                      help="Live vocabulary, read from the column's own CHECK")
+                      help="REQUIRED. Live vocabulary, read from the column's own CHECK")
     p_as.add_argument("--institution", help="the PERFORMING organisation, as ERIC's INSTITUTION field and a report's own title page use the term; the sponsor goes in --publisher")
     p_as.add_argument("--report-number", help="e.g. HUD-PDR 397; the issuer's own number")
     p_as.add_argument("--series")
@@ -2896,7 +2882,7 @@ def main():
                       # forbids.
                       choices=dbcore.schema_choices("evidence_sources",
                                                     "verification_status"),
-                      help="REQUIRED in practice. VERIFIED requires an independent connector/registry hit "
+                      help="REQUIRED (a missing value is refused; UNVERIFIED is a real value). VERIFIED requires an independent connector/registry hit "
                            "(CrossRef, PubMed, Semantic Scholar, a second citing source). A source found only "
                            "in one citing document's bibliography, with no independent hit, is UNVERIFIED "
                            "with disposition OPEN, "
@@ -4232,6 +4218,23 @@ def insert_evidence_source(data: dict, session: str,
     # any string, and the blocking jurisdiction_db_vocabulary audit found it afterwards.
     dbcore.check_jurisdiction(data.get("jurisdiction"), "add-source --jurisdiction")
 
+    # A SOURCE WITH NO STANDING OR NO TYPE (T-007). Both columns admit NULL, and a NULL
+    # standing is neither "verified" nor "unverified": assess_cell._verified and the blocking
+    # integrity check read it to decide whether a value may rest on the source, and research_batch_dod R5
+    # reads source_type. So REFUSE,
+    # and never default -- a default would be an invented fact. The vocabulary is read from
+    # the column's own CHECK, not restated here (CLAUDE.md rule 8).
+    for _col, _flag, _meaning in (
+            ("verification_status", "--verification-status",
+             "whether the source was verified; UNVERIFIED is a real value, say it if the "
+             "standing is not established"),
+            ("source_type", "--source-type", "what kind of document the source is")):
+        if not data.get(_col):
+            raise Refusal(
+                f"add-source needs {_flag} ({_meaning}). Live vocabulary, from the column's "
+                f"own CHECK: {', '.join(dbcore.schema_choices('evidence_sources', _col) or ('(could not be read)',))}. "
+                f"Nothing was written.")
+
     # A verification standing implies its evidence — so REFUSE the write when the
     # evidence is absent. Do not fill it in.
     #
@@ -4949,19 +4952,6 @@ _FINDINGS_BLOCK_RE = re.compile(
 _HANDBACK_TOOL_NAMES = frozenset({"SubagentHandback"})
 
 
-def _is_tracked(rel_path: str) -> bool:
-    """True iff `rel_path` (repo-relative) is a tracked file at HEAD.
-
-    An untracked transcript is not an artefact (CLAUDE.md rule 6): its entire
-    contents live in ephemeral container storage until committed, so a session
-    could name a file that a later clone will never see.
-    """
-    result = subprocess.run(
-        ["git", "-C", str(dbcore.REPO_ROOT), "ls-files", "--error-unmatch", rel_path],
-        capture_output=True)
-    return result.returncode == 0
-
-
 def _resolve_transcript_path(rel_path: str, label: str) -> tuple:
     """(resolved absolute Path, normalised repo-relative str), confirmed under transcripts/.
 
@@ -5080,7 +5070,7 @@ def record_adversarial_pass(subject_session: str, subject_commit: str,
             "self-administered pass is not a pass -- batch 20 section 0 says this "
             "about its own.")
     for label, rel in (("reviewer_transcript", reviewer_rel), ("author_transcript", author_rel)):
-        if not _is_tracked(rel):
+        if not dbcore.is_tracked(rel):
             raise Refusal(
                 f"{label} {rel!r} is not a tracked file. Commit it first (CLAUDE.md "
                 f"rule 6) -- an untracked transcript is not an artefact.")

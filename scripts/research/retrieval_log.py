@@ -1394,13 +1394,6 @@ def read_artefact_bytes(rel_path):
     return resolved.read_bytes()
 
 
-def _is_tracked(rel_path):
-    result = subprocess.run(
-        ["git", "-C", str(dbcore_module().REPO_ROOT), "ls-files", "--error-unmatch", rel_path],
-        capture_output=True)
-    return result.returncode == 0
-
-
 def dbcore_module():
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
     import dbcore                                                      # noqa: E402
@@ -1457,7 +1450,7 @@ def check_surfaced_in(exec_id, surfaced_in, surfaced_quote, locator, conn=None):
     # branch below and is refused there instead of silently accepted here.
     transcript_path = dbcore.resolve_under(dbcore.REPO_ROOT / "transcripts", surfaced_in)
     if transcript_path is not None:
-        if not _is_tracked(surfaced_in):
+        if not dbcore.is_tracked(surfaced_in):
             raise ValueError(
                 f"{surfaced_in!r} is not a tracked file. An untracked transcript is "
                 f"not yet an artefact (CLAUDE.md rule 6).")

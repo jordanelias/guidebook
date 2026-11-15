@@ -284,7 +284,8 @@ def scan(ref, sha, scope):
 
 
 AUTH = db.parse_author_flags(["corp|Fixture Body"])
-SRC = {"year": 2020, "evidence_type": "code", "scope": "intrinsic", "verification_status": "UNVERIFIED"}
+SRC = {"year": 2020, "evidence_type": "code", "scope": "intrinsic", "verification_status": "UNVERIFIED",
+       "source_type": dbcore.schema_choices("evidence_sources", "source_type")[0]}
 _titles = iter(range(1, 10 ** 6))
 
 
@@ -941,29 +942,46 @@ NEXT = dbcore.next_ref_id(con)
 TL_A, TL_B, TL_C = ("Alpha lead on stair nosings and contrast", "Bravo lead on handrail returns and finials",
                     "Charlie lead on tactile paving at kerb ramps")
 LOC = {"recovered_from": "f", "status": "REFERENCE-ONLY"}
-SRC2 = {"year": 2020, "evidence_type": "code", "scope": "intrinsic"}
 M_A, M_B, M_C = (f"{t} (first pass)" for t in (TL_A, TL_B, TL_C))   # the main copy's own leads; the scratch group below stages TL_*
 r = refusal(db.insert_locator, {**LOC, "ref_id": far(NEXT), "title": M_A}, session=S, dry_run=True)
 record("I01", "add-locator refuses a ref_id that is not next-id ref", r and NEXT in r, r)
 res, err = ok(db.insert_locator, {**LOC, "ref_id": NEXT, "title": M_A}, session=S, dry_run=False)
 record("I02", "add-locator accepts the next id (staged)", err is None, err)
-r = refusal(db.insert_evidence_source, {**SRC2, "ref_id": far(NEXT), "title": M_A},
+r = refusal(db.insert_evidence_source, {**SRC, "ref_id": far(NEXT), "title": M_A},
             S, dry_run=True, authors=AUTH)
 record("I03", "add-source refuses a hand-typed ref_id above the high-water mark", r and "next-id" in r, r)
-res, err = ok(db.insert_evidence_source, {**SRC2, "ref_id": NEXT, "title": M_A},
+res, err = ok(db.insert_evidence_source, {**SRC, "ref_id": NEXT, "title": M_A},
               S, dry_run=True, authors=AUTH)
 record("I04", "add-source accepts the id its own locator staged (promotion)", err is None, err)
 want = dbcore.next_ref_id(con)
 got, err = ok(db.insert_locator, {**LOC, "title": M_B}, session=S, dry_run=False)
 record("I05", "add-locator with no ref_id lands as dbcore.next_ref_id (R2-9)", got == want, err or (got, want))
 want = dbcore.next_ref_id(con)
-got, err = ok(db.insert_evidence_source, {**SRC2, "title": M_C}, S, dry_run=False, authors=AUTH)
+got, err = ok(db.insert_evidence_source, {**SRC, "title": M_C}, S, dry_run=False, authors=AUTH)
 record("I06", "add-source with no ref_id, for a document no staged lead describes, lands as the next id",
        got == want, err or (got, want))
-r1 = refusal(db.insert_evidence_source, {**SRC2, "title": M_C, "ref_id": far(want)}, S, dry_run=True, authors=AUTH)
+r1 = refusal(db.insert_evidence_source, {**SRC, "title": M_C, "ref_id": far(want)}, S, dry_run=True, authors=AUTH)
 r2 = refusal(db.insert_locator, {**LOC, "title": M_C, "ref_id": far(want)}, session=S, dry_run=True)
 record("I07", "a given id that is not the computed one is still refused, naming the flag to omit",
        r1 and r2 and "omit --ref-id" in r1 and "omit --ref-id" in r2, (r1, r2))
+# T-007: a source with no standing, or no type, is refused and the refusal names the live vocabulary
+# of the column's own CHECK. UNVERIFIED is a real value and is accepted. Titles match no staged lead.
+_T7 = {"title": "Fixture on handrail grip diameters and a T007 probe"}
+for _tid, _col, _flag in (("T007-01", "verification_status", "--verification-status"),
+                          ("T007-02", "source_type", "--source-type")):
+    _row = {k: v for k, v in {**SRC, **_T7}.items() if k != _col}
+    _r = refusal(db.insert_evidence_source, _row, S, dry_run=True, authors=AUTH)
+    _vocab = dbcore.schema_choices("evidence_sources", _col)
+    record(_tid, f"add-source without {_flag} refuses, names it and the column's CHECK vocabulary, joined as the refusal prints it",
+           _r and _flag in _r and ", ".join(_vocab) in _r and "Nothing was written" in _r, _r)
+_n = scalar("SELECT COUNT(*) FROM evidence_sources")
+_r = refusal(db.insert_evidence_source, {**SRC, **_T7, "verification_status": None}, S,
+             dry_run=False, authors=AUTH)
+record("T007-03", "a standing given as None is refused as absent and writes no row",
+       _r and "--verification-status" in _r and scalar("SELECT COUNT(*) FROM evidence_sources") == _n, _r)
+_res, _err = ok(db.insert_evidence_source, {**SRC, **_T7}, S, dry_run=True, authors=AUTH)
+record("T007-04", "add-source with UNVERIFIED and a source type from the vocabulary is accepted",
+       _err is None, _err)
 with scratch() as c:
     nxt = lambda: dbcore.next_ref_id(c)  # noqa: E731
     la, lb = (db.insert_locator({**LOC, "title": t}, session=S, dry_run=False) for t in (TL_A, TL_B))
@@ -971,7 +989,7 @@ with scratch() as c:
     def land(title, **o):
         """(the id the writer gives this source, the refusal text) -- a dry run."""
         try:
-            return db.insert_evidence_source({**SRC2, "title": title, **o}, S, dry_run=True, authors=AUTH), None
+            return db.insert_evidence_source({**SRC, "title": title, **o}, S, dry_run=True, authors=AUTH), None
         except Refusal as exc:
             return None, str(exc)
 
@@ -1111,7 +1129,7 @@ print("Section R2-3/R3-1: a reason is an obstacle the ledger classes, two are co
 if not COPY_VALUES:
     feature("P01", "add-source refuses the reasons that copy a typed fact", False, "db._BLOCK_REASON_COPIES")
 for i, v in enumerate(COPY_VALUES, 1):
-    r = refusal(db.insert_evidence_source, {**SRC2, "title": TL_A + str(i), "verification_status": "UNVERIFIED",
+    r = refusal(db.insert_evidence_source, {**SRC, "title": TL_A + str(i), "verification_status": "UNVERIFIED",
                                             "processing_blocked_reason": v}, S, dry_run=True, authors=AUTH)
     home = COPY_HOME[v]
     record(f"P0{i}", f"add-source refuses processing_blocked_reason {v!r}, naming its typed home {home!r}",

@@ -669,18 +669,6 @@ def close_gap(gap_id: str, status: str,
             "WHERE gap_id=?",
             [status, u["updated_at"], u["updated_by_session"], gap_id]
         )
-
-def update_gap_priority(gap_id: str, priority: str,
-                        session: str, dry_run: bool = False):
-    if priority not in ("P1","P2","P3"):
-        raise ValueError(f"Invalid priority: {priority}")
-    u = _upd(session)
-    with connect(dry_run) as conn:
-        conn.execute(
-            "UPDATE gaps SET priority=?, updated_at=?, updated_by_session=? "
-            "WHERE gap_id=?",
-            [priority, u["updated_at"], u["updated_by_session"], gap_id]
-        )
 ```
 
 ### 5.4 Storage layer — Citation Mining
