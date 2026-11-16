@@ -2131,9 +2131,28 @@ def main():
                            "it, or amend-term --field domain), declined, value-bearing or "
                            "already a parameter. A NAMES-NEW/NAMES-EXISTING adjudication is "
                            "REPORTED as provenance, not required (insert_parameter)")
+    p_ap.add_argument("--quantity-kind", dest="quantity_kind",
+                      help="the kind of quantity this parameter measures: a kind_id of base_quantity_kinds "
+                           "(the refusal lists them; db.py add-quantity-kind adds one). Two cases are two "
+                           "parameters only when they cannot be placed on one scale or their accessibility "
+                           "directions differ.")
+    p_ap.add_argument("--quantity-kind-observation-id", dest="quantity_kind_observation_id", type=int,
+                      help="the observed_terms row (db.py observe-term) whose verbatim context_quote shows a "
+                           "source stating a value of this quantity: the warrant for the kind")
     p_ap.add_argument("--notes")
     p_ap.add_argument("--session", required=True)
     p_ap.add_argument("--dry-run", action="store_true")
+
+    # add-quantity-kind — a quantity kind is added by data, on a ledger pointer (T-020).
+    p_aqk = sub.add_parser("add-quantity-kind",
+                           help="Admit a quantity kind to base_quantity_kinds, on a recorded approval")
+    p_aqk.add_argument("--kind-id", dest="kind_id", required=True,
+                       help="lower-case letters and underscores, a letter first")
+    p_aqk.add_argument("--definition", required=True, help="what the quantity is; no value, no digit")
+    p_aqk.add_argument("--approval-ref", dest="approval_ref", required=True,
+                       help="the dated `## ` heading of the ledger entry that admits the kind")
+    p_aqk.add_argument("--session", required=True)
+    p_aqk.add_argument("--dry-run", action="store_true")
 
     # decline-parameter — the other answer to "is this term a parameter?" (migration 101).
     # See decline_parameter for its refusals; revoke-declination (below) reverses one.
@@ -3637,8 +3656,15 @@ def main():
             term_id=args.term_id,
             notes=args.notes,
             session=args.session,
+            quantity_kind=args.quantity_kind,
+            quantity_kind_observation_id=args.quantity_kind_observation_id,
             dry_run=args.dry_run,
         ))
+
+    elif args.command == "add-quantity-kind":
+        _emit(insert_quantity_kind(
+            kind_id=args.kind_id, definition=args.definition, approval_ref=args.approval_ref,
+            session=args.session, dry_run=args.dry_run))
 
     elif args.command == "decline-parameter":
         _emit(decline_parameter(
@@ -7177,6 +7203,7 @@ def _name_holder(conn, name, *, aliases=True, exclude_term=None):
 
 
 def insert_parameter(term_id: str, session: str, notes: str = None,
+                     quantity_kind: str = None, quantity_kind_observation_id: int = None,
                      dry_run: bool = False):
     """Promote an adjudicated term into `base_parameters` — THE SUBJECT of a determination.
 
@@ -7221,6 +7248,16 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
     * A value-bearing name. `add-term` already refuses one, but a term minted before
       that guard existed could still carry it, and promotion to parameter is the last
       gate before the name becomes a determination's subject.
+
+    * (T-020) No quantity kind, or one not a row of `base_quantity_kinds`; no warrant, or one that is not a row
+      of `observed_terms`; a warrant whose `context_quote` holds no digit. Whether a term names an element or a
+      quantity is a judgment no script can compute (CLAUDE.md rule 8), so the writer asks for it, constrained to
+      the live kinds, and records the answer on the row with a POINTER to the observation that warrants it (rule 5:
+      the source's words already have a home). Checked after every refusal above, so each keeps its own message.
+      The writer does not require the observation to be adjudicated to this term and does not compare its words
+      with the term's name (R11: a source's phrase is not normalised): a determined operator can still point
+      `grab bar` at an observation stating a length. The promotion is then recorded with its warrant and
+      contestable, not prevented.
 
     DELIBERATELY ABSENT, and must stay absent: no --status and no --merged-into. A
     parameter is created active. Merging one into another is a different act on an
@@ -7299,7 +7336,32 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 f"(status {clash['status']}). One parameter per term — a second row is "
                 f"the dual home rule 5 forbids.\n"
                 f"Key the determination on parameter_id {clash['parameter_id']}.")
-        row = {"term_id": term_id, "status": "active", "notes": notes}
+        kinds = [r[0] for r in conn.execute("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id")]
+        quantity_kind = (quantity_kind or "").strip()
+        if quantity_kind not in kinds:
+            raise Refusal(
+                f"{term_id} ({term['canonical_en']!r}): --quantity-kind {quantity_kind or '(none)'!r} is not a "
+                f"kind of base_quantity_kinds. A parameter is a quantity: say which kind. The kinds are "
+                f"{kinds}; a kind that is missing is added by data: db.py add-quantity-kind --kind-id ... "
+                f"--definition ... --approval-ref '<dated ledger heading>' --session ... Nothing was written.\n"
+                f"Two cases are two parameters only when they cannot be placed on one scale or their "
+                f"accessibility directions differ.")
+        warrant = (conn.execute("SELECT observation_id, context_quote FROM observed_terms WHERE observation_id=?",
+                                [quantity_kind_observation_id]).fetchone()
+                   if quantity_kind_observation_id is not None else None)
+        if warrant is None:
+            raise Refusal(
+                f"{term_id} ({term['canonical_en']!r}): --quantity-kind-observation-id "
+                f"{quantity_kind_observation_id!r} is not a row of observed_terms. The kind {quantity_kind!r} is a "
+                f"judgment and needs its warrant: the observation (db.py observe-term) whose verbatim "
+                f"context_quote shows a source stating a value of this quantity. Nothing was written.")
+        if not any(ch.isdigit() for ch in (warrant["context_quote"] or "")):
+            raise Refusal(
+                f"{term_id} ({term['canonical_en']!r}): observation {warrant['observation_id']} holds no digit in "
+                f"its context_quote; a passage stating no value cannot show what the quantity is measured in. "
+                f"Point --quantity-kind-observation-id at an observation that does. Nothing was written.")
+        row = {"term_id": term_id, "status": "active", "notes": notes,
+               "quantity_kind": quantity_kind, "quantity_kind_observation_id": warrant["observation_id"]}
         row.update(dbcore.stamp_for(conn, "base_parameters", session))
         cur = conn.execute(f"INSERT INTO base_parameters ({','.join(row)}) "
                            f"VALUES ({','.join('?'*len(row))})", list(row.values()))
@@ -7308,7 +7370,41 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 "provenance": ("adjudicated" if adj else "base-vocabulary"),
                 "adjudicated_by": (adj["adjudication_id"] if adj else None),
                 "outcome": (adj["outcome"] if adj else None),
+                "quantity_kind": quantity_kind,
+                "quantity_kind_observation_id": warrant["observation_id"],
                 "dry_run": dry_run}
+
+
+def insert_quantity_kind(kind_id: str, definition: str, approval_ref: str, session: str,
+                         dry_run: bool = False):
+    """Admit a quantity kind to `base_quantity_kinds` (T-020, OD-24): a kind is added by data, on a ledger pointer.
+
+    Refuses a blank session, an id that is not lower-case letters and underscores with a letter first, a definition
+    holding a digit (a kind is not a value), an `--approval-ref` that is not exactly one dated `## ` heading of the
+    ledger (`dbcore.require_approval_heading`, the lookup `mint-term-from-catalogue` uses), and an existing kind.
+    What stays unproved is that the entry approves THIS kind: the operator answers for the match.
+    """
+    kind_id, definition = (kind_id or "").strip(), (definition or "").strip()
+    if not (session or "").strip():
+        raise Refusal("add-quantity-kind: --session is required and may not be blank.")
+    if not re.fullmatch(r"[a-z][a-z_]*", kind_id):
+        raise Refusal(f"add-quantity-kind: --kind-id {kind_id!r} must be lower-case letters and underscores, "
+                      f"a letter first (the shape of the seeded kinds).")
+    if not definition or any(ch.isdigit() for ch in definition):
+        raise Refusal(f"add-quantity-kind: --definition {definition!r} must be present and carry no digit: a kind "
+                      f"names a quantity, never a value.")
+    approval_ref = dbcore.require_approval_heading(approval_ref, "add-quantity-kind")
+    with connect(dry_run) as conn:
+        held = conn.execute("SELECT kind_id, approval_ref FROM base_quantity_kinds WHERE kind_id=?",
+                            [kind_id]).fetchone()
+        if held:
+            raise Refusal(f"add-quantity-kind: {kind_id!r} is already a kind (admitted by "
+                          f"{held['approval_ref']!r}). Nothing was written.")
+        row = {"kind_id": kind_id, "definition": definition, "approval_ref": approval_ref}
+        row.update(dbcore.stamp_for(conn, "base_quantity_kinds", session))
+        conn.execute(f"INSERT INTO base_quantity_kinds ({','.join(row)}) "
+                     f"VALUES ({','.join('?' * len(row))})", list(row.values()))
+        return {"kind_id": kind_id, "approval_ref": approval_ref, "dry_run": dry_run}
 
 
 def decline_parameter(term_id: str, reason: str, session: str, dry_run: bool = False):
@@ -7458,7 +7554,7 @@ def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str
         if row is None:
             raise Refusal(
                 f"parameter_id {parameter_id}: no such parameter. Mint one from a term "
-                f"first: db.py add-parameter --term-id TERM-NNN --session ...")
+                f"first: db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-observation-id N --session ...")
         if not dbcore.exists(conn, "evidence_sources", "ref_id", ref_id):
             raise Refusal(f"--ref-id {ref_id} is not an admitted source. The direction is "
                           f"read from a document this project holds; admit it first.")
@@ -9380,7 +9476,7 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
         if param is None:
             raise Refusal(
                 f"parameter_id {parameter_id}: no such parameter. Mint one from a term:\n"
-                f"  db.py add-parameter --term-id TERM-NNN --session ...")
+                f"  db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-observation-id N --session ...")
         if param["status"] != "active":
             raise Refusal(
                 f"parameter {parameter_id} is {param['status']}"
@@ -10493,13 +10589,13 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 "bare INSERT would fail with `FOREIGN KEY constraint failed` — a refusal "
                 "that names neither the cause nor the fix (CLAUDE.md §4).\n"
                 "Mint the subject first, from an adjudicated term:\n"
-                "  db.py add-parameter --term-id TERM-NNN --session ...")
+                "  db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-observation-id N --session ...")
         prow = conn.execute("SELECT status, merged_into FROM base_parameters "
                             "WHERE parameter_id=?", (pid,)).fetchone()
         if prow is None:
             raise Refusal(
                 f"parameter_id {pid}: no such parameter. Mint one from a term:\n"
-                f"  db.py add-parameter --term-id TERM-NNN --session ...")
+                f"  db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-observation-id N --session ...")
         if prow["status"] != "active":
             target = f" (merged into {prow['merged_into']})" if prow["merged_into"] else ""
             raise Refusal(

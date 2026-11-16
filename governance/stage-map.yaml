@@ -93,6 +93,7 @@ tables:
   base_icf: base
   base_jurisdictions: base
   base_parameters: base
+  base_quantity_kinds: base
   base_taxonomy_identity: base
   case_studies: evidence
   citation_mining: research

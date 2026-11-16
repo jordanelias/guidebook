@@ -135,8 +135,10 @@ _live = [r[0] for r in _con.execute(
     # `evidence_sources` joined the list 2026-11-06: migration 122 gave base_parameters a
     # direction_ref_id FK into it, and with foreign_keys ON the first INSERT into a table
     # whose FK parent does not exist fails "no such table" (the same rule-4 lesson as 081).
+    # `base_quantity_kinds` and `observed_terms` joined it with migration 143 (T-020), which gave
+    # base_parameters FKs into both.
     "  OR name IN ('base_parameters','terms','base_taxonomy_identity','base_icf',"
-    "              'access_needs','evidence_sources'))")]
+    "              'access_needs','evidence_sources','base_quantity_kinds','observed_terms'))")]
 _con.close()
 if not _live:
     print("  [FAIL] live schema has no `specifications` — fixture cannot be built.",

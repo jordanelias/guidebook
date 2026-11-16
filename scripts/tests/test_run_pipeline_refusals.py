@@ -3308,6 +3308,20 @@ else:
 print("Section T010: add-parameter refuses a term whose domain holds lenses, methods or bodies of law, adapts the next action "
       "to the term's declination, and amend-term can correct a term's domain")
 _NQ = getattr(dbcore, "NON_QUANTITY_DOMAINS", None)
+
+
+def _one(sql, *p):
+    """A scalar, or None where the table does not exist (the unchanged schema: T020-01 says so, not a crash here)."""
+    try:
+        return scalar(sql, *p)
+    except sqlite3.OperationalError:
+        return None
+
+
+# T-020: a promotion names a quantity kind and an observation whose quote holds a digit; both derived, never typed.
+_KIND = _one("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id LIMIT 1")
+_OBS_NUM = _one("SELECT observation_id FROM observed_terms WHERE context_quote GLOB '*[0-9]*' ORDER BY observation_id LIMIT 1")
+_FULL = dict(quantity_kind=_KIND, quantity_kind_observation_id=_OBS_NUM)
 # The six the T-010 task names are a floor the rule may grow from, not shrink from (a pin of a judged rule, not a second home).
 _TASK_SIX = {"functional_axis", "population", "medical", "methodology", "legal", "economics"}
 if feature("T010-01", "the rule dbcore.NON_QUANTITY_DOMAINS exists, holds at least the six the task names, and every member is a "
@@ -3359,7 +3373,7 @@ if feature("T010-01", "the rule dbcore.NON_QUANTITY_DOMAINS exists, holds at lea
     if _ok_dom is None:
         skip("T010-04", "no free term in a domain a live parameter has")
     else:
-        _res, _err = ok(db.insert_parameter, _undeclined(_ok_dom)[0], S, dry_run=True)
+        _res, _err = ok(db.insert_parameter, _undeclined(_ok_dom)[0], S, dry_run=True, **_FULL)
         record("T010-04", f"a free term of a live parameter's domain ({_ok_dom}) is still promoted (dry run)", _err is None, _err)
     record("T010-05", "no live parameter sits in a refused domain",
            not {dbcore.domain_key(d) for d in _live} & set(_NQ), _live)
@@ -3397,7 +3411,7 @@ if feature("T010-01", "the rule dbcore.NON_QUANTITY_DOMAINS exists, holds at lea
                _err is None and _res["changed"] and scalar("SELECT domain FROM terms WHERE term_id=?", _mis) == _own, _err or _res)
         db.amend_term(_mis, "domain", _ok_dom, "T010 probe: a quantity filed under the wrong domain", S)
         _note = scalar("SELECT scope_note FROM terms WHERE term_id=?", _mis) or ""
-        _res, _err = ok(db.insert_parameter, _mis, S, dry_run=True)
+        _res, _err = ok(db.insert_parameter, _mis, S, dry_run=True, **_FULL)
         record("T010-10", "after the real amend, the old domain and the reason are recorded in the term's trail, and the term the "
                "refusal turned away is promoted (dry run)",
                _err is None and f"domain was: '{_own}'" in _note and "a quantity filed under the wrong domain" in _note
@@ -3410,6 +3424,65 @@ if feature("T010-01", "the rule dbcore.NON_QUANTITY_DOMAINS exists, holds at lea
                if scalar("SELECT COUNT(*) FROM terms WHERE domain=? AND term_id<>?", d, _p)}
         record("T010-11", "amend-term refuses to move a term that is already a parameter into ANY refused domain",
                bool(_rs) and all(v and "already a parameter" in v for v in _rs.values()), _rs)
+
+
+# ───────────── T-020: add-parameter requires a quantity kind and the observation that warrants it ─────────────
+print("Section A7c: add-parameter requires a quantity kind and its warrant (T-020)")
+if feature("T020-01", "base_quantity_kinds exists and db.insert_quantity_kind exists",
+           _KIND is not None and hasattr(db, "insert_quantity_kind"), "base_quantity_kinds / db.insert_quantity_kind"):
+    record("T020-01", "base_quantity_kinds exists and db.insert_quantity_kind exists", True)
+    _kinds = [r[0] for r in q("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id")]
+    _free = [t for (t,) in q("SELECT t.term_id FROM terms t WHERE t.term_id NOT IN (SELECT term_id FROM base_parameters) "
+                             "AND t.term_id NOT IN (SELECT term_id FROM parameter_declinations WHERE revoked_at IS NULL) "
+                             "ORDER BY t.term_id")
+             if not db._VALUE_BEARING_NAME.search(scalar("SELECT canonical_en FROM terms WHERE term_id=?", t))
+             and dbcore.domain_key(scalar("SELECT domain FROM terms WHERE term_id=?", t)) not in _NQ]
+    _no_digit = scalar("SELECT observation_id FROM observed_terms WHERE context_quote NOT GLOB '*[0-9]*' ORDER BY observation_id LIMIT 1")
+    _no_obs = scalar("SELECT COALESCE(MAX(observation_id), 0) + 1 FROM observed_terms")
+    if not _free or _OBS_NUM is None:
+        skip("T020-02..T020-08", "no free term, or no observation whose quote holds a digit")
+    else:
+        _t = _free[0]
+        _r = refusal(db.insert_parameter, _t, S, dry_run=True)
+        record("T020-02", "a free term with no kind is refused, naming every kind_id of the table and the verb that adds one",
+               _r and all(k in _r for k in _kinds) and "add-quantity-kind" in _r and "Nothing was written" in _r, _r)
+        _r = refusal(db.insert_parameter, _t, S, quantity_kind="zz_" + _kinds[0], dry_run=True)
+        record("T020-03", "the same term with a kind that is not in the table is refused", _r and "zz_" + _kinds[0] in _r and all(k in _r for k in _kinds), _r)
+        _r1 = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, dry_run=True)
+        _r2 = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, quantity_kind_observation_id=_no_obs, dry_run=True)
+        record("T020-04", "a kind and no observation id, or an id that is not a row of observed_terms, is refused, naming the flag",
+               _r1 and _r2 and "--quantity-kind-observation-id" in _r1 and "--quantity-kind-observation-id" in _r2 and "observe-term" in _r2, (_r1, _r2))
+        if _no_digit is None:
+            skip("T020-05", "no observation whose context_quote holds no digit")
+        else:
+            _r = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, quantity_kind_observation_id=_no_digit, dry_run=True)
+            record("T020-05", "a kind and an observation whose quote holds no digit is refused", _r and "no digit" in _r and "Nothing was written" in _r, _r)
+        with scratch() as c:           # a real write on the scratch copy
+            _res, _err = ok(db.insert_parameter, _t, S, notes="TASK-FIXTURE", **_FULL)
+            _row = c.execute("SELECT quantity_kind, quantity_kind_observation_id, created_by_session FROM base_parameters WHERE term_id=?", (_t,)).fetchone()
+            record("T020-06", "a kind and an observation whose quote holds a digit is accepted; the row carries both values and the session",
+                   _err is None and _row and tuple(_row) == (_KIND, _OBS_NUM, S) and _res["quantity_kind"] == _KIND
+                   and _res["quantity_kind_observation_id"] == _OBS_NUM, (_err, _row))
+        _nq = next((t for d in sorted(_NQ) for (t,) in q("SELECT term_id FROM terms WHERE term_id NOT IN (SELECT term_id FROM base_parameters) "
+                                                         "AND lower(trim(domain)) = ? ORDER BY term_id", d)), None)
+        if _nq is None:
+            skip("T020-07", "no unpromoted term of a refused domain")
+        else:
+            _r = refusal(db.insert_parameter, _nq, S, dry_run=True, **_FULL)
+            record("T020-07", "no refusal weakened: a term of a refused domain, given a full kind and warrant, still gets T-010's domain message",
+                   _r and "decline-parameter" in _r and "is filed under the domain" in _r, _r)
+        _heading = scalar("SELECT approval_ref FROM base_quantity_kinds ORDER BY kind_id LIMIT 1")
+        _fx = "task_fixture_kind"
+        with scratch() as c:
+            _bad = [refusal(db.insert_quantity_kind, _fx, "a fixture quantity", a, S) for a in ("", "## Nothing 2099-01-01 — no such entry")]
+            _bad += [refusal(db.insert_quantity_kind, "Bad Kind1", "a fixture quantity", _heading, S),
+                     refusal(db.insert_quantity_kind, _fx, "a fixture quantity of 3 parts", _heading, S),
+                     refusal(db.insert_quantity_kind, _KIND, "a fixture quantity", _heading, S)]
+            _res, _err = ok(db.insert_quantity_kind, _fx, "a fixture quantity", _heading, S)
+            _res2, _err2 = ok(db.insert_parameter, _t, S, notes="TASK-FIXTURE", quantity_kind=_fx, quantity_kind_observation_id=_OBS_NUM)
+            record("T020-08", "add by data: insert_quantity_kind refuses a missing or unresolvable approval, an ill-shaped id, a digit in the "
+                   "definition and an existing id; with a ledger heading it writes a kind, and add-parameter then accepts it (no file edited)",
+                   all(_bad) and _err is None and _err2 is None, (_bad, _err, _err2))
 
 
 # ───────────── T-015: a language is one of the map's, whatever its letter case ─────────────

@@ -401,7 +401,14 @@ try:
                f"got {msg!r}")
         record("D03", "refuses a blank reason, and writes nothing",
                refusal(decline, TD, "   ", S) is not None and not declinations(TD))
-        pid = db.insert_parameter(TP, S)["parameter_id"]
+        # T-020: a promotion names a kind (the first row of base_quantity_kinds, derived) and an observation whose
+        # quote holds a digit (a fixture sighting, made through the writer like the terms above).
+        KIND = q("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id LIMIT 1")[0][0]
+        WARRANT = db.observe_term(dict(sighting(BODYLESS, "fixture phrase: warrant"),
+                                       context_quote="a fixture sentence using fixture phrase: warrant, 9 once"),
+                                  S)["observation_id"]
+        pid = db.insert_parameter(TP, S, quantity_kind=KIND,
+                                  quantity_kind_observation_id=WARRANT)["parameter_id"]
         msg = refusal(decline, TP, WHY, S)
         record("D04", "refuses a term that is already a parameter, naming the parameter_id",
                msg and f"parameter {pid}" in msg and not declinations(TP), f"got {msg!r}")
