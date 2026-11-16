@@ -2688,21 +2688,20 @@ def main():
     p_rx.add_argument("--session", required=True)
     p_rx.add_argument("--dry-run", action="store_true")
 
-    # amend-extraction -- _AMENDABLE_SVE_FIELDS ONLY. Everything else is a second
-    # row and a contest (D-0168), not an overwrite.
+    # amend-extraction -- the amendable columns (_amendable_sve_fields) ONLY. Everything else is a
+    # second row and a contest (D-0168), not an overwrite.
     p_amx = sub.add_parser("amend-extraction",
                            help="Change a gradeable field (see --field) on an existing "
                                 "row, with a reason ledgered into notes")
     p_amx.add_argument("--extraction-id", dest="extraction_id", type=int,
                        required=True)
-    # DERIVED from _AMENDABLE_SVE_FIELDS, not retyped. This list said
-    # ["figure_role", "comparator"] and went stale the moment the constant grew,
-    # which was rule 8's count of argparse choices= lists that duplicate a column's
-    # CHECK" in miniature -- one list fewer.
+    # No choices=: the amendable set is every live column less the named exclusions (GAP-013), so
+    # a list here would be the second home it removed; the writer's refusal names the live set.
     p_amx.add_argument("--field", required=True,
-                       choices=sorted(_AMENDABLE_SVE_FIELDS),
-                       help="ONLY these fields. A wrong claimed_value or claim_text is "
-                            "a SECOND ROW and a contest (D-0168), not an overwrite.")
+                       help="A column of source_value_extractions that is not excluded (the refusal "
+                            "lists them). claimed_value, claimed_unit and setting take a reformat "
+                            "only (same numbers; a unit already in the cell; an empty setting; OR-3). "
+                            "A different figure is a SECOND ROW and a contest (D-0168).")
     p_amx.add_argument("--value", required=True)
     p_amx.add_argument("--reason", required=True,
                        help="Why. Appended to notes, never overwriting it.")
@@ -10743,7 +10742,7 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
             "to_extraction_id": to_extraction, "dry_run": dry_run}
 
 
-# Only these two, ever. Every other column on this table is a SECOND ROW and a
+# Only these. Every other column on this table is a SECOND ROW and a
 # contest (D-0168) when it turns out wrong, not an overwrite -- the same rule
 # `add-population-match` states for itself by deliberately permitting a dissenting
 # second row. figure_role/comparator are GRADING columns migration 075 added NULL
@@ -10774,6 +10773,12 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
 # jurisdiction. Gated by dbcore.check_jurisdiction, so it widens WHO, not WHAT to. Like
 # add-extraction it holds no relation to the source's jurisdiction, and a value cannot be
 # cleared here (a blank is refused).
+# claimed_value, claimed_unit and setting ADDED by T-061 (prior workplan T-1b step 8). Owner, OR-3 (2026-10-29):
+# "Yes, reformat in place" -- a figure's value, unit or EMPTY setting is reformatted in place, with the same
+# numbers and quote, narrowing D-0168 for reformatting only. `_refuse_unless_reformat` is the whole of what
+# "reformat" means; a different figure is still a second row. The old text is not given a new home here:
+# the committed data migration that INSERTed the row holds it, and `amend_extraction`'s one generic trail
+# (below) is not extended (owner 2026-11-06: "a correction appended to a note" is data in the wrong cell).
 def register_root(root_id: str, description: str, root_type: str, provenance: str, population_note: str,
                   notes: str, session: str, dry_run: bool = False):
     """Register an EXTERNAL root: a source of a figure that is not an admitted source of this corpus.
@@ -10815,47 +10820,135 @@ def register_root(root_id: str, description: str, root_type: str, provenance: st
     return {"root_id": root_id, "root_type": root_type, "dry_run": dry_run}
 
 
-_AMENDABLE_SVE_FIELDS = frozenset({"figure_role", "comparator",
-                                   "extraction_method", "extraction_status",
-                                   "root_type", "root_ref_id", "value_as_written",
-                                   "jurisdiction",
-                                   # device_class, added 2026-11-15 (T-055): T-102 records the device a figure states on
-                                   # a row already written; the engine does not read the column. The column's own CHECK
-                                   # (dbcore.check_values) and --reason are its gates.
-                                   "device_class",
-                                   # root_id, added 2026-11-15 (T-048): a figure already written can point at a root
-                                   # registered after it (`db.py register-root`). The registry-existence refusal is
-                                   # the generic dbcore.fk_declared below; the old value is kept in notes by the writer.
-                                   "root_id"})
+# THE AMENDABLE COLUMNS ARE DERIVED, NOT LISTED (GAP-013, CLAUDE.md rule 8): every live column of
+# source_value_extractions except these, each with the reason it is not amended in place. The list that stood here
+# grew by one column each time a row had already been written wrong (figure_role, comparator, extraction_method,
+# extraction_status, root_type, root_ref_id, value_as_written, jurisdiction, device_class, root_id, and then
+# claimed_value, claimed_unit, setting); inverted, a new column is amendable until someone names why it must not
+# be, and the burden of proof sits on the exclusions. Safety does not live in membership: it lives in the
+# per-field refusals of `amend_extraction` (dbcore.check_declared, dbcore.fk_declared, the figure_role,
+# extraction_status, value_as_written and reformat rules, the live-determination refusal over
+# dbcore.ENGINE_EXTRACTION_COLUMNS) and in --reason, all of which stay. This is source_value_extractions only:
+# evidence_sources' _AMENDABLE/_CORRECTABLE and one amend verb for every table are GAP-013's remainder.
+_NOT_AMENDABLE_SVE = {
+    **dict.fromkeys(("extraction_id", "ref_id", "slug", "parameter_id"),
+                    "the row's key: a figure about another source, slug or parameter is another row"),
+    **dict.fromkeys(("identity_code", "icf_code", "needs_code"),
+                    "the lens is a set of links (migration 131): db.py add-lens-link / retire-lens-link"),
+    **dict.fromkeys(("claim_type", "claim_text", "source_section"),
+                    "the claim and the place the source says it: a different one is a SECOND ROW and a contest (D-0168)"),
+    **dict.fromkeys(("file_anchor", "locator_scheme", "loc_note",
+                     *(f"loc_{k}{end}" for k in ("division", "part", "section", "subsection", "paragraph", "clause",
+                                                 "subclause") for end in ("", "_end"))),
+                    "where in the held file the quote stands: checked against the file when the row was written"),
+    **dict.fromkeys(("echo_of", "measurement_paradigm", "root_population_note", "root_classification_basis",
+                     "contested", "harm_finding", "promoted_to_rdc_id"),
+                    "set with the row (or its promotion) by the writer that grades it; no ruling opens it to amendment"),
+    **dict.fromkeys(("notes", "created_at", "created_by_session", "updated_at", "updated_by_session"),
+                    "the ledger the writer keeps: amend_extraction appends to it and stamps it"),
+}
+
+
+def _amendable_sve_fields(conn):
+    """The columns `amend_extraction` may change: the live columns of source_value_extractions less `_NOT_AMENDABLE_SVE`."""
+    return [c for c in dbcore.columns(conn, "source_value_extractions") if c not in _NOT_AMENDABLE_SVE]
+
+
+def _figure_numbers(text):
+    """The numbers a figure states, in order, each as its set of readings (`retrieval_log.number_tokens`, the reader
+    T-008's number rule uses); a ratio gives its two operands. `1:20` -> [{1}, {20}]; `30,0` -> [{30.0}];
+    `30,000` -> [{30000, 30.000}] (a lone group of three after a comma is ambiguous)."""
+    out = []
+    for kind, readings, _whole in _retrieval_log().number_tokens(text or ""):
+        if kind == "ratio":
+            out += [{r[0] for r in readings}, {r[1] for r in readings}]
+        else:
+            out.append(set(readings))
+    return out
+
+
+def _refuse_unless_reformat(row, field, value):
+    """OR-3 (owner 2026-10-29, "Yes, reformat in place"): what a reformat of a stored figure is. Anything else is a
+    second row and a contest (D-0168). Called by `amend_extraction` for a changed claimed_value, claimed_unit or
+    setting.
+
+      setting        only when the row's setting is empty.
+      claimed_value  a quantity claim (`dbcore.QUANTITY_CLAIM_TYPES`) only; the new value states the same numbers
+                     in the same order, each one of the old number's readings (so `6%` -> `6`, `30,0` -> `30.0`,
+                     `0-4.8` -> `0 to 4.8`, `1 in 12` -> `1:12`; never `1:20` -> `1:2.0` or `6` -> `60`); then
+                     T-008's number rule against the row's own quote, and the figure must read under the row's unit.
+      claimed_unit   `dbcore.unit_refusal`; the new unit stands, on word boundaries, in the old cell (a reformat
+                     drops words, it does not name a unit the row did not, so `mm (clear)` -> `m` is refused); then
+                     the row's value must read under the new unit.
+
+    KNOWN AND ACCEPTED: a stored value that is ambiguous (`30,000`) cannot be reformatted in place, because T-008's
+    rule refuses an ambiguous claimed token and asks for the source's wording, which cannot be set while the stored
+    value is ambiguous. Such a row is a second row with --value-as-written."""
+    ctx = f"amend-extraction --field {field}: extraction {row['extraction_id']}"
+    if field == "setting":
+        if (row["setting"] or "").strip():
+            raise Refusal(f"{ctx} already states setting {row['setting']!r}. Only an EMPTY setting is filled in "
+                          f"place (OR-3); a different applicability is a second row (db.py add-extraction). "
+                          f"Nothing was written.")
+        return
+    if field == "claimed_value":
+        if row["claim_type"] not in dbcore.QUANTITY_CLAIM_TYPES:
+            raise Refusal(f"{ctx} is a {row['claim_type']!r} claim, not a quantity: a reformat keeps a figure's "
+                          f"numbers, and a changed qualitative value is a second row (D-0168). Nothing was written.")
+        old, new = _figure_numbers(row["claimed_value"]), _figure_numbers(value)
+        if len(old) != len(new) or not all(len(n) == 1 and n <= o for n, o in zip(new, old)):
+            raise Refusal(f"{ctx}: {value!r} does not state the same numbers, in the same order, as "
+                          f"{row['claimed_value']!r}. A reformat keeps the numbers (OR-3); a different figure is a "
+                          f"second row and a contest (D-0168), and a figure the row holds in words is a second row "
+                          f"with --value-as-written. Nothing was written.")
+        _require_stated_numbers(row["claim_text"] or "", value, row["claim_type"], row["value_as_written"],
+                                "--claimed-value", "amend-extraction")
+        figure, unit = value, row["claimed_unit"]
+    else:
+        why = dbcore.unit_refusal(value)
+        if why:
+            raise Refusal(f"{ctx}: {why}. Nothing was written.")
+        if not _as_whole_words(value, row["claimed_unit"]):
+            raise Refusal(f"{ctx}: {value!r} is not, on word boundaries, in the row's unit cell "
+                          f"{row['claimed_unit']!r}. A reformat drops words from the cell; naming a unit the row "
+                          f"did not is a new reading, a second row (D-0168). Nothing was written.")
+        figure, unit = row["claimed_value"], value
+    why = dbcore.figure_refusal(figure, unit, row["comparator"], row["claim_type"])
+    if why:
+        raise Refusal(f"{ctx}: the figure would still not be readable: {why}. When both the value and the unit "
+                      f"need reformatting, reformat claimed_value first. Nothing was written.")
 
 
 def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                      session: str, dry_run: bool = False):
-    """Change a field of `_AMENDABLE_SVE_FIELDS` on an EXISTING row -- and ONLY those.
+    """Change an amendable column (`_amendable_sve_fields`) of an EXISTING row -- and ONLY those.
 
     Every other refusal here mirrors the one `insert_extraction` runs at write
     time, because grading a pre-existing row after the fact must not be able to
     reach a state add-extraction itself refuses to create.
+    claimed_value, claimed_unit and setting take only a reformat (OR-3, _refuse_unless_reformat).
     """
-    if field not in _AMENDABLE_SVE_FIELDS:
-        raise Refusal(
-            f"amend-extraction: --field {field!r} refused. Only "
-            f"{sorted(_AMENDABLE_SVE_FIELDS)} may be amended here -- a wrong "
-            f"claimed_value or claim_text is a SECOND ROW and a contest (D-0168), "
-            f"not an overwrite. Write another `db.py add-extraction` if the "
-            f"disagreement is over the value or the claim itself.")
-    reason = (reason or "").strip()
-    if not reason:
-        raise Refusal(
-            "amend-extraction: --reason is required. An amendment that cannot say "
-            "why cannot be contested.")
-    value = (value or "").strip()
-    if not value:
-        raise Refusal("amend-extraction: --value is required and must not be blank.")
     with dbcore.connect(dry_run) as conn:
+        amendable = _amendable_sve_fields(conn)
+        if field not in amendable:
+            raise Refusal(
+                f"amend-extraction: --field {field!r} refused. Only "
+                f"{sorted(amendable)} may be amended here -- a wrong "
+                f"claim_text, or a claimed_value with different numbers, is a SECOND ROW "
+                f"and a contest (D-0168), not an overwrite; a reformat with the same "
+                f"numbers is amended here (OR-3). Write another `db.py add-extraction` if "
+                f"the disagreement is over the value or the claim itself.")
+        reason = (reason or "").strip()
+        if not reason:
+            raise Refusal(
+                "amend-extraction: --reason is required. An amendment that cannot say "
+                "why cannot be contested.")
+        value = (value or "").strip()
+        if not value:
+            raise Refusal("amend-extraction: --value is required and must not be blank.")
         # SELECT * rather than a hand-listed column set. The list here was
         # "extraction_id, ref_id, figure_role, comparator, claim_type, notes" and
-        # broke with IndexError the moment _AMENDABLE_SVE_FIELDS grew -- a second
+        # broke with IndexError the moment the amendable set grew -- a second
         # place naming the amendable columns, one line below the constant that
         # names them. Two lists, one truth.
         row = conn.execute(
@@ -10943,6 +11036,9 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
             return {"extraction_id": extraction_id, "field": field, "changed": False,
                     "reason": "already this value; the reason is recorded on notes",
                     "dry_run": dry_run}
+
+        if field in ("claimed_value", "claimed_unit", "setting"):
+            _refuse_unless_reformat(row, field, value)
 
         # A CHANGE of a column the engine reads (figure_role, comparator, extraction_method here)
         # decides what a row supplies (a value, direction, a confirmation) and what bound it

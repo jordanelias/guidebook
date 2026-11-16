@@ -3335,4 +3335,105 @@ with scratch() as c:
         record("T015-06", "an English source sorts after a non-English one of its tier whether it is stored `EN` or `en`", all(_res), _res)
 
 
+print("Section T061: amend-extraction reformats in place (OR-3)")
+with scratch() as c:
+    # T-061 (OR-3): a stored figure is reformatted in place, same numbers and quote, or not at all.
+    # The rows are written VALID through the writer, then put into the history shape the writer now
+    # refuses by HAND (that shape can no longer be written), then reformatted back through the verb.
+    T61 = {"pct":   "The longitudinal gradient is not to exceed 6% where the rise is at most 0.6 m.",
+           "ratio": "Every ramp in the survey had a slope of 1:20 over its full length.",
+           "comma": "Somente 30,0 % dos predios possuem inclinacao maxima.",
+           "range": "The inclination varied between 0 to 4.8 degrees across the trials.",
+           "mm":    "The clear width of the passage is to be 1200 mm at least.",
+           "qual":  "The surface is to be firm, stable and slip resistant.",
+           "words": "A rise of 1:12 is the most that is allowed on a short ramp."}
+    ref = new_source(verified=True)
+    held_text(ref, "\n".join(T61.values()))
+    hand_scan(c, ref, "full")
+    P = P_ACTIVE[0]
+
+    def put_row(key, value, unit, cmp_="<=", ctype="numerical", role="claim"):
+        return db.insert_extraction(extraction(ref, P, claim_text=T61[key], claimed_value=value,
+                                               claimed_unit=unit, comparator=cmp_, claim_type=ctype,
+                                               figure_role=role), session=S, dry_run=False,
+                                    relations=[])["extraction_id"]
+
+    def row(xid):
+        return c.execute("SELECT * FROM source_value_extractions WHERE extraction_id=?", (xid,)).fetchone()
+
+    def amend(x, f, v):
+        return db.amend_extraction(x, f, v, "T061 fixture", session=S, dry_run=False)
+
+    A = put_row("pct", "6", "%")
+    B = put_row("ratio", "1:20", "rise:run ratio")
+    C = put_row("comma", "30.0", "%", "=", role="finding")
+    D = put_row("range", "0 to 4.8", "degrees", "between", "range", "condition")
+    E = put_row("mm", "1200", "mm", ">=")
+    F = put_row("qual", "firm", None, None, "qualitative", "finding")
+    G = put_row("words", "1:12", "rise:run ratio")
+    # HAND: each row into the shape the writer now refuses (what T-108 finds in the stored history).
+    for xid, v, u in ((A, "6%", "% longitudinal gradient (maximum) where the rise is at most 0.6 m"),
+                      (B, "1:20", "rise:run ratio (preferred maximum)"), (C, "30,0", "%"), (D, "0-4.8", "degrees"),
+                      (E, "1200", "mm (clear, between handrails)"), (G, "one in twelve", "rise:run ratio")):
+        hand("UPDATE source_value_extractions SET claimed_value=?, claimed_unit=? WHERE extraction_id=?", v, u, xid)
+    stored_A = dict(row(A))
+
+    def refused(tid, name, x, f, v, needle):
+        before = row(x)[f]
+        r = refusal(amend, x, f, v)
+        record(tid, name, r and needle in r and row(x)[f] == before, r)
+
+    r, err = ok(amend, A, "claimed_value", "6")
+    record("T061-01", "a stored `6%` is reformatted to `6` in place (same number)", err is None and row(A)["claimed_value"] == "6", err)
+    r, err = ok(amend, A, "claimed_unit", "%")
+    record("T061-02", "then the prose unit is cut to the `%` already in its cell, and the figure reads",
+           err is None and not dbcore.unit_refusal(row(A)["claimed_unit"])
+           and not dbcore.figure_refusal(row(A)["claimed_value"], row(A)["claimed_unit"], row(A)["comparator"], row(A)["claim_type"])
+           and row(A)["claim_text"] == stored_A["claim_text"], err)
+    refused("T061-03", "a different number (`6` -> `60`) is a second row, not a reformat", A, "claimed_value", "60", "same numbers")
+    refused("T061-04", "a moved decimal point (`1:20` -> `1:2.0`) is refused", B, "claimed_value", "1:2.0", "same numbers")
+    refused("T061-05", "a unit that is not a word of the cell (`m` for `mm (clear ...)`, a rescale) is refused", E, "claimed_unit", "m",
+            "word boundaries")
+    refused("T061-06", "a unit in the cell under which the figure does not read (`ratio` for `1:20`) is refused", B, "claimed_unit", "ratio",
+            "still not be readable")
+    r, err = ok(amend, B, "claimed_unit", "rise:run ratio")
+    record("T061-07", "the cell's own `rise:run ratio` is accepted and the figure reads",
+           err is None and row(B)["claimed_unit"] == "rise:run ratio", err)
+    r, err = ok(amend, D, "claimed_value", "0 to 4.8")
+    record("T061-08", "`0-4.8` is reformatted to `0 to 4.8`", err is None and row(D)["claimed_value"] == "0 to 4.8", err)
+    r, err = ok(amend, C, "claimed_value", "30.0")
+    record("T061-09", "a decimal comma (`30,0`) is reformatted to a point", err is None and row(C)["claimed_value"] == "30.0", err)
+    r, err = ok(amend, A, "setting", "new buildings")
+    record("T061-10", "an EMPTY setting is filled in place", err is None and row(A)["setting"] == "new buildings", err)
+    refused("T061-11", "a setting already stated is not overwritten (a different applicability is a second row)", A, "setting",
+            "existing buildings", "already states setting")
+    r, err = ok(amend, A, "setting", "new buildings")
+    record("T061-11b", "re-confirming the stored setting is recorded, not refused (`changed` False)",
+           err is None and r and r["changed"] is False, err)
+    refused("T061-12", "a qualitative claim's value is not reformatted", F, "claimed_value", "rough", "not a quantity")
+    refused("T061-14", "a figure held in words (`one in twelve`) is not given a numeral here: that is a second row with --value-as-written",
+            G, "claimed_value", "1:12", "same numbers")
+    for tid, col in (("T061-16", "claim_text"), ("T061-16b", "ref_id"), ("T061-16c", "identity_code")):
+        before = row(A)[col]
+        r = refusal(amend, A, col, "x")
+        record(tid, f"an excluded column ({col}) is refused, naming the amendable set, and not written",
+               r and "SECOND ROW" in r and row(A)[col] == before, r)
+    # GAP-013 (rule 8): the amendable set is DERIVED from the live table; the burden of proof is on the named exclusions.
+    if feature("T061-13/15/17", "the amendable set of source_value_extractions is derived (GAP-013)",
+               hasattr(db, "_amendable_sve_fields") and hasattr(db, "_NOT_AMENDABLE_SVE"),
+               "db._amendable_sve_fields and db._NOT_AMENDABLE_SVE"):
+        record("T061-13", "claimed_value and claimed_unit are engine columns (the live-determination refusal covers them) and all three "
+               "are amendable", {"claimed_value", "claimed_unit"} <= set(dbcore.ENGINE_EXTRACTION_COLUMNS)
+               and {"claimed_value", "claimed_unit", "setting"} <= set(db._amendable_sve_fields(c)), None)
+        live = set(dbcore.columns(c, "source_value_extractions"))
+        amendable, excluded = set(db._amendable_sve_fields(c)), set(db._NOT_AMENDABLE_SVE)
+        record("T061-15", "the amendable columns are the live columns minus the named exclusions: the two partition the table, and every "
+               "exclusion is a live column with a reason", amendable | excluded == live and not amendable & excluded and bool(amendable)
+               and all(isinstance(w, str) and w.strip() for w in db._NOT_AMENDABLE_SVE.values()),
+               (sorted(live - amendable - excluded), sorted(excluded - live)))
+        hand("ALTER TABLE source_value_extractions ADD COLUMN zz_t061_probe TEXT")
+        record("T061-17", "a column added to the table is amendable until someone names why it must not be (the default is derived, not listed)",
+               "zz_t061_probe" in db._amendable_sve_fields(c), None)
+
+
 finish()

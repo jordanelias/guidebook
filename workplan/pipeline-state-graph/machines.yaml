@@ -218,11 +218,12 @@ machines:
       - {file: scripts/db.py, func: insert_extraction, needle: "R3: \\{ref\\} is tier"}
   - id: M04.t2
     from: "any"
-    to: "any (extraction_method, extraction_status, figure_role, comparator, root_type, root_ref_id, root_id, value_as_written, jurisdiction only)"
+    to: "any (the columns db._amendable_sve_fields derives: every column of source_value_extractions except db._NOT_AMENDABLE_SVE, GAP-013; claimed_value, claimed_unit and setting take a reformat only)"
     via: "db.py amend-extraction"
-    guards: ["a changed claimed_value or claim_text is NOT amendable: it is a second row and a contest (D-0168)"]
+    guards: ["a changed claim_text, or a claimed_value with different numbers, is NOT amendable: it is a second row and a contest (D-0168); a reformat is (OR-3)"]
     evidence:
-      - {file: scripts/db.py, needle: "_AMENDABLE_SVE_FIELDS = frozenset"}
+      - {file: scripts/db.py, needle: "_NOT_AMENDABLE_SVE = {"}
+      - {file: scripts/db.py, func: _refuse_unless_reformat, needle: "does not state the same numbers"}
   - id: M04.t3
     from: "(none)"
     to: "preliminary | ..."
