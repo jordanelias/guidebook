@@ -119,6 +119,7 @@ tables:
   life_stage_modifiers: base
   observed_terms: evidence
   parameter_declinations: base
+  reading_deferrals: evidence
   reasoning_doc_citations: synthesis
   research_code_leads: research
   rooms: base

@@ -140,7 +140,10 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   blocked. A full reading outranks the block (the pair reads READ-NOTHING-FOUND, or EXTRACTED once a row is written). A
   partial, fragment or abstract reading does not: the pair reads `BLOCKED` with that reading's scan beside it, which is not
   reading debt. "Abstract read, full text paywalled" is recorded as the abstract `record-scan` plus the reason, and the
-  full text stays owed while it can be obtained (Wayback first, CLAUDE.md §7). The writers refuse the two values that
+  full text stays owed while it can be obtained (Wayback first, CLAUDE.md §7). A reading put off on purpose, with the text
+  obtainable, is `defer-reading --ref-id … [--parameter …] --reason …` (no `--parameter`: the whole-source catalogue reading);
+  the pair stays owed in the ledger, the deferral lists in `v_deferred_acts` with its date, and a
+  `full` reading that covers it ends it, with no write to the deferral. The writers refuse the two values that
   restate a typed fact: `no-quantified-claims` (a source read with nothing found is the reading, `record-scan
   --text-scope full`, and no extraction row; the ledger derives READ-NOTHING-FOUND from that) and `superseded` (the typed
   home is `evidence_sources.superseded_by_ref_id`, written by `supersede-source --ref-id A --by B --reason …`).
@@ -363,7 +366,7 @@ examine nothing here, so run `--all` (measured against the ratcheting baseline) 
 fetches leave WebFetch ledger lines that `search_log_completeness` reads.
 
 ## Resume and exceptions
-Resume from live state, not memory: `/orient`; unadjudicated observations (`observed_terms` with no
+Resume from live state, not memory: `/orient`; deferred acts, with their age (`select * from v_deferred_acts order by deferred_at`: searches, mining passes, readings, and observations whose latest adjudication is `DEFERRED`); unadjudicated observations (`observed_terms` with no
 `term_adjudications` row); `scripts/audit/scan_debt.py`; open follow-ups (`extraction_follow_ups` with `resolved_at`
 NULL); parameters with extractions and no live specification (`specifications` with `retired_at IS NULL`; "best
 practice" is the `v_best_practice` subset); terms adjudicated `NAMES-NEW` that are neither a parameter nor declined

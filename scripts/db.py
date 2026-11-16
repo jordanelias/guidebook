@@ -2158,6 +2158,19 @@ def main():
     p_rsc.add_argument("--session", required=True)
     p_rsc.add_argument("--dry-run", action="store_true")
 
+    p_dfr = sub.add_parser(
+        "defer-reading",
+        help="Record that a source's reading is owed and deliberately not done yet (reading_deferrals). Discharged "
+             "by a full reading, never by a write; `select * from v_deferred_acts order by deferred_at` lists every "
+             "deferred act with its age")
+    p_dfr.add_argument("--ref-id", required=True)
+    p_dfr.add_argument("--parameter", "--parameter-id", dest="parameter_id", type=int,
+                       help="the active parameter whose reading is deferred; omit to defer the whole-source "
+                            "catalogue reading")
+    p_dfr.add_argument("--reason", required=True, help="why the reading is not done now")
+    p_dfr.add_argument("--session", required=True)
+    p_dfr.add_argument("--dry-run", action="store_true")
+
     p_rp = sub.add_parser("retire-parameter",
                           help="Retire a parameter IN PLACE (status retired; reason "
                                "appended to notes); refused while a live determination or "
@@ -3619,6 +3632,10 @@ def main():
             "method": args.method, "open_pass_done": args.open_pass_done,
             "catalogue_version": args.catalogue_version, "notes": args.notes,
         }, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "defer-reading":
+        _emit(defer_reading(args.ref_id, args.parameter_id, args.reason, session=args.session,
+                            dry_run=args.dry_run))
 
     elif args.command == "retire-parameter":
         _emit(retire_parameter(args.parameter_id, args.reason, session=args.session,
@@ -7489,6 +7506,12 @@ _MERGE_KEEPS_HISTORY = {
         "a gate is raised against a parameter; merge-parameter refuses while either "
         "parameter has an OPEN gate, so what remains is resolved history and stays where "
         "it was raised"),
+    "reading_deferrals": (
+        "a deferral says a reading of THIS parameter was put off, and v_deferred_acts lists it only while the "
+        "parameter is active, so the folded parameter's rows leave the view when it becomes 'merged' and stay as "
+        "the record of what was put off. The table has no notes column to carry a MERGED line, and the survivor's "
+        "pair is read from the ledger (still owed until a full reading covers it): it loses the deferral's date, "
+        "not the debt, and `defer-reading` records a fresh one"),
 }
 
 #: The prior-version item-code shape CLAUDE.md section 7 warns every grep meets
@@ -8603,6 +8626,54 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
         if scope == "full" and pages_read is None:
             out["uncounted"] = True
         return out
+
+
+def defer_reading(ref_id: str, parameter_id, reason: str, session: str, dry_run: bool = False):
+    """Record that a READING of a source is owed and deliberately not done yet (migration 141, T-079, AT-17).
+
+    "Deferred is okay so long as it runs eventually" (owner, 2026-09-18): a deferral is legitimate when it is on the
+    record with its date, so it can be listed and aged (`v_deferred_acts`). A pair no one has read is NOT-READ in
+    `v_scan_ledger` whether or not anyone decided to wait; this row says someone did, and why. THIS VERB WRITES
+    reading_deferrals AND NOTHING ELSE: the pair stays owed in the ledger, and the deferral is discharged by DERIVATION
+    when a full reading covers it (the view reads `v_scan_ledger`, never a flag a writer sets). `parameter_id` None
+    defers the whole-source catalogue reading.
+
+    REFUSES: a blank reason; an unknown or superseded source (the replacement is what is owed: `_refuse_tombstone`);
+    a parameter that does not exist or is not active; a pair a full reading already covers, or, for the whole source,
+    a source with no active parameter left without one (nothing is owed); a pair that already has a standing deferral
+    (asked of `v_deferred_acts`, the one definition of "standing"). A partial, fragment or abstract reading covers
+    nothing here, as in the ledger."""
+    reason = dbcore.require_reason(reason, "defer-reading",
+                                   "A deferral that cannot say why is neglect, and the reason is what its age is read against.")
+    with connect(dry_run) as conn:
+        ref = dbcore.fold_ref(ref_id)
+        if conn.execute("SELECT 1 FROM evidence_sources WHERE ref_id = ?", (ref,)).fetchone() is None:
+            raise Refusal(f"defer-reading: {ref_id!r} is not an admitted source.")
+        _refuse_tombstone(conn, ref, "defer-reading")
+        if parameter_id is not None:
+            prow = _parameter_row(conn, parameter_id, "defer-reading")
+            if prow["status"] != "active":
+                raise Refusal(f"defer-reading: parameter {parameter_id} is {prow['status']}; a reading is owed only "
+                              f"for an active parameter. Nothing was written.")
+        # Owed = the ledger's own reading of the pair: a FULL reading is the only thing that covers it.
+        owed = conn.execute("SELECT 1 FROM v_scan_ledger WHERE ref_id = ? AND parameter_id IS COALESCE(?, parameter_id) "
+                            "AND COALESCE(text_scope, '') <> 'full' LIMIT 1", (ref, parameter_id)).fetchone()
+        if owed is None:
+            raise Refusal(f"defer-reading: a full reading already covers "
+                          f"{ref + ' for parameter ' + str(parameter_id) if parameter_id is not None else ref + ' for every active parameter'}"
+                          f", so no reading is owed. Nothing was written.")
+        held = conn.execute("SELECT deferred_at, created_by_session FROM v_deferred_acts WHERE kind = 'reading' "
+                            "AND ref_id = ? AND parameter_id IS ?", (ref, parameter_id)).fetchone()
+        if held is not None:
+            raise Refusal(f"defer-reading: {ref} {'parameter ' + str(parameter_id) if parameter_id is not None else 'whole source'} "
+                          f"already has a standing deferral ({held['deferred_at']}, {held['created_by_session']}). A "
+                          f"second would reset nothing and list twice. Nothing was written.")
+        row = {"ref_id": ref, "parameter_id": parameter_id, "reason": reason}
+        row.update(dbcore.stamp_for(conn, "reading_deferrals", session))
+        cur = conn.execute(f"INSERT INTO reading_deferrals ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
+                           list(row.values()))
+        return {"deferral_id": cur.lastrowid, "ref_id": ref, "parameter_id": parameter_id,
+                "deferred_at": row["created_at"], "dry_run": dry_run}
 
 
 def _owner_approval(approval_ref: str, subject: str) -> str:
