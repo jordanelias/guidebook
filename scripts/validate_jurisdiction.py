@@ -38,22 +38,12 @@ REQUIRED_REGISTRY_FIELDS = {
 }
 DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}(\s\d{2}:\d{2})?$")
 
-# Common full-name → code mapping for jurisdiction-tracker output
-NAME_TO_CODE = {
-    "australia": "AU", "bangladesh": "BD", "brazil": "BR", "canada": "CA",
-    "switzerland": "CH", "china": "CN", "germany": "DE", "denmark": "DK",
-    "egypt": "EG", "france": "FR", "indonesia": "ID", "ireland": "IE",
-    "india": "IN", "japan": "JP", "kenya": "KE", "south korea": "KR",
-    "nigeria": "NG", "netherlands": "NL", "norway": "NO",
-    "new zealand": "NZ", "sweden": "SE", "singapore": "SG",
-    "united kingdom": "UK", "uk": "UK", "united states": "US", "usa": "US",
-    "south africa": "ZA", "iso": "ISO", "eu": "EU",
-    "european union": "EU",
-}
-
 
 def resolve_jurisdiction(raw) -> str | None:
-    """Resolve a jurisdiction string to a canonical code."""
+    """Resolve a jurisdiction string to a code declared in base_jurisdictions, or None.
+
+    The table is the whole vocabulary: a full country name is not a code and resolves to None
+    (reported as unrecognised), as any undeclared value does."""
     if not raw or not isinstance(raw, str):
         return None
     raw = raw.strip().strip('"').strip("'")
@@ -61,9 +51,6 @@ def resolve_jurisdiction(raw) -> str | None:
         return raw
     if raw.upper() in VALID_CODES:
         return raw.upper()
-    lower = raw.lower()
-    if lower in NAME_TO_CODE:
-        return NAME_TO_CODE[lower]
     return None
 
 

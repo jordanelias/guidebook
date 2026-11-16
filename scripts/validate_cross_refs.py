@@ -141,8 +141,10 @@ def collect_search_log_slugs(repo_root: str) -> dict[str, str]:
 
 # ── Checkers ─────────────────────────────────────────────────────────────────
 
-def check_con_ids(files: list[str], known_cons: set[str]) -> list[tuple[str, str]]:
+def check_con_ids(files: list[str], known_cons: set[str]) -> tuple[list[tuple[str, str]], int]:
+    """Returns (errors, n_refs): every CON-NNNN mention resolved against the connections table."""
     errors = []
+    n_refs = 0
     for path in files:
         try:
             with open(path, encoding="utf-8") as f:
@@ -150,6 +152,7 @@ def check_con_ids(files: list[str], known_cons: set[str]) -> list[tuple[str, str
         except Exception:
             continue
         for m in CON_ID_RE.finditer(content):
+            n_refs += 1
             con_num = m.group(1)
             if con_num not in known_cons:
                 line_no = content[:m.start()].count("\n") + 1
@@ -158,7 +161,7 @@ def check_con_ids(files: list[str], known_cons: set[str]) -> list[tuple[str, str
                     f"BROKEN_CON_ID: CON-{con_num} at line {line_no} "
                     f"not found in SQLite connections table"
                 ))
-    return errors
+    return errors, n_refs
 
 
 def check_bpc_searchlog_coexistence(
@@ -210,11 +213,12 @@ def run(repo_root: str = ".", fast: bool = False, warn_only: bool = False) -> in
     )
 
     print("Checking CON-ID references...", file=sys.stderr)
-    errors.extend(check_con_ids(scan_files, known_cons))
+    con_errors, n_con = check_con_ids(scan_files, known_cons)
+    errors.extend(con_errors)
 
     print("Checking BPC ↔ search-log co-existence...", file=sys.stderr)
     errors.extend(check_bpc_searchlog_coexistence(bpc_slugs, sl_slugs))
-    handoff_errors, handoff_warnings = check_handoff(repo_root)
+    handoff_errors, handoff_warnings, n_handoff = check_handoff(repo_root)
     errors.extend(handoff_errors)
 
     # Warnings are printed, never counted. They describe prose that has gone
@@ -229,6 +233,14 @@ def run(repo_root: str = ".", fast: bool = False, warn_only: bool = False) -> in
             print(f"{label} [{path}]: {msg}")
     else:
         print("All cross-reference checks passed.")
+
+    # What this run resolved, each subject in its own words and the sum as the whole-check count
+    # (the runner's EXAMINED contract): CON-ID mentions looked up in the connections table, BPC and
+    # search-log names each looked up in the other, handoff header fields resolved.
+    n_names = len(bpc_slugs) + len(sl_slugs)
+    print(f"resolved: {n_con} CON-ID mention(s), {n_names} BPC/search-log name(s), "
+          f"{n_handoff} handoff field(s)")
+    print(f"EXAMINED: {n_con + n_names + n_handoff}")
 
     mode = " (warn-only mode)" if warn_only else ""
     print(f"\n{'='*60}", file=sys.stderr)
@@ -272,11 +284,12 @@ def _is_shallow(repo_root: str) -> bool:
     return r.stdout.strip() == "true"
 
 
-def check_handoff(repo_root: str) -> tuple[list[tuple[str, str]], list[tuple[str, str]]]:
+def check_handoff(repo_root: str) -> tuple[list[tuple[str, str]], list[tuple[str, str]], int]:
     """The handoff is the first file a fresh session reads. Nothing checked it,
     and it spent eleven weeks naming a May HEAD and a merged branch.
 
-    Returns (errors, warnings) — and the split is the point.
+    Returns (errors, warnings, n_fields) — and the split is the point. n_fields is how many of
+    the handoff's header fields were found and resolved.
 
     A dangling PATH is an ERROR: it sends the next session to a file that is not
     there, and that is mechanically true in any clone. A stale HEAD is a
@@ -298,12 +311,13 @@ def check_handoff(repo_root: str) -> tuple[list[tuple[str, str]], list[tuple[str
     rel = "sessions/handoff-next-session.md"
     path = os.path.join(repo_root, rel)
     if not os.path.exists(path):
-        return [(rel, "handoff is missing — a fresh session has no entry point")], []
+        return [(rel, "handoff is missing — a fresh session has no entry point")], [], 0
 
     text = open(path, encoding="utf-8").read()
     errors: list[tuple[str, str]] = []
     warnings: list[tuple[str, str]] = []
     shallow = _is_shallow(repo_root)
+    n_fields = 0
 
     for label, pattern in HANDOFF_FIELDS.items():
         m = pattern.search(text)
@@ -311,6 +325,7 @@ def check_handoff(repo_root: str) -> tuple[list[tuple[str, str]], list[tuple[str
             warnings.append((rel, f"no `{label}:` line — the header format "
                                   f"changed, so nothing can check it"))
             continue
+        n_fields += 1
         value = m.group(1).strip()
         if label == "HEAD at handoff":
             ok = subprocess.run(["git", "cat-file", "-e", f"{value}^{{commit}}"],
@@ -335,7 +350,7 @@ def check_handoff(repo_root: str) -> tuple[list[tuple[str, str]], list[tuple[str
                                       f"ancestor of the current HEAD"))
         elif not os.path.exists(os.path.join(repo_root, value)):
             errors.append((rel, f"`{label}` names {value!r}, which does not exist"))
-    return errors, warnings
+    return errors, warnings, n_fields
 
 
 def main():

@@ -35,7 +35,7 @@ python3 scripts/run_checks.py --selftest                   # AFTER ANY RENAME â€
 
 Never re-run a check when nothing it reads has changed since its last run. Use `--battery <name> --kinds <kinds>`
 (or `--battery <name> --changed-from origin/main`) to answer a targeted question: `--battery` alone exits 2, the form runs the
-battery's checks of those kinds only (read `selected N of M`: a misspelt name selects 0 and still prints PASS), and `--all --battery <name>` runs the whole battery. Before trusting a green result, ask whether that check could have gone
+battery's checks of those kinds only (a misspelt `--battery` or `--level` name exits 2, and a selection that matches no check exits 2 as NOTHING-SELECTED; still read `selected N of M`), and `--all --battery <name>` runs the whole battery. Before trusting a green result, ask whether that check could have gone
 red on the defect in front of you. A check that is red on untouched `main`, or one that examined
 nothing, tells you nothing about your diff.
 

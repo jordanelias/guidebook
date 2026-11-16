@@ -129,6 +129,7 @@ def selftest() -> int:
         if got != expect:
             ok = False
         print(f"  [{status}] specification {row[0]}: {why} -> violation={got} (expected {expect})")
+    print(f"EXAMINED: {len(cases)} selftest case(s)")
     print("selftest:", "PASS" if ok else "FAIL")
     return 0 if ok else 1
 

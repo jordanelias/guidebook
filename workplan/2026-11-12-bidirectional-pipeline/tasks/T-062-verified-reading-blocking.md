@@ -173,7 +173,7 @@ scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "
 - **Run it once, when every edit is made, before the commit.** Do not run `run_checks.py` separately on the same diff, and never `--all`. Re-run it only if you change a file afterwards.
 - **A passing check prints no `EXAMINED:` line in this output.** In `gate.txt` read the `RESULT` line, any check under `NOTHING-IN-SCOPE` (it has not passed: say so), and any blocking `FAIL`. `verified_status_full_reading` is new and blocking: it must pass.
 - **The gate takes several minutes.** Run it in the background with a long timeout.
-- **`research_tooling_separation` reads `origin/main`, not `$BASE`.** Run it once by hand with the base: `python3 scripts/audit/research_tooling_separation.py --base "$BASE"`, and treat a gate FAIL that disappears with `--base` as not yours.
+- **`research_tooling_separation` reads `origin/main`, not `$BASE`, until T-075 (`@BASE@`) is merged.** Run it once by hand with the base: `python3 scripts/audit/research_tooling_separation.py --base "$BASE"`, and treat a gate FAIL that disappears with `--base` as not yours.
 - **A check that was already red before your change** tells you nothing about your diff: name it in the pull request with its before and after lines.
 
 **The canonical database must not move:** `sha256sum data/guidebook.db` gives the value recorded in section 2.

@@ -84,17 +84,30 @@ LEDGER_TABLE = "data_migrations"
 LEDGER_COLUMNS = ("migration_id", "content_sha")
 
 
+# The script `rebuild()` runs. It is an input to the rebuild exactly as the migrations are: it
+# orders, applies and checks them, so a change to it can change what the replay produces.
+REBUILD_SCRIPT = os.path.join(REPO_ROOT, "scripts", "migrate_db.py")
+
+
 def db_path():
     return os.environ.get("GUIDEBOOK_DB_PATH", os.path.join(REPO_ROOT, "data", "guidebook.db"))
 
 
-def migrations_fingerprint():
-    """SHA over every migration file's bytes — the sole input to a rebuild.
+def migrations_fingerprint(rebuild_script=REBUILD_SCRIPT):
+    """SHA over everything a rebuild runs: every migration file's bytes, the bytes of the script
+    that replays them (`rebuild_script`), and the SQLite engine that executes the SQL.
 
-    If this is unchanged, a rebuild is byte-for-byte the work already done.
+    If this is unchanged, a rebuild is byte-for-byte the work already done. It keyed on the
+    migration files alone, so a change to migrate_db.py (how it orders, applies or checks them)
+    reused a rebuild made by the old script and the blocking gate compared the committed database
+    against a rebuild nobody had re-made. migrate_db.py imports no project module; if that
+    changes, add the file it imports here.
     """
     import hashlib
     digest = hashlib.sha256()
+    with open(rebuild_script, "rb") as fh:
+        digest.update(b"rebuild-script\0" + fh.read())
+    digest.update(b"sqlite\0" + sqlite3.sqlite_version.encode())
     # Must be the SAME directory the rebuild replays. This fingerprinted the
     # repository's migrations unconditionally while the rebuild it guards honours
     # GUIDEBOOK_MIGRATIONS_DIR (scripts/migrate_db.py:42) — so pointing that
@@ -153,11 +166,12 @@ def rebuild(target, cache=True):
     twice because they are two registry entries sharing one input. The registry
     note conceded that and shipped it anyway.
 
-    The rebuild's only input is the migration files, so it is cached on their
-    fingerprint. Both checks run in one CI job (the `data` battery), so the second
-    invocation reuses the first's artifact and the pair costs one rebuild rather
-    than two. A change to any migration changes the fingerprint and forces a fresh
-    build, so the cache cannot mask the thing the check exists to detect.
+    A rebuild's inputs are the migration files, the script that replays them and the SQLite
+    engine, so it is cached on the fingerprint of all three (`migrations_fingerprint`). Both
+    checks run in one CI job (the `data` battery), so the second invocation reuses the first's
+    artifact and the pair costs one rebuild rather than two. A change to any of the three changes
+    the fingerprint and forces a fresh build, so the cache cannot mask the thing the check exists
+    to detect.
     """
     if cache:
         cached = os.path.join(tempfile.gettempdir(),
@@ -170,7 +184,7 @@ def rebuild(target, cache=True):
                 pass  # fall through to a real rebuild
 
     proc = subprocess.run(
-        [sys.executable, "scripts/migrate_db.py", "--rebuild", target],
+        [sys.executable, REBUILD_SCRIPT, "--rebuild", target],
         cwd=REPO_ROOT, capture_output=True, text=True,
     )
     ok = proc.returncode == 0
@@ -233,7 +247,11 @@ def user_tables(conn):
 
 
 def schema_objects(conn):
-    """Views, triggers and indexes, by name -> DDL.
+    """Tables, views, triggers and indexes, by name -> DDL.
+
+    A table's stored DDL is compared as well as its columns: the column list is blind to a
+    CHECK, a DEFAULT or a comment edited in an applied migration, and the committed database
+    keeps the text it was built from.
 
     Rows are not the whole database. `v_best_practice` (migrations 027/029, redefined by
     116 and 117) carries the state and retirement guard in its WHERE clause, so editing that view
@@ -242,7 +260,7 @@ def schema_objects(conn):
     """
     return {(t, n): sql for t, n, sql in conn.execute(
         "SELECT type, name, sql FROM sqlite_master "
-        "WHERE type IN ('view','trigger','index') AND sql IS NOT NULL "
+        "WHERE type IN ('table','view','trigger','index') AND sql IS NOT NULL "
         "AND name NOT LIKE 'sqlite_%'")}
 
 
@@ -322,7 +340,7 @@ def deep_compare(committed_path, rebuilt_path):
             rows.append((table, "TIMESTAMPS", f"{n_rows} rows; {summary}"))
             volatile_only.append(table)
 
-    # Views/triggers/indexes: DDL, not rows. See schema_objects().
+    # Tables/views/triggers/indexes: DDL, not rows. See schema_objects().
     oc, orb = schema_objects(committed), schema_objects(rebuilt)
     for key in sorted(set(oc) - set(orb)):
         rows.append((f"{key[0]} {key[1]}", "MISSING-IN-REBUILD", "not built by the migrations"))
@@ -440,8 +458,11 @@ def selftest():
     print("migration_reproducibility --selftest")
     print("=" * 70)
     failures = []
+    ran = 0
 
     def check(label, condition, detail=""):
+        nonlocal ran
+        ran += 1
         if condition:
             print(f"  [PASS] {label}")
         else:
@@ -587,7 +608,65 @@ def selftest():
         except sqlite3.OperationalError as exc:
             check("a table name needing quoting does not crash the comparator", False, str(exc))
 
+        # T075-04 — the rebuild cache keys on everything the rebuild runs. Two copies of the
+        # replay script one byte apart must key differently, or a change to migrate_db.py reuses
+        # a rebuild made by the old one; and a different SQLite engine must key differently too.
+        r1, r2 = os.path.join(tmpdir, "r1.py"), os.path.join(tmpdir, "r2.py")
+        for path, body in ((r1, b"# replay\n"), (r2, b"# replaz\n")):
+            with open(path, "wb") as fh:
+                fh.write(body)
+        check("T075-04 the fingerprint is stable for the same replay script",
+              migrations_fingerprint(r1) == migrations_fingerprint(r1))
+        check("T075-04 the fingerprint changes when the replay script changes by one byte",
+              migrations_fingerprint(r1) != migrations_fingerprint(r2))
+        real_engine = sqlite3.sqlite_version
+        try:
+            sqlite3.sqlite_version = real_engine + ".x"
+            engine_moved = migrations_fingerprint(r1)
+        finally:
+            sqlite3.sqlite_version = real_engine
+        check("T075-04 the fingerprint changes when the SQLite engine does",
+              engine_moved != migrations_fingerprint(r1))
+        # ...and the script it keys on is the one rebuild() really runs (seen through subprocess.run).
+        launched, real_run = [], subprocess.run
+
+        class _Done:
+            returncode, stdout, stderr = 0, "", ""
+
+        subprocess.run = lambda cmd, **kw: launched.append(cmd) or _Done()
+        try:
+            rebuild(os.path.join(tmpdir, "never-built.db"), cache=False)
+        finally:
+            subprocess.run = real_run
+        check("T075-04 rebuild() runs the script the fingerprint reads",
+              bool(launched) and launched[0][1] == REBUILD_SCRIPT, str(launched))
+
+        # T075-05 — --deep compares a table's stored DDL, not just its columns and rows. A comment
+        # edited in an applied migration changes neither, and passed.
+        def ddl_db(path, comment):
+            con = sqlite3.connect(path)
+            con.execute("PRAGMA user_version = 42")
+            for table in ("evidence_sources", "citation_mining", "source_slug_links",
+                          "gaps", "connections", "slugs"):
+                con.execute(f"CREATE TABLE {table} (id INTEGER PRIMARY KEY)")
+                con.execute(f"INSERT INTO {table} (id) VALUES (1)")
+            con.execute(f"CREATE TABLE t (id INTEGER PRIMARY KEY, v TEXT CHECK (v <> '') {comment})")
+            con.execute("INSERT INTO t VALUES (1, 'x')")
+            con.commit()
+            con.close()
+
+        d1, d2, d3 = (os.path.join(tmpdir, n) for n in ("ddl1.db", "ddl2.db", "ddl3.db"))
+        ddl_db(d1, "-- as applied\n")
+        ddl_db(d2, "-- as edited later\n")
+        ddl_db(d3, "-- as applied\n")
+        _, subst_same, _ = deep_compare(d1, d3)
+        _, subst_comment, _ = deep_compare(d1, d2)
+        check("T075-05 identical table DDL compares clean", not subst_same, str(subst_same))
+        check("T075-05 a comment edited in a table's DDL is reported though rows and columns match",
+              "table t" in subst_comment, str(subst_comment))
+
     print("=" * 70)
+    print(f"EXAMINED: {ran} selftest case(s)")
     if failures:
         print(f"SELFTEST: FAIL — {', '.join(failures)}")
         return 1

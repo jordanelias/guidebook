@@ -94,10 +94,15 @@ def build_snapshot() -> DoctrineSnapshot:
 
 # --- Pass 2.3: Cross-reference consistency ---
 
-def check_cross_references(snapshot: DoctrineSnapshot) -> list[RecheckFinding]:
-    """Examine each governance doc's doctrinal_basis references; flag missing."""
+def check_cross_references(snapshot: DoctrineSnapshot) -> tuple[list[RecheckFinding], int]:
+    """Examine each governance doc's doctrinal_basis references; flag missing.
+
+    Returns (findings, n_refs): n_refs is how many `governance/X.md` references it resolved,
+    which is what `--cross-ref` prints as EXAMINED.
+    """
     findings: list[RecheckFinding] = []
     seq = 0
+    n_refs = 0
 
     # Set of identifiers a doctrinal_basis ref can resolve to:
     # - governance/X.md path substring
@@ -121,6 +126,7 @@ def check_cross_references(snapshot: DoctrineSnapshot) -> list[RecheckFinding]:
         # Extract referenced governance files
         for ref_match in re.finditer(r"governance/([\w\-]+\.md)", basis_text):
             refname = ref_match.group(1)
+            n_refs += 1
             if refname not in governance_filenames:
                 seq += 1
                 findings.append(RecheckFinding(
@@ -138,7 +144,7 @@ def check_cross_references(snapshot: DoctrineSnapshot) -> list[RecheckFinding]:
                         f"in {path} should be updated."
                     ),
                 ))
-    return findings
+    return findings, n_refs
 
 
 # --- Pass 2.4: Drift detection ---
@@ -247,7 +253,7 @@ def main() -> int:
     # Passes 2.3-2.4
     all_findings: list[RecheckFinding] = []
 
-    findings_23 = check_cross_references(snapshot)
+    findings_23, n_refs = check_cross_references(snapshot)
     all_findings.extend(findings_23)
 
     if not args.cross_ref:
@@ -285,6 +291,11 @@ def main() -> int:
               "is the recheck reviewer's responsibility — run "
               "contamination sampling by hand and classify each sampled BPC "
               "(the sampler was deleted 2026-08-20; see doctrine-recheck.md §7).")
+
+    if args.cross_ref:
+        # In this mode pass 2.3 is the whole check, so its subject is the check's: the
+        # doctrinal_basis references resolved. (The full run adds a drift pass with its own subject.)
+        print(f"EXAMINED: {n_refs}")
 
     if args.report:
         return 0

@@ -425,6 +425,32 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
+- id: migration_reproducibility_selftest
+  cmd:
+  - python3
+  - scripts/audit/migration_reproducibility.py
+  - --selftest
+  battery: data
+  kinds:
+  - data
+  - schema
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
+- id: readonly_db_open_audit_selftest
+  cmd:
+  - python3
+  - scripts/audit/readonly_db_open_audit.py
+  - --selftest
+  battery: data
+  kinds:
+  - data
+  - tooling
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
 - id: provenance_artefact_audit
   cmd:
   - python3
@@ -712,6 +738,8 @@ checks:
   - scripts/audit/adherence_log_audit.py
   - --check
   - presence
+  - --base
+  - '@BASE@'
   battery: attestation
   kinds:
   - synthesis
@@ -729,6 +757,8 @@ checks:
   - scripts/audit/adherence_log_audit.py
   - --check
   - schema
+  - --base
+  - '@BASE@'
   battery: attestation
   kinds:
   - synthesis
@@ -746,6 +776,8 @@ checks:
   - scripts/audit/adherence_log_audit.py
   - --check
   - evidence
+  - --base
+  - '@BASE@'
   battery: attestation
   kinds:
   - synthesis
@@ -767,6 +799,8 @@ checks:
   - scripts/audit/adherence_log_audit.py
   - --check
   - verdict
+  - --base
+  - '@BASE@'
   battery: attestation
   kinds:
   - synthesis
@@ -784,7 +818,7 @@ checks:
   - python3
   - scripts/audit/research_batch_dod.py
   - --check-baseline
-  - origin/main
+  - '@BASE@'
   battery: research
   kinds:
   - always
@@ -950,6 +984,8 @@ checks:
   cmd:
   - python3
   - scripts/audit/research_tooling_separation.py
+  - --base
+  - '@BASE@'
   battery: governance
   kinds:
   - data
@@ -982,6 +1018,18 @@ checks:
   basis: cross_stage/doctrine-currency
   cost: fast
   min_items: 1
+- id: retired_vocabulary_audit_selftest
+  cmd:
+  - python3
+  - scripts/audit/retired_vocabulary_audit.py
+  - --selftest
+  battery: governance
+  kinds:
+  - always
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
 - id: research_protocol_audit
   cmd:
   - python3
@@ -1177,6 +1225,54 @@ checks:
   no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
   note: 'Partially vacuous by design: its live-smoke leg SKIPs when /tmp/work14.db is absent (it is, in
     CI) and the rest still asserts. Recorded so the pass is not read as broader than it is.'
+- id: dbcore_selftest
+  cmd:
+  - python3
+  - scripts/dbcore.py
+  - --selftest
+  battery: tests
+  kinds:
+  - tooling
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
+- id: emit_data_migration_selftest
+  cmd:
+  - python3
+  - scripts/emit_data_migration.py
+  - --selftest
+  battery: tests
+  kinds:
+  - tooling
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
+- id: migrate_db_selftest
+  cmd:
+  - python3
+  - scripts/migrate_db.py
+  - --selftest
+  battery: tests
+  kinds:
+  - tooling
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
+- id: emit_batch_sql_selftest
+  cmd:
+  - python3
+  - scripts/research/emit_batch_sql.py
+  - --selftest
+  battery: tests
+  kinds:
+  - tooling
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
 - id: column_vocabulary_audit
   cmd:
   - python3
@@ -1283,6 +1379,32 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
+- id: column_vocabulary_audit_selftest
+  cmd:
+  - python3
+  - scripts/audit/column_vocabulary_audit.py
+  - --selftest
+  battery: schema
+  kinds:
+  - schema
+  - data
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
+- id: validate_verification_consistency_selftest
+  cmd:
+  - python3
+  - scripts/validate_verification_consistency.py
+  - --selftest
+  battery: schema
+  kinds:
+  - schema
+  - data
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
 quarantine:
 - id: validate_db
   cmd:

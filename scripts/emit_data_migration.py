@@ -616,6 +616,7 @@ def selftest():
             fails.append(f"[refuse] {name}: expected a violation, got none")
 
     n = len(accept_cases) + len(refuse_cases)
+    print(f"EXAMINED: {n} selftest case(s)")
     if fails:
         print("emit_data_migration selftest FAILURES:", file=sys.stderr)
         for f in fails:

@@ -1201,7 +1201,7 @@ checks:
     - synthesis
     - governance
     min_items: null
-    cmd: python3 scripts/audit/adherence_log_audit.py --check evidence
+    cmd: python3 scripts/audit/adherence_log_audit.py --check evidence --base @BASE@
   - id: audit_evidence_metadata
     level: advisory
     battery: schema
@@ -1242,6 +1242,14 @@ checks:
     - docs
     min_items: 1
     cmd: python3 scripts/sync_claude_skills.py --check
+  - id: column_vocabulary_audit_selftest
+    level: advisory
+    battery: schema
+    kinds:
+    - schema
+    - data
+    min_items: null
+    cmd: python3 scripts/audit/column_vocabulary_audit.py --selftest
   - id: context_map_fresh
     level: advisory
     battery: render
@@ -1252,6 +1260,13 @@ checks:
     - governance
     min_items: 1
     cmd: python3 scripts/generate/context_map.py --check
+  - id: dbcore_selftest
+    level: advisory
+    battery: tests
+    kinds:
+    - tooling
+    min_items: null
+    cmd: python3 scripts/dbcore.py --selftest
   - id: derivation_handshake_integrity
     level: advisory
     battery: schema
@@ -1261,6 +1276,20 @@ checks:
     - governance
     min_items: 1
     cmd: python3 scripts/audit/derivation_handshake_integrity.py
+  - id: emit_batch_sql_selftest
+    level: advisory
+    battery: tests
+    kinds:
+    - tooling
+    min_items: null
+    cmd: python3 scripts/research/emit_batch_sql.py --selftest
+  - id: emit_data_migration_selftest
+    level: advisory
+    battery: tests
+    kinds:
+    - tooling
+    min_items: null
+    cmd: python3 scripts/emit_data_migration.py --selftest
   - id: extraction_follow_up_audit
     level: advisory
     battery: data
@@ -1300,6 +1329,13 @@ checks:
     - synthesis
     min_items: 1
     cmd: python3 scripts/audit/metadata_integrity_audit.py
+  - id: migrate_db_selftest
+    level: advisory
+    battery: tests
+    kinds:
+    - tooling
+    min_items: null
+    cmd: python3 scripts/migrate_db.py --selftest
   - id: migration_reproducibility_deep
     level: advisory
     battery: data
@@ -1308,6 +1344,14 @@ checks:
     - schema
     min_items: 1
     cmd: python3 scripts/audit/migration_reproducibility.py --deep
+  - id: migration_reproducibility_selftest
+    level: advisory
+    battery: data
+    kinds:
+    - data
+    - schema
+    min_items: null
+    cmd: python3 scripts/audit/migration_reproducibility.py --selftest
   - id: observation_verbatim_audit
     level: advisory
     battery: data
@@ -1338,6 +1382,14 @@ checks:
     - tooling
     min_items: 1
     cmd: python3 scripts/audit/readonly_db_open_audit.py
+  - id: readonly_db_open_audit_selftest
+    level: advisory
+    battery: data
+    kinds:
+    - data
+    - tooling
+    min_items: null
+    cmd: python3 scripts/audit/readonly_db_open_audit.py --selftest
   - id: research_dod
     level: advisory
     battery: research
@@ -1360,7 +1412,7 @@ checks:
     kinds:
     - data
     min_items: null
-    cmd: python3 scripts/audit/research_tooling_separation.py
+    cmd: python3 scripts/audit/research_tooling_separation.py --base @BASE@
   - id: retired_vocabulary
     level: advisory
     battery: governance
@@ -1368,6 +1420,13 @@ checks:
     - always
     min_items: 1
     cmd: python3 scripts/audit/retired_vocabulary_audit.py
+  - id: retired_vocabulary_audit_selftest
+    level: advisory
+    battery: governance
+    kinds:
+    - always
+    min_items: null
+    cmd: python3 scripts/audit/retired_vocabulary_audit.py --selftest
   - id: scan_debt
     level: advisory
     battery: data
@@ -1508,6 +1567,14 @@ checks:
     - data
     min_items: 1
     cmd: python3 scripts/validate_schema.py --cross-check
+  - id: validate_verification_consistency_selftest
+    level: advisory
+    battery: schema
+    kinds:
+    - schema
+    - data
+    min_items: null
+    cmd: python3 scripts/validate_verification_consistency.py --selftest
   - id: verified_scan_integrity
     level: advisory
     battery: db_integrity
@@ -1538,7 +1605,7 @@ checks:
     - synthesis
     - governance
     min_items: null
-    cmd: python3 scripts/audit/adherence_log_audit.py --check presence
+    cmd: python3 scripts/audit/adherence_log_audit.py --check presence --base @BASE@
   - id: attestation_schema
     level: blocking
     battery: attestation
@@ -1546,7 +1613,7 @@ checks:
     - synthesis
     - governance
     min_items: null
-    cmd: python3 scripts/audit/adherence_log_audit.py --check schema
+    cmd: python3 scripts/audit/adherence_log_audit.py --check schema --base @BASE@
   - id: audit_adversarial_use
     level: blocking
     battery: governance
@@ -1672,7 +1739,7 @@ checks:
     kinds:
     - always
     min_items: 1
-    cmd: python3 scripts/audit/research_batch_dod.py --check-baseline origin/main
+    cmd: python3 scripts/audit/research_batch_dod.py --check-baseline @BASE@
   - id: research_contract_sync
     level: blocking
     battery: research
@@ -1759,7 +1826,7 @@ checks:
     - synthesis
     - governance
     min_items: null
-    cmd: python3 scripts/audit/adherence_log_audit.py --check verdict
+    cmd: python3 scripts/audit/adherence_log_audit.py --check verdict --base @BASE@
   - id: citation_mining_backlog_t2
     level: informational
     battery: data

@@ -25,8 +25,10 @@ def _run(args):
 
 def main():
     ok = True
+    n = 0   # assertions made, printed as EXAMINED
     r = _run(["--selftest"])
     passed = r.returncode == 0 and "SELFTEST: PASS" in r.stdout
+    n += 1
     print(f"[{'PASS' if passed else 'FAIL'}] pipeline_contract_audit --selftest")
     if not passed:
         print(r.stdout + r.stderr)
@@ -43,6 +45,7 @@ def main():
     passed = (r.returncode in (0, 1)
               and "referential integrity:" in r.stdout
               and "VERDICT:" in r.stdout)
+    n += 1
     print(f"[{'PASS' if passed else 'FAIL'}] pipeline_contract_audit runs and reports a verdict")
     if not passed:
         print(r.stdout + r.stderr)
@@ -51,11 +54,13 @@ def main():
     # The contract must never regress to phantom enforcement: a criterion may be
     # honestly INCOMPLETE, but a path that is missing outright is always a defect.
     passed = "broken=0" in r.stdout
+    n += 1
     print(f"[{'PASS' if passed else 'FAIL'}] no criterion cites a path that does not exist")
     if not passed:
         print(r.stdout + r.stderr)
     ok = ok and passed
 
+    print(f"EXAMINED: {n} assertion(s)")
     print("RESULT:", "PASS" if ok else "FAIL")
     return 0 if ok else 1
 

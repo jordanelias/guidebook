@@ -429,7 +429,8 @@ def selftest():
     for name, ok, detail in results:
         print("  %s: %s%s" % ("PASS" if ok else "**FAIL**", name,
                               ("  [%s]" % detail) if not ok else ""))
-    print("\nRESULTS: %d/%d selftest cases pass" % (len(results) - failures, len(results)))
+    print("\nEXAMINED: %d selftest case(s)" % len(results))
+    print("RESULTS: %d/%d selftest cases pass" % (len(results) - failures, len(results)))
     print("SELFTEST: %s" % ("FAIL" if failures else "PASS"))
     return 1 if failures else 0
 

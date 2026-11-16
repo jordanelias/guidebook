@@ -12,9 +12,12 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 fails = []
+n_checked = 0   # assertions made, printed as EXAMINED
 
 
 def check(name, cond):
+    global n_checked
+    n_checked += 1
     print(f"  [{'PASS' if cond else 'FAIL'}] {name}")
     if not cond:
         fails.append(name)
@@ -228,5 +231,6 @@ check("a RETIRED stated row needs no marker",
 check("PRAGMA foreign_key_check clean", not db.execute("PRAGMA foreign_key_check").fetchall())
 db.close()
 
-print(f"\n{'ALL PASS' if not fails else 'FAILURES: ' + ', '.join(fails)}  ({len(fails)} failed)")
+print(f"\nEXAMINED: {n_checked} assertion(s)")
+print(f"{'ALL PASS' if not fails else 'FAILURES: ' + ', '.join(fails)}  ({len(fails)} failed)")
 sys.exit(1 if fails else 0)
