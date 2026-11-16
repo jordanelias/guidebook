@@ -3559,5 +3559,160 @@ with scratch() as c:
         record("T061-17", "a column added to the table is amendable until someone names why it must not be (the default is derived, not listed)",
                "zz_t061_probe" in db._amendable_sve_fields(c), None)
 
+print("Section T067: v_coverage_parameter_via_admission is one row per active parameter and owed pair, counted through admissions (OR-8)")
+# Nothing below names a count, id or code: the pair, the parameter and the source are chosen by query, and the oracle for the grain is
+# the base tables. Everything built is built on a scratch copy and is TASK-FIXTURE.
+V67 = "v_coverage_parameter_via_admission"
+_COLS67 = "parameter_id, language, jurisdiction, role, searches_naming_parameter, searches_reaching_parameter, sources_admitted"
+
+
+def view67(c):
+    return [tuple(r) for r in c.execute(f"SELECT {_COLS67} FROM {V67} ORDER BY parameter_id, language, jurisdiction")]
+
+
+try:
+    _grain = (scalar(f"SELECT COUNT(*) FROM {V67}"),
+              scalar(f"SELECT COUNT(*) FROM (SELECT DISTINCT parameter_id, language, jurisdiction FROM {V67})"),
+              scalar("SELECT (SELECT COUNT(*) FROM base_parameters WHERE status='active') * (SELECT COUNT(*) FROM v_research_scope)"))
+    record("T067-01", "the view holds one row per active parameter and owed pair: its rows equal its distinct keys and equal the "
+           "active parameters times the rows of v_research_scope (a pair with nothing is a row of zeros, never a missing row)",
+           _grain[0] == _grain[1] == _grain[2] and _grain[0] > 0, _grain)
+    _pick = q(f"SELECT v.parameter_id, v.language, v.jurisdiction FROM {V67} v WHERE v.sources_admitted = 0 AND v.searches_reaching_parameter = 0 "
+              "AND EXISTS (SELECT 1 FROM source_value_extractions x WHERE x.parameter_id = v.parameter_id "
+              "AND NOT EXISTS (SELECT 1 FROM search_admissions sa WHERE sa.ref_id = x.ref_id)) ORDER BY 1, 2, 3 LIMIT 1")
+    _err67 = None
+except sqlite3.OperationalError as exc:
+    _grain, _pick, _err67 = None, [], str(exc)
+    record("T067-01", "the view holds one row per active parameter and owed pair", False, _err67)
+
+if _err67 is not None:
+    for _t in ("T067-02", "T067-03", "T067-04", "T067-05", "T067-07", "T067-08", "T067-09", "T067-10", "T067-11"):
+        record(_t, "the view exists", False, _err67)
+elif not _pick:
+    for _t in ("T067-02", "T067-03", "T067-05", "T067-07", "T067-08", "T067-09", "T067-10", "T067-11"):
+        skip(_t, "no (parameter, owed pair) with nothing admitted and an extraction of that parameter in a source no search admitted")
+else:
+    P67, L67, J67 = _pick[0]
+    SLUG67 = SLUG
+
+    def seed(c, jurisdiction=J67, language=L67, deferred=None):
+        """TASK-FIXTURE: a search in the pair that admits a source holding an extraction of the parameter (the source chosen by query)."""
+        src = c.execute("SELECT x.ref_id FROM source_value_extractions x WHERE x.parameter_id=? AND NOT EXISTS "
+                        "(SELECT 1 FROM search_admissions sa WHERE sa.ref_id=x.ref_id) ORDER BY x.ref_id LIMIT 1", (P67,)).fetchone()[0]
+        cur = c.execute("INSERT INTO search_executions (slug, jurisdiction, language, query_text, engine, depth_method, deferred_reason, "
+                        "created_by_session, created_at) VALUES (?,?,?,?,?,?,?,?, '2026-01-01T00:00:00Z')",
+                        (SLUG67, jurisdiction, language, "TASK-FIXTURE T067", "manual", "scoping", deferred, S))
+        c.execute("INSERT INTO search_admissions (exec_id, ref_id, created_at, created_by_session) VALUES (?,?, '2026-01-01T00:00:00Z', ?)",
+                  (cur.lastrowid, src, S))
+        c.commit()
+        return src
+
+    def only_the_pair_moved(c, src, before, after, pair=(L67, J67)):
+        """Exactly the rows of the pair for the ACTIVE parameters the admitted source holds moved, each to (naming 0, reaching 1, sources 1)."""
+        held = {r[0] for r in c.execute("SELECT x.parameter_id FROM source_value_extractions x JOIN base_parameters p USING (parameter_id) "
+                                        "WHERE x.ref_id=? AND p.status='active'", (src,))}
+        moved = [(b, a) for b, a in zip(before, after) if b != a]
+        ok_ = (len(before) == len(after) and P67 in held and {a[0] for _, a in moved} == held
+               and all(a[1:3] == pair and a[4:] == (0, 1, 1) and b[4:] == (0, 0, 0) for b, a in moved))
+        return ok_, moved
+
+    with scratch() as c:
+        before = view67(c)
+        src = seed(c)
+        same, moved = only_the_pair_moved(c, src, before, view67(c))
+        record("T067-02", "a non-deferred search in an owed pair that admits a source holding an extraction of the parameter raises that row's "
+               "searches_reaching_parameter and sources_admitted to one and leaves searches_naming_parameter alone; the only other rows that "
+               "move are the pair's rows for the other active parameters the same source holds, and no row of any other pair moves",
+               same, moved[:3])
+    with scratch() as c:
+        before = view67(c)
+        seed(c, deferred="TASK-FIXTURE: deliberately not searched")
+        record("T067-03", "the same search with deferred_reason set leaves every row unchanged (a search that did not run reaches nothing)",
+               view67(c) == before, None)
+    with scratch() as c:
+        before = view67(c)
+        src = seed(c, language=L67.lower())
+        same, moved = only_the_pair_moved(c, src, before, view67(c))
+        record("T067-05", "the same search with the language in lower case counts toward the upper-case pair", same, moved[:3])
+    with scratch() as c:        # the direct route: a search logged FOR the parameter counts in searches_naming_parameter, and only there
+        before = view67(c)
+        c.execute("INSERT INTO search_executions (slug, parameter_id, jurisdiction, language, query_text, engine, depth_method, "
+                  "created_by_session, created_at) VALUES (NULL,?,?,?,'TASK-FIXTURE T067','manual','scoping',?, '2026-01-01T00:00:00Z')",
+                  (P67, J67, L67, S))
+        c.commit()
+        moved = [(b, a) for b, a in zip(before, view67(c)) if b != a]
+        record("T067-07", "a non-deferred search logged for the parameter in the pair raises that one row's searches_naming_parameter to one "
+               "and nothing else (it admitted nothing, so it reaches nothing)",
+               len(moved) == 1 and moved[0][1][:3] == (P67, L67, J67) and moved[0][1][4:] == (1, 0, 0), moved)
+    with scratch() as c:        # two searches admitting ONE source: two searches reached, one source
+        seed(c)
+        before = view67(c)
+        c.execute("INSERT INTO search_executions (slug, jurisdiction, language, query_text, engine, depth_method, created_by_session, "
+                  "created_at) VALUES (?,?,?,'TASK-FIXTURE T067 again','manual','scoping',?, '2026-01-01T00:00:00Z')", (SLUG67, J67, L67, S))
+        c.execute("INSERT INTO search_admissions (exec_id, ref_id, created_at, created_by_session) SELECT (SELECT MAX(exec_id) FROM "
+                  "search_executions), ref_id, '2026-01-01T00:00:00Z', ? FROM search_admissions WHERE exec_id=(SELECT MAX(exec_id) FROM "
+                  "search_executions WHERE query_text='TASK-FIXTURE T067')", (S,))
+        c.commit()
+        row = [r for r in view67(c) if r[:3] == (P67, L67, J67)][0]
+        record("T067-08", "a source admitted by two searches of the pair counts two searches reaching the parameter and one source",
+               row[5:] == (2, 1), row)
+    with scratch() as c:        # an owed pair whose jurisdiction base_jurisdictions does not hold is still reached (a LEFT roll-up, as v_coverage_priority)
+        free = c.execute("SELECT v.language, v.jurisdiction FROM v_research_scope v WHERE v.jurisdiction NOT IN "
+                         "(SELECT jurisdiction_code FROM base_jurisdictions) ORDER BY 1, 2 LIMIT 1").fetchone()
+        if free is None:
+            skip("T067-11", "every owed jurisdiction is registered in base_jurisdictions")
+        else:
+            c.execute("PRAGMA foreign_keys=OFF")        # HAND: a search the writer would refuse (an unregistered jurisdiction), to pin the LEFT roll-up
+            before = view67(c)
+            src = seed(c, jurisdiction=free[1], language=free[0])
+            same, moved = only_the_pair_moved(c, src, before, view67(c), pair=(free[0], free[1]))
+            record("T067-11", "a search in an owed pair whose jurisdiction base_jurisdictions does not hold still counts toward that pair "
+                   "(the roll-up is a LEFT join, so an unregistered jurisdiction is itself, not nothing)", same, moved[:3])
+    with scratch() as c:        # one search admitting two sources that both hold the parameter: one search reached, two sources
+        src = seed(c)
+        other = c.execute("SELECT x.ref_id FROM source_value_extractions x WHERE x.parameter_id=? AND x.ref_id<>? AND NOT EXISTS "
+                          "(SELECT 1 FROM search_admissions sa WHERE sa.ref_id=x.ref_id) ORDER BY x.ref_id LIMIT 1", (P67, src)).fetchone()
+        if other is None:
+            skip("T067-10", "no second source holding the parameter that no search admitted")
+        else:
+            c.execute("INSERT INTO search_admissions (exec_id, ref_id, created_at, created_by_session) VALUES "
+                      "((SELECT MAX(exec_id) FROM search_executions), ?, '2026-01-01T00:00:00Z', ?)", (other[0], S))
+            c.commit()
+            row = [r for r in view67(c) if r[:3] == (P67, L67, J67)][0]
+            record("T067-10", "one search admitting two sources that both hold the parameter counts one search reaching it and two sources",
+                   row[5:] == (1, 2), row)
+    with scratch() as c:        # a parameter no longer active is not owed a reading
+        c.execute("UPDATE base_parameters SET status='retired' WHERE parameter_id=?", (P67,))   # HAND: a retired parameter
+        c.commit()
+        record("T067-09", "a parameter that is not active has no row in the view",
+               c.execute(f"SELECT COUNT(*) FROM {V67} WHERE parameter_id=?", (P67,)).fetchone()[0] == 0
+               and c.execute(f"SELECT COUNT(*) FROM {V67}").fetchone()[0] > 0, None)
+    # A sub-national code rolls up to its country (OD-04). Built on a copy: one held `sub-national` code if any, else HAND.
+    with scratch() as c:
+        sub = c.execute("SELECT jurisdiction_code FROM base_jurisdictions WHERE kind='sub-national' AND parent_code=? ORDER BY 1 LIMIT 1", (J67,)).fetchone()
+        if sub is None:
+            sub = (J67 + "-ZZT",)       # TASK-FIXTURE: a subdivision of the pair's own jurisdiction
+            c.execute("INSERT INTO base_jurisdictions (jurisdiction_code, kind, parent_code, created_at, created_by_session) "
+                      "VALUES (?, 'sub-national', ?, '2026-01-01T00:00:00Z', ?)", (sub[0], J67, S))
+        before = view67(c)
+        src = seed(c, jurisdiction=sub[0])
+        same, moved = only_the_pair_moved(c, src, before, view67(c))
+        record("T067-04", "the same search logged with a sub-national code whose parent is the pair's jurisdiction counts toward the parent's row",
+               same, moved[:3])
+
+with scratch() as c:
+    if _err67 is not None:
+        record("T067-06", "the view exists", False, _err67)
+    else:
+        pair = c.execute("SELECT language, jurisdiction FROM v_research_scope ORDER BY 1, 2 LIMIT 1").fetchone()
+        c.execute("UPDATE lang_jur_map SET scope_status='scoped-out' WHERE language=? AND jurisdiction=?", tuple(pair))   # HAND: a scope fill
+        c.commit()
+        gone = c.execute(f"SELECT COUNT(*) FROM {V67} WHERE language=? AND jurisdiction=?", tuple(pair)).fetchone()[0]
+        record("T067-06", "a pair recorded scoped-out leaves the view (every row of it, for every parameter)",
+               gone == 0 and view67(c) and c.execute(f"SELECT COUNT(*) FROM {V67}").fetchone()[0]
+               == c.execute("SELECT (SELECT COUNT(*) FROM base_parameters WHERE status='active') * (SELECT COUNT(*) FROM v_research_scope)").fetchone()[0],
+               gone)
+
+
 
 finish()

@@ -102,7 +102,7 @@ After multilingual-research completes:
    the pair stays on the owed list (`coverage --slug`, `v_coverage_priority`). That distinction is the thing the whole pipeline exists
    to preserve; a missing row erases it.
 
-   > Coverage is derived from the log (`v_coverage_jurisdiction` / `v_coverage_language` / `v_coverage_lens`); read it with
+   > Coverage is derived from the log (`v_coverage_jurisdiction` / `v_coverage_language` / `v_coverage_lens` / `v_coverage_parameter_via_admission` (per parameter, through admissions)); read it with
    > `python3 scripts/db.py coverage --slug {slug}`. The hand-kept grids and their verbs are deleted.
 
 4. **Add new evidence sources:**
