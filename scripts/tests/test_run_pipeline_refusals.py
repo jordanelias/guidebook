@@ -2860,7 +2860,14 @@ T16 = {"pct": "A ramp gradient of 8.33% is the greatest permitted.", "slash": "T
        "d3": "The whole is 0.3 m long.",
        "ge": "The first landing rises at least 5.5 percent.", "dge": "The second landing rises at least 9.25 percent.",
        "mmd": "The third flight rises 9.25 millimetres.", "nloc": "The fourth flight rises 5.5 percent.",
-       "nquo": "The fifth flight rises 5.5 percent.", "ge3": "The third landing rises at least 1 percent.", "two": "The sixth flight rises 2 percent."}
+       "nquo": "The fifth flight rises 5.5 percent.", "ge3": "The third landing rises at least 1 percent.", "two": "The sixth flight rises 2 percent.",
+       "rat1": "The first ramp is graded 1:12 along the run.", "rat2": "The second ramp is graded 1:14 along the run.",
+       "nu1": "The first run measures 5.5 overall.", "nu2": "The second run measures 9.25 overall.",
+       "skim1": "The skimmed rise is 3 percent.", "cond1": "Where the rise is 4 percent the ramp is short.",
+       "contra1": "The disputed rise is 6 percent.", "prose1": "The seventh flight rises 2 percent.",
+       "relf": "The relating flight rises 7 percent.", "g1": "The g one flight rises 1 percent.",
+       "g2": "The g two flight rises 2 percent.", "pa1": "The pa one flight rises 10 percent.",
+       "pa2": "The pa two flight rises 4.75 percent."}
 RR = "rise:run ratio"
 with scratch() as c:
     t16 = new_source(verified=True)
@@ -3047,16 +3054,80 @@ with scratch() as c:
     hand("UPDATE evidence_sources SET tier=? WHERE ref_id=?", tier0, t16)
     record("T063-10", "a derived figure over a regulatory-stratum source needs no pinpoint of its own: its inputs' locators stand", err is None, err)
     h = cli("derive-extraction", "--help")
-    record("T063-08", "derive-extraction --help offers no --comparator, --claimed-unit, --conversion-note or --claim-text, and says its ref_id is a pointer",
-           not any(f in h.stdout for f in ("--comparator", "--claimed-unit", "--conversion-note", "--claim-text")) and "pointer" in h.stdout,
+    record("T063-08", "derive-extraction --help offers no --comparator, --claimed-unit, --conversion-note or --claim-text, and says --ref-id is only a check",
+           not any(f in h.stdout for f in ("--comparator", "--claimed-unit", "--conversion-note", "--claim-text")) and "--ref-id" in h.stdout and "CHECK" in h.stdout,
            h.stdout[-300:])
-    # relate-extraction: the second edge completes the pair, and the check runs then.
-    bad_id = db.insert_extraction(derived("99"), session=S, dry_run=False, relations=edges[:1])["extraction_id"]
+    # A derived row is written whole: both inputs, or nothing (the critic of T-063: a one-edge derived 999 was accepted).
     before = counts()
-    r = refusal(db.relate_extraction, bad_id, "derived_from", S, to_extraction=delta_id, stated="named",
-                quote=T16["delta"], input_role="delta")
-    record("T016-N11b", "relate-extraction refuses the delta edge that completes a derived 99 over 5.5 + 9.25, nothing written",
-           r is not None and "disagrees" in r and counts() == before, (r, counts(), before))
+    r = refusal(db.insert_extraction, derived("99"), session=S, dry_run=False, relations=edges[:1])
+    record("T063-11", "a derived row with ONE input edge is refused at write: base AND delta are both required, nothing written",
+           r is not None and "base AND one carrying --input-role delta" in r and counts() == before, (r, counts(), before))
+    r = refusal(db.insert_extraction, {**derived("14.75"), "claim_type": "qualitative"}, session=S, dry_run=False, relations=edges)
+    record("T063-12", "a derived row that is not a numerical claim is refused", r is not None and "numerical" in r, r)
+
+    # T063-13..: the critic of T-063 (a derived row must never state a figure its inputs do not support).
+    r1, r2 = landing("rat1", "1:12", claimed_unit="rise:run ratio"), landing("rat2", "1:14", claimed_unit="rise:run ratio")
+    before = counts()
+    r = refusal(db.derive_extraction, **derive(r1, r2, claimed_value="1:2"))
+    record("T063-13", "two ratios are not summed, and a typed --claimed-value does not make them so: refused, nothing written",
+           r is not None and "cannot be summed" in r and counts() == before, (r, counts(), before))
+    nu1, nu2 = landing("nu1", "5.5", claimed_unit=None), landing("nu2", "9.25", claimed_unit=None)
+    r = refusal(db.derive_extraction, **derive(nu1, nu2, claimed_value="99"))
+    record("T063-14", "two figures with no unit are not summed either", r is not None and "cannot be summed" in r, r)
+    r = refusal(db.derive_extraction, **derive(r1, r2))
+    record("T063-13b", "the same two ratios with no typed value: refused as not summable, not a crash", r is not None and "cannot be summed" in r, r)
+    rat_edges = [{"relation": "derived_from", "to_extraction": r1, "stated": "named", "quote": T16["rat1"], "input_role": "base"},
+                 {"relation": "derived_from", "to_extraction": r2, "stated": "named", "quote": T16["rat2"], "input_role": "delta"}]
+    before = counts()
+    r = refusal(db.insert_extraction, {**derived("1:2"), "claimed_unit": "rise:run ratio", "comparator": "="}, session=S,
+                dry_run=False, relations=rat_edges)
+    record("T063-13c", "through the Python writer too: a derived row whose pair no check can recompute is refused ('nothing can recompute it')",
+           r is not None and "nothing can recompute" in r and counts() == before, (r, counts(), before))
+    sk = landing("skim1", "3")
+    hand("UPDATE source_value_extractions SET extraction_method='skim' WHERE extraction_id=?", sk)
+    r = refusal(db.derive_extraction, **derive(sk, delta_id))
+    record("T063-15", "an input read by a skim (not publishable) is refused, and the message says so",
+           r is not None and "not publishable" in r and str(sk) in r, r)
+    cond = landing("cond1", "4", figure_role="condition")
+    r = refusal(db.derive_extraction, **derive(cond, delta_id))
+    record("T063-16", "a condition row is not an input of a sum", r is not None and "condition" in r and str(cond) in r, r)
+    contra = landing("contra1", "6")
+    hand("UPDATE source_value_extractions SET extraction_status='contradicted' WHERE extraction_id=?", contra)
+    r = refusal(db.derive_extraction, **derive(contra, delta_id))
+    record("T063-17", "a contradicted input is refused", r is not None and "contradicted" in r, r)
+    r = refusal(db.derive_extraction, **{**derive(base_id, delta_id), "ref_id": "REF-99999"})
+    record("T063-18", "a --ref-id that is not the inputs' source is refused (the flag is a check, not a choice)",
+           r is not None and "not the inputs' source" in r, r)
+    # a regulatory-stratum input with only a PROSE locator is refused, as a claim row of the same shape is (R3)
+    prose = landing("prose1", "2")
+    hand("UPDATE source_value_extractions SET source_section='clause 4', loc_section=NULL WHERE extraction_id=?", prose)
+    tier0 = c.execute("SELECT tier FROM evidence_sources WHERE ref_id=?", (t16,)).fetchone()[0]
+    hand("UPDATE evidence_sources SET tier=5 WHERE ref_id=?", t16)
+    r = refusal(db.derive_extraction, **derive(ge_id, prose, dry_run=True))
+    hand("UPDATE evidence_sources SET tier=? WHERE ref_id=?", tier0, t16)
+    record("T063-19", "on a tier-5 source an input with only a prose section is refused: the pinpoint hierarchy is owed",
+           r is not None and "pinpoint" in r and str(prose) in r, r)
+    # a derived figure is not turned into a claim with no words, nor given another comparator, nor left stale
+    d_ok = db.derive_extraction(**derive(landing("g1", "1"), landing("g2", "2")))["extraction_id"]
+    r = refusal(db.amend_extraction, d_ok, "figure_role", "claim", "T063 probe", session=S)
+    record("T063-20", "a derived row cannot be amended into a claim: it has no words of its own", r is not None and "no words of its own" in r, r)
+    r = refusal(db.amend_extraction, d_ok, "comparator", "<=", "T063 probe", session=S)
+    record("T063-21", "a derived row's comparator is its inputs': amending it is refused", r is not None and "its inputs'" in r, r)
+    inp = c.execute("SELECT to_extraction_id FROM extraction_relations WHERE from_extraction_id=? AND input_role='base'", (d_ok,)).fetchone()[0]
+    r = refusal(db.amend_extraction, inp, "comparator", ">=", "T063 probe", session=S)
+    record("T063-22", "an input's comparator cannot be amended under a derived row that computed its bound from it",
+           r is not None and "input of derived" in r, r)
+    # relate-extraction writes the same input rules as derive-extraction (one home: the edge writer)
+    rel_from = landing("relf", "7", figure_role="finding")
+    r = refusal(db.relate_extraction, rel_from, "derived_from", S, to_extraction=nloc_id, stated="named",
+                quote=T16["nloc"], input_role="delta")
+    record("T063-23", "relate-extraction refuses a derived_from edge to an input with no locator", r is not None and "no locator" in r, r)
+    # two derivations that differ in INPUTS but state the same result are not copies of each other
+    a1, a2 = landing("pa1", "10"), landing("pa2", "4.75")
+    res, err = ok(db.derive_extraction, **derive(a1, a2, dry_run=False))
+    record("T063-24", "a second derivation of 14.75 from DIFFERENT inputs is a second row, not a byte-identical copy", err is None, err)
+    r = refusal(db.derive_extraction, **derive(a1, a2))
+    record("T063-25", "...and the same inputs again are the copy, refused", r is not None and "exact row" in r, r)
 
     # --- amend-extraction to `derived` runs the same arithmetic (the `77` row), and an incomplete row is checked when it completes
     base_edge = {"to_extraction": base_id, "stated": "named", "quote": T16["base"], "input_role": "base"}

@@ -178,9 +178,10 @@ stages:
       bare ratio with no linked run-length/landing condition, or a T1 finding recorded as an independent
       measurement when the source actually tested subjects against a code's own stated limit
       (audited_against), is content the book can print wrong rather than merely incomplete. condition_on
-      and derived_from both require a resolvable to_extraction_id; v_derived_figure_check recomputes any
-      row graded figure_role='derived' from its linked base/delta inputs rather than trusting the stored
-      value on faith, the same posture derivation_sha and K01 (scripts/tests/test_db_integrity.py) already
+      and derived_from both require a resolvable to_extraction_id; v_derived_figure_check recomputes a
+      row graded figure_role='derived' from its linked base/delta inputs (plain numerals in one unit) rather
+      than trusting the stored value on faith, and the writers refuse a derived row whose pair it cannot
+      recompute (T-063), the same posture derivation_sha and K01 (scripts/tests/test_db_integrity.py) already
       take toward a determination. Migration 075 shipped without a writer for the grading or the
       relations; db.py now has them (`add-extraction`, `amend-extraction`, `relate-extraction`,
       `derive-extraction`), and assess_cell.compose_value reads `condition_on` edges from governing rows

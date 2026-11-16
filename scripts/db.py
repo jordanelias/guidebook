@@ -2737,7 +2737,9 @@ def main():
     p_dx = sub.add_parser("derive-extraction",
                           help="Write a computed (base+delta) extraction and the "
                                "derived_from edges that prove it")
-    p_dx.add_argument("--ref-id", required=True)
+    p_dx.add_argument("--ref-id", default=None,
+                      help="OPTIONAL check only: the derived row is filed under its inputs' source (the base's), "
+                           "and a different value is refused")
     p_dx.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
     _add_lens_flags(p_dx)
     p_dx.add_argument("--base", type=int, required=True,
@@ -2745,9 +2747,9 @@ def main():
     p_dx.add_argument("--delta", type=int, required=True,
                       help="extraction_id of the delta figure")
     p_dx.add_argument("--claimed-value", dest="claimed_value",
-                      help="Omit to compute base + delta. The comparator, the unit, the quote and the locator "
-                           "are the inputs' and are never asked for; --ref-id is a pointer to the base input's "
-                           "source, not an attribution of the derived figure to it")
+                      help="Omit to compute base + delta; a value given is CHECKED against it and refused if it differs. "
+                           "The comparator, the unit, the quote, the locator and the source are the inputs' and are "
+                           "never asked for")
     p_dx.add_argument("--session", required=True)
     p_dx.add_argument("--dry-run", action="store_true")
 
@@ -9692,6 +9694,41 @@ def _refuse_live_confirmation(conn, context, to_extraction):
             f"then re-determine. Nothing was written.")
 
 
+def _refuse_bad_derived_input(conn, context: str, inp):
+    """A figure a derived row is computed FROM must be one a source states and the engine could publish: a `claim` or
+    a `finding` (not a `condition`, not itself derived), not skimmed (`dbcore.NOT_PUBLISHABLE_METHODS`, the owner's
+    2026-10-09 rule) and not contradicted, with a quote of its own and a locator, as strict as R3 is for the same
+    source (a regulatory-stratum source, tier 4 to 6, needs a structured pinpoint, not only a prose section). The
+    ONE home of those rules for every writer of a `derived_from` edge (derive-extraction, add-extraction,
+    relate-extraction): a derived row stores neither quote nor locator (OD-40), so what it rests on is checked here."""
+    xid = inp["extraction_id"]
+    if inp["figure_role"] not in ("claim", "finding"):
+        raise Refusal(f"{context}: input {xid} is a {inp['figure_role']!r} row. A derived figure is computed from "
+                      f"figures a source states (a claim or a finding); a condition qualifies a figure and a derived "
+                      f"row has no words of its own. Nothing was written.")
+    if inp["extraction_method"] in dbcore.NOT_PUBLISHABLE_METHODS:
+        raise Refusal(f"{context}: input {xid} was read by {inp['extraction_method']!r}, which is not publishable "
+                      f"(owner 2026-10-09). A figure computed from it would carry the standing of a full reading it "
+                      f"does not have. Read the source in full first. Nothing was written.")
+    if (inp["extraction_status"] or "") == "contradicted":
+        raise Refusal(f"{context}: input {xid} is contradicted. Nothing computed from it stands. "
+                      f"Nothing was written.")
+    if not (inp["claim_text"] or "").strip():
+        raise Refusal(f"{context}: input {xid} has no quote of its own, and a derived figure's words are its inputs' "
+                      f"(an input that is itself derived has none). Derive from rows a source states. "
+                      f"Nothing was written.")
+    levels = [c for c in dbcore.columns(conn, "source_value_extractions") if c.startswith("loc_") and c != "loc_note"]
+    esc = "[UNVERIFIED-QUANT]" in (inp["notes"] or "")
+    pin = any(str(inp[c] or "").strip() for c in levels)
+    tier = conn.execute("SELECT tier FROM evidence_sources WHERE ref_id=?", (inp["ref_id"],)).fetchone()
+    regulatory = bool(tier and tier[0] is not None and int(tier[0]) >= 4)
+    if not esc and not pin and (regulatory or not str(inp["source_section"] or "").strip()):
+        raise Refusal(f"R3: derived figure's input {xid} has no locator" +
+                      (" a code, standard or statute numbers its clauses, so the pinpoint hierarchy is owed, not only a "
+                       "prose section" if regulatory and str(inp["source_section"] or "").strip() else "") +
+                      f", so the derived figure cannot be found again. Nothing written.")
+
+
 def _refuse_derived_mismatch(conn, extraction_id: int, context: str):
     """Refuse a derived figure that disagrees with its own base + delta: the ONE home of that arithmetic, run
     by every writer that can complete a derived row (add-extraction, relate-extraction, amend-extraction to
@@ -9705,12 +9742,20 @@ def _refuse_derived_mismatch(conn, extraction_id: int, context: str):
     (a derived figure in mm over a base in m) or whose base is a range is not compared; integrity reports it
     UNCHECKED. `derive-extraction` refuses two inputs in two units (T-063), so such a row can only arrive by
     `add-extraction` / `relate-extraction` / `amend-extraction`, and it carries no record of its conversion."""
-    for bad in conn.execute("SELECT stored, recomputed FROM v_derived_figure_check WHERE derived_id = ?",
-                            (extraction_id,)).fetchall():
+    checked = conn.execute("SELECT stored, recomputed FROM v_derived_figure_check WHERE derived_id = ?",
+                           (extraction_id,)).fetchall()
+    for bad in checked:
         if abs(bad["recomputed"] - bad["stored"]) > 1e-9:
             raise Refusal(f"{context}: derived figure {bad['stored']} disagrees with its own base + delta "
                           f"({bad['recomputed']}). A derived figure that contradicts its inputs is the "
                           f"defect this check exists to stop. Nothing was written.")
+    roles = {r[0] for r in conn.execute("SELECT input_role FROM extraction_relations WHERE from_extraction_id = ? "
+                                        "AND relation = 'derived_from'", (extraction_id,))}
+    if not checked and {"base", "delta"} <= roles:
+        raise Refusal(f"{context}: derived figure {extraction_id} has a base and a delta but nothing can recompute "
+                      f"it: the check joins plain numerals in ONE unit, and a ratio, a range, a missing unit or two "
+                      f"units cannot be summed by it. A figure no check can recompute is a number trusted on faith. "
+                      f"Nothing was written.")
 
 
 def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
@@ -9761,7 +9806,7 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                 f"{context}: --to-extraction {to_extraction} is the same row this "
                 f"edge is FROM. A figure cannot be its own comparator.")
         target = conn.execute(
-            "SELECT ref_id FROM source_value_extractions WHERE extraction_id=?",
+            "SELECT * FROM source_value_extractions WHERE extraction_id=?",
             (to_extraction,)).fetchone()
         if target is None:
             raise Refusal(
@@ -9769,6 +9814,8 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                 f"condition_on/derived_from name a figure this project actually "
                 f"holds as a row -- extract it first, or use --to-label for a "
                 f"referent that is not yet its own row.")
+        if relation == "derived_from":
+            _refuse_bad_derived_input(conn, context, target)
         if relation in _ROW_ONLY_RELATIONS and target["ref_id"] != from_ref_id \
                 and not (cross_source_reason or "").strip():
             raise Refusal(
@@ -10389,19 +10436,10 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
             _esc = "[UNVERIFIED-QUANT]" in (row.get("notes") or "")
             _pinpoint = any(str(row.get(c) or "").strip() for c in _levels)
             # A DERIVED FIGURE WITH NO LOCATOR OF ITS OWN is found again through its inputs (OD-40): each
-            # `derived_from` edge must point at a row that has one. The two refusals below do not apply to it.
+            # `derived_from` edge must point at a row that has one, checked where the edge is written
+            # (`_refuse_bad_derived_input`), so every writer of such an edge applies the same rule.
             _via_inputs = (figure_role == "derived" and not _esc and not _pinpoint
                            and not str(row.get("source_section") or "").strip())
-            if _via_inputs:
-                for _e in relations or ():
-                    _in = conn.execute("SELECT * FROM source_value_extractions WHERE extraction_id=?",
-                                       (_e.get("to_extraction"),)).fetchone() if _e.get("relation") == "derived_from" else None
-                    if _in is not None and not ("[UNVERIFIED-QUANT]" in (_in["notes"] or "")
-                                                or str(_in["source_section"] or "").strip()
-                                                or any(str(_in[c] or "").strip() for c in _levels)):
-                        raise Refusal(
-                            f"R3: derived figure's input {_e['to_extraction']} has no locator, so the derived figure "
-                            f"cannot be found again. Nothing written.")
             # EVERY TIER NEEDS A LOCATOR (R3). Below the regulatory stratum the prose
             # `--source-section` is the honest locator for a paper; above it the pinpoint
             # hierarchy is demanded below. A quantified row with neither, and no
@@ -10494,15 +10532,18 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 "of five corridor-width sources in the live corpus state theirs "
                 "against a reference they name or invoke -- silence is not "
                 "'absolute', it is unchecked.")
-        if figure_role == "derived" and not any(
-                e.get("relation") == "derived_from" and e.get("input_role") == "base"
-                for e in relations):
-            raise Refusal(
-                "figure_role='derived' requires at least one derived_from edge "
-                "carrying --input-role base. A derived row with nothing pointing "
-                "at what it was computed FROM is a number trusted on faith, which "
-                "is exactly what v_derived_figure_check (migration 075) exists to "
-                "stop trusting silently.")
+        if figure_role == "derived":
+            _have = {e.get("input_role") for e in relations if e.get("relation") == "derived_from"}
+            if not {"base", "delta"} <= _have:
+                raise Refusal(
+                    "figure_role='derived' requires a derived_from edge carrying --input-role base AND one "
+                    "carrying --input-role delta (db.py derive-extraction writes both). A derived row with nothing "
+                    "pointing at what it was computed FROM, or with one input, is a number trusted on faith, "
+                    "which is exactly what v_derived_figure_check (migration 075) exists to stop trusting "
+                    "silently. Nothing was written.")
+            if claim_type != "numerical":
+                raise Refusal("figure_role='derived' is a computed number: --claim-type must be 'numerical'. "
+                              "A sentence a source states is a claim row. Nothing was written.")
 
         # A BYTE-IDENTICAL ROW IS A COPY, NOT A CONTEST. D-0168 protects a DIVERGENT second
         # reading; a row equal in every column the source supplied adds nothing a reader
@@ -10517,9 +10558,17 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         # THE LENS IS NOT PART OF THE ROW'S IDENTITY (migration 131): a figure is written once and stated in
         # each group by a link, so the same reading in another group is `add-lens-link`, never a second figure
         # (a second copy would count the one reading twice).
-        _dup = conn.execute(
-            "SELECT extraction_id FROM source_value_extractions WHERE " + " AND ".join(_preds)
-            + " LIMIT 1", [row[c] for c in _same_cols]).fetchone()
+        _dups = conn.execute(
+            "SELECT extraction_id FROM source_value_extractions WHERE " + " AND ".join(_preds),
+            [row[c] for c in _same_cols]).fetchall()
+        if figure_role == "derived":
+            # A derived row has no words of its own to tell two derivations apart, so what makes it a copy is the
+            # same inputs in the same roles: 5.5 + 9.25 and 10 + 4.75 are two derivations of one result.
+            _mine = {(e.get("to_extraction"), e.get("input_role")) for e in relations if e.get("relation") == "derived_from"}
+            _dups = [d for d in _dups if {(r[0], r[1]) for r in conn.execute(
+                "SELECT to_extraction_id, input_role FROM extraction_relations WHERE from_extraction_id=? "
+                "AND relation='derived_from'", (d[0],))} == _mine]
+        _dup = _dups[0] if _dups else None
         if _dup:
             raise Refusal(
                 f"add-extraction: extraction {_dup[0]} already carries this exact row "
@@ -11097,6 +11146,27 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                     "reason": "already this value; the reason is recorded on notes",
                     "dry_run": dry_run}
 
+        if field == "figure_role" and row["figure_role"] == "derived" and value != "derived" \
+                and not (row["claim_text"] or "").strip():
+            raise Refusal(
+                f"amend-extraction --field figure_role: extraction {extraction_id} is a derived figure and has no "
+                f"words of its own (OD-40); turning it into a {value!r} row would assert a value with no quote and "
+                f"no locator, which add-extraction refuses at the verbatim floor. Retire it and extract the figure "
+                f"from the source's own sentence. Nothing was written.")
+        if field == "comparator":
+            if row["figure_role"] == "derived":
+                raise Refusal(
+                    f"amend-extraction --field comparator: extraction {extraction_id} is a derived figure and its "
+                    f"comparator is its inputs' (_derived_comparator); amend an input and derive again. "
+                    f"Nothing was written.")
+            _used = [r[0] for r in conn.execute(
+                "SELECT from_extraction_id FROM extraction_relations WHERE to_extraction_id=? AND relation='derived_from'",
+                (extraction_id,))]
+            if _used:
+                raise Refusal(
+                    f"amend-extraction --field comparator: extraction {extraction_id} is an input of derived "
+                    f"figure(s) {_used}, whose bound is computed from this comparator and would be left stale. Retire "
+                    f"the derived row(s) first, amend, and derive again. Nothing was written.")
         if field in ("claimed_value", "claimed_unit", "setting"):
             _refuse_unless_reformat(row, field, value)
         if field in ("claimed_value", "claimed_unit", "setting", "comparator"):
@@ -11146,7 +11216,7 @@ def _derived_comparator(base_cmp, delta_cmp):
     return None
 
 
-def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
+def derive_extraction(*, ref_id: str = None, parameter_id: int, base: int,
                       delta: int, session: str,
                       dry_run: bool = False, identity: str = None, icf: str = None,
                       needs: str = None,
@@ -11170,7 +11240,7 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
     The refusals reached through it carry the prefix `add-extraction:` (the writer is shared).
     """
     with dbcore.connect(dry_run, readonly=True) as conn:
-        cols = "extraction_id, ref_id, claimed_value, claimed_unit, claim_text, comparator"
+        cols = "*"
         base_row = conn.execute(f"SELECT {cols} FROM source_value_extractions WHERE extraction_id=?", (base,)).fetchone()
         if base_row is None:
             raise Refusal(
@@ -11186,11 +11256,18 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
             raise Refusal("derive-extraction: --base and --delta must be different "
                           "rows -- a figure cannot be derived from itself twice.")
         for _id, _row in ((base, base_row), (delta, delta_row)):
-            if not (_row["claim_text"] or "").strip():
-                raise Refusal(
-                    f"derive-extraction: input {_id} has no quote of its own, and a derived figure's words are its "
-                    f"inputs' (an input that is itself derived has none). Derive from rows a source states. "
-                    f"Nothing was written.")
+            _refuse_bad_derived_input(conn, "derive-extraction", _row)
+        if base_row["ref_id"] != delta_row["ref_id"]:
+            raise Refusal(
+                f"derive-extraction: base {base} is from {base_row['ref_id']} and delta {delta} from "
+                f"{delta_row['ref_id']}. This verb adds figures ONE source states; a derivation across two documents "
+                f"is a synthesis act this verb does not write. Nothing was written.")
+        if ref_id is not None and ref_id != base_row["ref_id"]:
+            raise Refusal(
+                f"derive-extraction: --ref-id {ref_id} is not the inputs' source ({base_row['ref_id']}); the "
+                f"derived row is filed under its inputs' source and the flag is only a check. Omit it. "
+                f"Nothing was written.")
+        ref_id = base_row["ref_id"]
 
         base_unit, delta_unit = base_row["claimed_unit"], delta_row["claimed_unit"]
         if base_unit != delta_unit:
@@ -11212,16 +11289,16 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
             except (TypeError, ValueError):
                 return None
         bn, dn = _num(base_row["claimed_value"]), _num(delta_row["claimed_value"])
+        if bn is None or dn is None or base_unit is None:
+            raise Refusal(
+                f"derive-extraction: base {base} ({base_row['claimed_value']!r} {base_unit!r}) and delta {delta} "
+                f"({delta_row['claimed_value']!r} {delta_unit!r}) cannot be summed: both must be plain numerals in "
+                f"one stated unit (a ratio, a range or a figure with no unit is not added, and no check could "
+                f"recompute it, v_derived_figure_check). Nothing was written.")
         # A supplied --claimed-value is compared with base + delta by `_refuse_derived_mismatch`
         # (the one home of that arithmetic), inside `insert_extraction`'s transaction.
-        if claimed_value is None and bn is not None and dn is not None:
+        if claimed_value is None:
             claimed_value = _fmt_num(bn + dn)
-        elif claimed_value is None:
-            raise Refusal(
-                f"derive-extraction: --claimed-value is required when base or "
-                f"delta does not parse as a plain number (base extraction {base} "
-                f"= {base_row['claimed_value']!r}, delta extraction {delta} = "
-                f"{delta_row['claimed_value']!r}).")
 
         data = {"ref_id": ref_id, "parameter_id": parameter_id,
                 "identity_code": identity, "icf_code": icf, "needs_code": needs,
