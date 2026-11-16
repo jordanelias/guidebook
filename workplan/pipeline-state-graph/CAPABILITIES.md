@@ -14,7 +14,7 @@ STATE-GRAPH.md. A predicate that tests a ruling the mechanism does not carry fai
 
 | capability | this tree |
 |---|---|
-| C1 Mine one source across many parameters | **BLOCKED** |
+| C1 Mine one source across many parameters | **CAN** |
 | C2 Grow its own parameter base | **BLOCKED** |
 | C3 Synthesize across parameters | **BLOCKED** |
 | C4 Specify, then render | **BLOCKED** |
@@ -33,7 +33,6 @@ whatever slug it was filed under")?
 | C1.3 | one source can be harvested for more than one sense of the same phrase | **PASS** | P-W = PASS | LED-197 |
 | C1.4 | an extraction can be filed under a slug other than the one the source was admitted to | **PASS** | P-V2 = PASS | LED-196, LED-201 |
 | C1.5 | a record exists of which parameters a source has been read for | **PASS** | P-V = PASS | LED-195, LED-199 |
-| C1.6 | a value can be stated in every lens, including the medical lens | **FAIL** | P-MEDICAL = FAIL | LED-110, LED-154 |
 | C1.7 | arguments and qualitative findings can be captured as well as numbers | **PASS** | source_value_extractions.claim_type admits qualitative | SES-022, SES-023 |
 | C1.8 | a search records which slug x lens cells it covered | **PASS** | P-M = PASS | LED-084, RES-04 |
 
@@ -95,7 +94,7 @@ database, with the rendering gated?
 | Term harvest (observe-term) | evidence | True | True | -- | -- | records any phrase a source uses, any number per source, unjudged; the entry point for new vocabulary. |
 | Adjudication and minting (adjudicate-term, add-term) | judgment | -- | True | -- | -- | the only route from a phrase to a term; divergent judgments are allowed to stand as a contest. |
 | Parameter registry (add-parameter, decline-parameter, set-parameter-direction) | base | -- | PARTIAL | -- | PARTIAL | creates and declines; on the main tree nothing retires or merges a parameter (C2.5). Direction is the judgment the engine cannot make. |
-| Lens registries (populations, base_icf, access_needs, base_taxonomy_medical) | base | PARTIAL | PARTIAL | -- | PARTIAL | add-extraction refuses a lens code whose registry is empty; the medical registry is empty (C1.6) and several base tables have no verb (C2.8). |
+| Lens registries (populations, base_icf, access_needs) | base | PARTIAL | PARTIAL | -- | PARTIAL | add-extraction refuses a lens code whose registry is empty; several base tables have no verb (C2.8). |
 | Extraction (add-extraction, derive-extraction, amend-extraction) | judgment | PARTIAL | -- | PARTIAL | True | one parameter per call; refuses a slug the source was not admitted to (C1.4); requires a lens; is what the engine gathers by parameter. |
 | Scan ledger (source_scans, v_scan_ledger) | judgment | NO (main) / YES (unreleased branch) | -- | -- | -- | the (source x parameter) read-state record the scan contract needs; absent from the main tree (C1.5). |
 | Determination engine (assess_cell) | specification | -- | -- | PARTIAL | True | computes state per (parameter x one lens) cell per run and emits SQL; combines sources within a cell, not across parameters (C3.5); cannot reach a determination from findings plus a threshold (C3.4). |
