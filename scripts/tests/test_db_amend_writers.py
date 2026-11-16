@@ -2174,6 +2174,20 @@ try:
                "naming it",
                msg_amend and f"{SPEC_G}" in msg_amend and "retire-specification" in msg_amend,
                f"{msg_amend!r}")
+        # G04b (T-061 critic): the value and the unit of a figure in a live determination are engine columns, so the
+        # live-determination refusal covers them as it covers extraction_method. The reformat rule is switched off for
+        # this one call so the case reaches the refusal it names; it asserts membership of ENGINE_EXTRACTION_COLUMNS by
+        # behaviour, not by set arithmetic.
+        _reformat_rule = db._refuse_unless_reformat
+        db._refuse_unless_reformat = lambda *a, **k: None
+        try:
+            msg_val = refusal(db.amend_extraction, GOV_X, "claimed_value", "999", "fixture", S, dry_run=True)
+            msg_unit = refusal(db.amend_extraction, GOV_X, "claimed_unit", "zz-unit", "fixture", S, dry_run=True)
+        finally:
+            db._refuse_unless_reformat = _reformat_rule
+        record("G04b", "amend-extraction refuses a changed claimed_value or claimed_unit on a row in a live determination's provenance",
+               bool(msg_val) and "live determination" in msg_val and bool(msg_unit) and "live determination" in msg_unit,
+               f"{msg_val!r} | {msg_unit!r}")
         msg_excl = amend(OTHER_X) if OTHER_X else None
         record("G05", "...whatever part the row played: a row the determination only EXCLUDED is "
                "refused too, because regrading could promote it",

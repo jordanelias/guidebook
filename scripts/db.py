@@ -10777,8 +10777,10 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
 # "Yes, reformat in place" -- a figure's value, unit or EMPTY setting is reformatted in place, with the same
 # numbers and quote, narrowing D-0168 for reformatting only. `_refuse_unless_reformat` is the whole of what
 # "reformat" means; a different figure is still a second row. The old text is not given a new home here:
-# the committed data migration that INSERTed the row holds it, and `amend_extraction`'s one generic trail
-# (below) is not extended (owner 2026-11-06: "a correction appended to a note" is data in the wrong cell).
+# the committed data migration that INSERTed the row holds it. `amend_extraction`'s generic trail
+# (" || date field SET old -> new (reason)" on notes) still runs for these fields as for every amendable one: it
+# was not added to and not removed. Whether that shape may stand under the owner's 2026-11-06 ruling ("a correction
+# appended to a note" is data in the wrong cell) is the owner's question, not settled here.
 def register_root(root_id: str, description: str, root_type: str, provenance: str, population_note: str,
                   notes: str, session: str, dry_run: bool = False):
     """Register an EXTERNAL root: a source of a figure that is not an admitted source of this corpus.
@@ -10854,6 +10856,11 @@ def _amendable_sve_fields(conn):
     return [c for c in dbcore.columns(conn, "source_value_extractions") if c not in _NOT_AMENDABLE_SVE]
 
 
+# A minus that is a sign: directly before a digit and not after a word character or a point (so the hyphen of `0-4.8`
+# and of `1-2` is not one, while `-8` and `0 to -4.8` are).
+_SIGNED = re.compile(r"(?<![\w.])[-\u2212](?=\d)")
+
+
 def _figure_numbers(text):
     """The numbers a figure states, in order, each as its set of readings (`retrieval_log.number_tokens`, the reader
     T-008's number rule uses); a ratio gives its two operands. `1:20` -> [{1}, {20}]; `30,0` -> [{30.0}];
@@ -10877,13 +10884,18 @@ def _refuse_unless_reformat(row, field, value):
                      in the same order, each one of the old number's readings (so `6%` -> `6`, `30,0` -> `30.0`,
                      `0-4.8` -> `0 to 4.8`, `1 in 12` -> `1:12`; never `1:20` -> `1:2.0` or `6` -> `60`); then
                      T-008's number rule against the row's own quote, and the figure must read under the row's unit.
-      claimed_unit   `dbcore.unit_refusal`; the new unit stands, on word boundaries, in the old cell (a reformat
-                     drops words, it does not name a unit the row did not, so `mm (clear)` -> `m` is refused); then
-                     the row's value must read under the new unit.
+      claimed_unit   `dbcore.unit_refusal`; the new unit LEADS the old cell, exactly as written and followed by
+                     whitespace or the end (a reformat drops the words after the unit, as in `% longitudinal gradient
+                     (maximum) where the rise is <= 0.6 m` -> `%`; it never picks another word of the cell, so
+                     `m` out of that cell, `MM` out of `mm`, and `dB` out of `dB(A)` are refused); then the row's
+                     value must read under the new unit.
+      all three      the row must not become a copy of another row (the measure `insert_extraction` uses).
+      claimed_value  a sign is part of the number: a `-` directly before a digit (not the hyphen of `0-4.8`) is
+                     counted in the old and the new text and the counts must agree.
 
-    KNOWN AND ACCEPTED: a stored value that is ambiguous (`30,000`) cannot be reformatted in place, because T-008's
-    rule refuses an ambiguous claimed token and asks for the source's wording, which cannot be set while the stored
-    value is ambiguous. Such a row is a second row with --value-as-written."""
+    NOT GUARDED: a stored value that is ambiguous (`30,000`) is read through T-008's rule only as far as the quote
+    settles it; no stored row is ambiguous today (checked with `retrieval_log.number_tokens` over every row), so the
+    rule is not built for it. A row of that shape is a second row with --value-as-written."""
     ctx = f"amend-extraction --field {field}: extraction {row['extraction_id']}"
     if field == "setting":
         if (row["setting"] or "").strip():
@@ -10901,6 +10913,11 @@ def _refuse_unless_reformat(row, field, value):
                           f"{row['claimed_value']!r}. A reformat keeps the numbers (OR-3); a different figure is a "
                           f"second row and a contest (D-0168), and a figure the row holds in words is a second row "
                           f"with --value-as-written. Nothing was written.")
+        if len(_SIGNED.findall(row["claimed_value"] or "")) != len(_SIGNED.findall(value)):
+            raise Refusal(f"{ctx}: {value!r} carries a different number of minus signs from "
+                          f"{row['claimed_value']!r}. A sign is part of the number (the engine reads -8 as minus eight); "
+                          f"turning a range hyphen into a minus, or dropping one, is a different figure, a second row "
+                          f"and a contest (D-0168). Nothing was written.")
         _require_stated_numbers(row["claim_text"] or "", value, row["claim_type"], row["value_as_written"],
                                 "--claimed-value", "amend-extraction")
         figure, unit = value, row["claimed_unit"]
@@ -10908,15 +10925,37 @@ def _refuse_unless_reformat(row, field, value):
         why = dbcore.unit_refusal(value)
         if why:
             raise Refusal(f"{ctx}: {why}. Nothing was written.")
-        if not _as_whole_words(value, row["claimed_unit"]):
-            raise Refusal(f"{ctx}: {value!r} is not, on word boundaries, in the row's unit cell "
-                          f"{row['claimed_unit']!r}. A reformat drops words from the cell; naming a unit the row "
-                          f"did not is a new reading, a second row (D-0168). Nothing was written.")
+        cell = row["claimed_unit"] or ""
+        if not (cell.startswith(value) and (len(cell) == len(value) or cell[len(value)].isspace())):
+            raise Refusal(f"{ctx}: {value!r} does not lead the row's unit cell {cell!r}. A reformat drops the words "
+                          f"AFTER the unit (the cell reads unit first, then its conditions); choosing another word of "
+                          f"the cell, or another spelling of it, names a unit the row did not state, a new reading, "
+                          f"a second row (D-0168). Nothing was written.")
         figure, unit = row["claimed_value"], value
     why = dbcore.figure_refusal(figure, unit, row["comparator"], row["claim_type"])
     if why:
         raise Refusal(f"{ctx}: the figure would still not be readable: {why}. When both the value and the unit "
                       f"need reformatting, reformat claimed_value first. Nothing was written.")
+
+
+_AMEND_COPY_IGNORE = frozenset({"extraction_id", "notes", "extraction_status", "extraction_method", "contested",
+                                "created_at", "created_by_session", "updated_at", "updated_by_session"})
+
+
+def _refuse_copy_after_amend(conn, row, field, value):
+    """An amendment must not leave the row a byte-identical copy of another (the measure `insert_extraction` applies
+    to a new row: every column the source supplies, not the notes, status, method, contest flag, ledger or id). A
+    reformat of one of two rows that restate the same fact would otherwise end in exactly the pair add-extraction
+    refuses, counted twice by anything that counts rows."""
+    cols = [c for c in row.keys() if c not in _AMEND_COPY_IGNORE]
+    vals = [value if c == field else row[c] for c in cols]
+    dup = conn.execute("SELECT extraction_id FROM source_value_extractions WHERE extraction_id <> ? AND "
+                       + " AND ".join(f'"{c}" IS ?' for c in cols) + " LIMIT 1", [row["extraction_id"], *vals]).fetchone()
+    if dup:
+        raise Refusal(f"amend-extraction --field {field}: extraction {row['extraction_id']} would become a "
+                      f"byte-identical copy of extraction {dup[0]} (same source, parameter, claim, value, unit, "
+                      f"text and locator). A copy is not a second reading; state the same figure in another lens "
+                      f"code with add-lens-link on one of them, and retire the other. Nothing was written.")
 
 
 def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
@@ -11039,6 +11078,8 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
 
         if field in ("claimed_value", "claimed_unit", "setting"):
             _refuse_unless_reformat(row, field, value)
+        if field in ("claimed_value", "claimed_unit", "setting", "comparator"):
+            _refuse_copy_after_amend(conn, row, field, value)
 
         # A CHANGE of a column the engine reads (figure_role, comparator, extraction_method here)
         # decides what a row supplies (a value, direction, a confirmation) and what bound it

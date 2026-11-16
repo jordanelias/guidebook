@@ -3383,6 +3383,15 @@ with scratch() as c:
         r = refusal(amend, x, f, v)
         record(tid, name, r and needle in r and row(x)[f] == before, r)
 
+    # T061-19..22 (the critic of the first commit): a reformat never names another word of the cell, flips a sign,
+    # or leaves a row a byte-identical copy of another. A's cell still holds its conditions at this point and
+    # contains the free-standing words `rise`, `is` and `m`.
+    for tid, bad in (("T061-19", "m"), ("T061-19b", "gradient"), ("T061-19c", "rise"), ("T061-19d", "the")):
+        refused(tid, f"a unit that is another word of the cell (`{bad}`) is refused: the unit LEADS the cell", A, "claimed_unit", bad, "does not lead")
+    refused("T061-20", "a unit that is another spelling of the leading one (`MM` for `mm (clear ...)`) is refused", E, "claimed_unit", "MM", "does not lead")
+    refused("T061-21", "a range hyphen turned into a minus (`0-4.8` -> `0 to -4.8`) is a different figure", D, "claimed_value", "0 to -4.8", "minus signs")
+    E2 = put_row("mm", "1200", "mm", ">=")          # written after E was put into its history shape: not a copy yet
+    refused("T061-22", "a unit reformat that would leave the row a byte-identical copy of another is refused", E, "claimed_unit", "mm", "byte-identical copy")
     r, err = ok(amend, A, "claimed_value", "6")
     record("T061-01", "a stored `6%` is reformatted to `6` in place (same number)", err is None and row(A)["claimed_value"] == "6", err)
     r, err = ok(amend, A, "claimed_unit", "%")
@@ -3393,8 +3402,8 @@ with scratch() as c:
     refused("T061-03", "a different number (`6` -> `60`) is a second row, not a reformat", A, "claimed_value", "60", "same numbers")
     refused("T061-04", "a moved decimal point (`1:20` -> `1:2.0`) is refused", B, "claimed_value", "1:2.0", "same numbers")
     refused("T061-05", "a unit that is not a word of the cell (`m` for `mm (clear ...)`, a rescale) is refused", E, "claimed_unit", "m",
-            "word boundaries")
-    refused("T061-06", "a unit in the cell under which the figure does not read (`ratio` for `1:20`) is refused", B, "claimed_unit", "ratio",
+            "does not lead")
+    refused("T061-06", "a unit that leads the cell but under which the figure does not read (`rise:run` for `1:20`) is refused", B, "claimed_unit", "rise:run",
             "still not be readable")
     r, err = ok(amend, B, "claimed_unit", "rise:run ratio")
     record("T061-07", "the cell's own `rise:run ratio` is accepted and the figure reads",
