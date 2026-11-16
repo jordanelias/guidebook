@@ -101,7 +101,8 @@ object as unproven, not clean.**
 *"It is better to have a table cell point to another table cell than to rewrite."* Each stage holds
 only its own data; anything earlier is reached by pointer on the shared reference ID.
 **A parity check is not a fix** — it makes a dual home survivable, therefore permanent. **A column a
-committed data migration INSERTs can never be dropped**: grep `scripts/migrations/data_*` first, then
+committed data migration INSERTs can be dropped only by a schema migration the replay plan orders after every one of them**
+(`migrate_db.build_plan()`; an `-- AFTER_DATA:` line places it): grep `scripts/migrations/data_*` first, then
 writer-retire, reader-retire, NULL forward.
 → **NOT ENFORCED — you are the gate.**
 

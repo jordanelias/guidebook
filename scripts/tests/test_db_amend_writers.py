@@ -1945,6 +1945,21 @@ try:
            and n_links_now() == nl,
            f"{out_of(r11a)[-120:]!r} | {out_of(r11b)[-120:]!r}")
 
+    # T018-11b: a lens registry with no row is named, not left to `FOREIGN KEY constraint failed`. No live registry is
+    # empty any more (the medical one, the only one that was, was deleted 2026-11-16), so the refusal is exercised on a
+    # one-table in-memory database: the code is generic over every registry `_LENS_COLUMNS` names.
+    import db as _db_t18
+    _mem = sqlite3.connect(":memory:")
+    _tbl, _key = _db_t18._LENS_COLUMNS["icf_code"]
+    _mem.execute(f'CREATE TABLE "{_tbl}" ("{_key}" TEXT PRIMARY KEY)')
+    try:
+        _db_t18._require_lens_code(_mem, "icf_code", "ANY")
+        _empty_msg = None
+    except _db_t18.Refusal as _e:
+        _empty_msg = str(_e)
+    record("T018-11b", "a lens code against an EMPTY registry is refused in words ('holds no rows'), not left to the foreign key",
+           bool(_empty_msg) and "holds no rows" in _empty_msg and _tbl in _empty_msg, repr(_empty_msg)[:200])
+
     # T018-12: a retired identity is not newly used, by either writer. The state is set by SQL on the copy and undone.
     (dep,) = q("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code NOT IN ('ALL', ?) "
                "ORDER BY identity_code LIMIT 1", POP)[0]

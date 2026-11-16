@@ -216,7 +216,7 @@ for tid, t in tasks.items():
 # --- critical path (longest hard chain)
 def chain(t):
     best = []
-    for d in tasks[t]["hard"]:
+    for d in sorted(tasks[t]["hard"]):      # sorted: a set's order moves with PYTHONHASHSEED, and a tie in length picked the first seen
         if d in tasks:
             c = chain(d)
             if len(c) > len(best):
@@ -224,7 +224,7 @@ def chain(t):
     return best + [t]
 
 
-crit = max((chain(t) for t in tasks), key=len)
+crit = max((chain(t) for t in sorted(tasks)), key=len)
 
 sha = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
 now = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")

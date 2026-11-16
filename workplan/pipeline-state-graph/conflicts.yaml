@@ -184,28 +184,13 @@ conflicts:
   class: RULING-MECHANISM
   severity: S2
   title: "determination_gates attaches to a group through one lens column"
-  atoms: [LED-128, LED-130, PIP-04]
+  atoms: [LED-128, LED-130]
   sides:
     - {atoms: [LED-128], says: "any table attaching a determination to a group has four lens columns."}
-    - {atoms: [PIP-04], says: "a medical lens always accompanies another lens; no determination is keyed on medical_code alone."}
   probe: P-GT
-  direction: "P-GT: determination_gates carries identity_code only. Whether PIP-04 is enforced anywhere is not probed; the specifications CHECK is 'at least one' (LED-130), which admits medical alone."
+  direction: "P-GT: determination_gates carries identity_code only. The specifications CHECK is 'at least one' (LED-130). (PIP-04, the rule that no determination is keyed on a medical code alone, was superseded on 2026-11-16 with the medical lens.)"
   resolver: AGENT
   confidence: medium
-
-- id: C-022
-  class: RULING-DOC
-  severity: S1
-  title: "Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out"
-  atoms: [LED-154, LED-156, LED-157, LED-158, DRS-194, DRS-229, DRS-231, DRS-232, DRS-233, PIP-04]
-  sides:
-    - {atoms: [DRS-194], says: "D-0184 (2026-09-01, an agent decision awaiting owner review, C-023): populating base_taxonomy_medical is 'the owner's alone' (DG-NON)."}
-    - {atoms: [LED-154, DRS-229, DRS-231], says: "owner, 2026-09-11 (quoted): 'Fable 5.1 to adjudicate and resolve all items that are presented to me ... Ensure that medical gets filled out.'"}
-    - {atoms: [DRS-232, DRS-233], says: "D-0188's own text limits the delegation to the 'enumerated items and no further' -- which may be narrower than the owner's 'all items that are presented to me', depending on what was presented."}
-  probe: P-MEDICAL
-  direction: "Rule 0: the owner's words of 2026-09-11 outrank D-0184's reservation to the extent of those words ('all items that are presented to me'; 'ensure that medical gets filled out'). D-0188's 'enumerated items and no further' is the agent's text and may be narrower than the owner's; whether that narrowing is intended is the owner's to confirm. Mechanism: add-extraction refuses a lens code whose registry table is empty; P-MEDICAL shows the medical registry empty although its writer (add-medical) exists. The instruction has not been executed."
-  resolver: OWNER+AGENT
-  confidence: high
 
 - id: C-023
   class: PROVENANCE

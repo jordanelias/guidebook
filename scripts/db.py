@@ -10000,7 +10000,7 @@ def _build_relation_groups(relations, to_extractions, to_labels, to_kinds, state
 
 
 # A FIGURE'S LENS LIVES IN extraction_lens_links (OR-1c, migration 131): one row per (figure, code), the
-# four typed columns of which a row states exactly one, and a warrant. The figure's own four columns are held
+# three typed columns of which a row states exactly one, and a warrant. The figure's own three columns are held
 # NULL by the table's CHECK. The helpers below are the one home of what a link write checks; insert_extraction
 # (every code of a new figure), add-lens-link and retire-lens-link all call them.
 
