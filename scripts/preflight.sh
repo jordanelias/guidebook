@@ -84,15 +84,19 @@ echo
 # --base reaches run_checks.py in EVERY mode: it is the `@BASE@` the changeset-scoped checks
 # (research_tooling_separation, the attestation checks) diff against. In --all and --kinds mode
 # nothing else carried it, so a check diffed origin/main whatever base you named.
+if ! git rev-parse --verify --quiet "$BASE" >/dev/null; then
+  echo "preflight: base ref '$BASE' not found; fetching..." >&2
+  git fetch origin main --quiet 2>/dev/null || true
+  if ! git rev-parse --verify --quiet "$BASE" >/dev/null; then
+    echo "PREFLIGHT: NOT RUN — base ref '$BASE' does not exist (a run that names a base it cannot read is not a gate)"
+    exit 2
+  fi
+fi
 if [ "$MODE_ALL" -eq 1 ]; then
   python3 scripts/run_checks.py --all --base "$BASE" ${ARGS[@]+"${ARGS[@]}"}
 elif [ "$USER_KINDS" -eq 1 ]; then
   python3 scripts/run_checks.py --base "$BASE" ${ARGS[@]+"${ARGS[@]}"}
 else
-  if ! git rev-parse --verify --quiet "$BASE" >/dev/null; then
-    echo "preflight: base ref '$BASE' not found; fetching..." >&2
-    git fetch origin main --quiet 2>/dev/null || true
-  fi
   python3 scripts/run_checks.py --changed-from "$BASE" ${ARGS[@]+"${ARGS[@]}"}
 fi
 status=$?

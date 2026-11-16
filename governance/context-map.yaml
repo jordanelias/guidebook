@@ -1350,6 +1350,7 @@ checks:
     kinds:
     - data
     - schema
+    - tooling
     min_items: null
     cmd: python3 scripts/audit/migration_reproducibility.py --selftest
   - id: observation_verbatim_audit
@@ -1739,7 +1740,7 @@ checks:
     kinds:
     - always
     min_items: 1
-    cmd: python3 scripts/audit/research_batch_dod.py --check-baseline @BASE@
+    cmd: python3 scripts/audit/research_batch_dod.py --check-baseline origin/main
   - id: research_contract_sync
     level: blocking
     battery: research

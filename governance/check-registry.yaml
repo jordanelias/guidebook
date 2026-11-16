@@ -229,7 +229,9 @@ checks:
   no_floor: not-instrumented — several distinct subjects (slugs, CON-IDs, BPC files, search-logs, scan
     files, the handoff pointer), each with its own count and no single one honestly speaks for the whole
     check; instrumenting any one of them would misrepresent the others. Left uninstrumented on 2026-08-14
-    (A5) rather than invent a combined figure — see CLAUDE.md guardrail 1.
+    (A5) rather than invent a combined figure — see CLAUDE.md guardrail 1. SINCE 2026-11-16 (T-075) the script
+    prints EXAMINED as the SUM of the per-subject counts on its `resolved:` line; read that line, because the
+    database-backed subject (CON-IDs) can be 0 while the sum is not.
   note: Cross-references span every corpus, so no path filter is correct here.
 - id: test_db_integrity
   cmd:
@@ -434,6 +436,7 @@ checks:
   kinds:
   - data
   - schema
+  - tooling
   level: advisory
   basis: hygiene
   cost: fast
@@ -654,7 +657,8 @@ checks:
     whole. The registered command runs pass 2.3 only, because `--cross-ref` skips drift detection (2.4); removing
     a governance document does not turn this gate red; `--baseline-against <snapshot>` does, and is not
     registered because it reports ERRORs for documents whose Status is no longer CANONICAL. Left
-    uninstrumented on 2026-08-14 (A5) rather than invent a combined figure.
+    uninstrumented on 2026-08-14 (A5) rather than invent a combined figure. SINCE 2026-11-16 (T-075) it prints
+    EXAMINED as the sum of the subjects its snapshot line reports; read that line for each.
 - id: skill_vocabulary_audit
   cmd:
   - python3
@@ -818,7 +822,7 @@ checks:
   - python3
   - scripts/audit/research_batch_dod.py
   - --check-baseline
-  - '@BASE@'
+  - origin/main
   battery: research
   kinds:
   - always

@@ -1089,6 +1089,14 @@ def selftest(reg):
     # made research_contract_baseline_ratchet read origin/main whatever the gate was given). An entry
     # may be exempt only with its reason, and an exemption that no longer names a base-taking check
     # is itself a failure.
+    # A WITNESS IS NOT A BASE (the critic of T-075): the ratchet compares the baseline file with a ref OUTSIDE the
+    # change, so that a committed raise cannot vouch for itself. Giving it `@BASE@` lets the branch under test (or
+    # any ref the caller names) be its own witness; it stays the literal default and the selftest holds it there.
+    WITNESS_NOT_BASE = {
+        "research_contract_baseline_ratchet": "its ref is a WITNESS outside the changeset, not a base to diff: a "
+                                              "ratchet that accepts the caller's ref is satisfied by a branch that "
+                                              "already carries the raise",
+    }
     BASE_NOT_READ = {
         "claims_docket": "its registered mode `check` reads the docket file and ignores --base; "
                          "only `generate` diffs, and that mode is not registered",
@@ -1105,7 +1113,8 @@ def selftest(reg):
 
     def _base_gaps(checks):
         return [c["id"] for c in checks
-                if _takes_base(c) and c["id"] not in BASE_NOT_READ and "@BASE@" not in c["cmd"]]
+                if _takes_base(c) and c["id"] not in BASE_NOT_READ and c["id"] not in WITNESS_NOT_BASE
+                and not any("@BASE@" in t for t in c["cmd"])]
 
     gaps = _try("C12 T075-02 base-taking checks derived", lambda: _base_gaps(reg["checks"]))
     if gaps is not None:
@@ -1115,6 +1124,11 @@ def selftest(reg):
               bool(carrying))
         stale = [i for i in BASE_NOT_READ
                  if not any(c["id"] == i and _takes_base(c) for c in reg["checks"])]
+        witness_bad = [i for i in WITNESS_NOT_BASE
+                       if not any(c["id"] == i and DEFAULT_BASE in c["cmd"] and not any("@BASE@" in t for t in c["cmd"])
+                                  for c in reg["checks"])]
+        check("C12 T075-02 a witness stays the literal ref and never takes `@BASE@` (a ratchet its own branch could satisfy)",
+              not witness_bad, str(witness_bad))
         check("C12 T075-02 every exemption still names a base-taking check", not stale, str(stale))
 
         # Seeded defects, over EVERY carrier: each entry rewritten the two ways it could regress.
