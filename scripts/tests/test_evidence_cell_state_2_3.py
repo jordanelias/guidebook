@@ -52,7 +52,7 @@ conv = ConvergenceAssessment(status="convergent", clinical_sources=["REF-001"],
                              co1_sources=["REF-050"], down_weighted_sources=["REF-099"],
                              discounted_sources=["REF-200"])
 # Cell identity after migration 071: parameter_id is THE SUBJECT (owner 2026-08-26),
-# the four lenses are THE LENS (owner 2026-08-28, relaxed by D-0182). item_code and
+# the three lenses are THE LENS (owner 2026-08-28, relaxed by D-0182). item_code and
 # population were the pre-071 key and are now refused outright.
 cell = EvidenceStateRecord(parameter_id=1, identity_code="AUT", design_scale="population",
                            state="stated", convergence=conv, marker=M)
@@ -61,11 +61,11 @@ check("stated cell with parameter_id + design_scale + directness convergence",
 check("convergence carries directness-conditioned source lists",
       conv.down_weighted_sources == ["REF-099"] and conv.discounted_sources == ["REF-200"])
 multi = EvidenceStateRecord(parameter_id=2, identity_code="DEAF", icf_code="b230",
-                            needs_code="AN-HEAR", medical_code="H90", state="stated", marker=M)
+                            needs_code="AN-HEAR", state="stated", marker=M)
 check("D-0182: a cell may be stated in several lenses at once",
-      (multi.identity_code, multi.icf_code, multi.needs_code, multi.medical_code)
-      == ("DEAF", "b230", "AN-HEAR", "H90"))
-check("D-0182: one lens alone is enough — the other three stay None",
+      (multi.identity_code, multi.icf_code, multi.needs_code)
+      == ("DEAF", "b230", "AN-HEAR"))
+check("D-0182: one lens alone is enough — the other two stay None",
       EvidenceStateRecord(parameter_id=3, needs_code="AN-REACH",
                           state="not_applicable",
                           not_applicable_rationale="reach range not implicated"
@@ -133,7 +133,7 @@ _live = [r[0] for r in _con.execute(
     # direction_ref_id FK into it, and with foreign_keys ON the first INSERT into a table
     # whose FK parent does not exist fails "no such table" (the same rule-4 lesson as 081).
     "  OR name IN ('base_parameters','terms','base_taxonomy_identity','base_icf',"
-    "              'access_needs','base_taxonomy_medical','evidence_sources'))")]
+    "              'access_needs','evidence_sources'))")]
 _con.close()
 if not _live:
     print("  [FAIL] live schema has no `specifications` — fixture cannot be built.",

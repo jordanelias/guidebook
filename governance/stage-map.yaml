@@ -94,7 +94,6 @@ tables:
   base_jurisdictions: base
   base_parameters: base
   base_taxonomy_identity: base
-  base_taxonomy_medical: base
   case_studies: evidence
   citation_mining: research
   conflicts: synthesis
@@ -115,9 +114,7 @@ tables:
   extraction_relations: judgment
   gap_mining: research
   gaps: cross-stage          # resolved, no longer disputed: ledger "Delegated resolution 2026-11-12 — OD-11"
-  icf_medical_map: base
   identity_icf_map: base
-  identity_medical_map: base
   lang_jur_map: base
   life_stage_modifiers: base
   observed_terms: evidence

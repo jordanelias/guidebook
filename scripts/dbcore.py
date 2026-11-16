@@ -1141,7 +1141,7 @@ IDENTITY_FAMILY_SQL = ("(WITH RECURSIVE family AS (SELECT ? AS code UNION SELECT
                        "SELECT code FROM family)")
 
 
-LENS_ORDER = ("identity_code", "icf_code", "needs_code", "medical_code")
+LENS_ORDER = ("identity_code", "icf_code", "needs_code")
 
 
 def lens_differs(row, lens, family):
@@ -1459,8 +1459,8 @@ def check_jurisdiction(value, context: str):
 # seven: evidence_source_authors (where the 2026-08-19 author fabrication happened, so
 # the repair had to be hand-written through the same channel the fabrication entered
 # by), source_locators, observed_terms/term_adjudications, terms,
-# base_parameters/specifications, base_taxonomy_medical with the two medical crossing
-# maps, and extraction_relations. The eighth was found on 2026-09-13 by an audit and
+# base_parameters/specifications, the medical-lens tables (deleted 2026-11-16) with their
+# two crossing maps, and extraction_relations. The eighth was found on 2026-09-13 by an audit and
 # then immediately reproduced: the orchestrator added `specification_extraction_links`
 # in migration 077 and did not add it here — while reading the comment that recorded
 # the previous seven. Four further tables had been writable and invisible for longer

@@ -23,11 +23,11 @@ into `base_parameters`, which points at the adjudicated term. It is NOT
 to a Part-4 render rollup derived FROM specifications, never keyed by them. Every
 `[A-E]-NN` code still on the reading surface is prior-version content.
 
-The LENS is the four browsing taxonomies (owner 2026-08-28, CHECK relaxed by
-D-0182): identity / ICF / access-need / medical. `population_code` is retired in
-favour of the four, and `base_taxonomy_identity` is ONLY the identity lens — keying a cell on
+The LENS is the three browsing taxonomies (owner 2026-08-28, CHECK relaxed by
+D-0182; the medical taxonomy deleted by the owner 2026-11-16): identity / ICF / access-need. `population_code` is retired in
+favour of the three, and `base_taxonomy_identity` is ONLY the identity lens — keying a cell on
 it alone is the traversal D-0184 measured and rejected. NULL in a lens means the
-determination is not stated in that lens, which is legitimate; NULL in all four is
+determination is not stated in that lens, which is legitimate; NULL in all three is
 not, and `at_least_one_lens` below is that CHECK mechanised.
 
 Migration 071 built both halves. This model mirrors the table it built.
@@ -148,14 +148,13 @@ class EvidenceStateRecord(BaseModel):
     # parameter, pointed at, never copied (rule 5). base_parameters.parameter_id.
     parameter_id: int
 
-    # Cell identity — THE FOUR LENSES (owner 2026-08-28; CHECK relaxed by D-0182
+    # Cell identity — THE THREE LENSES (owner 2026-08-28; CHECK relaxed by D-0182
     # to "at least one"). Each is a code in its own base taxonomy; the codes are
     # NOT validated here, because a vocabulary belongs to the schema's CHECK and
     # its FK, never to a list in Python (CLAUDE.md §4).
     identity_code: Optional[str] = None   # base_taxonomy_identity.identity_code
     icf_code: Optional[str] = None        # base_icf.icf_code (was axes.axis_code until migration 081)
     needs_code: Optional[str] = None      # access_needs.need_code
-    medical_code: Optional[str] = None    # base_taxonomy_medical.medical_code
 
     # Design scale (§1.4/§1.6) — universal | population | person
     design_scale: Optional[str] = None
@@ -206,7 +205,7 @@ class EvidenceStateRecord(BaseModel):
         """D-0182, mechanised: absence in a lens is fine, absence in ALL is not.
 
         This is the Python side of the live table's
-        `CHECK (COALESCE(identity_code, icf_code, needs_code, medical_code)
+        `CHECK (COALESCE(identity_code, icf_code, needs_code)
         IS NOT NULL)`. It was "exactly one" under the 2026-08-28 ruling and D-0182
         relaxed it; stating a determination in several lenses at once is the ideal,
         not a violation.
@@ -215,11 +214,10 @@ class EvidenceStateRecord(BaseModel):
             self.identity_code is None
             and self.icf_code is None
             and self.needs_code is None
-            and self.medical_code is None
         ):
             raise ValueError(
                 "A determination must be stated in at least one lens: set one or "
-                "more of identity_code / icf_code / needs_code / medical_code "
+                "more of identity_code / icf_code / needs_code "
                 "(D-0182). A cell in no lens is a cell about nobody."
             )
         return self

@@ -28,7 +28,7 @@ and untouched in another.
 | 5 | **Synthesis** | extracted values across sources for one (parameter × lens) | a **best-practice statement** with an evidence marker | `specifications` + `convergence_assessment` | `specifications.derivation_sha`, attestations |
 
 *Rows 4 and 5 read `(item × population)` until 2026-09-10. Migrations 071 and 073 re-keyed both
-tables onto `parameter_id` and the four lens columns (owner 2026-08-26 and 2026-08-28); the item
+tables onto `parameter_id` and the lens columns (owner 2026-08-26 and 2026-08-28; three since the medical lens was deleted on 2026-11-16); the item
 layer was emptied 2026-09-01 and `items` is a Part-4 render rollup derived from specifications.*
 
 Adjudication (does this source qualify for admission, at which tier) is not a sixth operation —
@@ -107,8 +107,8 @@ dedicated table with the pointers that make it traceable, alongside the typed va
 accompanies. `source_value_extractions` is the model: `claimed_value` and `claimed_unit` are
 typed, `claim_text` is the verbatim quote, `source_section` and the 16 `loc_*` columns are the
 locator, and `ref_id`, `slug`, `parameter_id`, `promoted_to_rdc_id` and the figure's lens links
-(`extraction_lens_links`, read through `v_live_lens_links`; the four lens columns on the figure itself are held NULL since migration 131) carry the trace. *(This named `population_code` until 2026-09-10; migration 073 retired it in
-favour of the four lens columns, under the 2026-08-28 owner ruling.)*
+(`extraction_lens_links`, read through `v_live_lens_links`; the lens columns on the figure itself are held NULL since migration 131) carry the trace. *(This named `population_code` until 2026-09-10; migration 073 retired it in
+favour of the lens columns, under the 2026-08-28 owner ruling.)*
 
 What is forbidden is a **state written as prose in a value column**. This is not hypothetical:
 four rows held `[author surname pending …]` in `first_author_last`, and because the string was

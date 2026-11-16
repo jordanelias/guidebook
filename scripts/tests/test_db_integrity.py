@@ -48,10 +48,15 @@ DB_PATH = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 LEGACY_SHA_VERSIONS = ("pilot-2",)
 LEGACY_SHA_SQL = ", ".join(map(repr, LEGACY_SHA_VERSIONS))
 #: The link-set labels whose derivation_sha hashed the cell's COALESCE lens key alone. History, so it
-#: cannot grow: every later label hashes all four lens codes (T-019). Derived with git log -p
+#: cannot grow: every later label hashes the lens codes (T-019). Derived with git log -p
 #: -G'^RULE_VERSION = ' (not -S, which misses a changed label) plus the stored labels, minus
 #: LEGACY_SHA_VERSIONS.
 COALESCE_LENS_SHA_VERSIONS = ("pilot-3", "pilot-4", "pilot-5")
+#: The label whose derivation_sha hashed FOUR `|`-joined lens slots, the last being the medical code the
+#: owner deleted on 2026-11-16. History, so it cannot grow: pilot-7 on hashes the three that remain.
+#: A pilot-6 row recomputes with the removed slot empty (the one thing a row that never carried a
+#: medical code can have stored there).
+FOUR_LENS_SHA_VERSIONS = ("pilot-6",)
 #: The link-set versions written before pilot-5 added the `|branches:` term (the governing claims
 #: with an outgoing `condition_on` edge). Closed, like the set above: a row stamped with one of
 #: these verifies without the term, whatever edges were filed since, because that engine did not
@@ -1081,9 +1086,9 @@ def run_checks(db_path):
     # evidence-architecture §10 means -- "same evidence + same rule_version => same
     # state + same derivation_sha" -- and the remedy is the same as for every other
     # K01 failure: re-run the engine and restamp.
-    for cid, pid, *lens4, gr, rv, sha_rec in conn.execute(
+    for cid, pid, *lens3, gr, rv, sha_rec in conn.execute(
             "SELECT specification_id, parameter_id, identity_code, icf_code, needs_code, "
-            "medical_code, governing_refs, rule_version, derivation_sha FROM specifications "
+            "governing_refs, rule_version, derivation_sha FROM specifications "
             "WHERE retired_at IS NULL"):
         if not sha_rec or not rv:
             unattested += 1
@@ -1114,7 +1119,7 @@ def run_checks(db_path):
                     states[r[1]] = all(conn.execute(
                         f"SELECT 1 FROM v_live_lens_links WHERE extraction_id = ? AND {col} = ?",
                         (r[1], code)).fetchone() for col, code in zip(
-                            ("identity_code", "icf_code", "needs_code", "medical_code"), lens4) if code)
+                            ("identity_code", "icf_code", "needs_code"), lens3) if code)
                     if states[r[1]] == (r[2] or "").startswith("not stated in this cell's lens ("):
                         stale.append(f"{cid} (param {pid}, {rv}): the stored lens reason of "
                                      f"extraction {r[1]} disagrees with its live lens links")
@@ -1138,13 +1143,14 @@ def run_checks(db_path):
             n_x = conn.execute("SELECT COUNT(*) FROM source_value_extractions "
                                "WHERE parameter_id = ?", (pid,)).fetchone()[0]
             body = "|".join(refs) + f"|x{n_x}"
-        # The lens term: the COALESCE key for the labels that hashed it, all four codes from pilot-6 on.
-        lens = (next((c for c in lens4 if c), None)
+        # The lens term: the COALESCE key for the labels that hashed it, every code from pilot-6 on (four slots
+        # for pilot-6, the three that remain after the medical lens was deleted from pilot-7).
+        lens = (next((c for c in lens3 if c), None)
                 if rv in LEGACY_SHA_VERSIONS + COALESCE_LENS_SHA_VERSIONS
-                else "|".join(c or "" for c in lens4))
+                else "|".join([c or "" for c in lens3] + ([""] if rv in FOUR_LENS_SHA_VERSIONS else [])))
         payload = f"{pid}|{lens}|" + body + "::" + rv
         if _hashlib.sha256(payload.encode()).hexdigest() != sha_rec:
-            stale.append(f"{cid} (param {pid}×{next((c for c in lens4 if c), None)}, {rv})")
+            stale.append(f"{cid} (param {pid}×{next((c for c in lens3 if c), None)}, {rv})")
     record("K01", "every recorded derivation_sha verifies against its own row",
            not stale,
            f"{len(stale)} stale: {', '.join(stale)} — the row, or the evidence read "

@@ -207,9 +207,9 @@ def _ref_tiers(conn, ref_ids):
 # it is deliberately not part of the required set.
 # Re-keyed 2026-09-09 by migration 071: the cell is parameter x lens, not
 # (item_code x population_code). item_code went with the item layer the owner deleted;
-# population_code is retired in favour of the four lens columns (owner 2026-08-28).
+# population_code is retired in favour of the three lens columns (owner 2026-08-28).
 CELL_STATE_COLUMNS = ("specification_id,parameter_id,"
-                      "identity_code,icf_code,needs_code,medical_code,"
+                      "identity_code,icf_code,needs_code,"
                       "state,design_scale,convergence_id,"
                       "confidence_dimensions_present,confidence_dimensions_absent,"
                       "confidence_synthesis_basis,gap_register_id,not_applicable_rationale,"
@@ -245,15 +245,15 @@ def validate_cell_states_db(conn, gap_ids: set):
     n = 0
     for row in conn.execute(f"SELECT {cols} FROM specifications"):
         (specification_id, parameter_id,
-         identity_code, icf_code, needs_code, medical_code,
+         identity_code, icf_code, needs_code,
          state, design_scale, conv_id,
          cdp, cda, csb, gap_id, na_rat,
-         governing_refs, code_floor_only, tier_basis) = row[:17]
-        rso = row[17] if have_rso else 0
+         governing_refs, code_floor_only, tier_basis) = row[:16]
+        rso = row[16] if have_rso else 0
         n += 1
         # The row's CHECK guarantees at least one lens is non-NULL (D-0182), so this
         # never falls through to "?" on a row the database accepted.
-        lens = next((c for c in (identity_code, icf_code, needs_code, medical_code) if c), "?")
+        lens = next((c for c in (identity_code, icf_code, needs_code) if c), "?")
         tag = f"cell {specification_id} (param {parameter_id}×{lens})"
         # scale-aware: design_scale vocabulary (§1.4/§1.6)
         if design_scale is not None and design_scale not in ALL_SCALES:

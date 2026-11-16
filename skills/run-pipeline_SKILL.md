@@ -21,7 +21,7 @@ run. Derive every figure; paste no counts.
 | `full` (default) | stage 1 | nothing |
 | `from-evidence` | stage 3 | discovery searching only; every later gate still applies |
 
-**Where a cell stands:** a run started mid-pipeline reads `python3 scripts/db.py cell-status --parameter-id <id> [--identity|--icf|--needs|--medical <code>] [--jurisdiction <code>] [--language <L>]` first (read-only): per stage, row ids held, examined and found empty, never examined and owed, so work already done is not repeated and work owed is not skipped.
+**Where a cell stands:** a run started mid-pipeline reads `python3 scripts/db.py cell-status --parameter-id <id> [--identity|--icf|--needs <code>] [--jurisdiction <code>] [--language <L>]` first (read-only): per stage, row ids held, examined and found empty, never examined and owed, so work already done is not repeated and work owed is not skipped.
 
 **Open once:** `/session-open` first (it sets `CURRENT` before the first Bash call), then
 `bash .claude/hooks/ensure-deps.sh`, then `/orient`. Work on a scratch DB (CLAUDE.md §4): `cp data/guidebook.db $S/guidebook.db`
@@ -55,7 +55,7 @@ editions only.** T4–T6 values are accepted as baselines; do not trace their hi
 
 ## 1. base — read before touching a source
 The catalogue every source is read against: `base_parameters` + `terms`/`term_aliases`, the lenses
-(`base_taxonomy_identity`, `access_needs`, `base_icf`, `base_taxonomy_medical` — empty until its owed rows land),
+(`base_taxonomy_identity`, `access_needs`, `base_icf`),
 `slugs`, `lang_jur_map`. Codes AND names; no bare axis codes or population umbrellas.
 - **Equivalence before minting.** Search terms and aliases first. A phrase a source uses for a term we hold is an
   alias, reached only through the chain `observe-term` (its `--context-quote` must be found byte-for-byte in a file
@@ -183,7 +183,7 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
 *(Your "evidence stage" adjudication lives here: CLAUDE.md §6 records the owner's 2026-08-27 ruling that the lens
 crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map.yaml` change.)*
 - `adjudicate-term` for every observed phrase (`NOT-OURS` and `DEFERRED` are answers). `add-extraction` per stated
-  figure: parameter, at least one lens (`--identity`, `--icf` code and name, `--needs`, `--medical`; an extraction
+  figure: parameter, at least one lens (`--identity`, `--icf` code and name, `--needs`; an extraction
   is stated in at least one lens, D-0182). Each flag repeats, one link per code in `extraction_lens_links` (the
   figure's own lens columns are held NULL), and `--lens-basis` with `--lens-basis-text` (the figure's own words that
   name the group) are required; a code with a different warrant, or a judged one that replaces a carried link, is
@@ -259,7 +259,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
 
 ## 6. specification — the most accommodating value found, not the most common
 - The state is **computed**: `python3 scripts/assess/assess_cell.py --db $S/guidebook.db --emit-sql <file>
-  --parameter-id N --slug <slug> --identity|--icf|--needs|--medical <code> --session <STEM> --stamp <ISO instant>
+  --parameter-id N --slug <slug> --identity|--icf|--needs <code> --session <STEM> --stamp <ISO instant>
   [--report-json <file>]` per cell on the scratch DB (it takes `--db`, not `GUIDEBOOK_DB_PATH`; it writes the convergence
   row and the determination together; `--slug` names an existing topic, `SELECT slug FROM slugs`, and selects no
   evidence, and a slug that does not exist is refused). **A cell** is a parameter × the lens codes given (`specifications`' unique
@@ -289,8 +289,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
      the engine labels a code-only cell otherwise, that is an engine defect: tooling PR.
   3. The recorded rationale is the derivation (which sources, what they state, the rule version), not an endorsement.
 - `raise-determination-gate` caps a cell at provisional; with `--verdict QUESTION` (no source, no tier) it records an objection to a published cell, which flags the cell and never caps it.
-- Checks: `scripts/validate_evidence_state.py`, `scripts/audit/derivation_handshake_integrity.py`,
-  `scripts/audit/medical_lens_integrity.py`.
+- Checks: `scripts/validate_evidence_state.py`, `scripts/audit/derivation_handshake_integrity.py`.
 
 ## 7. render — read from the database at render time; commit nothing generated
 **Read first (merged PRs on the display of a specification item):** PR #205 (`workplan/2026-10-30-ramp-spec-pages/`:

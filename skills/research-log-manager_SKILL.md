@@ -69,7 +69,7 @@ After multilingual-research completes:
      --slug {slug} \                   # omit for a search made for one parameter (--parameter {parameter_id}) or one source (--mined-ref-id); a search naming none is refused
      --language {lang_code} \
      --jurisdiction {jur_code} \        # omit if the search was not jurisdiction-scoped
-     --identity {identity_code} --icf {icf_code} --needs {need_code} \   # the lens this query covered; each optional and checked against its registry (--medical once that registry has rows)
+     --identity {identity_code} --icf {icf_code} --needs {need_code} \   # the lens this query covered; each optional and checked against its registry
      --query-text '{the query, exactly as fired}' \
      --form-id {rowid} --form-id {rowid} \   # repeatable: the rowid of each term_aliases row this query fired (select rowid, term_id, alias, language from term_aliases); stored by the form's key; a form's language must be the search's --language. --terms-used is refused
      --engine {pubmed|crossref|web|...} \

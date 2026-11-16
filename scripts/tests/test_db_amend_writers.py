@@ -1582,7 +1582,7 @@ try:
            f"refusal={msg!r} control={ok_id!r}")
 
     # ── M: log-search records the lens a search covered (R18) ───────────────────────────
-    # Four optional columns on search_executions, each checked against the registry its own foreign
+    # Three optional columns on search_executions, each checked against the registry its own foreign
     # key names. Through argparse (run_cli), not the function: an unwired flag is invisible to a
     # function call, and the dispatch block is where the flags are passed on.
     lens_live = {"--identity": q("SELECT identity_code FROM base_taxonomy_identity ORDER BY 1 LIMIT 1")[0][0],
@@ -1596,17 +1596,17 @@ try:
 
     n_before = counts("search_executions")
     refused = {}
-    for flag in ("--identity", "--icf", "--needs", "--medical"):
+    for flag in ("--identity", "--icf", "--needs"):
         r = ls_lens(f"bad {flag}", flag, "NOT-A-CODE")
         refused[flag] = (r.returncode, "has no matching row in" in (r.stdout + r.stderr))
-    record("M01", "log-search refuses an unknown lens code on each of the four flags and writes nothing",
+    record("M01", "log-search refuses an unknown lens code on each of the three flags and writes nothing",
            all(rc != 0 and named for rc, named in refused.values()) and counts("search_executions") == n_before,
            f"{refused} rows {n_before} -> {counts('search_executions')}")
     r = ls_lens("live codes", *[x for kv in lens_live.items() for x in kv])
-    row = q("SELECT identity_code, icf_code, needs_code, medical_code FROM search_executions "
+    row = q("SELECT identity_code, icf_code, needs_code FROM search_executions "
             "WHERE query_text=?", "fixture M: live codes")
-    record("M02", "live codes land in their columns and the medical column stays NULL",
-           r.returncode == 0 and row == [(lens_live["--identity"], lens_live["--icf"], lens_live["--needs"], None)],
+    record("M02", "live codes land in their columns",
+           r.returncode == 0 and row == [(lens_live["--identity"], lens_live["--icf"], lens_live["--needs"])],
            f"rc={r.returncode} {r.stderr[-300:]} {row}")
     import importlib                                               # noqa: E402
     sys.path.insert(0, str(REPO / "scripts" / "research"))
@@ -1619,8 +1619,8 @@ try:
         captured = f"emit refused: {exc}"
     hit = [ln for ln in captured.splitlines() if ln.startswith('INSERT INTO "search_executions"')
            and "fixture M: live codes" in ln
-           # the four lens values, in column order; columns added after medical_code (absence_class,
-           # migration 119) follow them, so this does not pin where the statement ends
+           # the three lens values, in column order; columns added after them (absence_class,
+           # migration 119) follow, so this does not pin where the statement ends
            and ("'%s', '%s', '%s', NULL" % (lens_live["--identity"], lens_live["--icf"], lens_live["--needs"])) in ln]
     record("M03", "emit_batch_sql captures the lens columns of a logged search (the write can be shipped)",
            len(hit) == 1, captured[-400:])
@@ -1784,7 +1784,7 @@ try:
             return None, f"{exc.__class__.__name__}: {exc}"
 
     def t018_live(extraction_id):
-        rows, err = t018_read("SELECT identity_code, icf_code, needs_code, medical_code, basis FROM "
+        rows, err = t018_read("SELECT identity_code, icf_code, needs_code, basis FROM "
                               "v_live_lens_links WHERE extraction_id=? ORDER BY link_id", extraction_id)
         return rows, err
 
@@ -1810,12 +1810,12 @@ try:
     r01, fig01 = t018_add("two icf", "--icf", T18_D1, "--icf", T18_D2, "--lens-basis", "named_in_text",
                           "--lens-basis-text", "TASK-FIXTURE")
     live01, err01 = t018_live(fig01) if fig01 else (None, "no figure was written")
-    cols01 = q("SELECT identity_code, icf_code, needs_code, medical_code FROM source_value_extractions "
+    cols01 = q("SELECT identity_code, icf_code, needs_code FROM source_value_extractions "
                "WHERE extraction_id=?", fig01) if fig01 else None
     record("T018-01", "one figure with two ICF codes is stored once with two live links, and its own lens columns stay NULL",
            r01.returncode == 0 and live01 is not None
-           and sorted((x[1], x[4]) for x in live01) == sorted([(T18_D1, "named_in_text"), (T18_D2, "named_in_text")])
-           and cols01 == [(None, None, None, None)],
+           and sorted((x[1], x[3]) for x in live01) == sorted([(T18_D1, "named_in_text"), (T18_D2, "named_in_text")])
+           and cols01 == [(None, None, None)],
            f"rc={r01.returncode} {(r01.stdout + r01.stderr)[-250:]!r} links={live01} {err01} cols={cols01}")
 
     # A figure with exactly one link, for T018-02 and -03.
@@ -1939,15 +1939,11 @@ try:
                    "--basis-text", "   ", "--session", S)
     r11b = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--icf", "NOT-A-CODE", "--basis", "named_in_text",
                    "--basis-text", "TASK-FIXTURE", "--session", S)
-    medical_rows = q("SELECT COUNT(*) FROM base_taxonomy_medical")[0][0]
-    r11c = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--medical", "NOT-A-CODE", "--basis",
-                   "named_in_text", "--basis-text", "TASK-FIXTURE", "--session", S)
-    record("T018-11", "add-lens-link refuses a blank --basis-text, an unknown code and (derived) an empty registry, each in words",
+    record("T018-11", "add-lens-link refuses a blank --basis-text and an unknown code, each in words",
            r11a.returncode != 0 and "blank" in out_of(r11a)
            and r11b.returncode != 0 and "is not a live icf_code" in out_of(r11b)
-           and r11c.returncode != 0 and ("holds no rows" if medical_rows == 0 else "is not a live") in out_of(r11c)
            and n_links_now() == nl,
-           f"{out_of(r11a)[-120:]!r} | {out_of(r11b)[-120:]!r} | {out_of(r11c)[-120:]!r}")
+           f"{out_of(r11a)[-120:]!r} | {out_of(r11b)[-120:]!r}")
 
     # T018-12: a retired identity is not newly used, by either writer. The state is set by SQL on the copy and undone.
     (dep,) = q("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code NOT IN ('ALL', ?) "
@@ -2056,7 +2052,7 @@ try:
       "created_at, created_by_session, ref_id) VALUES (?, ?, ?, ?, ?, 't', ?, ?)",
       f"TASK-FIXTURE-{ref17}", ref17, POP, "TASK-FIXTURE participants Zeta", grade, S, ref17)
     r18a = link17("--needs", needs17, "study_participants", "participants Zeta")
-    r18b = link17("--medical", "NOT-A-CODE", "study_participants", "participants Zeta")
+    r18b = link17("--icf", "NOT-A-CODE", "study_participants", "participants Zeta")
     PHRASE = "TASK-FIXTURE phrase only in a saved file"
     (T18_D3,) = q("SELECT icf_code FROM base_icf WHERE icf_code LIKE 'd%' ORDER BY icf_code LIMIT 1 OFFSET 2")[0]
     rl = db._retrieval_log()

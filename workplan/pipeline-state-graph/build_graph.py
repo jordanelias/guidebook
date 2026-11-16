@@ -250,7 +250,7 @@ def make_probes():
             P[pid] = dict(fn=fn, tests=tests, atoms=atoms); PROBE_DEFS[pid] = P[pid]; return fn
         return deco
 
-    LENS = ["identity_code", "icf_code", "needs_code", "medical_code"]
+    LENS = ["identity_code", "icf_code", "needs_code"]
 
     @probe("P-A", "the five splinter population_* link tables are deleted (owner 2026-08-28)", ["LED-132"])
     def _(T):
@@ -429,11 +429,6 @@ def make_probes():
         return ("FAIL" if u else "PASS"), {"count": len(u), "pairs": [f"{x['child']}.{x['col']} -> {x['parent']}" for x in u],
                                            "with_a_db_py_verb": sorted({v for x in u for v in x["verbs_child"]}),
                                            "parent_written_by_same_verb": {f"{x['child']}.{x['col']}": x["parent_written_by_same_verb"] for x in u if x["parent_written_by_same_verb"]}}
-
-    @probe("P-MEDICAL", "a medical-lens value can be written (the lens registry holds a row)", ["LED-154", "LED-156", "DRS-229"])
-    def _(T):
-        n = T.rows.get("base_taxonomy_medical", 0)
-        return ("PASS" if n else "FAIL"), {"base_taxonomy_medical_rows": n, "writer_verbs": T.writers.get("base_taxonomy_medical", [])}
 
     @probe("P-CO1-TYPE", "every live co1_source_type value is in schemas.enums.Co1SourceType", ["DRS-248"])
     def _(T):
@@ -851,7 +846,7 @@ def render_state_graph(T, atoms, probes, machines, cmp_info, stamp):
         if T.rows[t] == 0: flags.append("EMPTY")
         if t not in T.writers: flags.append("NO-WRITER")
         if t in unw: flags.append("UNWRITABLE" + ("*" if unw[t]["parent_written_by_same_verb"] else ""))
-        lens = [c for c in T.cols(t) if c in ("identity_code", "icf_code", "needs_code", "medical_code", "population_code")]
+        lens = [c for c in T.cols(t) if c in ("identity_code", "icf_code", "needs_code", "population_code")]
         rows.append((t, T.stage(t), T.rows[t], ", ".join(T.writers.get(t, [])) or "--", ", ".join(lens) or "--", " ".join(flags)))
     L.append(mdtable(["table", "stage", "rows", "db.py verbs that write it", "lens / population columns", "flags"], rows))
     L += ["", "`UNWRITABLE` = a NOT NULL foreign key points into an emptied table (CLAUDE.md section 4). `*` = a verb that writes the child also writes the parent in one call, so the table is writable through that verb. `NO-WRITER` = no `db.py` verb names the table in an INSERT/UPDATE/DELETE (lexical; a table written by another script is listed too).", ""]

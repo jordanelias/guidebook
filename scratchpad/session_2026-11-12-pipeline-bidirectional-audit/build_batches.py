@@ -15,7 +15,7 @@ A dependency written 'none (after T-nnn if both are open ...)' is SOFT: an order
 MERGED is read from git, never typed: a task is merged when a merge commit reachable from HEAD names its branch,
 `task/` + the file stem in lower case (the branch every task file's set-up block creates; GitHub's subject is
 "Merge pull request #N from <owner>/task/<stem>"). A merged task leaves the open batches and is listed apart; a
-dependency on it is satisfied. A SQUASH merge leaves no merge commit; it is read from its single commit, whose
+dependency on it is satisfied. A STACKED batch leaves no task branch name: its tasks are the ids of the "## Executed" section of its BATCH-n-EXECUTION-NOTES.md, minus any marked "(in part)". A SQUASH merge leaves no merge commit; it is read from its single commit, whose
 subject is the pull request title plus " (#N)": a task is merged when such a subject reachable from HEAD begins
 "T-nnn:" or says "execute workplan T-nnn" (the two title forms the task pull requests have used; a title that only
 mentions a task, such as a plan fold's "T-057/T-059/T-060 authored", is not read as a merge). A rebase merge leaves
@@ -110,8 +110,16 @@ _branches = set(re.findall(r"/task/(\S+)\s*$", subprocess.run(["git", "log", "--
 _squashed = set(re.findall(r"^(?:(T-\d+):|.*\bexecute workplan (T-\d+)\b).*\(#\d+\)\s*$", subprocess.run(
     ["git", "log", "--no-merges", "--format=%s", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout, re.M))
 _squashed = {a or b for a, b in _squashed}
+# A STACKED batch (owner 2026-11-15) merges as one pull request from its own branch, so no merge commit names a task:
+# its record is the "## Executed" section of the batch's BATCH-<n>-EXECUTION-NOTES.md, committed in that pull request
+# and therefore reachable from HEAD only once it has merged. An id marked "(in part)" is not counted.
+_executed = set()
+for _f in sorted(W.glob("BATCH-*-EXECUTION-NOTES.md")):
+    _m = re.search(r"^## Executed[^\n]*\n(.*?)(?=^## |\Z)", _f.read_text(encoding="utf-8"), re.M | re.S)
+    if _m:
+        _executed |= {i for i, part in re.findall(r"\b(T-\d{3})\b( \(in part\))?", _m.group(1)) if not part}
 done = {tid: tasks.pop(tid) for tid in sorted(tasks, key=lambda x: int(x[2:]))
-        if tasks[tid]["file"][:-3].lower() in _branches or tid in _squashed}
+        if tasks[tid]["file"][:-3].lower() in _branches or tid in _squashed or tid in _executed}
 for t in tasks.values():
     t["hard"] -= set(done)
     t["soft"] -= set(done)
@@ -243,7 +251,7 @@ for b in range(1, nb + 1):
     c = collections.Counter(k for t in ids for k in kinds(tasks[t]))
     A(f"| {b} | {len(ids)} | {c['READY']} | {c['OWNER']} | {c['DESIGN']} | {c['NOT FOR SONNET']} | {sum(tasks[t]['kind']=='TOOLING' for t in ids)} / {sum(tasks[t]['kind']=='RESEARCH' for t in ids)} | {len(lanes(ids))} |")
 A("\nCounts are derived; the commands that check them: `ls workplan/2026-11-12-bidirectional-pipeline/tasks/T-[0-9]*-*.md | wc -l`, and the generator's own output.\n")
-A("**Merged** (a merge commit on HEAD names the task's branch, or a squash commit's subject begins `T-nnn:` or says `execute workplan T-nnn` and ends `(#N)`; out of the batches below, and a dependency on one is satisfied; "
+A("**Merged** (a merge commit on HEAD names the task's branch, or the "## Executed" section of a BATCH-n-EXECUTION-NOTES.md on HEAD lists it without "(in part)", or a squash commit's subject begins `T-nnn:` or says `execute workplan T-nnn` and ends `(#N)`; out of the batches below, and a dependency on one is satisfied; "
   "re-derive: `git log --merges --format=%s HEAD | grep -o 'task/t-[0-9a-z-]*'` and `git log --no-merges --format=%s HEAD | grep -E '^T-[0-9]+:|execute workplan T-[0-9]+' | grep -E '\\(#[0-9]+\\)$'`): "
   + (", ".join(f"[{t}](tasks/{done[t]['file']})" for t in done) or "none") + ".\n")
 A(f"**Longest dependency chain ({len(crit)} tasks):** " + " → ".join(f"{t} ({tasks[t]['status']})" for t in crit) + ".\n")

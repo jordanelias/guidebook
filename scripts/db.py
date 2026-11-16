@@ -302,7 +302,7 @@ def _check_language(conn, language: str, noun: str, flag: str = "--language") ->
 
 
 def insert_gap(data: dict, session: str, dry_run: bool = False) -> str:
-    """Insert a gap. A gap that has NO cell may name what it is a gap in (parameter, the four lens
+    """Insert a gap. A gap that has NO cell may name what it is a gap in (parameter, the three lens
     codes, jurisdiction, language); each is refused by name before any row is written, the way
     `log_search` refuses its own. A gap the assessment engine files for a pending cell names none of
     these: its cell already holds them, reached through the join `specifications.gap_register_id`
@@ -322,7 +322,7 @@ def insert_gap(data: dict, session: str, dry_run: bool = False) -> str:
             cell = conn.execute(
                 "SELECT specification_id, gap_register_id, state FROM specifications WHERE retired_at IS NULL "
                 "AND parameter_id=? AND identity_code IS ? AND icf_code IS ? AND needs_code IS ? "
-                "AND medical_code IS ? ORDER BY specification_id LIMIT 1",
+                "ORDER BY specification_id LIMIT 1",
                 [row["parameter_id"], *(row.get(c) for c in _LENS_COLUMNS)]).fetchone()
             if cell:
                 raise Refusal(
@@ -735,7 +735,7 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
                origin: str = "planned", mined_ref_id: str = None,
                origin_pass_id: int = None, result_artefacts=None,
                identity_code: str = None, icf_code: str = None,
-               needs_code: str = None, medical_code: str = None,
+               needs_code: str = None,
                parameter_id: int = None, absence_class: str = None,
                gap_id: str = None, form_ids=None, dry_run: bool = False) -> int:
     """Append one row to search_executions. Returns its exec_id.
@@ -911,7 +911,7 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         # The lens this search covered (R18). Optional; write-once like the prior and the
         # jurisdiction, so a wrong code costs a compensating migration.
         "identity_code": identity_code, "icf_code": icf_code,
-        "needs_code": needs_code, "medical_code": medical_code,
+        "needs_code": needs_code,
         "parameter_id": parameter_id, "absence_class": absence_class,
         # The gap this search was run to close (nullable: most searches are not for a gap).
         "gap_id": gap_id,
@@ -1168,7 +1168,7 @@ def _gap_applies(row, lens, jurisdiction, lang, family=frozenset(), roll=lambda 
 
 
 def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs: str = None,
-                medical: str = None, jurisdiction: str = None, language: str = None) -> dict:
+                jurisdiction: str = None, language: str = None) -> dict:
     """Where one cell stands, stage by stage, read from the tables and nothing else (T-034).
 
     For a parameter, and optionally a lens, a jurisdiction and a language, each stage reports four lists of
@@ -1179,7 +1179,7 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
 
     A pair's scope is reported as it stands in `lang_jur_map.scope_status`: a NULL is reported as
     `scope_unrecorded` (owed, as `v_research_scope` reads it), never as in scope or out of it."""
-    given = {"identity_code": identity, "icf_code": icf, "needs_code": needs, "medical_code": medical}
+    given = {"identity_code": identity, "icf_code": icf, "needs_code": needs}
     lens = {k: v for k, v in given.items() if v}
     with connect(readonly=True) as conn:
         param = conn.execute("SELECT parameter_id, status FROM base_parameters WHERE parameter_id=?",
@@ -1259,7 +1259,7 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
                               "connections": ids("SELECT DISTINCT con_id FROM connection_targets WHERE parameter_id = ? ORDER BY con_id", parameter_id)},
                      "examined_empty": [], "never_examined": [],
                      "owed": {"open_gaps": [r["gap_id"] for r in conn.execute(
-                         "SELECT gap_id, identity_code, icf_code, needs_code, medical_code, jurisdiction, language FROM gaps "
+                         "SELECT gap_id, identity_code, icf_code, needs_code, jurisdiction, language FROM gaps "
                          "WHERE parameter_id = ? AND status LIKE 'OPEN%' ORDER BY gap_id", (parameter_id,))
                          if _gap_applies(r, lens, jurisdiction, lang, family, roll)]}}
         # ---- specification: the live determination(s) of the cell, their history, and the open gates ------
@@ -1267,7 +1267,7 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
         sp_args = [parameter_id, *lens.values()]
         _lensed = lambda r: not dbcore.lens_differs(r, lens, family)          # noqa: E731
         gates = [r["gate_id"] for r in conn.execute(
-            "SELECT gate_id, identity_code, icf_code, needs_code, medical_code FROM v_open_determination_gates "
+            "SELECT gate_id, identity_code, icf_code, needs_code FROM v_open_determination_gates "
             "WHERE parameter_id = ? ORDER BY gate_id", (parameter_id,)) if _lensed(r)]
         specification = {"held": [{"specification_id": r[0], "state": r[1]} for r in conn.execute(
                              sp.replace("SELECT specification_id", "SELECT specification_id, state")
@@ -1517,12 +1517,11 @@ def delete_connection(con_id: str, session: str, dry_run: bool = False):
 
 
 def _add_lens_flags(p):
-    """The four repeatable lens flags and their one warrant, for add-extraction and derive-extraction
+    """The three repeatable lens flags and their one warrant, for add-extraction and derive-extraction
     (a figure's lens is a set of links, OR-1c; argparse's default keeps only the last of a repeated flag)."""
     p.add_argument("--identity", action="append", help="base_taxonomy_identity.identity_code (repeatable)")
     p.add_argument("--icf", action="append", help="base_icf.icf_code — a real ICF b/d code (repeatable)")
     p.add_argument("--needs", action="append", help="access_needs.need_code (repeatable)")
-    p.add_argument("--medical", action="append", help="base_taxonomy_medical.medical_code (repeatable)")
     p.add_argument("--lens-basis", dest="lens_basis", choices=_lens_basis_choices(),
                    help="REQUIRED with any lens flag. Why the figure is stated in these groups (live "
                         "vocabulary, read from extraction_lens_links.basis's own CHECK): the figure's own "
@@ -2458,7 +2457,6 @@ def main():
                              "which cells exist should do")
     p_gate.add_argument("--icf", help="base_icf.icf_code. The gate reaches every cell that does not carry a DIFFERENT ICF code (a cell with no ICF code is reached too, as an identity-keyed gate always was)")
     p_gate.add_argument("--needs", help="access_needs.need_code. Reaches every cell that does not carry a DIFFERENT need code")
-    p_gate.add_argument("--medical", help="base_taxonomy_medical.medical_code. Reaches every cell that does not carry a DIFFERENT medical code")
     p_gate.add_argument("--verdict", required=True,
                         choices=dbcore.schema_choices("determination_gates", "verdict"),
                         help="QUESTION records an objection to a published value: no source, no tier "
@@ -2486,37 +2484,6 @@ def main():
     p_rg.add_argument("--session", required=True)
     p_rg.add_argument("--dry-run", action="store_true")
 
-    # add-medical — the writer base_taxonomy_medical shipped without, and went on
-    # shipping without for the two weeks between migration 065 creating the table and
-    # 074 giving it something to point with. See insert_medical for the refusals.
-    p_md = sub.add_parser("add-medical",
-                          help="Mint a medical-lens row and at least one crossing "
-                               "(the FOURTH lens, D-0170)")
-    p_md.add_argument("--code", required=True, help="MD-<UPPER>, e.g. MD-AUTISM")
-    p_md.add_argument("--display-name", dest="display_name", required=True,
-                      help="the project's OWN name for the concept — not copied prose")
-    p_md.add_argument("--description", help="the project's OWN definition")
-    p_md.add_argument("--icd11", required=True,
-                      help="comma list of ICD-11 codes this ANCHORS to. A bare code is a "
-                           "fact; it is a pointer, not borrowed text (rule 5)")
-    p_md.add_argument("--icd11-payload", dest="icd11_payload",
-                      help="path under retrieval-log/ whose bytes CONTAIN every --icd11 "
-                           "code. ONLY this sets icd11_verified_at; absent means NULL, "
-                           "and NULL means not verified")
-    p_md.add_argument("--identity", help="base_taxonomy_identity.identity_code to cross to")
-    p_md.add_argument("--relationship", choices=dbcore.schema_choices("identity_medical_map", "relationship"),
-                      help="required with --identity")
-    p_md.add_argument("--icf", help="base_icf.icf_code to cross to")
-    p_md.add_argument("--role", choices=dbcore.schema_choices("icf_medical_map", "role"),
-                      help="required with --icf. No ALIAS: a diagnosis is never an alias "
-                           "of a functional demand (074)")
-    p_md.add_argument("--mapping-confidence", dest="mapping_confidence",
-                      choices=dbcore.schema_choices("icf_medical_map", "mapping_confidence"),
-                      help="required with --icf; functional-taxonomy §3.2")
-    p_md.add_argument("--note")
-    p_md.add_argument("--session", required=True)
-    p_md.add_argument("--dry-run", action="store_true")
-
     # add-extraction — the writer source_value_extractions shipped without. See
     # insert_extraction for the refusals, and for the three that are DELIBERATELY
     # ABSENT (uniqueness on (ref_id, parameter_id), a value-directness grade, and
@@ -2527,7 +2494,7 @@ def main():
     p_ax.add_argument("--ref-id", required=True, help="evidence_sources.ref_id — the source read")
     p_ax.add_argument("--parameter-id", dest="parameter_id", type=int, required=True,
                       help="base_parameters.parameter_id — THE SUBJECT (owner 2026-08-26)")
-    # The four lenses. At least one is required (D-0182); the CLI names them by lens
+    # The three lenses. At least one is required (D-0182); the CLI names them by lens
     # rather than by column so the operator is choosing a LENS, not filling a field. Each flag
     # may be repeated (OR-1c): one link per code, all with the warrant of --lens-basis.
     _add_lens_flags(p_ax)
@@ -2750,7 +2717,6 @@ def main():
     p_all.add_argument("--identity", help="base_taxonomy_identity.identity_code")
     p_all.add_argument("--icf", help="base_icf.icf_code — a real ICF b/d code")
     p_all.add_argument("--needs", help="access_needs.need_code")
-    p_all.add_argument("--medical", help="base_taxonomy_medical.medical_code")
     p_all.add_argument("--basis", required=True, choices=_lens_basis_choices(),
                        help="Live vocabulary, read from extraction_lens_links.basis's own CHECK ('carried' is "
                             "written only by migration 131)")
@@ -2839,7 +2805,7 @@ def main():
                            help="Read-only: where a cell stands at every stage (held, examined empty, never examined, "
                                 "owed), each as row ids")
     p_cs2.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
-    p_cs2.add_argument("--identity"); p_cs2.add_argument("--icf"); p_cs2.add_argument("--needs"); p_cs2.add_argument("--medical")
+    p_cs2.add_argument("--identity"); p_cs2.add_argument("--icf"); p_cs2.add_argument("--needs")
     p_cs2.add_argument("--jurisdiction", help="a code base_jurisdictions holds; narrows searches, pairs and figures")
     p_cs2.add_argument("--language", help="narrows searches and pairs")
 
@@ -2863,7 +2829,6 @@ def main():
     p_ag.add_argument("--identity", help="base_taxonomy_identity.identity_code the gap is in")
     p_ag.add_argument("--icf", help="base_icf.icf_code the gap is in")
     p_ag.add_argument("--needs", help="access_needs.need_code the gap is in")
-    p_ag.add_argument("--medical", help="base_taxonomy_medical.medical_code the gap is in")
     p_ag.add_argument("--jurisdiction", help="the jurisdiction the gap is in (omit for none)")
     p_ag.add_argument("--language", help="ISO 639-1 language the gap is in (omit for none)")
     p_ag.add_argument("--dry-run", action="store_true")
@@ -3003,8 +2968,6 @@ def main():
     p_ls.add_argument("--identity", help="base_taxonomy_identity.identity_code this search covered")
     p_ls.add_argument("--icf", help="base_icf.icf_code this search covered")
     p_ls.add_argument("--needs", help="access_needs.need_code this search covered")
-    p_ls.add_argument("--medical", help="base_taxonomy_medical.medical_code this search covered "
-                                        "(the registry holds no row until it is filled)")
     p_ls.add_argument("--gap-id", dest="gap_id",
                       help="gaps.gap_id this search was run to close (refused unless held)")
     p_ls.add_argument("--dry-run", action="store_true")
@@ -3375,7 +3338,7 @@ def main():
         _emit(get_coverage_completeness(args.slug))
 
     elif args.command == "cell-status":
-        _emit(cell_status(args.parameter_id, args.identity, args.icf, args.needs, args.medical,
+        _emit(cell_status(args.parameter_id, args.identity, args.icf, args.needs,
                           args.jurisdiction, args.language))
 
     elif args.command == "add-gap":
@@ -3393,7 +3356,7 @@ def main():
             data["section"] = args.section
         for col, val in (("parameter_id", args.parameter), ("identity_code", args.identity),
                          ("icf_code", args.icf), ("needs_code", args.needs),
-                         ("medical_code", args.medical), ("jurisdiction", args.jurisdiction),
+                         ("jurisdiction", args.jurisdiction),
                          ("language", args.language)):
             if val is not None:          # a blank is refused by insert_gap, not dropped here
                 data[col] = val
@@ -3458,7 +3421,7 @@ def main():
             origin_pass_id=args.origin_pass_id,
             result_artefacts=args.result_artefacts,
             identity_code=args.identity, icf_code=args.icf,
-            needs_code=args.needs, medical_code=args.medical,
+            needs_code=args.needs,
             parameter_id=args.parameter, absence_class=args.absence_class,
             gap_id=args.gap_id, form_ids=args.form_ids, dry_run=args.dry_run)
         _emit({"exec_id": exec_id, "slug": args.slug,
@@ -3758,7 +3721,7 @@ def main():
     elif args.command == "raise-determination-gate":
         _emit(raise_determination_gate(
             parameter_id=args.parameter_id, identity=args.identity,
-            icf=args.icf, needs=args.needs, medical=args.medical,
+            icf=args.icf, needs=args.needs,
             verdict=args.verdict, trigger_ref_id=args.trigger_ref_id,
             trigger_tier=args.trigger_tier,
             trigger_evidence_type=args.trigger_evidence_type,
@@ -3769,22 +3732,13 @@ def main():
             gate_id=args.gate_id, rationale=args.rationale,
             session=args.session, dry_run=args.dry_run))
 
-    elif args.command == "add-medical":
-        out = insert_medical(
-            code=args.code, display_name=args.display_name, icd11=args.icd11,
-            description=args.description, icd11_payload=args.icd11_payload,
-            identity=args.identity, relationship=args.relationship,
-            icf=args.icf, role=args.role, mapping_confidence=args.mapping_confidence,
-            note=args.note, session=args.session, dry_run=args.dry_run)
-        print(json.dumps(out, indent=2, ensure_ascii=False))
-
     elif args.command == "add-extraction":
         # The lens flags are named for the LENS and stored in the COLUMN; the mapping
         # is stated once, here, and mirrors db._LENS_COLUMNS' key order.
         _ax = {"ref_id": args.ref_id,
                "parameter_id": args.parameter_id,
                "identity_code": args.identity, "icf_code": args.icf,
-               "needs_code": args.needs, "medical_code": args.medical,
+               "needs_code": args.needs,
                "lens_basis": args.lens_basis, "lens_basis_text": args.lens_basis_text,
                "claim_type": args.claim_type, "claimed_value": args.claimed_value,
                "claimed_unit": args.claimed_unit, "claim_text": args.claim_text,
@@ -3856,7 +3810,7 @@ def main():
 
     elif args.command == "add-lens-link":
         _emit(add_lens_link(args.extraction_id, args.session, identity=args.identity, icf=args.icf,
-                            needs=args.needs, medical=args.medical, basis=args.basis,
+                            needs=args.needs, basis=args.basis,
                             basis_text=args.basis_text, dry_run=args.dry_run))
 
     elif args.command == "retire-lens-link":
@@ -3866,7 +3820,7 @@ def main():
         _emit(derive_extraction(
             ref_id=args.ref_id, parameter_id=args.parameter_id,
             identity=args.identity, icf=args.icf, needs=args.needs,
-            medical=args.medical, lens_basis=args.lens_basis,
+            lens_basis=args.lens_basis,
             lens_basis_text=args.lens_basis_text, base=args.base, delta=args.delta,
             claimed_value=args.claimed_value, claimed_unit=args.claimed_unit,
             comparator=args.comparator, conversion_note=args.conversion_note,
@@ -7193,208 +7147,6 @@ def _name_holder(conn, name, *, aliases=True, exclude_term=None):
     return {"kind": "alias", "term_id": held[0], "detail": held[1]} if held else None
 
 
-_MD_CODE = re.compile(r"^MD-[A-Z]+(-[A-Z]+)*$")
-
-
-def insert_medical(code: str, display_name: str, icd11: str, session: str,
-                   description: str = None, icd11_payload: str = None,
-                   identity: str = None, relationship: str = None,
-                   icf: str = None, role: str = None, mapping_confidence: str = None,
-                   note: str = None, dry_run: bool = False):
-    """Mint a medical-lens row AND at least one crossing, in one act.
-
-    THE FOURTH LENS. D-0170 (2026-08-27) adopted it on the owner's ruling -- "yes we
-    include the medical model too. we give our users the choice of what model they want to
-    use to browse the site." `base_taxonomy_medical` was created by migration 065 and had
-    no writer for the fortnight since, which is why D-0182's own evidence could count "0
-    medical" attachment points. Migration 074 gave it the crossings; this gives it a verb.
-
-    ROW AND CROSSING TOGETHER, on the `insert_term` precedent. A medical row with no
-    crossing cannot be reached from any other lens, so the lens cannot switch into it --
-    D-0170's structural requirement, still binding even though D-0184 moved the render path
-    off traversal. Minting the row alone would satisfy a CHECK and defeat the purpose.
-
-    WHAT IT REFUSES, and why each refusal is the point:
-
-      A CODE OUTSIDE `^MD-[A-Z]+(-[A-Z]+)*$`. Letters only, so no medical code can ever
-      match the `\b[A-Z]-[0-9]{2}\b` prior-version item-code shape that CLAUDE.md §7
-      warns a grep will hand you. A digit in this namespace would collide with the exact
-      surface the owner deleted the item layer to get away from.
-
-      A VALUE-BEARING NAME OR DESCRIPTION, via the same `_VALUE_BEARING` that gates
-      `add-term` -- IMPORTED, not retyped, because two copies of one regex is rule 5 in
-      miniature. A diagnosis names the subject, never the determination.
-
-      NO CROSSING. `--identity` needs `--relationship`; `--icf` needs both `--role` and
-      `--mapping-confidence`; and at least one of the two must be present.
-
-      `--identity ALL`. ALL is a scope marker, not a population, and crossing a diagnosis
-      to "everyone" asserts the medical model as the frame rather than offering it as a
-      lens -- which is what D-0170's rationale exists to refuse.
-
-      A DUPLICATE CODE, with the existing row named, on the `add-term` NAMES-EXISTING
-      precedent: a second row for one concept is the dual home rule 5 forbids.
-
-    icd11_verified_at IS SET ONLY FROM BYTES. `--icd11-payload` must name a file under
-    `retrieval-log/` whose content contains every code in `--icd11`; otherwise the column
-    stays NULL and NULL means "not verified". This is `retrieval_log.py`'s artefact
-    discipline (CLAUDE.md §5(c)) applied to a vocabulary instead of a citation -- the 2026-
-    08-19 fabrication was bibliographic fields written from memory past six green gates, and
-    an anchor asserted from memory is the same act on a different column.
-
-    WHAT IS DELIBERATELY ABSENT: any writer for `display_name` or `description` that copies
-    text from a classification. The anchor points; the prose is ours. That is rule 5, and it
-    is also why the licensing question on WHO's terms does not reach these two columns --
-    see scratchpad/pr-134-repository-orientation/MEDICAL-LENS-LICENSING-STOP.md.
-    """
-    if not _MD_CODE.match(code or ""):
-        raise Refusal(
-            f"--code {code!r} REFUSED: medical codes are ^MD-[A-Z]+(-[A-Z]+)*$ -- letters "
-            f"only, no digits.\nA digit here would produce a token matching the prior-"
-            f"version item-code shape [A-Z]-NN that CLAUDE.md §7 warns every grep still "
-            f"meets. That surface is what the owner deleted the item layer to escape; this "
-            f"namespace does not rejoin it.")
-    for field, val, rx in (("--display-name", display_name, _VALUE_BEARING_NAME),
-                           ("--description", description, _VALUE_BEARING)):
-        vb = rx.search(val) if val else None
-        if vb:
-            raise Refusal(
-                f"{field} {val!r} REFUSED: it carries a number, a comparator or a min/max "
-                f"word ({vb.group(0)!r}), so it states a determination in its own name.\nA diagnosis names "
-                f"the SUBJECT. The value belongs in the determination, which the engine "
-                f"computes (owner 2026-09-09).")
-    if not (icd11 or "").strip():
-        raise Refusal(
-            "--icd11 REFUSED: empty. argparse requires the flag to be PRESENT but an empty "
-            "string satisfied it, and a row whose anchor points nowhere is worse than one "
-            "with no anchor at all -- it reads as satisfied.\nThe anchor is the entire reason "
-            "this row exists (rule 5: point, do not copy). Give at least one ICD-11 code or "
-            "BlockId.")
-    if identity and not relationship:
-        raise Refusal("--identity given without --relationship. Say HOW the diagnosis "
-                      "relates: names | member_of | identity_first.")
-    if icf and not (role and mapping_confidence):
-        raise Refusal("--icf needs both --role and --mapping-confidence. A crossing whose "
-                      "strength is unstated reads as high-predictive to the next reader, "
-                      "which is the inference D-0184 measured and rejected.")
-    if not identity and not icf:
-        raise Refusal(
-            "REFUSED: no crossing given. A medical row with no crossing cannot be reached "
-            "from any other lens, so the lens cannot switch into it (D-0170's structural "
-            "requirement).\nPass --identity/--relationship, or --icf/--role/"
-            "--mapping-confidence, or both.")
-    if identity == "ALL":
-        raise Refusal(
-            "--identity ALL REFUSED: ALL is a scope marker, not a population. Crossing a "
-            "diagnosis to every population asserts the medical model as the project's "
-            "FRAME rather than offering it as one lens among four -- the reading D-0170's "
-            "rationale exists to refuse.")
-
-    verified_at = None
-    if icd11_payload:
-        pay = Path(icd11_payload)
-        # READ ARCHIVE MEMBERS, NOT JUST RAW BYTES. The first version of this check
-        # substring-matched `pay.read_bytes()`, and the only artefact it will ever be
-        # pointed at is WHO's release file — a DEFLATE-COMPRESSED ZIP, in which no code
-        # occurs literally. Measured: b"MB56" in the raw zip -> False; in the decompressed
-        # member -> True. So the check refused the very payload that proves the anchor,
-        # and the ruling it enforces ("verified against the persisted release file at write
-        # time") was unexecutable. The MB5 verification of 2026-09-11 02:47 was done by
-        # hand in Python and never through this writer, while the record claimed otherwise.
-        bodies = _payload_bodies(pay, "--icd11-payload",
-                                 "icd11_verified_at is set from BYTES or not at all")
-        missing = [c.strip() for c in icd11.split(",")
-                   if c.strip() and not any(c.strip() in b for b in bodies)]
-        if missing:
-            raise Refusal(
-                f"--icd11-payload does not contain {missing!r}. REFUSED rather than stamped: "
-                f"a payload that does not mention the code verifies nothing, and a "
-                f"verification standing with no artefact behind it is the 2026-08-19 shape.")
-        # A REAL stamp, not a guarded one. The first draft of this line read
-        # `_now() if "_now" in globals() else None`, and _now() does not exist in this
-        # module -- so --icd11-payload would have validated the bytes and then written
-        # NULL anyway, leaving a verified anchor indistinguishable from an unverified
-        # one. A writer that silently does nothing is worse than one that refuses.
-        verified_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-    with connect(dry_run) as conn:
-        dup = conn.execute("SELECT medical_code, display_name FROM base_taxonomy_medical "
-                           "WHERE medical_code = ?", (code,)).fetchone()
-        if dup:
-            raise Refusal(
-                f"--code {code!r} REFUSED: already exists as {dup[1]!r}. Minting a second "
-                f"row for one concept is the dual home rule 5 forbids; add a crossing to "
-                f"the standing row instead.")
-        # PRE-CHECK THE CROSSING TARGETS. Without this, a typo'd --identity or --icf
-        # reached the INSERT and surfaced as `sqlite3.IntegrityError: FOREIGN KEY
-        # constraint failed` with a traceback naming a line number -- while a
-        # DOCTRINAL error (--identity ALL) got a full sentence. So the writer explained
-        # the subtle mistake and stack-traced the obvious one. That is the exact pattern
-        # PR #133 ("db.py's refusals become sentences too") existed to remove, and this
-        # writer reintroduced it. Found by driving the CLI, not by reading it.
-        # The transaction did roll back, so nothing was corrupted -- the defect was the
-        # message, which is still the difference between a user fixing a typo and a user
-        # filing a bug.
-        if identity:
-            dbcore.check_identity_live(conn, identity, "add-medical --identity")
-            if not conn.execute("SELECT 1 FROM base_taxonomy_identity WHERE identity_code = ?",
-                                (identity,)).fetchone():
-                near = [r[0] for r in conn.execute(
-                    "SELECT identity_code FROM base_taxonomy_identity ORDER BY identity_code")]
-                raise Refusal(
-                    f"--identity {identity!r} REFUSED: not an identity_code. The identity "
-                    f"lens is `base_taxonomy_identity`, and its live vocabulary is: {', '.join(near)}")
-        if icf:
-            # INVERTED 2026-09-13, and the old message is worth remembering because it
-            # stated the ruled-out state as doctrine: it read "specifications.icf_code FKs
-            # to `axes`, NOT to raw ICF b/d/e codes … a raw code would be refused by the
-            # FK". That was true of the schema and is now exactly backwards. Owner ruling,
-            # same day: "'AX-' for ICF should never ever exist anywhere", then "keep the
-            # ICF lens, give it real ICF codes". Migration 081 re-pointed all six icf_code
-            # columns at `base_icf`, so a raw ICF code is the ONLY thing accepted here and
-            # an AX- demand code is what the FK now refuses.
-            if not dbcore.exists(conn, "base_icf", "icf_code", icf):
-                raise Refusal(
-                    f"--icf {icf!r} REFUSED: not in `base_icf`, the ICF registry the lens "
-                    f"points at since migration 081.\n"
-                    f"If this is a real ICF code the registry does not yet hold, mint it:\n"
-                    f"  db.py add-icf-code --icf-code {icf} --session ...\n"
-                    f"If it is an AX- demand code, it is not an ICF code and never was "
-                    f"(owner ruling 2026-09-13).")
-        row = {"medical_code": code, "display_name": display_name,
-               "description": description, "icd11_anchors": icd11,
-               "icd11_verified_at": verified_at, "notes": note}
-        row = {k: v for k, v in row.items() if v is not None}
-        row.update(dbcore.stamp_for(conn, "base_taxonomy_medical", session))
-        conn.execute(
-            f"INSERT INTO base_taxonomy_medical ({','.join(row)}) "
-            f"VALUES ({','.join('?' * len(row))})", tuple(row.values()))
-        crossings = []
-        if identity:
-            c = {"identity_code": identity, "medical_code": code,
-                 "relationship": relationship, "notes": note}
-            c = {k: v for k, v in c.items() if v is not None}
-            c.update(dbcore.stamp_for(conn, "identity_medical_map", session))
-            conn.execute(f"INSERT INTO identity_medical_map ({','.join(c)}) "
-                         f"VALUES ({','.join('?' * len(c))})", tuple(c.values()))
-            crossings.append({"lens": "identity", "code": identity,
-                              "relationship": relationship})
-        if icf:
-            c = {"icf_code": icf, "medical_code": code, "role": role,
-                 "mapping_confidence": mapping_confidence, "notes": note}
-            c = {k: v for k, v in c.items() if v is not None}
-            c.update(dbcore.stamp_for(conn, "icf_medical_map", session))
-            conn.execute(f"INSERT INTO icf_medical_map ({','.join(c)}) "
-                         f"VALUES ({','.join('?' * len(c))})", tuple(c.values()))
-            crossings.append({"lens": "icf", "code": icf, "role": role,
-                              "mapping_confidence": mapping_confidence})
-        return {"medical_code": code, "display_name": display_name,
-                "icd11_anchors": icd11,
-                "icd11_verified_at": verified_at,
-                "anchor_verified": bool(verified_at),
-                "crossings": crossings, "dry_run": dry_run}
-
-
 def insert_parameter(term_id: str, session: str, notes: str = None,
                      dry_run: bool = False):
     """Promote an adjudicated term into `base_parameters` — THE SUBJECT of a determination.
@@ -9160,8 +8912,8 @@ def resolve_follow_up(follow_up_id: int, resolution: str, session: str,
 
 
 # --- H3/H4: the two tables migration 080 created ---------------------------------
-# Both shipped with no writer, which is the defect `insert_parameter` and
-# `insert_medical` were each written to close on their own table: a capturable table
+# Both shipped with no writer, which is the defect `insert_parameter`
+# was written to close on its own table: a capturable table
 # with nothing that can write it is unreachable through the sanctioned path, and the
 # next session reaches for hand SQL (CLAUDE.md section 4 -- "if you find one it cannot,
 # that is a coverage bug to fix, not a licence to bypass").
@@ -9290,8 +9042,7 @@ def insert_icf_code(*, icf_code: str, title: str = None, title_source: str = Non
     and never whether it was TRUE. An ICF title recalled rather than read is the same act
     in a smaller field. So `title` may only arrive with a `title_source`, which the schema
     enforces too — and when that source is a persisted payload, the title is checked
-    against its BYTES here, the same way `add-medical --icd11-payload` checks an ICD-11
-    anchor. A title with no payload is accepted and records its document, which is weaker
+    against its BYTES here. A title with no payload is accepted and records its document, which is weaker
     and is meant to read as weaker.
 
     A CODE WITH NO TITLE IS FINE and is the honest default: 43 of the 72 seeded codes are
@@ -9394,7 +9145,7 @@ def set_icf_title(*, icf_code: str, title: str, title_source: str = None,
 
 def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
                              identity: str = None, icf: str = None, needs: str = None,
-                             medical: str = None, trigger_ref_id: str = None,
+                             trigger_ref_id: str = None,
                              trigger_tier: int = None, trigger_evidence_type: str = None,
                              session: str, dry_run: bool = False):
     """Raise an H4 gate: a finding that caps a cell at `provisional` until resolved.
@@ -9477,8 +9228,7 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
                 f"the gate against EVERY lens on this parameter, which is what an audit "
                 f"that does not yet know which cells exist should do.")
         for _flag, _val, _tbl, _col in (("--icf", icf, "base_icf", "icf_code"),
-                                        ("--needs", needs, "access_needs", "need_code"),
-                                        ("--medical", medical, "base_taxonomy_medical", "medical_code")):
+                                        ("--needs", needs, "access_needs", "need_code")):
             if _val and not dbcore.exists(conn, _tbl, _col, _val):
                 raise Refusal(
                     f"{_flag} {_val!r} is not in {_tbl}. List the codes with SELECT {_col} FROM {_tbl}; "
@@ -9501,7 +9251,7 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
                     f"state the strength as your own finding.")
             trigger_tier, trigger_evidence_type = src["tier"], src["evidence_type"]
         row = {"parameter_id": parameter_id, "identity_code": identity, "icf_code": icf,
-               "needs_code": needs, "medical_code": medical,
+               "needs_code": needs,
                "verdict": verdict, "trigger_ref_id": trigger_ref_id,
                "trigger_tier": trigger_tier,
                "trigger_evidence_type": trigger_evidence_type, "detail": detail,
@@ -9509,8 +9259,7 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
         cur = conn.execute(f"INSERT INTO determination_gates ({','.join(row)}) "
                            f"VALUES ({','.join('?'*len(row))})", list(row.values()))
         return {"gate_id": cur.lastrowid, "parameter_id": parameter_id,
-                "identity_code": identity, "icf_code": icf, "needs_code": needs,
-                "medical_code": medical, "verdict": verdict,
+                "identity_code": identity, "icf_code": icf, "needs_code": needs, "verdict": verdict,
                 "trigger_tier": trigger_tier,
                 "trigger_evidence_type": trigger_evidence_type,
                 "trigger_strength_source": ("none: a question states no strength" if verdict == "QUESTION"
@@ -9561,7 +9310,7 @@ def resolve_determination_gate(*, gate_id: int, rationale: str, session: str,
                 "dry_run": dry_run}
 
 
-# The four lenses (owner 2026-08-28; CHECK relaxed to "at least one" by D-0182).
+# The three lenses (owner 2026-08-28, the medical lens deleted 2026-11-16; CHECK relaxed to "at least one" by D-0182).
 # Each column, the base registry its real FK points into, and that registry's key.
 # DERIVED FROM THE SCHEMA, not a vocabulary restated in code: the registries ARE the
 # vocabulary (CLAUDE.md §4). Mirrors assess_cell.LENS_COLUMNS deliberately — the
@@ -9577,7 +9326,6 @@ _LENS_COLUMNS = {
     # dropped its tables.
     "icf_code": ("base_icf", "icf_code"),
     "needs_code": ("access_needs", "need_code"),
-    "medical_code": ("base_taxonomy_medical", "medical_code"),
 }
 
 # Columns on source_value_extractions whose CHECK declares a closed vocabulary. The
@@ -9675,8 +9423,7 @@ def _fmt_num(x: float) -> str:
 def _payload_bodies(pay, flag: str, why: str):
     """Every readable text body inside a persisted payload, for a bytes-not-memory check.
 
-    FACTORED OUT 2026-09-13 so `set-icf-title` verifies an ICF title exactly the way
-    `add-medical --icd11-payload` verifies an ICD-11 anchor. Two copies of a
+    FACTORED OUT 2026-09-13 so `set-icf-title` reads the bytes of a persisted payload. Two copies of a
     bytes-verification would be two places for the archive-member bug below to come back.
 
     READS ARCHIVE MEMBERS, NOT JUST RAW BYTES, and that is the whole reason this is more
@@ -10300,8 +10047,7 @@ def _require_lens_warrant(conn, basis, basis_text, ref_id, claim_text, source_se
       study_participants  the study_population of an evidence_population_match row for the source (2026-08-25).
 
     Returns the stripped text. WHAT THIS DOES NOT CHECK: that the words name the lens code itself. The registries
-    do not hold a name for every code (about half the ICF d-codes have no title, access_needs has no name column,
-    base_taxonomy_medical is empty), so a name test cannot be derived for them; whether the words name the group
+    do not hold a name for every code (about half the ICF d-codes have no title, access_needs has no name column), so a name test cannot be derived for them; whether the words name the group
     is the judge's (D-2) and the recorded warrant is what a later reader audits."""
     allowed = set(_lens_basis_choices() or ())
     if basis not in allowed:
@@ -10384,8 +10130,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
       table look healthy": the schema parses, a rebuild reproduces it exactly, and
       every gate stays green over a table that cannot accept a row. The refusal here
       names `db.py add-parameter` as the remedy. The same treatment is given to each
-      lens registry, because `base_taxonomy_medical` is ALSO empty and `--medical`
-      would fail the same silent way.
+      lens registry.
 
     * A lens code that is not live in its own registry — and a BLANK is not an
       absence. `--identity ""` is normalised to None before anything reads it:
@@ -10566,7 +10311,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         if not any(lens.values()):
             raise Refusal(
                 "an extraction must be stated in at least one lens (D-0182): pass one or "
-                "more of --identity / --icf / --needs / --medical. A value attached to no "
+                "more of --identity / --icf / --needs. A value attached to no "
                 "lens is a value about nobody.")
         for col, codes in lens.items():
             dup = sorted({c for c in codes if codes.count(c) > 1})
@@ -10814,7 +10559,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
 
 
 def add_lens_link(extraction_id: int, session: str, *, identity: str = None, icf: str = None,
-                  needs: str = None, medical: str = None, basis: str = None, basis_text: str = None,
+                  needs: str = None, basis: str = None, basis_text: str = None,
                   dry_run: bool = False):
     """State an existing figure in ONE more lens code (OR-1c), with the words that warrant it.
 
@@ -10825,11 +10570,11 @@ def add_lens_link(extraction_id: int, session: str, *, identity: str = None, icf
     replaces a carried one in one act. The retirement is written first and its reason completed once
     the new link has an id: the partial unique index admits one live link per (figure, code)."""
     given = {col: code for col, code in (("identity_code", identity), ("icf_code", icf),
-                                         ("needs_code", needs), ("medical_code", medical))
+                                         ("needs_code", needs))
              if code is not None}
     if len(given) != 1:
-        raise Refusal(f"add-lens-link: name exactly one code, with one of --identity / --icf / --needs / "
-                      f"--medical (got {len(given)}). Repeat the verb for each code. Nothing was written.")
+        raise Refusal(f"add-lens-link: name exactly one code, with one of --identity / --icf / --needs "
+                      f"(got {len(given)}). Repeat the verb for each code. Nothing was written.")
     ((col, code),) = given.items()
     if not isinstance(code, str):
         raise Refusal(f"add-lens-link: {col} must be one code as text, got {code!r}. Nothing was written.")
@@ -11235,7 +10980,7 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
 def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
                       delta: int, claim_text: str, session: str,
                       dry_run: bool = False, identity: str = None, icf: str = None,
-                      needs: str = None, medical: str = None,
+                      needs: str = None,
                       lens_basis: str = None, lens_basis_text: str = None,
                       claimed_value: str = None, claimed_unit: str = None,
                       comparator: str = None, conversion_note: str = None):
@@ -11317,7 +11062,7 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
 
         data = {"ref_id": ref_id, "parameter_id": parameter_id,
                 "identity_code": identity, "icf_code": icf, "needs_code": needs,
-                "medical_code": medical, "lens_basis": lens_basis,
+                "lens_basis": lens_basis,
                 "lens_basis_text": lens_basis_text, "claim_type": "numerical",
                 "claimed_value": claimed_value, "claimed_unit": unit,
                 "claim_text": claim_text, "figure_role": "derived",

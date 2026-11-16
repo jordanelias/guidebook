@@ -940,7 +940,6 @@ print("Section T021: a question about a published cell is an open gate with no t
 _P_Q = next((p for p in P_ACTIVE), None)
 _ICF = scalar("SELECT icf_code FROM base_icf ORDER BY icf_code LIMIT 1")
 _NEED = scalar("SELECT need_code FROM access_needs ORDER BY need_code LIMIT 1")
-_MED = scalar("SELECT medical_code FROM base_taxonomy_medical ORDER BY medical_code LIMIT 1")
 if _P_Q is None or _ICF is None:
     skip("T021", "no active parameter or ICF code on the live database to build the question on")
 else:
@@ -948,13 +947,13 @@ else:
     with scratch() as c:
         _n0 = c.execute("SELECT COUNT(*) FROM determination_gates").fetchone()[0]
         res, err = ok(db.raise_determination_gate, parameter_id=_P_Q, verdict="QUESTION", detail=_text, icf=_ICF,
-                      needs=_NEED, medical=_MED, session=S, dry_run=False)
+                      needs=_NEED, session=S, dry_run=False)
         row = c.execute("SELECT verdict, trigger_tier, trigger_evidence_type, trigger_ref_id, icf_code, needs_code, "
-                        "medical_code, detail, raised_by_session FROM determination_gates WHERE gate_id=?",
+                        "detail, raised_by_session FROM determination_gates WHERE gate_id=?",
                         (res["gate_id"] if res else -1,)).fetchone()
         record("T021-06", "a QUESTION is raised with no tier, no evidence type and no source, names the lens codes it was given, "
                "keeps the objection's words and the session, and is listed by v_open_determination_gates",
-               err is None and row is not None and tuple(row) == ("QUESTION", None, None, None, _ICF, _NEED, _MED, _text, S)
+               err is None and row is not None and tuple(row) == ("QUESTION", None, None, None, _ICF, _NEED, _text, S)
                and c.execute("SELECT COUNT(*) FROM v_open_determination_gates WHERE gate_id=?", (res["gate_id"],)).fetchone()[0] == 1
                and c.execute("SELECT COUNT(*) FROM determination_gates").fetchone()[0] == _n0 + 1, (err, row))
         _rs = {
@@ -1373,11 +1372,8 @@ with scratch() as c:
         record("T054-05", "retire-population-icf-link retires one crossing row in place with its session and reason; a second retirement, an absent id and a blank reason are refused",
                err is None and all(_lr) and _lr[2] == "T054 fixture" and _again and "already retired" in _again and _absent and "not in identity_icf_map" in _absent
                and _blank and "--reason" in _blank, (err, tuple(_lr), _again, _absent, _blank))
-        # T054-08: add-medical (a writer the first cut missed) refuses the deprecated code; T054-09: a retirement is not
-        # blocked by records, and says what stays; T054-10: a code that is a deprecated code's successor cannot be retired
-        _med = refusal(db.insert_medical, code="MD-TFIXTUREZ", display_name="T fixture", description="TASK-FIXTURE", icd11="8A00",
-                       identity=_a, relationship="names", session=S, dry_run=True) if hasattr(db, "insert_medical") else "no insert_medical"
-        record("T054-08", "add-medical --identity refuses the deprecated code", bool(_med) and ("deprecated" in _med or _med == "no insert_medical"), _med)
+        # T054-09: a retirement is not blocked by records, and says what stays; T054-10: a code that is a deprecated
+        # code's successor cannot be retired
         if len(_free) > 4:
             _y, _x = _free[3], _free[4]
             ok(db.retire_identity, _x, None, _y, _named54(_x), "T054 fixture", **_R)
@@ -2167,15 +2163,15 @@ else:
     record("Z07", "a plain multi-word name is not refused by the value-bearing rule",
            r is None or "carries a number" not in r, r)
 # A description is prose: the comparator words guard NAMES only (a definition says "rather than").
-r = refusal(db.insert_medical, "MD-FIXTURE", "Fixture condition", "6A02", S,
-            description="Affects more than one limb, no more than mild", dry_run=True)
-record("Z08", "a description with 'than' and 'no more' is not refused for its words (it is refused later, for "
-              "its missing crossing, which this case does not supply)", r is None or "--description" not in r, r)
-r = refusal(db.insert_medical, "MD-FIXTURE", "Fixture condition", "6A02", S,
-            description="Grade 3 impairment", dry_run=True)
-record("Z09", "...and a description with a number still is", r and "--description" in r, r)
-r = refusal(db.insert_medical, "MD-FIXTURE", "not steeper than", "6A02", S, dry_run=True)
-record("Z10", "...while the same words in the display name are refused", r and "'than'" in r, r)
+_MINT = dict(catalogue="references/none.md", entry_ref="x", approval_ref="## 2026-01-01 no such entry", session=S, dry_run=True)
+r = refusal(db.mint_term_from_catalogue, canonical_en="Fixture quantity",
+            definition="Affects more than one limb, no more than mild", **_MINT)
+record("Z08", "a definition with 'than' and 'no more' is not refused for its words (it is refused later, for "
+              "its unrecorded approval, which this case does not supply)", r is not None and "--definition" not in r, r)
+r = refusal(db.mint_term_from_catalogue, canonical_en="Fixture quantity", definition="Grade 3 impairment", **_MINT)
+record("Z09", "...and a definition with a number still is", r and "--definition" in r, r)
+r = refusal(db.mint_term_from_catalogue, canonical_en="not steeper than", definition="Fixture definition", **_MINT)
+record("Z10", "...while the same words in the canonical name are refused", r and "'than'" in r, r)
 VB = getattr(db, "_VALUE_BEARING_NAME", None)
 if feature("Z06", "no live term name is caught by the widened name rule", VB is not None, "db._VALUE_BEARING_NAME"):
     record("Z06", "no live term name is caught by the widened name rule (it would strand the vocabulary)",
@@ -2299,21 +2295,20 @@ else:
 # ─────────────────────── T-013: a gap says what it is a gap in; a search says which gap caused it ───────────────────────
 print("Section T013: add-gap names a cell-less gap's parameter, lens, jurisdiction and language; log-search --gap-id; "
       "an engine-made gap is reached through its cell, never copied (rule 5)")
-GAP_SUBJECT = ("parameter_id", "identity_code", "icf_code", "needs_code", "medical_code", "jurisdiction", "language")
+GAP_SUBJECT = ("parameter_id", "identity_code", "icf_code", "needs_code", "jurisdiction", "language")
 gcols = [x[1] for x in con.execute("PRAGMA table_info(gaps)")]
 secols = [x[1] for x in con.execute("PRAGMA table_info(search_executions)")]
 fk_of = lambda t, col: [tuple(f[2:5]) for f in con.execute(f'PRAGMA foreign_key_list("{t}")') if f[3] == col]  # noqa: E731
-record("T013-01", "gaps holds the seven subject columns and search_executions holds gap_id (the lens and parameter "
+record("T013-01", "gaps holds the subject columns and search_executions holds gap_id (the lens and parameter "
                   "columns point where search_executions' own do; gap_id points at gaps)",
        all(c_ in gcols for c_ in GAP_SUBJECT) and "gap_id" in secols
        and all(fk_of("gaps", c_) == fk_of("search_executions", c_) and fk_of("gaps", c_)
-               for c_ in ("parameter_id", "identity_code", "icf_code", "needs_code", "medical_code"))
+               for c_ in ("parameter_id", "identity_code", "icf_code", "needs_code"))
        and fk_of("search_executions", "gap_id") == [("gaps", "gap_id", "gap_id")],
        ([c_ for c_ in GAP_SUBJECT if c_ not in gcols], "gap_id" in secols))
 
 A_PAR = scalar("SELECT parameter_id FROM base_parameters WHERE status='active' ORDER BY 1 LIMIT 1")
 A_NEED = scalar("SELECT need_code FROM access_needs ORDER BY 1 LIMIT 1")
-A_MED = scalar("SELECT medical_code FROM base_taxonomy_medical ORDER BY 1 LIMIT 1")
 gap_cli = lambda *a: cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE gap",  # noqa: E731
                          "--session", S, *a)
 stored_gap = lambda c_, gid: dict(c_.execute("SELECT * FROM gaps WHERE gap_id=?", (gid,)).fetchone() or {})  # noqa: E731
@@ -2331,17 +2326,12 @@ def se_gap(c_, exec_id):
 
 
 if None in (A_PAR, IDENT, ICF, A_NEED, LANG, JUR):
-    skip("T013-02..T013-22", "a registry or the research-scope map is empty")
+    skip("T013-02..T013-21", "a registry or the research-scope map is empty")
 else:
     flags = ["--parameter", str(A_PAR), "--identity", IDENT, "--icf", ICF, "--needs", A_NEED,
              "--jurisdiction", JUR, "--language", LANG.lower()]
     want = {"parameter_id": A_PAR, "identity_code": IDENT, "icf_code": ICF, "needs_code": A_NEED,
             "jurisdiction": JUR, "language": LANG}
-    if A_MED is not None:
-        flags += ["--medical", A_MED]
-        want["medical_code"] = A_MED
-    else:
-        skip("T013-03/medical", "base_taxonomy_medical holds no row, so T013-02 cannot store a live --medical code (T013-22 builds one on its own copy)")
     with scratch() as c:
         before = n_gaps(c)
         r = gap_cli(*flags)
@@ -2354,13 +2344,13 @@ else:
         r0 = gap_cli()
         g0 = json.loads(r0.stdout)["gap_id"] if r0.returncode == 0 and r0.stdout.strip() else None
         row0 = stored_gap(c, g0) if g0 else {}
-        record("T013-03", "add-gap with no subject flag still works and leaves the seven columns NULL",
+        record("T013-03", "add-gap with no subject flag still works and leaves the subject columns NULL",
                g0 is not None and all(row0.get(k_) is None for k_ in GAP_SUBJECT), (r0.stderr[-200:], row0))
 
         # Each refusal: non-zero exit, the flag or column named, and no row written.
         bad = {"--parameter": ("parameter_id", str(scalar("SELECT MAX(parameter_id) FROM base_parameters") + 1000)),
                "--identity": ("identity_code", IDENT + "-NO-SUCH"), "--icf": ("icf_code", ICF + "-NO-SUCH"),
-               "--needs": ("needs_code", A_NEED + "-NO-SUCH"), "--medical": ("medical_code", "NO-SUCH-MEDICAL"),
+               "--needs": ("needs_code", A_NEED + "-NO-SUCH"),
                "--jurisdiction": ("jurisdiction", JUR + "-NO-SUCH"), "--language": ("--language", "ZZ")}
         for k_, (name_, val_) in bad.items():
             n0 = n_gaps(c)
@@ -2425,7 +2415,7 @@ else:
             cell = c.execute("SELECT parameter_id, identity_code, icf_code, needs_code, gap_register_id "
                              "FROM specifications WHERE gap_register_id=?", (rep.get("gap_register_id") or "",)).fetchone()
             try:
-                g = c.execute("SELECT parameter_id, identity_code, icf_code, needs_code, medical_code, jurisdiction, "
+                g = c.execute("SELECT parameter_id, identity_code, icf_code, needs_code, jurisdiction, "
                               "language FROM gaps WHERE gap_id=?", (rep.get("gap_register_id") or "",)).fetchone()
             except sqlite3.OperationalError:
                 g = None                                   # no such columns: red below, not a crash
@@ -2536,24 +2526,9 @@ else:
             record("T013-21", "...and once the first is closed the same subject may be filed again",
                    cg.returncode == 0 and re_.returncode == 0, (cg.stderr + re_.stderr)[-250:])
 
-        # medical_code: the live registry is empty, so the positive path is built on this scratch copy only.
-        with scratch() as c:
-            c.execute("INSERT INTO base_taxonomy_medical (medical_code, display_name, status, notes) "
-                      "VALUES ('MD-TASK-FIXTURE', 'TASK-FIXTURE condition', 'active', 'TASK-FIXTURE')")
-            c.commit()
-            rm_ = cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE medical", "--session", S,
-                      "--medical", "MD-TASK-FIXTURE")
-            gm = json.loads(rm_.stdout or "{}").get("gap_id")
-            held_m = c.execute("SELECT medical_code FROM gaps WHERE gap_id=?", (gm,)).fetchone() if gm else None
-            rm2 = cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE medical", "--session", S,
-                      "--medical", "MD-TASK-FIXTURE-NO-SUCH")
-            record("T013-22", "add-gap --medical stores a code the registry holds (TASK-FIXTURE row on this copy) and refuses one it does not",
-                   held_m is not None and held_m[0] == "MD-TASK-FIXTURE" and rm2.returncode != 0 and "medical_code" in rm2.stderr,
-                   (rm_.stderr + rm2.stderr)[-250:])
-
 h_ls, h_ag = cli("log-search", "--results-found", "1", "--help").stdout, cli("add-gap", "--help").stdout
-record("T013-12", "log-search --help lists --gap-id; add-gap --help lists the seven subject flags",
-       "--gap-id" in h_ls and all(f_ in h_ag for f_ in ("--parameter", "--identity", "--icf", "--needs", "--medical",
+record("T013-12", "log-search --help lists --gap-id; add-gap --help lists the subject flags",
+       "--gap-id" in h_ls and all(f_ in h_ag for f_ in ("--parameter", "--identity", "--icf", "--needs",
                                                           "--jurisdiction", "--language")), (h_ls[-100:], h_ag[-100:]))
 
 # The verified-scan reader: independent oracle (SQL over the base tables), not the script's own query.
@@ -3292,13 +3267,13 @@ record("T015-01", "the coverage views hold one row per slug and language: the di
        scalar("SELECT COUNT(DISTINCT language) FROM v_coverage_language")
        == scalar("SELECT COUNT(DISTINCT UPPER(language)) FROM search_executions WHERE deferred_reason IS NULL")
        and scalar("SELECT COUNT(*) FROM (SELECT slug, UPPER(language) FROM v_coverage_language GROUP BY 1, 2 HAVING COUNT(*) > 1)") == 0
-       and scalar("SELECT COUNT(*) FROM (SELECT slug, parameter_id, jurisdiction, UPPER(language), identity_code, icf_code, needs_code, "
-                  "medical_code FROM v_coverage_lens GROUP BY 1,2,3,4,5,6,7,8 HAVING COUNT(*) > 1)") == 0
+       and scalar("SELECT COUNT(*) FROM (SELECT slug, parameter_id, jurisdiction, UPPER(language), identity_code, icf_code, needs_code "
+                  "FROM v_coverage_lens GROUP BY 1,2,3,4,5,6,7 HAVING COUNT(*) > 1)") == 0
        and scalar("SELECT COUNT(*) FROM v_coverage_language WHERE language <> UPPER(language)") == 0, None)
 with scratch() as c:                   # every search stored in lower case: neither view may notice (the live log holds both spellings)
     _snap = lambda: ([tuple(r) for r in c.execute("SELECT slug, language, searches, admitted FROM v_coverage_language ORDER BY 1, 2")],  # noqa: E731
                      [tuple(r) for r in c.execute("SELECT slug, parameter_id, jurisdiction, language, identity_code, icf_code, needs_code, "
-                                                  "medical_code, searches, deferred FROM v_coverage_lens ORDER BY 1, 2, 3, 4, 5, 6, 7, 8")])
+                                                  "searches, deferred FROM v_coverage_lens ORDER BY 1, 2, 3, 4, 5, 6, 7")])
     _before = _snap()
     hand("UPDATE search_executions SET language=LOWER(language)")
     _after = _snap()

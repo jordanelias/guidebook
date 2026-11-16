@@ -884,7 +884,7 @@ try:
     con = sqlite3.connect(DB)
     try:
         # The cell's lens: a figure reaches a cell only through the live lens links written on it (T-019).
-        lens = {"identity_code": POP, "icf_code": None, "needs_code": None, "medical_code": None}
+        lens = {"identity_code": POP, "icf_code": None, "needs_code": None}
         refs = [s["ref_id"] for s in ac.gather_sources(con, PE, lens)]
         links = ac.gather_extraction_links(con, PE, [REF_A, REF_S], lens)
         by_id = {l["extraction_id"]: l for l in links}

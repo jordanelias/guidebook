@@ -372,8 +372,9 @@ judgment. Zero links **after judgment** is a defect. Only Opus-class models writ
 **Both halves of the determination's key are RULED.**
 
 - **Lens.** Owner ruling 2026-08-28 (`references/project-standards.md`): any table attaching a
-  determination to a group of disabled people takes **four lens columns, one CHECK, real FKs, and
-  `population_code` is retired in favour of the four**. D-0182 relaxed that CHECK from "exactly one"
+  determination to a group of disabled people takes **three lens columns (identity, ICF, access need), one CHECK, real FKs, and
+  `population_code` is retired in favour of them**. The ruling named four; the owner deleted the fourth, the medical
+  lens, on 2026-11-16 (ledger entry of that date; migration 138). D-0182 relaxed that CHECK from "exactly one"
   to **at least one** (`COALESCE(...) IS NOT NULL`), which migration 065 built.
 - **Subject.** Owner ruling **2026-08-26** (`grep -n 'judgment object is the'
   references/project-standards.md`): *"The judgment object is the **canonical parameter**, and
