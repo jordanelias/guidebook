@@ -28,7 +28,7 @@ sys.path.insert(0, REPO_ROOT)
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "assess"))
 
 from assess_cell import (  # noqa: E402
-    NOT_PUBLISHABLE_METHODS, RULE_VERSION, STORED_ANSWER, Refusal, determine, gap_account,
+    NOT_PUBLISHABLE_METHODS, RULE_VERSION, STORED_ANSWER, Refusal, derivation_handshake, determine, gap_account, population_match,
     scan_command, stale_determinations, validate_lens)
 from schemas.enums import EvidenceMarker  # noqa: E402
 from schemas.evidence_state import ConvergenceAssessment, EvidenceStateRecord  # noqa: E402
@@ -57,7 +57,7 @@ def _default_scope(evidence_type, tier):
 
 
 def synth_db(sources, parameter_id=1, extractions_per_source=1,
-             icf_links=(), gates=(), direction=None, row_lens=({"identity_code": "MOB"},)):
+             icf_links=(), gates=(), direction=None, row_lens=({"identity_code": "MOB"},), family=()):
     """Minimal in-memory schema for determine(): evidence_sources +
     source_value_extractions + evidence_population_match.
 
@@ -107,6 +107,7 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
       -- identity_icf_map is also the honest default -- it is what a cell whose
       -- identity lens has no promoted functional mapping actually looks like.
       CREATE TABLE identity_icf_map (
+        retired_at TEXT,
         link_id INTEGER PRIMARY KEY AUTOINCREMENT, identity_code TEXT, icf_code TEXT,
         mechanism TEXT, mapping_confidence TEXT, provenance TEXT, notes TEXT,
         created_at TEXT, created_by_session TEXT);
@@ -118,13 +119,17 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
       CREATE TABLE base_parameters (
         parameter_id INTEGER PRIMARY KEY, term_id TEXT, status TEXT,
         accessibility_direction TEXT, direction_rationale TEXT);
+      CREATE TABLE base_taxonomy_identity (identity_code TEXT PRIMARY KEY,
+        parent_code TEXT REFERENCES base_taxonomy_identity(identity_code));
       CREATE TABLE determination_gates (
         gate_id INTEGER PRIMARY KEY AUTOINCREMENT, parameter_id INTEGER,
-        identity_code TEXT, verdict TEXT, trigger_ref_id TEXT, trigger_tier INT,
+        identity_code TEXT, icf_code TEXT, needs_code TEXT, medical_code TEXT,
+        verdict TEXT, trigger_ref_id TEXT, trigger_tier INT,
         trigger_evidence_type TEXT, detail TEXT, raised_at TEXT, raised_by_session TEXT,
         resolved_at TEXT, resolved_by_session TEXT, resolution_rationale TEXT);
       CREATE VIEW v_open_determination_gates AS
-        SELECT g.gate_id, g.parameter_id, g.identity_code, g.verdict, g.trigger_ref_id,
+        SELECT g.gate_id, g.parameter_id, g.identity_code, g.icf_code, g.needs_code,
+               g.medical_code, g.verdict, g.trigger_ref_id,
                g.trigger_tier, g.trigger_evidence_type, g.detail, g.raised_at,
                g.raised_by_session
           FROM determination_gates g WHERE g.resolved_at IS NULL;
@@ -141,6 +146,10 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
     for L in icf_links:
         conn.execute("INSERT INTO identity_icf_map (identity_code, icf_code, "
                      "mechanism, mapping_confidence, provenance) VALUES (?,?,?,?,?)", L)
+    for child, parent in family:             # (child, parent) identity codes; empty by default, so every code is a root
+        for code in (parent, child):
+            conn.execute("INSERT OR IGNORE INTO base_taxonomy_identity (identity_code) VALUES (?)", (code,))
+        conn.execute("UPDATE base_taxonomy_identity SET parent_code = ? WHERE identity_code = ?", (parent, child))
     for g in gates:
         conn.execute("INSERT INTO determination_gates (parameter_id, identity_code, verdict, "
                      "trigger_tier, trigger_evidence_type, detail, raised_at, "
@@ -193,7 +202,11 @@ def link_lens(conn, extraction_id, lens):
 FAILED = []
 
 
+_EXPECTED = []
+
+
 def expect(label, cond, detail=""):
+    _EXPECTED.append(label)
     print(f"  {'PASS' if cond else 'FAIL'}: {label}" + (f"  [{detail}]" if detail and not cond else ""))
     if not cond:
         FAILED.append(label)
@@ -479,6 +492,58 @@ def main():
                            gates=[(1, "DEAF", "UNLINKED", 1, "primary_research", "other lens")]),
                   1, {"identity_code": "MOB"}, "syn-slug", "other-lens")
     expect("H4: a gate on another lens does not bind", d["state"] == "stated", d["state"])
+
+    # 8g2. T-021 (OD-21): a QUESTION about a published cell is an open gate that FLAGS the cell and never caps it.
+    _Q = "a reader asks whether the 5% in this cell is right for a user of a long cane"
+    def _gate_rows(conn, *rows):
+        for lens_cols, verdict, tier, etype, detail in rows:
+            cols = ["parameter_id", "verdict", "trigger_tier", "trigger_evidence_type", "detail", "raised_at",
+                    "raised_by_session", *lens_cols]
+            conn.execute(f"INSERT INTO determination_gates ({','.join(cols)}) VALUES "
+                         f"({','.join('?' * len(cols))})",
+                         [1, verdict, tier, etype, detail, "2026-11-15", "syn", *lens_cols.values()])
+    c = synth_db([dict(T1), dict(T1)], icf_links=MOB_LINK)
+    _gate_rows(c, ({"identity_code": "MOB"}, "QUESTION", None, None, _Q))
+    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "question")
+    _qs = [g for g in d["gates"] if g.get("question")]
+    expect("T021-01: a QUESTION on the cell leaves a stated cell stated", d["state"] == "stated", d["state"])
+    expect("T021-02: the cell's report carries the question, not binding, with its words and no tier",
+           len(d["gates"]) == 1 and len(_qs) == 1 and not _qs[0]["binds"] and _qs[0]["why"] == _Q
+           and _qs[0]["trigger_tier"] is None and _qs[0]["verdict"] == "QUESTION", str(d["gates"]))
+    c = synth_db([dict(T1), dict(T1)], icf_links=MOB_LINK)
+    _gate_rows(c, ({"identity_code": "MOB"}, "QUESTION", None, None, _Q),
+               ({"identity_code": "MOB"}, "MISLINKED", 1, "primary_research", "population links omit DEAF"))
+    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "question+binding")
+    expect("T021-03: a QUESTION beside a binding gate does not stop the binding gate capping the cell, and both are reported",
+           d["state"] == "provisional" and sorted((g["verdict"], g["binds"]) for g in d["gates"])
+           == [("MISLINKED", True), ("QUESTION", False)], str(d["gates"]))
+    c = synth_db([dict(T1), dict(T1)], icf_links=MOB_LINK)
+    _gate_rows(c, ({"icf_code": "ICF-A"}, "QUESTION", None, None, "q-a"),
+               ({"needs_code": "NEED-A"}, "QUESTION", None, None, "q-n"),
+               ({"medical_code": "MD-A"}, "QUESTION", None, None, "q-m"),
+               ({"identity_code": "MOB", "icf_code": "ICF-A"}, "QUESTION", None, None, "q-ma"))
+    _flag = lambda lens: sorted(g["why"] for g in derivation_handshake(c, 1, lens, [dict(T1)])[4])  # noqa: E731
+    _all = ["q-a", "q-m", "q-ma", "q-n"]
+    expect("T021-04: a gate is skipped only when the cell carries a DIFFERENT code in a lens the gate names "
+           "(a lens the cell does not carry never skips it, as before)",
+           _flag({"icf_code": "ICF-A"}) == _all and _flag({"icf_code": "ICF-B"}) == ["q-m", "q-n"]
+           and _flag({"needs_code": "NEED-B"}) == ["q-a", "q-m", "q-ma"]
+           and _flag({"medical_code": "MD-B"}) == ["q-a", "q-ma", "q-n"]
+           and _flag({"identity_code": "MOB", "icf_code": "ICF-A"}) == _all
+           and _flag({"identity_code": "OTHER"}) == ["q-a", "q-m", "q-n"],
+           str([_flag({"icf_code": "ICF-A"}), _flag({"icf_code": "ICF-B"}), _flag({"needs_code": "NEED-B"})]))
+    c.execute("UPDATE determination_gates SET resolved_at='2026-11-15', resolved_by_session='syn', "
+              "resolution_rationale='answered' WHERE detail = 'q-a'")
+    expect("T021-05: a question closed with a rationale no longer flags the cell",
+           "q-a" not in _flag({"icf_code": "ICF-A"}))
+
+    # 8g3. T-054: a RETIRED crossing row is history: the function path the engine reads leaves it out.
+    c = synth_db([dict(T1), dict(T1)], icf_links=MOB_LINK)
+    _fb_live = derivation_handshake(c, 1, {"identity_code": "MOB"}, [dict(T1)])[0]
+    c.execute("UPDATE identity_icf_map SET retired_at='2026-11-15'")
+    _fb_ret = derivation_handshake(c, 1, {"identity_code": "MOB"}, [dict(T1)])[0]
+    expect("T054-07: a live crossing row gives the cell a functional basis and a retired one does not",
+           _fb_live is not None and "d450" in _fb_live and _fb_ret is None, f"{_fb_live} / {_fb_ret}")
 
     # 8h. Resolution is a NAMED PATH, and the view is what enforces it: a resolved gate
     # stops binding, so no cell sits at provisional with no owner of resolution.
@@ -1161,6 +1226,67 @@ def main():
     def _mob(code="MOB"):
         return {"identity_code": code}
 
+    # T-055: the identity lens counts through parent_code. A parent's cell gathers its descendants' figures, a child's only its
+    # own, and a figure linked to two codes of one family is gathered once.
+    _T55 = {"tier": 1, "evidence_type": "clinical"}
+    _fam = [("KIDA", "PAR"), ("KIDB", "PAR"), ("GRAND", "KIDA")]
+    _src = [dict(_T55, lenses=[{"identity_code": "KIDA"}]), dict(_T55, lenses=[{"identity_code": "KIDB"}]),
+            dict(_T55, lenses=[{"identity_code": "GRAND"}]), dict(_T55, lenses=[{"identity_code": "KIDA"}, {"identity_code": "GRAND"}]),
+            dict(_T55, lenses=[{"identity_code": "OTHER"}])]
+    _ids = lambda d: sorted(l["extraction_id"] for l in d["links"] if l["in_lens"])          # noqa: E731
+    def _t55(cell, family):
+        # A family defect makes a cell refuse for want of a figure; that is a failed case, not a crashed file that skips
+        # every case after it (T-055 critic, 2026-11-15).
+        try:
+            return determine(synth_db(_src, family=family, direction="lower_is_better"), 1, _mob(cell), "syn-slug", "t055")
+        except Refusal as e:
+            return {"links": [], "n_extractions_in_lens": -1, "n_sources": -1, "governing_refs": [], "refused": str(e)[:120]}
+    _par19, _a19, _g19, _root = _t55("PAR", _fam), _t55("KIDA", _fam), _t55("GRAND", _fam), _t55("KIDA", ())
+    expect("T055-01: a parent's cell gathers the figures of every descendant (four of the five here, each once), not an unrelated code's",
+           _ids(_par19) == [1, 2, 3, 4] and len(_par19["links"]) == 5 and _par19["n_extractions_in_lens"] == 4,
+           f"{_ids(_par19)} {_par19.get('n_extractions_in_lens')}")
+    expect("T055-02: a child's cell gathers only itself and its own descendants, never its parent's other children or a sibling",
+           _ids(_a19) == [1, 3, 4] and _ids(_g19) == [3, 4], f"{_ids(_a19)} {_ids(_g19)}")
+    expect("T055-03: with no family declared every code is a root and the cell gathers only its own code's figures (the premise of "
+           "leaving RULE_VERSION alone)", _ids(_root) == [1, 4], str(_ids(_root)))
+    expect("T055-04: a figure linked to two codes of one family is one governing figure, not two (counts and refs are each once)",
+           _par19["n_extractions_in_lens"] == len(set(_ids(_par19))) == 4 and _par19["n_sources"] == 4
+           and len(_par19["governing_refs"]) == len(set(_par19["governing_refs"])),
+           f"{_par19.get('n_extractions_in_lens')} {_par19.get('n_sources')} {_par19.get('governing_refs')}")
+    # T055-05 (OD-08): a parent with no figure of its own is determined from its descendants' figures.
+    _own = determine(synth_db([dict(_T55, lenses=[{"identity_code": "KIDA"}])], family=_fam, direction="lower_is_better"),
+                     1, _mob("PAR"), "syn-slug", "t055")
+    expect("T055-05: a parent code no figure names is still a cell, and gathers the descendant's figure",
+           _own["n_extractions_in_lens"] == 1 and _own["n_sources"] == 1, f"{_own.get('n_extractions_in_lens')} {_own.get('n_sources')}")
+    # T055-06: a retired link carries nothing up to the parent.
+    _rc = synth_db([dict(_T55, lenses=[{"identity_code": "KIDA"}])], family=_fam, direction="lower_is_better")
+    _rc.execute("UPDATE extraction_lens_links SET retired_at = '2026-01-01'")
+    try:
+        _rr = determine(_rc, 1, _mob("PAR"), "syn-slug", "t055")
+        _rr_ok = _rr["n_extractions_in_lens"] == 0
+        _rr_msg = ""
+    except Exception as _e:                                                  # noqa: BLE001 - a refusal for no gatherable figure is the other right answer
+        _rr_ok, _rr_msg = "has no row" in str(_e), str(_e)[:160]
+    expect("T055-06: a figure whose only link is retired reaches neither its own code's cell nor its parent's", _rr_ok, _rr_msg)
+    # T055-07 (T-055 critic, 2026-11-15): an open gate on a descendant's code reaches the parent's cell, which gathers the figure.
+    def _gated(cell):
+        d_ = determine(synth_db([dict(_T55, lenses=[{"identity_code": "KIDA"}]), dict(_T55, lenses=[{"identity_code": "KIDB"}]),
+                                 dict(_T55, lenses=[{"identity_code": "GRAND"}])],
+                                family=_fam, direction="lower_is_better",
+                                gates=[(1, "KIDA", "CONTRADICTS", 1, "primary_research", "a trial disagrees")]),
+                       1, _mob(cell), "syn-slug", "t055")
+        return d_["state"], [g["gate_id"] for g in d_["gates"]]
+    _gp, _gc, _gs, _gg = _gated("PAR"), _gated("KIDA"), _gated("KIDB"), _gated("GRAND")
+    expect("T055-07: a gate on KIDA reaches KIDA's cell and its parent's, and not a sibling's or a grandchild's (a child's own figures are not the parent's)",
+           _gp[1] == [1] and _gc[1] == [1] and _gs[1] == [] and _gg[1] == [] and _gp[0] == _gc[0] == "provisional" and _gs[0] != "provisional",
+           f"{_gp} {_gc} {_gs} {_gg}")
+    # T055-08: the 2026-08-25 ruling "Not fanned out, ever": a match grade written against a child is not the parent's.
+    _pc = synth_db([dict(_T55, ref_id="REF-KID", lenses=[{"identity_code": "KIDA"}])], family=_fam, direction="lower_is_better")
+    _pc.execute("INSERT INTO evidence_population_match (match_id, ref_id, match_grade, target_population) VALUES ('M1','REF-KID','EXACT','KIDA')")
+    expect("T055-08: a population match graded against a child code is read for that child and never for its parent",
+           population_match(_pc, "REF-KID", "KIDA") is not None and population_match(_pc, "REF-KID", "PAR") is None,
+           f"{population_match(_pc, 'REF-KID', 'KIDA')} {population_match(_pc, 'REF-KID', 'PAR')}")
+
     def _cell19(sources, cell, **kw):
         return determine(synth_db(sources, direction="lower_is_better", **kw), 1, cell,
                          "syn-slug", "t019")
@@ -1400,8 +1526,23 @@ def main():
         _live = sqlite3.connect(f"file:{live_db}?mode=ro", uri=True)
         if not _live.execute("SELECT 1 FROM sqlite_master WHERE name = 'v_live_lens_links'").fetchone():
             _live = None
-    _Q = ("SELECT DISTINCT x.extraction_id FROM source_value_extractions x JOIN v_live_lens_links l "
-          "USING (extraction_id) WHERE x.parameter_id = ? AND l.identity_code = ?")
+    _par = dict(_live.execute("SELECT identity_code, parent_code FROM base_taxonomy_identity").fetchall()) if _live else {}
+
+    def _family_py(code):
+        """The code and every descendant, computed in Python from the registry (independent of the engine's SQL)."""
+        fam, grew = {code}, True
+        while grew:
+            grew = False
+            for k, p in _par.items():
+                if p in fam and k not in fam:
+                    fam.add(k); grew = True
+        return fam
+
+    def _carries(pid, code):
+        fam = sorted(_family_py(code))
+        return {r[0] for r in _live.execute(
+            "SELECT DISTINCT x.extraction_id FROM source_value_extractions x JOIN v_live_lens_links l USING (extraction_id) "
+            f"WHERE x.parameter_id = ? AND l.identity_code IN ({','.join('?' * len(fam))})", (pid, *fam))}
     _pairs = _live.execute("SELECT DISTINCT x.parameter_id, l.identity_code FROM v_live_lens_links l "
                            "JOIN source_value_extractions x USING (extraction_id) "
                            "WHERE l.identity_code IS NOT NULL ORDER BY 1, 2").fetchall() if _live else []
@@ -1413,7 +1554,7 @@ def main():
             d = determine(_live, pid, _mob(code), "syn-slug", "t019-live")
             inl = {l["extraction_id"] for l in d["links"] if l["in_lens"]}
             _reached += len(inl)
-            carries = {r[0] for r in _live.execute(_Q, (pid, code))}
+            carries = _carries(pid, code)
             out_ok = all(l["role"] == "excluded" and (l["exclusion_reason"] or "").startswith(LENS_REASON)
                          for l in d["links"] if not l["in_lens"])
             gov_ok = all(l["extraction_id"] in carries for l in d["links"] if l["role"] != "excluded")
@@ -1442,9 +1583,10 @@ def main():
                 for code in ("ALL", other):
                     d = determine(_live, pid, _mob(code), "syn-slug", "t019-live")
                     inl = {l["extraction_id"] for l in d["links"] if l["in_lens"]}
-                    ok &= inl == {r[0] for r in _live.execute(_Q, (pid, code))} and bool(inl)
+                    ok &= inl == _carries(pid, code) and bool(inl)
+                    _fam = sorted(_family_py(code))
                     ok &= all(_live.execute("SELECT 1 FROM v_live_lens_links WHERE extraction_id = ? "
-                                            "AND identity_code = ?", (l["extraction_id"], code)).fetchone()
+                                            f"AND identity_code IN ({','.join('?' * len(_fam))})", (l["extraction_id"], *_fam)).fetchone()
                               for l in d["links"] if l["role"] != "excluded")
                     _played += code == "ALL" and any(l["role"] != "excluded" for l in d["links"])
             expect("T019-14 (AT-51, live): every ALL cell reaches exactly the figures carrying ALL, and every "
@@ -1456,12 +1598,9 @@ def main():
                       "row, so AT-51 is met on the fixture case only (the equality above is over reached "
                       "figures that supply nothing)")
 
-        _n = _live.execute("SELECT p.parameter_id, i.identity_code FROM (SELECT DISTINCT x.parameter_id "
-                           "FROM source_value_extractions x JOIN v_live_lens_links l USING (extraction_id)) p, "
-                           "base_taxonomy_identity i WHERE NOT EXISTS (SELECT 1 FROM "
-                           "source_value_extractions x JOIN v_live_lens_links l USING (extraction_id) "
-                           "WHERE x.parameter_id = p.parameter_id AND l.identity_code = i.identity_code) "
-                           "ORDER BY 1, 2 LIMIT 1").fetchone()
+        _n = next(((pid, code) for (pid,) in _live.execute("SELECT DISTINCT x.parameter_id FROM source_value_extractions x "
+                                                          "JOIN v_live_lens_links l USING (extraction_id) ORDER BY 1")
+                    for code in sorted(_par) if not _carries(pid, code)), None)
         if not _n:
             print("      SKIPPED-NO-FIXTURE: T019-15 needs a parameter with links and an identity "
                   "no figure of it carries")
@@ -1474,9 +1613,172 @@ def main():
             expect("T019-15 (AT-52): an identity no figure of the parameter carries has no row: refused",
                    _r is not None and "has no row" in _r, f"parameter {_n[0]} {_n[1]}: {_r}")
 
+    # T-011: a cell determined again after a retirement points its newest retired row at the new one. The engine runs as a
+    # subprocess on copies of the live database (it commits into the copy). The cell is derived by query (an identity-only
+    # cell with a determination, live or retired) and each copy is PREPARED to the state the case needs: the live row is
+    # retired by the verb, pointers are cleared by HAND on the copy. So the cases survive the cell being determined again.
+    import shutil
+    import subprocess
+    import tempfile
+    _ro = sqlite3.connect(f"file:{os.path.join(REPO_ROOT, 'data', 'guidebook.db')}?mode=ro", uri=True)
+    _cell = _ro.execute(
+        "SELECT parameter_id, identity_code FROM specifications WHERE identity_code IS NOT NULL AND icf_code IS NULL "
+        "AND needs_code IS NULL AND medical_code IS NULL GROUP BY 1, 2 HAVING COUNT(*) >= 3 ORDER BY 1, 2 LIMIT 1").fetchone()
+    _slug = _ro.execute("SELECT slug FROM slugs WHERE status='ACTIVE' ORDER BY slug LIMIT 1").fetchone()
+    _ro.close()
+    if not _cell or not _slug:
+        print("      SKIPPED-NO-FIXTURE: T011 needs an identity-only cell with three determinations and an active slug")
+    else:
+        _tmp = tempfile.mkdtemp(prefix="t011-")
+        _CELLQ = ("FROM specifications WHERE parameter_id=? AND identity_code=? AND icf_code IS NULL AND needs_code IS NULL "
+                  "AND medical_code IS NULL")
+        _SESS = "session_t011-fixture"
+
+        def _sql_on(db_file, sql, *args):
+            c = sqlite3.connect(db_file)
+            out = c.execute(sql, args).fetchall()
+            c.commit()
+            c.close()
+            return out
+
+        def _prep(tag, clear=(), point=()):
+            """A copy of the live database whose cell has no live row: the live row is retired by the verb, the pointers
+            of the rows named in `clear` (offsets from the newest retired row) are set NULL by hand, and those in `point`
+            are set to the oldest row of the cell (a pointer that already exists)."""
+            f = os.path.join(_tmp, tag + ".db")
+            shutil.copy(os.path.join(REPO_ROOT, "data", "guidebook.db"), f)
+            live = _sql_on(f, f"SELECT specification_id {_CELLQ} AND retired_at IS NULL", *_cell)
+            if live:
+                subprocess.run([sys.executable, os.path.join(REPO_ROOT, "scripts", "db.py"), "retire-specification",
+                                "--specification-id", str(live[0][0]), "--reason", "TASK-FIXTURE T011", "--session", _SESS],
+                               capture_output=True, text=True, env=dict(os.environ, GUIDEBOOK_DB_PATH=f), check=True)
+            order = [r[0] for r in _sql_on(f, f"SELECT specification_id {_CELLQ} AND retired_at IS NOT NULL "
+                                              "ORDER BY retired_at DESC, specification_id DESC", *_cell)]
+            for k in clear:
+                _sql_on(f, "UPDATE specifications SET superseded_by_specification_id=NULL WHERE specification_id=?", order[k])
+            for k in point:
+                _sql_on(f, "UPDATE specifications SET superseded_by_specification_id=? WHERE specification_id=?",
+                        order[-1], order[k])
+            return f, order
+
+        def _engine(db_file, tag, stamp, session=_SESS):
+            sql_file = os.path.join(_tmp, tag + ".sql")
+            r = subprocess.run([sys.executable, os.path.join(REPO_ROOT, "scripts", "assess", "assess_cell.py"),
+                                "--db", db_file, "--emit-sql", sql_file, "--parameter-id", str(_cell[0]),
+                                "--slug", _slug[0], "--identity", _cell[1], "--session", session, "--stamp", stamp],
+                               capture_output=True, text=True)
+            return r, sql_file
+
+        def _full(db_file):
+            c = sqlite3.connect(f"file:{db_file}?mode=ro", uri=True)
+            cur = c.execute(f"SELECT * {_CELLQ} ORDER BY specification_id", _cell)
+            names = [d[0] for d in cur.description]
+            out = {r[0]: dict(zip(names, r)) for r in cur.fetchall()}
+            c.close()
+            return out
+
+        def _ptr(rows, spec_id):
+            return rows[spec_id]["superseded_by_specification_id"]
+
+        # --- the ordinary case: the newest retired row has no pointer
+        _a, _order = _prep("a", clear=(0,))
+        _b, _ = _prep("b", clear=(0,))
+        _c, _ = _prep("c", clear=(0,))
+        _before = _full(_a)
+        _newest = _order[0]
+        _ra, _sa = _engine(_a, "a", "2026-01-01 00:00")
+        _rb, _sb = _engine(_b, "b", "2026-01-01 00:00")
+        _after = _full(_a)
+        _new = max(_after)
+        expect("T011-01: the newest retired row of the cell now points at the new determination, which is live",
+               _ra.returncode == 0 and _ptr(_after, _newest) == _new and _after[_new]["retired_at"] is None,
+               f"cell {_cell}, newest {_newest}, {_ra.stderr[-200:]}")
+        _same = {k: v for k, v in _after.items() if k not in (_newest, _new)} == \
+                {k: v for k, v in _before.items() if k != _newest}
+        _others = {k: v for k, v in _after[_newest].items() if k not in ("superseded_by_specification_id", "updated_at",
+                                                                         "updated_by_session")} == \
+                  {k: v for k, v in _before[_newest].items() if k not in ("superseded_by_specification_id", "updated_at",
+                                                                          "updated_by_session")}
+        expect("T011-02: no other row of the cell changed in any column, and the linked row changed only in its pointer and "
+               "its update stamp", _same and _others, f"{_before.keys()} -> {_after.keys()}")
+        _sql = open(_sa).read()
+        expect("T011-03: the emitted SQL carries the UPDATE once, after the INSERT of the new row",
+               _sql.count("UPDATE specifications SET superseded_by_specification_id=") == 1
+               and _sql.index("INSERT INTO specifications") < _sql.index("UPDATE specifications SET superseded_by"),
+               _sql.count("UPDATE specifications"))
+        _cc = sqlite3.connect(_c)
+        _cc.executescript(_sql)
+        _cc.commit()
+        _cc.close()
+        expect("T011-04: replaying the SQL on a second prepared copy reproduces the engine's rows in EVERY column, stamps included",
+               _full(_c) == _after, "replayed rows differ from the engine's")
+        expect("T011-05: the same inputs on a second prepared copy give byte-identical SQL",
+               _rb.returncode == 0 and open(_sa).read() == open(_sb).read())
+        # --- the chain: retire the new row, determine again; the first link is untouched
+        _rt = subprocess.run([sys.executable, os.path.join(REPO_ROOT, "scripts", "db.py"), "retire-specification",
+                              "--specification-id", str(_new), "--reason", "TASK-FIXTURE T011", "--session", _SESS],
+                             capture_output=True, text=True, env=dict(os.environ, GUIDEBOOK_DB_PATH=_a))
+        _r2, _s2 = _engine(_a, "a2", "2026-01-01 00:01")
+        _last = _full(_a)
+        _new2 = max(_last)
+        expect("T011-06: determining again after a second retirement links the second row and leaves the first link alone",
+               _rt.returncode == 0 and _r2.returncode == 0 and _ptr(_last, _new) == _new2 and _ptr(_last, _newest) == _new,
+               f"{_rt.stderr[-150:]} {_r2.stderr[-150:]}")
+        # --- two retired rows with no pointer: only the newest is linked, the older is named
+        _d, _od = _prep("d", clear=(0, 1))
+        _rd, _sd = _engine(_d, "d", "2026-01-01 00:00")
+        _rows7 = _full(_d)
+        expect("T011-07: with two retired rows holding no pointer only the newest retired is linked; the older stays as history "
+               "and is named, by id, on stderr",
+               _rd.returncode == 0 and _ptr(_rows7, _od[0]) == max(_rows7) and _ptr(_rows7, _od[1]) is None
+               and f"[{_od[1]}]" in _rd.stderr, f"{_rd.stderr[-250:]}")
+        # --- the newest retired row already has its successor: nothing is linked, the older bare row is named
+        _e, _oe = _prep("e", clear=(1,), point=(0,))
+        _re, _se = _engine(_e, "e", "2026-01-01 00:00")
+        _rows8 = _full(_e)
+        expect("T011-08: when the newest retired row already has a pointer nothing is linked and no UPDATE is emitted; the older "
+               "bare row is named",
+               _re.returncode == 0 and _ptr(_rows8, _oe[0]) == _oe[-1] and _ptr(_rows8, _oe[1]) is None
+               and "UPDATE specifications SET superseded_by" not in open(_se).read() and f"[{_oe[1]}]" in _re.stderr,
+               f"{_re.stderr[-200:]}")
+        # --- 'most recently retired' is read from retired_at, not from the id
+        _f, _of = _prep("f", clear=(0, 1))
+        _sql_on(_f, "UPDATE specifications SET retired_at='2099-01-01 00:00' WHERE specification_id=?", _of[1])
+        _rf, _sf = _engine(_f, "f", "2026-01-01 00:00")
+        _rows9 = _full(_f)
+        expect("T011-09: the row retired most recently by its retired_at is the one linked, not the one with the highest id",
+               _rf.returncode == 0 and _ptr(_rows9, _of[1]) == max(_rows9) and _ptr(_rows9, _of[0]) is None,
+               f"{_rf.stderr[-200:]}")
+        # --- a '?' in a value is data: the emitted SQL and the database agree
+        _g, _og = _prep("g", clear=(0,))
+        _gc, _ = _prep("gc", clear=(0,))
+        _rg, _sg = _engine(_g, "g", "2026-01-01 00:00", session="session_t011-what?")
+        _gcc = sqlite3.connect(_gc)
+        _gcc.executescript(open(_sg).read())
+        _gcc.commit()
+        _gcc.close()
+        expect("T011-10: a '?' in --session does not corrupt the emitted UPDATE: replaying it reproduces the engine's rows",
+               _rg.returncode == 0 and _full(_gc) == _full(_g), _rg.stderr[-200:])
+        # --- T-021: a QUESTION on the cell appears in what the engine prints, and does not change the answer
+        _Qtext = "TASK-FIXTURE: a reader asks whether this value suits a person who uses a long cane"
+        _q0, _ = _prep("q0", clear=(0,))
+        _q1, _ = _prep("q1", clear=(0,))
+        _sql_on(_q1, "INSERT INTO determination_gates (parameter_id, identity_code, verdict, detail, raised_at, raised_by_session) "
+                     "VALUES (?, ?, 'QUESTION', ?, '2026-11-15', 'syn')", _cell[0], _cell[1], _Qtext)
+        _r0, _ = _engine(_q0, "q0", "2026-01-01 00:00")
+        _r1, _ = _engine(_q1, "q1", "2026-01-01 00:00")
+        _pl = lambda r: next((l.split() for l in r.stdout.splitlines() if l.startswith("param ")), [])  # noqa: E731
+        expect("T021-06: the engine prints the question beside the cell (QUESTIONED, the gate id and the words) and a run without it prints none",
+               _r0.returncode == 0 and _r1.returncode == 0 and "QUESTIONED" not in _r0.stdout
+               and "QUESTIONED: gate" in _r1.stdout and _Qtext[:60] in _r1.stdout, f"{_r1.stdout[-300:]} {_r1.stderr[-200:]}")
+        expect("T021-07: the question does not change the determination: the printed state of the cell is the same with and without it",
+               len(_pl(_r0)) > 2 and _pl(_r0)[2] == _pl(_r1)[2], f"{_pl(_r0)[:3]} {_pl(_r1)[:3]}")
+        shutil.rmtree(_tmp, ignore_errors=True)
+
     if FAILED:
         print(f"\nFAIL: {len(FAILED)} test(s): {FAILED}")
         sys.exit(1)
+    print(f"\nEXAMINED: {len(_EXPECTED)} case(s)")
     print("\nPASS: all pilot-engine branch tests")
 
 

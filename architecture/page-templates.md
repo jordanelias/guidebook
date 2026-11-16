@@ -1,4 +1,7 @@
 # Page Template Specifications
+
+> **SUPERSEDED IN PART (marked 2026-11-15, T-001).** Superseded for routing by item code (the item layer was deleted; `CLAUDE.md` §7), for the table names it queries (the live schema is the home of those) and for the evidence-marker meanings: `●` is *confirmed*, `◐` policy/standards only, `○` grey, thin or unverified (`CLAUDE.md` §6), not the stated / provisional / pending readings given below. The status line below is out of date for the same reason. A draft, unratified render design for two parameters is at `workplan/2026-10-30-ramp-spec-pages/RENDER-CONTRACT-parameters-3-and-12.md`; no render contract is ratified. The text below is kept as written.
+
 **Created:** 2026-05-04
 **Depends on:** navigation-modes.md, d0139-amendment-1.md, d0139-amendment-2.md
 **Decision:** D-TMPL-001 through D-TMPL-014

@@ -98,7 +98,7 @@ scope-shaped exclusion." *Bound:* stratum-(i) mechanism claims survive translati
 they are the exportable layer. *Path:* the non-English concept-validation gate on the
 functional taxonomy (PR #52 checklist); `term_aliases` / native-alias machinery;
 `lang_jur_map` population **deferred pending owner-defined criteria** per
-DR-2026-06-11-remove-colonial-role — that DR is this tension's precedent: classify
+DR-2026-06-11-remove-colonial-role (superseded 2026-07-24: the owner ratified the role definitions and the map was populated, D-0152, `decisions/DR-2026-07-24-lang-jur-map-roles.md`; derive its size with `select count(*) from lang_jur_map`, never quote it) — that DR is this tension's precedent: classify
 only under ratified criteria, and correct provenance honestly when wrong.
 
 **Instrument.** Stratum labels on claims; jurisdiction scope chips (armature §4.6);

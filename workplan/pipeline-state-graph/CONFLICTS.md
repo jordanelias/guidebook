@@ -22,7 +22,7 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-013 | S2 | RULING-MECHANISM | AGENT | P-F -> FAIL | The tier verdict is a judgment output, but the tier column lives on evidence_sources and is written at admission |
 | C-014 | S2 | RULING-RULING | OWNER | -- | When does the crossing happen: at judgment, or is applicability a synthesis output? |
 | C-018 | S2 | RULING-MECHANISM | OWNER | P-C -> NOT-BUILT | 'We don't use the word population' -- the schema, the methodology and three DRs still do |
-| C-021 | S2 | RULING-MECHANISM | AGENT | P-GT -> FAIL | determination_gates attaches to a group through one lens column |
+| C-021 | S2 | RULING-MECHANISM | AGENT | P-GT -> PASS | determination_gates attaches to a group through one lens column |
 | C-023 | S2 | PROVENANCE | OWNER | -- | D-0184 (the lens is a column) is an agent decision awaiting owner review but is treated as binding |
 | C-031 | S2 | RULING-MECHANISM | AGENT | P-H -> FAIL | Retire in place requires every reader to filter status first -- some views do not |
 | C-036 | S2 | UNRECORDED | OWNER | P-LEDGER-GREP -> FAIL | Owner statements whose only home is a session record |
@@ -47,7 +47,6 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 
 | atom | now | should be | decided by | why |
 |---|---|---|---|---|
-| LED-029 | ACTIVE | SUPERSEDED | LED-084 | 2026-08-24: every slug is searched against every lens; 'one slug, one population' (2026-03-18) is overtaken. |
 | LED-018 | ACTIVE | AMENDED | LED-013, EVI-058 | Option A (2026-07-21) permits a flagged weak-band rendering of a T4-T6-only basis. |
 | DRS-039 | ACTIVE | SUPERSEDED | LED-094, LED-124 | owner 2026-08-27: base is a stage (LED-124) and the stage verbs end 'specify syntheses, and render specifications' (LED-094), so specification is a stage; the 2026-08-24 five-stage list that said otherwise is overtaken. |
 | DRS-040 | ACTIVE | SUPERSEDED | LED-094, LED-124 | as DRS-039. |
@@ -245,7 +244,7 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 
 ## C-021 [S2] determination_gates attaches to a group through one lens column
 
-**Class** RULING-MECHANISM  ·  **Resolver** AGENT  ·  **Confidence** medium  ·  **Probe** `P-GT` = **FAIL**
+**Class** RULING-MECHANISM  ·  **Resolver** AGENT  ·  **Confidence** medium  ·  **Probe** `P-GT` = **PASS**
 
 - any table attaching a determination to a group has four lens columns.  
   _atoms:_ `LED-128`(act)
@@ -397,7 +396,7 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 - '24 countries plus 2 meta', a 24/46/49 jurisdiction structure; the section table has 25 country rows.  
   _atoms:_ `ENT-338`(act), `ENT-418`(pro), `ENT-402`(act)
 - all 14 languages searched on every run; the research skill obliges 19; jurisdiction scope later limited to Buckets 1-2 (LED-193).  
-  _atoms:_ `LED-031`(act)
+  _atoms:_ `LED-031`(sup)
 - standards-registry.md kept as markdown against the owner directive that citation data in .md goes into a table; a differently named tracker.  
   _atoms:_ `ENT-361`(act), `ENT-043`(act), `ENT-410`(act)
 

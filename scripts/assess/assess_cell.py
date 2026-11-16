@@ -223,7 +223,16 @@ LENS_COLUMNS = {
     "medical_code": ("base_taxonomy_medical", "medical_code"),
 }
 # COALESCE order, matching the table's own CHECK and test_db_integrity K01's sha payload.
-LENS_ORDER = ("identity_code", "icf_code", "needs_code", "medical_code")
+LENS_ORDER = dbcore.LENS_ORDER
+# A cell's identity in SQL: the parameter and the four lens codes, blank and NULL alike (the COALESCE of
+# `idx_spec_row_identity`, migration 071). One text, read by the already-determined refusal and by the
+# supersession link; `_cell_vals` gives its parameters.
+CELL_WHERE = ("parameter_id=? AND COALESCE(identity_code,'')=? AND COALESCE(icf_code,'')=? "
+              "AND COALESCE(needs_code,'')=? AND COALESCE(medical_code,'')=?")
+
+
+def _cell_vals(parameter_id, lens):
+    return (parameter_id,) + tuple(lens.get(c) or "" for c in LENS_ORDER)
 
 
 def lens_key(lens):
@@ -239,8 +248,17 @@ def lens_key(lens):
     return None
 
 
+# The identity lens is the one lens with a hierarchy (base_taxonomy_identity.parent_code): a cell keyed on a code
+# gathers the figures linked to that code or to any code whose parent_code chain reaches it (T-055). Derived from
+# the registry on every gather, never a list. UNION, not UNION ALL, so a cycle ends.
+
+
 def _lens_clause(lens, alias):
     """`AND <every lens the cell states is among the figure's live links>` and its parameters.
+
+    The identity lens counts through `parent_code` (a parent's cell gathers its descendants' figures, a child's only
+    its own); the predicate stays inside the per-figure EXISTS, so a figure carrying two codes of one family is
+    gathered once and no count downstream multiplies by its number of links.
 
     A figure reaches a cell when, for each lens the cell states, it has a live link carrying that
     code; a lens the cell leaves NULL imposes nothing (T-018 design section 4). Read from
@@ -249,7 +267,8 @@ def _lens_clause(lens, alias):
     does not reach a cell that does not state that tag (OR-1b). A cell stating no lens would
     impose nothing and gather by parameter alone, which is the defect this closes, so it is refused."""
     parts = [(f"EXISTS (SELECT 1 FROM v_live_lens_links k WHERE "
-              f"k.extraction_id = {alias}.extraction_id AND k.{c} = ?)", lens[c])
+              f"k.extraction_id = {alias}.extraction_id AND k.{c} "
+              + (f"IN {dbcore.IDENTITY_FAMILY_SQL}" if c == "identity_code" else "= ?") + ")", lens[c])
              for c in LENS_ORDER if lens.get(c)]
     if not parts:
         raise Refusal("a cell states at least one lens (D-0182); gathering without one would "
@@ -497,8 +516,9 @@ def gather_extraction_links(conn, parameter_id, governing_refs, lens):
             # BEFORE every other branch: a figure the cell's lens does not reach played no part in it.
             role, why = "excluded", (
                 f"not stated in this cell's lens ({cell}): no live lens link of this figure carries "
-                f"every code the cell states; a figure reaches a cell only through the lens codes "
-                f"written on it")
+                f"every code the cell states (an identity code counts through its parent chain: a figure "
+                f"linked to a descendant reaches the parent's cell); a figure reaches a cell only through "
+                f"the lens codes written on it")
         elif frole in VALUE_SUPPLYING_ROLES and method in NOT_PUBLISHABLE_METHODS:
             # Checked BEFORE the governing branch: a skimmed row is left out even when its
             # source governs through another, fully read row (owner 2026-10-09).
@@ -595,7 +615,7 @@ def derivation_handshake(conn, parameter_id, lens, sources):
     if identity and _table_exists(conn, "identity_icf_map"):
         fb_rows = conn.execute(
             "SELECT icf_code, mechanism, mapping_confidence, provenance "
-            "FROM identity_icf_map WHERE identity_code = ? ORDER BY icf_code",
+            "FROM identity_icf_map WHERE identity_code = ? AND retired_at IS NULL ORDER BY icf_code",
             (identity,)).fetchall()
     functional_basis = json.dumps(
         [{"icf_code": r[0], "mechanism": r[1], "mapping_confidence": r[2],
@@ -648,18 +668,44 @@ def derivation_handshake(conn, parameter_id, lens, sources):
         rationale = ("no governing population evidence for this cell; the determination "
                      "rests on the functional mapping alone")
     else:
-        return functional_basis, None, None, cultural_anchor, []
+        # No governing evidence and no function path: nothing to derive and no anchor for a gate to cap, but a
+        # QUESTION about the cell is still reported with it.
+        return functional_basis, None, None, cultural_anchor, _open_gates(conn, parameter_id, lens, 6, questions_only=True)
 
     # --- H4 ---------------------------------------------------------------------
+    best = min((r["tier"] for r in sources if r.get("tier")), default=6)
+    gates = _open_gates(conn, parameter_id, lens, best)
+    return functional_basis, paths, rationale, cultural_anchor, gates
+
+
+def _open_gates(conn, parameter_id, lens, best, questions_only=False):
+    """The open determination gates that reach this cell, as the engine reports them.
+
+    A gate is skipped when the cell carries a DIFFERENT code in a lens the gate names (a lens the cell does not carry
+    never skips it); for the identity lens "different" means outside the cell's code and its descendants. A QUESTION (OD-21) is reported, never binding. Any other gate binds only when its trigger is at
+    least as strong as the cell's best anchor `best` (the ladder-inversion guard)."""
     gates = []
+    family = dbcore.identity_family(conn, lens.get("identity_code"))
     if _table_exists(conn, "determination_gates"):
-        best = min((r["tier"] for r in sources if r.get("tier")), default=6)
         for g in conn.execute(
                 "SELECT gate_id, verdict, trigger_tier, trigger_evidence_type, "
-                "trigger_ref_id, detail, identity_code FROM v_open_determination_gates "
-                "WHERE parameter_id = ?", (parameter_id,)):
-            if g[6] and identity and g[6] != identity:
+                "trigger_ref_id, detail, identity_code, icf_code, needs_code, medical_code "
+                "FROM v_open_determination_gates WHERE parameter_id = ?", (parameter_id,)):
+            # The identity lens counts through parent_code, as the figures do: a parent's cell gathers its descendants'
+            # figures, so a gate on a descendant's code reaches it (the gate caps the figure wherever it is read); a gate
+            # on the parent's code does not reach a child's cell, which does not gather the parent's own figures.
+            if dbcore.lens_differs(dict(zip(dbcore.LENS_ORDER, g[6:10])), lens, family):
                 continue                      # a gate on another lens
+            if g[1] == "QUESTION":
+                # An objection to a published value, recorded as an open gate (OD-21). It FLAGS the cell and never
+                # caps it: it states no tier, so there is no strength to weigh against the cell's anchors, and the
+                # book does not call a value wrong because someone asked. It closes with a recorded answer
+                # (resolve-determination-gate) or a re-derivation.
+                gates.append({"gate_id": g[0], "verdict": g[1], "trigger_tier": None, "binds": False,
+                              "question": True, "why": g[5]})
+                continue
+            if questions_only:
+                continue
             if g[2] > best:
                 # LADDER-INVERSION GUARD. The trigger is weaker than the cell's best
                 # anchor; recorded as not-binding rather than dropped, so a reader can
@@ -671,7 +717,7 @@ def derivation_handshake(conn, parameter_id, lens, sources):
                 continue
             gates.append({"gate_id": g[0], "verdict": g[1], "trigger_tier": g[2],
                           "binds": True, "why": g[5]})
-    return functional_basis, paths, rationale, cultural_anchor, gates
+    return gates
 
 
 def _table_exists(conn, name):
@@ -2021,10 +2067,7 @@ def validate_cell_undetermined(conn, parameter_id, lens):
     retired ones behind it. The remedy named below is the owner's design, not this
     function's invention, and the retirement it points at refuses without a reason.
     """
-    where = ("parameter_id=? AND COALESCE(identity_code,'')=? "
-             "AND COALESCE(icf_code,'')=? AND COALESCE(needs_code,'')=? "
-             "AND COALESCE(medical_code,'')=?")
-    vals = (parameter_id,) + tuple(lens.get(c) or "" for c in LENS_ORDER)
+    where, vals = CELL_WHERE, _cell_vals(parameter_id, lens)
     # LIVE rows only. A retired determination is history, not an obstacle — that is the
     # whole point of retiring in place, and it must match idx_spec_row_identity's own
     # partial predicate (migration 083) or the two drift apart exactly as the COALESCE
@@ -2335,6 +2378,26 @@ def main():
         # comment then kept the retirement deferred for three migrations, and two
         # sessions rediscovered the blocker from it. Every live row is rule_version
         # pilot-3, so the pilot-2 hashing path is dead.
+        # THE RETIRED ROW IT FOLLOWS POINTS AT IT (T-011). Re-determining a cell is retire, then run this engine
+        # again; nothing linked the old value to the one that replaced it, so a reader at the old value could not
+        # reach the current one. The most recently retired row of this cell gets one, if it has none, by the
+        # statement `db.py retire-specification --superseded-by` uses (dbcore.SUPERSEDE_SQL), here and in the
+        # emitted SQL. Older retired rows with no pointer stay as they are (history is not back-filled), and so
+        # does a newest retired row that already has one; the unpointed ones are named on stderr, not silent.
+        _retired = conn.execute(
+            f"SELECT specification_id, superseded_by_specification_id FROM specifications WHERE {CELL_WHERE} "
+            "AND retired_at IS NOT NULL AND specification_id<>? ORDER BY retired_at DESC, specification_id DESC",
+            _cell_vals(det["parameter_id"], det["lens"]) + (specification_id,)).fetchall()
+        _bare = [r[0] for r in _retired if r[1] is None]
+        if _retired and _retired[0][1] is None:        # the newest retired row has no successor yet
+            _sup = (specification_id, STAMP, SESSION, _retired[0][0])
+            conn.execute(dbcore.SUPERSEDE_SQL, _sup)
+            _vals = iter(q(v) for v in _sup)           # one pass over the template: a `?` inside a value is data
+            sql_lines.append(re.sub(r"\?", lambda _m: next(_vals), dbcore.SUPERSEDE_SQL) + ";")
+            _bare = _bare[1:]
+        if _bare:
+            print(f"NOTE: {len(_bare)} older retired row(s) of this cell hold no pointer and are left as history "
+                  f"(history is not back-filled): {_bare}", file=sys.stderr)
         for _ref in det["governing_refs"]:
             _link = (specification_id, _ref, "governing", STAMP, SESSION)
             _lcols = ("specification_id, ref_id, role, created_at, created_by_session")
@@ -2371,7 +2434,7 @@ def main():
                         "all_sources_disqualified", "derivation_sha", "n_sources",
                         "n_extractions_in_lens", "n_extractions_outside_lens", "unkeyed_models",
                         "non_anchoring_on_tier",
-                        "needs_population_assessment", "tier_inconsistent", "falsification")}
+                        "needs_population_assessment", "tier_inconsistent", "falsification", "gates")}
                       | {"convergence": det["convergence"], "confidence": det["confidence"],
                          "gap_register_id": gap_id, "specification_id": specification_id,
                          "convergence_id": this_conv,
@@ -2410,6 +2473,9 @@ def main():
               f"nonanchor={len(r['non_anchoring_on_tier'])} "
               f"rso={r['regulatory_stratum_only']} marker={r['marker'] or '-'} "
               f"cfo={r['code_floor_only']} sha={r['derivation_sha'][:12]}")
+        for _g in r["gates"]:
+            print(f"    {'QUESTIONED' if _g.get('question') else ('GATE binds' if _g['binds'] else 'gate does not bind')}: "
+                  f"gate {_g['gate_id']} ({_g['verdict']}): {(_g.get('why') or '')[:200]}")
         if r["unkeyed_models"]:
             print(f"    lens model(s) its governing figures also carry, which the cell key leaves "
                   f"NULL: {', '.join(r['unkeyed_models'])}")

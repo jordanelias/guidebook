@@ -13,6 +13,7 @@
 > now the flat, community-organized **23 codes** (no parent codes, no containment):
 >
 > `BLIND DEAF DEAFBLIND MOB LMB SCI MOVE NDV AUT ADHD ID DEM BRAIN COM PAIN MS EPI VES MH LPA TALL BAR ALL`
+> *Note (T-054, OD-37): `MOVE` and `VES` are access needs, not populations (`A-PRECISION` and `A-STABLE` carry them); T-114 re-tags what names them and `db.py retire-identity` retires them in place to those needs.*
 >
 > **Crosswalk:** VIS→BLIND · UPL→LMB · DBL→DEAFBLIND · {NEU,PCS}→BRAIN ·
 > {OFS,CFS,MCAS,POTS}→COM · SENS→NDV · EXH→TALL · IntD→ID · ABI→BRAIN. New: MOVE, ID, VES,
@@ -132,7 +133,7 @@ The slash notation for sub-codes (MOB/AMB) is distinct from the slash notation f
 
 ### 3.3 One slug, one population
 
-Per project-standards: "Each slug covers exactly one population." A BPC slug addresses a single population code (top-level or sub-code). Combined slugs are not permitted. If a design parameter needs research for both MOB and VIS, two slugs are created.
+Per project-standards: "Each slug covers exactly one population." A BPC slug addresses a single population code (top-level or sub-code). Combined slugs are not permitted. If a design parameter needs research for both MOB and VIS, two slugs are created. [Superseded by the owner's statement of 2026-08-24: every slug is crossed with every population code, access need and ICF code; see "Supersession record 2026-11-15" in `references/project-standards.md`.]
 
 ### 3.4 Population variability acknowledgment
 

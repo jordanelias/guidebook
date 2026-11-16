@@ -27,6 +27,8 @@ description: >
 
 ## Coverage axes — both must be satisfied independently
 
+> Superseded for exhaustion (owner answer OR-8, 2026-10-29): coverage is judged per parameter and bucket member, a jurisdiction with its associated language. See "Supersession record 2026-11-15" in `references/project-standards.md`.
+
 This skill operates on two axes that are NOT equivalent and cannot substitute for each other:
 
 **Axis 1 — Language (19):** SV · NO · DA · FI · FR · DE · ZH · JA · NL · ES · PT · KO · IT · EN · AR · HI · ID · SW · BN

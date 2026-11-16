@@ -1071,7 +1071,7 @@ try:
         # T026-03 (AT-24 b): a search that fired the seed is found by the flag join; the junction
         # stores the form's KEY, not the rowid.
         rid = q("SELECT rowid FROM term_aliases WHERE term_id=? AND alias=?", T26[0], seed_a)
-        LS = ["log-search", "--prior-expectation", "fixture: nothing", "--slug", SLUG_A,
+        LS = ["log-search", "--results-found", "1", "--prior-expectation", "fixture: nothing", "--slug", SLUG_A,
               "--language", "EN", "--query-text", "TASK-FIXTURE fixture query", "--engine", "web",
               "--depth-method", "scoping", "--session", S]
         r3 = run(*LS, *(["--form-id", str(rid[0][0])] if rid else []))
@@ -1340,7 +1340,8 @@ try:
             # T026-14 (finding 3b): the audit READS the zero-result searches against the junction:
             # no form recorded, an unattested form, an attested form; it does not fail on them.
             def exec_of(*extra):
-                r = run(*LS, *extra)
+                # the audit reads ZERO-result searches: --results-found 0 with its cause (R14), which the later flags override
+                r = run(*LS, "--results-found", "0", "--absence-class", "genuine_absence", *extra)
                 return json.loads(r.stdout)["exec_id"] if r.returncode == 0 else None
             e_none = exec_of()
             e_un = exec_of("--form-id", str(rid_en))

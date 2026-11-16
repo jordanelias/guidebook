@@ -389,7 +389,7 @@ population-taxonomy validator rules (BAR containment, VIS/DEAF non-compound,
 DBL ≠ VIS+DEAF, ALL exclusivity — all preserved and extended to the profile
 layer) · `lang_jur_map` remains empty pending owner-defined PRIMARY/SECONDARY
 criteria per DR-2026-06-11 (v1.0-adjacent session advice to populate it is
-withdrawn) · the mission, audience-priority, armature, and canonical taxonomy
+withdrawn) (superseded 2026-07-24: the owner ratified the role definitions and the map was populated, D-0152, `decisions/DR-2026-07-24-lang-jur-map-roles.md`; derive its size with `select count(*) from lang_jur_map`, never quote it) · the mission, audience-priority, armature, and canonical taxonomy
 texts · all DB rows, item links, and skill files — until ratification.
 
 ## §8 Coverage holes, and the queue rule's honest cost

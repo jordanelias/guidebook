@@ -90,6 +90,10 @@ DB = os.path.join(TMP, "guidebook.db")
 shutil.copy(REPO / "data" / "guidebook.db", DB)
 os.environ["GUIDEBOOK_DB_PATH"] = DB          # before db/dbcore resolve a path
 sys.path.insert(0, str(REPO / "scripts"))
+sys.path.insert(0, str(REPO / "scripts" / "tests"))
+from _fixture_log import fixture_log_root  # noqa: E402
+# T-073: read an isolated root, not the working tree's retrieval log (an untracked pre-admission folder would change a verdict)
+os.environ["GUIDEBOOK_RETRIEVAL_LOG"] = fixture_log_root(os.path.join(TMP, "retrieval-log"), DB)
 import db        # noqa: E402
 import dbcore    # noqa: E402
 from dbcore import Refusal  # noqa: E402
@@ -195,7 +199,7 @@ try:
 
     def search(label):
         return db.log_search(slug=A, language="EN", query_text=f"fixture: {label}",
-                             engine="manual", depth_method="scoping", session=S,
+                             engine="manual", depth_method="scoping", session=S, results_found=1,
                              prior_expectation="fixture prior, written before the call")
 
     def candidate(exec_id, title, disposition="PENDING-VERIFICATION", **extra):
@@ -618,10 +622,10 @@ try:
                r.returncode == 1 and r2.returncode == 1 and not q(
                    "SELECT 1 FROM connections WHERE con_id IN ('CON-9991','CON-9992')"),
                f"rc={r.returncode},{r2.returncode} {r.stderr[-200:]!r}")
-        r = run_cli("log-search", "--slug", plain, "--language", "EN", "--query-text", "fixture zero-yield",
+        r = run_cli("log-search", "--results-found", "1", "--slug", plain, "--language", "EN", "--query-text", "fixture zero-yield",
                     "--engine", "manual", "--depth-method", "scoping", "--prior-expectation", "none",
                     "--results-found", "0", "--absence-class", "genuine_absence", "--session", S)
-        r2 = run_cli("log-search", "--slug", plain, "--language", "EN", "--query-text", "fixture found",
+        r2 = run_cli("log-search", "--results-found", "1", "--slug", plain, "--language", "EN", "--query-text", "fixture found",
                      "--engine", "manual", "--depth-method", "scoping", "--prior-expectation", "some",
                      "--results-found", "3", "--absence-class", "genuine_absence", "--session", S)
         record("S13", "log-search --absence-class lands on a zero-yield search and is refused on one that "
@@ -1586,7 +1590,7 @@ try:
                  "--needs": q("SELECT need_code FROM access_needs ORDER BY 1 LIMIT 1")[0][0]}
 
     def ls_lens(label, *extra):
-        return run_cli("log-search", "--slug", A, "--language", "EN", "--query-text", f"fixture M: {label}",
+        return run_cli("log-search", "--results-found", "1", "--slug", A, "--language", "EN", "--query-text", f"fixture M: {label}",
                        "--engine", "manual", "--depth-method", "scoping", "--session", S,
                        "--prior-expectation", "fixture prior, written before the call", *extra)
 
@@ -1627,7 +1631,7 @@ try:
     (PARAM,) = q("SELECT parameter_id FROM base_parameters ORDER BY parameter_id LIMIT 1")[0]
 
     def ls_bare(label, *extra):
-        return run_cli("log-search", "--language", "EN", "--query-text", f"fixture N: {label}",
+        return run_cli("log-search", "--results-found", "1", "--language", "EN", "--query-text", f"fixture N: {label}",
                        "--engine", "manual", "--depth-method", "scoping", "--session", S,
                        "--prior-expectation", "fixture prior, written before the call", *extra)
 
@@ -1948,13 +1952,14 @@ try:
     # T018-12: a retired identity is not newly used, by either writer. The state is set by SQL on the copy and undone.
     (dep,) = q("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code NOT IN ('ALL', ?) "
                "ORDER BY identity_code LIMIT 1", POP)[0]
-    w("UPDATE base_taxonomy_identity SET status='deprecated' WHERE identity_code=?", dep)
+    w("UPDATE base_taxonomy_identity SET status='deprecated', superseded_by_need=(SELECT need_code FROM access_needs "
+      "ORDER BY need_code LIMIT 1) WHERE identity_code=?", dep)          # the table's CHECK now requires a successor (T-054)
     try:
         r12a = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--identity", dep, "--basis", "named_in_text",
                        "--basis-text", "TASK-FIXTURE", "--session", S)
         r12b = run_cli(*t018_cmd(ref09, "deprecated", "--identity", dep, *BASIS))
     finally:
-        w("UPDATE base_taxonomy_identity SET status='active' WHERE identity_code=?", dep)
+        w("UPDATE base_taxonomy_identity SET status='active', superseded_by_need=NULL WHERE identity_code=?", dep)
     record("T018-12", "add-lens-link and add-extraction refuse a deprecated identity code and write nothing",
            r12a.returncode != 0 and "deprecated" in out_of(r12a) and r12b.returncode != 0 and "deprecated" in out_of(r12b)
            and n_figures() == nf and n_links_now() == nl, f"{out_of(r12a)[-160:]!r} | {out_of(r12b)[-160:]!r}")
@@ -2467,7 +2472,7 @@ try:
                     "FROM base_jurisdictions WHERE jurisdiction_code=?", ADM)
             record("T024-20", "add-jurisdiction admits the probe as a country with the pointer "
                    "stored and the session", row == [("country", None, H_OK, S)], f"{out} {row}")
-            ls = run_cli("log-search", "--slug", SLUG24, "--language", LANG24, "--query-text",
+            ls = run_cli("log-search", "--results-found", "1", "--slug", SLUG24, "--language", LANG24, "--query-text",
                          "fixture T024: a search in an admitted code", "--engine", "manual",
                          "--depth-method", "scoping", "--session", S, "--prior-expectation",
                          "fixture prior, written before the call", "--jurisdiction", ADM)
@@ -2486,7 +2491,7 @@ try:
             # Roll-up (OD-04): a search under a sub-national code counts toward its country.
             pre = db.get_coverage_completeness(SLUG24)
             db.add_jurisdiction(SUB24, "sub-national", COUNTRY24, H_OK, S)
-            ls = run_cli("log-search", "--slug", SLUG24, "--language", LANG24, "--query-text",
+            ls = run_cli("log-search", "--results-found", "1", "--slug", SLUG24, "--language", LANG24, "--query-text",
                          "fixture T024: a search in a sub-national code", "--engine", "manual",
                          "--depth-method", "scoping", "--session", S, "--prior-expectation",
                          "fixture prior, written before the call", "--jurisdiction", SUB24)

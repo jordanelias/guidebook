@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""
+r"""
 scripts/audit/derived_not_curated_audit.py — CLAUDE.md rule 8, mechanised.
 
 THE RULE: derive it, or name who judged it. Never curate a fact the machine can compute.
@@ -25,8 +25,8 @@ judgement, which a script cannot police. ONE class of violation is mechanically 
 an argparse `choices=` literal whose values are exactly a live column's CHECK vocabulary.
 That is a second home with a first home sitting next to it, and the fix is always the same
 (`dbcore.schema_choices(table, column)`). The other known violations named in rule 8 —
-`--ref-id` and `--tier` asking for derivable values, the
-registry's counts — need judgement about what the single home should BE, so they are
+`amend-source --tier` asking for a derivable value, a hand-typed figure in the
+registry's notes — need judgement about what the single home should BE, so they are
 listed in the rule for a reader rather than asserted here.
 
 A SECOND MECHANICALLY DECIDABLE CLASS, added 2026-09-17: A WRITER THAT NAMES A COLUMN
@@ -63,14 +63,13 @@ THREE MORE CLASSES, added 2026-09-27 (RC2, DR-2026-09-26-recurring-defect-shapes
 section 3). The first pass above sees only a bracketed `choices=[...]` literal; the
 detector was blind to every OTHER shape the same shortcut takes. `grep -c 'choices='
 scripts/db.py` against `grep -c 'choices=dbcore\.\(schema_choices\|check_values\)'
-scripts/db.py` (CLAUDE.md rule 8) names the gap this closes.
+scripts/db.py` (the pair CLAUDE.md rule 8 named until it pointed here instead) names the gap this closes.
 
   * CLASS 3 — a module-level string collection (frozenset/set/list/tuple literal) in a
     writer module that EQUALS a live CHECK IN-list. FAILS. A collection that is a proper
-    SUBSET of a live vocabulary is printed as SUBSET and never fails — three exist today
-    on purpose (`_VALID_DIRECTIONS`, `_ROW_ONLY_RELATIONS`,
-    `assess_cell.VALUE_SUPPLYING_ROLES`), each a deliberate restriction, not a drifted
-    copy. Neither list is quoted here as a count; the class computes both live, each run.
+    SUBSET of a live vocabulary is printed as SUBSET and never fails — some exist on
+    purpose (the audit prints each one), each a deliberate restriction, not a drifted
+    copy. No list or count is quoted here; the class computes them live, each run.
   * CLASS 4 — a numeric `choices=` (a `range(...)` or an integer literal list) that
     mirrors a `BETWEEN` CHECK, read through `dbcore.check_expression` rather than
     `check_values` (which cannot parse a range expression). `--target-tier

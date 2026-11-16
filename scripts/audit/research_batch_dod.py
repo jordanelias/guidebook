@@ -1219,8 +1219,8 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     if bare_empty:
         fail("R14", f"{bare_empty} zero-yield search(es) carry neither an absence_class nor a "
                     f"findings_note. Keep the empty (R8) but say WHICH it is: --absence-class "
-                    f"query_shape_failure / wrong_index / genuine_absence (amend-search "
-                    f"--set-absence-class once judged). Only the last is evidence.", bare_empty)
+                    f"query_shape_failure / wrong_index / genuine_absence (log-search "
+                    f"--absence-class, or amend-search --set-absence-class on a row already logged). Only the last is evidence.", bare_empty)
     else:
         ok("R14", "every zero-yield search records why it was empty (absence_class or a note)")
 

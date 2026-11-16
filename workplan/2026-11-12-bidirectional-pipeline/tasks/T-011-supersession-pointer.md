@@ -60,7 +60,7 @@ Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule o
 1. `scripts/assess/assess_cell.py`, where `main` writes the new determination: when the cell (parameter and the four lens codes) has a retired row whose `superseded_by_specification_id` is NULL and which is the most recently retired for that cell, set that pointer to the new row's id in the same transaction and in the emitted SQL. Reuse the UPDATE that `retire_specification` in `scripts/db.py` already performs for `--superseded-by` (`grep -n 'superseded_by_specification_id' scripts/db.py`); do not add a second writer of the column.
 2. The engine's determinism must hold: the same inputs and `--stamp` still give byte-identical SQL.
 
-**What reads what this task adds or changes:** `v_determination_provenance` consumers; a future render history; `dbcore.determinations_resting_on`.
+**What reads what this task adds or changes:** `db.py retire-specification` (its link-only refusal reads the pointer); `scripts/generate/owner_browser.html`; a future render history. (Corrected 2026-11-15 by the adversarial pass on this task: no view, trigger or index names `superseded_by_specification_id`, and `dbcore.determinations_resting_on` reads `retired_at` only, so neither reads what this task writes.)
 
 **Code size.** Report in the pull request the output of `git diff --shortstat "$(git merge-base HEAD "$BASE")" -- scripts schemas .github skills ':!scripts/migrations'` (run it after `git add`, so new files count), and for anything added name what reads it and what existing code it replaces or makes deletable. The base is the point where your branch left `$BASE`, not `origin/main` by name.
 

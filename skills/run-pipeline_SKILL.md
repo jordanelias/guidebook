@@ -21,10 +21,14 @@ run. Derive every figure; paste no counts.
 | `full` (default) | stage 1 | nothing |
 | `from-evidence` | stage 3 | discovery searching only; every later gate still applies |
 
+**Where a cell stands:** a run started mid-pipeline reads `python3 scripts/db.py cell-status --parameter-id <id> [--identity|--icf|--needs|--medical <code>] [--jurisdiction <code>] [--language <L>]` first (read-only): per stage, row ids held, examined and found empty, never examined and owed, so work already done is not repeated and work owed is not skipped.
+
 **Open once:** `/session-open` first (it sets `CURRENT` before the first Bash call), then
 `bash .claude/hooks/ensure-deps.sh`, then `/orient`. Work on a scratch DB (CLAUDE.md §4): `cp data/guidebook.db $S/guidebook.db`
 and `GUIDEBOOK_DB_PATH=$S/guidebook.db` inline on every call. `--session` takes the bare stem, the content of
-`scratchpad/CURRENT` (the writer strips a trailing `.md`). This file orders the work; the research contract
+`scratchpad/CURRENT` (the writer strips a trailing `.md`). Research batches are serial: copy the scratch from the current `main`, not from an older base. `emit_batch_sql.py` refuses a scratch that
+lacks rows the canonical DB holds, but it does NOT see a value `main` has since corrected, and it emits an UPDATE that reverts it; a batch captured from an
+older base is regenerated from the new `main`, never emitted as it stands. This file orders the work; the research contract
 (`governance/research-contract.yaml`, rule ids `R1`…`R17`, rendered by the SessionStart hook), CLAUDE.md §2 and
 `governance/pipeline-contract.yaml` are the law. **`python3 scripts/db.py <verb> --help` is the one home of a verb's
 flags and vocabularies** (rule 8: every `choices=` is read from the column's own CHECK); this file names only the flags
@@ -90,15 +94,16 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   (R8). A search names what it looked for (`--slug`, `--parameter` or `--mined-ref-id`); `--slug` must exist and
   `--parameter` must be active. `--language` is a two-letter code from `lang_jur_map` (derive: `SELECT DISTINCT
   language FROM lang_jur_map`), folded to upper case on write, and a language the map does not hold is refused (the map is the vocabulary of research
-  languages; a new one is a doctrine change, owner question 5); `--jurisdiction` is a code `base_jurisdictions`
+  languages; a new one is a doctrine change, owner question 5: `add-lang-jur-pair --approval-ref <the owner's dated ledger entry>` admits it; `observe-term --language` and `add-source --lang-detected` are held to the same map and stored in its spelling); `--jurisdiction` is a code `base_jurisdictions`
   holds (a sub-national code counts toward its parent country in `coverage`; admit one with `add-jurisdiction`). The pair is not checked: a search in any declared jurisdiction is logged, and the result's
   in_research_scope says whether the pair counts toward what `coverage` owes (`v_research_scope`). A search outside it
   is counted apart (searches_outside_scope), never refused (R8). `--result-artefact retrieval-log/<session>/<file>`
   (repeatable) links a persisted payload whose URL carries the query's host and identifying value; the path is the
   manifest's own pointer shape, resolved against the repository's `retrieval-log/` whatever `GUIDEBOOK_RETRIEVAL_LOG`
   says. A WebSearch has no payload, and `scripts/audit/search_log_completeness.py --session <STEM>` reads the harness
-  ledger for those. Keep empties. R14's class (query-shape / wrong index / genuine absence) is a column:
-  `--absence-class` (or `amend-search --exec-id N --append-note … --set-absence-class` once judged; `--append-note` is
+  ledger for those. Keep empties. R14's class (query-shape / wrong index / genuine absence) is a column,
+  REQUIRED by `log-search` when `--results-found` is 0 (a request that returned no result list was not run: log it with
+  `--deferred-reason` instead, T-080): `--absence-class` (or, for a row already written, `amend-search --exec-id N --append-note … --set-absence-class`; `--append-note` is
   required on every `amend-search`, the class is write-once, and only a search that found nothing takes it); the batch
   gate reads the column. `coverage --slug` and `v_coverage_priority` (the unsearched language × jurisdiction anti-join)
   show what is unsearched.
@@ -258,7 +263,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   [--report-json <file>]` per cell on the scratch DB (it takes `--db`, not `GUIDEBOOK_DB_PATH`; it writes the convergence
   row and the determination together; `--slug` names an existing topic, `SELECT slug FROM slugs`, and selects no
   evidence, and a slug that does not exist is refused). **A cell** is a parameter × the lens codes given (`specifications`' unique
-  row identity); a figure reaches a cell only through the live lens links written on it (`v_live_lens_links`): every
+  row identity); a figure reaches a cell only through the live lens links written on it (`v_live_lens_links`; an identity code counts through its `parent_code` chain: a parent's cell gathers its descendants' figures, once each, and a child's only its own, T-055): every
   lens the cell states must be among them and a lens it leaves NULL imposes nothing; a lens no figure of the parameter
   carries has no cell (the engine refuses and writes nothing; if the lens is relevant, raise the gap at judgment with
   `add-gap`). Do not hand-assign. Review its output against these tests; a failure is a gate or a
@@ -283,7 +288,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
      research, clinical guidelines, advocacy and lived-experience work) replaces it and earns the stronger band. If
      the engine labels a code-only cell otherwise, that is an engine defect: tooling PR.
   3. The recorded rationale is the derivation (which sources, what they state, the rule version), not an endorsement.
-- `raise-determination-gate` caps a cell at provisional.
+- `raise-determination-gate` caps a cell at provisional; with `--verdict QUESTION` (no source, no tier) it records an objection to a published cell, which flags the cell and never caps it.
 - Checks: `scripts/validate_evidence_state.py`, `scripts/audit/derivation_handshake_integrity.py`,
   `scripts/audit/medical_lens_integrity.py`.
 

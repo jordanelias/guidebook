@@ -7566,3 +7566,121 @@ OD-67 STATUS: REFERRED BACK TO THE OWNER
 CONDITION: any session asking whether OD-67 is answered, building the writer's proposals (T-126), or running the batch that writes the population-to-ICF rows.
 ACTION: (1) The lens of a code value is judged and written at recording; the maps propose. (2) Treat OD-67 as the owner's, CLOSED by the gate. (3) Ask it in its plain form. (4) Do not resolve it under delegation.
 DATE: 2026-11-15 — correction and registration, not an owner statement.
+
+
+---
+
+## Owner instruction 2026-11-15 — tasks of the remediation plan are stacked into a single pull request, not one pull request each
+
+**Owner's words, quoted (typed):**
+
+> "going forward, we will stack branches into single PR instead of one item per PR"
+
+**Readings.** [ASSUMPTION: "branches" means the task branches the remediation plan assigns one to a task, and "single PR" means one pull request that carries several tasks as separate commits on one branch, so a task no longer waits for the previous task's pull request to merge — basis: the statement, given while pull request 235 was open on the working branch and T-006 was the next task]. [ASSUMPTION: each task still keeps its own commits, its own caller sweep, before-and-after check run, gate and adversarial pass, and its own entry in the pull request body; only the unit of merge changes — basis: the statement says nothing that loosens them, and the plan's tests are what make a stacked pull request reviewable].
+
+**What it supersedes.** The sentences "One task, one pull request" (every task file, section 2 and section 11 step 5), "One pull request merges at a time" (`workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md` section 2 item 2; the prior workplan's WR-1) and the "Do not start batch n until every READY task of batch n-1 is merged" of `REMEDIATION-PLAN.md` section 1 item 2, as to the unit of merge only. Dependencies between tasks are unchanged: a task still follows the tasks it depends on, now as an earlier commit on the same branch, not a merged pull request.
+
+**What it does not decide.** Whether CLAUDE.md rule 10 (tooling and research never share a pull request) is relaxed: it is not, and a stacked pull request carries tooling tasks only; a research task still goes in its own pull request. How large a stacked pull request may grow before the owner wants it split.
+
+CONDITION: any session executing a task of the remediation plan, or asking whether a task waits for the previous pull request to merge.
+ACTION: (1) Finish each task on the working branch (its own gate, adversarial pass and repairs, each a commit) before the next; open one pull request for the branch and add each task to its body; do not wait for a merge between tasks. (2) Keep tooling and research apart (rule 10). (3) The generated `REMEDIATION-PLAN.md` is not edited by hand; its "merged" test reads merge commits and will count a stacked task as merged only when the pull request merges.
+DATE: 2026-11-15 — owner instruction (typed words, quoted above).
+
+
+---
+
+## Owner instruction 2026-11-15 (later) — at the end of each batch, sweep the changes forward and backward and repair what was left, so nothing hangs
+
+**Owner's words, quoted (typed):**
+
+> "for unrepaired items: please sweep your changes at end of each batch both forward and backward to assess compatibility with existing work and proposed work, and then rectify accoridngly. we do not want to leave hanging unfixed work"
+
+**Readings.** [ASSUMPTION: "unrepaired items" are the findings an adversarial pass raised and the executor reported without repairing, and every limit a task's own report states; "batch" is a batch of `REMEDIATION-PLAN.md`; "forward" is the proposed work (the task files of later tasks and batches that name anything the batch changed) and "backward" is existing work (the code, tests, skills, governance and derived files that already stood, and the earlier tasks of the same stack) — basis: the statement]. [ASSUMPTION: "rectify" means repair it in the batch's pull request where the repair is code or text within the executor's reach, and where it is a decision the owner holds (doctrine, taxonomy, a delegated resolution) put the question to the owner in the pull request and amend the affected task files so the question is not silently carried; a reported item is not an acceptable end state — basis: "we do not want to leave hanging unfixed work"].
+
+**What it adds to the per-task process.** After the last task of a batch: (1) list every reported-and-not-repaired item of the batch; (2) read every task file of later work that names anything the batch changed and correct it; (3) re-run the checks of every earlier task of the stack against the final tree and re-grep the callers of everything changed; (4) regenerate derived files; (5) commit, push, and say in the pull request what was repaired and what is now the owner's question.
+
+CONDITION: any session that has finished the last task of a batch of the remediation plan.
+ACTION: run the sweep above before reporting the batch finished; do not report an item as "not repaired" without either repairing it in the sweep or naming the owner question and the task files amended for it.
+DATE: 2026-11-15 — owner instruction (typed words, quoted above).
+
+## Supersession back-pointer 2026-11-15 — the nine-languages rule (OD-13)
+
+The owner's answer to OD-13 (2026-11-12, above) is that the 2026-03-19 "at least nine languages" rule no longer holds, the pair rulings having replaced it. The superseded sentence lives in `governance/jurisdiction-philosophy.md`; the back-pointer is the line below and a marker beside that sentence. Nothing in either is otherwise edited.
+
+SUPERSEDES: governance/jurisdiction-philosophy.md :: "A BPC entry is PROVISIONAL until the Co-1 pass covers ≥9 languages."
+  BY: references/project-standards.md :: "is superseded by the language–jurisdiction pair rulings"
+
+CONDITION: any session meeting the sentence "A BPC entry is PROVISIONAL until the Co-1 pass covers ≥9 languages" or the March 2026 rules marked in place above (one population per slug; language and jurisdiction as distinct axes; all 14 languages on every run).
+ACTION: treat each as superseded; coverage is judged per parameter and bucket member (a jurisdiction with its associated language).
+DATE: 2026-11-15 — marks added; the rulings are the owner's, quoted where they stand.
+
+## Supersession record 2026-11-15 — three March 2026 rules overtaken, recorded by this entry (T-001)
+
+Three rules of the 2026-03-18 and 2026-03-19 entries under "Research and Evidence Pipeline" no longer bind. A `SUPERSEDES`/`BY` pair cannot be added for a target that lives in this ledger (the audit would count the quoted target twice, and a marker inside a committed entry is an in-place edit, which `decisions/DR-2026-09-26-recurring-defect-shapes-remediation.md` forbids), so this entry is the record, by the same reasoning as "Correction 2026-11-12 — to the fifth set of owner answers: how OD-39's supersession is recorded". No line above is edited.
+
+1. **One population per slug.** The rule that each slug covers exactly one population, and that combined slugs are not permitted, is overtaken by the owner's statement of 2026-08-24 in "RULES 2026-08-25 — the four owner rulings of 2026-08-24, entered as operative rules": every research slug is crossed with a population code, access need or ICF code, because an unexpected connection may exist. A slug names a topic; it is not a population.
+2. **Language and jurisdiction as independent axes.** The rule that language coverage and jurisdiction coverage are distinct axes, both satisfied independently, is overtaken by the owner's answer to OR-8 in "Owner rulings 2026-10-29 (second)": exhaustion is judged per parameter and per bucket member, where a bucket member is a jurisdiction with its associated language.
+3. **All languages on every run.** The rule that every language is searched to completion on every run is overtaken by the same OR-8 answer, with the scope the bucket table sets, and by the 2026-11-12 answer to OD-13 above.
+
+The same 2026-03-19 entry's provisional-until-covered clause (a best-practice entry stays provisional until a number of recorded jurisdictions and Co-1 languages are covered) is the clause OD-13 supersedes; its second copy is marked in `governance/jurisdiction-philosophy.md`.
+
+CONDITION: any session that meets one of the three March 2026 rules, or a restatement of one in a skill, schema comment or governance file.
+ACTION: (1) Treat each as superseded, by the ruling named against it. (2) Do not add a `SUPERSEDES` pair for a ledger target. (3) A restatement outside the ledger is marked where it stands (T-001 marked the ones its sweep found).
+DATE: 2026-11-15 — record by the recorder of rulings the owner gave on the dates named; not a new owner statement.
+
+## Owner statements 2026-10-12 — eight sentences on the idealized state graph, entered on the owner's answer to OD-28 (2026-11-12)
+
+Eight messages of the owner, in the main session of `transcripts/harness_db856d85/main.jsonl` (outside every sidechain; O1 to O3 are queued commands, O4 to O8 delivered messages with origin human), timestamped by the transcript's own clock in UTC. They had been cited from a relay (`workplan/pipeline-state-graph/IDEAL-GRAPH.md`, line 11) that trims the openings of O1 ("use Opus to") and O7 ("yeah, and") and keeps nothing of when they were said. They are quoted here **verbatim from the transcript**, trailing whitespace dropped, and entered because the owner answered OD-28 on 2026-11-12 ("OD-28: enter the eight sentences verbatim from the committed transcript", above).
+
+**O1** — 2026-10-12T01:51:55.394Z UTC (queued command):
+
+> "use Opus to create an idealized new state graph that has as little infrastructure and code as possible that still meets all conditions required of project for a walkable pipeline all directions that can dynamically scrape mine organize and sort all relevant information from any source for any parameter regardless of search slug"
+
+**O2** — 2026-10-12T01:54:09.304Z UTC (queued command):
+
+> "ideal state graph just be code architecture compliant"
+
+**O3** — 2026-10-12T02:05:50.269Z UTC (queued command):
+
+> "wherever there is a conflict, adjudicate to ensure 100% accuracy, code compliance and logic for ensuring walkability in pipeline as well as dynamic information collection"
+
+**O4** — 2026-10-12T02:09:02.696Z UTC (delivered message, origin human):
+
+> "ensure that you strive to minimize amount of code so that it is as distilled and clean as possible as well as deduplicating and reconciling all conflicts"
+
+**O5** — 2026-10-12T02:10:40.361Z UTC (delivered message, origin human):
+
+> "centralized where possible and rely on pointers and injectable code"
+
+**O6** — 2026-10-12T02:10:51.805Z UTC (delivered message, origin human):
+
+> "the less hard coded, the better"
+
+**O7** — 2026-10-12T02:11:45.907Z UTC (delivered message, origin human):
+
+> "yeah, and we need to ensure handshakes both top-down and bottom-up, and we need to ensure walkability across all tables with references and ids"
+
+**O8** — 2026-10-12T02:12:19.870Z UTC (delivered message, origin human):
+
+> "handshake ALL directions"
+
+**What they record.** The owner's instructions of 2026-10-12 for the idealized state graph and the conditions it is to meet: as little infrastructure and code as will do, centralised with pointers and injectable code, as little hard coding as possible, conflicts adjudicated, and walkability and handshakes in all directions across tables that carry references and ids. Nothing is read into them here beyond what they say; the relay's reading of O2 as "must" is the relay's, not the owner's.
+
+CONDITION: any session citing the owner's instructions for the idealized state graph, or reading `IDEAL-GRAPH.md` line 11.
+ACTION: (1) Cite this entry for the eight sentences, not the relay. (2) Do not read a further meaning into a sentence that it does not state. (3) Where the relay and this entry differ, this entry's text governs.
+DATE: 2026-11-15 — entered on the owner's answer to OD-28 (2026-11-12); the sentences are the owner's, of 2026-10-12.
+
+## Owner statement 2026-10-12 — a ninth sentence found beside the eight, and corrections to the entry that enters them
+
+Found by the adversarial pass on the entry "Owner statements 2026-10-12 — eight sentences on the idealized state graph" (above), by listing every human-origin message of that run rather than the eight patterns the plan searched for. It is the owner's, queued at 2026-10-12T02:05:02.301Z UTC (`transcripts/harness_db856d85/main.jsonl`, the enqueue line and its `queued_command` attachment), 48 seconds before O3:
+
+> "upon completion, perform a comparative analysis between workplan v2 and ideal state graph"
+
+It is not one of the eight OD-28 named; it is entered here because the owner's words are recorded on contact (CLAUDE.md rule 0), and O3's "wherever there is a conflict" follows it.
+
+**Corrections to the entry above, which is not edited.** (1) Its paragraph "What they record" says the sentences are about tables "that carry references and ids"; O7 says "across all tables with references and ids", and the paragraph is not a restatement to cite. (2) It assigns all eight to "the idealized state graph"; only O1 and O2 name it, O3 concerns adjudicating conflicts, and O4 to O8 name no object. (3) It summarises O1 and O3 without O1's "dynamically scrape mine organize and sort all relevant information from any source for any parameter regardless of search slug" or O3's "100% accuracy, code compliance". (4) Where it quotes the answer to OD-28 as "OD-28: enter the eight sentences verbatim from the committed transcript", the ledger line reads "OD-28: enter the eight sentences of 2026-10-12 verbatim from the committed transcript", the owner's selection being "Enter them verbatim from the transcript". The eight sentences themselves are quoted exactly. Cite the sentences, not the paragraph.
+
+CONDITION: any session citing the owner's 2026-10-12 sentences or the paragraph "What they record".
+ACTION: (1) Cite the quoted sentences, O1 to O8 and the ninth above, and nothing the paragraph adds. (2) Read no sentence as naming an object it does not name.
+DATE: 2026-11-15 — corrections by the recorder; the ninth sentence is the owner's, of 2026-10-12.
+

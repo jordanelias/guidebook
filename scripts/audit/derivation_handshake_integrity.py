@@ -44,8 +44,8 @@ which is about the book and not the apparatus):
      (`assess_cell.stale_determinations`).
 
 ADVISORY, WITH THE RATCHET NAMED. House norm: a newly-wired check starts advisory. It is
-also vacuous today — `specifications` holds 0 rows, because no parameter has been minted
-since the 2026-09-13 circulation clear — and adding a SIXTH blocking-and-vacuous gate to
+also vacuous while no determination is LIVE (the `determinations read:` line it prints says how
+many are; retired rows are history and are not read) — and adding a SIXTH blocking-and-vacuous gate to
 the list `run_checks.py` already prints as a defect would make the battery worse, not
 safer. Ratchet to `blocking` with `min_items: 1` in the same change that writes the first
 determination; determinations are never deleted, so the floor holds once set.
@@ -57,6 +57,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
+import dbcore                                                  # noqa: E402  -- stdlib only; the lens rule has one home there
 
 # G3's predicate, IMPORTED AND NEVER RETYPED (rule 5). `grain_for()` is the one home of
 # "which Co-1 provenance is population-grain community knowledge", and
@@ -94,7 +96,7 @@ def _engine_pending(con, s):
 
 def main(argv=None):
     # --db EXISTS SO THIS CHECK CAN BE FAULT-INJECTED. A gate nobody has seen go red is a
-    # gate nobody has tested, and every subject below is unreachable on today's corpus.
+    # gate nobody has tested, and every subject below is unreachable while no determination is live.
     import argparse
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--db", default=str(DB), help="database to read (default: canonical)")
@@ -110,7 +112,8 @@ def main(argv=None):
     links = set()
     if _table(con, "identity_icf_map"):
         links = {(r[0], r[1]) for r in con.execute(
-            "SELECT identity_code, icf_code FROM identity_icf_map")}
+            "SELECT identity_code, icf_code FROM identity_icf_map"
+            + (" WHERE retired_at IS NULL" if "retired_at" in {c[1] for c in con.execute("PRAGMA table_info(identity_icf_map)")} else ""))}
 
     # --- 1 + 5. THE H4 CAP, AND THE LADDER GUARD IT DEPENDS ON ----------------------
     open_by_param = {}
@@ -151,9 +154,10 @@ def main(argv=None):
             if row and row[0] is not None:
                 best = row[0]
         for g in open_by_param.get(pid, []):
-            if g["identity_code"] and s["identity_code"] and \
-                    g["identity_code"] != s["identity_code"]:
-                continue
+            if g["verdict"] == "QUESTION":
+                continue                       # flags the cell, never caps it (OD-21): no tier to weigh
+            if dbcore.lens_differs(g, s, dbcore.identity_family(con, s.get("identity_code"))):
+                continue                       # a gate on another lens (the identity lens through its descendants, as the engine reads it)
             if g["trigger_tier"] > best:
                 continue                       # correctly non-binding: see the guard above
             if s["state"] == "stated":
@@ -269,14 +273,14 @@ def main(argv=None):
         print(f"  [NOTE] {n}")
 
     unresolved = sum(1 for g in gates if g["resolved_at"] is None)
+    _retired = (con.execute("SELECT COUNT(*) FROM specifications WHERE retired_at IS NOT NULL").fetchone()[0]
+                if _table(con, "specifications") else 0)
+    print(f"  determinations read: {len(specs)} live, 0 retired ({_retired} retired row(s) in the table are history and "
+          f"are not read here)")
     if not specs:
-        print("  specifications holds 0 rows.")
-        print("  NOT a check with nothing to say: it is the corpus state. `specifications`")
-        print("  cannot accept a row until a parameter is minted (CLAUDE.md §4), and none")
-        print("  has been since the 2026-09-13 circulation clear. Every subject here is")
-        print("  therefore unreachable today — which is why this check is advisory and why")
-        print("  its own failure paths are exercised by fault injection against a scratch")
-        print("  copy rather than by the live corpus.")
+        print("  No LIVE determination: the stored-answer comparison above had nothing to compare. That is the")
+        print("  corpus state, not a check with nothing to say, and the failure paths are exercised by fault")
+        print("  injection against a scratch copy (--db) rather than by the live corpus.")
     print(f"\n  determinations: {len(specs)}  "
           f"gates: {len(gates)} ({unresolved} open)  "
           f"distinct (population, ICF code) pairs: {len(links)}")

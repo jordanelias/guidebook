@@ -92,6 +92,8 @@ Every BPC entry's jurisdiction-coverage section records the research status for 
 
 A BPC entry is PROVISIONAL until the Co-1 pass covers ≥9 languages.
 
+> SUPERSEDED (owner answer OD-13, 2026-11-12, `references/project-standards.md`): the 2026-03-19 "at least nine languages" rule is superseded by the language–jurisdiction pair rulings.
+
 ---
 
 ## 3. Standards currency

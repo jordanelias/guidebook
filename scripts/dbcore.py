@@ -380,6 +380,37 @@ def ledger_heading_count(heading: str) -> int:
                if l.startswith("## ") and normalise_quote_text(l[3:]) == want)
 
 
+def code_currency_vocabulary() -> list:
+    """The `code_currency_status` values, read from the ratified enum line of governance/tier-system.md.
+
+    The column carries no CHECK, so its vocabulary's one home is the governance sentence that ratified it
+    ("`code_currency_status` enum: `A`, `B` ..."): read at call time, never retyped (rule 8). Empty if the
+    sentence is gone, and the caller then refuses to guess."""
+    text = (REPO_ROOT / "governance" / "tier-system.md").read_text(encoding="utf-8")
+    m = re.search(r"`code_currency_status` enum:([^\n]*)", text)
+    return re.findall(r"`([A-Z][A-Z-]+)`", m.group(1)) if m else []
+
+
+def require_approval_heading(ref, subject: str) -> str:
+    """The dated `## ` heading `ref` names, leading `## ` stripped, or a Refusal naming `subject`.
+
+    ONE HOME for the check every base-vocabulary admission makes (T-025): the pointer must carry a date and
+    be the heading of exactly ONE ledger entry. It proves a unique dated entry exists, not that the entry
+    approves this act; the operator answers for the match. Reads LEDGER_PATH at call time (through
+    ledger_heading_count), so a test can swap the ledger."""
+    heading = re.sub(r"^##\s+", "", (ref or "").strip())
+    if not re.search(r"\d{4}-\d{2}-\d{2}", heading):
+        raise Refusal(f"{subject}: --approval-ref {heading!r} carries no date. Give the dated `## ` heading of "
+                      f"the approving ledger entry.")
+    n = ledger_heading_count(heading)
+    if n != 1:
+        raise Refusal(
+            f"{subject}: --approval-ref {heading!r} is the heading of {n} ledger entries; it must be exactly "
+            f"one. Record the owner's approving words in a dated entry of references/project-standards.md "
+            f"first (CLAUDE.md rule 0), then give that entry's `## ` heading as written.")
+    return heading
+
+
 #: The two `term_aliases.attestation` values that say a source uses the form (migration 130).
 #: The other three (owner_supplied, model_seed, unrecorded) are seeds or unknowns: search aids.
 ATTESTED_FORMS = ("instrument", "other_source")
@@ -388,6 +419,11 @@ ATTESTED_FORMS = ("instrument", "other_source")
 #: begins "Delegated resolution" (an Opus-class model resolving a register decision under the
 #: owner's delegation of 2026-11-12). A typed prefix of the ledger, not a vocabulary list.
 LEDGER_DELEGATED_PREFIX = "Delegated resolution"
+
+#: The ledger's convention for an entry that records the OWNER's own words or answer: its heading begins "Owner"
+#: ("Owner answers", "Owner statements", "Owner rulings", "Owner instruction"). A verb that makes a decision the owner
+#: holds (base vocabulary, scope, the population taxonomy) points at one of these and at nothing else.
+LEDGER_OWNER_PREFIX = "Owner"
 
 
 def ledger_entry_names(heading: str, token: str) -> bool:
@@ -631,6 +667,14 @@ def domain_key(domain) -> str:
     is free text (no CHECK, and `add-term --domain` stores any string), so an exact match would let `Legal`,
     ` legal` or `functional-axis` through. A NULL or blank domain is '' and is not in the rule."""
     return (domain or "").strip().casefold().replace("-", "_").replace(" ", "_")
+
+#: The one UPDATE that points a retired determination at the one that replaced it (T-011). `db.py
+#: retire-specification --superseded-by` runs it on a row retired earlier; the engine runs it, and emits it, when it
+#: writes the determination that follows a retired row of the same cell. (`retire-specification --reason` may also
+#: set the pointer in the same statement that retires a live row, when `--superseded-by` is given with it; that
+#: statement is the retirement itself.) `updated_at` and `updated_by_session` take the run's stamp and session.
+SUPERSEDE_SQL = ("UPDATE specifications SET superseded_by_specification_id=?, updated_at=?, "
+                 "updated_by_session=? WHERE specification_id=?")
 
 #: Which figure_role values supply a value to a determination. ONE HOME (migration 077; moved here from
 #: `assess_cell`, which imports it back): `gather_sources` filters on it, `gather_extraction_links` grades
@@ -1086,8 +1130,52 @@ def check_declared(conn, table: str, column: str, value, context: str):
     if allowed and value not in allowed:
         raise Refusal(
             "%s: %s.%s does not accept %r. The schema's own CHECK declares: %s. "
-            "Nothing was written."
+            "Pass one of them. Nothing was written."
             % (context, table, column, value, sorted(allowed)))
+
+
+# An identity code and every code below it through `parent_code`: the set a cell keyed on that code gathers (T-055).
+# One home for `assess_cell._lens_clause` and `db.py cell-status`.
+IDENTITY_FAMILY_SQL = ("(WITH RECURSIVE family AS (SELECT ? AS code UNION SELECT i.identity_code "
+                       "FROM base_taxonomy_identity i JOIN family f ON i.parent_code = f.code) "
+                       "SELECT code FROM family)")
+
+
+LENS_ORDER = ("identity_code", "icf_code", "needs_code", "medical_code")
+
+
+def lens_differs(row, lens, family):
+    """True when `row` (a gate or a gap) names a code in a lens the cell states that is not the cell's. For the identity lens
+    "not the cell's" means outside the cell's code and its descendants (`family`, from `identity_family`): a parent's cell
+    gathers its descendants' figures, so a gate on a descendant reaches it. One home for the engine, `db.py cell-status` and
+    the derivation-handshake audit."""
+    cols = row.keys()
+    return any(c in cols and row[c] and lens.get(c) and (row[c] not in family if c == "identity_code" else row[c] != lens[c])
+               for c in LENS_ORDER)
+
+
+def identity_family(conn, code):
+    """The set {code} plus every descendant of it; empty when `code` is falsy."""
+    return {r[0] for r in conn.execute("SELECT code FROM " + IDENTITY_FAMILY_SQL, (code,))} if code else set()
+
+
+def check_identity_live(conn, code, context: str):
+    """Refuse an identity code that has been retired (deprecated), naming the successor to use instead (T-054).
+
+    A retired code is not newly stated: a writer given one is pointed at the access need or identity code that
+    carries it, read from whichever successor column is set. A code the registry does not hold is not this
+    function's business (the existence check says so). Tolerates a database that predates the successor columns."""
+    try:
+        r = conn.execute("SELECT status, superseded_by_need, superseded_by_identity FROM base_taxonomy_identity "
+                         "WHERE identity_code = ?", (code,)).fetchone()
+    except sqlite3.OperationalError:
+        return
+    if r is None or r[0] != "deprecated":
+        return
+    use = (f"the access need {r[1]!r} (--needs / a need lens)" if r[1]
+           else f"the identity code {r[2]!r}" if r[2] else "the live code that replaced it")
+    raise Refusal(f"{context}: identity code {code!r} is deprecated, so nothing is newly stated against it. Use {use} "
+                  f"instead. Nothing was written.")
 
 
 def fk_declared(conn, table: str, column: str, value, context: str, remedy: str = ""):
@@ -1114,6 +1202,8 @@ def fk_declared(conn, table: str, column: str, value, context: str, remedy: str 
         to_col = to_col or "rowid"
         if conn.execute('SELECT 1 FROM "%s" WHERE "%s"=?' % (parent, to_col),
                         (value,)).fetchone():
+            if parent == "base_taxonomy_identity":
+                check_identity_live(conn, value, context)
             return
         raise Refusal(
             "%s: %s.%s=%r has no matching row in %s.%s. A reference must point at "
@@ -1242,7 +1332,7 @@ def check_vocab(conn, table: str, column: str, value, context: str):
         if value not in declared:
             raise Refusal(
                 "%s: %s.%s does not accept %r. The schema's own CHECK declares: %s. "
-                "Nothing was written." % (context, table, column, value, sorted(declared)))
+                "Pass one of them. Nothing was written." % (context, table, column, value, sorted(declared)))
         return
 
     vocab = live_vocab(conn, table, column)

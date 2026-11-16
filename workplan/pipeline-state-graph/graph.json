@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-11-06 12:36 UTC from git HEAD c474bd6 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-11-15 23:23 UTC from git HEAD 3bb08c10 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
- "user_version": 123,
+ "user_version": 136,
  "stages": [
   "base",
   "research",
@@ -128,6 +128,21 @@
     "created_by_session"
    ]
   },
+  "base_jurisdictions": {
+   "stage": "base",
+   "rows": 36,
+   "writers": [
+    "add-jurisdiction"
+   ],
+   "cols": [
+    "jurisdiction_code",
+    "kind",
+    "parent_code",
+    "admission_ref",
+    "created_at",
+    "created_by_session"
+   ]
+  },
   "base_parameters": {
    "stage": "base",
    "rows": 10,
@@ -156,7 +171,11 @@
   "base_taxonomy_identity": {
    "stage": "base",
    "rows": 23,
-   "writers": [],
+   "writers": [
+    "add-identity",
+    "amend-identity",
+    "retire-identity"
+   ],
    "cols": [
     "identity_code",
     "display_name",
@@ -166,7 +185,9 @@
     "is_compound",
     "status",
     "created_at",
-    "updated_at"
+    "updated_at",
+    "superseded_by_need",
+    "superseded_by_identity"
    ]
   },
   "base_taxonomy_medical": {
@@ -403,6 +424,9 @@
     "gate_id",
     "parameter_id",
     "identity_code",
+    "icf_code",
+    "needs_code",
+    "medical_code",
     "verdict",
     "trigger_ref_id",
     "trigger_tier",
@@ -502,7 +526,6 @@
     "correct-source",
     "amend-source",
     "supersede-source",
-    "record-scan",
     "add-source"
    ],
    "cols": [
@@ -608,7 +631,9 @@
   "external_root_registry": {
    "stage": "evidence",
    "rows": 0,
-   "writers": [],
+   "writers": [
+    "register-root"
+   ],
    "cols": [
     "root_id",
     "description",
@@ -637,6 +662,33 @@
     "resolved_at",
     "resolved_by_session",
     "resolution"
+   ]
+  },
+  "extraction_lens_links": {
+   "stage": "judgment",
+   "rows": 216,
+   "writers": [
+    "add-extraction",
+    "add-lens-link",
+    "retire-lens-link",
+    "derive-extraction"
+   ],
+   "cols": [
+    "link_id",
+    "extraction_id",
+    "identity_code",
+    "icf_code",
+    "needs_code",
+    "medical_code",
+    "basis",
+    "basis_text",
+    "retired_at",
+    "retired_by_session",
+    "retirement_reason",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
    ]
   },
   "extraction_relations": {
@@ -684,7 +736,7 @@
    ]
   },
   "gaps": {
-   "stage": "synthesis",
+   "stage": "cross-stage",
    "rows": 110,
    "writers": [
     "amend-gap",
@@ -708,7 +760,14 @@
     "confidence_interval",
     "shift_conditions",
     "named_dissenter",
-    "mining_addressability"
+    "mining_addressability",
+    "parameter_id",
+    "identity_code",
+    "icf_code",
+    "needs_code",
+    "medical_code",
+    "jurisdiction",
+    "language"
    ]
   },
   "icf_medical_map": {
@@ -731,6 +790,7 @@
    "stage": "base",
    "rows": 61,
    "writers": [
+    "retire-population-icf-link",
     "add-population-icf-link"
    ],
    "cols": [
@@ -742,7 +802,10 @@
     "provenance",
     "notes",
     "created_at",
-    "created_by_session"
+    "created_by_session",
+    "retired_at",
+    "retired_by_session",
+    "retired_reason"
    ]
   },
   "identity_medical_map": {
@@ -763,7 +826,10 @@
   "lang_jur_map": {
    "stage": "base",
    "rows": 70,
-   "writers": [],
+   "writers": [
+    "add-lang-jur-pair",
+    "set-pair-scope"
+   ],
    "cols": [
     "language",
     "jurisdiction",
@@ -961,6 +1027,21 @@
     "created_at"
    ]
   },
+  "search_execution_forms": {
+   "stage": "research",
+   "rows": 0,
+   "writers": [
+    "log-search"
+   ],
+   "cols": [
+    "exec_id",
+    "term_id",
+    "alias",
+    "language",
+    "created_at",
+    "created_by_session"
+   ]
+  },
   "search_executions": {
    "stage": "research",
    "rows": 203,
@@ -1005,7 +1086,8 @@
     "icf_code",
     "needs_code",
     "medical_code",
-    "absence_class"
+    "absence_class",
+    "gap_id"
    ]
   },
   "slugs": {
@@ -1161,7 +1243,8 @@
     "updated_by_session",
     "figure_role",
     "comparator",
-    "harm_finding"
+    "harm_finding",
+    "value_as_written"
    ]
   },
   "specification_extraction_links": {
@@ -1303,7 +1386,13 @@
     "created_at",
     "created_by_session",
     "updated_at",
-    "updated_by_session"
+    "updated_by_session",
+    "observation_id",
+    "attestation",
+    "source_url",
+    "source_page",
+    "source_line",
+    "source_clause"
    ]
   },
   "terms": {
@@ -1362,6 +1451,12 @@
    "notnull": true
   },
   {
+   "child": "base_jurisdictions",
+   "col": "parent_code",
+   "parent": "base_jurisdictions",
+   "notnull": false
+  },
+  {
    "child": "base_parameters",
    "col": "direction_ref_id",
    "parent": "evidence_sources",
@@ -1378,6 +1473,18 @@
    "col": "term_id",
    "parent": "terms",
    "notnull": true
+  },
+  {
+   "child": "base_taxonomy_identity",
+   "col": "superseded_by_identity",
+   "parent": "base_taxonomy_identity",
+   "notnull": false
+  },
+  {
+   "child": "base_taxonomy_identity",
+   "col": "superseded_by_need",
+   "parent": "access_needs",
+   "notnull": false
   },
   {
    "child": "base_taxonomy_identity",
@@ -1477,6 +1584,24 @@
   },
   {
    "child": "determination_gates",
+   "col": "medical_code",
+   "parent": "base_taxonomy_medical",
+   "notnull": false
+  },
+  {
+   "child": "determination_gates",
+   "col": "needs_code",
+   "parent": "access_needs",
+   "notnull": false
+  },
+  {
+   "child": "determination_gates",
+   "col": "icf_code",
+   "parent": "base_icf",
+   "notnull": false
+  },
+  {
+   "child": "determination_gates",
    "col": "identity_code",
    "parent": "base_taxonomy_identity",
    "notnull": false
@@ -1518,6 +1643,36 @@
    "notnull": true
   },
   {
+   "child": "extraction_lens_links",
+   "col": "medical_code",
+   "parent": "base_taxonomy_medical",
+   "notnull": false
+  },
+  {
+   "child": "extraction_lens_links",
+   "col": "needs_code",
+   "parent": "access_needs",
+   "notnull": false
+  },
+  {
+   "child": "extraction_lens_links",
+   "col": "icf_code",
+   "parent": "base_icf",
+   "notnull": false
+  },
+  {
+   "child": "extraction_lens_links",
+   "col": "identity_code",
+   "parent": "base_taxonomy_identity",
+   "notnull": false
+  },
+  {
+   "child": "extraction_lens_links",
+   "col": "extraction_id",
+   "parent": "source_value_extractions",
+   "notnull": true
+  },
+  {
    "child": "extraction_relations",
    "col": "to_extraction_id",
    "parent": "source_value_extractions",
@@ -1534,6 +1689,36 @@
    "col": "gap_id",
    "parent": "gaps",
    "notnull": true
+  },
+  {
+   "child": "gaps",
+   "col": "medical_code",
+   "parent": "base_taxonomy_medical",
+   "notnull": false
+  },
+  {
+   "child": "gaps",
+   "col": "needs_code",
+   "parent": "access_needs",
+   "notnull": false
+  },
+  {
+   "child": "gaps",
+   "col": "icf_code",
+   "parent": "base_icf",
+   "notnull": false
+  },
+  {
+   "child": "gaps",
+   "col": "identity_code",
+   "parent": "base_taxonomy_identity",
+   "notnull": false
+  },
+  {
+   "child": "gaps",
+   "col": "parameter_id",
+   "parent": "base_parameters",
+   "notnull": false
   },
   {
    "child": "icf_medical_map",
@@ -1636,6 +1821,36 @@
    "col": "exec_id",
    "parent": "search_executions",
    "notnull": true
+  },
+  {
+   "child": "search_execution_forms",
+   "col": "term_id",
+   "parent": "term_aliases",
+   "notnull": true
+  },
+  {
+   "child": "search_execution_forms",
+   "col": "alias",
+   "parent": "term_aliases",
+   "notnull": true
+  },
+  {
+   "child": "search_execution_forms",
+   "col": "language",
+   "parent": "term_aliases",
+   "notnull": true
+  },
+  {
+   "child": "search_execution_forms",
+   "col": "exec_id",
+   "parent": "search_executions",
+   "notnull": true
+  },
+  {
+   "child": "search_executions",
+   "col": "gap_id",
+   "parent": "gaps",
+   "notnull": false
   },
   {
    "child": "search_executions",
@@ -1873,6 +2088,12 @@
   },
   {
    "child": "term_aliases",
+   "col": "observation_id",
+   "parent": "observed_terms",
+   "notnull": false
+  },
+  {
+   "child": "term_aliases",
    "col": "term_id",
    "parent": "terms",
    "notnull": true
@@ -1957,22 +2178,26 @@
   },
   "v_coverage_branch": {
    "reads": [
+    "base_jurisdictions",
     "search_executions"
    ],
    "stages": [
+    "base",
     "research"
    ],
-   "crosses": false,
+   "crosses": true,
    "rows": 89
   },
   "v_coverage_jurisdiction": {
    "reads": [
+    "base_jurisdictions",
     "search_executions"
    ],
    "stages": [
+    "base",
     "research"
    ],
-   "crosses": false,
+   "crosses": true,
    "rows": 28
   },
   "v_coverage_language": {
@@ -1983,20 +2208,23 @@
     "research"
    ],
    "crosses": false,
-   "rows": 21
+   "rows": 16
   },
   "v_coverage_lens": {
    "reads": [
+    "base_jurisdictions",
     "search_executions"
    ],
    "stages": [
+    "base",
     "research"
    ],
-   "crosses": false,
-   "rows": 41
+   "crosses": true,
+   "rows": 35
   },
   "v_coverage_priority": {
    "reads": [
+    "base_jurisdictions",
     "search_executions",
     "slugs"
    ],
@@ -2059,6 +2287,18 @@
    "crosses": false,
    "rows": 59
   },
+  "v_gap_subject": {
+   "reads": [
+    "gaps",
+    "specifications"
+   ],
+   "stages": [
+    "cross-stage",
+    "specification"
+   ],
+   "crosses": true,
+   "rows": 110
+  },
   "v_item_provenance": {
    "reads": [
     "base_parameters",
@@ -2076,6 +2316,16 @@
    "crosses": true,
    "rows": 0
   },
+  "v_live_lens_links": {
+   "reads": [
+    "extraction_lens_links"
+   ],
+   "stages": [
+    "judgment"
+   ],
+   "crosses": false,
+   "rows": 216
+  },
   "v_open_determination_gates": {
    "reads": [
     "determination_gates"
@@ -2092,8 +2342,8 @@
     "specifications"
    ],
    "stages": [
-    "specification",
-    "synthesis"
+    "cross-stage",
+    "specification"
    ],
    "crosses": true,
    "rows": 0
@@ -2287,6 +2537,13 @@
     "s"
    ]
   },
+  "base_jurisdictions": {
+   "kind": [
+    "country",
+    "sub-national",
+    "meta"
+   ]
+  },
   "base_parameters": {
    "status": [
     "active",
@@ -2407,7 +2664,8 @@
     "UNLINKED",
     "MISLINKED",
     "UNDER-CONSERVATIVE",
-    "CONTRADICTS"
+    "CONTRADICTS",
+    "QUESTION"
    ]
   },
   "economics_entries": {
@@ -2529,7 +2787,16 @@
   },
   "extraction_follow_ups": {
    "reason": [
-    "read-outside-admitting-purpose"
+    "read-outside-admitting-purpose",
+    "absence-needs-tested-value"
+   ]
+  },
+  "extraction_lens_links": {
+   "basis": [
+    "named_in_text",
+    "heading",
+    "study_participants",
+    "carried"
    ]
   },
   "extraction_relations": {
@@ -2825,6 +3092,9 @@
     "bariatric_manual",
     "bariatric_power",
     "walker_rollator",
+    "lower_limb_prosthesis",
+    "crutches",
+    "cane",
     "mixed",
     "not_device_scoped"
    ],
@@ -2918,6 +3188,17 @@
     "BROADER",
     "DEPRECATED",
     "DOMAIN"
+   ],
+   "attestation": [
+    "instrument",
+    "other_source",
+    "owner_supplied",
+    "model_seed",
+    "unrecorded"
+   ],
+   "NOT": [
+    "instrument",
+    "other_source"
    ]
   },
   "terms": {
@@ -3206,7 +3487,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 4
+   "refusals": 6
   },
   "amend-source": {
    "functions": [
@@ -3218,7 +3499,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 13
+   "refusals": 17
   },
   "link-source-slug": {
    "functions": [
@@ -3294,7 +3575,7 @@
      "INSERT"
     ]
    },
-   "refusals": 6
+   "refusals": 7
   },
   "set-parameter-direction": {
    "functions": [
@@ -3318,7 +3599,7 @@
      "INSERT"
     ]
    },
-   "refusals": 5
+   "refusals": 6
   },
   "decline-parameter": {
    "functions": [
@@ -3338,14 +3619,11 @@
     "record_scan"
    ],
    "writes": {
-    "evidence_sources": [
-     "UPDATE"
-    ],
     "source_scans": [
      "INSERT"
     ]
    },
-   "refusals": 13
+   "refusals": 12
   },
   "retire-parameter": {
    "functions": [
@@ -3385,7 +3663,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 11
+   "refusals": 10
   },
   "revoke-declination": {
    "functions": [
@@ -3418,10 +3696,11 @@
    ],
    "writes": {
     "term_aliases": [
-     "INSERT"
+     "INSERT",
+     "UPDATE"
     ]
    },
-   "refusals": 7
+   "refusals": 30
   },
   "mint-term-from-catalogue": {
    "functions": [
@@ -3433,7 +3712,103 @@
      "INSERT"
     ]
    },
-   "refusals": 7
+   "refusals": 6
+  },
+  "add-jurisdiction": {
+   "functions": [
+    "_emit",
+    "add_jurisdiction"
+   ],
+   "writes": {
+    "base_jurisdictions": [
+     "INSERT"
+    ]
+   },
+   "refusals": 11
+  },
+  "add-lang-jur-pair": {
+   "functions": [
+    "_emit",
+    "add_lang_jur_pair"
+   ],
+   "writes": {
+    "lang_jur_map": [
+     "INSERT"
+    ]
+   },
+   "refusals": 3
+  },
+  "set-pair-scope": {
+   "functions": [
+    "_emit",
+    "set_pair_scope"
+   ],
+   "writes": {
+    "lang_jur_map": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 2
+  },
+  "add-identity": {
+   "functions": [
+    "_emit",
+    "add_identity"
+   ],
+   "writes": {
+    "base_taxonomy_identity": [
+     "INSERT"
+    ]
+   },
+   "refusals": 4
+  },
+  "amend-identity": {
+   "functions": [
+    "_emit",
+    "amend_identity"
+   ],
+   "writes": {
+    "base_taxonomy_identity": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 3
+  },
+  "register-root": {
+   "functions": [
+    "_emit",
+    "register_root"
+   ],
+   "writes": {
+    "external_root_registry": [
+     "INSERT"
+    ]
+   },
+   "refusals": 6
+  },
+  "retire-identity": {
+   "functions": [
+    "_emit",
+    "retire_identity"
+   ],
+   "writes": {
+    "base_taxonomy_identity": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 8
+  },
+  "retire-population-icf-link": {
+   "functions": [
+    "_emit",
+    "retire_population_icf_link"
+   ],
+   "writes": {
+    "identity_icf_map": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 2
   },
   "raise-follow-up": {
    "functions": [
@@ -3445,7 +3820,7 @@
      "INSERT"
     ]
    },
-   "refusals": 3
+   "refusals": 4
   },
   "resolve-follow-up": {
    "functions": [
@@ -3505,7 +3880,7 @@
      "INSERT"
     ]
    },
-   "refusals": 8
+   "refusals": 10
   },
   "resolve-determination-gate": {
    "functions": [
@@ -3543,6 +3918,9 @@
     "insert_extraction"
    ],
    "writes": {
+    "extraction_lens_links": [
+     "INSERT"
+    ],
     "extraction_relations": [
      "INSERT"
     ],
@@ -3550,7 +3928,7 @@
      "INSERT"
     ]
    },
-   "refusals": 27
+   "refusals": 28
   },
   "relate-extraction": {
    "functions": [
@@ -3576,7 +3954,32 @@
      "UPDATE"
     ]
    },
-   "refusals": 8
+   "refusals": 9
+  },
+  "add-lens-link": {
+   "functions": [
+    "_emit",
+    "add_lens_link"
+   ],
+   "writes": {
+    "extraction_lens_links": [
+     "INSERT",
+     "UPDATE"
+    ]
+   },
+   "refusals": 4
+  },
+  "retire-lens-link": {
+   "functions": [
+    "_emit",
+    "retire_lens_link"
+   ],
+   "writes": {
+    "extraction_lens_links": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 4
   },
   "derive-extraction": {
    "functions": [
@@ -3584,6 +3987,9 @@
     "derive_extraction"
    ],
    "writes": {
+    "extraction_lens_links": [
+     "INSERT"
+    ],
     "extraction_relations": [
      "INSERT"
     ],
@@ -3591,7 +3997,7 @@
      "INSERT"
     ]
    },
-   "refusals": 6
+   "refusals": 5
   },
   "adjudicate-term": {
    "functions": [
@@ -3624,6 +4030,14 @@
    "writes": {},
    "refusals": 0
   },
+  "cell-status": {
+   "functions": [
+    "_emit",
+    "cell_status"
+   ],
+   "writes": {},
+   "refusals": 2
+  },
   "coverage": {
    "functions": [
     "_emit",
@@ -3643,7 +4057,7 @@
      "INSERT"
     ]
    },
-   "refusals": 0
+   "refusals": 2
   },
   "close-gap": {
    "functions": [
@@ -3706,11 +4120,14 @@
     "search_execution_artefacts": [
      "INSERT"
     ],
+    "search_execution_forms": [
+     "INSERT"
+    ],
     "search_executions": [
      "INSERT"
     ]
    },
-   "refusals": 15
+   "refusals": 20
   },
   "add-source": {
    "functions": [
@@ -3733,7 +4150,7 @@
      "INSERT"
     ]
    },
-   "refusals": 17
+   "refusals": 20
   },
   "add-conflict": {
    "functions": [
@@ -3746,7 +4163,7 @@
      "INSERT"
     ]
    },
-   "refusals": 4
+   "refusals": 6
   },
   "update-conflict": {
    "functions": [
@@ -3781,7 +4198,7 @@
      "DELETE"
     ]
    },
-   "refusals": 0
+   "refusals": 1
   },
   "add-supersession-check": {
    "functions": [
@@ -3850,9 +4267,6 @@
    "evidence": {
     "connection_targets": [
      "identity_code"
-    ],
-    "determination_gates": [
-     "identity_code"
     ]
    }
   },
@@ -3920,7 +4334,7 @@
     "LED-166"
    ],
    "evidence": {
-    "icf_typed_columns_examined": 8,
+    "icf_typed_columns_examined": 11,
     "icf_columns_holding_AX": {},
     "AX_elsewhere_not_tested_by_this_ruling": {
      "access_need_icf.notes": 3,
@@ -3963,6 +4377,9 @@
      ],
      "v_evidence_authors": [
       "evidence_sources"
+     ],
+     "v_gap_subject": [
+      "specifications"
      ],
      "v_source_admission": [
       "evidence_sources"
@@ -4030,8 +4447,6 @@
      "access_need_icf",
      "access_needs",
      "access_stakes",
-     "base_taxonomy_identity",
-     "lang_jur_map",
      "life_stage_modifiers",
      "rooms",
      "slugs"
@@ -4103,7 +4518,6 @@
      "connections",
      "convergence_assessment",
      "convergence_sources",
-     "gaps",
      "reasoning_doc_citations",
      "supersession_check"
     ],
@@ -4151,14 +4565,17 @@
    "evidence": {}
   },
   "P-GT": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "tests": "determination_gates carries all four lens columns",
    "atoms": [
     "LED-128"
    ],
    "evidence": {
     "lens_columns": [
-     "identity_code"
+     "identity_code",
+     "icf_code",
+     "needs_code",
+     "medical_code"
     ]
    }
   },
@@ -4289,14 +4706,14 @@
     "CLM-029"
    ],
    "evidence": {
-    "count": 7,
+    "count": 6,
     "with_live_rows": [
      "base_parameters.direction_ref_id -> evidence_sources",
-     "evidence_population_match.gap_id -> gaps",
      "search_admissions.ref_id -> evidence_sources",
      "search_candidates.resolved_ref_id -> evidence_sources",
      "search_executions.mined_ref_id -> evidence_sources",
-     "source_value_extractions.promoted_to_rdc_id -> reasoning_doc_citations"
+     "source_value_extractions.promoted_to_rdc_id -> reasoning_doc_citations",
+     "term_aliases.observation_id -> observed_terms"
     ],
     "all": [
      {
@@ -4304,18 +4721,6 @@
       "from_stage": "base",
       "to_stage": "evidence",
       "child_rows": 10
-     },
-     {
-      "fk": "evidence_population_match.gap_id -> gaps",
-      "from_stage": "judgment",
-      "to_stage": "synthesis",
-      "child_rows": 61
-     },
-     {
-      "fk": "gap_mining.gap_id -> gaps",
-      "from_stage": "research",
-      "to_stage": "synthesis",
-      "child_rows": 0
      },
      {
       "fk": "search_admissions.ref_id -> evidence_sources",
@@ -4340,6 +4745,12 @@
       "from_stage": "judgment",
       "to_stage": "synthesis",
       "child_rows": 214
+     },
+     {
+      "fk": "term_aliases.observation_id -> observed_terms",
+      "from_stage": "base",
+      "to_stage": "evidence",
+      "child_rows": 2382
      }
     ]
    }
@@ -4624,8 +5035,8 @@
     {
      "id": "C3.3",
      "says": "a spread across lenses is carried with each lens's direction",
-     "verdict": "PASS",
-     "why": "matched",
+     "verdict": "FAIL",
+     "why": "needle not found",
      "atoms": [
       "LED-176"
      ]
@@ -4731,22 +5142,22 @@
  "capabilities_comparison": null,
  "examined": {
   "atoms in all (structure checked)": 2598,
-  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 362,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 361,
   "distinct quotes among all atoms": 2566,
-  "status corrections owed (each atom's status re-read)": 13,
+  "status corrections owed (each atom's status re-read)": 12,
   "conflicts (atoms, class, probe exist)": 32,
-  "machine transitions": 41,
-  "transition evidence needles re-read": 71,
+  "machine transitions": 43,
+  "transition evidence needles re-read": 74,
   "state vocabularies compared with a column's own CHECK": 11,
   "abstract machines (no single column holder)": 5,
   "capability predicates": 28,
   "probes run": 33,
   "probes linted for a reachable PASS": 33,
-  "tables placed in a stage": 56
+  "tables placed in a stage": 59
  },
  "atoms_by_status": {
-  "ACTIVE": 2214,
-  "SUPERSEDED": 85,
+  "ACTIVE": 2212,
+  "SUPERSEDED": 87,
   "AMENDED": 73,
   "OPEN": 71,
   "PROPOSED": 129,

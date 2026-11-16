@@ -205,7 +205,9 @@ def insert_connection(data: dict, targets: list[tuple[str, object]],
         for kind, value in targets:
             if kind not in _CONNECTION_TARGET_KINDS:
                 raise Refusal(f"unknown connection target kind {kind!r}.")
-            dbcore.fk_declared(conn, "connection_targets", kind, value, f"add-connection {kind}")
+            dbcore.fk_declared(conn, "connection_targets", kind, value, f"add-connection {kind}",
+                               remedy=("SELECT parameter_id FROM base_parameters WHERE status = 'active'"
+                                       if kind == "parameter_id" else ""))
             if kind == "parameter_id":
                 st = conn.execute("SELECT status FROM base_parameters WHERE parameter_id=?",
                                   (value,)).fetchone()[0]
@@ -254,7 +256,8 @@ def update_connection_status(con_id: str, status: str,
     u = _upd(session)
     with connect(dry_run) as conn:
         if not dbcore.exists(conn, "connections", "con_id", con_id):
-            raise Refusal(f"update-connection: {con_id} is not a connection. Nothing was written.")
+            raise Refusal(f"update-connection: {con_id} is not a connection. Nothing was written. "
+                          f"`db.py connections` lists the ids; `db.py add-connection` writes a new one.")
         dbcore.check_declared(conn, "connections", "status", status, "update-connection --status")
         conn.execute(
             "UPDATE connections SET status=?, updated_at=?, updated_by_session=? WHERE con_id=?",
@@ -280,15 +283,22 @@ def next_gap_id() -> str:
 _OPEN_GAP = "status LIKE 'OPEN%'"
 
 
-def _check_language(conn, language: str, noun: str) -> None:
+def _check_language(conn, language: str, noun: str, flag: str = "--language") -> str:
     """Refuse a language `lang_jur_map` does not hold; a new language is a doctrine change, not a
-    flag. One home for `log-search` and `add-gap`; `noun` names the record the refusal is about."""
+    flag. Returns the language in the map's OWN spelling, found case-insensitively (T-015), so a writer
+    stores what the map holds without assuming its letter case. One home for `log-search`, `add-gap`,
+    `observe-term`, `add-source --lang-detected` and `add-alias`; `noun` names the record the refusal is about
+    and `flag` the option the operator typed."""
     _langs = dbcore.live_vocab(conn, "lang_jur_map", "language")
-    if _langs and language not in _langs:
+    if not _langs:
+        return (language or "").strip().upper()          # an empty map holds nothing to match; fold as every writer did
+    held = {v.upper(): v for v in _langs}
+    if (language or "").strip().upper() not in held:
         raise Refusal(
-            f"--language {language!r} is not a language lang_jur_map holds "
+            f"{flag} {language!r} is not a language lang_jur_map holds "
             f"({', '.join(sorted(_langs))}). The map is the vocabulary of research "
             f"languages (rule 8); a language is added there, not at the {noun}.")
+    return held[language.strip().upper()]
 
 
 def insert_gap(data: dict, session: str, dry_run: bool = False) -> str:
@@ -343,7 +353,8 @@ def insert_gap(data: dict, session: str, dry_run: bool = False) -> str:
 def close_gap(gap_id: str, status: str,
               session: str, dry_run: bool = False):
     if not status.startswith("CLOSED"):
-        raise Refusal(f"status must start with CLOSED, got '{status}'")
+        raise Refusal(f"status must start with CLOSED, got '{status}'. The closing statuses in use: "
+                      f"SELECT DISTINCT status FROM gaps WHERE status LIKE 'CLOSED%'.")
     u = _upd(session)
     with connect(dry_run) as conn:
         conn.execute(
@@ -905,9 +916,31 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         # The gap this search was run to close (nullable: most searches are not for a gap).
         "gap_id": gap_id,
     }
+    # A count is a whole number of results, never a string, a bool or a negative: `"0"` and `-1` each slip past every
+    # test of `== 0` below and every reader of results_found = 0 (T-080 critic, 2026-11-15).
+    if isinstance(results_found, bool) or not isinstance(results_found, int) or results_found < 0:
+        raise Refusal(f"log-search: --results-found must be a whole number of results, 0 or more (got "
+                      f"{results_found!r}). Nothing was written.")
+    # A blank reason is no reason: it would make the row read as deferred (not run) to every zero-yield reader
+    # while stating no cause.
+    deferred_reason = (deferred_reason or "").strip() or None
+    row["deferred_reason"] = deferred_reason
+    if deferred_reason and absence_class is not None:
+        raise Refusal(f"log-search: --deferred-reason says the search was not run, and --absence-class "
+                      f"{absence_class!r} says it ran and found nothing. A row cannot assert both. Nothing was written.")
     if absence_class is not None and results_found != 0:
         raise Refusal(f"--absence-class {absence_class!r} with --results-found {results_found}: only a "
                       "search that found nothing can be classed as an absence (R14). Nothing was written.")
+    if results_found == 0 and absence_class is None and not deferred_reason:
+        # An empty result is evidence that nothing exists only if the query was well formed and the index the right
+        # one (R14), so a search that found nothing states which. A request that returned no result list at all (a
+        # block, a rate limit, a reset, a stub page) was not RUN: log it with --deferred-reason naming the failure, as a
+        # search owed a re-run (OD-45, resolved under delegation), never as a zero-result search.
+        raise Refusal("log-search: --results-found 0 needs --absence-class (R14: query malformed, index wrong, or "
+                      "genuinely absent; the values are the column's own CHECK: "
+                      + ", ".join(dbcore.schema_choices("search_executions", "absence_class") or [])
+                      + "). If the request returned no result list (blocked, rate-limited, reset, a stub page) the search "
+                        "was not run: log it with --deferred-reason naming the failure instead. Nothing was written.")
     with connect(dry_run) as conn:
         if absence_class is not None:
             dbcore.check_declared(conn, "search_executions", "absence_class", absence_class,
@@ -1126,6 +1159,129 @@ def get_unmined_sources(slug: str) -> list[dict]:
     return [dict(r) for r in rows]
 
 
+def _gap_applies(row, lens, jurisdiction, lang, family=frozenset(), roll=lambda j: j):
+    """A gap names the subject it is about; it is skipped for a cell only when it names a DIFFERENT code in a lens the cell
+    states, or a different jurisdiction or language than the one asked for (the rule the engine applies to a gate)."""
+    return not (dbcore.lens_differs(row, lens, family)
+                or (jurisdiction and row["jurisdiction"] and roll(row["jurisdiction"]) != jurisdiction)
+                or (lang and row["language"] and row["language"].upper() != lang))
+
+
+def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs: str = None,
+                medical: str = None, jurisdiction: str = None, language: str = None) -> dict:
+    """Where one cell stands, stage by stage, read from the tables and nothing else (T-034).
+
+    For a parameter, and optionally a lens, a jurisdiction and a language, each stage reports four lists of
+    row ids: `held` (what is there), `examined_empty` (looked at and found nothing), `never_examined` (not
+    looked at) and `owed` (what the record says is still to be done). Every list is computed from the live
+    tables and views (`v_research_scope`, `v_scan_ledger`, `v_live_lens_links`, ...), never typed, so a run
+    started mid-pipeline can read what to skip and what to do. Read-only: nothing is written.
+
+    A pair's scope is reported as it stands in `lang_jur_map.scope_status`: a NULL is reported as
+    `scope_unrecorded` (owed, as `v_research_scope` reads it), never as in scope or out of it."""
+    given = {"identity_code": identity, "icf_code": icf, "needs_code": needs, "medical_code": medical}
+    lens = {k: v for k, v in given.items() if v}
+    with connect(readonly=True) as conn:
+        param = conn.execute("SELECT parameter_id, status FROM base_parameters WHERE parameter_id=?",
+                             (parameter_id,)).fetchone()
+        if param is None:
+            raise Refusal(f"cell-status: parameter_id {parameter_id}: no such parameter. List them with SELECT "
+                          f"parameter_id FROM base_parameters.")
+        for col, (tbl, key) in _LENS_COLUMNS.items():
+            if lens.get(col) and not dbcore.exists(conn, tbl, key, lens[col]):
+                raise Refusal(f"cell-status: {col} {lens[col]!r} is not in {tbl}. List the codes with SELECT "
+                              f"{key} FROM {tbl}.")
+        ids = lambda sql, *a: [r[0] for r in conn.execute(sql, a)]          # noqa: E731
+        # A sub-national code counts toward its country everywhere coverage is read (the map is keyed on the country), so
+        # the cell is asked about, and every row compared, at the country level.
+        _parents = {r[0]: r[1] for r in conn.execute(
+            "SELECT jurisdiction_code, parent_code FROM base_jurisdictions WHERE parent_code IS NOT NULL")}
+        roll = lambda j: _parents.get(j, j)          # noqa: E731
+        if jurisdiction:
+            dbcore.check_jurisdiction(jurisdiction, "cell-status --jurisdiction")
+            jurisdiction = roll(jurisdiction)
+        lang = _check_language(conn, language, "cell-status") if language else None
+        family = dbcore.identity_family(conn, lens.get("identity_code"))
+        # ---- research: the searches logged against this parameter, and the pairs the scope owes ----------
+        pj = "COALESCE(b.parent_code, se.jurisdiction)"
+        # Searches are keyed on a SLUG (most rows have no parameter_id): a parameter's searches are those logged against
+        # it directly and those logged against any slug its figures carry.
+        slugs = ids("SELECT DISTINCT slug FROM source_value_extractions WHERE parameter_id = ? AND slug IS NOT NULL", parameter_id)
+        sfilter = (f"(se.parameter_id = ?{' OR se.slug IN (' + ','.join('?' * len(slugs)) + ')' if slugs else ''})"
+                   + (f" AND {pj} = ?" if jurisdiction else "")
+                   + (" AND UPPER(se.language) = ?" if lang else ""))
+        sargs = [parameter_id, *slugs] + ([jurisdiction] if jurisdiction else []) + ([lang] if lang else [])
+        base = ("SELECT se.exec_id FROM search_executions se LEFT JOIN base_jurisdictions b "
+                "ON b.jurisdiction_code = se.jurisdiction WHERE " + sfilter)
+        searched = {(r[0], r[1]) for r in conn.execute(
+            f"SELECT UPPER(se.language), {pj} FROM search_executions se LEFT JOIN base_jurisdictions b "
+            f"ON b.jurisdiction_code = se.jurisdiction WHERE {sfilter} AND se.deferred_reason IS NULL", sargs)}
+        pairs = [dict(r) for r in conn.execute("SELECT language, jurisdiction, role, scope_status FROM lang_jur_map "
+                                               "ORDER BY language, jurisdiction")
+                 if (not jurisdiction or r["jurisdiction"] == jurisdiction) and (not lang or r["language"] == lang)]
+        unsearched = [p for p in pairs if (p["language"], p["jurisdiction"]) not in searched]
+        research = {
+            "held": ids(base + " AND se.deferred_reason IS NULL AND COALESCE(se.results_admitted, 0) > 0", *sargs),
+            "examined_empty": ids(base + " AND se.deferred_reason IS NULL AND COALESCE(se.results_admitted, 0) = 0", *sargs),
+            "never_examined": {"deferred_searches": ids(base + " AND se.deferred_reason IS NOT NULL", *sargs),
+                               "pairs_scoped_out": [f"{p['language']}/{p['jurisdiction']}" for p in unsearched
+                                                    if p["scope_status"] == "scoped-out"]},
+            "owed": {"pairs_in_scope": [f"{p['language']}/{p['jurisdiction']}" for p in unsearched
+                                        if p["scope_status"] == "in-scope"],
+                     "scope_unrecorded": [f"{p['language']}/{p['jurisdiction']}" for p in unsearched
+                                          if p["scope_status"] is None]}}
+        # ---- evidence and judgment: the extractions of this parameter, and the scan ledger ----------------
+        ex_sql, ex_args = "SELECT e.extraction_id FROM source_value_extractions e WHERE e.parameter_id = ?", [parameter_id]
+        if jurisdiction:
+            ex_sql += (" AND COALESCE((SELECT parent_code FROM base_jurisdictions WHERE jurisdiction_code = e.jurisdiction), "
+                       "e.jurisdiction) = ?"); ex_args.append(jurisdiction)
+        for col, val in lens.items():
+            # the identity lens counts through parent_code, as the engine gathers a cell's figures (T-055)
+            ex_sql += (f" AND EXISTS (SELECT 1 FROM v_live_lens_links l WHERE l.extraction_id = e.extraction_id "
+                       f"AND l.{col} " + (f"IN {dbcore.IDENTITY_FAMILY_SQL})" if col == "identity_code" else "= ?)")); ex_args.append(val)
+        extractions = ids(ex_sql + " ORDER BY e.extraction_id", *ex_args)
+        scan = lambda *st: ids("SELECT ref_id FROM v_scan_ledger WHERE parameter_id = ? AND status IN (%s) ORDER BY ref_id"  # noqa: E731
+                               % ",".join("?" * len(st)), parameter_id, *st)
+        evidence = {"held": scan("EXTRACTED", "STATED-ABSENT"), "examined_empty": scan("READ-NOTHING-FOUND"),
+                    "never_examined": scan("NOT-READ"), "owed": {"read_in_part_only": scan("READ-PARTIAL")}}
+        qs = ",".join("?" * len(extractions)) or "NULL"
+        if lens or jurisdiction:
+            # `held` is narrowed to the sources of the figures that survived the filter; the other three lists are per
+            # (source, parameter) in the scan ledger and are NOT narrowed by a lens or a jurisdiction.
+            _kept = set(ids(f"SELECT DISTINCT ref_id FROM source_value_extractions WHERE extraction_id IN ({qs})", *extractions))
+            evidence["held"] = [r for r in evidence["held"] if r in _kept]
+            evidence["not_narrowed"] = ["examined_empty", "never_examined", "owed"]
+        judgment = {"held": extractions, "examined_empty": [], "never_examined": [],
+                    "owed": {"open_follow_ups": ids(f"SELECT follow_up_id FROM extraction_follow_ups WHERE resolved_at "
+                                                    f"IS NULL AND extraction_id IN ({qs}) ORDER BY follow_up_id", *extractions)}}
+        # ---- synthesis: what weighs these figures together, and the gaps still open on the parameter -------
+        synthesis = {"held": {"conflicts": ids("SELECT conflict_id FROM conflicts WHERE parameter_id = ? ORDER BY conflict_id", parameter_id),
+                              "connections": ids("SELECT DISTINCT con_id FROM connection_targets WHERE parameter_id = ? ORDER BY con_id", parameter_id)},
+                     "examined_empty": [], "never_examined": [],
+                     "owed": {"open_gaps": [r["gap_id"] for r in conn.execute(
+                         "SELECT gap_id, identity_code, icf_code, needs_code, medical_code, jurisdiction, language FROM gaps "
+                         "WHERE parameter_id = ? AND status LIKE 'OPEN%' ORDER BY gap_id", (parameter_id,))
+                         if _gap_applies(r, lens, jurisdiction, lang, family, roll)]}}
+        # ---- specification: the live determination(s) of the cell, their history, and the open gates ------
+        sp = "SELECT specification_id FROM specifications WHERE parameter_id = ?" + "".join(f" AND {c} = ?" for c in lens)
+        sp_args = [parameter_id, *lens.values()]
+        _lensed = lambda r: not dbcore.lens_differs(r, lens, family)          # noqa: E731
+        gates = [r["gate_id"] for r in conn.execute(
+            "SELECT gate_id, identity_code, icf_code, needs_code, medical_code FROM v_open_determination_gates "
+            "WHERE parameter_id = ? ORDER BY gate_id", (parameter_id,)) if _lensed(r)]
+        specification = {"held": [{"specification_id": r[0], "state": r[1]} for r in conn.execute(
+                             sp.replace("SELECT specification_id", "SELECT specification_id, state")
+                             + " AND retired_at IS NULL ORDER BY specification_id", sp_args)],
+                         "retired": ids(sp + " AND retired_at IS NOT NULL ORDER BY specification_id", *sp_args),
+                         "examined_empty": [], "never_examined": [], "owed": {"open_gates": gates}}
+    return {"parameter_id": parameter_id, "parameter_status": param["status"], "lens": lens,
+            "jurisdiction": jurisdiction, "language": lang,
+            "stages": {"research": research, "evidence": evidence, "judgment": judgment, "synthesis": synthesis,
+                       "specification": specification},
+            "note": "Lists are row ids read from the live tables. `scope_unrecorded` pairs are owed until a scope is "
+                    "recorded (set-pair-scope); render holds no rows of its own."}
+
+
 def get_coverage_completeness(slug: str) -> dict:
     """Coverage for a slug, answered from the search LOG.
 
@@ -1169,11 +1325,11 @@ def get_coverage_completeness(slug: str) -> dict:
         # SEARCHED IS READ FROM THE LOG, not taken as required-minus-unsearched: the view lists
         # unsearched pairs only for the slugs it covers, so for any other slug that subtraction
         # reads every pair searched and `complete` true over a slug nothing was logged for.
-        # Same anti-join as the view (a logged row, deferred or not, names the pair).
+        # Same anti-join as the view (migration 137): a row that RAN names the pair; a deferred one (not run) does not.
         searched = conn.execute(
             "SELECT COUNT(*) AS n FROM v_research_scope v WHERE EXISTS (SELECT 1 FROM "
             "search_executions se LEFT JOIN base_jurisdictions b "
-            "ON b.jurisdiction_code = se.jurisdiction WHERE se.slug=? "
+            "ON b.jurisdiction_code = se.jurisdiction WHERE se.slug=? AND se.deferred_reason IS NULL "
             "AND COALESCE(b.parent_code, se.jurisdiction) = v.jurisdiction "
             "AND UPPER(se.language) = v.language)", [slug]).fetchone()["n"]
         # A search is a search whatever its spelling: the log holds `en` beside `EN`.
@@ -1311,7 +1467,8 @@ def update_conflict(conflict_id: str, session: str,
     vals.append(conflict_id)
     with connect(dry_run) as conn:
         if not dbcore.exists(conn, "conflicts", "conflict_id", conflict_id):
-            raise Refusal(f"update-conflict: {conflict_id} is not a conflict. Nothing was written.")
+            raise Refusal(f"update-conflict: {conflict_id} is not a conflict. Nothing was written. "
+                          f"`db.py conflicts` lists the ids; `db.py add-conflict` writes a new one.")
         if status is not None:
             dbcore.check_declared(conn, "conflicts", "status", status, "update_conflict")
         # Named, not the bare FOREIGN KEY constraint failed a walk-through met on GAP-99999.
@@ -1342,8 +1499,16 @@ def get_conflicts(domain: str = None,
 
 
 def delete_connection(con_id: str, session: str, dry_run: bool = False):
-    """Hard-delete a connection and its targets. Use sparingly — for data corrections only."""
+    """Hard-delete a connection and its targets. Use sparingly — for data corrections only.
+
+    REFUSES an id that is not a connection (T-006): the two DELETEs match nothing for a mistyped id, and the
+    verb used to answer `{"deleted": ...}` all the same, so a session believed the wrong link was gone while it
+    was still there. The id is looked up in `connections` itself, so `connection_targets` rows with no
+    connection (not constructible through db.py) are refused too."""
     with connect(dry_run) as conn:
+        if not dbcore.exists(conn, "connections", "con_id", con_id):
+            raise Refusal(f"delete-connection: {con_id!r} is not a connection. Nothing was written. "
+                          f"`db.py connections` lists the ids that exist.")
         conn.execute("DELETE FROM connection_targets WHERE con_id=?", [con_id])
         conn.execute("DELETE FROM connections WHERE con_id=?", [con_id])
 
@@ -1854,9 +2019,10 @@ def main():
                       help="REQUIRED to retire: why this determination no longer stands. "
                            "The trigger on the table refuses without it.")
     p_rs.add_argument("--superseded-by", type=int,
-                      help="The specification that replaced it. May be supplied on a "
-                           "LATER call, once the replacement exists — which is the real "
-                           "order of events: retire, re-determine, then link.")
+                      help="The specification that replaced it. The engine writes this "
+                           "pointer itself when the cell is determined again (T-011), so a "
+                           "later call is needed only for a row it did not link: a "
+                           "replacement that exists but is not the next determination.")
     p_rs.add_argument("--session", required=True)
     p_rs.add_argument("--dry-run", action="store_true")
 
@@ -1868,7 +2034,8 @@ def main():
                             "translated, not mapped to one of our terms.")
     p_obs.add_argument("--language", default="EN",
                        help="The language the phrase APPEARS IN, which need not be the "
-                            "source's own language")
+                            "source's own language; one lang_jur_map holds (refused otherwise), "
+                            "stored in the map's spelling")
     p_obs.add_argument("--locator",
                        help="R3: where in the source it appears. REQUIRED for a new "
                             "observation: an observation is one SIGHTING, keyed on the "
@@ -2116,6 +2283,88 @@ def main():
     p_aj.add_argument("--session", required=True)
     p_aj.add_argument("--dry-run", action="store_true")
 
+    p_alp = sub.add_parser("add-lang-jur-pair",
+                           help="Admit a language-and-jurisdiction pair to lang_jur_map after checking the ledger "
+                                "entry that records the owner's approval (checked and printed, not stored)")
+    p_alp.add_argument("--language", required=True, help="upper case; a language new to the map is reported as new_language")
+    p_alp.add_argument("--jurisdiction", required=True, help="a code base_jurisdictions holds (admit one with add-jurisdiction)")
+    p_alp.add_argument("--role", required=True, choices=dbcore.schema_choices("lang_jur_map", "role"),
+                       help="Live vocabulary, read from the column's own CHECK")
+    p_alp.add_argument("--notes")
+    p_alp.add_argument("--approval-ref", dest="approval_ref", required=True,
+                       help="the dated `## ` heading of the ledger entry that records the approval, found exactly once")
+    p_alp.add_argument("--session", required=True)
+    p_alp.add_argument("--dry-run", action="store_true")
+
+    p_sps = sub.add_parser("set-pair-scope",
+                           help="Set scope_status of a held lang_jur_map pair after checking the ledger entry that records the answer (the entry is checked and printed, not stored: the table has no column for it)")
+    p_sps.add_argument("--language", required=True)
+    p_sps.add_argument("--jurisdiction", required=True)
+    p_sps.add_argument("--scope-status", dest="scope_status", required=True,
+                       choices=dbcore.schema_choices("lang_jur_map", "scope_status"),
+                       help="Live vocabulary, read from the column's own CHECK")
+    p_sps.add_argument("--approval-ref", dest="approval_ref", required=True,
+                       help="the dated `## ` heading of the ledger entry that records the answer, found exactly once")
+    p_sps.add_argument("--session", required=True)
+    p_sps.add_argument("--dry-run", action="store_true")
+
+    p_aid = sub.add_parser("add-identity",
+                           help="Mint a base_taxonomy_identity code after checking the ledger entry that records the owner's approval (checked and printed, not stored: the table has no column for it)")
+    p_aid.add_argument("--code", required=True, help="upper case, no space")
+    p_aid.add_argument("--display-name", dest="display_name", required=True)
+    p_aid.add_argument("--category", required=True, choices=dbcore.schema_choices("base_taxonomy_identity", "category"),
+                       help="Live vocabulary, read from the column's own CHECK")
+    p_aid.add_argument("--description", required=True)
+    p_aid.add_argument("--parent", help="a held active identity code this one decomposes")
+    p_aid.add_argument("--approval-ref", dest="approval_ref", required=True,
+                       help="the dated `## ` heading of the ledger entry that records the approval, found exactly once")
+    p_aid.add_argument("--session", required=True)
+    p_aid.add_argument("--dry-run", action="store_true")
+
+    p_amid = sub.add_parser("amend-identity",
+                            help="Correct the name, description or category of a held identity code, printing what it replaces")
+    p_amid.add_argument("--code", required=True)
+    p_amid.add_argument("--display-name", dest="display_name")
+    p_amid.add_argument("--description")
+    p_amid.add_argument("--category", choices=dbcore.schema_choices("base_taxonomy_identity", "category"),
+                        help="Live vocabulary, read from the column's own CHECK")
+    p_amid.add_argument("--approval-ref", dest="approval_ref", required=True,
+                        help="the dated `## ` heading of the ledger entry that records the approval, found exactly once")
+    p_amid.add_argument("--reason", required=True, help="printed, not stored")
+    p_amid.add_argument("--session", required=True)
+    p_amid.add_argument("--dry-run", action="store_true")
+
+    p_rr = sub.add_parser("register-root",
+                          help="Register an external root of a figure (a source that is not an admitted source here)")
+    p_rr.add_argument("--root-id", dest="root_id", required=True, help="no space; the key a figure's --root-id names")
+    p_rr.add_argument("--description", required=True)
+    p_rr.add_argument("--root-type", dest="root_type", required=True,
+                      choices=dbcore.schema_choices("external_root_registry", "root_type"),
+                      help="Live vocabulary, read from the column's own CHECK")
+    p_rr.add_argument("--provenance", required=True, help="the warrant: where the root comes from and how that is known")
+    p_rr.add_argument("--population-note", dest="population_note")
+    p_rr.add_argument("--notes")
+    p_rr.add_argument("--session", required=True)
+    p_rr.add_argument("--dry-run", action="store_true")
+
+    p_ri = sub.add_parser("retire-identity",
+                          help="Retire an identity code in place to the access need or identity code that carries it")
+    p_ri.add_argument("--code", required=True)
+    p_ri.add_argument("--need", help="the access_needs code that carries it (exactly one of --need, --to-identity)")
+    p_ri.add_argument("--to-identity", dest="to_identity", help="the live identity code that carries it")
+    p_ri.add_argument("--approval-ref", dest="approval_ref", required=True,
+                      help="the dated `## ` heading of the owner's ledger entry, found exactly once")
+    p_ri.add_argument("--reason", required=True, help="printed, not stored")
+    p_ri.add_argument("--session", required=True)
+    p_ri.add_argument("--dry-run", action="store_true")
+
+    p_rpl = sub.add_parser("retire-population-icf-link",
+                           help="Retire one crossing row of identity_icf_map in place (never deleted, never un-retired)")
+    p_rpl.add_argument("--link-id", dest="link_id", type=int, required=True)
+    p_rpl.add_argument("--reason", required=True)
+    p_rpl.add_argument("--session", required=True)
+    p_rpl.add_argument("--dry-run", action="store_true")
+
     p_rfu = sub.add_parser("raise-follow-up",
                            help="Tag an extraction for a reviewer to re-check "
                                 "(extraction_follow_ups; owner D1, 2026-10-09)")
@@ -2199,14 +2448,22 @@ def main():
 
     p_gate = sub.add_parser(
         "raise-determination-gate",
-        help="Raise an H4 gate: cap a cell at provisional until it is resolved")
+        help="Raise an H4 gate (cap a cell at provisional until it is resolved), or, with "
+             "--verdict QUESTION, record a question about a published cell that flags it "
+             "without capping it")
     p_gate.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
     p_gate.add_argument("--identity",
                         help="base_taxonomy_identity.identity_code. OMIT to gate every lens on "
                              "this parameter — what an audit that does not yet know "
                              "which cells exist should do")
+    p_gate.add_argument("--icf", help="base_icf.icf_code. The gate reaches every cell that does not carry a DIFFERENT ICF code (a cell with no ICF code is reached too, as an identity-keyed gate always was)")
+    p_gate.add_argument("--needs", help="access_needs.need_code. Reaches every cell that does not carry a DIFFERENT need code")
+    p_gate.add_argument("--medical", help="base_taxonomy_medical.medical_code. Reaches every cell that does not carry a DIFFERENT medical code")
     p_gate.add_argument("--verdict", required=True,
-                        choices=dbcore.schema_choices("determination_gates", "verdict"))
+                        choices=dbcore.schema_choices("determination_gates", "verdict"),
+                        help="QUESTION records an objection to a published value: no source, no tier "
+                             "(refused if given); it flags the cell as questioned, never as wrong, and "
+                             "is closed with resolve-determination-gate")
     p_gate.add_argument("--trigger-ref-id", dest="trigger_ref_id",
                         help="the source that raised it. Its tier and evidence_type are "
                              "READ from it; passing them too is refused")
@@ -2473,7 +2730,7 @@ def main():
                        required=True)
     # DERIVED from _AMENDABLE_SVE_FIELDS, not retyped. This list said
     # ["figure_role", "comparator"] and went stale the moment the constant grew,
-    # which is rule 8's "twelve argparse choices= lists that duplicate a column's
+    # which was rule 8's count of argparse choices= lists that duplicate a column's
     # CHECK" in miniature -- one list fewer.
     p_amx.add_argument("--field", required=True,
                        choices=sorted(_AMENDABLE_SVE_FIELDS),
@@ -2578,6 +2835,14 @@ def main():
                        choices=["connections", "gaps", "terms", "conflicts", "ref"])
 
     # coverage
+    p_cs2 = sub.add_parser("cell-status",
+                           help="Read-only: where a cell stands at every stage (held, examined empty, never examined, "
+                                "owed), each as row ids")
+    p_cs2.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
+    p_cs2.add_argument("--identity"); p_cs2.add_argument("--icf"); p_cs2.add_argument("--needs"); p_cs2.add_argument("--medical")
+    p_cs2.add_argument("--jurisdiction", help="a code base_jurisdictions holds; narrows searches, pairs and figures")
+    p_cs2.add_argument("--language", help="narrows searches and pairs")
+
     p_cov = sub.add_parser("coverage", help="Check search coverage")
     p_cov.add_argument("--slug", required=True)
 
@@ -2711,8 +2976,8 @@ def main():
     p_ls.add_argument("--absence-class",
                       choices=dbcore.schema_choices("search_executions", "absence_class"),
                       help="R14, for a search that found nothing: was the query malformed, the index "
-                           "wrong, or is the evidence genuinely absent. Omit until judged; set later "
-                           "with amend-search --set-absence-class.")
+                           "wrong, or is the evidence genuinely absent. REQUIRED when --results-found is 0 "
+                           "(unless --deferred-reason says the search was not run); refused otherwise.")
     p_ls.add_argument("--deferred-reason",
                       help="a search DELIBERATELY not run. This is what makes "
                            "'not looked for' different from 'nothing found'.")
@@ -2852,7 +3117,8 @@ def main():
     # is the exact artefact the field exists to prevent. It now lives on `log-search`,
     # where the fact exists, and migration 069 gives search_executions the column.
     p_as.add_argument("--synthesis-attribution-required", type=int, choices=[0, 1])
-    p_as.add_argument("--lang-detected", help="ISO 639-1 code for the source's actual publication language")
+    p_as.add_argument("--lang-detected", help="ISO 639-1 code for the source's actual publication language; folded to the "
+                                              "letter case lang_jur_map holds, and refused if the map does not hold it")
     p_as.add_argument("--lang-detection-method",
                       help="How --lang-detected was determined, e.g. 'native_title_verified', "
                            "'journal_family_inference', 'citing_document_language'")
@@ -3107,6 +3373,10 @@ def main():
 
     elif args.command == "coverage":
         _emit(get_coverage_completeness(args.slug))
+
+    elif args.command == "cell-status":
+        _emit(cell_status(args.parameter_id, args.identity, args.icf, args.needs, args.medical,
+                          args.jurisdiction, args.language))
 
     elif args.command == "add-gap":
         gap_id = next_gap_id()
@@ -3432,6 +3702,33 @@ def main():
         _emit(add_jurisdiction(args.code, args.kind, args.parent, args.approval_ref,
                                session=args.session, dry_run=args.dry_run))
 
+    elif args.command == "add-lang-jur-pair":
+        _emit(add_lang_jur_pair(args.language, args.jurisdiction, args.role, args.notes, args.approval_ref,
+                                session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "set-pair-scope":
+        _emit(set_pair_scope(args.language, args.jurisdiction, args.scope_status, args.approval_ref,
+                             session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "add-identity":
+        _emit(add_identity(args.code, args.display_name, args.category, args.description, args.parent,
+                           args.approval_ref, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "amend-identity":
+        _emit(amend_identity(args.code, args.display_name, args.description, args.category, args.approval_ref,
+                             args.reason, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "register-root":
+        _emit(register_root(args.root_id, args.description, args.root_type, args.provenance,
+                            args.population_note, args.notes, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "retire-identity":
+        _emit(retire_identity(args.code, args.need, args.to_identity, args.approval_ref, args.reason,
+                              session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "retire-population-icf-link":
+        _emit(retire_population_icf_link(args.link_id, args.reason, session=args.session, dry_run=args.dry_run))
+
     elif args.command == "raise-follow-up":
         _emit(raise_follow_up(args.extraction_id, args.reason, args.warrant,
                               session=args.session, dry_run=args.dry_run))
@@ -3461,6 +3758,7 @@ def main():
     elif args.command == "raise-determination-gate":
         _emit(raise_determination_gate(
             parameter_id=args.parameter_id, identity=args.identity,
+            icf=args.icf, needs=args.needs, medical=args.medical,
             verdict=args.verdict, trigger_ref_id=args.trigger_ref_id,
             trigger_tier=args.trigger_tier,
             trigger_evidence_type=args.trigger_evidence_type,
@@ -4278,6 +4576,11 @@ def insert_evidence_source(data: dict, session: str,
 
     row = {**data, **audit(session)}
     with _txn(conn, dry_run) as conn:
+        # THE SOURCE'S LANGUAGE IS ONE OF THE MAP'S (T-015): folded to the letter case lang_jur_map holds, and refused if the
+        # map does not hold it (a new language is a doctrine change, not a flag), as log-search refuses its own.
+        if data.get("lang_detected"):
+            data["lang_detected"] = row["lang_detected"] = _check_language(conn, data["lang_detected"], "source",
+                                                                           "--lang-detected")
         _refuse_copied_block_reason(conn, data.get("processing_blocked_reason"),
                                     "add-source --processing-blocked-reason")
         # THE ID IS DERIVED FROM THE DOCUMENT'S IDENTITY, never from the flag: the id of the
@@ -4755,8 +5058,9 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
         absence_set = None
         if set_absence_class:
             # WRITE-ONCE, and only for a search that found nothing (R14; the column's CHECK says the
-            # second half too). The class is a judgment made after the results exist, so it cannot be
-            # a log-time prior; correcting a wrong one costs a compensating migration, as with a lens.
+            # second half too). log-search now takes the class at log time (T-080); this amends a search
+            # logged before that, or one whose class was judged later. Correcting a wrong one costs a
+            # compensating migration, as with a lens.
             dbcore.check_declared(conn, "search_executions", "absence_class", set_absence_class,
                                   "amend-search --set-absence-class")
             if row["results_found"] != 0:
@@ -4963,7 +5267,8 @@ def _resolve_transcript_path(rel_path: str, label: str) -> tuple:
     """
     resolved = dbcore.resolve_under(dbcore.REPO_ROOT / "transcripts", rel_path)
     if resolved is None:
-        raise Refusal(f"{label} {rel_path!r} does not resolve under transcripts/.")
+        raise Refusal(f"{label} {rel_path!r} does not resolve under transcripts/. Give a path of a "
+                      f"tracked file relative to the repository root (git ls-files transcripts/).")
     return resolved, os.path.normpath(rel_path).replace(os.sep, "/")
 
 
@@ -5191,7 +5496,9 @@ def dispose_adversarial_finding(finding_id: int, disposition: str, ref: str, ses
         if row["disposition"] is not None:
             raise Refusal(
                 f"finding {finding_id}: already disposed as {row['disposition']!r}. "
-                f"A disposition is not amended by a second call.")
+                f"A disposition is not amended by a second call: read the recorded one with SELECT "
+                f"disposition FROM adversarial_findings WHERE finding_id = {finding_id!r}, and "
+                f"record any correction in the pull request.")
         dbcore.check_declared(conn, "adversarial_findings", "disposition", disposition,
                               f"finding {finding_id}")
         if disposition == "REPAIRED":
@@ -5659,7 +5966,9 @@ def unlink_admission(exec_id: int, ref_id: str, reason: str, session: str,
             raise Refusal(f"exec {exec_id}: no such search execution.")
         if not conn.execute("SELECT 1 FROM search_admissions WHERE exec_id=? AND ref_id=?",
                             [exec_id, ref]).fetchone():
-            raise Refusal(f"exec {exec_id} -> {ref}: no such admission edge to remove.")
+            raise Refusal(f"exec {exec_id} -> {ref}: no such admission edge to remove. List the "
+                          f"edges a source holds with SELECT exec_id FROM search_admissions "
+                          f"WHERE ref_id = '{ref}'.")
         conn.execute("DELETE FROM search_admissions WHERE exec_id=? AND ref_id=?",
                      [exec_id, ref])
         edges = conn.execute("SELECT COUNT(*) FROM search_admissions WHERE exec_id=?",
@@ -5704,7 +6013,9 @@ def amend_population_match(match_id: str, match_grade: str, reason: str, session
                            "evidence_population_match WHERE match_id=?",
                            [match_id]).fetchone()
         if row is None:
-            raise Refusal(f"{match_id}: no such population match.")
+            raise Refusal(f"{match_id}: no such population match. List a source's with SELECT match_id, "
+                           f"target_population FROM evidence_population_match WHERE ref_id = '<REF>' "
+                           f"(read-only); a new one is written with `db.py add-population-match`.")
         dbcore.check_vocab(conn, "evidence_population_match", "match_grade",
                            match_grade, "--match-grade")
         if row["match_grade"] == match_grade:
@@ -5912,6 +6223,11 @@ _AMENDABLE = (
     # clears it: it is the retrieval record, and v_scan_ledger (migration 124) decides whether a
     # later reading outranks it.
     "processing_blocked_reason",
+    # code_currency_status and code_currency_notes, added 2026-11-15 (T-027). Whether the edition cited is the
+    # one legally in force is a JUDGEMENT no payload settles (governance/tier-system.md). The status takes the
+    # enum that sentence ratifies; its two stamp columns (code_currency_verified_at / _by_session) are never
+    # typed: this verb writes them with the status, so the date and the session are the amendment's own.
+    "code_currency_status", "code_currency_notes",
 )
 
 
@@ -6080,7 +6396,8 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
     if field not in _AMENDABLE:
         raise Refusal(
             f"{ref_id}: {field!r} is not an amendable judgement field. "
-            f"Amendable: {', '.join(_AMENDABLE)}.")
+            f"Amendable: {', '.join(_AMENDABLE)}. Give one of them as --field; a "
+            f"bibliographic field is corrected with `db.py correct-source`.")
     if not replacement:
         raise Refusal(f"{ref_id}: refusing to blank {field!r}. Give the corrected text.")
     if not reason:
@@ -6144,7 +6461,7 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         row = conn.execute(f"SELECT ref_id, {field}, verification_method, "
                            f"verification_disposition, verification_closure_reason, "
                            f"verification_attempt_count, "
-                           f"metadata_integrity_detail "
+                           f"metadata_integrity_detail, metadata_integrity_status "
                            f"FROM evidence_sources WHERE ref_id=?", [ref_id]).fetchone()
         if row is None:
             raise Refusal(f"{ref_id}: no such evidence source.")
@@ -6178,6 +6495,24 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                     f"{ref_id}: --replacement {replacement!r} is not a member of "
                     f"schemas.enums.Co1SourceType: {sorted(m.value for m in Co1SourceType)}. "
                     f"Nothing was written.")
+        if field == "code_currency_status":
+            _cv = dbcore.code_currency_vocabulary()
+            if not _cv:
+                raise Refusal(f"{ref_id}: the code_currency_status enum could not be read from "
+                               f"governance/tier-system.md, so no value can be checked. Nothing was written.")
+            if replacement not in _cv:
+                raise Refusal(f"{ref_id}: code_currency_status {replacement!r} is not in the enum "
+                              f"governance/tier-system.md ratifies: {_cv}. Pass one of them. Nothing was written.")
+        if field in ("code_currency_status", "code_currency_notes"):
+            # Currency is a T4-T6 fact (governance/tier-system.md section 4: the cited edition must be the one in force) and
+            # a tombstone is never read again.
+            _cur = conn.execute("SELECT tier, superseded_by_ref_id FROM evidence_sources WHERE ref_id=?", (ref_id,)).fetchone()
+            if _cur["superseded_by_ref_id"]:
+                raise Refusal(f"{ref_id}: is superseded by {_cur['superseded_by_ref_id']}; a tombstone carries no currency. "
+                              f"State it on the replacement. Nothing was written.")
+            if _cur["tier"] is None or int(_cur["tier"]) < 4:
+                raise Refusal(f"{ref_id}: is tier {_cur['tier']}; code currency is stated for T4-T6 sources (a code, a standard, "
+                              f"a regulation: is the cited edition the one in force). Nothing was written.")
         if field == "verification_status":
             # The live vocabulary, read from the column rather than retyped beside it
             # (rule 8). This column carries no CHECK, so check_vocab falls back to the
@@ -6286,7 +6621,9 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         # register to be worth re-creating. Until then the warrant lives here, in the
         # column `metadata_integrity_audit.py` actually reads.
         ledger = (row["metadata_integrity_detail"] or "").rstrip()
-        segment = (f"{stamp['created_at'][:10]} {field} CORRECTED ({reason}). "
+        # A currency statement is not a metadata correction (the status below stays as it was), so the ledger says RECORDED.
+        _verb = "RECORDED" if field in ("code_currency_status", "code_currency_notes") else "CORRECTED"
+        segment = (f"{stamp['created_at'][:10]} {field} {_verb} ({reason}). "
                    f"Replaced text was: {was!r}")
         if retype is not None:
             # ONE segment: the type, its scope and tier, and any Co-1 text it carries out
@@ -6303,11 +6640,16 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
             _sets.append("tier=?"); _vals.append(new_tier)
         for col, value in (retype or {}).get("sets", {}).items():
             _sets.append(f"{col}=?"); _vals.append(value)
+        if field == "code_currency_status":
+            _sets += ["code_currency_verified_at=?", "code_currency_verified_by_session=?"]
+            _vals += [stamp["created_at"], stamp["created_by_session"]]
         conn.execute(
             f"UPDATE evidence_sources SET {', '.join(_sets)}, "
             f"metadata_integrity_status=?, metadata_integrity_detail=?, "
             f"updated_at=?, updated_by_session=? WHERE ref_id=?",
-            _vals + ["CORRECTED", ledger.lstrip(" |"),
+            _vals + [("CORRECTED" if field not in ("code_currency_status", "code_currency_notes")
+                      else row["metadata_integrity_status"]),     # a currency statement is not a metadata correction
+                     ledger.lstrip(" |"),
                      stamp["created_at"], stamp["created_by_session"], ref_id])
         out = {"ref_id": ref_id, "field": field, "changed": True,
                "was_chars": len(was or ""), "now_chars": len(replacement)}
@@ -6335,11 +6677,12 @@ def retire_specification(specification_id: int, session: str, reason: str = None
     What changes is that it is no longer the cell's answer. That is the difference
     between a history the project can audit and a hole where a determination used to be.
 
-    LINKING IS A SECOND CALL BY DESIGN. The replacement does not exist at the moment of
-    retirement — the engine refuses to run while a live row stands, so the real order is
-    retire, re-determine, then link. Passing --superseded-by on a later call fills the
-    pointer on an already-retired row; that is the one amendment this writer allows,
-    and only while the pointer is still empty.
+    LINKING IS A SECOND CALL BY DESIGN, and since T-011 the engine makes it. The replacement does not
+    exist at the moment of retirement — the engine refuses to run while a live row stands, so the real
+    order is retire, re-determine, link; the engine's second step writes the link itself (the most
+    recently retired row of the cell, if it has no pointer). Passing --superseded-by on a later call
+    fills the pointer on an already-retired row the engine did not link; that is the one amendment this
+    writer allows, and only while the pointer is still empty.
     """
     with connect(dry_run) as conn:
         row = conn.execute(
@@ -6366,8 +6709,7 @@ def retire_specification(specification_id: int, session: str, reason: str = None
                 raise Refusal(f"--superseded-by {superseded_by}: no such determination.")
             if superseded_by == specification_id:
                 raise Refusal("a determination cannot supersede itself.")
-            conn.execute("UPDATE specifications SET superseded_by_specification_id=?, "
-                         "updated_at=?, updated_by_session=? WHERE specification_id=?",
+            conn.execute(dbcore.SUPERSEDE_SQL,
                          [superseded_by, dbcore.now(), session, specification_id])
             return {"specification_id": specification_id, "superseded_by": superseded_by,
                     "linked": True}
@@ -6410,7 +6752,8 @@ def update_locator(ref_id: str, status: str, session: str, reason: str = None,
         row = conn.execute("SELECT ref_id, status FROM source_locators WHERE ref_id=?",
                            [ref_id]).fetchone()
         if row is None:
-            raise Refusal(f"{ref_id}: not in source_locators.")
+            raise Refusal(f"{ref_id}: not in source_locators. A lead is written with `db.py add-locator`; "
+                           f"a source already admitted is in evidence_sources (`db.py amend-source`).")
         dbcore.check_vocab(conn, "source_locators", "status", status, "--status")
         if status == "PROMOTED" and not dbcore.exists(conn, "evidence_sources",
                                                       "ref_id", ref_id):
@@ -6503,7 +6846,7 @@ def observe_term(data: dict, session: str, dry_run: bool = False):
                 f"ref_id {data.get('ref_id')!r} is not an admitted source. A term is "
                 f"observed IN a source; observe it after the source is filed.")
         _refuse_tombstone(conn, ref, "observe-term")
-        language = (data.get("language") or "EN").strip().upper()
+        language = _check_language(conn, data.get("language") or "EN", "observation")
         prior = conn.execute(
             "SELECT observation_id FROM observed_terms "
             "WHERE ref_id=? AND surface_form=? AND language=? "
@@ -6993,6 +7336,7 @@ def insert_medical(code: str, display_name: str, icd11: str, session: str,
         # message, which is still the difference between a user fixing a typo and a user
         # filing a bug.
         if identity:
+            dbcore.check_identity_live(conn, identity, "add-medical --identity")
             if not conn.execute("SELECT 1 FROM base_taxonomy_identity WHERE identity_code = ?",
                                 (identity,)).fetchone():
                 near = [r[0] for r in conn.execute(
@@ -7249,7 +7593,8 @@ def decline_parameter(term_id: str, reason: str, session: str, dry_run: bool = F
                 f"leave that parameter_id standing beside a record saying the term is not "
                 f"a parameter.\n"
                 f"Retiring a parameter is a different act on parameter "
-                f"{param['parameter_id']}'s own row, not a declination. Nothing was written.")
+                f"{param['parameter_id']}'s own row, not a declination: use `db.py retire-parameter` "
+                f"if the parameter is wrong. Nothing was written.")
         prior = conn.execute(
             "SELECT reason, created_at, created_by_session, revoked_at, revoked_by_session "
             "FROM parameter_declinations WHERE term_id=?", [term_id]).fetchone()
@@ -7970,6 +8315,7 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
                 raise Refusal("add-alias: --alias is empty. Nothing was written.")
             # lang_jur_map is the vocabulary of research languages and their pairs; compared
             # case-insensitively, the same refusal add-term --first-form gives (T-028).
+            _check_language(conn, language, "alias")
             want_j = jurisdiction.strip().upper() if jurisdiction else None
             pairs = conn.execute("SELECT jurisdiction FROM lang_jur_map WHERE upper(language) = ? "
                                  "AND (? IS NULL OR upper(jurisdiction) = ?)",
@@ -8228,16 +8574,7 @@ def mint_term_from_catalogue(catalogue: str, entry_ref: str, canonical_en: str,
                 f"mint-term-from-catalogue: {flag} {val!r} carries a number, a comparator "
                 f"or a min/max word ({vb.group(0)!r}). The owner asked for 'cleaned parameters without "
                 f"values': name and define the quantity, never its value.")
-    if not re.search(r"\d{4}-\d{2}-\d{2}", approval_ref):
-        raise Refusal(f"mint-term-from-catalogue: --approval-ref {approval_ref!r} carries no "
-                      f"date. Give the dated `## ` heading of the approving ledger entry.")
-    n = dbcore.ledger_heading_count(approval_ref)
-    if n != 1:
-        raise Refusal(
-            f"mint-term-from-catalogue: --approval-ref {approval_ref!r} is the heading of "
-            f"{n} ledger entries; it must be exactly one. Record the owner's approving words "
-            f"in a dated entry of references/project-standards.md first (CLAUDE.md rule 0), "
-            f"then give that entry's `## ` heading as written.")
+    approval_ref = dbcore.require_approval_heading(approval_ref, "mint-term-from-catalogue")
     with connect(dry_run) as conn:
         dbcore.check_declared(conn, "terms", "catalogue", catalogue,
                               "mint-term-from-catalogue --catalogue")
@@ -8290,7 +8627,6 @@ def add_jurisdiction(code: str, kind: str, parent: str, approval_ref: str,
     the table's CHECKs hold the same shapes for a row written any other way.
     """
     code = (code or "").strip()
-    approval_ref = re.sub(r"^##\s+", "", (approval_ref or "").strip())
     if not (session or "").strip():
         raise Refusal("add-jurisdiction: --session is required and may not be blank.")
     if code.startswith("GB"):
@@ -8300,16 +8636,7 @@ def add_jurisdiction(code: str, kind: str, parent: str, approval_ref: str,
         raise Refusal(f"add-jurisdiction: --code {code!r} must be upper-case letters and digits, "
                       f"a letter first, with at most one dash that is followed by a "
                       f"subdivision.")
-    if not re.search(r"\d{4}-\d{2}-\d{2}", approval_ref):
-        raise Refusal(f"add-jurisdiction: --approval-ref {approval_ref!r} carries no date. "
-                      f"Give the dated `## ` heading of the approving ledger entry.")
-    n = dbcore.ledger_heading_count(approval_ref)
-    if n != 1:
-        raise Refusal(
-            f"add-jurisdiction: --approval-ref {approval_ref!r} is the heading of {n} ledger "
-            f"entries; it must be exactly one. Record the approving words in a dated entry "
-            f"of references/project-standards.md first (CLAUDE.md rule 0), then give that "
-            f"entry's `## ` heading as written.")
+    approval_ref = dbcore.require_approval_heading(approval_ref, "add-jurisdiction")
     if approval_ref.startswith(dbcore.LEDGER_DELEGATED_PREFIX):
         raise Refusal(
             f"add-jurisdiction: --approval-ref {approval_ref!r} is a delegated resolution "
@@ -8432,12 +8759,12 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
         held = retrieval_log.artefacts_for_source(ref, src["url"])
         match = [h for h in held if (h["sha256"] or "").lower() == sha]
         if not match:
-            listed = "; ".join(f"{h['artefact']} {(h['sha256'] or '?')[:16]} ({h['via']})"
+            listed = "; ".join(f"{h['artefact']} {h['sha256'] or '?'} ({h['via']})"
                                for h in held) or "nothing"
             raise Refusal(
                 f"record-scan: no file saved for {ref} has sha256 {sha[:16]}... The reading "
                 f"must name bytes the retrieval-log holds FOR this source. Saved for it: "
-                f"{listed}. Nothing was written.")
+                f"{listed}. Give the --file-sha256 of one of them. Nothing was written.")
         h = next((m for m in match if m["exists"]), match[0])
         if not h["exists"]:
             raise Refusal(f"record-scan: {h['session']}/{h['artefact']} is in the manifest "
@@ -8489,6 +8816,263 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
         if scope == "full" and pages_read is None:
             out["uncounted"] = True
         return out
+
+
+def _owner_approval(approval_ref: str, subject: str) -> str:
+    """The approval heading for a base-vocabulary admission: one dated ledger entry whose heading begins "Owner"
+    (the owner's own words). A delegated resolution is a model's, and any other entry (a session, a referral, a
+    correction, a supersession record) is not an approval, so each admits nothing."""
+    heading = dbcore.require_approval_heading(approval_ref, subject)
+    if heading.startswith(dbcore.LEDGER_DELEGATED_PREFIX):
+        raise Refusal(f"{subject}: --approval-ref {heading!r} is a delegated resolution (a model's, under the "
+                      f"owner's delegation), not the owner's words. This is a decision on research scope or "
+                      f"the population taxonomy, and the owner's. Nothing was written.")
+    if not heading.startswith(dbcore.LEDGER_OWNER_PREFIX):
+        raise Refusal(f"{subject}: --approval-ref {heading!r} is not an entry that records the owner's own words "
+                      f"(the ledger's owner entries begin {dbcore.LEDGER_OWNER_PREFIX!r}: Owner answers, Owner "
+                      f"statements, Owner rulings). A session heading, a referral to the owner, a correction or "
+                      f"a supersession record approves nothing. List them with grep -n '^## Owner' "
+                      f"references/project-standards.md. Nothing was written.")
+    return heading
+
+
+def add_lang_jur_pair(language: str, jurisdiction: str, role: str, notes: str, approval_ref: str,
+                      session: str, dry_run: bool = False):
+    """Admit one language-and-jurisdiction pair to `lang_jur_map`, pointing at the ledger entry that records
+    the owner's approval. `scope_status` stays NULL (owed): scoping a pair in or out is `set-pair-scope`."""
+    language, jurisdiction = (language or "").strip(), (jurisdiction or "").strip()
+    if not language or language != language.upper():
+        raise Refusal(f"add-lang-jur-pair: --language {language!r} must be non-blank and upper case (the letter "
+                      f"case lang_jur_map holds). Nothing was written.")
+    heading = _owner_approval(approval_ref, "add-lang-jur-pair")
+    with connect(dry_run) as conn:
+        dbcore.check_jurisdiction(jurisdiction, "add-lang-jur-pair --jurisdiction")
+        dbcore.check_declared(conn, "lang_jur_map", "role", role, "add-lang-jur-pair --role")
+        _kind = conn.execute("SELECT kind, parent_code FROM base_jurisdictions WHERE jurisdiction_code=?",
+                             (jurisdiction,)).fetchone()
+        if _kind and _kind["kind"] == "sub-national":
+            raise Refusal(f"add-lang-jur-pair: {jurisdiction!r} is a sub-national code. A pair is keyed on the "
+                          f"country: coverage counts a search under a sub-national code toward its parent, so a "
+                          f"pair on {jurisdiction!r} could never be satisfied. Use --jurisdiction "
+                          f"{_kind['parent_code']!r}. Nothing was written.")
+        if conn.execute("SELECT 1 FROM lang_jur_map WHERE language=? AND jurisdiction=?",
+                        (language, jurisdiction)).fetchone():
+            raise Refusal(f"add-lang-jur-pair: the pair {language}/{jurisdiction} is already held. A held pair's "
+                          f"role is not rewritten here. Nothing was written.")
+        new_language = not conn.execute("SELECT 1 FROM lang_jur_map WHERE language=?", (language,)).fetchone()
+        row = {"language": language, "jurisdiction": jurisdiction, "role": role, "notes": notes or None}
+        row.update(dbcore.stamp_for(conn, "lang_jur_map", session))
+        conn.execute(f"INSERT INTO lang_jur_map ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
+                     list(row.values()))
+    return {"language": language, "jurisdiction": jurisdiction, "role": role, "new_language": new_language,
+            "approval_ref": heading, "dry_run": dry_run}
+
+
+def set_pair_scope(language: str, jurisdiction: str, scope_status: str, approval_ref: str, session: str,
+                   dry_run: bool = False):
+    """Set `scope_status` of one held pair, pointing at the ledger entry that records the owner's answer."""
+    heading = _owner_approval(approval_ref, "set-pair-scope")
+    with connect(dry_run) as conn:
+        row = conn.execute("SELECT scope_status FROM lang_jur_map WHERE language=? AND jurisdiction=?",
+                           (language, jurisdiction)).fetchone()
+        if row is None:
+            raise Refusal(f"set-pair-scope: the pair {language}/{jurisdiction} is not held. List the pairs with "
+                          f"SELECT language, jurisdiction FROM lang_jur_map; `db.py add-lang-jur-pair` admits "
+                          f"one. Nothing was written.")
+        dbcore.check_declared(conn, "lang_jur_map", "scope_status", scope_status, "set-pair-scope --scope-status")
+        if row["scope_status"] == scope_status:
+            raise Refusal(f"set-pair-scope: {language}/{jurisdiction} is already {scope_status!r}. Nothing was "
+                          f"written.")
+        conn.execute("UPDATE lang_jur_map SET scope_status=? WHERE language=? AND jurisdiction=?",
+                     (scope_status, language, jurisdiction))
+    return {"language": language, "jurisdiction": jurisdiction, "scope_status": scope_status,
+            "scope_status_was": row["scope_status"], "approval_ref": heading, "dry_run": dry_run}
+
+
+def add_identity(code: str, display_name: str, category: str, description: str, parent: str,
+                 approval_ref: str, session: str, dry_run: bool = False):
+    """Mint one `base_taxonomy_identity` code, pointing at the ledger entry that records the owner's approval.
+    The identity registry is the population taxonomy: a decision the owner holds."""
+    code = (code or "").strip()
+    if not code or code != code.upper() or re.search(r"\s", code):
+        raise Refusal(f"add-identity: --code {code!r} must be non-blank, upper case and contain no space. "
+                      f"Nothing was written.")
+    if not (display_name or "").strip() or not (description or "").strip():
+        raise Refusal("add-identity: --display-name and --description may not be blank. Nothing was written.")
+    heading = _owner_approval(approval_ref, "add-identity")
+    with connect(dry_run) as conn:
+        if dbcore.exists(conn, "base_taxonomy_identity", "identity_code", code):
+            raise Refusal(f"add-identity: {code!r} is already held (whatever its status); `db.py amend-identity` "
+                          f"changes its name, description or category. Nothing was written.")
+        dbcore.check_declared(conn, "base_taxonomy_identity", "category", category, "add-identity --category")
+        if parent:
+            held = conn.execute("SELECT status FROM base_taxonomy_identity WHERE identity_code=?",
+                                (parent,)).fetchone()
+            if held is None or held["status"] != "active":
+                raise Refusal(f"add-identity: --parent {parent!r} is not a held active code "
+                              f"({'not held' if held is None else held['status']}). The codes: SELECT "
+                              f"identity_code FROM base_taxonomy_identity WHERE status = 'active'. Nothing was "
+                              f"written.")
+        row = {"identity_code": code, "display_name": display_name.strip(), "category": category,
+               "description": description.strip(), "parent_code": parent or None}
+        row.update(dbcore.stamp_for(conn, "base_taxonomy_identity", session))
+        conn.execute(f"INSERT INTO base_taxonomy_identity ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
+                     list(row.values()))
+    return {"identity_code": code, "parent_code": parent or None, "approval_ref": heading, "dry_run": dry_run}
+
+
+def amend_identity(code: str, display_name: str, description: str, category: str, approval_ref: str,
+                   reason: str, session: str, dry_run: bool = False):
+    """Correct the display name, description or category of a held identity code, printing what it replaces.
+    Never the code, the parent or the status (retiring a code is its own act)."""
+    given = {k: v for k, v in (("display_name", display_name), ("description", description),
+                               ("category", category)) if v is not None}
+    if not given:
+        raise Refusal("amend-identity: give at least one of --display-name, --description, --category. Nothing "
+                      "was written.")
+    if any(not v.strip() for v in given.values()):
+        raise Refusal("amend-identity: a given value may not be blank. Nothing was written.")
+    reason = dbcore.require_reason(reason, "amend-identity")
+    heading = _owner_approval(approval_ref, "amend-identity")
+    with connect(dry_run) as conn:
+        held = conn.execute("SELECT display_name, description, category FROM base_taxonomy_identity "
+                            "WHERE identity_code=?", (code,)).fetchone()
+        if held is None:
+            raise Refusal(f"amend-identity: {code!r} is not held. List the codes with SELECT identity_code FROM "
+                          f"base_taxonomy_identity; `db.py add-identity` mints one. Nothing was written.")
+        if "category" in given:
+            dbcore.check_declared(conn, "base_taxonomy_identity", "category", given["category"],
+                                  "amend-identity --category")
+        changed = {k: v.strip() for k, v in given.items() if v.strip() != held[k]}
+        replaced = {k: held[k] for k in changed}
+        if changed:
+            sets = {**changed, **{k: v for k, v in dbcore.upd(session).items()
+                                  if k in dbcore.columns(conn, "base_taxonomy_identity")}}
+            conn.execute("UPDATE base_taxonomy_identity SET " + ", ".join(f"{c}=?" for c in sets)
+                         + " WHERE identity_code=?", [*sets.values(), code])
+    return {"identity_code": code, "changed": bool(changed), "replaced": replaced, "now": changed,
+            "reason": reason, "approval_ref": heading, "dry_run": dry_run}
+
+
+#: Tables whose identity codes are RECORDS of what was logged or graded, not live subjects a retirement must move.
+_IDENTITY_RECORD_COLS = {"search_executions": "identity_code", "evidence_population_match": "target_population"}
+
+
+def _identity_records(conn, code):
+    """How many records name `code` and stay as history across a retirement: (table.column, n)."""
+    out = []
+    for t, col in _IDENTITY_RECORD_COLS.items():
+        if col in set(dbcore.columns(conn, t)):
+            n = conn.execute(f'SELECT COUNT(*) FROM "{t}" WHERE "{col}" = ?', (code,)).fetchone()[0]
+            if n:
+                out.append((f"{t}.{col}", n))
+    return out
+
+
+def _identity_carriers(conn, code):
+    """Every live row that still carries identity `code`: (table.column, n). DERIVED from the foreign keys into
+    base_taxonomy_identity (never listed). `evidence_population_match.target_population` (free text, no foreign key) is NOT a
+    carrier: it is a record, counted apart by `_identity_records`. A row is live unless its table carries a retirement mark
+    and it is set; a code's own successor pointers and a retired child's parent_code are not carriers."""
+    out = []
+    tables = [r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")]
+    # RECORDS are not carriers: a logged search and a graded population match say what happened and were true when
+    # written, and no verb re-tags either, so counting them would make a retirement impossible (the 2026-11-15
+    # critic showed SCI could not be retired). They are counted apart by `_identity_records`.
+    pairs = [(t, f[3]) for t in tables for f in conn.execute(f'PRAGMA foreign_key_list("{t}")')
+             if f[2] == "base_taxonomy_identity" and t not in _IDENTITY_RECORD_COLS]
+    for t, col in pairs:
+        cols = set(dbcore.columns(conn, t))
+        if col not in cols:
+            continue
+        where = f'"{col}" = ?'
+        if "retired_at" in cols:
+            where += " AND retired_at IS NULL"
+        if "resolved_at" in cols:                      # a resolved gate is history
+            where += " AND resolved_at IS NULL"
+        if t == "gaps":                                # a closed gap is history
+            where += " AND status LIKE 'OPEN%'"
+        if t == "base_taxonomy_identity" and col == "parent_code":
+            where += " AND status = 'active'"
+        if t == "base_taxonomy_identity" and col == "superseded_by_identity":
+            where += " AND status = 'deprecated'"      # a code another deprecated code names as its successor
+        n = conn.execute(f'SELECT COUNT(*) FROM "{t}" WHERE {where}', (code,)).fetchone()[0]
+        if n:
+            out.append((f"{t}.{col}", n))
+    return out
+
+
+def retire_identity(code: str, need: str, to_identity: str, approval_ref: str, reason: str, session: str,
+                    dry_run: bool = False):
+    """Retire an identity code in place to the access need or the identity code that carries it (OD-37).
+
+    Sets status 'deprecated' and ONE successor column; deletes nothing and renames nothing (the 2026-09-16 ruling).
+    Refused while any live row still carries the code, naming each carrier and the count: those rows are re-tagged
+    first (T-114). A logged search and a graded population match (`evidence_population_match.target_population`, free
+    text with no foreign key, never fanned out to a successor) are RECORDS, kept as history and listed in the result,
+    never blocking; nothing re-tags them. A code another deprecated code names as its successor cannot be retired."""
+    if bool(need) == bool(to_identity):
+        raise Refusal("retire-identity: give exactly one of --need (an access-need code) and --to-identity (an "
+                      "identity code). Nothing was written.")
+    reason = dbcore.require_reason(reason, "retire-identity")
+    heading = _owner_approval(approval_ref, "retire-identity")
+    with connect(dry_run) as conn:
+        held = conn.execute("SELECT status FROM base_taxonomy_identity WHERE identity_code=?", (code,)).fetchone()
+        if held is None:
+            raise Refusal(f"retire-identity: {code!r} is not held. List the codes with SELECT identity_code FROM "
+                          f"base_taxonomy_identity. Nothing was written.")
+        if held["status"] == "deprecated":
+            raise Refusal(f"retire-identity: {code!r} is already deprecated. Nothing was written.")
+        if need and not dbcore.exists(conn, "access_needs", "need_code", need):
+            raise Refusal(f"retire-identity: --need {need!r} is not in access_needs. List the codes with SELECT "
+                          f"need_code FROM access_needs. Nothing was written.")
+        if to_identity:
+            tgt = conn.execute("SELECT status FROM base_taxonomy_identity WHERE identity_code=?", (to_identity,)).fetchone()
+            if to_identity == code:
+                raise Refusal(f"retire-identity: {code!r} cannot be retired to itself. Nothing was written.")
+            if tgt is None or tgt["status"] != "active":
+                raise Refusal(f"retire-identity: --to-identity {to_identity!r} is "
+                              f"{'not held' if tgt is None else tgt['status']}; a code retires only to a live one. "
+                              f"Nothing was written.")
+        if not dbcore.ledger_entry_names(heading, code):
+            raise Refusal(f"retire-identity: the ledger entry {heading!r} does not name {code!r}. Record the owner's "
+                          f"words retiring this code in a dated entry that names it, then give that entry's heading. "
+                          f"Nothing was written.")
+        carriers = _identity_carriers(conn, code)
+        if carriers:
+            raise Refusal(
+                f"retire-identity: {code!r} is still carried by live rows: "
+                + ", ".join(f"{c} ({n})" for c, n in carriers)
+                + ". Re-tag them first (T-114's re-tag moves a figure's lens; a crossing row moves with "
+                  "`db.py add-population-icf-link` then `db.py retire-population-icf-link`; a code that is "
+                  "another deprecated code's successor stays live). Logged searches and population matches "
+                  "that name the code are history and do not block. Nothing was written.")
+        sets = {"status": "deprecated", "superseded_by_need": need or None, "superseded_by_identity": to_identity or None,
+                "updated_at": dbcore.now()}
+        conn.execute("UPDATE base_taxonomy_identity SET " + ", ".join(f"{c}=?" for c in sets) + " WHERE identity_code=?",
+                     [*sets.values(), code])
+        records = _identity_records(conn, code)
+    return {"identity_code": code, "status": "deprecated", "superseded_by_need": need or None,
+            "superseded_by_identity": to_identity or None, "approval_ref": heading, "reason": reason,
+            "records_kept_as_history": [{"where": w, "rows": n} for w, n in records], "dry_run": dry_run}
+
+
+def retire_population_icf_link(link_id: int, reason: str, session: str, dry_run: bool = False):
+    """Retire one crossing row of identity_icf_map in place (never deleted, never un-retired). A crossing moves to a
+    successor as a NEW row (`add-population-icf-link`, provenance naming this link_id), then this retires the old."""
+    reason = dbcore.require_reason(reason, "retire-population-icf-link")
+    with connect(dry_run) as conn:
+        row = conn.execute("SELECT link_id, retired_at FROM identity_icf_map WHERE link_id=?", (link_id,)).fetchone()
+        if row is None:
+            raise Refusal(f"retire-population-icf-link: link {link_id} is not in identity_icf_map. List the rows "
+                          f"with SELECT link_id, identity_code, icf_code FROM identity_icf_map. Nothing was written.")
+        if row["retired_at"]:
+            raise Refusal(f"retire-population-icf-link: link {link_id} is already retired ({row['retired_at']}); a "
+                          f"retired crossing is never un-retired. Nothing was written.")
+        stamp = dbcore.upd(session)
+        conn.execute("UPDATE identity_icf_map SET retired_at=?, retired_by_session=?, retired_reason=? WHERE link_id=?",
+                     (stamp["updated_at"], stamp["updated_by_session"], reason, link_id))
+    return {"link_id": link_id, "retired": True, "reason": reason, "dry_run": dry_run}
 
 
 def raise_follow_up(extraction_id: int, reason: str, warrant: str, session: str,
@@ -8561,7 +9145,9 @@ def resolve_follow_up(follow_up_id: int, resolution: str, session: str,
                            "extraction_follow_ups WHERE follow_up_id = ?",
                            (follow_up_id,)).fetchone()
         if row is None:
-            raise Refusal(f"resolve-follow-up: follow-up {follow_up_id}: no such row.")
+            raise Refusal(f"resolve-follow-up: follow-up {follow_up_id}: no such row. Open ones: SELECT "
+                          f"follow_up_id FROM extraction_follow_ups WHERE resolved_at IS NULL; "
+                          f"`db.py raise-follow-up` writes a new one.")
         if row["resolved_at"]:
             raise Refusal(f"resolve-follow-up: follow-up {follow_up_id} was resolved by "
                           f"{row['resolved_by_session']} at {row['resolved_at']}. Nothing "
@@ -8647,6 +9233,7 @@ def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str
                 f"  db.py add-icf-code --icf-code {icf_code} --session ...\n"
                 f"If it is an AX- demand code, it is not an ICF code and never was (owner "
                 f"ruling 2026-09-13).")
+        dbcore.check_identity_live(conn, population, "add-population-icf-link")
         if not dbcore.exists(conn, "base_taxonomy_identity", "identity_code", population):
             live = sorted(r[0] for r in
                           conn.execute("SELECT identity_code FROM base_taxonomy_identity"))
@@ -8662,8 +9249,12 @@ def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str
             "WHERE identity_code=? AND icf_code=? AND mechanism=?",
             [population, icf_code, mechanism]).fetchone()
         if clash:
+            _ret = conn.execute("SELECT retired_at, retired_reason FROM identity_icf_map WHERE link_id=?",
+                                [clash["link_id"]]).fetchone()
             raise Refusal(
-                f"link {clash['link_id']} already maps {population} -> {icf_code} by "
+                (f"link {clash['link_id']} was RETIRED {_ret['retired_at']} ({_ret['retired_reason']!r}) and is never "
+                 f"un-retired; " if _ret and _ret["retired_at"] else "")
+                + f"link {clash['link_id']} already maps {population} -> {icf_code} by "
                 f"this mechanism (provenance {clash['provenance']!r}). One row per "
                 f"(population, code, mechanism) -- a second is the dual home rule 5 "
                 f"forbids. A DIFFERENT mechanism is a different row and is allowed.")
@@ -8802,7 +9393,8 @@ def set_icf_title(*, icf_code: str, title: str, title_source: str = None,
 
 
 def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
-                             identity: str = None, trigger_ref_id: str = None,
+                             identity: str = None, icf: str = None, needs: str = None,
+                             medical: str = None, trigger_ref_id: str = None,
                              trigger_tier: int = None, trigger_evidence_type: str = None,
                              session: str, dry_run: bool = False):
     """Raise an H4 gate: a finding that caps a cell at `provisional` until resolved.
@@ -8841,13 +9433,22 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
             "--detail is required and may not be blank. A gate that cannot say what it "
             "found is a cell pinned at provisional for no stated reason, which is the "
             "deadlock the resolution discipline exists to prevent.")
-    if trigger_ref_id and (trigger_tier is not None or trigger_evidence_type):
+    if verdict == "QUESTION":
+        # A question states no strength: no source raised it, so no tier is invented for it (OD-21). The
+        # engine reports it beside the cell and never lets it cap the cell.
+        if trigger_ref_id or trigger_tier is not None or trigger_evidence_type:
+            raise Refusal(
+                "a QUESTION carries no --trigger-ref-id, --trigger-tier or --trigger-evidence-type: it is an "
+                "objection to a published value, not a finding with a strength, and a tier typed onto it "
+                "would let it pin a cell, or fail to, on a strength nobody established. Put the objection "
+                "in --detail. To raise a finding that a source supports, use a verdict other than QUESTION.")
+    elif trigger_ref_id and (trigger_tier is not None or trigger_evidence_type):
         raise Refusal(
             "--trigger-tier / --trigger-evidence-type are refused alongside "
             "--trigger-ref-id. The source states both, and this row POINTS at the "
             "source (rule 5); they are read from it. A typed tier is a tier that can be "
             "typed wrong, and a wrong one inverts the ladder the gate exists to protect.")
-    if not trigger_ref_id and (trigger_tier is None or not trigger_evidence_type):
+    if verdict != "QUESTION" and not trigger_ref_id and (trigger_tier is None or not trigger_evidence_type):
         raise Refusal(
             "a gate with no --trigger-ref-id must state --trigger-tier and "
             "--trigger-evidence-type. Doctrine requires every gate to carry the strength "
@@ -8868,11 +9469,20 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
                 + (f" (merged into {param['merged_into']})" if param["merged_into"] else "")
                 + ". Gating a parameter that no longer stands on its own pins cells "
                   "nobody will look at.")
+        if identity:
+            dbcore.check_identity_live(conn, identity, "raise-determination-gate --identity")
         if identity and not dbcore.exists(conn, "base_taxonomy_identity", "identity_code", identity):
             raise Refusal(
                 f"{identity!r} is not a live population code. Omit --identity to raise "
                 f"the gate against EVERY lens on this parameter, which is what an audit "
                 f"that does not yet know which cells exist should do.")
+        for _flag, _val, _tbl, _col in (("--icf", icf, "base_icf", "icf_code"),
+                                        ("--needs", needs, "access_needs", "need_code"),
+                                        ("--medical", medical, "base_taxonomy_medical", "medical_code")):
+            if _val and not dbcore.exists(conn, _tbl, _col, _val):
+                raise Refusal(
+                    f"{_flag} {_val!r} is not in {_tbl}. List the codes with SELECT {_col} FROM {_tbl}; "
+                    f"omit {_flag} to gate every lens of that kind on this parameter.")
         dbcore.check_declared(conn, "determination_gates", "verdict", verdict,
                               "raise-determination-gate")
         if trigger_ref_id:
@@ -8890,7 +9500,8 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
                     f"established. Fix the source, or raise the gate without a ref_id and "
                     f"state the strength as your own finding.")
             trigger_tier, trigger_evidence_type = src["tier"], src["evidence_type"]
-        row = {"parameter_id": parameter_id, "identity_code": identity,
+        row = {"parameter_id": parameter_id, "identity_code": identity, "icf_code": icf,
+               "needs_code": needs, "medical_code": medical,
                "verdict": verdict, "trigger_ref_id": trigger_ref_id,
                "trigger_tier": trigger_tier,
                "trigger_evidence_type": trigger_evidence_type, "detail": detail,
@@ -8898,11 +9509,13 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
         cur = conn.execute(f"INSERT INTO determination_gates ({','.join(row)}) "
                            f"VALUES ({','.join('?'*len(row))})", list(row.values()))
         return {"gate_id": cur.lastrowid, "parameter_id": parameter_id,
-                "identity_code": identity, "verdict": verdict,
+                "identity_code": identity, "icf_code": icf, "needs_code": needs,
+                "medical_code": medical, "verdict": verdict,
                 "trigger_tier": trigger_tier,
                 "trigger_evidence_type": trigger_evidence_type,
-                "trigger_strength_source": ("read from " + trigger_ref_id
-                                            if trigger_ref_id else "asserted by operator"),
+                "trigger_strength_source": ("none: a question states no strength" if verdict == "QUESTION"
+                                            else "read from " + trigger_ref_id if trigger_ref_id
+                                            else "asserted by operator"),
                 "dry_run": dry_run}
 
 
@@ -9659,11 +10272,8 @@ def _require_lens_code(conn, col: str, code: str):
         raise Refusal(
             f"{col} {code!r} is not a live {key} in `{table}`. The registry is the "
             f"vocabulary (CLAUDE.md §4); it is not extended from the CLI.")
-    if col == "identity_code" and conn.execute(
-            "SELECT status FROM base_taxonomy_identity WHERE identity_code=?", (code,)).fetchone()[0] == "deprecated":
-        raise Refusal(
-            f"{col} {code!r} is deprecated: a figure is not newly stated in a retired group; "
-            f"use the live code that replaced it. Nothing was written.")
+    if col == "identity_code":
+        dbcore.check_identity_live(conn, code, f"{col} (a figure is not newly stated in a retired group)")
 
 
 def _lens_basis_choices():
@@ -9905,8 +10515,8 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 conn, "external_root_registry", "root_id", row["root_id"]):
             raise Refusal(
                 f"root_id {row['root_id']!r} is not in external_root_registry. A root_id names an "
-                f"external root; a root held in this corpus is --root-ref-id. The registry has no "
-                f"writer yet, so until one exists a root_id cannot be written here.")
+                f"external root; a root held in this corpus is --root-ref-id. Register the root "
+                f"first with `db.py register-root`, then give its id here.")
 
         # --- the subject -----------------------------------------------------
         pid = row.get("parameter_id")
@@ -10419,10 +11029,59 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
 # jurisdiction. Gated by dbcore.check_jurisdiction, so it widens WHO, not WHAT to. Like
 # add-extraction it holds no relation to the source's jurisdiction, and a value cannot be
 # cleared here (a blank is refused).
+def register_root(root_id: str, description: str, root_type: str, provenance: str, population_note: str,
+                  notes: str, session: str, dry_run: bool = False):
+    """Register an EXTERNAL root: a source of a figure that is not an admitted source of this corpus.
+
+    Convergence counts independent roots, never documents or jurisdictions, and a figure's `root_id` is a
+    foreign key into this registry, so a root that was never registered could never be named. Writes only the
+    columns the table has; the root type is read from the table's own CHECK; `--provenance` is the warrant
+    (where the root comes from and how that is known) and may not be blank."""
+    root_id = (root_id or "").strip()
+    if not root_id or re.search(r"\s", root_id):
+        raise Refusal("register-root: --root-id must be non-blank and contain no space. Nothing was written.")
+    if not (description or "").strip():
+        raise Refusal("register-root: --description may not be blank: a root that cannot be described cannot be "
+                      "told from another. Nothing was written.")
+    if not (provenance or "").strip():
+        raise Refusal("register-root: --provenance is required and may not be blank. It is the warrant: where "
+                      "this root comes from and how that is known. Nothing was written.")
+    with connect(dry_run) as conn:
+        dbcore.check_declared(conn, "external_root_registry", "root_type", root_type, "register-root --root-type")
+        if dbcore.exists(conn, "evidence_sources", "ref_id", root_id):
+            raise Refusal(f"register-root: {root_id!r} is an admitted source of this corpus; a root held here is "
+                          f"--root-ref-id, never an external root. Nothing was written.")
+        _same = conn.execute("SELECT root_id FROM external_root_registry WHERE LOWER(root_id) = LOWER(?) "
+                             "OR LOWER(TRIM(description)) = LOWER(TRIM(?))", (root_id, description)).fetchone()
+        if _same and _same[0] != root_id:
+            raise Refusal(f"register-root: {root_id!r} (or its description) is the registered root {_same[0]!r} under "
+                          f"another spelling; one root is one row, and counting it twice raises the independent-root "
+                          f"count. Point figures at {_same[0]!r}. Nothing was written.")
+        if dbcore.exists(conn, "external_root_registry", "root_id", root_id):
+            raise Refusal(f"register-root: {root_id!r} is already registered. Point a figure at it with "
+                          f"`db.py add-extraction --root-id` or `db.py amend-extraction --field root_id`. "
+                          f"Nothing was written.")
+        row = {"root_id": root_id, "description": description.strip(), "root_type": root_type,
+               "provenance": provenance.strip(), "root_population_note": population_note or None,
+               "notes": notes or None}
+        row.update(dbcore.stamp_for(conn, "external_root_registry", session))
+        conn.execute(f"INSERT INTO external_root_registry ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
+                     list(row.values()))
+    return {"root_id": root_id, "root_type": root_type, "dry_run": dry_run}
+
+
 _AMENDABLE_SVE_FIELDS = frozenset({"figure_role", "comparator",
                                    "extraction_method", "extraction_status",
                                    "root_type", "root_ref_id", "value_as_written",
-                                   "jurisdiction"})
+                                   "jurisdiction",
+                                   # device_class, added 2026-11-15 (T-055): T-102 records the device a figure states on
+                                   # a row already written; the engine does not read the column. The column's own CHECK
+                                   # (dbcore.check_values) and --reason are its gates.
+                                   "device_class",
+                                   # root_id, added 2026-11-15 (T-048): a figure already written can point at a root
+                                   # registered after it (`db.py register-root`). The registry-existence refusal is
+                                   # the generic dbcore.fk_declared below; the old value is kept in notes by the writer.
+                                   "root_id"})
 
 
 def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
@@ -11039,7 +11698,7 @@ def supersede_source(ref_id: str, by: str, reason: str, session: str,
 def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:
     """Return all unmined Tier 1–N sources across all slugs.
 
-    Non-English sources (lang_detected/language not in {'en', NULL}) sort first
+    Non-English sources (lang_detected/language not EN in any letter case, or NULL) sort first
     within each tier, per the citation-mining non-English priority ordering.
     """
     with connect(readonly=True) as conn:
@@ -11075,7 +11734,7 @@ def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:
             -- "what is unmined" differently is how a backlog goes half-invisible.
             AND COALESCE(es.citation_mining_status, '') <> 'mined'
             ORDER BY es.tier ASC,
-                     CASE WHEN COALESCE(es.lang_detected, es.language, 'en') = 'en' THEN 1 ELSE 0 END,
+                     CASE WHEN UPPER(COALESCE(es.lang_detected, es.language, 'EN')) = 'EN' THEN 1 ELSE 0 END,
                      ssl.slug, ssl.local_ref_id
         """, [tier_max]).fetchall()
     return [dict(r) for r in rows]
@@ -11388,9 +12047,11 @@ def insert_population_match(data: dict, session: str, dry_run: bool = False):
                 f"match AFTER admission -- a match row for a source that does not exist "
                 f"is a claim about nothing.")
         _refuse_tombstone(conn, ref, "add-population-match")
+        dbcore.check_identity_live(conn, data.get("target_population"), "add-population-match --target-population")
         if not dbcore.exists(conn, "base_taxonomy_identity", "identity_code", data.get("target_population")):
             raise Refusal(
-                f"target_population {data.get('target_population')!r} is not in `base_taxonomy_identity`.")
+                f"target_population {data.get('target_population')!r} is not in `base_taxonomy_identity`. "
+                f"The codes it holds: SELECT identity_code FROM base_taxonomy_identity.")
         dbcore.check_vocab(conn, "evidence_population_match", "match_grade",
                            data.get("match_grade"), "insert_population_match")
         if data.get("match_grade") == "MISMATCH" and not (data.get("mismatch_note") or "").strip():

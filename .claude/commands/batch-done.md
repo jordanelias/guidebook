@@ -14,7 +14,7 @@ python3 scripts/audit/search_log_completeness.py --session "$(cat scratchpad/CUR
 The second line is RC4 (advisory): it FAILs if this session wrote to any of the 2026-08-19
 RULE's research tables and no closed adversarial pass names it. That FAIL is not a reason to
 close pass 1; LED-192 holds it open (`/adversarial` step 3). Run it on `CURRENT`, not via
-`run_checks.py --battery research` — that battery's other session-scoped checks
+`run_checks.py --all --battery research` — that battery's other session-scoped checks
 (`research_dod_session`, `author_fidelity`, `citation_mining_session`) are still pointed
 at `LATEST-RESEARCH`, which names the PREVIOUS session for the whole life of this one.
 
@@ -48,6 +48,66 @@ python3 scripts/audit/research_batch_dod.py --all
 Then commit the scratchpad and the agent transcripts (`scripts/preserve_transcripts.py`)
 — a read-only subagent writes nothing at all, so its entire workings live in
 ephemeral container storage until they are copied out.
+
+## COVERAGE (read it; it does not fail)
+
+A batch can read a document whose provisions are for blind, Deaf, cognitive and fatigue-limited people and still
+write only mobility figures, because those are the quantities the catalogue holds. Print what the catalogue can
+and cannot speak about, read-only, against the database the batch used (`GUIDEBOOK_DB_PATH`, else
+`data/guidebook.db`). Add `--all` to read (3) over every source, not only this batch's. **Quote the three reads in the
+pull request body: the owner reads coverage there.** Every count is printed beside its query; none is typed here.
+Printed, not failed: zero is the honest state of most of the catalogue, and a check that is red by construction
+teaches its reader to ignore it (CLAUDE.md rule 6).
+
+```
+python3 -I - $ARGUMENTS <<'PY'
+import os, re, sys, sqlite3
+db = os.environ.get("GUIDEBOOK_DB_PATH") or "data/guidebook.db"
+c = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+if set(sys.argv[1:]) - {"--all"}: sys.exit(f"unknown argument(s) {sorted(set(sys.argv[1:]) - {'--all'})}: the only one is --all")
+all_sources = "--all" in sys.argv
+session = re.sub(r"\.md$", "", open("scratchpad/CURRENT").read().strip()) if os.path.exists("scratchpad/CURRENT") else ""
+VS = "x.figure_role IN ('claim','derived')"
+LENSES = (("identity_code", "SELECT identity_code FROM base_taxonomy_identity WHERE status='active'"),
+          ("needs_code", "SELECT need_code FROM access_needs"), ("icf_code", "SELECT icf_code FROM base_icf"),
+          ("medical_code", "SELECT medical_code FROM base_taxonomy_medical WHERE status='active'"))
+params = [r[0] for r in c.execute("SELECT parameter_id FROM base_parameters WHERE status='active' ORDER BY 1")]
+print("(1) LENS BY PARAMETER: distinct live value-supplying figures per (lens code, active parameter)")
+for col, reg in LENSES:
+    q = (f"SELECT COUNT(DISTINCT x.extraction_id) FROM source_value_extractions x JOIN v_live_lens_links l "
+         f"ON l.extraction_id = x.extraction_id WHERE {VS} AND x.parameter_id = ? AND l.{col} "
+         + ("IN (WITH RECURSIVE f(c) AS (SELECT ? UNION SELECT i.identity_code FROM base_taxonomy_identity i JOIN f ON i.parent_code = f.c) SELECT c FROM f)"
+            if col == "identity_code" else "= ?"))   # a parent's cell counts its descendants' figures (T-055)
+    codes = [r[0] for r in c.execute(reg)]
+    zero, cells = [], []
+    for code in codes:
+        n = [c.execute(q, (p, code)).fetchone()[0] for p in params]
+        (zero if not any(n) else cells).append((code, [(p, k) for p, k in zip(params, n) if k]))
+    print(f"  {col}: {len(codes)} codes x {len(params)} active parameters; query: {q}")
+    print(f"    codes with ZERO figures against every parameter (a group the catalogue cannot speak about): {[z[0] for z in zero]}")
+    for code, nz in cells: print(f"    {code}: {nz}")
+print("(2) LENS BY FIGURE: value-supplying figures with a live link")
+umbrella = {r[0] for r in c.execute("SELECT parent_code FROM base_taxonomy_identity WHERE parent_code IS NOT NULL")} | {"ALL"}
+rows = c.execute(f"SELECT x.extraction_id, group_concat(l.identity_code), group_concat(l.icf_code), group_concat(l.needs_code), "
+                 f"group_concat(l.medical_code) FROM source_value_extractions x JOIN v_live_lens_links l ON l.extraction_id = x.extraction_id "
+                 f"WHERE {VS} GROUP BY x.extraction_id").fetchall()
+ident_only = [r[0] for r in rows if r[1] and not (r[2] or r[3] or r[4])]
+umb_only = [r[0] for r in rows if r[1] and set(r[1].split(",")) <= umbrella and not (r[2] or r[3] or r[4])]
+print(f"  figures with a live link: {len(rows)}; identity links ONLY: {len(ident_only)}; filed only to ALL or a parent code: {len(umb_only)} {umb_only}")
+print("(3) GROUP WORDS WITH NO PARAMETER: observations whose latest adjudication is DEFERRED, NOT-OURS or none")
+q3 = ("SELECT o.ref_id, o.observation_id, o.surface_form, o.locator, COALESCE(a.outcome, 'none') FROM observed_terms o "
+      "LEFT JOIN term_adjudications a ON a.adjudication_id = (SELECT MAX(adjudication_id) FROM term_adjudications WHERE observation_id = o.observation_id) "
+      "WHERE COALESCE(a.outcome, 'none') IN ('DEFERRED', 'NOT-OURS', 'none')")
+mine = set() if all_sources else {r[0] for r in c.execute("SELECT ref_id FROM evidence_sources WHERE created_by_session = ? UNION SELECT ref_id FROM source_scans WHERE created_by_session = ?", (session, session))}
+print(f"  query: {q3}  (sources: {'all' if all_sources else f'this batch, session {session!r}: {len(mine)}'})")
+by = {}
+for ref, oid, form, loc, out in c.execute(q3 + " ORDER BY o.ref_id, o.observation_id"):
+    if all_sources or ref in mine: by.setdefault(ref, []).append((oid, form, loc, out))
+for ref, obs in by.items():
+    print(f"    {ref}: {len(obs)} observation(s)")
+    for oid, form, loc, out in obs: print(f"      #{oid} [{out}] {form!r} @ {loc}")
+PY
+```
 
 Then gate the diff once, when the batch is ready to open a PR: `scripts/preflight.sh`
 (CLAUDE.md §1) — not `run_checks.py --all`.

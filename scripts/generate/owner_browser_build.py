@@ -61,6 +61,10 @@ def meta(conn, db_file):
         entries = re.split(r"(?m)^## ", f.read())[1:]
     rulings = {}
     wants = [(d["id"], d["answered"]["ledger"]) for d in owner["decisions"] if d.get("answered")]
+    # A prompt settled by a delegated resolution carries the entry that resolved it, and the one that corrected it.
+    wants += [(d["id"], d["resolved_under_delegation"][k]) for d in owner["decisions"]
+              if d.get("resolved_under_delegation") for k in ("ledger", "corrected_by")
+              if d["resolved_under_delegation"].get(k)]
     wants += [(f"{q['table']} {rid}", led) for q in owner["queue"] for rid, led in (q.get("ruled") or {}).items()]
     for what, want in wants:
         hits = [e for e in entries if e.startswith(want)]
@@ -81,7 +85,7 @@ def meta(conn, db_file):
         sha = hashlib.sha256(f.read()).hexdigest()
     return {
         "stamp": {"sha256": sha, "user_version": conn.execute("PRAGMA user_version").fetchone()[0], "commit": commit or "unknown"},
-        "stage_order": order + ["infrastructure"], "stage": stages["tables"],
+        "stage_order": order + ["cross-stage", "infrastructure"], "stage": stages["tables"],
         "stage_judged": {"by": stages["judged_by"], "on": stages["judged_on"]},
         "vocab": vocab, "shape": shape, "holds": holds,
         "glossary": owner["glossary"], "words": owner["words"], "decisions": owner["decisions"], "rulings": rulings, "queue": owner["queue"],

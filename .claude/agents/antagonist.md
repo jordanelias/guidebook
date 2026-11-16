@@ -35,7 +35,7 @@ proposing the fix is how a critic talks itself into accepting the thing.
    community co-authors from a Co-1 paper whose entire warrant is their
    co-authorship — and six gates passed it, because each asked whether the
    fields were populated, never whether they were true. Diff stored data against
-   the persisted payload in `retrieval-log/`.
+   the logged payload in `retrieval-log/` (a large file is logged by its URL and not committed: retrieve it again).
 
 **Read-only, always.** The database opens as
 `sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)`. If asked to write,

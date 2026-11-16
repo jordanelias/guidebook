@@ -15,7 +15,7 @@ model: haiku
 You run sweeps and return findings. You do not adjudicate them.
 
 **Search correctly or your answer is wrong.** `.ignore` hides `_archived/`,
-`audits/`, `sessions/`, `references/search-log/`, `versions/`,
+`audits/`, `sessions/`, `references/search-log/`, `references/bpc/`, `versions/`,
 `workplan/_superseded/` and the JSONL under `transcripts/` from
 ripgrep and from the Grep tool. Owner rulings live overwhelmingly in
 `sessions/`. So:

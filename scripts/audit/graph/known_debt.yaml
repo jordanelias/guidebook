@@ -17,19 +17,12 @@
 #   lift_when_ge  suppression lifts (and is flagged stale) once the count reaches this
 version: 1
 entries:
-  - id: c1-source-value-extractions-empty
-    check_id: table.empty_mission_critical
-    table: source_value_extractions
-    warrant: "DR-2026-05-28-b (B6) + C1 value backfill pending (ratification-execution-register-2026-07-13)"
-    lift_when_sql: "SELECT COUNT(*) FROM source_value_extractions"
-    lift_when_ge: 1
-
   # id kept stable across the 2026-08-12 rename (migration 055) so the entry's
   # paper trail survives; the table it suppresses is now `specifications`.
   - id: c1-evidence-cell-state-pilot-only
     check_id: table.empty_mission_critical
     table: specifications
-    warrant: "DR-2026-07-12 A2 + C1 determination backfill pending (0 rows today — pilot rows cleared 2026-08-12 with the evidence-stage reset)"
+    warrant: "DR-2026-07-12 A2 + C1 determination backfill pending (live rows: SELECT COUNT(*) FROM specifications WHERE retired_at IS NULL — the pilot rows were retired with the evidence-stage reset of 2026-08-12)"
     lift_when_sql: "SELECT COUNT(*) FROM specifications"
     lift_when_ge: 20
 
@@ -38,11 +31,4 @@ entries:
     table: conflicts
     warrant: "DR-2026-07-12 A5 Item V — conflicts.status CHECK migration pending"
     lift_when_sql: "SELECT COUNT(*) FROM conflicts"
-    lift_when_ge: 1
-
-  - id: lang-jur-map-deferred
-    check_id: table.empty_mission_critical
-    table: lang_jur_map
-    warrant: "DR C4 — lang_jur_map PRIMARY/SECONDARY criteria deferred (by design, migration 023)"
-    lift_when_sql: "SELECT COUNT(*) FROM lang_jur_map"
     lift_when_ge: 1

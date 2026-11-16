@@ -79,24 +79,23 @@ DB = os.path.join(TMP, "guidebook.db")
 shutil.copy(REPO / "data" / "guidebook.db", DB)
 
 
+sys.path.insert(0, str(REPO / "scripts"))
+sys.path.insert(0, str(REPO / "scripts" / "research"))
+sys.path.insert(0, str(REPO))
+from _fixture_log import fixture_log_root  # noqa: E402
+
+
 def farm(name):
-    """A scratch retrieval-log root of symlinks to the tracked sessions: fixtures written to it leave the
-    tracked log (and every other root) as it was."""
+    """A scratch retrieval-log root of symlinks to the tracked sessions, leaving out a pre-admission folder (T-073): a
+    fixture source takes the copy's next id, and a folder filed under that id would hand it saved text it never fetched.
+    Fixtures written to it leave the tracked log (and every other root) as it was."""
     path = os.path.join(TMP, name)
-    if not os.path.isdir(path):
-        os.makedirs(path)
-        for d in (REPO / "retrieval-log").iterdir():
-            if d.is_dir():
-                os.symlink(d.resolve(), os.path.join(path, d.name))
-    return path
+    return path if os.path.isdir(path) else fixture_log_root(path, DB)
 
 
 FARM = farm("retrieval-log")
 os.environ["GUIDEBOOK_DB_PATH"] = DB
 os.environ["GUIDEBOOK_RETRIEVAL_LOG"] = FARM
-sys.path.insert(0, str(REPO / "scripts"))
-sys.path.insert(0, str(REPO / "scripts" / "research"))
-sys.path.insert(0, str(REPO))
 from schemas.enums import EvidenceMarker  # noqa: E402
 import db        # noqa: E402
 import dbcore    # noqa: E402
@@ -770,7 +769,7 @@ db.retire_parameter(P_RET, "fixture: a retired target", session=S)
 def search(**over):
     base = {"slug": SLUG, "language": LANG, "query_text": "q", "engine": "web",
             "depth_method": "scoping", "session": S, "prior_expectation": "nothing",
-            "jurisdiction": JUR, "dry_run": True}
+            "jurisdiction": JUR, "dry_run": True, "results_found": 1}
     base.update(over)
     return base
 
@@ -784,7 +783,7 @@ record("J01", "log-search refuses a language lang_jur_map does not hold", r and 
 
 def scope_flag(lang):
     """`in_research_scope` as the operator reads it: the JSON `log-search --dry-run` prints."""
-    p = cli("log-search", "--slug", SLUG, "--language", lang, "--jurisdiction", JUR, "--query-text", "q",
+    p = cli("log-search", "--results-found", "1", "--slug", SLUG, "--language", lang, "--jurisdiction", JUR, "--query-text", "q",
             "--engine", "web", "--depth-method", "scoping", "--prior-expectation", "nothing",
             "--session", S, "--dry-run")
     try:
@@ -851,6 +850,652 @@ r = refusal(db.update_connection_status, ABSENT_CON, "CONSUMED", session=S, dry_
 record("N08", "update-connection refuses an unknown con_id", r and ABSENT_CON in r, r)
 res, err = ok(db.update_connection_status, NEXT_CON, "CONSUMED", session=S, dry_run=True)
 record("N09", "a CHECK status on a live connection is accepted", err is None, err)
+_n_con = [scalar(f"SELECT COUNT(*) FROM {t}") for t in ("connections", "connection_targets")]
+_rs = {how: refusal(db.delete_connection, who, session=S, dry_run=dry)
+       for how, who, dry in (("absent, dry", ABSENT_CON, True), ("absent, for real", ABSENT_CON, False),
+                             ("lower case", NEXT_CON.lower(), False), ("padded", f" {NEXT_CON} ", False))}
+record("T006-01", "delete-connection refuses an id that is not a connection, for real and under --dry-run and for a case or "
+       "whitespace variant of one that is: it names the verb and the id, says nothing was written, points at `db.py connections`, "
+       "and the tables are unchanged",
+       all(v and "delete-connection:" in v and "Nothing was written" in v and "db.py connections" in v for v in _rs.values())
+       and ABSENT_CON in _rs["absent, dry"] and _n_con == [scalar(f"SELECT COUNT(*) FROM {t}")
+                                                          for t in ("connections", "connection_targets")], _rs)
+with scratch() as c:                   # the copy holds NEXT_CON, written above; the main copy keeps it for later cases
+    _P3 = next((p for p in P_ACTIVE if p not in (P1, P2)), None)
+    _other, _e2 = ok(db.insert_connection, conn_(description="T006 second connection"),
+                     [("parameter_id", P1), ("parameter_id", _P3)], session=S, dry_run=False) if _P3 else (None, "no third parameter")
+    _tot = lambda: [c.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0] for t in ("connections", "connection_targets")]  # noqa: E731
+    _before = _tot()
+    res, err = ok(db.delete_connection, NEXT_CON, session=S, dry_run=False)
+    left = [c.execute(f"SELECT COUNT(*) FROM {t} WHERE con_id=?", (NEXT_CON,)).fetchone()[0]
+            for t in ("connections", "connection_targets")]
+    kept = [c.execute(f"SELECT COUNT(*) FROM {t} WHERE con_id=?", (_other,)).fetchone()[0]
+            for t in ("connections", "connection_targets")] if _other else None
+    record("T006-02", "delete-connection deletes the connection it is given and its targets, and only those: a second connection "
+           "and its targets are still there", err is None and _e2 is None and left == [0, 0] and kept == [1, 2]
+           and _tot() == [_before[0] - 1, _before[1] - 2], (err, _e2, left, kept, _before, _tot()))
+    # A connection whose target rows are gone is still a connection: the lookup is in `connections`, not in its targets.
+    if _other:
+        hand("DELETE FROM connection_targets WHERE con_id=?", _other)
+        _res, _e3 = ok(db.delete_connection, _other, session=S, dry_run=False)
+        record("T006-03", "a connection with no target rows is still found, and deleted",
+               _e3 is None and scalar("SELECT COUNT(*) FROM connections WHERE con_id=?", _other) == 0, _e3)
+    else:
+        skip("T006-03", "no second connection could be built on the copy")
+
+print("Section T043: a refusal says what to do next")
+_CUE = re.compile(r"db\.py |SELECT |--[a-z]|git ls-files")      # a verb, a query, a flag or a listing command
+_NOID = "T043-NO-SUCH-ID"
+_a_ref = scalar("SELECT ref_id FROM evidence_sources ORDER BY ref_id LIMIT 1")
+_a_exec = scalar("SELECT exec_id FROM search_executions e WHERE NOT EXISTS (SELECT 1 FROM search_admissions a "
+                 "WHERE a.exec_id = e.exec_id AND a.ref_id = ?) ORDER BY exec_id LIMIT 1", _a_ref)
+_a_term = scalar("SELECT term_id FROM base_parameters WHERE status = 'active' ORDER BY parameter_id LIMIT 1")
+_a_fnd = scalar("SELECT finding_id FROM adversarial_findings WHERE verdict = 'SUSTAINED' AND disposition IS NOT NULL "
+                "ORDER BY finding_id LIMIT 1")
+_t043 = [
+    ("update-connection, absent id", refusal(db.update_connection_status, ABSENT_CON, "CONSUMED", session=S, dry_run=True),
+     "db.py connections"),
+    ("update-connection, status outside the CHECK", refusal(db.update_connection_status, NEXT_CON, "BANANA", session=S,
+                                                           dry_run=True), "Pass one of them"),
+    ("update-conflict, absent id", refusal(db.update_conflict, _NOID, session=S, status="RESOLVED", dry_run=True),
+     "db.py conflicts"),
+    ("close-gap, status not CLOSED", refusal(db.close_gap, _NOID, "NOT-CLOSED", session=S, dry_run=True), "SELECT DISTINCT status"),
+    ("resolve-follow-up, absent id", refusal(db.resolve_follow_up, 2 ** 31, "x", session=S, dry_run=True), "db.py raise-follow-up"),
+    ("amend-population-match, absent id", refusal(db.amend_population_match, _NOID, "x", "reason", session=S, dry_run=True),
+     "db.py add-population-match"),
+    ("update-locator, absent ref", refusal(db.update_locator, _NOID, "RETIRED", session=S, reason="reason", dry_run=True),
+     "db.py add-locator"),
+    ("a transcript path outside transcripts/", refusal(db._resolve_transcript_path, "../governance/x", "reviewer_transcript"),
+     "git ls-files transcripts/"),
+    ("add-connection, a parameter that does not exist", refusal(db.insert_connection, conn_(),
+                                                                [("parameter_id", 2 ** 30), ("parameter_id", P1)],
+                                                                session=S, dry_run=True), "SELECT parameter_id FROM base_parameters"),
+]
+if _a_exec and _a_ref:
+    _t043.append(("unlink-admission, no such edge", refusal(db.unlink_admission, _a_exec, _a_ref, "reason", session=S, dry_run=True),
+                  "SELECT exec_id FROM search_admissions"))
+if _a_term:
+    _t043.append(("decline-parameter on a term that is a parameter", refusal(db.decline_parameter, _a_term, "reason", session=S,
+                                                                             dry_run=True), "db.py retire-parameter"))
+if _a_fnd and _a_ref:
+    _t043.append(("dispose-adversarial-finding, already disposed", refusal(db.dispose_adversarial_finding, _a_fnd, "REPAIRED",
+                                                                           _a_ref, session=S, dry_run=True),
+                  "SELECT disposition FROM adversarial_findings"))
+_verb_ok = {}
+def _verb_exists(msg):
+    """Every `db.py <verb>` a message names is a verb the CLI has (its --help exits 0)."""
+    for v in re.findall(r"db\.py ([a-z][a-z-]+)", msg or ""):
+        if v not in _verb_ok:
+            _verb_ok[v] = subprocess.run([sys.executable, str(REPO / "scripts" / "db.py"), v, "--help"],
+                                         capture_output=True, text=True).returncode == 0
+    return all(_verb_ok[v] for v in re.findall(r"db\.py ([a-z][a-z-]+)", msg or ""))
+for _i, (_what, _msg, _tok) in enumerate(_t043, 1):
+    record(f"T043-{_i:02d}", f"{_what}: the refusal names the way forward ({_tok!r}), and every `db.py` verb it names exists",
+           bool(_msg) and _tok in _msg and bool(_CUE.search(_msg)) and _verb_exists(_msg), _msg)
+for _need, _label in ((_a_exec and _a_ref, "unlink-admission"), (_a_term, "decline-parameter"), (_a_fnd and _a_ref, "dispose-adversarial-finding")):
+    if not _need:
+        skip("T043", f"{_label}: the live database offers no row to build the refusal on")
+
+print("Section T021: a question about a published cell is an open gate with no tier")
+_P_Q = next((p for p in P_ACTIVE), None)
+_ICF = scalar("SELECT icf_code FROM base_icf ORDER BY icf_code LIMIT 1")
+_NEED = scalar("SELECT need_code FROM access_needs ORDER BY need_code LIMIT 1")
+_MED = scalar("SELECT medical_code FROM base_taxonomy_medical ORDER BY medical_code LIMIT 1")
+if _P_Q is None or _ICF is None:
+    skip("T021", "no active parameter or ICF code on the live database to build the question on")
+else:
+    _text = "a reader asks whether this value suits a person who uses a long cane"
+    with scratch() as c:
+        _n0 = c.execute("SELECT COUNT(*) FROM determination_gates").fetchone()[0]
+        res, err = ok(db.raise_determination_gate, parameter_id=_P_Q, verdict="QUESTION", detail=_text, icf=_ICF,
+                      needs=_NEED, medical=_MED, session=S, dry_run=False)
+        row = c.execute("SELECT verdict, trigger_tier, trigger_evidence_type, trigger_ref_id, icf_code, needs_code, "
+                        "medical_code, detail, raised_by_session FROM determination_gates WHERE gate_id=?",
+                        (res["gate_id"] if res else -1,)).fetchone()
+        record("T021-06", "a QUESTION is raised with no tier, no evidence type and no source, names the lens codes it was given, "
+               "keeps the objection's words and the session, and is listed by v_open_determination_gates",
+               err is None and row is not None and tuple(row) == ("QUESTION", None, None, None, _ICF, _NEED, _MED, _text, S)
+               and c.execute("SELECT COUNT(*) FROM v_open_determination_gates WHERE gate_id=?", (res["gate_id"],)).fetchone()[0] == 1
+               and c.execute("SELECT COUNT(*) FROM determination_gates").fetchone()[0] == _n0 + 1, (err, row))
+        _rs = {
+            "a tier": refusal(db.raise_determination_gate, parameter_id=_P_Q, verdict="QUESTION", detail=_text,
+                              trigger_tier=1, session=S, dry_run=True),
+            "an evidence type": refusal(db.raise_determination_gate, parameter_id=_P_Q, verdict="QUESTION", detail=_text,
+                                        trigger_evidence_type="clinical", session=S, dry_run=True),
+            "a source": refusal(db.raise_determination_gate, parameter_id=_P_Q, verdict="QUESTION", detail=_text,
+                                trigger_ref_id=_a_ref, session=S, dry_run=True)}
+        record("T021-07", "a QUESTION is refused a tier, an evidence type or a source, naming what to do instead",
+               all(v and "QUESTION" in v and "--detail" in v for v in _rs.values()), _rs)
+        _other = refusal(db.raise_determination_gate, parameter_id=_P_Q, verdict="CONTRADICTS", detail=_text,
+                         session=S, dry_run=True)
+        record("T021-08", "every other verdict still needs its tier (or a source to read it from)",
+               _other and "--trigger-tier" in _other, _other)
+        _bad = refusal(db.raise_determination_gate, parameter_id=_P_Q, verdict="QUESTION", detail=_text,
+                       icf="ICF-NO-SUCH", session=S, dry_run=True)
+        record("T021-09", "a lens code that does not exist is refused, naming the table and the listing query",
+               _bad and "--icf" in _bad and "base_icf" in _bad and "SELECT icf_code FROM base_icf" in _bad, _bad)
+        res2, err2 = ok(db.resolve_determination_gate, gate_id=res["gate_id"], rationale="answered in the ledger",
+                        session=S, dry_run=False)
+        record("T021-10", "a question is closed only through resolve-determination-gate with a rationale, and then leaves the open view",
+               err2 is None and c.execute("SELECT COUNT(*) FROM v_open_determination_gates WHERE gate_id=?",
+                                          (res["gate_id"],)).fetchone()[0] == 0, err2)
+        _aud = subprocess.run([sys.executable, str(REPO / "scripts" / "audit" / "derivation_handshake_integrity.py"),
+                               "--db", os.environ["GUIDEBOOK_DB_PATH"]], capture_output=True, text=True)
+        _gn = c.execute("SELECT COUNT(*), SUM(resolved_at IS NULL) FROM determination_gates").fetchone()
+        record("T021-12", "the handshake audit reads a database holding a QUESTION (NULL tier) without failing and counts the gates it read",
+               _aud.returncode == 0 and f"gates: {_gn[0]} ({_gn[1]} open)" in _aud.stdout, (_aud.returncode, _aud.stdout[-300:], _aud.stderr[-200:]))
+        _hand = None
+        try:
+            c.execute("INSERT INTO determination_gates (parameter_id, verdict, trigger_tier, trigger_evidence_type, detail, "
+                      "raised_at, raised_by_session) VALUES (?, 'QUESTION', 1, 'clinical', 'x', 'now', 'x')", (_P_Q,))
+        except sqlite3.IntegrityError as exc:
+            _hand = str(exc)
+        record("T021-11", "the schema itself refuses a QUESTION that carries a tier", _hand is not None, _hand)
+
+print("Section T025: language-jurisdiction pairs and identity codes are written by verbs, each pointing at an owner entry")
+_led = pathlib.Path(dbcore.LEDGER_PATH).read_text(encoding="utf-8").splitlines()
+_heads = [l[3:] for l in _led if l.startswith("## ")]
+_dated = [h for h in _heads if re.search(r"\d{4}-\d{2}-\d{2}", h) and _heads.count(h) == 1]
+_OWNER_H = next((h for h in _dated if h.startswith(dbcore.LEDGER_OWNER_PREFIX)), None)
+_OTHER_H = next((h for h in _dated if not h.startswith((dbcore.LEDGER_OWNER_PREFIX, dbcore.LEDGER_DELEGATED_PREFIX))), None)
+_DELEG_H = next((h for h in _heads if h.startswith(dbcore.LEDGER_DELEGATED_PREFIX) and _heads.count(h) == 1), None)
+_jur = [r[0] for r in q("SELECT jurisdiction_code FROM base_jurisdictions ORDER BY 1")]
+_pair = next(((l, j) for (l,) in q("SELECT DISTINCT language FROM lang_jur_map ORDER BY 1") for j in _jur
+              if not scalar("SELECT 1 FROM lang_jur_map WHERE language=? AND jurisdiction=?", l, j)), None)
+_held = q("SELECT language, jurisdiction FROM lang_jur_map ORDER BY 1, 2 LIMIT 1")[0]
+_PAR = scalar("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' ORDER BY identity_code LIMIT 1")
+_CAT = scalar("SELECT category FROM base_taxonomy_identity WHERE category IS NOT NULL ORDER BY 1 LIMIT 1")
+if not (_OWNER_H and _OTHER_H and _DELEG_H and _pair and _PAR and _CAT):
+    skip("T025", "the live ledger or database offers no owner heading, delegated heading, free pair or active code")
+else:
+    _R = dict(session=S, dry_run=False)
+    with scratch() as c:
+        res, err = ok(db.add_lang_jur_pair, _pair[0], _pair[1], "PRIMARY", "T025 fixture", _OWNER_H, **_R)
+        _r = c.execute("SELECT role, notes, scope_status, created_by_session FROM lang_jur_map WHERE language=? AND "
+                       "jurisdiction=?", _pair).fetchone()
+        record("T025-01", "add-lang-jur-pair writes one pair with scope_status NULL (owed), the notes and a session stamp, and reports "
+               "new_language false for a language the map holds and the approval it read",
+               err is None and tuple(_r) == ("PRIMARY", "T025 fixture", None, S) and res["new_language"] is False
+               and res["approval_ref"] == _OWNER_H, (err, _r, res))
+        _NEWLANG = "ZZTQ"
+        res, err = ok(db.add_lang_jur_pair, _NEWLANG, _pair[1], "SECONDARY", None, _OWNER_H, **_R)
+        record("T025-02", "a language the map does not hold is admitted only through the verb and reported as new_language true",
+               err is None and res["new_language"] is True and c.execute("SELECT COUNT(*) FROM lang_jur_map WHERE language=?", (_NEWLANG,)).fetchone()[0] == 1, err)
+        _rs = {
+            "lower case": refusal(db.add_lang_jur_pair, "zz", _pair[1], "PRIMARY", None, _OWNER_H, session=S, dry_run=True),
+            "jurisdiction not held": refusal(db.add_lang_jur_pair, "ZZTR", "ZZ-NOT-A-CODE", "PRIMARY", None, _OWNER_H, session=S, dry_run=True),
+            "role outside the CHECK": refusal(db.add_lang_jur_pair, "ZZTR", _pair[1], "BANANA", None, _OWNER_H, session=S, dry_run=True),
+            "pair held": refusal(db.add_lang_jur_pair, _held[0], _held[1], "PRIMARY", None, _OWNER_H, session=S, dry_run=True),
+            "no date": refusal(db.add_lang_jur_pair, "ZZTR", _pair[1], "PRIMARY", None, "an undated heading", session=S, dry_run=True),
+            "not exactly one": refusal(db.add_lang_jur_pair, "ZZTR", _pair[1], "PRIMARY", None, "2026-01-01 no such entry", session=S, dry_run=True),
+            "delegated": refusal(db.add_lang_jur_pair, "ZZTR", _pair[1], "PRIMARY", None, _DELEG_H, session=S, dry_run=True)}
+        record("T025-03", "add-lang-jur-pair refuses a lower-case language, a jurisdiction not held, a role outside the CHECK, a held pair, "
+               "an approval with no date, one that is not exactly one entry and a delegated resolution, each by name",
+               all(_rs.values()) and "upper case" in _rs["lower case"] and "ZZ-NOT-A-CODE" in _rs["jurisdiction not held"]
+               and "CHECK" in _rs["role outside the CHECK"] and "already held" in _rs["pair held"] and "carries no date" in _rs["no date"] and "exactly one" in _rs["not exactly one"]
+               and "delegated resolution" in _rs["delegated"], _rs)
+        _scope = c.execute("SELECT scope_status FROM lang_jur_map WHERE language=? AND jurisdiction=?", _pair).fetchone()[0]
+        res, err = ok(db.set_pair_scope, _pair[0], _pair[1], "in-scope", _OWNER_H, **_R)
+        _now = c.execute("SELECT scope_status FROM lang_jur_map WHERE language=? AND jurisdiction=?", _pair).fetchone()[0]
+        record("T025-04", "set-pair-scope moves one held pair's scope_status and reports the old value",
+               err is None and _scope is None and _now == "in-scope" and res["scope_status_was"] is None, (err, _scope, _now))
+        _rs = [refusal(db.set_pair_scope, _pair[0], _pair[1], "in-scope", _OWNER_H, session=S, dry_run=True),
+               refusal(db.set_pair_scope, "ZZTR", "ZZ", "in-scope", _OWNER_H, session=S, dry_run=True),
+               refusal(db.set_pair_scope, _pair[0], _pair[1], "BANANA", _OWNER_H, session=S, dry_run=True)]
+        record("T025-05", "set-pair-scope refuses the value the pair already has, a pair not held and a value outside the CHECK",
+               all(_rs) and "already" in _rs[0] and "not held" in _rs[1] and "CHECK" in _rs[2], _rs)
+        _CODE = "T025ZZ"
+        res, err = ok(db.add_identity, _CODE, "T025 fixture group", _CAT, "a fixture", _PAR, _OWNER_H, **_R)
+        _i = c.execute("SELECT display_name, category, description, parent_code, status, created_at, updated_at FROM "
+                       "base_taxonomy_identity WHERE identity_code=?", (_CODE,)).fetchone()
+        record("T025-06", "add-identity writes one active code under a held parent with its name, category, description and stamps",
+               err is None and _i["display_name"] == "T025 fixture group" and _i["category"] == _CAT and _i["parent_code"] == _PAR
+               and _i["description"] == "a fixture"
+               and _i["status"] == "active" and _i["created_at"] and _i["updated_at"], (err, dict(_i) if _i else None))
+        _rs = [refusal(db.add_identity, "t025lower", "x", _CAT, "d", None, _OWNER_H, session=S, dry_run=True),
+               refusal(db.add_identity, _CODE, "x", _CAT, "d", None, _OWNER_H, session=S, dry_run=True),
+               refusal(db.add_identity, "T025Y", "x", "BANANA", "d", None, _OWNER_H, session=S, dry_run=True),
+               refusal(db.add_identity, "T025Y", "x", _CAT, "d", "NO-SUCH-PARENT", _OWNER_H, session=S, dry_run=True),
+               refusal(db.add_identity, "T025Y", "", _CAT, "d", None, _OWNER_H, session=S, dry_run=True),
+               refusal(db.add_identity, "T025Y", "x", _CAT, "d", None, _DELEG_H, session=S, dry_run=True),
+               refusal(db.add_identity, "T025 Y", "x", _CAT, "d", None, _OWNER_H, session=S, dry_run=True),
+               refusal(db.add_identity, "T025Y", "x", _CAT, " ", None, _OWNER_H, session=S, dry_run=True)]
+        record("T025-07", "add-identity refuses a lower-case code, a held code, a category outside the CHECK, a parent not held, a blank name "
+               "and a delegated approval",
+               all(_rs) and "upper case" in _rs[0] and "already held" in _rs[1] and "CHECK" in _rs[2] and "not held" in _rs[3]
+               and "blank" in _rs[4] and "delegated" in _rs[5] and "no space" in _rs[6] and "blank" in _rs[7], _rs)
+        c.execute("UPDATE base_taxonomy_identity SET status='deprecated', superseded_by_need=(SELECT need_code FROM access_needs LIMIT 1) "
+                  "WHERE identity_code=?", (_CODE,)); c.commit()
+        _dep = refusal(db.add_identity, "T025Y", "x", _CAT, "d", _CODE, _OWNER_H, session=S, dry_run=True)
+        record("T025-07b", "add-identity refuses a parent that is held but not active", bool(_dep) and "deprecated" in _dep, _dep)
+        c.execute("UPDATE base_taxonomy_identity SET status='active', superseded_by_need=NULL WHERE identity_code=?", (_CODE,)); c.commit()
+        _no_owner = {"add-lang-jur-pair": refusal(db.add_lang_jur_pair, "ZZTR", _pair[1], "PRIMARY", None, _OTHER_H, session=S, dry_run=True),
+                     "set-pair-scope": refusal(db.set_pair_scope, _pair[0], _pair[1], "scoped-out", _OTHER_H, session=S, dry_run=True),
+                     "add-identity": refusal(db.add_identity, "T025Y", "x", _CAT, "d", None, _OTHER_H, session=S, dry_run=True),
+                     "amend-identity": refusal(db.amend_identity, _CODE, "x", None, None, _OTHER_H, "r", session=S, dry_run=True)}
+        _deleg = {"set-pair-scope": refusal(db.set_pair_scope, _pair[0], _pair[1], "scoped-out", _DELEG_H, session=S, dry_run=True),
+                  "amend-identity": refusal(db.amend_identity, _CODE, "x", None, None, _DELEG_H, "r", session=S, dry_run=True)}
+        record("T025-07c", "each of the four verbs refuses a dated, unique ledger heading that is not the owner's (a session, a referral, a correction) "
+               "and set-pair-scope and amend-identity refuse a delegated resolution",
+               all(v and "not an entry that records the owner" in v for v in _no_owner.values())
+               and all(v and "delegated resolution" in v for v in _deleg.values()), (_no_owner, _deleg))
+        res, err = ok(db.amend_identity, _CODE, "T025 renamed", None, None, _OWNER_H, "T025 fixture", **_R)
+        _name = c.execute("SELECT display_name FROM base_taxonomy_identity WHERE identity_code=?", (_CODE,)).fetchone()[0]
+        res2, err2 = ok(db.amend_identity, _CODE, "T025 renamed", None, None, _OWNER_H, "again", **_R)
+        record("T025-08", "amend-identity changes the given field and prints the value it replaces; the same value again changes nothing",
+               err is None and res["changed"] and res["replaced"] == {"display_name": "T025 fixture group"} and _name == "T025 renamed"
+               and err2 is None and res2["changed"] is False, (err, res, err2, res2))
+        _cats = sorted(dbcore.schema_choices("base_taxonomy_identity", "category"))
+        _cat2 = next((x for x in _cats if x != _CAT), None)
+        res3, err3 = ok(db.amend_identity, _CODE, None, "T025 new description", _cat2, _OWNER_H, "T025 fixture", **_R)
+        _i2 = c.execute("SELECT description, category FROM base_taxonomy_identity WHERE identity_code=?", (_CODE,)).fetchone()
+        record("T025-08b", "amend-identity changes a description and a category, printing both replaced values",
+               err3 is None and tuple(_i2) == ("T025 new description", _cat2)
+               and res3["replaced"] == {"description": "a fixture", "category": _CAT}, (err3, res3, tuple(_i2)))
+        res4, err4 = ok(db.set_pair_scope, _pair[0], _pair[1], "scoped-out", _OWNER_H, **_R)
+        record("T025-05b", "set-pair-scope sets scoped-out from in-scope and reports the old value", err4 is None
+               and res4["scope_status_was"] == "in-scope" and res4["scope_status"] == "scoped-out", (err4, res4))
+        _rs = [refusal(db.amend_identity, _CODE, None, None, None, _OWNER_H, "r", session=S, dry_run=True),
+               refusal(db.amend_identity, _CODE, " ", None, None, _OWNER_H, "r", session=S, dry_run=True),
+               refusal(db.amend_identity, "NO-SUCH-CODE", "x", None, None, _OWNER_H, "r", session=S, dry_run=True),
+               refusal(db.amend_identity, _CODE, "x", None, None, _OWNER_H, "", session=S, dry_run=True),
+               refusal(db.amend_identity, _CODE, None, None, "BANANA", _OWNER_H, "r", session=S, dry_run=True)]
+        record("T025-09", "amend-identity refuses no field, a blank value, a code not held and a blank reason",
+               all(_rs) and "at least one" in _rs[0] and "blank" in _rs[1] and "not held" in _rs[2] and "--reason" in _rs[3]
+               and "CHECK" in _rs[4], _rs)
+        # a sub-national code can never satisfy a pair: refused, naming the country (fixture row, HAND on the copy)
+        _ctry = scalar("SELECT jurisdiction_code FROM base_jurisdictions WHERE kind='country' ORDER BY 1 LIMIT 1")
+        if _ctry:
+            c.execute("INSERT INTO base_jurisdictions (jurisdiction_code, kind, parent_code, admission_ref, created_at, created_by_session) "
+                      "VALUES (?, 'sub-national', ?, 'TASK-FIXTURE', '2026-11-15', 'syn')", (_ctry + "-TFX", _ctry)); c.commit()
+            _sn = refusal(db.add_lang_jur_pair, _pair[0], _ctry + "-TFX", "PRIMARY", None, _OWNER_H, session=S, dry_run=True)
+            record("T025-09b", "add-lang-jur-pair refuses a sub-national code, naming the country it counts toward",
+                   bool(_sn) and "sub-national" in _sn and repr(_ctry) in _sn, _sn)
+        else:
+            skip("T025-09b", "no country row to hang a sub-national fixture on")
+        _wt = set(dbcore.writable_tables(c))
+        record("T025-10", "lang_jur_map and base_taxonomy_identity are in the captured set (a change to either reaches a migration)",
+               {"lang_jur_map", "base_taxonomy_identity"} <= _wt, sorted(_wt))
+
+print("Section T027: a source's code currency is written by amend-source, stamped, and its edition by correct-source")
+_cv = dbcore.code_currency_vocabulary()
+_ref27 = scalar("SELECT ref_id FROM evidence_sources WHERE code_currency_status IS NULL AND tier >= 4 AND superseded_by_ref_id IS NULL ORDER BY ref_id LIMIT 1")
+_ref27_t1 = scalar("SELECT ref_id FROM evidence_sources WHERE tier < 4 ORDER BY ref_id LIMIT 1")
+_ref27_tomb = scalar("SELECT ref_id FROM evidence_sources WHERE superseded_by_ref_id IS NOT NULL ORDER BY ref_id LIMIT 1")
+if not _cv or not _ref27:
+    skip("T027", "no readable enum in governance/tier-system.md or no source without a currency status")
+else:
+    with scratch() as c:
+        _before_mis = c.execute("SELECT metadata_integrity_status FROM evidence_sources WHERE ref_id=?", (_ref27,)).fetchone()[0]
+        _before = c.execute("SELECT code_currency_status, code_currency_verified_at, code_currency_verified_by_session "
+                            "FROM evidence_sources WHERE ref_id=?", (_ref27,)).fetchone()
+        res, err = ok(db.amend_source, _ref27, "code_currency_status", _cv[0], "T027 fixture: edition checked", session=S, dry_run=False)
+        _row = c.execute("SELECT code_currency_status, code_currency_verified_at, code_currency_verified_by_session, "
+                         "metadata_integrity_detail FROM evidence_sources WHERE ref_id=?", (_ref27,)).fetchone()
+        record("T027-01", "amend-source sets code_currency_status to a member of the enum governance/tier-system.md ratifies, stamps "
+               "code_currency_verified_at and _by_session itself, and ledgers the replaced value with the reason",
+               err is None and tuple(_before) == (None, None, None) and _row[0] == _cv[0] and bool(_row[1])
+               and _row[2] == dbcore.session_stem(S) and "code_currency_status RECORDED (T027 fixture: edition checked)" in _row[3] and "code_currency_status CORRECTED" not in _row[3], (err, tuple(_row)))
+        res, err = ok(db.amend_source, _ref27, "code_currency_status", _cv[0], "again", session=S, dry_run=False)
+        record("T027-02", "the same value again changes nothing", err is None and res["changed"] is False, (err, res))
+        _rs = {"outside the enum": refusal(db.amend_source, _ref27, "code_currency_status", "CURRENT-ISH", "r", session=S, dry_run=True),
+               "stamp typed": refusal(db.amend_source, _ref27, "code_currency_verified_at", "2026-01-01", "r", session=S, dry_run=True),
+               "edition by hand": refusal(db.amend_source, _ref27, "edition", "2nd", "r", session=S, dry_run=True)}
+        record("T027-03", "a value outside the enum is refused naming the enum; the stamp columns are not amendable; edition is a bibliographic "
+               "field and is sent to correct-source",
+               all(_rs.values()) and all(v in _rs["outside the enum"] for v in _cv) and "not an amendable" in _rs["stamp typed"]
+               and "correct-source" in _rs["edition by hand"], _rs)
+        _st = {"tier below 4": refusal(db.amend_source, _ref27_t1, "code_currency_status", _cv[0], "r", session=S, dry_run=True) if _ref27_t1 else "n/a",
+               "tombstone": refusal(db.amend_source, _ref27_tomb, "code_currency_status", _cv[0], "r", session=S, dry_run=True) if _ref27_tomb else "n/a"}
+        record("T027-06", "code currency is refused for a source below tier 4 and for a tombstone, and writing it does not flip metadata_integrity_status",
+               bool(_st["tier below 4"]) and ("T4-T6" in _st["tier below 4"] or _st["tier below 4"] == "n/a")
+               and bool(_st["tombstone"]) and ("tombstone" in _st["tombstone"] or _st["tombstone"] == "n/a")
+               and _before_mis == c.execute("SELECT metadata_integrity_status FROM evidence_sources WHERE ref_id=?", (_ref27,)).fetchone()[0], (_st,))
+        _stamp0 = c.execute("SELECT code_currency_verified_at FROM evidence_sources WHERE ref_id=?", (_ref27,)).fetchone()[0]
+        res, err = ok(db.amend_source, _ref27, "code_currency_notes", "checked against the issuing body's page", "T027 note", session=S, dry_run=False)
+        _n = c.execute("SELECT code_currency_notes, code_currency_verified_at FROM evidence_sources WHERE ref_id=?", (_ref27,)).fetchone()
+        record("T027-04", "code_currency_notes is amendable on its own and does not move the verification stamp",
+               err is None and _n[0] == "checked against the issuing body's page" and _n[1] == _stamp0, (err, tuple(_n)))
+    record("T027-05", "edition is a field correct-source takes from the logged payload", "edition" in db._CORRECTABLE, sorted(db._CORRECTABLE))
+    record("T027-07", "original_title is a field correct-source takes from the logged payload (Crossref original-title), and amend-source sends it there",
+           "original_title" in db._CORRECTABLE and "correct-source" in (refusal(db.amend_source, _ref27, "original_title", "x", "r", session=S, dry_run=True) or ""),
+           sorted(db._CORRECTABLE))
+
+print("Section T034: cell-status answers where a cell stands, from the tables, and writes nothing")
+_tabs = [r[0] for r in q("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")]
+_P_none = scalar("SELECT parameter_id FROM base_parameters WHERE parameter_id NOT IN "
+                 "(SELECT parameter_id FROM source_value_extractions) ORDER BY parameter_id LIMIT 1")
+_P_fig = scalar("SELECT parameter_id FROM source_value_extractions GROUP BY parameter_id ORDER BY COUNT(*) DESC LIMIT 1")
+if _P_none is None or _P_fig is None:
+    skip("T034", "the live database has no parameter without figures and one with")
+else:
+    _cnt = lambda: [scalar(f'SELECT COUNT(*) FROM "{t}"') for t in _tabs]          # noqa: E731
+    _n0 = _cnt()
+    d_none, e1 = ok(db.cell_status, _P_none)
+    d_fig, e2 = ok(db.cell_status, _P_fig)
+    record("T034-01", "a parameter with no figures reports nothing held at judgment and evidence and no determination, and its owed pairs are read "
+           "from the scope",
+           e1 is None and d_none["stages"]["judgment"]["held"] == [] and d_none["stages"]["evidence"]["held"] == []
+           and d_none["stages"]["specification"]["held"] == []
+           and sorted(d_none["stages"]["research"]["owed"]["scope_unrecorded"] + d_none["stages"]["research"]["owed"]["pairs_in_scope"])
+           == sorted(f"{a}/{b}" for a, b in q("SELECT language, jurisdiction FROM lang_jur_map WHERE COALESCE(scope_status, 'in-scope') <> 'scoped-out' "
+                                              "AND NOT (language, jurisdiction) IN (SELECT UPPER(language), jurisdiction FROM search_executions "
+                                              "WHERE parameter_id = ? AND deferred_reason IS NULL)", _P_none)), e1)
+    _judged = [r[0] for r in q("SELECT extraction_id FROM source_value_extractions WHERE parameter_id=? ORDER BY extraction_id", _P_fig)]
+    _led = {st: [r[0] for r in q("SELECT ref_id FROM v_scan_ledger WHERE parameter_id=? AND status=? ORDER BY ref_id", _P_fig, st)]
+            for st in ("EXTRACTED", "STATED-ABSENT", "READ-NOTHING-FOUND", "NOT-READ", "READ-PARTIAL")}
+    _st = d_fig["stages"] if d_fig else {}
+    record("T034-02", "a parameter with figures lists every extraction id at judgment, and the scan ledger's statuses at evidence "
+           "(held = extracted or stated absent, examined empty = read nothing found, never examined = not read, owed = read in part only)",
+           e2 is None and _st["judgment"]["held"] == _judged
+           and _st["evidence"]["held"] == sorted(_led["EXTRACTED"] + _led["STATED-ABSENT"])
+           and _st["evidence"]["examined_empty"] == _led["READ-NOTHING-FOUND"]
+           and _st["evidence"]["never_examined"] == _led["NOT-READ"]
+           and _st["evidence"]["owed"]["read_in_part_only"] == _led["READ-PARTIAL"], (e2, len(_judged)))
+    _lens = q("SELECT l.identity_code, l.extraction_id FROM v_live_lens_links l JOIN source_value_extractions e ON e.extraction_id = l.extraction_id "
+              "WHERE e.parameter_id=? AND l.identity_code IS NOT NULL ORDER BY l.extraction_id", _P_fig)
+    if _lens:
+        _code = _lens[0][0]
+        d_l, e3 = ok(db.cell_status, _P_fig, identity=_code)
+        _want = [r[0] for r in q("SELECT e.extraction_id FROM source_value_extractions e WHERE e.parameter_id=? AND EXISTS (SELECT 1 FROM "
+                                 "v_live_lens_links l WHERE l.extraction_id=e.extraction_id AND l.identity_code=?) ORDER BY 1", _P_fig, _code)]
+        record("T034-03", "a lens narrows the figures to those carrying that code, and no other stage's list is made up",
+               e3 is None and d_l["stages"]["judgment"]["held"] == _want and 0 < len(_want) <= len(_judged), (e3, _want[:5]))
+    else:
+        skip("T034-03", "no figure of the chosen parameter carries an identity code")
+    _rs = [refusal(db.cell_status, 2 ** 30), refusal(db.cell_status, _P_fig, identity="NO-SUCH-CODE"),
+           refusal(db.cell_status, _P_fig, jurisdiction="ZZ-NOT-A-CODE"), refusal(db.cell_status, _P_fig, language="ZZNOLANG")]
+    record("T034-04", "an unknown parameter, lens code, jurisdiction or language is refused, naming the listing query or table",
+           all(_rs) and "SELECT parameter_id" in _rs[0] and "base_taxonomy_identity" in _rs[1] and "ZZ-NOT-A-CODE" in _rs[2] and "lang_jur_map" in _rs[3], _rs)
+    record("T034-05", "the verb writes nothing: every table holds as many rows after the calls as before", _n0 == _cnt(), (_n0, _cnt()))
+    with scratch() as c:
+        _pr = c.execute("SELECT language, jurisdiction FROM lang_jur_map WHERE NOT (language, jurisdiction) IN (SELECT UPPER(language), "
+                        "jurisdiction FROM search_executions WHERE parameter_id=? AND deferred_reason IS NULL) ORDER BY 1, 2 LIMIT 1", (_P_none,)).fetchone()
+        _key = f"{_pr[0]}/{_pr[1]}"
+        _seen = {}
+        for st in ("scoped-out", "in-scope", None):
+            c.execute("UPDATE lang_jur_map SET scope_status=? WHERE language=? AND jurisdiction=?", (st, *_pr))
+            c.commit()
+            r = db.cell_status(_P_none)["stages"]["research"]
+            _seen[st] = (_key in r["never_examined"]["pairs_scoped_out"], _key in r["owed"]["pairs_in_scope"], _key in r["owed"]["scope_unrecorded"])
+        record("T034-06", "a pair never searched is reported by its recorded scope: scoped out = never examined, in scope = owed, NULL = scope unrecorded",
+               _seen == {"scoped-out": (True, False, False), "in-scope": (False, True, False), None: (False, False, True)}, _seen)
+
+# T-034 repairs after the critic: searches are keyed on a slug, and the lens narrows every stage it can.
+if _P_fig is not None:
+    _d = db.cell_status(_P_fig)["stages"]["research"]
+    _want = sorted(r[0] for r in q("SELECT exec_id FROM search_executions WHERE deferred_reason IS NULL AND (parameter_id = ? OR slug IN "
+                                   "(SELECT DISTINCT slug FROM source_value_extractions WHERE parameter_id = ? AND slug IS NOT NULL))", _P_fig, _P_fig))
+    record("T034-07", "the research stage lists the searches logged against the parameter or any slug its figures carry (found something + found nothing)",
+           sorted(_d["held"] + _d["examined_empty"]) == _want, (len(_want), len(_d["held"]), len(_d["examined_empty"])))
+    _lc = q("SELECT l.identity_code FROM v_live_lens_links l JOIN source_value_extractions e ON e.extraction_id = l.extraction_id WHERE e.parameter_id = ? "
+            "AND l.identity_code IS NOT NULL GROUP BY 1 ORDER BY COUNT(*) LIMIT 1", _P_fig)
+    if _lc:
+        _code = _lc[0][0]
+        _n = db.cell_status(_P_fig, identity=_code)["stages"]
+        _refs = {r[0] for r in q("SELECT DISTINCT e.ref_id FROM source_value_extractions e JOIN v_live_lens_links l ON l.extraction_id = e.extraction_id "
+                                 "WHERE e.parameter_id = ? AND l.identity_code = ?", _P_fig, _code)}
+        _gate_other = [r[0] for r in q("SELECT gate_id FROM v_open_determination_gates WHERE parameter_id = ? AND identity_code IS NOT NULL AND identity_code <> ?", _P_fig, _code)]
+        record("T034-08", "a lens narrows the evidence held to the sources of its figures, drops an open gate that names a different code, and says which lists it did not narrow",
+               set(_n["evidence"]["held"]) <= _refs and not (set(_gate_other) & set(_n["specification"]["owed"]["open_gates"]))
+               and _n["evidence"].get("not_narrowed") == ["examined_empty", "never_examined", "owed"], (_code, _n["evidence"]["held"][:3], _n["specification"]["owed"]))
+    else:
+        skip("T034-08", "no figure of the chosen parameter carries an identity code")
+
+if _P_fig is not None:
+    with scratch() as c:
+        _two = [r[0] for r in c.execute("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' AND parent_code IS NULL "
+                                        "ORDER BY identity_code LIMIT 2")]
+        c.execute("UPDATE base_taxonomy_identity SET parent_code=? WHERE identity_code=?", (_two[0], _two[1]))   # HAND, on the copy
+        c.execute("INSERT INTO determination_gates (parameter_id, identity_code, verdict, detail, raised_at, raised_by_session) "
+                  "VALUES (?,?,'QUESTION','T034 fixture','2026-11-16','TASK-FIXTURE')", (_P_fig, _two[1]))
+        c.commit()
+        _gid = c.execute("SELECT MAX(gate_id) FROM determination_gates").fetchone()[0]
+        _par = db.cell_status(_P_fig, identity=_two[0])["stages"]["specification"]["owed"]["open_gates"]
+        _kid = db.cell_status(_P_fig, identity=_two[1])["stages"]["specification"]["owed"]["open_gates"]
+        _sib = [r[0] for r in c.execute("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code NOT IN (?,?) AND identity_code<>'ALL' "
+                                        "ORDER BY identity_code LIMIT 1", _two)]
+        _oth = db.cell_status(_P_fig, identity=_sib[0])["stages"]["specification"]["owed"]["open_gates"] if _sib else None
+        record("T034-09", "an open gate on a child identity code is owed on the parent's cell (the engine's rule: the parent gathers the child's figures), on the "
+               "child's own, and not on an unrelated code's",
+               _gid in _par and _gid in _kid and _oth is not None and _gid not in _oth, (_gid, _par, _kid, _oth))
+    with scratch() as c:
+        _co = c.execute("SELECT jurisdiction_code FROM base_jurisdictions WHERE kind='country' ORDER BY 1 LIMIT 1").fetchone()[0]
+        c.execute("INSERT INTO base_jurisdictions (jurisdiction_code, kind, parent_code) VALUES (?, 'sub-national', ?)", (f"{_co}-ZZ", _co))   # HAND, on the copy
+        c.commit()
+        _sub, _top = db.cell_status(_P_fig, jurisdiction=f"{_co}-ZZ"), db.cell_status(_P_fig, jurisdiction=_co)
+        record("T034-10", "a sub-national jurisdiction is asked about at its country, so it answers as the country does and the report names the country",
+               _sub["stages"] == _top["stages"] and _sub["jurisdiction"] == _co, (_sub["jurisdiction"], _co))
+
+print("Section T048: an external root is registered by a verb, and a figure already written can point at it")
+_RT = next(iter(sorted(dbcore.schema_choices("external_root_registry", "root_type"))), None)
+_EID = scalar("SELECT extraction_id FROM source_value_extractions WHERE root_id IS NULL ORDER BY extraction_id LIMIT 1")
+if _RT is None or _EID is None:
+    skip("T048", "no root type in the CHECK or no figure without a root on the live database")
+else:
+    with scratch() as c:
+        _n0 = c.execute("SELECT COUNT(*) FROM external_root_registry").fetchone()[0]
+        res, err = ok(db.register_root, "T048-ROOT-A", "a fixture root", _RT, "TASK-FIXTURE: a warrant", "n", None, session=S, dry_run=False)
+        _row = c.execute("SELECT description, root_type, provenance, root_population_note, created_by_session FROM external_root_registry "
+                         "WHERE root_id=?", ("T048-ROOT-A",)).fetchone()
+        record("T048-01", "register-root writes one row with its type, its warrant and the session stamp, and the table is then in the captured set",
+               err is None and tuple(_row) == ("a fixture root", _RT, "TASK-FIXTURE: a warrant", "n", S)
+               and c.execute("SELECT COUNT(*) FROM external_root_registry").fetchone()[0] == _n0 + 1
+               and "external_root_registry" in set(dbcore.writable_tables(c)), (err, _row))
+        _rs = {"blank description": refusal(db.register_root, "T048-B", " ", _RT, "w", None, None, session=S, dry_run=True),
+               "blank warrant": refusal(db.register_root, "T048-B", "d", _RT, "", None, None, session=S, dry_run=True),
+               "type outside the CHECK": refusal(db.register_root, "T048-B", "d", "BANANA", "w", None, None, session=S, dry_run=True),
+               "space in the id": refusal(db.register_root, "T048 B", "d", _RT, "w", None, None, session=S, dry_run=True),
+               "already registered": refusal(db.register_root, "T048-ROOT-A", "d", _RT, "w", None, None, session=S, dry_run=True)}
+        record("T048-02", "register-root refuses a blank description, a blank warrant, a type outside the CHECK, a space in the id and a root already registered, "
+               "each by name", all(_rs.values()) and "--description" in _rs["blank description"] and "--provenance" in _rs["blank warrant"]
+               and "CHECK" in _rs["type outside the CHECK"] and "--root-id" in _rs["space in the id"]
+               and "already registered" in _rs["already registered"], _rs)
+        res, err = ok(db.amend_extraction, _EID, "root_id", "T048-ROOT-A", "T048 fixture", session=S, dry_run=False)
+        _now = c.execute("SELECT root_id FROM source_value_extractions WHERE extraction_id=?", (_EID,)).fetchone()[0]
+        _notes = c.execute("SELECT notes FROM source_value_extractions WHERE extraction_id=?", (_EID,)).fetchone()[0] or ""
+        _dup = {"case variant": refusal(db.register_root, "t048-root-a", "another", _RT, "w", None, None, session=S, dry_run=True),
+                "same description": refusal(db.register_root, "T048-ROOT-Z", " A FIXTURE ROOT ", _RT, "w", None, None, session=S, dry_run=True),
+                "an admitted source": refusal(db.register_root, scalar("SELECT ref_id FROM evidence_sources LIMIT 1"), "d", _RT, "w", None, None, session=S, dry_run=True)}
+        record("T048-02b", "register-root refuses a case variant of a registered id, a description already registered, and an admitted source's ref_id (a root held here is --root-ref-id)",
+               all(_dup.values()) and "another spelling" in _dup["case variant"] and "another spelling" in _dup["same description"] and "--root-ref-id" in _dup["an admitted source"], _dup)
+        record("T048-03", "amend-extraction --field root_id points a figure at a registered root and the writer's marker keeps the change in notes",
+               err is None and _now == "T048-ROOT-A" and "root_id" in _notes, (err, _now, _notes[-160:]))
+        _bad = refusal(db.amend_extraction, _EID, "root_id", "T048-NOT-REGISTERED", "T048 fixture", session=S, dry_run=True)
+        record("T048-04", "an id absent from the registry is refused by the foreign-key check, naming the table", bool(_bad) and "external_root_registry" in _bad, _bad)
+    _src = pathlib.Path(db.__file__).read_text(encoding="utf-8")
+    record("T048-05", "add-extraction's refusal for an unregistered root names the verb that registers one and no longer says no writer exists",
+           "db.py register-root" in _src and "has no writer yet" not in _src, None)
+
+print("Section T054: an identity code retires in place to the need or code that carries it, and a crossing row retires in place")
+_H54 = [l[3:] for l in pathlib.Path(dbcore.LEDGER_PATH).read_text(encoding="utf-8").splitlines() if l.startswith("## ")]
+_H54 = [h for h in _H54 if h.startswith(dbcore.LEDGER_OWNER_PREFIX) and re.search(r"\d{4}-\d{2}-\d{2}", h) and _H54.count(h) == 1]
+_OH54 = _H54[0] if _H54 else None
+_named54 = lambda code: next((h for h in _H54 if dbcore.ledger_entry_names(h, code)), None)          # noqa: E731
+_codes54 = [r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' ORDER BY identity_code")]
+_NEED54 = scalar("SELECT need_code FROM access_needs ORDER BY need_code LIMIT 1")
+_LINK54 = q("SELECT link_id, identity_code FROM identity_icf_map WHERE retired_at IS NULL ORDER BY link_id LIMIT 1")
+with scratch() as c:
+    _free = [k for k in _codes54 if not db._identity_carriers(c, k) and _named54(k)]
+    _carried = [k for k in _codes54 if db._identity_carriers(c, k)]
+    if not (_OH54 and _NEED54 and len(_free) >= 2 and _carried and _LINK54):
+        skip("T054", "the live ledger or database offers no owner heading, need, two free codes, a carried code and a live crossing row")
+    else:
+        _a, _b = _free[0], _free[1]
+        _HA, _HB = _named54(_a), _named54(_b)
+        _R = dict(session=S, dry_run=False)
+        _n0 = c.execute("SELECT COUNT(*) FROM base_taxonomy_identity").fetchone()[0]
+        res, err = ok(db.retire_identity, _a, _NEED54, None, _HA, "T054 fixture", **_R)
+        _r = c.execute("SELECT status, superseded_by_need, superseded_by_identity FROM base_taxonomy_identity WHERE identity_code=?", (_a,)).fetchone()
+        record("T054-01", "retire-identity --need deprecates the code in place with that need as its one successor, deletes nothing and reports the approval",
+               err is None and tuple(_r) == ("deprecated", _NEED54, None) and c.execute("SELECT COUNT(*) FROM base_taxonomy_identity").fetchone()[0] == _n0
+               and res["approval_ref"] == _HA, (err, tuple(_r)))
+        if len(_free) > 2:
+            res, err = ok(db.retire_identity, _b, None, _free[2], _HB, "T054 fixture", **_R)
+            _r2 = c.execute("SELECT status, superseded_by_need, superseded_by_identity FROM base_taxonomy_identity WHERE identity_code=?", (_b,)).fetchone()
+            record("T054-02", "retire-identity --to-identity deprecates the code with that identity as its one successor",
+                   err is None and tuple(_r2) == ("deprecated", None, _free[2]), (err, tuple(_r2)))
+        else:
+            skip("T054-02", "fewer than three codes without live carriers")
+        _c0 = _carried[0]
+        _rs = {"neither": refusal(db.retire_identity, _free[-1], None, None, _OH54, "r", session=S, dry_run=True),
+               "both": refusal(db.retire_identity, _free[-1], _NEED54, _free[0], _OH54, "r", session=S, dry_run=True),
+               "not held": refusal(db.retire_identity, "NO-SUCH-CODE", _NEED54, None, _OH54, "r", session=S, dry_run=True),
+               "already deprecated": refusal(db.retire_identity, _a, _NEED54, None, _HA, "r", session=S, dry_run=True),
+               "entry does not name the code": refusal(db.retire_identity, _free[-1], _NEED54, None, _HA if _named54(_free[-1]) != _HA else _OH54, "r", session=S, dry_run=True),
+               "need absent": refusal(db.retire_identity, _free[-1], "NO-SUCH-NEED", None, _OH54, "r", session=S, dry_run=True),
+               "to itself": refusal(db.retire_identity, _free[-1], None, _free[-1], _OH54, "r", session=S, dry_run=True),
+               "to a deprecated code": refusal(db.retire_identity, _free[-1], None, _a, _OH54, "r", session=S, dry_run=True),
+               "blank reason": refusal(db.retire_identity, _free[-1], _NEED54, None, _OH54, "", session=S, dry_run=True),
+               "not an owner entry": refusal(db.retire_identity, _free[-1], _NEED54, None, "Supersession record 2026-11-15 — x", "r", session=S, dry_run=True),
+               "carried": refusal(db.retire_identity, _c0, _NEED54, None, _named54(_c0) or _OH54, "r", session=S, dry_run=True)}
+        record("T054-03", "retire-identity refuses neither or both successors, a code not held or already deprecated, a need that does not exist, a retirement "
+               "to itself or to a deprecated code, a blank reason, an approval that is not the owner's, and a code a live row still carries (naming the "
+               "carriers and the count)",
+               all(_rs.values()) and "exactly one" in _rs["neither"] and "exactly one" in _rs["both"] and "not held" in _rs["not held"]
+               and "already deprecated" in _rs["already deprecated"] and "access_needs" in _rs["need absent"] and "itself" in _rs["to itself"]
+               and "deprecated" in _rs["to a deprecated code"] and "--reason" in _rs["blank reason"] and "owner" in _rs["not an owner entry"]
+               and "does not name" in _rs["entry does not name the code"]
+               and ("still carried" in _rs["carried"] or not _named54(_c0)) and re.search(r"\w+\.\w+ \(\d+\)", _rs["carried"]), _rs)
+        _w = {"add-population-icf-link": refusal(db.insert_population_icf_link, population=_a, icf_code="d450", mechanism="m", mapping_confidence="high_predictive",
+                                                provenance="p", session=S, dry_run=True),
+              "raise-determination-gate": refusal(db.raise_determination_gate, parameter_id=scalar("SELECT parameter_id FROM base_parameters WHERE status='active' LIMIT 1"),
+                                                 verdict="QUESTION", detail="x", identity=_a, session=S, dry_run=True),
+              "fk_declared": refusal(dbcore.fk_declared, c, "connection_targets", "identity_code", _a, "add-connection identity_code")}
+        record("T054-04", "a writer given the deprecated code refuses it and names the access need that replaced it",
+               all(v and "deprecated" in v and _NEED54 in v for v in _w.values()), _w)
+        _lid = _LINK54[0][0]
+        res, err = ok(db.retire_population_icf_link, _lid, "T054 fixture", **_R)
+        _lr = c.execute("SELECT retired_at, retired_by_session, retired_reason FROM identity_icf_map WHERE link_id=?", (_lid,)).fetchone()
+        _again = refusal(db.retire_population_icf_link, _lid, "again", session=S, dry_run=True)
+        _absent = refusal(db.retire_population_icf_link, 2 ** 30, "r", session=S, dry_run=True)
+        _blank = refusal(db.retire_population_icf_link, _lid, " ", session=S, dry_run=True)
+        record("T054-05", "retire-population-icf-link retires one crossing row in place with its session and reason; a second retirement, an absent id and a blank reason are refused",
+               err is None and all(_lr) and _lr[2] == "T054 fixture" and _again and "already retired" in _again and _absent and "not in identity_icf_map" in _absent
+               and _blank and "--reason" in _blank, (err, tuple(_lr), _again, _absent, _blank))
+        # T054-08: add-medical (a writer the first cut missed) refuses the deprecated code; T054-09: a retirement is not
+        # blocked by records, and says what stays; T054-10: a code that is a deprecated code's successor cannot be retired
+        _med = refusal(db.insert_medical, code="MD-TFIXTUREZ", display_name="T fixture", description="TASK-FIXTURE", icd11="8A00",
+                       identity=_a, relationship="names", session=S, dry_run=True) if hasattr(db, "insert_medical") else "no insert_medical"
+        record("T054-08", "add-medical --identity refuses the deprecated code", bool(_med) and ("deprecated" in _med or _med == "no insert_medical"), _med)
+        if len(_free) > 4:
+            _y, _x = _free[3], _free[4]
+            ok(db.retire_identity, _x, None, _y, _named54(_x), "T054 fixture", **_R)
+            _blocked = refusal(db.retire_identity, _y, _NEED54, None, _named54(_y), "r", session=S, dry_run=True)
+            record("T054-10", "a code another deprecated code names as its successor cannot be retired while that stands",
+                   bool(_blocked) and "still carried" in _blocked and "superseded_by_identity" in _blocked, _blocked)
+        _bad = []
+        _spare = next(k for k in _codes54 if k not in (_a, _b, *_free[2:5]))
+        for sql in ("UPDATE base_taxonomy_identity SET status='deprecated' WHERE identity_code=?",
+                    "UPDATE base_taxonomy_identity SET superseded_by_need=? WHERE identity_code=?",
+                    "UPDATE base_taxonomy_identity SET status='deprecated', superseded_by_need=?, superseded_by_identity=? WHERE identity_code=?"):
+            try:
+                args = {1: (_spare,), 2: (_NEED54, _spare), 3: (_NEED54, _a, _spare)}[sql.count("?")]
+                c.execute(sql, args); _bad.append(sql)
+            except sqlite3.IntegrityError:
+                pass
+        c.rollback()
+        record("T054-06", "the schema refuses a deprecated code with no successor, an active code with one, and a deprecated code with two", not _bad, _bad)
+
+with scratch() as c:           # T054-09: a fresh copy, so every free code is still free
+    _fc = [k for k in [r[0] for r in c.execute("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' ORDER BY identity_code")]
+           if not db._identity_carriers(c, k) and _named54(k)]
+    if _fc and _NEED54:
+        c.execute("UPDATE evidence_population_match SET target_population=? WHERE rowid=(SELECT MIN(rowid) FROM evidence_population_match)", (_fc[0],)); c.commit()   # HAND: one graded match names it
+        res5, err5 = ok(db.retire_identity, _fc[0], _NEED54, None, _named54(_fc[0]), "T054 fixture", session=S, dry_run=False)
+        record("T054-09", "a code that only a graded population match still names is retired, and the result lists that record as history (a match is a record, not a carrier)",
+               err5 is None and any(r["where"] == "evidence_population_match.target_population" and r["rows"] >= 1 for r in res5["records_kept_as_history"]), (err5, res5))
+    else:
+        skip("T054-09", "no free code named by an owner entry, or no need")
+
+print("Section T055: device_class takes the mobility values and can be amended on a figure already written")
+_EID55 = scalar("SELECT extraction_id FROM source_value_extractions WHERE device_class IS NULL ORDER BY extraction_id LIMIT 1")
+_dv = {"lower_limb_prosthesis", "crutches", "cane"}
+if _EID55 is None:
+    skip("T055", "no figure without a device_class on the live database")
+else:
+    record("T055-11", "the column's own CHECK admits the three mobility values and keeps every earlier one",
+           _dv <= set(dbcore.schema_choices("source_value_extractions", "device_class")) and {"power_chair", "walker_rollator", "mixed", "not_device_scoped"}
+           <= set(dbcore.schema_choices("source_value_extractions", "device_class")), sorted(dbcore.schema_choices("source_value_extractions", "device_class")))
+    with scratch() as c:
+        _out = {}
+        for v in sorted(_dv):
+            res, err = ok(db.amend_extraction, _EID55, "device_class", v, "T055 fixture", session=S, dry_run=False)
+            _out[v] = (err, c.execute("SELECT device_class FROM source_value_extractions WHERE extraction_id=?", (_EID55,)).fetchone()[0])
+        _bad = refusal(db.amend_extraction, _EID55, "device_class", "BANANA", "T055 fixture", session=S, dry_run=True)
+        record("T055-12", "amend-extraction --field device_class accepts each new value and refuses one outside the CHECK, naming the set",
+               all(e is None and now == v for v, (e, now) in _out.items()) and bool(_bad) and "power_chair" in _bad, (_out, _bad))
+
+print("Section T080: a search that found nothing states its cause, or was not run")
+_cls80 = sorted(dbcore.schema_choices("search_executions", "absence_class"))
+_r0 = refusal(db.log_search, **search(results_found=0))
+_r0b = refusal(db.log_search, **search(results_found=0, backfill=1))
+record("T080-01", "log-search refuses a zero-result search with no cause, backfill included, naming every value of the column's CHECK and the deferral for a request that returned no result list",
+       all(_r0) and all(c in _r0 for c in _cls80) and "--deferred-reason" in _r0 and _r0b and all(c in _r0b for c in _cls80), (_r0, _r0b))
+_ok0, _e0 = ok(db.log_search, **search(results_found=0, absence_class=_cls80[0]))
+_ok1, _e1 = ok(db.log_search, **search(results_found=0, deferred_reason="TASK-FIXTURE the request returned no result list (403)"))
+_ok2, _e2 = ok(db.log_search, **search(results_found=3))
+record("T080-02", "a zero-result search carrying a cause, a deferred search, and a search that found something are all accepted (dry run)",
+       _e0 is None and _e1 is None and _e2 is None, (_e0, _e1, _e2))
+_r3 = refusal(db.log_search, **search(results_found=2, absence_class=_cls80[0]))
+record("T080-03", "an absence class on a search that found something is still refused", bool(_r3) and "only a search that found nothing" in _r3, _r3)
+_rb = refusal(db.log_search, **search(results_found=0, deferred_reason="  "))
+_rn = refusal(db.log_search, **search(results_found=-1))
+_rs = refusal(db.log_search, **search(results_found="0"))
+_rboth = refusal(db.log_search, **search(results_found=0, absence_class=_cls80[0], deferred_reason="TASK-FIXTURE not run"))
+record("T080-04", "a blank deferral, a negative count, a count that is not a whole number, and a class beside a deferral are each refused before a row is written",
+       bool(_rb) and "--results-found 0 needs" in _rb and bool(_rn) and "whole number" in _rn and bool(_rs) and "whole number" in _rs
+       and bool(_rboth) and "cannot assert both" in _rboth, (_rb, _rn, _rs, _rboth))
+_cli80 = cli("log-search", "--slug", SLUG, "--language", LANG, "--jurisdiction", JUR, "--query-text", "q", "--engine", "web",
+             "--depth-method", "scoping", "--prior-expectation", "nothing", "--session", S, "--dry-run")
+record("T080-05", "through the CLI, a search that states no count (so 0) and no cause is refused with the REFUSING prefix",
+       _cli80.returncode != 0 and _cli80.stderr.lstrip().startswith("REFUSING") and "--results-found 0 needs" in _cli80.stderr,
+       (_cli80.returncode, _cli80.stderr[:200]))
+with scratch() as c:
+    _cell = c.execute("SELECT slug, language, jurisdiction FROM v_coverage_priority WHERE jurisdiction IN (SELECT jurisdiction_code FROM base_jurisdictions) AND language IN (SELECT language FROM lang_jur_map) ORDER BY priority_score DESC, slug LIMIT 1").fetchone()
+    if _cell is None:
+        skip("T080-06", "no owed cell on the live database")
+    else:
+        _q = lambda: c.execute("SELECT COUNT(*) FROM v_coverage_priority WHERE slug=? AND language=? AND jurisdiction=?", tuple(_cell)).fetchone()[0]
+        _n0 = _q()
+        _o, _e = ok(db.log_search, **search(slug=_cell[0], language=_cell[1], jurisdiction=_cell[2], results_found=0,
+                                            deferred_reason="TASK-FIXTURE the request returned 403", dry_run=False))
+        c.commit()
+        _n1 = _q()
+        _o2, _e2 = ok(db.log_search, **search(slug=_cell[0], language=_cell[1], jurisdiction=_cell[2], results_found=0,
+                                              absence_class=_cls80[0], dry_run=False))
+        c.commit()
+        _n2 = _q()
+        record("T080-06", "a deferred search (not run) leaves its cell on the owed list and a search that ran takes it off (migration 137)",
+               _e is None and _e2 is None and _n0 == 1 and _n1 == 1 and _n2 == 0, (_e, _e2, _n0, _n1, _n2))
+
+print("Section T073: a fixture retrieval root leaves out a folder filed under an id the database has not minted")
+import io as _io
+_hw = dbcore.ref_id_high_water(sqlite3.connect(f"file:{DB}?mode=ro", uri=True))
+_src = pathlib.Path(TMP) / "t073-source"
+for _name, _ref in (("session-below", f"REF-{max(_hw - 1, 1):05d}"), ("session-at", f"REF-{_hw:05d}"), ("session-ahead", f"REF-{_hw + 1:05d}")):
+    (_src / _name).mkdir(parents=True, exist_ok=True)
+    (_src / _name / "manifest.jsonl").write_text(json.dumps({"ref_id": _ref}) + "\n", encoding="utf-8")
+(_src / "session-no-manifest").mkdir(exist_ok=True)
+_mx = _src / "session-mixed"                      # one folder, two sources: one admitted (at the mark), one not yet
+_mx.mkdir(exist_ok=True)
+(_mx / "manifest.jsonl").write_text(json.dumps({"ref_id": f"REF-{_hw:05d}", "artefact": "aaaa.html"}) + "\n"
+                                    + json.dumps({"ref_id": f"REF-{_hw + 1:05d}", "artefact": "bbbb.pdf"}) + "\n", encoding="utf-8")
+for _f in ("aaaa.html", "bbbb.pdf", "bbbb-full-text.txt"):
+    (_mx / _f).write_text("x", encoding="utf-8")
+with contextlib.redirect_stdout(_io.StringIO()) as _out:
+    _root = pathlib.Path(fixture_log_root(os.path.join(TMP, "t073-root"), DB, source=_src))
+_kept = sorted(x.name for x in _root.iterdir())
+_mfiles = sorted(x.name for x in (_root / "session-mixed").iterdir())
+_mlines = [json.loads(l)["ref_id"] for l in (_root / "session-mixed" / "manifest.jsonl").open() if l.strip()]
+record("T073-01", "the fixture root links every folder whose ids the database has minted (below and AT its high-water mark) and one with no manifest, and keeps of a folder holding "
+       "an id above the mark only the lines and files of the ids below it, saying so in one line that names the id and the mark",
+       _kept == ["session-ahead", "session-at", "session-below", "session-mixed", "session-no-manifest"]
+       and _mfiles == ["aaaa.html", "manifest.jsonl"] and _mlines == [f"REF-{_hw:05d}"] and list((_root / "session-ahead").iterdir()) == [_root / "session-ahead" / "manifest.jsonl"]
+       and f"REF-{_hw + 1:05d}" in _out.getvalue() and str(_hw) in _out.getvalue(), (_kept, _mfiles, _mlines, _out.getvalue()))
+record("T073-02", "the fixture root of this very suite holds no folder above the copy's high-water mark",
+       not any(dbcore._MINTABLE.fullmatch((json.loads(l).get("ref_id") or "")) and int(json.loads(l)["ref_id"][4:]) > _hw
+               for m in pathlib.Path(FARM).glob("*/manifest.jsonl") for l in m.open() if l.strip()), None)
 
 print("Section B4/B5/D4/R3-14: conflicts -- keyed on the parameter, an unordered pair, two real populations")
 CODES = [r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "
@@ -1729,7 +2374,7 @@ else:
                (rb.stderr + rb.stdout)[-200:])
 
         # log-search --gap-id
-        ls = lambda gap, *a: cli("log-search", "--parameter", str(A_PAR), "--language", LANG, "--query-text",  # noqa: E731
+        ls = lambda gap, *a: cli("log-search", "--results-found", "1", "--parameter", str(A_PAR), "--language", LANG, "--query-text",  # noqa: E731
                                  "TASK-FIXTURE probe", "--engine", "manual", "--depth-method", "scoping",
                                  "--prior-expectation", "TASK-FIXTURE: none expected", "--session", S,
                                  "--gap-id", gap, *a)
@@ -1749,7 +2394,7 @@ else:
                and unheld in ru.stderr + ru.stdout and unheld in rw.stderr + rw.stdout and n_se(c) == e1
                and "unrecognized arguments" not in ru.stderr + rw.stderr,
                ((ru.stderr + ru.stdout)[-250:], n_se(c) - e1))
-        rn = cli("log-search", "--parameter", str(A_PAR), "--language", LANG, "--query-text", "TASK-FIXTURE probe",
+        rn = cli("log-search", "--results-found", "1", "--parameter", str(A_PAR), "--language", LANG, "--query-text", "TASK-FIXTURE probe",
                  "--engine", "manual", "--depth-method", "scoping", "--prior-expectation", "TASK-FIXTURE: none expected",
                  "--session", S)
         enull = json.loads(rn.stdout)["exec_id"] if rn.returncode == 0 and rn.stdout.strip() else None
@@ -1831,7 +2476,7 @@ else:
             # A search for the engine gap must agree with the cell's subject (its subject comes from v_gap_subject).
             other_p = scalar("SELECT parameter_id FROM base_parameters WHERE status='active' AND parameter_id<>? "
                              "ORDER BY 1 LIMIT 1", P_ENG)
-            base_ls = ["log-search", "--language", LANG, "--query-text", "TASK-FIXTURE probe", "--engine", "manual",
+            base_ls = ["log-search", "--results-found", "1", "--language", LANG, "--query-text", "TASK-FIXTURE probe", "--engine", "manual",
                        "--depth-method", "scoping", "--prior-expectation", "TASK-FIXTURE: none expected", "--session", S]
             r1 = cli(*base_ls, "--parameter", str(other_p), "--gap-id", gid_e)
             r2 = cli(*base_ls, "--parameter", str(P_ENG), "--identity", CELL_IDENT, "--gap-id", gid_e)
@@ -1857,7 +2502,7 @@ else:
             ga = json.loads(cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE typed gap",
                                 "--session", S, *typed).stdout or "{}").get("gap_id")
             ls_ = lambda gap, **o: cli(*(  # noqa: E731
-                ["log-search", "--query-text", "TASK-FIXTURE probe", "--engine", "manual", "--depth-method", "scoping",
+                ["log-search", "--results-found", "1", "--query-text", "TASK-FIXTURE probe", "--engine", "manual", "--depth-method", "scoping",
                  "--prior-expectation", "TASK-FIXTURE: none expected", "--session", S, "--gap-id", gap]
                 + [x for k_, v_ in {"--parameter": str(A_PAR), "--identity": IDENT, "--jurisdiction": JUR,
                                     "--language": LANG, **o}.items() if v_ is not None for x in (k_, v_)]))
@@ -1906,7 +2551,7 @@ else:
                    held_m is not None and held_m[0] == "MD-TASK-FIXTURE" and rm2.returncode != 0 and "medical_code" in rm2.stderr,
                    (rm_.stderr + rm2.stderr)[-250:])
 
-h_ls, h_ag = cli("log-search", "--help").stdout, cli("add-gap", "--help").stdout
+h_ls, h_ag = cli("log-search", "--results-found", "1", "--help").stdout, cli("add-gap", "--help").stdout
 record("T013-12", "log-search --help lists --gap-id; add-gap --help lists the seven subject flags",
        "--gap-id" in h_ls and all(f_ in h_ag for f_ in ("--parameter", "--identity", "--icf", "--needs", "--medical",
                                                           "--jurisdiction", "--language")), (h_ls[-100:], h_ag[-100:]))
@@ -2048,7 +2693,7 @@ with scratch() as c:
         record("ST2", "log-mining --session x.md stores x in citation_mining.updated_by_session", p.returncode == 0
                and bool(got) and all(g[0] == S for g in got), (p.stdout + p.stderr)[-200:] or [tuple(g) for g in got])
     if PAIR and slug_ref:
-        p = cli("log-search", "--slug", SLUG, "--language", LANG, "--jurisdiction", JUR, "--query-text", "stem probe",
+        p = cli("log-search", "--results-found", "1", "--slug", SLUG, "--language", LANG, "--jurisdiction", JUR, "--query-text", "stem probe",
                 "--engine", "web", "--depth-method", "scoping", "--prior-expectation", "nothing",
                 "--admitted-ref-id", slug_ref[1], "--session", S + ".md")
         try:
@@ -2636,6 +3281,83 @@ if feature("T010-01", "the rule dbcore.NON_QUANTITY_DOMAINS exists, holds at lea
                if scalar("SELECT COUNT(*) FROM terms WHERE domain=? AND term_id<>?", d, _p)}
         record("T010-11", "amend-term refuses to move a term that is already a parameter into ANY refused domain",
                bool(_rs) and all(v and "already a parameter" in v for v in _rs.values()), _rs)
+
+
+# ───────────── T-015: a language is one of the map's, whatever its letter case ─────────────
+print("Section T015: the coverage views fold a language to the map's case; observe-term and add-source refuse a language the "
+      "map does not hold and store the map's spelling; an English source sorts as English in any case")
+_MAP = [r[0] for r in q("SELECT DISTINCT language FROM lang_jur_map ORDER BY 1")]
+record("T015-01", "the coverage views hold one row per slug and language: the distinct languages of v_coverage_language equal the "
+       "folded distinct languages of the searches, and no (slug, language) pair is split by case in either view",
+       scalar("SELECT COUNT(DISTINCT language) FROM v_coverage_language")
+       == scalar("SELECT COUNT(DISTINCT UPPER(language)) FROM search_executions WHERE deferred_reason IS NULL")
+       and scalar("SELECT COUNT(*) FROM (SELECT slug, UPPER(language) FROM v_coverage_language GROUP BY 1, 2 HAVING COUNT(*) > 1)") == 0
+       and scalar("SELECT COUNT(*) FROM (SELECT slug, parameter_id, jurisdiction, UPPER(language), identity_code, icf_code, needs_code, "
+                  "medical_code FROM v_coverage_lens GROUP BY 1,2,3,4,5,6,7,8 HAVING COUNT(*) > 1)") == 0
+       and scalar("SELECT COUNT(*) FROM v_coverage_language WHERE language <> UPPER(language)") == 0, None)
+with scratch() as c:                   # every search stored in lower case: neither view may notice (the live log holds both spellings)
+    _snap = lambda: ([tuple(r) for r in c.execute("SELECT slug, language, searches, admitted FROM v_coverage_language ORDER BY 1, 2")],  # noqa: E731
+                     [tuple(r) for r in c.execute("SELECT slug, parameter_id, jurisdiction, language, identity_code, icf_code, needs_code, "
+                                                  "medical_code, searches, deferred FROM v_coverage_lens ORDER BY 1, 2, 3, 4, 5, 6, 7, 8")])
+    _before = _snap()
+    hand("UPDATE search_executions SET language=LOWER(language)")
+    _after = _snap()
+    hand("UPDATE search_executions SET language=UPPER(language)")
+    _upper = _snap()
+    record("T015-02", "storing EVERY search as lower case, and then as upper case, changes neither view in any row or figure: both "
+           "views read the language, not its spelling", bool(_before[0]) and bool(_before[1]) and _before == _after == _upper,
+           (len(_before[0]), len(_after[0]), len(_before[1]), len(_after[1])))
+_absent = next("".join(p) for p in itertools.product("ABCDEFGHIJKLMNOPQRSTUVWXYZ", repeat=2) if "".join(p) not in _MAP)
+_ref15 = new_source()
+_obs15 = {"ref_id": _ref15, "surface_form": "clause", "locator": "p1", "context_quote": "a clause read off paper",
+          "verbatim_exempt": "scanned PDF, no text layer"}
+r = refusal(db.observe_term, {**_obs15, "language": _absent.lower()}, S, dry_run=True)
+record("T015-03", "observe-term refuses a language lang_jur_map does not hold, whatever its case, naming the map",
+       r and "lang_jur_map" in r and repr(_absent.lower()) in r and "--language" in r, r)
+_held = next((l for l in _MAP if l != "EN"), None)
+with scratch() as c:
+    if _held is None:
+        for _t in ("T015-04", "T015-05", "T015-07"):
+            skip(_t, "lang_jur_map holds no language besides EN")
+    else:
+        _r15 = new_source()
+        res, err = ok(db.observe_term, {**_obs15, "ref_id": _r15, "language": _held.lower()}, S, dry_run=False)
+        record("T015-04", "observe-term stores a held language in the map's spelling, however it was typed",
+               err is None and c.execute("SELECT language FROM observed_terms WHERE ref_id=?", (_r15,)).fetchone()[0] == _held, err)
+        _src = {**SRC, "title": "Fixture on handrail finial profiles and a T015 probe"}
+        _bad = refusal(db.insert_evidence_source, {**_src, "lang_detected": _absent.lower()}, S, dry_run=True, authors=AUTH)
+        _id15, _e15 = ok(db.insert_evidence_source, {**_src, "title": _src["title"] + " two", "lang_detected": _held.lower()}, S,
+                         dry_run=False, authors=AUTH)
+        record("T015-05", "add-source refuses a --lang-detected the map does not hold, naming that flag and the map, and stores a held "
+               "one in the map's spelling", _bad and "lang_jur_map" in _bad and "--lang-detected" in _bad and _e15 is None
+               and c.execute("SELECT lang_detected FROM evidence_sources WHERE ref_id=?", (_id15,)).fetchone()[0] == _held, (_bad, _e15))
+        # The map's spelling is READ, not assumed upper: with the map holding the language in lower case, both spellings are accepted
+        # and the stored value is the map's.
+        hand("UPDATE lang_jur_map SET language=LOWER(language) WHERE language=?", _held)
+        _id16, _e16 = ok(db.insert_evidence_source, {**_src, "title": _src["title"] + " three", "lang_detected": _held}, S,
+                         dry_run=False, authors=AUTH)
+        record("T015-07", "the writers store the map's own spelling: with the map holding the language in lower case, an upper-case "
+               "--lang-detected is accepted and stored in lower case",
+               _e16 is None and c.execute("SELECT lang_detected FROM evidence_sources WHERE ref_id=?", (_id16,)).fetchone()[0] == _held.lower(),
+               _e16)
+        hand("UPDATE lang_jur_map SET language=UPPER(language) WHERE language=?", _held.lower())
+    # An English source is English whatever its spelling: of two unmined sources of one tier, the Japanese one comes first and the
+    # English one after it, `EN` or `en`, though the English one sorts earlier by slug and label.
+    _un = [r for r in db.get_unmined_for_all_slugs(6)]
+    _tier = next((t for t in sorted({r["tier"] for r in _un}) if len([r for r in _un if r["tier"] == t]) >= 2), None)
+    if _tier is None:
+        skip("T015-06", "no tier with two unmined sources")
+    else:
+        _two = sorted((r for r in _un if r["tier"] == _tier), key=lambda r: (r["slug"], r["local_ref_id"]))[:2]
+        _ids = [c.execute("SELECT ref_id FROM source_slug_links WHERE slug=? AND local_ref_id=?", (r["slug"], r["local_ref_id"])).fetchone()[0]
+                for r in _two]
+        _res = []
+        for _spelling in ("EN", "en"):
+            hand("UPDATE evidence_sources SET lang_detected=?, language=NULL WHERE ref_id=?", _spelling, _ids[0])
+            hand("UPDATE evidence_sources SET lang_detected='ja', language=NULL WHERE ref_id=?", _ids[1])
+            _order = [r["local_ref_id"] for r in db.get_unmined_for_all_slugs(6) if r["tier"] == _tier]
+            _res.append(_order.index(_two[1]["local_ref_id"]) < _order.index(_two[0]["local_ref_id"]))
+        record("T015-06", "an English source sorts after a non-English one of its tier whether it is stored `EN` or `en`", all(_res), _res)
 
 
 finish()

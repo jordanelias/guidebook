@@ -221,7 +221,8 @@ class BestPracticeStatus(str, Enum):
     """T-04 state machine for BPC entries.
 
     PROVISIONAL: initial extraction, not all 24 jurisdictions recorded.
-    COMPLETE: all 24 jurisdictions + co1_pass ≥ 9 languages.
+    COMPLETE: all 24 jurisdictions + co1_pass ≥ 9 languages (the ≥ 9 languages clause is superseded by the
+    owner's answer to OD-13, 2026-11-12; see the ledger, references/project-standards.md).
     OPUS_SYNTHESIZED: Opus has reviewed and set recommendation_strength.
     CONSUMED: integrated into item specification.
     """
