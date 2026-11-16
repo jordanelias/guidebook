@@ -2183,7 +2183,7 @@ def main():
     p_rnt.add_argument("--term-id", dest="term_id", required=True)
     p_rnt.add_argument("--canonical-en", dest="canonical_en", required=True)
     p_rnt.add_argument("--from-observation", dest="from_observation", type=int,
-                       help="an English observation adjudicated to this term whose phrase "
+                       help="an observation whose LATEST adjudication names this term and whose phrase "
                             "contains the new name")
     p_rnt.add_argument("--ruling-quote", dest="ruling_quote",
                        help="the owner's words, verbatim, found exactly once in "
@@ -6932,7 +6932,8 @@ def adjudicate_term(observation_id: int, outcome: str, rationale: str, session: 
         if prior:
             print(f"NOTE: observation {observation_id} ({obs['surface_form']!r}) already "
                   f"adjudicated by {[r[0] for r in prior]}. Writing a second row -- "
-                  f"divergent judgements read as a contest, not as an error.",
+                  f"the latest one is the standing judgment (T-074): this row now governs what an "
+                  f"alias or a rename may rest on.",
                   file=sys.stderr)
         cols = ",".join(row)
         cur = conn.execute(f"INSERT INTO term_adjudications ({cols}) "
@@ -7099,6 +7100,11 @@ def insert_term(from_observation: int, canonical_en: str, rationale: str, sessio
         row.update(dbcore.stamp_for(conn, "terms", session))
         conn.execute(f"INSERT INTO terms ({','.join(row)}) "
                      f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+        _prior_adj = conn.execute("SELECT outcome, created_by_session FROM term_adjudications WHERE observation_id=? "
+                                  "ORDER BY adjudication_id DESC LIMIT 1", (from_observation,)).fetchone()
+        if _prior_adj is not None:
+            print(f"NOTE: observation {from_observation} was last adjudicated {_prior_adj[0]} by {_prior_adj[1]}. "
+                  f"This NAMES-NEW row is now the standing judgment (T-074) and overrides it.", file=sys.stderr)
         adj = {"observation_id": from_observation, "outcome": "NAMES-NEW",
                "term_id": term_id, "rationale": rationale}
         adj.update(dbcore.stamp_for(conn, "term_adjudications", session))
@@ -7720,10 +7726,18 @@ def _names_term(conn, observation_id: int, term_id: str) -> bool:
     return row is not None and row[0] == term_id
 
 
-def _not_named_msg(verb: str, observation_id: int, term_id: str) -> str:
-    """The refusal's opening, shared by the two callers of _names_term."""
-    return (f"{verb}: the latest adjudication of observation {observation_id} does not name "
-            f"{term_id} (none does, or a later one declined it or named another term).")
+def _not_named_msg(conn, verb: str, observation_id: int, term_id: str) -> str:
+    """The refusal's opening, shared by the callers of _names_term: it says WHICH case holds."""
+    row = conn.execute(
+        "SELECT adjudication_id, outcome, term_id, created_by_session FROM term_adjudications "
+        "WHERE observation_id = ? ORDER BY adjudication_id DESC LIMIT 1", (observation_id,)).fetchone()
+    if row is None:
+        what = "there is none"
+    elif row["term_id"]:
+        what = f"adjudication {row['adjudication_id']} ({row['created_by_session']}) names {row['term_id']}"
+    else:
+        what = f"adjudication {row['adjudication_id']} ({row['created_by_session']}) is {row['outcome']}"
+    return (f"{verb}: the latest adjudication of observation {observation_id} does not name {term_id}: {what}.")
 
 
 def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
@@ -7807,10 +7821,11 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
                               f"observed term.")
             if not _names_term(conn, from_observation, term_id):
                 raise Refusal(
-                    f"{_not_named_msg('rename-term', from_observation, term_id)} "
-                    f"Judge first that the source's phrase names THIS concept "
-                    f"(db.py adjudicate-term --outcome NAMES-EXISTING --term-id {term_id}), "
-                    f"then rename from it. Nothing was written.")
+                    f"{_not_named_msg(conn, 'rename-term', from_observation, term_id)} "
+                    f"If the source's phrase does name THIS concept, judge it: db.py adjudicate-term "
+                    f"--observation-id {from_observation} --outcome NAMES-EXISTING --term-id {term_id} "
+                    f"--rationale ... --session ... (a later adjudication is the standing one), then rename "
+                    f"from it. Nothing was written.")
             if not _retrieval_log().phrase_in_quote(new, obs["surface_form"]):
                 raise Refusal(
                     f"rename-term: {new!r} is not in the observed phrase "
@@ -8023,6 +8038,21 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
         if not dbcore.exists(conn, "terms", "term_id", term_id):
             raise Refusal(f"add-alias: {term_id!r}: no such term.")
         obs, note = None, None
+        if route == "base":
+            # The base route is "a form read where NO observation exists". A form an observation already
+            # records is judged there, and the latest adjudication governs (T-074): writing it here would
+            # carry a phrase the project declined into the vocabulary with a URL as its warrant.
+            for _o in conn.execute("SELECT observation_id FROM observed_terms WHERE lower(trim(surface_form)) = ? "
+                                   "AND upper(language) = upper(?) ORDER BY observation_id",
+                                   (alias.strip().lower(), language or "")).fetchall():
+                _latest = conn.execute("SELECT term_id FROM term_adjudications WHERE observation_id = ? "
+                                       "ORDER BY adjudication_id DESC LIMIT 1", (_o[0],)).fetchone()
+                if _latest is not None and _latest[0] is None:   # judged NOT-OURS or DEFERRED (an unjudged one is not a rejection)
+                    raise Refusal(
+                        f"{_not_named_msg(conn, 'add-alias', _o[0], term_id)} The base route is for a form no "
+                        f"observation covers; observation {_o[0]} records this phrase and its standing judgment "
+                        f"names no term. Judge it first (db.py adjudicate-term), then alias from the "
+                        f"observation (--observation-id {_o[0]}). Nothing was written.")
         if route == "observation":
             obs = conn.execute(
                 "SELECT o.observation_id, o.ref_id, o.surface_form, o.language, o.locator, "
@@ -8041,7 +8071,7 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
                     f"route with the instrument's own URL and clause. Nothing was written.")
             if not _names_term(conn, observation_id, term_id):
                 raise Refusal(
-                    f"{_not_named_msg('add-alias', observation_id, term_id)} "
+                    f"{_not_named_msg(conn, 'add-alias', observation_id, term_id)} "
                     f"An alias says the source's phrase names THIS concept, which is "
                     f"a judgement: db.py adjudicate-term --observation-id {observation_id} "
                     f"--outcome NAMES-EXISTING --term-id {term_id} --rationale ... first.")

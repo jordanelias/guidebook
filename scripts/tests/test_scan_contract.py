@@ -699,8 +699,12 @@ try:
     # T074: an alias or a rename rests on the LATEST adjudication of its observation (adjudications
     # are appended, never edited: a later one that disagrees is the observation's standing judgment).
     if len(FREE) < 30:
-        print("      SKIPPED-NO-FIXTURE: T074 needs three free terms beyond FREE[27]")
+        # A silent skip let the defect come back unseen (the critic of T-074 forced it): research drains FREE by
+        # design (R16 promotes or declines every adjudicated term), so the case that says the fixture ran FAILS.
+        record("T074-00", "T074 has its fixture: three free terms beyond FREE[27] (research drains them; widen the fixture, do not skip)",
+               False, f"len(FREE)={len(FREE)}")
     else:
+        record("T074-00", "T074 has its fixture: three free terms beyond FREE[27]", True)
         TX, TY, TZ = FREE[27:30]
 
         def t74_obs(loc):
@@ -750,6 +754,45 @@ try:
                and q("SELECT observation_id FROM term_aliases WHERE term_id=? AND alias='door leaf'",
                      TX) == [] and q("SELECT observation_id FROM term_aliases WHERE term_id=? AND "
                                      "alias='door leaf'", TZ) == [(o4,)], (m4, w4))
+    # T074-05..09 (the critic of T-074): the same rule on the other paths and orders.
+    if len(FREE) >= 30:
+        o5 = t74_obs("T074e")
+        attempt(adj, o5, "NAMES-EXISTING", "fixture: names it", S, term_id=TX)
+        attempt(adj, o5, "DEFERRED", "fixture: later, cannot settle", S)
+        m5 = refusal(add_alias, TX, o5, "SYNONYM", S)
+        record("T074-05", "add-alias: NAMES-EXISTING and then DEFERRED names nothing now: refused, and the message says the latest is DEFERRED",
+               m5 and "is DEFERRED" in m5, m5)
+        o6 = t74_obs("T074f")
+        attempt(adj, o6, "NAMES-EXISTING", "fixture: names it", S, term_id=TY)
+        attempt(adj, o6, "NOT-OURS", "fixture: dissent in ANOTHER session", S + "-dissent")
+        m6 = refusal(add_alias, TY, o6, "SYNONYM", S)
+        record("T074-06", "the latest adjudication is the highest id whatever the session: a dissent written by another session governs",
+               m6 and "latest adjudication of observation" in m6 and "-dissent" in m6, m6)
+        o7 = t74_obs("T074g")
+        attempt(adj, o7, "NAMES-EXISTING", "fixture: names the first", S, term_id=TX)
+        attempt(adj, o7, "NAMES-EXISTING", "fixture: re-pointed", S, term_id=TZ)
+        name_x2 = q("SELECT canonical_en FROM terms WHERE term_id=?", TX)
+        m7 = refusal(rename, TX, "clearance zone of a wheelchair seat", "fixture", S, from_observation=o7)
+        record("T074-07", "rename-term: an observation re-pointed to another term is refused for the first term and names the term it now names",
+               m7 and m7.startswith("rename-term:") and TZ in m7 and q("SELECT canonical_en FROM terms WHERE term_id=?", TX) == name_x2, m7)
+        # the base route covers a form no observation covers: where one exists and its latest judgment rejects the term, refused
+        _l2 = q("SELECT language FROM observed_terms WHERE observation_id=?", o2)[0][0]
+        a8 = n74()
+        m8 = refusal(add_alias, TX, None, "SYNONYM", S, alias=PH2, language=_l2, jurisdiction="CA",
+                     source_url="https://example.org/doc", source_page="p. 1", attestation="other_source")
+        record("T074-08", "add-alias BASE route: a form an observation records, whose latest judgment is NOT-OURS, is refused and names the observation",
+               m8 and f"observation {o2}" in m8 and "base route is for a form no observation covers" in m8 and n74() == a8, m8)
+        # an alias written under a standing judgment is seen when the judgment is overturned afterwards
+        o9 = t74_obs("T074i")
+        attempt(adj, o9, "NAMES-EXISTING", "fixture: names it", S, term_id=TX)
+        attempt(add_alias, TX, o9, "SYNONYM", S)
+        attempt(adj, o9, "NOT-OURS", "fixture: overturned later", S)
+        import subprocess as _sp9
+        _r9 = _sp9.run([sys.executable, str(REPO / "scripts/audit/alias_provenance_audit.py")],
+                       env={**os.environ, "GUIDEBOOK_DB_PATH": DB}, capture_output=True, text=True)
+        record("T074-09", "alias_provenance_audit flags an alias whose observation was re-judged NOT-OURS afterwards",
+               _r9.returncode == 1 and "re-judged" in _r9.stdout and "no longer names" in _r9.stdout, (_r9.returncode, _r9.stdout[-300:]))
+        x("DELETE FROM term_aliases WHERE observation_id=?", o9)       # fixture cleanup: later cases read the audit's verdict
     # T2: a name is a phrase the source used
     ins = fn("insert_term")
     o_n = attempt(observe, obs("turnwise clearance zone", "PDF page 3 / zone",
@@ -1161,11 +1204,11 @@ try:
         b5 = attempt(aliasfn, T26[2], None, "SYNONYM", S, alias="corridor route", **base_kw)
         r5 = q("SELECT attestation, source_url, source_clause, jurisdiction, observation_id FROM "
                "term_aliases WHERE term_id=? AND alias='corridor route'", T26[2])
-        seed_sql(T26[3], "door leaf", "model_seed")
+        seed_sql(T26[3], "swing leaf", "model_seed")
         n_t3 = q("SELECT COUNT(*) FROM term_aliases WHERE term_id=?", T26[3])[0][0]
-        p5 = attempt(aliasfn, T26[3], None, "SYNONYM", S, alias="door leaf", **base_kw)
+        p5 = attempt(aliasfn, T26[3], None, "SYNONYM", S, alias="swing leaf", **base_kw)
         r5p = q("SELECT attestation, alias_type, source_clause FROM term_aliases WHERE term_id=? "
-                "AND alias='door leaf'", T26[3])
+                "AND alias='swing leaf'", T26[3])
         o5 = attempt(observe, obs("corridor route", "PDF page 2 / T026",
                                   "the clear width of a corridor route is measured here"), S)
         attempt(adj, o5.get("observation_id"), "NAMES-EXISTING", "fixture", S, term_id=T26[2])

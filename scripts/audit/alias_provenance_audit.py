@@ -193,6 +193,23 @@ def main():
               f"(before {CUTOFF_SESSION_DATE}).")
         print("  Reported, not failed — record provenance on next touch.")
 
+    # AN ALIAS RESTS ON THE LATEST ADJUDICATION OF ITS OBSERVATION (T-074): add-alias refuses at write when the
+    # latest does not name the term, but a later adjudication can overturn it, and no verb withdraws an alias. The
+    # row then stands under a judgment that rejects it; this is where that is seen.
+    rejudged = [r for r in con.execute(
+        "SELECT a.term_id, a.alias, a.language, a.observation_id, "
+        "(SELECT t.term_id FROM term_adjudications t WHERE t.observation_id = a.observation_id "
+        " ORDER BY t.adjudication_id DESC LIMIT 1) AS latest "
+        "FROM term_aliases a WHERE a.observation_id IS NOT NULL").fetchall() if r["latest"] != r["term_id"]]
+    print(f"aliases resting on an observation: {sum(1 for r in rows if r['observation_id'] is not None)}"
+          f"; re-judged since: {len(rejudged)}")
+    if rejudged:
+        print(f"\nFAIL: {len(rejudged)} alias(es) whose observation's latest adjudication no longer names their term:")
+        for r in rejudged[:20]:
+            print(f"  {r['term_id']}  {r['language']}  {r['alias']}  observation {r['observation_id']} "
+                  f"latest names {r['latest'] or 'no term'}")
+        print("\n  Re-adjudicate the observation (db.py adjudicate-term) or retire the alias; no verb retires one yet.")
+
     if offenders:
         print(f"\nFAIL: {len(offenders)} alias(es) created on/after {CUTOFF_SESSION_DATE} "
               f"carry no provenance marker:")
@@ -203,6 +220,8 @@ def main():
             print(f"  ... and {len(offenders) - 20} more")
         print("\n  Record the form's attestation (db.py add-alias: an observation, a locator or --seed),")
         print(f"  or, for a row not yet re-attested, one of: {', '.join(PROVENANCE_MARKERS)} in term_aliases.notes.")
+        return 1
+    if rejudged:
         return 1
 
     print(f"\nRESULTS: all post-{CUTOFF_SESSION_DATE} aliases carry provenance")
