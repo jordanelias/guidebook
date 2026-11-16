@@ -3579,6 +3579,8 @@ try:
            _grain[0] == _grain[1] == _grain[2] and _grain[0] > 0, _grain)
     _pick = q(f"SELECT v.parameter_id, v.language, v.jurisdiction FROM {V67} v WHERE v.sources_admitted = 0 AND v.searches_reaching_parameter = 0 "
               "AND EXISTS (SELECT 1 FROM source_value_extractions x WHERE x.parameter_id = v.parameter_id "
+              "AND x.claim_type <> 'absent' AND COALESCE(x.extraction_method, '') <> 'skim' "
+              "AND NOT EXISTS (SELECT 1 FROM evidence_sources e WHERE e.ref_id = x.ref_id AND e.superseded_by_ref_id IS NOT NULL) "
               "AND NOT EXISTS (SELECT 1 FROM search_admissions sa WHERE sa.ref_id = x.ref_id)) ORDER BY 1, 2, 3 LIMIT 1")
     _err67 = None
 except sqlite3.OperationalError as exc:
@@ -3597,7 +3599,9 @@ else:
 
     def seed(c, jurisdiction=J67, language=L67, deferred=None):
         """TASK-FIXTURE: a search in the pair that admits a source holding an extraction of the parameter (the source chosen by query)."""
-        src = c.execute("SELECT x.ref_id FROM source_value_extractions x WHERE x.parameter_id=? AND NOT EXISTS "
+        src = c.execute("SELECT x.ref_id FROM source_value_extractions x WHERE x.parameter_id=? AND x.claim_type <> 'absent' "
+                        "AND COALESCE(x.extraction_method, '') <> 'skim' AND NOT EXISTS "
+                        "(SELECT 1 FROM evidence_sources e WHERE e.ref_id=x.ref_id AND e.superseded_by_ref_id IS NOT NULL) AND NOT EXISTS "
                         "(SELECT 1 FROM search_admissions sa WHERE sa.ref_id=x.ref_id) ORDER BY x.ref_id LIMIT 1", (P67,)).fetchone()[0]
         cur = c.execute("INSERT INTO search_executions (slug, jurisdiction, language, query_text, engine, depth_method, deferred_reason, "
                         "created_by_session, created_at) VALUES (?,?,?,?,?,?,?,?, '2026-01-01T00:00:00Z')",
@@ -3610,7 +3614,7 @@ else:
     def only_the_pair_moved(c, src, before, after, pair=(L67, J67)):
         """Exactly the rows of the pair for the ACTIVE parameters the admitted source holds moved, each to (naming 0, reaching 1, sources 1)."""
         held = {r[0] for r in c.execute("SELECT x.parameter_id FROM source_value_extractions x JOIN base_parameters p USING (parameter_id) "
-                                        "WHERE x.ref_id=? AND p.status='active'", (src,))}
+                                        "WHERE x.ref_id=? AND p.status='active' AND x.claim_type <> 'absent' AND COALESCE(x.extraction_method, '') <> 'skim'", (src,))}
         moved = [(b, a) for b, a in zip(before, after) if b != a]
         ok_ = (len(before) == len(after) and P67 in held and {a[0] for _, a in moved} == held
                and all(a[1:3] == pair and a[4:] == (0, 1, 1) and b[4:] == (0, 0, 0) for b, a in moved))
@@ -3714,5 +3718,69 @@ with scratch() as c:
                gone)
 
 
+
+
+# T067-12..19: the critic of T-067 (migration 140). Seeded on scratch copies; chosen by query as above.
+if _err67 is None and _pick:
+    def row67(c, par=None):
+        return [tuple(r) for r in c.execute(
+            f"SELECT parameter_id, language, jurisdiction, searches_ran_in_pair, searches_naming_parameter, searches_reaching_parameter, "
+            f"sources_admitted, jurisdiction_registered FROM {V67} WHERE language=? AND jurisdiction=? "
+            f"AND (? IS NULL OR parameter_id=?) ORDER BY parameter_id", (L67, J67, par, par))]
+
+    with scratch() as c:
+        before = view67(c)
+        src = seed(c)
+        other = c.execute("SELECT ref_id FROM evidence_sources WHERE ref_id<>? ORDER BY ref_id LIMIT 1", (src,)).fetchone()[0]
+        c.execute("UPDATE evidence_sources SET superseded_by_ref_id=? WHERE ref_id=?", (other, src)); c.commit()
+        record("T067-12", "a SUPERSEDED source is not a source reached: superseding the admitted source returns the view to what it was (LED-171)",
+               view67(c) == before, None)
+    with scratch() as c:
+        src = seed(c)
+        c.execute("UPDATE source_value_extractions SET claim_type='absent', claimed_value=NULL WHERE ref_id=? AND parameter_id=?", (src, P67)); c.commit()
+        r = row67(c, P67)[0]
+        record("T067-13", "an extraction that records the parameter as ABSENT from the source does not make a search reach it",
+               r[5] == 0 and r[6] == 0, r)
+    with scratch() as c:
+        src = seed(c)
+        c.execute("UPDATE source_value_extractions SET extraction_method='skim' WHERE ref_id=? AND parameter_id=?", (src, P67)); c.commit()
+        r = row67(c, P67)[0]
+        record("T067-14", "a skimmed extraction (not publishable) does not make a search reach the parameter", r[5] == 0 and r[6] == 0, r)
+    with scratch() as c:
+        _vsql = c.execute("SELECT sql FROM sqlite_master WHERE name=?", (V67,)).fetchone()[0]
+        record("T067-15", "every method dbcore calls not publishable is named in the view's filter (the literal is pinned to the constant)",
+               bool(dbcore.NOT_PUBLISHABLE_METHODS) and all(f"'{m}'" in _vsql for m in dbcore.NOT_PUBLISHABLE_METHODS), (dbcore.NOT_PUBLISHABLE_METHODS,))
+    with scratch() as c:
+        before = row67(c, P67)[0]
+        for deferred in (None, None, "TASK-FIXTURE: not run"):
+            c.execute("INSERT INTO search_executions (slug, jurisdiction, language, query_text, engine, depth_method, deferred_reason, "
+                      "created_by_session, created_at) VALUES (?,?,?,?,?,?,?,?, '2026-01-01T00:00:00Z')",
+                      (SLUG67, J67, L67, "TASK-FIXTURE T067-16", "manual", "scoping", deferred, S))
+        c.commit()
+        after = row67(c, P67)[0]
+        record("T067-16", "searches that RAN in the pair are counted whatever they were for and whatever they admitted (searched, nothing found is not "
+               "unsearched), a deferred one is not, and no other count moves",
+               after[3] == before[3] + 2 and after[4:7] == before[4:7], (before, after))
+    with scratch() as c:
+        for k in range(2):
+            c.execute("INSERT INTO search_executions (slug, parameter_id, jurisdiction, language, query_text, engine, depth_method, deferred_reason, "
+                      "created_by_session, created_at) VALUES (?,?,?,?,?,?,?,?,?, '2026-01-01T00:00:00Z')",
+                      (None, P67, J67, L67, f"TASK-FIXTURE T067-17 {k}", "manual", "scoping", None, S))
+        c.execute("INSERT INTO search_executions (slug, parameter_id, jurisdiction, language, query_text, engine, depth_method, deferred_reason, "
+                  "created_by_session, created_at) VALUES (?,?,?,?,?,?,?,?,?, '2026-01-01T00:00:00Z')",
+                  (None, P67, J67, L67, "TASK-FIXTURE T067-17 deferred", "manual", "scoping", "TASK-FIXTURE: not run", S))
+        c.commit()
+        r = row67(c, P67)[0]
+        record("T067-17", "the searches that name the parameter are counted one by one (two that ran count two; a deferred one is not counted)",
+               r[4] == 2, r)
+    with scratch() as c:
+        _into = c.execute("SELECT parameter_id FROM base_parameters WHERE status='active' AND parameter_id<>? ORDER BY 1 LIMIT 1", (P67,)).fetchone()[0]
+        c.execute("UPDATE base_parameters SET status='merged', merged_into=? WHERE parameter_id=?", (_into, P67)); c.commit()
+        record("T067-18", "a parameter that is not active (here merged) has no row", row67(c, P67) == [], row67(c, P67))
+    with scratch() as c:
+        bad = [tuple(r) for r in c.execute(f"SELECT parameter_id, language, jurisdiction, jurisdiction_registered FROM {V67} v "
+                                           "WHERE jurisdiction_registered <> (EXISTS (SELECT 1 FROM base_jurisdictions j WHERE j.jurisdiction_code = v.jurisdiction))")]
+        record("T067-19", "jurisdiction_registered says whether the pair's jurisdiction is a declared code (a structural zero is not an unsearched pair)",
+               bad == [], bad[:3])
 
 finish()

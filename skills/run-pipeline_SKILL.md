@@ -41,8 +41,10 @@ never call a value correct, safe or adequate.
 
 **Scope (OR-8, OR-12a, ledger 2026-10-30).** Exhaustion is per parameter, per bucket member (a jurisdiction **with its
 associated language**, a `lang_jur_map` row). Read it per parameter from `v_coverage_parameter_via_admission` (one row per active
-parameter and owed pair; a pair of zeros is unsearched for that parameter). In scope: P1+P2+P3 (ledger 2026-10-30 item 7; list in
-`workplan/2026-10-30-ramp-spec-pages/HANDOFF.md` §3); Arabic, Bengali, Hindi and Swahili are scoped out for now. What
+parameter and owed pair: `searches_ran_in_pair` says whether anything was searched there, `searches_reaching_parameter` and
+`sources_admitted` say what reached THIS parameter through a published, unsuperseded figure; a row with `searches_ran_in_pair` above 0
+and the rest 0 is searched and found nothing, not unsearched; `jurisdiction_registered` 0 is a pair no search can be logged in). In scope: P1+P2+P3 (ledger 2026-10-30 item 7; list in
+`workplan/2026-10-30-ramp-spec-pages/HANDOFF.md` §3); Arabic, Bengali, Hindi and Swahili are scoped out for now (the fill of `scope_status` is a data task: until it is recorded every pair is owed and the view carries their rows). What
 is owed has one home, the view `v_research_scope`: every `lang_jur_map` row not recorded `scoped-out` in `scope_status`
 (column added by migration 122; the view by migration 123); a NULL is owed, so an unrecorded scope never shrinks the requirement, and the fill of the column is a
 data PR. `db.py coverage --slug` reads it and reports slug_status and merged_into, pairs_required, pairs_searched, pairs_unsearched (the
