@@ -2745,15 +2745,9 @@ def main():
     p_dx.add_argument("--delta", type=int, required=True,
                       help="extraction_id of the delta figure")
     p_dx.add_argument("--claimed-value", dest="claimed_value",
-                      help="Omit to compute base + delta")
-    p_dx.add_argument("--claimed-unit", dest="claimed_unit",
-                      help="Overrides the base figure's unit -- requires "
-                           "--conversion-note")
-    p_dx.add_argument("--comparator")
-    p_dx.add_argument("--conversion-note", dest="conversion_note",
-                      help="Required when --claimed-unit overrides the base/delta "
-                           "unit")
-    p_dx.add_argument("--claim-text", dest="claim_text", required=True)
+                      help="Omit to compute base + delta. The comparator, the unit, the quote and the locator "
+                           "are the inputs' and are never asked for; --ref-id is a pointer to the base input's "
+                           "source, not an attribution of the derived figure to it")
     p_dx.add_argument("--session", required=True)
     p_dx.add_argument("--dry-run", action="store_true")
 
@@ -3821,9 +3815,7 @@ def main():
             identity=args.identity, icf=args.icf, needs=args.needs,
             lens_basis=args.lens_basis,
             lens_basis_text=args.lens_basis_text, base=args.base, delta=args.delta,
-            claimed_value=args.claimed_value, claimed_unit=args.claimed_unit,
-            comparator=args.comparator, conversion_note=args.conversion_note,
-            claim_text=args.claim_text, session=args.session, dry_run=args.dry_run))
+            claimed_value=args.claimed_value, session=args.session, dry_run=args.dry_run))
 
     elif args.command == "adjudicate-term":
         _emit(adjudicate_term(args.observation_id, args.outcome, args.rationale,
@@ -9711,8 +9703,8 @@ def _refuse_derived_mismatch(conn, extraction_id: int, context: str):
 
     WHAT IS NOT CHECKED: the view joins on equal units and plain numerals, so a row converted between units
     (a derived figure in mm over a base in m) or whose base is a range is not compared; integrity reports it
-    UNCHECKED. `--conversion-note` exists only on `derive-extraction` (not on this path), so on this path such a
-    row carries no record of its conversion."""
+    UNCHECKED. `derive-extraction` refuses two inputs in two units (T-063), so such a row can only arrive by
+    `add-extraction` / `relate-extraction` / `amend-extraction`, and it carries no record of its conversion."""
     for bad in conn.execute("SELECT stored, recomputed FROM v_derived_figure_check WHERE derived_id = ?",
                             (extraction_id,)).fetchall():
         if abs(bad["recomputed"] - bad["stored"]) > 1e-9:
@@ -10117,6 +10109,10 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
       guarantee is the CLI's, not the schema's — say so rather than implying the
       table enforces it.
 
+    * EXCEPT for `figure_role='derived'` (T-063, OD-40): a derived row stores NO claim_text (one given is refused;
+      a figure a source states in words is a claim row) and, with no locator of its own, is checked for one on each
+      `derived_from` input instead of R3's two refusals. Its words and its place are its inputs'.
+
     * A `parameter_id` that is absent, or whose row is not `status='active'`. A
       determination keyed on a parameter folded into another is a determination about
       a subject that no longer stands on its own, and the FK cannot see the
@@ -10323,11 +10319,22 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         # --- the claim -------------------------------------------------------
         claim_type = row.get("claim_type")
         value = row.get("claimed_value")
+        figure_role = row.get("figure_role")
+        # A DERIVED FIGURE HAS NO QUOTE OR LOCATOR OF ITS OWN (OD-40, delegated 2026-11-13): its words and its
+        # place are its inputs', reached through its `derived_from` edges, each of which carries its input's
+        # verified quote. A figure a source states in words is a claim row, never a derived one.
+        if figure_role == "derived":
+            if "claim_text" in row:
+                raise Refusal(
+                    "add-extraction: a derived figure carries no claim_text of its own: its words are its inputs', "
+                    "reached through its derived_from edges (OD-40). A figure the source states in words is a claim "
+                    "row (--figure-role claim); a computed one is written with db.py derive-extraction. "
+                    "Nothing was written.")
         # THE VERBATIM FLOOR. `--claim-text` is required at the parser, so this fires
         # on the PYTHON API path and on `--claim-text ""` — a blank is not a quote,
         # and normalising it to None here would restore exactly the zero-verbatim row
         # the requirement exists to forbid.
-        if not str(row.get("claim_text") or "").strip():
+        elif not str(row.get("claim_text") or "").strip():
             raise Refusal(
                 "--claim-text is required and must not be blank. Migration 073 retired "
                 "`parameter`, the last NOT NULL column that carried the source's own "
@@ -10341,12 +10348,13 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         # claimed_value 9999 with an invented claim_text landed and governed a cell.
         # `--verbatim-exempt` is the ledgered escape for text no artefact can carry, and
         # is itself refused when the text would have verified.
-        _exempt_note = _require_verbatim(
-            str(row["claim_text"]), row.get("ref_id"), "--claim-text",
-            "add-extraction", exempt_reason=verbatim_exempt, claimed_value=value,
-            claim_type=claim_type, value_as_written=row.get("value_as_written"))
-        if _exempt_note:
-            row["notes"] = ((row.get("notes") or "") + " " + _exempt_note).strip()
+        if figure_role != "derived":
+            _exempt_note = _require_verbatim(
+                str(row["claim_text"]), row.get("ref_id"), "--claim-text",
+                "add-extraction", exempt_reason=verbatim_exempt, claimed_value=value,
+                claim_type=claim_type, value_as_written=row.get("value_as_written"))
+            if _exempt_note:
+                row["notes"] = ((row.get("notes") or "") + " " + _exempt_note).strip()
 
         # THE LENS WARRANT: the words that name the group are the figure's own (or its source's).
         lens_basis_text = _require_lens_warrant(
@@ -10380,17 +10388,31 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 and c[1] != "loc_note"]
             _esc = "[UNVERIFIED-QUANT]" in (row.get("notes") or "")
             _pinpoint = any(str(row.get(c) or "").strip() for c in _levels)
+            # A DERIVED FIGURE WITH NO LOCATOR OF ITS OWN is found again through its inputs (OD-40): each
+            # `derived_from` edge must point at a row that has one. The two refusals below do not apply to it.
+            _via_inputs = (figure_role == "derived" and not _esc and not _pinpoint
+                           and not str(row.get("source_section") or "").strip())
+            if _via_inputs:
+                for _e in relations or ():
+                    _in = conn.execute("SELECT * FROM source_value_extractions WHERE extraction_id=?",
+                                       (_e.get("to_extraction"),)).fetchone() if _e.get("relation") == "derived_from" else None
+                    if _in is not None and not ("[UNVERIFIED-QUANT]" in (_in["notes"] or "")
+                                                or str(_in["source_section"] or "").strip()
+                                                or any(str(_in[c] or "").strip() for c in _levels)):
+                        raise Refusal(
+                            f"R3: derived figure's input {_e['to_extraction']} has no locator, so the derived figure "
+                            f"cannot be found again. Nothing written.")
             # EVERY TIER NEEDS A LOCATOR (R3). Below the regulatory stratum the prose
             # `--source-section` is the honest locator for a paper; above it the pinpoint
             # hierarchy is demanded below. A quantified row with neither, and no
             # [UNVERIFIED-QUANT], is a number nobody can find again (2026-11-06).
-            if not _esc and not _pinpoint and not str(row.get("source_section") or "").strip():
+            if not _via_inputs and not _esc and not _pinpoint and not str(row.get("source_section") or "").strip():
                 raise Refusal(
                     f"R3: this row states a value with no locator -- no --source-section, "
                     f"none of {', '.join('--' + c.replace('_', '-') for c in _levels)}. A "
                     f"quantified claim names where it was read, or carries "
                     f"[UNVERIFIED-QUANT] in --notes to say it cannot. Nothing written.")
-            if _tier and _tier[0] is not None and int(_tier[0]) >= 4:
+            if _tier and _tier[0] is not None and int(_tier[0]) >= 4 and not _via_inputs:
                 if not _esc and not _pinpoint:
                     raise Refusal(
                         f"R3: {ref} is tier {int(_tier[0])} -- the regulatory stratum -- and this row "
@@ -10415,7 +10437,6 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 f"recorded absence, which is evidence, not a missing field.")
 
         # --- figure_role (migration 075) -------------------------------------
-        figure_role = row.get("figure_role")
         if not figure_role:
             raise Refusal(
                 "--figure-role is required. A value with no role reads as a claim, "
@@ -11114,13 +11135,23 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
             "changed": True, "dry_run": dry_run}
 
 
+def _derived_comparator(base_cmp, delta_cmp):
+    """The comparator of base + delta, by interval arithmetic: a point delta ('=') keeps the base's bound; a delta
+    bounded the same way as the base keeps that bound; anything else (a range, 'approx', opposite or mixed bounds,
+    a base with no comparator) bounds nothing, and None is returned."""
+    if delta_cmp == "=" and base_cmp in ("=", ">=", ">", "<=", "<"):
+        return base_cmp
+    if delta_cmp == base_cmp and base_cmp in (">=", ">", "<=", "<"):
+        return base_cmp
+    return None
+
+
 def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
-                      delta: int, claim_text: str, session: str,
+                      delta: int, session: str,
                       dry_run: bool = False, identity: str = None, icf: str = None,
                       needs: str = None,
                       lens_basis: str = None, lens_basis_text: str = None,
-                      claimed_value: str = None, claimed_unit: str = None,
-                      comparator: str = None, conversion_note: str = None):
+                      claimed_value: str = None):
     """Write a figure_role='derived' row computed as base + delta, plus the two
     derived_from edges `v_derived_figure_check` (migration 075) re-verifies it
     against -- a derived figure is never a number trusted on faith.
@@ -11131,27 +11162,22 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
     the ONE transaction inside that single `insert_extraction` call, the same
     guarantee every other caller of it gets.
 
-    KNOWN DEFECT, recorded by T-016 and NOT repaired here: this verb cannot write a row. Three independent
-    blockers stand in front of `insert_extraction`'s arithmetic, each reached once the one before is cleared
-    (tests T016-N11c, N11d, N11e assert them, and go red when the verb is repaired):
-      1. it passes no locator (no `source_section`, no `loc_*`), so R3 refuses every row it builds;
-      2. a value-supplying numerical row needs `--comparator` and `p_dx` has no default for it;
-      3. its `claim_text` is "the analyst's computation statement" (see the edge comment below), which the
-         verbatim check refuses unless a source says it in those words.
+    WHAT IT DERIVES, and what it never asks for (T-063, OD-40): the comparator (`_derived_comparator`) and the
+    unit are the inputs' (two inputs in two units are refused: no check recomputes a converted figure); the quote
+    and the locator are the inputs' too, reached through the two edges, each of which carries its input's quote.
+    A derived row stores neither; it is refused when an input lacks a quote or a locator. `ref_id` is NOT NULL, so
+    it is a POINTER to the base input's source (as `root_ref_id` is), not an attribution of the figure to it.
     The refusals reached through it carry the prefix `add-extraction:` (the writer is shared).
     """
     with dbcore.connect(dry_run, readonly=True) as conn:
-        base_row = conn.execute(
-            "SELECT extraction_id, ref_id, claimed_value, claimed_unit, claim_text "
-            "FROM source_value_extractions WHERE extraction_id=?", (base,)).fetchone()
+        cols = "extraction_id, ref_id, claimed_value, claimed_unit, claim_text, comparator"
+        base_row = conn.execute(f"SELECT {cols} FROM source_value_extractions WHERE extraction_id=?", (base,)).fetchone()
         if base_row is None:
             raise Refusal(
                 f"derive-extraction: --base {base}: no such extraction. A derived "
                 f"figure is computed from a row this project actually holds, never "
                 f"invented -- extract the base figure first with add-extraction.")
-        delta_row = conn.execute(
-            "SELECT extraction_id, ref_id, claimed_value, claimed_unit, claim_text "
-            "FROM source_value_extractions WHERE extraction_id=?", (delta,)).fetchone()
+        delta_row = conn.execute(f"SELECT {cols} FROM source_value_extractions WHERE extraction_id=?", (delta,)).fetchone()
         if delta_row is None:
             raise Refusal(
                 f"derive-extraction: --delta {delta}: no such extraction. Extract "
@@ -11159,26 +11185,26 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
         if base == delta:
             raise Refusal("derive-extraction: --base and --delta must be different "
                           "rows -- a figure cannot be derived from itself twice.")
+        for _id, _row in ((base, base_row), (delta, delta_row)):
+            if not (_row["claim_text"] or "").strip():
+                raise Refusal(
+                    f"derive-extraction: input {_id} has no quote of its own, and a derived figure's words are its "
+                    f"inputs' (an input that is itself derived has none). Derive from rows a source states. "
+                    f"Nothing was written.")
 
         base_unit, delta_unit = base_row["claimed_unit"], delta_row["claimed_unit"]
-        # ONE RULE, ONE REFUSAL: if the unit that will be STORED differs from what
-        # either input actually carries, a --claimed-unit and a --conversion-note are
-        # both mandatory. This was two sequential checks with two near-identical
-        # messages -- one for "base and delta disagree", one for "your override
-        # disagrees with base" -- which are the same rule seen from two sides, and
-        # which a later change to the reconciliation policy would have had to find in
-        # two places that only inspection kept in sync.
-        unit = claimed_unit or base_unit
-        if (base_unit != delta_unit or unit != base_unit) and not (
-                claimed_unit and (conversion_note or "").strip()):
+        if base_unit != delta_unit:
             raise Refusal(
-                f"derive-extraction: the unit this row would store ({unit!r}) is not "
-                f"the unit both inputs carry -- base (extraction {base}) is "
-                f"{base_unit!r}, delta (extraction {delta}) is {delta_unit!r}. Pass "
-                f"--claimed-unit WITH a --conversion-note saying how they reconcile, "
-                f"or fix the mismatched row first. Note that a converted row is "
-                f"invisible to v_derived_figure_check, which joins on equal units, so "
-                f"the conversion note is the only record of the arithmetic.")
+                f"derive-extraction: base {base} is stated in {base_unit!r} and delta {delta} in {delta_unit!r}. "
+                f"This verb adds figures stated in one unit; a converted figure is not recomputed by any check "
+                f"(v_derived_figure_check joins on equal units). Nothing was written.")
+        comparator = _derived_comparator(base_row["comparator"], delta_row["comparator"])
+        if comparator is None:
+            raise Refusal(
+                f"derive-extraction: the sum of base {base} ({base_row['comparator'] or 'no comparator'}) and delta "
+                f"{delta} ({delta_row['comparator'] or 'no comparator'}) is not a bound. A point delta ('=') moves "
+                f"the base's bound; two bounds of the same kind add. Set a missing comparator with "
+                f"amend-extraction --field comparator. Nothing was written.")
 
         def _num(x):
             try:
@@ -11201,22 +11227,18 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
                 "identity_code": identity, "icf_code": icf, "needs_code": needs,
                 "lens_basis": lens_basis,
                 "lens_basis_text": lens_basis_text, "claim_type": "numerical",
-                "claimed_value": claimed_value, "claimed_unit": unit,
-                "claim_text": claim_text, "figure_role": "derived",
+                "claimed_value": claimed_value, "claimed_unit": base_unit,
+                "figure_role": "derived",
                 "comparator": comparator, "extraction_method": "auto-mined",
                 "root_type": "derived_calculation", "root_ref_id": base_row["ref_id"]}
-        # EACH EDGE CARRIES ITS OWN TARGET'S QUOTE, not this row's claim_text.
-        # Corrected 2026-09-13 before first use. Every edge quote is checked as a
-        # byte-substring of a persisted retrieval artefact, and a derived row's
-        # claim_text is by its nature the analyst's computation statement -- not
-        # something any source said. Passing it as both edge quotes made this verb
-        # STRUCTURALLY UNABLE TO SUCCEED: the only path through it was a refusal,
-        # which is worse than a missing verb because it looks implemented.
-        #
-        # The base and delta rows' own claim_text values already passed that check
-        # when those rows were written, so using them is an APPLICATION of the rule
-        # rather than a carve-out from it -- and it is also the truer record: the
-        # warrant for "this figure derives from that one" is what that one says.
+        # EACH EDGE CARRIES ITS OWN TARGET'S QUOTE, not this row's (a derived row has none: OD-40).
+        # Every edge quote is checked as a byte-substring of a persisted retrieval artefact. The base and
+        # delta rows' own claim_text values already passed that check when those rows were written, so using
+        # them is an APPLICATION of the rule rather than a carve-out from it -- and it is also the truer
+        # record: the warrant for "this figure derives from that one" is what that one says. (Corrected
+        # 2026-09-13: passing the analyst's computation statement as both edge quotes made this verb
+        # structurally unable to succeed, which is worse than a missing verb because it looks implemented;
+        # T-063 then removed that statement, the locator and the comparator it also lacked.)
         relations = [
             {"relation": "derived_from", "to_extraction": base, "stated": "named",
              "quote": base_row["claim_text"], "input_role": "base"},

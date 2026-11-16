@@ -214,7 +214,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   names the renders, so the adversarial pass can check the locator against them; a
   byte-identical second row (a divergent reading is a contest, D-0168, and is written).
 - `relate-extraction` for comparators (`--cross-source <reason>` makes a condition drawn from another document an
-  explicit synthesis act; the quote verifies the from-source only), `derive-extraction` for computed figures,
+  explicit synthesis act; the quote verifies the from-source only), `derive-extraction` for computed figures (the comparator and the unit are its inputs'; a derived figure has no quote or locator of its own: its words and its place are its inputs', reached through its `derived_from` edges),
   `raise-follow-up` for doubtful rows — its `--reason` vocabulary is `extraction_follow_ups.reason` (`raise-follow-up
   --help` prints it, and says what each means: `absence-needs-tested-value` is only for a `claim_type='absent'` extraction whose tested value is still to find by backward citation mining; a doubt it cannot name is a GAP until the owner extends it).
 - `add-population-match` grades **identity only** (R13; children, general population, no participants are PROXY); ICF
