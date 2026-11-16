@@ -79,7 +79,7 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   adjudication together; it refuses a near match (shared tokens with a term or an alias that is not a `model_seed`) unless `--distinct-from
   TERM-ID` names it and the rationale says why. `adjudicate-term` never writes NAMES-NEW. Owner approval is the data
   PR the owner reads (OR-17: "bulk, with me reading the PR"); `add-parameter` and `decline-parameter` take no
-  approval flag — `--approval-ref` belongs to the catalogue route (`mint-term-from-catalogue`, D3), to `add-alias --seed owner_supplied` and to `add-quantity-kind` only. `add-parameter` takes instead `--quantity-kind` and `--quantity-kind-observation-id` (T-020): the kind of quantity, from `base_quantity_kinds`, and the observation whose quote states a value of it.
+  approval flag; `--approval-ref` is the flag of the verbs that record an approval (derive them: `grep -n -F -- '"--approval-ref"' scripts/db.py`). `add-parameter` takes instead `--quantity-kind` and `--quantity-kind-observation-id` (T-020): the kind of quantity, from `base_quantity_kinds`, and the observation whose quote states a value of it.
 - `set-parameter-direction --ref-id` records which way is better **from an admitted source** that holds an
   extraction for the parameter (ledger 2026-10-30, ACTION 6; stored in `base_parameters.direction_ref_id`); a
   direction with no source is refused. Without a direction stage 6 cannot select a value and says so in its gap. A

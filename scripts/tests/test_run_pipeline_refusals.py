@@ -3475,14 +3475,31 @@ if feature("T020-01", "base_quantity_kinds exists and db.insert_quantity_kind ex
         _fx = "task_fixture_kind"
         with scratch() as c:
             _bad = [refusal(db.insert_quantity_kind, _fx, "a fixture quantity", a, S) for a in ("", "## Nothing 2099-01-01 — no such entry")]
-            _bad += [refusal(db.insert_quantity_kind, "Bad Kind1", "a fixture quantity", _heading, S),
-                     refusal(db.insert_quantity_kind, _fx, "a fixture quantity of 3 parts", _heading, S),
+            # each ill-shaped id fails one rule alone (a capital, a space, a digit), so a loosened pattern turns one probe green
+            _bad += [refusal(db.insert_quantity_kind, i, "a fixture quantity", _heading, S) for i in ("Capital", "has space", "digit1")]
+            _bad += [refusal(db.insert_quantity_kind, _fx, "a fixture quantity of 3 parts", _heading, S),
                      refusal(db.insert_quantity_kind, _KIND, "a fixture quantity", _heading, S)]
             _res, _err = ok(db.insert_quantity_kind, _fx, "a fixture quantity", _heading, S)
             _res2, _err2 = ok(db.insert_parameter, _t, S, notes="TASK-FIXTURE", quantity_kind=_fx, quantity_kind_observation_id=_OBS_NUM)
-            record("T020-08", "add by data: insert_quantity_kind refuses a missing or unresolvable approval, an ill-shaped id, a digit in the "
-                   "definition and an existing id; with a ledger heading it writes a kind, and add-parameter then accepts it (no file edited)",
-                   all(_bad) and _err is None and _err2 is None, (_bad, _err, _err2))
+            # the refusal names the kinds the TABLE holds now: the fixture kind, which no code could have typed, is listed
+            _r_after = refusal(db.insert_parameter, _free[1] if len(_free) > 1 else _t, S, quantity_kind="zz_" + _fx, dry_run=True)
+            record("T020-08", "add by data: insert_quantity_kind refuses a missing or unresolvable approval, an ill-shaped id (each rule alone), a digit in the "
+                   "definition and an existing id; with a ledger heading it writes a kind, add-parameter then accepts it, and the refusal then lists it (no file edited)",
+                   all(_bad) and _err is None and _err2 is None and _r_after and _fx in _r_after, (_bad, _err, _err2, _r_after))
+    # T020-09: the new refusals come AFTER every earlier one, so a term an earlier refusal stops is told that reason, never "name a kind".
+    _held = scalar("SELECT term_id FROM base_parameters ORDER BY parameter_id LIMIT 1")
+    if _held is None or not _free:
+        skip("T020-09", "no live parameter, or no free term to give a value-bearing name on the scratch copy")
+    else:
+        _r_held = refusal(db.insert_parameter, _held, S, dry_run=True)
+        with scratch() as c:           # the live terms hold no unpromoted value-bearing name: build one on the copy
+            c.execute("UPDATE terms SET canonical_en = canonical_en || ' 25' WHERE term_id=?", (_free[0],))
+            c.commit()                 # insert_parameter opens its own connection to the copy
+            _r_vb = refusal(db.insert_parameter, _free[0], S, dry_run=True)
+        record("T020-09", "order: a term that is already a parameter, or whose name states a determination, gets that refusal when no kind is given, "
+               "not the kind refusal",
+               _r_held and "One parameter per term" in _r_held and "--quantity-kind" not in _r_held
+               and _r_vb and "states a determination in its own name" in _r_vb and "--quantity-kind" not in _r_vb, (_r_held, _r_vb))
 
 
 # ───────────── T-015: a language is one of the map's, whatever its letter case ─────────────

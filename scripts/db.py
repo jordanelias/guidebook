@@ -7337,7 +7337,7 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 f"the dual home rule 5 forbids.\n"
                 f"Key the determination on parameter_id {clash['parameter_id']}.")
         kinds = [r[0] for r in conn.execute("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id")]
-        quantity_kind = (quantity_kind or "").strip()
+        quantity_kind = str(quantity_kind or "").strip()
         if quantity_kind not in kinds:
             raise Refusal(
                 f"{term_id} ({term['canonical_en']!r}): --quantity-kind {quantity_kind or '(none)'!r} is not a "
