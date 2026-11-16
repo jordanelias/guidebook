@@ -696,6 +696,60 @@ try:
     record("AL09", "alias_provenance_audit classifies from the pointer, not the notes text",
            _am.classify("source-attested: forged", None) != "SOURCE-ATTESTED"
            and _am.classify("model-generated", 1) == "SOURCE-ATTESTED")
+    # T074: an alias or a rename rests on the LATEST adjudication of its observation (adjudications
+    # are appended, never edited: a later one that disagrees is the observation's standing judgment).
+    if len(FREE) < 30:
+        print("      SKIPPED-NO-FIXTURE: T074 needs three free terms beyond FREE[27]")
+    else:
+        TX, TY, TZ = FREE[27:30]
+
+        def t74_obs(loc):
+            """A fresh observation of 'door leaf' on REF_A (its quote verifies against the fixture text)."""
+            return attempt(observe, obs("door leaf", f"PDF page 1 / {loc}",
+                                        "the clear width of a door leaf is measured here"),
+                           S).get("observation_id")
+        n74 = lambda: q("SELECT count(*) FROM term_aliases")[0][0]
+        o1 = t74_obs("T074a")
+        attempt(adj, o1, "NAMES-EXISTING", "fixture: names it", S, term_id=TX)
+        attempt(adj, o1, "NOT-OURS", "fixture: on re-reading, not ours", S)
+        a0 = n74()
+        m1 = refusal(add_alias, TX, o1, "SYNONYM", S)
+        record("T074-01", "add-alias: an observation judged NAMES-EXISTING and later NOT-OURS names "
+               "no term: refused naming the latest adjudication, and no alias row lands",
+               m1 and m1.startswith("add-alias:") and "latest adjudication of observation" in m1
+               and n74() == a0, m1)
+        # rename-term refuses a name another term answers to BEFORE it reads the adjudication, and AL04
+        # has made 'door leaf' an alias: the rename case observes a phrase no term holds.
+        PH2 = "clearance zone of a wheelchair"
+        o2 = attempt(observe, obs(PH2, "PDF page 3 / T074d", "the turnwise clearance zone of a "
+                                  "wheelchair"), S).get("observation_id")
+        attempt(adj, o2, "NAMES-EXISTING", "fixture: names it", S, term_id=TX)
+        attempt(adj, o2, "NOT-OURS", "fixture: on re-reading, not ours", S)
+        name_x = q("SELECT canonical_en FROM terms WHERE term_id=?", TX)
+        m2 = refusal(rename, TX, PH2, "fixture", S, from_observation=o2)
+        record("T074-02", "rename-term: an observation judged NAMES-EXISTING and later NOT-OURS is "
+               "refused with the latest adjudication, and the name does not move",
+               m2 and m2.startswith("rename-term:") and "latest adjudication of observation" in m2
+               and q("SELECT canonical_en FROM terms WHERE term_id=?", TX) == name_x, m2)
+        o3 = t74_obs("T074b")
+        attempt(adj, o3, "DEFERRED", "fixture: cannot settle on this source alone", S)
+        attempt(adj, o3, "NAMES-EXISTING", "fixture: settled, names it", S, term_id=TY)
+        w3 = attempt(add_alias, TY, o3, "SYNONYM", S)
+        record("T074-03", "add-alias: DEFERRED and then NAMES-EXISTING (the live shape of observation "
+               "88) is accepted: the latest adjudication names the term",
+               q("SELECT observation_id FROM term_aliases WHERE term_id=? AND alias='door leaf'",
+                 TY) == [(o3,)], w3)
+        o4 = t74_obs("T074c")
+        attempt(adj, o4, "NAMES-EXISTING", "fixture: names the first", S, term_id=TX)
+        attempt(adj, o4, "NAMES-EXISTING", "fixture: re-pointed at the second", S, term_id=TZ)
+        m4 = refusal(add_alias, TX, o4, "SYNONYM", S)
+        w4 = attempt(add_alias, TZ, o4, "SYNONYM", S)
+        record("T074-04", "add-alias: an observation re-pointed from one term to another is refused for "
+               "the first term and accepted for the second",
+               m4 and m4.startswith("add-alias:") and "latest adjudication of observation" in m4
+               and q("SELECT observation_id FROM term_aliases WHERE term_id=? AND alias='door leaf'",
+                     TX) == [] and q("SELECT observation_id FROM term_aliases WHERE term_id=? AND "
+                                     "alias='door leaf'", TZ) == [(o4,)], (m4, w4))
     # T2: a name is a phrase the source used
     ins = fn("insert_term")
     o_n = attempt(observe, obs("turnwise clearance zone", "PDF page 3 / zone",

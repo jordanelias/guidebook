@@ -7708,10 +7708,22 @@ def _alias_language(conn, language: str) -> str:
 
 
 def _names_term(conn, observation_id: int, term_id: str) -> bool:
-    """Does some adjudication of this observation name this term?"""
-    return conn.execute(
-        "SELECT 1 FROM term_adjudications WHERE observation_id = ? AND term_id = ?",
-        (observation_id, term_id)).fetchone() is not None
+    """Does the LATEST adjudication of this observation name this term?
+
+    Adjudications are appended, never edited (adjudicate_term: a disagreeing judgment is a second
+    row), so the latest one is the observation's standing judgment; an earlier one that named the
+    term and was later declined or re-pointed warrants nothing. Latest = highest adjudication_id
+    (the order the writer assigns; created_at is minute-resolution and can tie)."""
+    row = conn.execute(
+        "SELECT term_id FROM term_adjudications WHERE observation_id = ? "
+        "ORDER BY adjudication_id DESC LIMIT 1", (observation_id,)).fetchone()
+    return row is not None and row[0] == term_id
+
+
+def _not_named_msg(verb: str, observation_id: int, term_id: str) -> str:
+    """The refusal's opening, shared by the two callers of _names_term."""
+    return (f"{verb}: the latest adjudication of observation {observation_id} does not name "
+            f"{term_id} (none does, or a later one declined it or named another term).")
 
 
 def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
@@ -7727,7 +7739,7 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
 
       --from-observation N  the new name comes from a phrase a source USES, in the
                             source's own language (owner E1, 2026-11-06: a concept first
-                            met outside English is named by that phrase), adjudicated to
+                            met outside English is named by that phrase), whose latest adjudication names
                             THIS term, whose surface form
                             contains the new name (the 2026-09-09 rule, kept by the owner
                             on 2026-10-09: names come from observed phrases);
@@ -7743,8 +7755,8 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
 
     REFUSES: neither or both warrants; a value-bearing name (_VALUE_BEARING, as add-term);
     a quote not exactly once in the ledger or not containing the name; an observation
-    not adjudicated to this term, or that does not contain the name; a name another term
-    holds.
+    whose latest adjudication does not name this term, or that does not contain the name; a name
+    another term holds.
     """
     new = (canonical_en or "").strip()
     if not new:
@@ -7795,8 +7807,8 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
                               f"observed term.")
             if not _names_term(conn, from_observation, term_id):
                 raise Refusal(
-                    f"rename-term: no adjudication of observation {from_observation} names "
-                    f"{term_id}. Judge first that the source's phrase names THIS concept "
+                    f"{_not_named_msg('rename-term', from_observation, term_id)} "
+                    f"Judge first that the source's phrase names THIS concept "
                     f"(db.py adjudicate-term --outcome NAMES-EXISTING --term-id {term_id}), "
                     f"then rename from it. Nothing was written.")
             if not _retrieval_log().phrase_in_quote(new, obs["surface_form"]):
@@ -7901,8 +7913,8 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
 
     REFUSES: neither or several routes; an alias type outside the CHECK, DEPRECATED
     (rename-term's record) or TRANSLATION (a source's own phrase is not a rendering of the
-    English one, R11); an unknown term or observation; an observation no adjudication names
-    this term with, whose phrase is not inside its quote, or whose quote is not in a file
+    English one, R11); an unknown term or observation; an observation whose latest adjudication
+    does not name this term, whose phrase is not inside its quote, or whose quote is not in a file
     saved for its source (unless VERBATIM-EXEMPT); `instrument` for a source outside the
     regulatory stratum; a base route with no locator, a blank locator part, a URL that is
     not http(s)://host with no whitespace, a pair lang_jur_map lacks, or an attestation
@@ -8029,8 +8041,8 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
                     f"route with the instrument's own URL and clause. Nothing was written.")
             if not _names_term(conn, observation_id, term_id):
                 raise Refusal(
-                    f"add-alias: no adjudication of observation {observation_id} names "
-                    f"{term_id}. An alias says the source's phrase names THIS concept, which is "
+                    f"{_not_named_msg('add-alias', observation_id, term_id)} "
+                    f"An alias says the source's phrase names THIS concept, which is "
                     f"a judgement: db.py adjudicate-term --observation-id {observation_id} "
                     f"--outcome NAMES-EXISTING --term-id {term_id} --rationale ... first.")
             quote = obs["context_quote"] or ""
