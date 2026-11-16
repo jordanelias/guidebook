@@ -1958,10 +1958,19 @@ class Refusal(ValueError):
     """
 
 
+_ARGS = None   # main()'s parsed namespace: argparse takes abbreviations of any length, so the session and --db are read from it
+
+
+def _record(sentence):
+    """Keep what this process said no to (T-088): a refusal, a usage error or a crash."""
+    dbcore.record_refusal("scripts/assess/assess_cell.py", sys.argv[1:], sentence,
+                          session=getattr(_ARGS, "session", None), db=getattr(_ARGS, "db", None))
+
+
 def _refuse(sentence, code=1):
-    """Say a refusal as `REFUSING: <sentence>` on stderr, keep it (T-088: `dbcore.record_refusal`) and exit `code`.
+    """Say a refusal as `REFUSING: <sentence>` on stderr, keep it (T-088) and exit `code`.
     Every place this engine says no goes through here, so none is left out of the batch's refusal record."""
-    dbcore.record_refusal("scripts/assess/assess_cell.py", sys.argv[1:], sentence)
+    _record(sentence)
     print(f"REFUSING: {sentence}", file=sys.stderr)
     sys.exit(code)
 
@@ -2147,8 +2156,8 @@ def q(v):
 
 
 def main():
-    global SESSION, STAMP
-    ap = argparse.ArgumentParser(
+    global SESSION, STAMP, _ARGS
+    ap = dbcore.RecordingArgumentParser(
         description="Determine one cell: a parameter under one or more lenses.",
         epilog="--db IS WRITTEN, NOT ONLY READ. The engine gathers the cell's evidence "
                "from it and INSERTs the determination -- plus any gap and convergence "
@@ -2186,7 +2195,7 @@ def main():
                     help="fixed timestamp, e.g. '2026-09-09 00:00:00'. An INPUT, never "
                          "now(): the engine run twice must be byte-identical.")
     ap.add_argument("--report-json", default=None)
-    args = ap.parse_args()
+    args = _ARGS = ap.parse_args()
     if os.path.abspath(args.db) == os.path.abspath(os.path.join(REPO_ROOT, "data", "guidebook.db")):
         _refuse("this engine never writes the canonical DB (owner-gated).")
     # The DB holds the bare session stem; the pointer form carries `.md` (CLAUDE.md section 7), and
@@ -2527,4 +2536,8 @@ if __name__ == "__main__":
                     "pre-flight check that should have caught it "
                     "(validate_cell_undetermined). There is no re-determination path; "
                     "revisiting a determined cell needs a supersede design first.")
+        _record(f"{type(exc).__name__}: {exc}")
+        raise
+    except Exception as exc:   # a defect, kept and then raised unchanged: traceback and exit code are the evidence
+        _record(f"{type(exc).__name__}: {exc}")
         raise

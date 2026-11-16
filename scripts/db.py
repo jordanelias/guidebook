@@ -62,9 +62,17 @@ import dbcore                                                      # noqa: E402
 from dbcore import Refusal                                         # noqa: E402
 
 
+_ARGS = None   # main()'s parsed namespace: argparse takes abbreviations of any length, so the catch sites read the session from it
+
+
+def _record(sentence):
+    """Keep what this process said no to (T-088): a Refusal, a JSON error, a usage error, or a crash."""
+    dbcore.record_refusal("scripts/db.py", sys.argv[1:], sentence, session=getattr(_ARGS, "session", None))
+
+
 def _json_refusal(sentence):
     """The verbs that answer in JSON refuse as `{"error": ...}` and exit 2: the same refusal as a `Refusal`, kept (T-088)."""
-    dbcore.record_refusal("scripts/db.py", sys.argv[1:], sentence)
+    _record(sentence)
     print(json.dumps({"error": sentence}))
     sys.exit(2)
 
@@ -1549,7 +1557,8 @@ def _vocab_help(column: str) -> str:
 
 
 def main():
-    parser = argparse.ArgumentParser(
+    global _ARGS
+    parser = dbcore.RecordingArgumentParser(
         description="Guidebook SQLite data layer CLI"
     )
     sub = parser.add_subparsers(dest="command")
@@ -3274,7 +3283,7 @@ def main():
     p_ung.add_argument("--include-recent", action="store_true",
                        help="Include gaps with created_at within last 6 months (default: skip)")
 
-    args = parser.parse_args()
+    args = _ARGS = parser.parse_args()
 
     if not args.command:
         parser.print_help()
@@ -12547,6 +12556,9 @@ if __name__ == "__main__":
     try:
         main()
     except Refusal as exc:
-        dbcore.record_refusal("scripts/db.py", sys.argv[1:], str(exc))
+        _record(str(exc))
         sys.exit(f"REFUSING: {exc}")
+    except Exception as exc:   # a defect, kept and then raised unchanged: traceback and exit code are the evidence
+        _record(f"{type(exc).__name__}: {exc}")
+        raise
 

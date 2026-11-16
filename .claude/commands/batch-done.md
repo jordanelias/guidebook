@@ -32,12 +32,21 @@ not clear them. It witnesses WebSearch and WebFetch only: a search run through a
 owes each of them a `log-search` row, and `record_file` its result (DR-2026-09-26 §2.2b); the
 gate can check neither.
 
-The fourth line lists every writer refusal this batch met (each is kept in `scratchpad/<session>/refusals.jsonl`,
-for a call made under the running session) and exits 1 while any is undisposed. Every writer refusal this batch met is disposed before the batch is done: **retried** (the writer was
-right; the corrected call succeeded), **parked** (its content waits: file a gap with `db.py add-gap`, typed by its
-subject, and keep the refused argv, which is the replay command), or **waived** (with a reason). Record each with
-`refusal_register.py dispose --session S --ts T --as retried|parked|waived [--gap-id G] [--reason R]`. An undisposed
-refusal is a batch that is not done.
+The fourth line lists every writer refusal this batch met and exits 1 while any is undisposed. Each is kept in
+`scratchpad/<session>/refusals.jsonl` when it was made under the running `--session`: a refusal, a usage error
+(an unknown vocabulary term is one: argparse says it and the record keeps it) or a writer's crash. **It exits 2
+and prints `NOT RUN` when `scratchpad/CURRENT` does not name an existing `session_YYYY-MM-DD-...` folder** (a
+misspelt name, a branch slug, a folder never made): nothing could have been kept there, so nothing was examined, and
+that is not a pass. The gate does not run until `CURRENT` is fixed as `/session-open` sets it. An existing folder
+with no `refusals.jsonl` is a batch that met none (`EXAMINED: 0`). Not kept: a refusal of a script that takes no
+`--session` (`emit_batch_sql.py`) or whose errors are not routed (`migrate_db.py`, `retrieval_log.py`,
+`page_image.py`, and `full_text.py`'s `NOTHING TO DERIVE` exit, its several-derivable-files exit and its missing-reader exit): read those on the terminal. Every writer refusal this batch met is disposed before the batch is
+done: **retried** (the writer was right; the corrected call succeeded), **parked** (its content waits: file a gap
+with `db.py add-gap`, typed by its subject, and keep the refused argv, which is the replay command), or **waived**
+(with a reason of at least ten characters). Record each with
+`refusal_register.py dispose --session S --id K --as retried|parked|waived [--gap-id G] [--reason R]`, K being the id
+`list` prints. `list` checks every disposition again each time it runs: a parked gap that has since been closed puts
+the refusal back to UNDISPOSED. An undisposed refusal is a batch that is not done.
 
 **The session id is the bare stem in the DB and carries `.md` in pointer files.**
 Wrong form scopes the gate to zero rows and every rule reports PASS over an empty

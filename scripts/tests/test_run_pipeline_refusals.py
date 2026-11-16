@@ -3790,9 +3790,12 @@ print("Section T088: a writer's refusal is kept, and every refusal a batch met i
 # The capture is `dbcore.record_refusal` (one home, called by every place a writer says no); the disposition is
 # `scripts/audit/refusal_register.py`. Everything here runs on a TEMPORARY tree that holds its own `scratchpad/CURRENT` and
 # session folder (`dbcore.REPO_ROOT` is pointed at it for the call and restored), so no case reaches the real session's record.
+import ast  # noqa: E402
+import collections  # noqa: E402
 import runpy  # noqa: E402
+from unittest import mock  # noqa: E402
 
-S88 = "session_t088-fixture"
+S88 = "session_2026-11-16-t088-fixture"
 _TS88 = re.compile(r"^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d\.\d{6}$")
 HAS88 = hasattr(dbcore, "record_refusal")
 REG88 = None
@@ -3830,16 +3833,23 @@ def file88(base, stem=S88):
 
 def lines88(base, stem=S88):
     f = file88(base, stem)
-    return [json.loads(x) for x in f.read_text(encoding="utf-8").splitlines()] if f.exists() else []
+    return [json.loads(x) for x in f.read_bytes().decode("utf-8-sig").splitlines() if x.strip()] if f.exists() else []
 
 
-def refuse88(argv, sentence="a refusal; Nothing was written.", script="scripts/db.py"):
-    """What a caller does at a catch point; returns whatever `record_refusal` returns (it must not raise)."""
-    return dbcore.record_refusal(script, argv, sentence)
+def rid88(rec):
+    """What names a refusal line: its refusal_id (a line without one is named by its ts)."""
+    return rec.get("refusal_id") or rec["ts"]
+
+
+def refuse88(argv, sentence="a refusal; Nothing was written.", script="scripts/db.py", **kw):
+    """What a caller does at a catch point; returns whatever `record_refusal` returns (it must not raise). The keywords
+    (the caller's parsed session and db) are passed only where the function takes them."""
+    ok = {k: v for k, v in kw.items() if k in inspect.signature(dbcore.record_refusal).parameters}
+    return dbcore.record_refusal(script, argv, sentence, **ok)
 
 
 def run88(script, *argv):
-    """Run `script`'s `__main__` in this process: (exit code or message, stdout, stderr). `dbcore.REPO_ROOT` is whatever the
+    """Run `script`'s `__main__` in this process: (exit code or message, or the exception it let propagate, stdout, stderr). `dbcore.REPO_ROOT` is whatever the
     caller's `root88` set, so a refusal it keeps lands in the temporary tree."""
     out, err, old, code = io.StringIO(), io.StringIO(), sys.argv, None
     sys.argv = [script, *argv]
@@ -3848,6 +3858,8 @@ def run88(script, *argv):
             runpy.run_path(str(REPO / script), run_name="__main__")
     except SystemExit as exc:
         code = exc.code
+    except Exception as exc:   # noqa: BLE001 -- a crash: handed back as the exception, which the script let propagate
+        code = exc
     finally:
         sys.argv = old
     return code, out.getvalue(), err.getvalue()
@@ -3866,23 +3878,25 @@ def reg88(*argv):
 
 _SUCH88 = "99999999"   # a parameter id no database holds: built by the width, not read from data (add-gap refuses it)
 _ARGV88 = ["add-gap", "--category", "SW", "--priority", "P1", "--description", "x", "--session", S88, "--parameter", _SUCH88]
+_FIELDS88 = {"refusal_id", "ts", "session", "script", "verb", "argv", "sentence", "db"}
 
 if feature("T088-01", "the capture exists", HAS88, "dbcore.record_refusal"):
     with root88() as b:
         refuse88(_ARGV88, "add-gap parameter_id: no such row. Nothing was written.")
         ls = lines88(b)
-    record("T088-01", "a refusal whose argv carries the running session appends exactly one line with its seven fields, and the verb is the subcommand",
-           len(ls) == 1 and set(ls[0]) == {"ts", "session", "script", "verb", "argv", "sentence", "db"} and _TS88.match(ls[0]["ts"])
+    record("T088-01", "a refusal whose argv carries the running session appends exactly one line with its eight fields, a uuid refusal_id, and the verb is the subcommand",
+           len(ls) == 1 and set(ls[0]) == _FIELDS88 and _TS88.match(ls[0]["ts"]) and re.fullmatch(r"[0-9a-f]{32}", ls[0]["refusal_id"])
            and ls[0]["session"] == S88 and ls[0]["script"] == "scripts/db.py" and ls[0]["verb"] == "add-gap"
            and ls[0]["argv"] == _ARGV88 and ls[0]["sentence"] == "add-gap parameter_id: no such row. Nothing was written."
-           and ls[0]["db"] == DB, ls)
+           and ls[0]["db"] == "<outside-repo>/guidebook.db", ls)
     with root88() as b:
         refuse88(["--db", "/tmp/some-scratch.db", "--session", S88, "--parameter-id", "3"], "the engine said no", "scripts/assess/assess_cell.py")
+        refuse88(["--db", f"{b}/data/in-tree.db", "--session", S88], "the engine said no again", "scripts/assess/assess_cell.py")
         ls = lines88(b)
-    record("T088-01b", "the engine's refusal names its own script as the verb and the database its --db flag gave",
-           len(ls) == 1 and ls[0]["verb"] == "assess_cell" and ls[0]["db"] == "/tmp/some-scratch.db", ls)
+    record("T088-01b", "the engine's refusal names its own script as the verb; `db` is a repository-relative path, else <outside-repo>/<file name>",
+           len(ls) == 2 and ls[0]["verb"] == "assess_cell" and ls[0]["db"] == "<outside-repo>/some-scratch.db" and ls[1]["db"] == "data/in-tree.db", ls)
 
-    # T088-02: not the running session -> nothing is written.
+    # T088-02: not the running session -> nothing is written, and nothing is written outside scratchpad/<stem>/.
     cases = {"another session": (S88, S88, ["add-gap", "--session", "session_other"]),
              "no --session": (S88, S88, ["add-gap", "--category", "SW"]),
              "--session with no value": (S88, S88, ["add-gap", "--session"]),
@@ -3890,7 +3904,10 @@ if feature("T088-01", "the capture exists", HAS88, "dbcore.record_refusal"):
              "CURRENT empty": ("", S88, ["add-gap", "--session", S88]),
              "the folder named differently from CURRENT": (S88, S88 + "-other", ["add-gap", "--session", S88]),
              "no session folder": (S88, None, ["add-gap", "--session", S88]),
-             "CURRENT naming a path": ("../escape", None, ["add-gap", "--session", "../escape"])}
+             "CURRENT naming a path": ("../escape", None, ["add-gap", "--session", "../escape"]),
+             "CURRENT a branch slug whose folder exists": ("my-branch-slug", "my-branch-slug", ["add-gap", "--session", "my-branch-slug"]),
+             "CURRENT and --session both ..": ("..", "x", ["add-gap", "--session", ".."]),
+             "CURRENT and --session both .": (".", "x", ["add-gap", "--session", "."])}
     wrote = []
     for label, (cur, folder, argv) in cases.items():
         with root88(cur, folder) as b:
@@ -3899,12 +3916,13 @@ if feature("T088-01", "the capture exists", HAS88, "dbcore.record_refusal"):
             got = [str(p.relative_to(b)) for p in b.rglob("refusals.jsonl")]
             if got:
                 wrote.append((label, got))
-    record("T088-02", "a call under another session, with no --session, with CURRENT missing or empty, with the folder named differently from CURRENT, "
-           "or with no folder appends nothing", not wrote, wrote)
+    record("T088-02", "a call under another session, with no --session, with CURRENT missing, empty, a path, a branch slug, `..` or `.`, with the folder named "
+           "differently from CURRENT, or with no folder appends nothing, anywhere", not wrote, wrote)
 
     # T088-03: the spellings argparse accepts for the session are all the running session.
     spell = {"--session=": ["add-gap", f"--session={S88}"], ".md form": ["add-gap", "--session", S88 + ".md"],
-             "prefix --ses": ["add-gap", "--ses", S88], "last value wins": ["add-gap", "--session", "session_other", "--session", S88]}
+             "prefix --ses": ["add-gap", "--ses", S88], "prefix --se": ["add-gap", "--se", S88], "prefix --s": ["add-gap", "--s", S88],
+             "last value wins": ["add-gap", "--session", "session_other", "--session", S88]}
     missed = []
     for label, argv in spell.items():
         with root88() as b:
@@ -3915,100 +3933,457 @@ if feature("T088-01", "the capture exists", HAS88, "dbcore.record_refusal"):
         refuse88(["add-gap", "--session", S88])
         if len(lines88(b)) != 1:
             missed.append("CURRENT holding the .md pointer form")
-    record("T088-03", "`--session=S`, `--session S.md`, an argparse prefix, the last of two --session flags, and a CURRENT holding the .md form are all the running session",
-           not missed, missed)
+    with root88() as b:                 # the caller's parsed namespace decides, whatever the argv spells
+        refuse88(["add-gap", "--x", "1"], session=S88 + ".md")
+        n_first = len(lines88(b))
+        refuse88(["add-gap", "--session", S88], session="session_other")
+        n_second = len(lines88(b))
+    if (n_first, n_second) != (1, 1):
+        missed.append(f"the parsed session wins over the argv (captured {n_first} then {n_second}, want 1 then 1)")
+    record("T088-03", "`--session=S`, `--session S.md`, any argparse prefix down to `--s`, the last of two --session flags, a CURRENT holding the .md form, and "
+           "the caller's parsed session (which wins over the argv) are all the running session", not missed, missed)
 
-    # T088-04: never raises, whatever is wrong with the file.
+    # T088-04: never raises, whatever goes wrong while keeping it.
+    survived, boom = [], {}
     with root88() as b:
         file88(b).mkdir()      # a directory where the file goes: the append fails (a read-only mode would not, as root)
         try:
-            r = refuse88(_ARGV88)
-            err = None
+            refuse88(_ARGV88)
         except Exception as exc:   # noqa: BLE001
-            r, err = None, f"{type(exc).__name__}: {exc}"
-    record("T088-04", "a write that fails leaves the refusal's caller untouched (record_refusal returns, never raises)", err is None and r is None, err)
-
-    # T088-05: privacy. The file is committed to a public repository.
+            boom["directory"] = f"{type(exc).__name__}: {exc}"
+    for exc_t in (UnicodeEncodeError("utf-8", "x", 0, 1, "bad"), TypeError("not serialisable"), PermissionError("read-only"), OSError("disk full"), ValueError("v")):
+        with root88() as b:
+            with mock.patch.object(dbcore, "append_line", side_effect=exc_t, create=True):
+                try:
+                    refuse88(_ARGV88)
+                except Exception as exc:   # noqa: BLE001
+                    boom[type(exc_t).__name__] = f"{type(exc).__name__}: {exc}"
     with root88() as b:
-        refuse88(["add-source", "--session", S88, "--token", "SEKRIT-ONE", "--api-key=SEKRIT-TWO", "--Password", "SEKRIT-THREE",
-                  "--db", "/home/alice/work/scratch.db", "--note", f"{b}/data/x.pdf and /Users/bob/y"],
-                 f"{b}/data/x.pdf is not held; saw /home/alice/z and /root/w")
-        raw = file88(b).read_text(encoding="utf-8")
-        ln = json.loads(raw)
-    record("T088-05", "a secret-flag value, a home directory, and this repository's root are not stored (root relative, home as ~)",
-           not any(w in raw for w in ("SEKRIT", "alice", "bob", "/root", str(b))) and ln["argv"][3:5] == ["--token", "<redacted>"]
-           and "--api-key=<redacted>" in ln["argv"] and ln["argv"][ln["argv"].index("--Password") + 1] == "<redacted>"
-           and ln["db"] == "~/work/scratch.db" and ln["sentence"] == "data/x.pdf is not held; saw ~/z and ~/w", raw)
-    # nothing in db.py's own flags is named like a secret, so the redaction never eats a real value
-    _flags = set(re.findall(r'add_argument\(\s*"(--[a-z0-9-]+)"', (REPO / "scripts" / "db.py").read_text(encoding="utf-8")))
-    record("T088-05b", "no flag of db.py is named like a token, secret, password, credential or api key (the redaction would hide its value from the record)",
-           bool(_flags) and not [f for f in _flags if dbcore._SECRET_FLAG.search(f)], sorted(f for f in _flags if dbcore._SECRET_FLAG.search(f)))
+        with mock.patch.object(dbcore.json, "dumps", side_effect=TypeError("circular")):
+            try:
+                refuse88(_ARGV88)
+            except Exception as exc:   # noqa: BLE001
+                boom["json.dumps"] = f"{type(exc).__name__}: {exc}"
+    record("T088-04", "a failure while keeping the refusal (a directory in the way, UnicodeEncodeError, TypeError, PermissionError, OSError, a serialising error) "
+           "leaves the caller untouched: record_refusal returns, never raises", not boom, boom)
+    with root88() as b:      # a byte that is not UTF-8 in argv (a surrogate escape) must be kept, not lost to the encoder
+        refuse88(["add-gap", "--session", S88, "--description", "caf\udce9 x"], "bad byte: caf\udce9")
+        ls = lines88(b)
+        listed = reg88("list", "--session", S88) if REG88 else (None, "", "")
+    record("T088-04b", "a non-UTF-8 byte in argv or the sentence is written as an escape, and the line reads back",
+           len(ls) == 1 and "caf" in ls[0]["argv"][-1] and "caf" in ls[0]["sentence"] and listed[0] in (None, 1) and "EXAMINED: 1" in (listed[1] or "EXAMINED: 1"), ls)
 
-    # T088-06: two refusals of one retry loop are two lines with two keys.
+    # T088-05: privacy, both ways. The file is committed to a public repository and its argv is the replay command: what is
+    # private must not reach it, and what is not must come back exactly as it went in.
+    LEAK88 = {
+        "a URL query": (["--url", "https://x/y.pdf?token=SEKRET&sig=SIG1"], "could not fetch 'https://x/y.pdf?token=SEKRET&sig=SIG1'", ("SEKRET", "SIG1")),
+        "URL userinfo": (["--url", "https://bob:HUNTER2@host.example/y"], "bad https://bob:HUNTER2@host.example/y", ("HUNTER2", "bob")),
+        "an email address": (["--note", "ask jane.doe@example.org"], "write to jane.doe@example.org", ("jane.doe", "example.org")),
+        "--password and a sentence quoting it": (["--password", "PW3"], "the password 'PW3' was refused", ("PW3",)),
+        "--api_key": (["--api_key", "KEYONE"], "key KEYONE", ("KEYONE",)),
+        "--auth with a scheme": (["--auth", "Bearer BEAR1"], "auth 'Bearer BEAR1'", ("BEAR1",)),
+        "--header Authorization": (["--header", "Authorization: Bearer BEAR2"], "header 'Authorization: Bearer BEAR2'", ("BEAR2",)),
+        "a Bearer value in prose (no Authorization)": (["--note", "sent Bearer ZZTOP9 upstream"], "sent Bearer ZZTOP9 upstream", ("ZZTOP9",)),
+        "an Authorization value that is not Bearer": (["--header", "Authorization: Basic QWxhZGRpbjpvcGVu"], "header 'Authorization: Basic QWxhZGRpbjpvcGVu'", ("QWxhZGRpbjpvcGVu",)),
+        "--key": (["--key", "KEYTWO"], "KEYTWO", ("KEYTWO",)),
+        "--pat": (["--pat", "PATONE"], "PATONE", ("PATONE",)),
+        "-p": (["-p", "PTWO"], "PTWO", ("PTWO",)),
+        "--token=v": (["--token=TOK9"], "TOK9", ("TOK9",)),
+        "--Password": (["--Password", "PWUP"], "PWUP", ("PWUP",)),
+        "--secret-key": (["--secret-key", "SK77"], "SK77", ("SK77",)),
+        "--cookie": (["--cookie", "COOK1"], "COOK1", ("COOK1",)),
+        "a home path": (["--note", "/home/alice/work /Users/bob/y /root/w"], "saw /home/alice/z and /root/w", ("alice", "bob", "/root/")),
+        "a Windows path": (["--note", "C:\\Users\\jane\\x"], "saw C:\\Users\\jane\\x", ("jane",)),
+        "~user": (["--note", "~jane/x"], "saw ~jane/x", ("jane",)),
+        "the harness scratch form": (["--note", "/tmp/claude-0/-home-jane-guidebook/82388ac1-2e44-55eb-8ade-e982067adc5f/scratchpad/x"],
+                                     "in /tmp/claude-0/-home-jane-guidebook/82388ac1-2e44-55eb-8ade-e982067adc5f/scratchpad/x", ("jane", "82388ac1")),
+    }
+    leaked = []
+    for label, (extra, sentence, forbidden) in LEAK88.items():
+        with root88() as b:
+            refuse88(["add-source", "--session", S88, *extra], sentence)
+            raw = file88(b).read_text(encoding="utf-8")
+        if any(w in raw for w in forbidden) or "<redacted>" not in raw.replace("<scratch>", "<redacted>").replace("<email>", "<redacted>").replace("~", "<redacted>"):
+            leaked.append((label, raw[:300]))
+    with root88() as b:
+        refuse88(["--session", S88, "--db", f"{b}/data/x.db", "--note", f"{b}/data/x.pdf and /home/alice/w"], f"{b}/data/x.pdf is not held; {b}", "scripts/assess/assess_cell.py")
+        ln = lines88(b)[0]
+        raw = file88(b).read_text(encoding="utf-8")
+    if str(b) in raw or "alice" in raw or ln["argv"][-1] != "data/x.pdf and ~/w" or ln["sentence"] != "data/x.pdf is not held; ." or ln["db"] != "data/x.db":
+        leaked.append(("the repository root", ln))
+    with root88() as b:
+        refuse88(["--session", S88, "--db", "/tmp/claude-0/-home-jane-guidebook/82388ac1-2e44-55eb-8ade-e982067adc5f/s.db"], "x", "scripts/assess/assess_cell.py")
+        ln = lines88(b)[0]
+    if ln["db"] != "<outside-repo>/s.db":
+        leaked.append(("the db field", ln["db"]))
+    record("T088-05", "no secret value, URL query or userinfo, email, home or harness path, or a secret quoted in the sentence reaches the line (argv, sentence and db alike)",
+           not leaked, leaked)
+
+    DAMAGE88 = ["https://city.example.org/home/accessibility/guide.pdf", "/var/root/x", "/root-dir", "https://x/home/y", "/srv/Users/zed/f",
+                "a ~ b and ~/c", "50% of? it", "Smith, J.", "REF-00012", "C:/Program Files/x", "mail: not an address"]
+    damaged = []
+    for text in DAMAGE88:
+        with root88() as b:
+            refuse88(["add-gap", "--session", S88, "--tokens", "5", "--author", "Smith", "--keywords", "a b", "--note", text], f"saw {text}")
+            ln = lines88(b)[0]
+        if ln["argv"][3:] != ["--tokens", "5", "--author", "Smith", "--keywords", "a b", "--note", text] or ln["sentence"] != f"saw {text}":
+            damaged.append((text, ln["argv"][3:], ln["sentence"]))
+    record("T088-05c", "what is not private comes back exactly: ordinary URLs and words (`--tokens 5`, `--author`, `/var/root/x`, `/root-dir`, `https://x/home/y`) are not rewritten",
+           not damaged, damaged)
+
+    with root88() as b:      # through db.py's own main: an unrecognised secret flag is a usage error whose sentence quotes the value
+        code, out, err = run88("scripts/db.py", "add-gap", "--category", "SW", "--priority", "P1", "--description", "see https://x/y.pdf?token=SEKRET from /home/alice/w",
+                               "--session", S88, "--parameter", _SUCH88, "--api_key", "KEYONE")
+        raw = file88(b).read_text(encoding="utf-8") if file88(b).exists() else ""
+    record("T088-05d", "through db.py's main, a usage error naming an unrecognised --api_key keeps no secret value, URL query or home path in argv or sentence, and still exits 2 with argparse's words",
+           code == 2 and "unrecognized arguments" in err and raw.count("\n") == 1 and not any(w in raw for w in ("SEKRET", "alice", "KEYONE"))
+           and '"--api_key", "<redacted>"' in raw and "https://x/y.pdf?<redacted>" in raw, (code, err[-160:], raw[:400]))
+
+    # nothing in any writer's own flags is named like a secret, so the redaction never eats a real value
+    _flags = set()
+    for _f in (REPO / "scripts").rglob("*.py"):
+        if _f.relative_to(REPO / "scripts").parts[0] in ("tests", "migrations"):
+            continue
+        for _n in ast.walk(ast.parse(_f.read_text(encoding="utf-8"))):
+            if isinstance(_n, ast.Call) and getattr(_n.func, "attr", "") == "add_argument":
+                _flags.update(a.value for a in _n.args if isinstance(a, ast.Constant) and isinstance(a.value, str) and a.value.startswith("-"))
+    _named = sorted(f for f in _flags if dbcore._secret_flag(f)) if hasattr(dbcore, "_secret_flag") else ["no dbcore._secret_flag"]
+    record("T088-05b", "no flag of any script under scripts/ is named like a token, secret, password, credential, key, auth or pat (the redaction would hide its value from the record)",
+           bool(_flags) and not _named, _named)
+
+    # T088-06: two refusals of one retry loop are two lines with two keys; 24 processes at once are 24 intact lines with 24 ids.
     with root88() as b:
         for _ in range(3):
             refuse88(_ARGV88)
-        tss = [x["ts"] for x in lines88(b)]
-    record("T088-06", "refusals repeated at once (one retry loop) carry distinct ts, so a disposition names one", len(tss) == 3 and len(set(tss)) == 3, tss)
+        got = lines88(b)
+    record("T088-06", "refusals repeated at once (one retry loop) carry distinct ts and distinct refusal_id, so a disposition names one",
+           len(got) == 3 and len({x["ts"] for x in got}) == 3 and len({rid88(x) for x in got}) == 3, got)
+    with root88() as b:
+        code = ("import sys, pathlib; sys.path.insert(0, 'scripts'); import dbcore; dbcore.REPO_ROOT = pathlib.Path(sys.argv[1]); "
+                "dbcore.record_refusal('scripts/db.py', ['add-gap', '--session', sys.argv[2]], 'concurrent; ' + 'x' * 6000)")
+        procs = [subprocess.Popen([sys.executable, "-c", code, str(b), S88], cwd=REPO) for _ in range(24)]
+        for p_ in procs:
+            p_.wait()
+        got = lines88(b)
+    record("T088-06b", "24 processes refusing at once leave 24 intact lines (large ones included) with 24 distinct refusal_id",
+           len(got) == 24 and len({rid88(x) for x in got}) == 24, (len(got), len({rid88(x) for x in got})))
+
+    # T088-19: an interrupted write leaves a stump with no newline; the next append starts its own line.
+    with root88() as b:
+        refuse88(_ARGV88)
+        file88(b).write_bytes(file88(b).read_bytes().rstrip(b"\n")[:-9])
+        refuse88(_ARGV88, "after the stump")
+        after = file88(b).read_bytes().splitlines()
+        try:
+            kept = [json.loads(x) for x in after[1:]]
+        except ValueError:
+            kept = []
+        stump_then = reg88("list", "--session", S88) if REG88 else (None, "", "")
+        disp = reg88("dispose", "--session", S88, "--id", rid88(kept[0]), "--as", "waived", "--reason", "TASK-FIXTURE: a stump precedes it") if (REG88 and kept) else (None, "", "")
+        with open(file88(b), "ab") as fh:
+            fh.write(b'{"kind": "disposition", "refus')      # a stump after the disposition too
+        refuse88(_ARGV88, "after the second stump")
+        final = [x for x in file88(b).read_bytes().splitlines() if x.strip()]
+        try:
+            last_ok = bool(json.loads(final[-1])["sentence"] == "after the second stump")
+            third = json.loads(final[-1])
+        except ValueError:
+            last_ok, third = False, {"ts": "?"}
+        with open(file88(b), "ab") as fh:
+            fh.write(b'{"kind": "disposition", "refus')      # a stump, then the disposition of that very refusal
+        disp3 = reg88("dispose", "--session", S88, "--id", rid88(third), "--as", "waived", "--reason", "TASK-FIXTURE: dispose after a stump") if REG88 else (None, "", "")
+        try:
+            disp3_ok = disp3[0] == 0 and json.loads(file88(b).read_bytes().splitlines()[-1])["kind"] == "disposition"
+        except ValueError:
+            disp3_ok = False
+    record("T088-19", "a file ending in a partial line (no newline) gets the next refusal and the next disposition on their own lines: both are readable, `dispose` succeeds "
+           "and `list` reads it; the stump alone is reported",
+           len(after) == 2 and len(kept) == 1 and kept[0]["sentence"] == "after the stump" and disp[0] == 0 and "PROBLEM line 1: unreadable" in stump_then[1]
+           and last_ok and disp3_ok, (after, disp, stump_then, disp3))
 
 # T088-07..: the CLI. Every place a writer says no keeps its sentence, and none of them changes its exit or its words.
 if feature("T088-07", "the capture exists", HAS88, "dbcore.record_refusal"):
     real = REPO / "scratchpad" / (REPO / "scratchpad" / "CURRENT").read_text(encoding="utf-8").strip() / "refusals.jsonl"
     size_before = real.stat().st_size if real.exists() else None
     r = cli("add-gap", "--category", "SW", "--priority", "P1", "--description", "x", "--session", "session_fixture", "--parameter", _SUCH88)
+    r2 = cli("add-gap", "--category", "NEW-CATEGORY", "--priority", "P1", "--description", "x", "--session", "session_fixture")
     size_after = real.stat().st_size if real.exists() else None
-    record("T088-07", "db.py refusing under another session exits 1 with the same REFUSING: sentence, and the real session's refusals.jsonl does not change",
+    record("T088-07", "db.py refusing, or failing its usage check, under another session exits as before with the same words, and the real session's refusals.jsonl does not change",
            r.returncode == 1 and r.stderr.startswith("REFUSING: add-gap parameter_id: gaps.parameter_id=") and r.stderr.rstrip().endswith("Nothing was written.")
-           and size_before == size_after, (r.returncode, r.stderr[:160], size_before, size_after))
+           and r2.returncode == 2 and "invalid choice: 'NEW-CATEGORY'" in r2.stderr and size_before == size_after, (r.returncode, r.stderr[:160], r2.returncode, size_before, size_after))
 
+    # --- T088-08: one run per place a writer says no, on the CODE, with exit and words checked as they were, and the stored
+    # sentence equal to what the process said. The 11 JSON sites of db.py are derived from its source (one case per
+    # `_json_refusal(` call, bijectively); the engine's 4th place (an IntegrityError that means two checks drifted) and full_text.py's
+    # 4th (an artefact that exists with other bytes) need state no fixture builds: only T088-09 holds those.
     eng = ["scripts/assess/assess_cell.py"]
-    sites = {
-        "db.py: a Refusal": (["scripts/db.py", "add-gap", "--category", "SW", "--priority", "P1", "--description", "x", "--session", S88, "--parameter", _SUCH88],
-                             lambda c, o, e: isinstance(c, str) and c.startswith("REFUSING: add-gap parameter_id:"), "add-gap"),
-        "db.py: a JSON error": (["scripts/db.py", "add-supersession-check", "--slug", "s", "--local-ref", "x", "--ref", "REF-00001", "--tier", "1",
-                                 "--evidence-type", "clinical", "--search-strategy", "{bad", "--outcome", "current_best", "--check-method", "pubmed_search",
-                                 "--session", S88],
-                                lambda c, o, e: c == 2 and json.loads(o)["error"].startswith("--search-strategy is not valid JSON"), "add-supersession-check"),
-        "engine: the canonical-DB guard": (eng + ["--db", "data/guidebook.db", "--emit-sql", f"{TMP}/x.sql", "--parameter-id", "1", "--slug", "s", "--session", S88,
-                                                  "--stamp", "2026-01-01 00:00"],
-                                           lambda c, o, e: c == 1 and e == "REFUSING: this engine never writes the canonical DB (owner-gated).\n", "assess_cell"),
-        "engine: a foreign --stamp": (eng + ["--db", DB, "--emit-sql", f"{TMP}/x.sql", "--parameter-id", "1", "--slug", "s", "--session", S88, "--stamp", "bad"],
-                                      lambda c, o, e: c == 2 and e.startswith("REFUSING: --stamp 'bad' is not 'YYYY-MM-DD HH:MM'") and e.endswith("Nothing was written.\n"), "assess_cell"),
-        "engine: a Refusal": (eng + ["--db", DB, "--emit-sql", f"{TMP}/x.sql", "--parameter-id", _SUCH88, "--slug", "s", "--session", S88, "--stamp", "2026-01-01 00:00"],
-                              lambda c, o, e: c == 1 and e.startswith(f"REFUSING: parameter_id {_SUCH88}: no such parameter."), "assess_cell"),
-        "full_text.py: a REFUSING print": (["scripts/research/full_text.py", "--ref-id", "REF-99999", "--session", S88],
-                                           lambda c, o, e: c == 2 and e == "REFUSING: REF-99999 is not an admitted source.\n", "full_text"),
+    asc = ["scripts/db.py", "add-supersession-check", "--slug", "s", "--local-ref", "x", "--ref", "REF-00001", "--tier", "1", "--evidence-type", "clinical",
+           "--search-strategy", "{}", "--outcome", "current_best", "--check-method", "pubmed_search", "--session", S88]
+    _agm_outcomes = dbcore.schema_choices("gap_mining", "outcome")
+    _agm_method = dbcore.schema_choices("gap_mining", "check_method")[0]
+
+    def agm(outcome="deferred", **over):
+        a = {"--gap-id": "GAP-001", "--search-strategy": "{}", "--candidates-returned": "0", "--candidates-reviewed": "0", "--outcome": outcome,
+             "--check-method": _agm_method, "--session": S88, **over}
+        return ["scripts/db.py", "add-gap-mining", *[x for kv in a.items() for x in kv]]
+
+    def swap(argv, flag, value):
+        i = argv.index(flag)
+        return argv[:i + 1] + [value] + argv[i + 2:]
+
+    json_cases = {
+        "asc: search-strategy not JSON": swap(asc, "--search-strategy", "{bad"),
+        "asc: refined_by with no dimension": swap(asc, "--outcome", "refined_by"),
+        "asc: divergent_no_supersession with no notes": swap(asc, "--outcome", "divergent_no_supersession"),
+        "asc: superseded_by with no superseding source": swap(asc, "--outcome", "superseded_by"),
+        "asc: co1_addition_logged for another evidence type": swap(asc, "--outcome", "co1_addition_logged"),
+        "agm: search-strategy not JSON": agm(**{"--search-strategy": "{bad"}),
+        "agm: --discoveries not an array": agm(**{"--discoveries": "{}"}),
+        "agm: --candidate-dois not an array": agm(**{"--candidate-dois": "{}"}),
+        "agm: closure_evidence_found with no discoveries": agm("closure_evidence_found"),
+        "agm: gap_recategorized with no notes": agm("gap_recategorized"),
+        "agm: deferred with no notes": agm("deferred"),
     }
-    bad = []
-    for label, (argv, expect, verb) in sites.items():
+    sites = {}
+    for label, argv in json_cases.items():
+        sites[f"db.py JSON error, {label}"] = (argv, "json", "add-supersession-check" if label.startswith("asc") else "add-gap-mining", "scripts/db.py")
+    sites["db.py: a Refusal"] = (["scripts/db.py", *_ARGV88], "str", "add-gap", "scripts/db.py")
+    sites["db.py: argparse, an unknown vocabulary term"] = (["scripts/db.py", "add-gap", "--category", "NEW-CATEGORY", "--priority", "P1", "--description", "x", "--session", S88],
+                                                            "usage", "add-gap", "scripts/db.py")
+    sites["db.py: argparse, a missing required flag of a subcommand"] = (["scripts/db.py", "add-gap", "--session", S88], "usage", "add-gap", "scripts/db.py")
+    sites["engine: the canonical-DB guard"] = (eng + ["--db", "data/guidebook.db", "--emit-sql", f"{TMP}/x.sql", "--parameter-id", "1", "--slug", "s", "--session", S88,
+                                                      "--stamp", "2026-01-01 00:00"], "stderr1", "assess_cell", eng[0])
+    sites["engine: a foreign --stamp"] = (eng + ["--db", DB, "--emit-sql", f"{TMP}/x.sql", "--parameter-id", "1", "--slug", "s", "--session", S88, "--stamp", "bad"],
+                                          "stderr2", "assess_cell", eng[0])
+    sites["engine: a Refusal, with --db and --session abbreviated"] = (eng + ["--d", DB, "--emit-sql", f"{TMP}/x.sql", "--parameter-id", _SUCH88, "--slug", "s", "--se", S88,
+                                                                              "--stamp", "2026-01-01 00:00"], "stderr1", "assess_cell", eng[0])
+    sites["engine: argparse, a missing required flag"] = (eng + ["--session", S88], "usage", "assess_cell", eng[0])
+    sites["full_text.py: not an admitted source, with --session abbreviated"] = (["scripts/research/full_text.py", "--ref-id", "REF-99999", "--s", S88], "stderr2", "full_text",
+                                                                                 "scripts/research/full_text.py")
+    sites["full_text.py: argparse, a missing required flag"] = (["scripts/research/full_text.py", "--session", S88], "usage", "full_text", "scripts/research/full_text.py")
+    _empty88 = os.path.join(TMP, "t088-empty.sql")
+    pathlib.Path(_empty88).write_text("", encoding="utf-8")
+    _body88 = os.path.join(TMP, "t088-body.sql")
+    pathlib.Path(_body88).write_text("UPDATE gaps SET status = status WHERE gap_id = 'TASK-FIXTURE';\n", encoding="utf-8")
+    _tier88 = os.path.join(TMP, "t088-tier.sql")
+    pathlib.Path(_tier88).write_text("INSERT INTO evidence_sources (ref_id, tier) VALUES ('REF-1', 9);\n", encoding="utf-8")
+    _out88 = os.path.join(TMP, "t088-mig")
+    em = ["scripts/emit_data_migration.py", "--session", S88 + ".md", "--summary", "TASK-FIXTURE", "--output-dir", _out88]
+    sites["emit_data_migration.py: an empty SQL body"] = (em + ["--input", _empty88], "stderr1", "emit_data_migration", "scripts/emit_data_migration.py")
+    sites["emit_data_migration.py: a value outside an audit range"] = (em + ["--input", _tier88], "stderr1", "emit_data_migration", "scripts/emit_data_migration.py")
+    sites["emit_data_migration.py: argparse, no --summary"] = (["scripts/emit_data_migration.py", "--session", S88 + ".md"], "usage", "emit_data_migration",
+                                                               "scripts/emit_data_migration.py")
+    bad, said_all, js_sentences = [], {}, []
+    for label, (argv, kind, verb, script) in sites.items():
         with root88() as b:
             code, out, err = run88(*argv)
             ls = lines88(b)
-        if not expect(code, out, err):
-            bad.append((label, "exit/words changed", code, out[:120], err[:160]))
-        elif len(ls) != 1 or ls[0]["verb"] != verb or ls[0]["sentence"] not in (str(code) if isinstance(code, str) else "") + out + err:
-            bad.append((label, "kept line wrong", ls))
-    record("T088-08", "each place a writer says no (db.py's Refusal and its JSON errors, the engine's four, full_text.py's REFUSING) exits as before, in the same words, "
-           "and keeps exactly the sentence it said", not bad, bad)
+        if kind == "json":
+            ok, said = code == 2 and out.startswith('{"error"'), (json.loads(out.splitlines()[0])["error"] if out.startswith('{"error"') else None)
+        elif kind == "str":
+            ok, said = isinstance(code, str) and code.startswith("REFUSING: ") and not err, (code or "")[len("REFUSING: "):]
+        elif kind == "usage":
+            ok = code == 2 and "usage:" in err and "error:" in err
+            said = err.split("error: ", 1)[1].rstrip("\n") if "error: " in err else None
+        else:
+            ok = code == int(kind[-1]) and err.startswith("REFUSING: ") and out == ""
+            said = err[len("REFUSING: "):].rstrip("\n")
+        if label.startswith("emit_data_migration.py: an empty") or label.startswith("emit_data_migration.py: a value"):
+            ok = code == 1 and "ERROR" in err
+            said = " ".join(x.strip() for x in err.splitlines())
+        if not ok:
+            bad.append((label, "exit/words changed", code, out[:100], err[:160]))
+        elif len(ls) != 1 or ls[0]["verb"] != verb or ls[0]["script"] != script or ls[0]["sentence"] != dbcore._scrub(said):
+            bad.append((label, "kept line wrong (verb, script, or the sentence is not exactly what was said)", ls, said))
+        if kind == "json":
+            js_sentences.append(said)
+    # the engine's usage-error words and the engine's session abbreviation were parsed by argparse, not by the capture's argv scan
+    # only: the same refusal under the session recorded by its prefix is one line (above); here the second duplicate-payload run
+    with root88() as b:
+        run88(*em, "--input", _body88)
+        code, out, err = run88(*em, "--input", _body88)
+        ls = lines88(b)
+    if not (code == 1 and "byte-identical" in err and len(ls) == 1 and ls[0]["sentence"] == dbcore._scrub(err.rstrip("\n").splitlines()[-1])):
+        bad.append(("emit_data_migration.py: the same payload twice", code, err[:120], ls))
+    with scratch() as c:      # full_text.py: a superseded source, and an --artefact it does not hold (HAND: the state no writer builds)
+        ref = c.execute("SELECT ref_id FROM evidence_sources WHERE superseded_by_ref_id IS NULL ORDER BY ref_id LIMIT 1").fetchone()[0]
+        with root88() as b:
+            code, out, err = run88("scripts/research/full_text.py", "--ref-id", ref, "--session", S88, "--artefact", "no-such-file.pdf")
+            ls = lines88(b)
+        if not (code == 2 and err.startswith("REFUSING: --artefact 'no-such-file.pdf'") and len(ls) == 1 and ls[0]["sentence"] == dbcore._scrub(err[len("REFUSING: "):].rstrip("\n"))):
+            bad.append(("full_text.py: an --artefact it does not hold", code, err[:160], ls))
+        hand("UPDATE evidence_sources SET superseded_by_ref_id = ? WHERE ref_id = ?", far(ref), ref)
+        with root88() as b:
+            code, out, err = run88("scripts/research/full_text.py", "--ref-id", ref, "--session", S88)
+            ls = lines88(b)
+        if not (code == 2 and f"REFUSING: {ref} is superseded by" in err and len(ls) == 1 and ls[0]["sentence"] == dbcore._scrub(err[len("REFUSING: "):].rstrip("\n"))):
+            bad.append(("full_text.py: a superseded source", code, err[:160], ls))
+    # a CRASH (any other exception) is kept too, then raised unchanged: the traceback and the exit code are the evidence
+    crashes = {"db.py: a writer verb crashes on its own input": (["scripts/db.py", *swap(asc, "--search-strategy", "{}")[1:], "--superseding-refs", "{bad"], "scripts/db.py", "add-supersession-check"),
+               "engine: a database that cannot be opened": (eng + ["--db", f"{TMP}/no-such-dir/x.db", "--emit-sql", f"{TMP}/x.sql", "--parameter-id", "1", "--slug", "s",
+                                                                  "--session", S88, "--stamp", "2026-01-01 00:00"], eng[0], "assess_cell"),
+               "full_text.py: a database that cannot be opened": (["scripts/research/full_text.py", "--ref-id", "REF-00001", "--session", S88], "scripts/research/full_text.py", "full_text")}
+    for label, (argv, script, verb) in crashes.items():
+        with root88() as b:
+            with mock.patch.dict(os.environ, {"GUIDEBOOK_DB_PATH": f"{TMP}/no-such-dir/x.db"} if label.startswith("full_text") else {}):
+                code, out, err = run88(*argv)
+            ls = lines88(b)
+        if not (isinstance(code, Exception) and len(ls) == 1 and ls[0]["verb"] == verb and ls[0]["script"] == script
+                and ls[0]["sentence"] == dbcore._scrub(f"{type(code).__name__}: {code}")):
+            bad.append((label, "a crash is kept, then raised unchanged", type(code).__name__, ls))
+    # the JSON sites are derived from the source: every `_json_refusal(` call has a case whose sentence matches its text
+    _src = ast.parse((REPO / "scripts" / "db.py").read_text(encoding="utf-8"))
+    _pat = []
+    for _n in ast.walk(_src):
+        if isinstance(_n, ast.Call) and getattr(_n.func, "id", "") == "_json_refusal" and _n.args:
+            _a = _n.args[0]
+            _parts = _a.values if isinstance(_a, ast.JoinedStr) else [_a]
+            _pat.append("".join(re.escape(str(p.value)) if isinstance(p, ast.Constant) else ".*" for p in _parts))
+    _uncovered = [p for p in _pat if not any(re.fullmatch(p, s or "") for s in js_sentences)]
+    if len(_pat) != len(json_cases) or _uncovered:
+        bad.append(("the derived JSON sites", len(_pat), len(json_cases), _uncovered))
+    record("T088-08", "each place a writer says no that a fixture can reach (db.py's Refusal, its 11 JSON errors derived from the source, its usage errors; the engine's three and its usage error; "
+           "full_text.py's three and its usage error; emit_data_migration.py's four) exits as before, in the same words, and keeps exactly one line whose sentence is what the process said",
+           not bad, bad)
 
-    # T088-09: the capture set is derived, not listed: any writer script that says REFUSING: must keep it.
-    uncaptured = []
-    for f in sorted((REPO / "scripts").rglob("*.py")):
-        rel = f.relative_to(REPO / "scripts").parts
-        if rel[0] in ("tests", "migrations", "audit") or f.name == "dbcore.py":
-            continue      # tests and migrations are not writers; audit scripts read, and their REFUSING is a verdict on the diff, not a write
-        text = f.read_text(encoding="utf-8")
-        if "REFUSING" in text and "record_refusal" not in text:
-            uncaptured.append(str(f.relative_to(REPO)))
-    record("T088-09", "every writer script outside tests, migrations and audit that says REFUSING: also calls dbcore.record_refusal (a new writer cannot say no unrecorded)",
-           not uncaptured, uncaptured)
+    # --- T088-09: the capture set is DERIVED from the syntax, not listed: in every writer script (one that adds `--session`, outside tests,
+    # migrations and audit) each place that says no -- `sys.exit(<message or non-zero>)`, `raise SystemExit(...)`, a print/write of a REFUSING or
+    # ERROR sentence, a printed `{"error": ...}`, a `return <non-zero>`, a plain ArgumentParser -- must be preceded, in its own block or one that
+    # encloses it within its function, by a call to something that calls `record_refusal`. What it cannot see: a refusal returned as a value to
+    # a caller that exits, a message with another prefix, an exit through `os._exit`, a script with no `--session` (the capture needs the
+    # session), a subprocess writer, and whether the recorded sentence is the one printed (T088-08 runs that).
+    def _head88(node):
+        if isinstance(node, ast.Constant) and isinstance(node.value, str):
+            return node.value
+        if isinstance(node, ast.JoinedStr) and node.values and isinstance(node.values[0], ast.Constant):
+            return str(node.values[0].value)
+        return ""
+
+    def _calls88(node):
+        return [n for n in ast.walk(node) if isinstance(n, ast.Call)]
+
+    def _cname88(call):
+        return call.func.attr if isinstance(call.func, ast.Attribute) else getattr(call.func, "id", "")
+
+    def cands88(tree):
+        out = []
+        for n in ast.walk(tree):
+            if isinstance(n, ast.Call):
+                nm = _cname88(n)
+                if nm in ("exit", "SystemExit") and n.args and not isinstance(n.args[0], ast.Call) and not (isinstance(n.args[0], ast.Constant) and n.args[0].value in (0, None)):
+                    out.append((n, "exits with a message or a non-zero code"))
+                elif nm in ("print", "write") and n.args and _head88(n.args[0]).strip().startswith(("REFUSING", "ERROR")):
+                    out.append((n, "prints a REFUSING or ERROR sentence"))
+                elif nm == "print" and n.args and any(isinstance(d, ast.Dict) and any(isinstance(k, ast.Constant) and k.value == "error" for k in d.keys) for d in ast.walk(n.args[0])):
+                    out.append((n, "prints a JSON error"))
+                elif nm == "ArgumentParser":
+                    out.append((n, "a plain ArgumentParser: its usage errors are not kept"))
+            elif isinstance(n, ast.Raise) and n.exc is None:
+                out.append((n, "re-raises a caught exception"))
+            elif isinstance(n, ast.Return) and isinstance(n.value, ast.Constant) and isinstance(n.value.value, int) and not isinstance(n.value.value, bool) and n.value.value:
+                out.append((n, "returns a non-zero exit code"))
+        return out
+
+    def unrouted88(src):
+        tree = ast.parse(src)
+        par = {c: n for n in ast.walk(tree) for c in ast.iter_child_nodes(n)}
+        rec = {"record_refusal"} | {f.name for f in ast.walk(tree) if isinstance(f, (ast.FunctionDef, ast.AsyncFunctionDef))
+                                    and any(_cname88(c) == "record_refusal" for c in _calls88(f))}
+
+        def routed(node):
+            cur = node
+            while cur in par:
+                up = par[cur]
+                for field in ("body", "orelse", "finalbody", "handlers"):
+                    block = getattr(up, field, None)
+                    # a STATEMENT of the block, before this one, that is itself the call: a recorder call buried in an earlier `if`, or in
+                    # a function defined above, keeps nothing for this place
+                    if isinstance(block, list) and cur in block and any(isinstance(s, ast.Expr) and isinstance(s.value, ast.Call) and _cname88(s.value) in rec
+                                                                       for s in block[:block.index(cur)]):
+                        return True
+                if isinstance(up, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    return False
+                cur = up
+            return False
+
+        def fn(node):
+            while node in par:
+                node = par[node]
+                if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    return node.name
+            return "<module>"
+        return [(fn(c), ast.unparse(c), why) for c, why in cands88(tree) if why.startswith("a plain") or not routed(c)]
+
+    def writers88():
+        for f in sorted((REPO / "scripts").rglob("*.py")):
+            if f.relative_to(REPO / "scripts").parts[0] in ("tests", "migrations", "audit") or f.name == "dbcore.py":
+                continue
+            src = f.read_text(encoding="utf-8")
+            if any(isinstance(c, ast.Call) and _cname88(c) == "add_argument" and c.args and isinstance(c.args[0], ast.Constant) and c.args[0].value == "--session"
+                   for c in ast.walk(ast.parse(src))):
+                yield str(f.relative_to(REPO)), src
+
+    # places that say no and are not routed, with how many there are, who judged them not a writer's refusal, and the phrase the docs name them by
+    # (a count that moves, or a place that is gone, fails: this list cannot go stale)
+    EXEMPT88 = {("scripts/db.py", "main", "sys.exit(1)"): (1, "no subcommand given: prints the usage and exits 1", None),
+                ("scripts/emit_data_migration.py", "selftest", "return 1"): (1, "the selftest's own verdict", None),
+                ("scripts/research/full_text.py", "main", "return 1"): (1, "exit 1 is `NOTHING TO DERIVE`: a state of the reader, not a refusal to write", "NOTHING TO DERIVE"),
+                ("scripts/research/full_text.py", "main", "return 2"): (2, "`AMBIGUOUS` (several derivable files: a choice for the operator) and the missing PDF reader (the environment)", "several-derivable-files")}
+    # whole scripts whose errors are not routed: infrastructure or reader errors, named in /batch-done and the skill
+    NOT_ROUTED88 = {"scripts/migrate_db.py": "applies migrations: its errors are the runner's, and a failed one is rolled back",
+                    "scripts/research/page_image.py": "renders a page to an image: a reader",
+                    "scripts/research/retrieval_log.py": "the retrieval ledger: errors are returned codes of fetch/verify helpers"}
+    found88, seen88 = {}, collections.Counter()
+    for rel, src in writers88():
+        left = []
+        for item in unrouted88(src):
+            if (rel, item[0], item[1]) in EXEMPT88:
+                seen88[(rel, item[0], item[1])] += 1
+            else:
+                left.append(item)
+        if left:
+            found88[rel] = left
+    used88 = {k for k, v in EXEMPT88.items() if seen88[k] == v[0]}
+    seeded = unrouted88("import sys\ndef main():\n    sys.exit('REFUSING: x')\n") + unrouted88("def f():\n    print(json.dumps({'error': 'x'}))\n    return 1\n") + \
+        unrouted88("import argparse\nap = argparse.ArgumentParser()\n") + unrouted88("def main():\n    print('ERROR: x', file=sys.stderr)\n    return 2\n") + \
+        unrouted88("try:\n    main()\nexcept Exception as exc:\n    raise\n")
+    clean = unrouted88("def _rec(s):\n    dbcore.record_refusal('x', [], s)\n\ndef main():\n    _rec('x')\n    sys.exit('REFUSING: x')\n")
+    record("T088-09", "every place a writer script says no is preceded by a call that keeps it (derived from the syntax: sys.exit with a message or code, a REFUSING/ERROR print, "
+           "a JSON error print, a non-zero return, a plain ArgumentParser); the scripts left out are exactly the named ones, and the exemptions are all still real",
+           set(found88) == set(NOT_ROUTED88) and used88 == set(EXEMPT88) and len(seeded) == 7 and not clean,
+           ({k: v[:2] for k, v in found88.items() if k not in NOT_ROUTED88}, set(NOT_ROUTED88) - set(found88), set(EXEMPT88) - used88, seeded, clean))
 
 # T088-10..: the disposition.
 if feature("T088-10", "the reader exists", REG88 is not None, f"scripts/audit/refusal_register.py ({REG88_ERR})") and HAS88:
     with root88() as b:
         empty = reg88("list", "--session", S88)
-    record("T088-10", "no refusal captured: `list` says so, prints EXAMINED: 0 and exits 0 (a batch that met none is done)",
-           empty[0] == 0 and "no refusal captured" in empty[1] and "EXAMINED: 0 refusal(s)" in empty[1], empty)
+        file88(b).write_text("", encoding="utf-8")
+        empty_file = reg88("list", "--session", S88)
+        file88(b).write_text("\n  \n", encoding="utf-8")
+        blank_file = reg88("list", "--session", S88)
+        file88(b).write_text("{this is not json\n", encoding="utf-8")
+        only_bad = reg88("list", "--session", S88)
+    record("T088-10", "a folder with no refusals.jsonl, an empty one or a blank one is a batch that met none: `list` says so, prints EXAMINED: 0 and exits 0; a file holding "
+           "only an unreadable line is not that: it exits 1 and says PROBLEM",
+           all(x[0] == 0 and "no refusal captured" in x[1] and "EXAMINED: 0 refusal(s)" in x[1] for x in (empty, empty_file, blank_file))
+           and only_bad[0] == 1 and "PROBLEM" in only_bad[1] and "EXAMINED: 0 refusal(s)" in only_bad[1], (empty, empty_file, blank_file, only_bad))
+
+    notrun = {}
+    for label, (cur, folder, arg) in {"CURRENT names a folder that does not exist": (S88 + "-typo", S88, None),
+                                      "CURRENT holds a branch slug": ("my-branch-slug", "my-branch-slug", None),
+                                      "CURRENT is empty": ("", S88, None),
+                                      "CURRENT is missing": (None, S88, None),
+                                      "--session ..": (S88, S88, ".."),
+                                      "--session .": (S88, S88, "."),
+                                      "--session a path": (S88, S88, f"../{S88}"),
+                                      "--session a typo": (S88, S88, S88 + "x")}.items():
+        with root88(cur, folder) as b:
+            notrun[label] = reg88("list", *(["--session", arg] if arg else []))
+            d = reg88("dispose", "--session", arg or (cur or "x"), "--id", "x", "--as", "retried")
+            notrun[label] = (*notrun[label], d[0])
+    record("T088-10b", "`list` is NOT RUN (exit 2, no EXAMINED line, nothing read) when the session is not a session_YYYY-MM-DD-... stem with an existing folder "
+           "(missing folder, branch slug, empty or missing CURRENT, `..`, `.`, a path, a typo); `dispose` refuses the same",
+           all(v[0] == 2 and v[1].startswith("NOT RUN:") and "EXAMINED" not in v[1].replace("NOT EXAMINED", "") and v[3] == 1 for v in notrun.values()), notrun)
 
     with scratch() as c:
         gap_open = json.loads(cli("add-gap", "--category", "SW", "--priority", "P3", "--description", "TASK-FIXTURE T088 open gap", "--session", S).stdout)["gap_id"]
@@ -4019,35 +4394,38 @@ if feature("T088-10", "the reader exists", REG88 is not None, f"scripts/audit/re
         with root88() as b:
             for k in range(5):
                 refuse88(_ARGV88 + [str(k)], f"refusal number {k}; Nothing was written.")
-            ts = [x["ts"] for x in lines88(b)]
+            ids = [rid88(x) for x in lines88(b)]
             first = reg88("list", "--session", S88)
             size0 = file88(b).stat().st_size
             fails = {}
             for label, (said, argv) in {
-                    "an unknown ts": ("no refusal of", ["--ts", "2000-01-01 00:00:00.000000", "--as", "retried"]),
-                    "parked without a gap": ("parked needs --gap-id", ["--ts", ts[0], "--as", "parked"]),
-                    "parked on an absent gap": ("not in the gaps table", ["--ts", ts[0], "--as", "parked", "--gap-id", gap_none]),
-                    "parked on a closed gap": ("not open", ["--ts", ts[0], "--as", "parked", "--gap-id", gap_shut]),
-                    "waived without a reason": ("waived needs --reason", ["--ts", ts[0], "--as", "waived"]),
-                    "waived with a blank reason": ("waived needs --reason", ["--ts", ts[0], "--as", "waived", "--reason", "   "]),
-                    "retried with a gap": ("belongs to parked", ["--ts", ts[0], "--as", "retried", "--gap-id", gap_open]),
-                    "an unknown disposition": ("invalid choice", ["--ts", ts[0], "--as", "ignored"])}.items():
+                    "an unknown id": ("no refusal of", ["--id", "0" * 32, "--as", "retried"]),
+                    "parked without a gap": ("parked needs --gap-id", ["--id", ids[0], "--as", "parked"]),
+                    "parked on an absent gap": ("not in the gaps table", ["--id", ids[0], "--as", "parked", "--gap-id", gap_none]),
+                    "parked on a closed gap": ("not open", ["--id", ids[0], "--as", "parked", "--gap-id", gap_shut]),
+                    "waived without a reason": ("waived needs --reason", ["--id", ids[0], "--as", "waived"]),
+                    "waived with a blank reason": ("waived needs --reason", ["--id", ids[0], "--as", "waived", "--reason", "   "]),
+                    "waived with a reason that is a dot": ("waived needs --reason", ["--id", ids[0], "--as", "waived", "--reason", "."]),
+                    "waived with a nine-character reason": ("waived needs --reason", ["--id", ids[0], "--as", "waived", "--reason", "not a gap"]),
+                    "waived with a reason of no letter or digit": ("waived needs --reason", ["--id", ids[0], "--as", "waived", "--reason", "!!!!!!!!!!!!"]),
+                    "retried with a gap": ("belongs to parked", ["--id", ids[0], "--as", "retried", "--gap-id", gap_open]),
+                    "an unknown disposition": ("invalid choice", ["--id", ids[0], "--as", "ignored"])}.items():
                 rc, _, err = reg88("dispose", "--session", S88, *argv)
                 fails[label] = (rc != 0 and said in err, file88(b).stat().st_size == size0)
-            ok_a = reg88("dispose", "--session", S88, "--ts", ts[0], "--as", "retried")
-            second = reg88("dispose", "--session", S88, "--ts", ts[0], "--as", "waived", "--reason", "again")
+            ok_a = reg88("dispose", "--session", S88, "--id", ids[0], "--as", "retried")
+            second = reg88("dispose", "--session", S88, "--id", ids[0], "--as", "waived", "--reason", "again, for good reason")
             mid = reg88("list", "--session", S88)
-            ok_b = reg88("dispose", "--session", S88, "--ts", ts[1], "--as", "parked", "--gap-id", gap_open)
-            ok_c = reg88("dispose", "--session", S88, "--ts", ts[2], "--as", "waived", "--reason", "TASK-FIXTURE: not content")
-            ok_d = reg88("dispose", "--session", S88, "--ts", ts[3], "--as", "retried", "--reason", "the corrected call wrote it")
+            ok_b = reg88("dispose", "--session", S88, "--id", ids[1], "--as", "parked", "--gap-id", gap_open)
+            ok_c = reg88("dispose", "--session", S88, "--id", ids[2], "--as", "waived", "--reason", "TASK-FIXTURE: not content")
+            ok_d = reg88("dispose", "--session", S88, "--id", ids[3], "--as", "retried", "--reason", "the corrected call wrote it")
             one_left = reg88("list", "--session", S88)
-            ok_e = reg88("dispose", "--session", S88, "--ts", ts[4], "--as", "retried")
+            ok_e = reg88("dispose", "--session", S88, "--id", ids[4], "--as", "retried")
             done = reg88("list", "--session", S88)
-    record("T088-11", "`list` shows five UNDISPOSED, prints each refusal's ts, and exits 1; EXAMINED counts the refusals",
+    record("T088-11", "`list` shows five UNDISPOSED, prints each refusal's id, and exits 1; EXAMINED counts the refusals",
            first[0] == 1 and first[1].count("UNDISPOSED") >= 5 and "UNDISPOSED: 5" in first[1] and "EXAMINED: 5 refusal(s)" in first[1]
-           and all(t in first[1] for t in ts), first)
-    record("T088-12", "dispose refuses an unknown ts, a parked with no gap / an absent gap / a closed gap, a waived with no or a blank reason, a gap given to retried, "
-           "and an unknown disposition, each saying which rule it is and leaving the file as it was",
+           and all(t in first[1] for t in ids), first)
+    record("T088-12", "dispose refuses an unknown id, a parked with no gap / an absent gap / a closed gap, a waived with no, a blank, a one-character, a nine-character or a "
+           "symbols-only reason, a gap given to retried, and an unknown disposition, each saying which rule it is and leaving the file as it was",
            absent and all(v == (True, True) for v in fails.values()), (absent, fails))
     record("T088-13", "a retried, a parked (real open gap), a waived (with a reason) are written; a second disposition of the same refusal is refused",
            ok_a[0] == 0 and ok_b[0] == 0 and ok_c[0] == 0 and ok_d[0] == 0 and ok_e[0] == 0 and second[0] == 1 and "already disposed" in second[2], (ok_a, ok_b, ok_c, second))
@@ -4060,59 +4438,118 @@ if feature("T088-10", "the reader exists", REG88 is not None, f"scripts/audit/re
     # a record that cannot be read is reported, never skipped
     with root88() as b:
         refuse88(_ARGV88)
-        ts = lines88(b)[0]["ts"]
+        rid = rid88(lines88(b)[0])
         with open(file88(b), "a", encoding="utf-8") as fh:
             fh.write("{this is not json\n")
-            fh.write(json.dumps({"kind": "disposition", "refusal_ts": "1999-01-01 00:00:00.000000", "as": "retried", "ts": "x"}) + "\n")
+            fh.write(json.dumps({"kind": "disposition", "refusal_id": "1999-01-01 00:00:00.000000", "as": "retried", "ts": "x"}) + "\n")
             fh.write(json.dumps({"kind": "mystery"}) + "\n")
-            fh.write(json.dumps({"kind": "disposition", "refusal_ts": ts, "as": "shrugged", "ts": "x"}) + "\n")
-        bad = reg88("list", "--session", S88)
-        reg88("dispose", "--session", S88, "--ts", ts, "--as", "retried")
-        reg88("dispose", "--session", S88, "--ts", ts, "--as", "retried")        # refused: already disposed
+            fh.write(json.dumps({"kind": "disposition", "refusal_id": rid, "as": "shrugged", "ts": "x"}) + "\n")
+        bad_ = reg88("list", "--session", S88)
+        reg88("dispose", "--session", S88, "--id", rid, "--as", "retried")
+        reg88("dispose", "--session", S88, "--id", rid, "--as", "retried")        # refused: already disposed
         twice = reg88("list", "--session", S88)
         with open(file88(b), "a", encoding="utf-8") as fh:                       # a hand-edited second disposition
-            fh.write(json.dumps({"kind": "disposition", "refusal_ts": ts, "as": "waived", "reason": "r", "ts": "x"}) + "\n")
+            fh.write(json.dumps({"kind": "disposition", "refusal_id": rid, "as": "waived", "reason": "a reason of length", "ts": "x"}) + "\n")
         dup = reg88("list", "--session", S88)
     record("T088-15", "`list` reports a line that is not JSON, an unknown kind, an unknown disposition and a disposition no refusal carries, and exits 1 even when every refusal is disposed",
-           bad[0] == 1 and bad[1].count("PROBLEM") == 4 and "UNDISPOSED: 1" in bad[1] and twice[0] == 1 and twice[1].count("PROBLEM") == 4 and "UNDISPOSED: 0" in twice[1]
-           and dup[0] == 1 and "disposed a second time" in dup[1], (bad, twice, dup))
+           bad_[0] == 1 and bad_[1].count("PROBLEM") == 4 and "UNDISPOSED: 1" in bad_[1] and twice[0] == 1 and twice[1].count("PROBLEM") == 4 and "UNDISPOSED: 0" in twice[1]
+           and dup[0] == 1 and "disposed a second time" in dup[1], (bad_, twice, dup))
 
+    # a refusal id two lines carry cannot name one; a line written before refusal_id existed is still named by its ts
     with root88() as b:
         refuse88(_ARGV88)
         ln = lines88(b)[0]
         with open(file88(b), "a", encoding="utf-8") as fh:
-            fh.write(json.dumps(ln) + "\n")                    # a hand-copied line: two refusals, one ts
+            fh.write(json.dumps(ln) + "\n")                    # a hand-copied line: two refusals, one id
         size = file88(b).stat().st_size
-        twin = reg88("dispose", "--session", S88, "--ts", ln["ts"], "--as", "retried")
+        twin = reg88("dispose", "--session", S88, "--id", rid88(ln), "--as", "retried")
         grew = file88(b).stat().st_size != size
         listed = reg88("list", "--session", S88)
-    record("T088-18", "a ts that two refusal lines carry cannot name one: dispose refuses and writes nothing, and `list` counts both (no refusal is merged away)",
-           twin[0] == 1 and "carried by 2" in twin[2] and not grew and "EXAMINED: 2 refusal(s)" in listed[1] and "UNDISPOSED: 2" in listed[1], (twin, listed))
+        with open(file88(b), "a", encoding="utf-8") as fh:        # ...and a disposition written for it by hand covers neither
+            fh.write(json.dumps({"kind": "disposition", "refusal_id": rid88(ln), "as": "retried", "ts": "x"}) + "\n")
+        covered = reg88("list", "--session", S88)
+    record("T088-18", "an id that two refusal lines carry cannot name one: dispose refuses and writes nothing, `list` flags it and counts both undisposed, and a hand-written "
+           "disposition for it covers neither (no refusal is merged away)",
+           twin[0] == 1 and "carried by 2" in twin[2] and not grew and "EXAMINED: 2 refusal(s)" in listed[1] and "UNDISPOSED: 2" in listed[1] and "carried by 2" in listed[1]
+           and "UNDISPOSED: 2" in covered[1] and covered[0] == 1, (twin, listed, covered))
+    with root88() as b:
+        old = {k: v for k, v in {"ts": "2026-11-16 10:00:00.000001", "session": S88, "script": "scripts/db.py", "verb": "add-gap", "argv": [], "sentence": "old line", "db": "data/guidebook.db"}.items()}
+        file88(b).write_text(json.dumps(old) + "\n", encoding="utf-8")
+        o_list = reg88("list", "--session", S88)
+        o_disp = reg88("dispose", "--session", S88, "--id", old["ts"], "--as", "retried")
+        o_done = reg88("list", "--session", S88)
+    record("T088-18b", "a refusal line written before refusal_id existed is named by its ts, listed and disposed as before",
+           o_list[0] == 1 and o_disp[0] == 0 and o_done[0] == 0 and "UNDISPOSED: 0" in o_done[1], (o_list, o_disp, o_done))
 
-    # the database a gap is checked against is the one the refusal names, else the one this process opens
+    # a foreign line, a byte-order mark and CRLF line ends
+    with root88() as b:
+        mine = {"refusal_id": "a" * 32, "ts": "2026-11-16 10:00:00.000001", "session": S88, "script": "scripts/db.py", "verb": "add-gap", "argv": [], "sentence": "mine", "db": "x"}
+        theirs = {**mine, "refusal_id": "b" * 32, "session": "session_2026-01-01-someone-else", "sentence": "theirs"}
+        file88(b).write_bytes(b"\xef\xbb\xbf" + (json.dumps(mine) + "\r\n" + json.dumps(theirs) + "\r\n").encode("utf-8"))
+        bom = reg88("list", "--session", S88)
+    record("T088-20", "a file that starts with a byte-order mark and uses CRLF is read (its first line is not reported unreadable) and a line whose session is not the folder's is flagged foreign",
+           "unreadable" not in bom[1] and "EXAMINED: 2 refusal(s)" in bom[1] and bom[1].count("foreign line") == 1 and "session_2026-01-01-someone-else" in bom[1] and bom[0] == 1, bom)
+
+    # a disposition is checked again when it is read
+    with scratch() as c:
+        g_ok = json.loads(cli("add-gap", "--category", "SW", "--priority", "P3", "--description", "TASK-FIXTURE T088 recheck", "--session", S).stdout)["gap_id"]
+        with root88() as b:
+            for k in range(6):
+                refuse88(_ARGV88 + [str(k)], f"recheck {k}; Nothing was written.")
+            ids = [rid88(x) for x in lines88(b)]
+            ok_p = reg88("dispose", "--session", S88, "--id", ids[0], "--as", "parked", "--gap-id", g_ok)
+            before = reg88("list", "--session", S88)
+            hand("UPDATE gaps SET status='CLOSED-FIXED' WHERE gap_id=?", g_ok)           # the gap is closed after the refusal was parked
+            closed = reg88("list", "--session", S88)
+            hand("DELETE FROM gaps WHERE gap_id=?", g_ok)
+            gone = reg88("list", "--session", S88)
+            with open(file88(b), "a", encoding="utf-8") as fh:                           # hand-written dispositions that dispose would have refused
+                for rid, how, gap, why in ((ids[1], "parked", None, None), (ids[2], "parked", "GAP-NOPE-1", None), (ids[3], "waived", None, "."),
+                                           (ids[4], "retried", "GAP-1", None), (ids[5], "waived", None, None)):
+                    fh.write(json.dumps({"kind": "disposition", "refusal_id": rid, "as": how, "gap_id": gap, "reason": why, "ts": "x"}) + "\n")
+            hand_ = reg88("list", "--session", S88)
+    record("T088-21", "`list` checks every disposition again: a parked gap closed or deleted afterwards, a hand-written parked with no gap or an absent gap, a waived with a dot or no reason "
+           "and a retried with a gap each make the refusal UNDISPOSED again, with the reason printed, and exit 1",
+           ok_p[0] == 0 and "parked " + g_ok in before[1] and "UNDISPOSED: 5" in before[1]
+           and closed[0] == 1 and "no longer holds" in closed[1] and "not open" in closed[1] and "UNDISPOSED: 6" in closed[1]
+           and gone[0] == 1 and "not in the gaps table" in gone[1] and "UNDISPOSED: 6" in gone[1]
+           and hand_[0] == 1 and hand_[1].count("no longer holds") >= 6 and "UNDISPOSED: 6" in hand_[1], (before, closed, gone, hand_))
+
+    # the database a gap is checked against is the one the refusal names (a repository-relative path), else the one this process opens
     with scratch() as c:
         mine = json.loads(cli("add-gap", "--category", "SW", "--priority", "P3", "--description", "TASK-FIXTURE T088 named db", "--session", S).stdout)["gap_id"]
         with root88() as b:
             refuse88(_ARGV88)
-            ts = lines88(b)[0]["ts"]
             ln = lines88(b)[0]
-            elsewhere = os.path.join(TMP, "named-elsewhere.db")
-            shutil.copy(os.environ["GUIDEBOOK_DB_PATH"], elsewhere)
-            sqlite3.connect(elsewhere).execute("DELETE FROM gaps WHERE gap_id=?", (mine,)).connection.commit()
-            file88(b).write_text(json.dumps({**ln, "db": elsewhere}) + "\n", encoding="utf-8")
-            refused = reg88("dispose", "--session", S88, "--ts", ts, "--as", "parked", "--gap-id", mine)
-            file88(b).write_text(json.dumps({**ln, "db": "~/gone/scratch.db"}) + "\n", encoding="utf-8")
-            fallback = reg88("dispose", "--session", S88, "--ts", ts, "--as", "parked", "--gap-id", mine)
-    record("T088-16", "a gap is looked up in the database the refusal names (absent there: refused), and when that file is gone or private (~), in the one this process opens",
+            rid = rid88(ln)
+            shutil.copy(os.environ["GUIDEBOOK_DB_PATH"], b / "named-elsewhere.db")
+            _c = sqlite3.connect(b / "named-elsewhere.db")
+            _c.execute("DELETE FROM gaps WHERE gap_id=?", (mine,))
+            _c.commit()
+            _c.close()
+            file88(b).write_text(json.dumps({**ln, "db": "named-elsewhere.db"}) + "\n", encoding="utf-8")
+            refused = reg88("dispose", "--session", S88, "--id", rid, "--as", "parked", "--gap-id", mine)
+            file88(b).write_text(json.dumps({**ln, "db": "<outside-repo>/gone.db"}) + "\n", encoding="utf-8")
+            fallback = reg88("dispose", "--session", S88, "--id", rid, "--as", "parked", "--gap-id", mine)
+    record("T088-16", "a gap is looked up in the database the refusal names (absent there: refused), and when that file is outside the repository or gone, in the one this process opens",
            refused[0] == 1 and "not in the gaps table" in refused[2] and fallback[0] == 0, (refused, fallback))
 
 # T088-17: the Layer 0 rule and the Layer 2 protocol say what the code does.
 _bd = re.sub(r"\s+", " ", (REPO / ".claude" / "commands" / "batch-done.md").read_text(encoding="utf-8"))
 _sk = re.sub(r"\s+", " ", (REPO / "skills" / "run-pipeline_SKILL.md").read_text(encoding="utf-8"))
 _line = 'python3 scripts/audit/refusal_register.py list --session "$(cat scratchpad/CURRENT)"'
-record("T088-17", "/batch-done runs `refusal_register.py list` on CURRENT and says an undisposed refusal is a batch not done; the skill's resume section says what to do when a writer refuses",
-       _line in _bd and "An undisposed refusal is a batch that is not done" in _bd and "When a writer refuses" in _sk and "refusal_register.py list" in _sk
-       and all(w in _sk and w in _bd for w in ("retried", "parked", "waived")), (_line in _bd, "When a writer refuses" in _sk))
+try:
+    _named, _exempt = set(NOT_ROUTED88), EXEMPT88
+    _nosession = [rel for rel in ("scripts/research/emit_batch_sql.py",) if rel not in dict(writers88())]
+except NameError:
+    _named, _nosession = set(), []
+_names_ok = bool(_named) and bool(_nosession) and all(pathlib.Path(n).name in _bd and pathlib.Path(n).name in _sk for n in _named | set(_nosession)) \
+    and all(v[2] in _bd and v[2] in _sk for v in EXEMPT88.values() if v[2])
+record("T088-17", "/batch-done runs `refusal_register.py list` on CURRENT, says it exits 2 / NOT RUN when CURRENT's folder is missing, says an undisposed refusal is a batch not done, "
+       "and names the scripts that keep nothing (derived: the ones the T088-09 sweep leaves out, and a script with no --session); the skill's resume section says what to do when a writer refuses",
+       _line in _bd and "An undisposed refusal is a batch that is not done" in _bd and "NOT RUN" in _bd and "exits 2" in _bd and "--id K" in _bd
+       and "When a writer refuses" in _sk and "refusal_register.py list" in _sk and "NOT RUN" in _sk and "worktree" in _sk and "usage error" in _sk and _names_ok
+       and all(w in _sk and w in _bd for w in ("retried", "parked", "waived")), (_line in _bd, "When a writer refuses" in _sk, _names_ok))
 # T088-END
 
 
