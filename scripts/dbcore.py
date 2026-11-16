@@ -1134,6 +1134,18 @@ def check_declared(conn, table: str, column: str, value, context: str):
             % (context, table, column, value, sorted(allowed)))
 
 
+# An identity code and every code below it through `parent_code`: the set a cell keyed on that code gathers (T-055).
+# One home for the engine (`assess_cell._IDENTITY_FAMILY`, inline in its SQL) and for `db.py cell-status`.
+IDENTITY_FAMILY_SQL = ("(WITH RECURSIVE family AS (SELECT ? AS code UNION SELECT i.identity_code "
+                       "FROM base_taxonomy_identity i JOIN family f ON i.parent_code = f.code) "
+                       "SELECT code FROM family)")
+
+
+def identity_family(conn, code):
+    """The set {code} plus every descendant of it; empty when `code` is falsy."""
+    return {r[0] for r in conn.execute("SELECT code FROM " + IDENTITY_FAMILY_SQL, (code,))} if code else set()
+
+
 def check_identity_live(conn, code, context: str):
     """Refuse an identity code that has been retired (deprecated), naming the successor to use instead (T-054).
 

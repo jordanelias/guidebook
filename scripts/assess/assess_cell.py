@@ -251,9 +251,7 @@ def lens_key(lens):
 # The identity lens is the one lens with a hierarchy (base_taxonomy_identity.parent_code): a cell keyed on a code
 # gathers the figures linked to that code or to any code whose parent_code chain reaches it (T-055). Derived from
 # the registry on every gather, never a list. UNION, not UNION ALL, so a cycle ends.
-_IDENTITY_FAMILY = ("(WITH RECURSIVE family AS (SELECT ? AS code UNION SELECT i.identity_code "
-                    "FROM base_taxonomy_identity i JOIN family f ON i.parent_code = f.code) "
-                    "SELECT code FROM family)")
+_IDENTITY_FAMILY = dbcore.IDENTITY_FAMILY_SQL
 
 
 def _lens_clause(lens, alias):
@@ -688,7 +686,7 @@ def _open_gates(conn, parameter_id, lens, best, questions_only=False):
     never skips it); for the identity lens "different" means outside the cell's code and its descendants. A QUESTION (OD-21) is reported, never binding. Any other gate binds only when its trigger is at
     least as strong as the cell's best anchor `best` (the ladder-inversion guard)."""
     gates = []
-    family = ({r[0] for r in conn.execute("SELECT code FROM " + _IDENTITY_FAMILY, (lens["identity_code"],))} if lens.get("identity_code") else set())
+    family = dbcore.identity_family(conn, lens.get("identity_code"))
     if _table_exists(conn, "determination_gates"):
         for g in conn.execute(
                 "SELECT gate_id, verdict, trigger_tier, trigger_evidence_type, "

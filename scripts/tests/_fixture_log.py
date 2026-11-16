@@ -59,6 +59,6 @@ def fixture_log_root(dest, db_path, source=None):
         out.mkdir(exist_ok=True)
         (out / "manifest.jsonl").write_text("".join(keep), encoding="utf-8")
         for f in d.iterdir():
-            if f.name != "manifest.jsonl" and not any(f.name.startswith(st) for st in stems) and not (out / f.name).exists():
+            if f.name != "manifest.jsonl" and not any(f.name == st or f.name.startswith((st + ".", st + "-")) for st in stems) and not (out / f.name).exists():
                 (out / f.name).symlink_to(f.resolve())
     return str(dest)

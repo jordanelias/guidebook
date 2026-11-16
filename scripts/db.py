@@ -291,7 +291,7 @@ def _check_language(conn, language: str, noun: str, flag: str = "--language") ->
     and `flag` the option the operator typed."""
     _langs = dbcore.live_vocab(conn, "lang_jur_map", "language")
     if not _langs:
-        return language
+        return (language or "").strip().upper()          # an empty map holds nothing to match; fold as every writer did
     held = {v.upper(): v for v in _langs}
     if (language or "").strip().upper() not in held:
         raise Refusal(
@@ -1163,11 +1163,18 @@ _CELL_LENS_TABLES = (("identity_code", "base_taxonomy_identity", "identity_code"
                      ("needs_code", "access_needs", "need_code"), ("medical_code", "base_taxonomy_medical", "medical_code"))
 
 
-def _gap_applies(row, lens, jurisdiction, lang):
+def _lens_differs(row, lens, family):
+    """True when `row` (a gate or a gap) names a code in a lens the cell states that is not the cell's: for the identity lens
+    "not the cell's" means outside the cell's code and its descendants, as the engine reads a gate (`assess_cell._open_gates`)."""
+    return any(row[c] and lens.get(c) and (row[c] not in family if c == "identity_code" else row[c] != lens[c])
+               for c in ("identity_code", "icf_code", "needs_code", "medical_code"))
+
+
+def _gap_applies(row, lens, jurisdiction, lang, family=frozenset(), roll=lambda j: j):
     """A gap names the subject it is about; it is skipped for a cell only when it names a DIFFERENT code in a lens the cell
     states, or a different jurisdiction or language than the one asked for (the rule the engine applies to a gate)."""
-    return not (any(row[c] and lens.get(c) and row[c] != lens[c] for c in ("identity_code", "icf_code", "needs_code", "medical_code"))
-                or (jurisdiction and row["jurisdiction"] and row["jurisdiction"] != jurisdiction)
+    return not (_lens_differs(row, lens, family)
+                or (jurisdiction and row["jurisdiction"] and roll(row["jurisdiction"]) != jurisdiction)
                 or (lang and row["language"] and row["language"].upper() != lang))
 
 
@@ -1196,9 +1203,16 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
                 raise Refusal(f"cell-status: {col} {lens[col]!r} is not in {tbl}. List the codes with SELECT "
                               f"{key} FROM {tbl}.")
         ids = lambda sql, *a: [r[0] for r in conn.execute(sql, a)]          # noqa: E731
+        # A sub-national code counts toward its country everywhere coverage is read (the map is keyed on the country), so
+        # the cell is asked about, and every row compared, at the country level.
+        _parents = {r[0]: r[1] for r in conn.execute(
+            "SELECT jurisdiction_code, parent_code FROM base_jurisdictions WHERE parent_code IS NOT NULL")}
+        roll = lambda j: _parents.get(j, j)          # noqa: E731
         if jurisdiction:
             dbcore.check_jurisdiction(jurisdiction, "cell-status --jurisdiction")
+            jurisdiction = roll(jurisdiction)
         lang = _check_language(conn, language, "cell-status") if language else None
+        family = dbcore.identity_family(conn, lens.get("identity_code"))
         # ---- research: the searches logged against this parameter, and the pairs the scope owes ----------
         pj = "COALESCE(b.parent_code, se.jurisdiction)"
         # Searches are keyed on a SLUG (most rows have no parameter_id): a parameter's searches are those logged against
@@ -1230,10 +1244,12 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
         # ---- evidence and judgment: the extractions of this parameter, and the scan ledger ----------------
         ex_sql, ex_args = "SELECT e.extraction_id FROM source_value_extractions e WHERE e.parameter_id = ?", [parameter_id]
         if jurisdiction:
-            ex_sql += " AND e.jurisdiction = ?"; ex_args.append(jurisdiction)
+            ex_sql += (" AND COALESCE((SELECT parent_code FROM base_jurisdictions WHERE jurisdiction_code = e.jurisdiction), "
+                       "e.jurisdiction) = ?"); ex_args.append(jurisdiction)
         for col, val in lens.items():
+            # the identity lens counts through parent_code, as the engine gathers a cell's figures (T-055)
             ex_sql += (f" AND EXISTS (SELECT 1 FROM v_live_lens_links l WHERE l.extraction_id = e.extraction_id "
-                       f"AND l.{col} = ?)"); ex_args.append(val)
+                       f"AND l.{col} " + (f"IN {dbcore.IDENTITY_FAMILY_SQL})" if col == "identity_code" else "= ?)")); ex_args.append(val)
         extractions = ids(ex_sql + " ORDER BY e.extraction_id", *ex_args)
         scan = lambda *st: ids("SELECT ref_id FROM v_scan_ledger WHERE parameter_id = ? AND status IN (%s) ORDER BY ref_id"  # noqa: E731
                                % ",".join("?" * len(st)), parameter_id, *st)
@@ -1257,11 +1273,11 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
                      "owed": {"open_gaps": [r["gap_id"] for r in conn.execute(
                          "SELECT gap_id, identity_code, icf_code, needs_code, medical_code, jurisdiction, language FROM gaps "
                          "WHERE parameter_id = ? AND status LIKE 'OPEN%' ORDER BY gap_id", (parameter_id,))
-                         if _gap_applies(r, lens, jurisdiction, lang)]}}
+                         if _gap_applies(r, lens, jurisdiction, lang, family, roll)]}}
         # ---- specification: the live determination(s) of the cell, their history, and the open gates ------
         sp = "SELECT specification_id FROM specifications WHERE parameter_id = ?" + "".join(f" AND {c} = ?" for c in lens)
         sp_args = [parameter_id, *lens.values()]
-        _lensed = lambda r: not any(r[c] and lens.get(c) and r[c] != lens[c] for c in given)          # noqa: E731
+        _lensed = lambda r: not _lens_differs(r, lens, family)          # noqa: E731
         gates = [r["gate_id"] for r in conn.execute(
             "SELECT gate_id, identity_code, icf_code, needs_code, medical_code FROM v_open_determination_gates "
             "WHERE parameter_id = ? ORDER BY gate_id", (parameter_id,)) if _lensed(r)]
@@ -2280,8 +2296,8 @@ def main():
     p_aj.add_argument("--dry-run", action="store_true")
 
     p_alp = sub.add_parser("add-lang-jur-pair",
-                           help="Admit a language-and-jurisdiction pair to lang_jur_map, pointing at the ledger "
-                                "entry that records the owner's approval")
+                           help="Admit a language-and-jurisdiction pair to lang_jur_map after checking the ledger "
+                                "entry that records the owner's approval (checked and printed, not stored)")
     p_alp.add_argument("--language", required=True, help="upper case; a language new to the map is reported as new_language")
     p_alp.add_argument("--jurisdiction", required=True, help="a code base_jurisdictions holds (admit one with add-jurisdiction)")
     p_alp.add_argument("--role", required=True, choices=dbcore.schema_choices("lang_jur_map", "role"),
@@ -2293,7 +2309,7 @@ def main():
     p_alp.add_argument("--dry-run", action="store_true")
 
     p_sps = sub.add_parser("set-pair-scope",
-                           help="Set scope_status of a held lang_jur_map pair, pointing at the ledger entry that records the answer")
+                           help="Set scope_status of a held lang_jur_map pair after checking the ledger entry that records the answer (the entry is checked and printed, not stored: the table has no column for it)")
     p_sps.add_argument("--language", required=True)
     p_sps.add_argument("--jurisdiction", required=True)
     p_sps.add_argument("--scope-status", dest="scope_status", required=True,
@@ -2305,7 +2321,7 @@ def main():
     p_sps.add_argument("--dry-run", action="store_true")
 
     p_aid = sub.add_parser("add-identity",
-                           help="Mint a base_taxonomy_identity code, pointing at the ledger entry that records the owner's approval")
+                           help="Mint a base_taxonomy_identity code after checking the ledger entry that records the owner's approval (checked and printed, not stored: the table has no column for it)")
     p_aid.add_argument("--code", required=True, help="upper case, no space")
     p_aid.add_argument("--display-name", dest="display_name", required=True)
     p_aid.add_argument("--category", required=True, choices=dbcore.schema_choices("base_taxonomy_identity", "category"),
@@ -6617,7 +6633,9 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         # register to be worth re-creating. Until then the warrant lives here, in the
         # column `metadata_integrity_audit.py` actually reads.
         ledger = (row["metadata_integrity_detail"] or "").rstrip()
-        segment = (f"{stamp['created_at'][:10]} {field} CORRECTED ({reason}). "
+        # A currency statement is not a metadata correction (the status below stays as it was), so the ledger says RECORDED.
+        _verb = "RECORDED" if field in ("code_currency_status", "code_currency_notes") else "CORRECTED"
+        segment = (f"{stamp['created_at'][:10]} {field} {_verb} ({reason}). "
                    f"Replaced text was: {was!r}")
         if retype is not None:
             # ONE segment: the type, its scope and tier, and any Co-1 text it carries out
@@ -8968,9 +8986,9 @@ def _identity_records(conn, code):
 
 def _identity_carriers(conn, code):
     """Every live row that still carries identity `code`: (table.column, n). DERIVED from the foreign keys into
-    base_taxonomy_identity (never listed), plus the one identity-bearing column that declares no foreign key,
-    evidence_population_match.target_population. A row is live unless its table carries a retirement mark and it is set;
-    a code's own successor pointers and a retired child's parent_code are not carriers."""
+    base_taxonomy_identity (never listed). `evidence_population_match.target_population` (free text, no foreign key) is NOT a
+    carrier: it is a record, counted apart by `_identity_records`. A row is live unless its table carries a retirement mark
+    and it is set; a code's own successor pointers and a retired child's parent_code are not carriers."""
     out = []
     tables = [r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")]
     # RECORDS are not carriers: a logged search and a graded population match say what happened and were true when
@@ -9005,9 +9023,9 @@ def retire_identity(code: str, need: str, to_identity: str, approval_ref: str, r
 
     Sets status 'deprecated' and ONE successor column; deletes nothing and renames nothing (the 2026-09-16 ruling).
     Refused while any live row still carries the code, naming each carrier and the count: those rows are re-tagged
-    first (T-114), and `evidence_population_match.target_population`, which declares no foreign key, is re-graded by
-    judgment, never fanned out. A logged search and a graded population match are RECORDS, kept as history (listed in the
-    result, never blocking), and a code another deprecated code names as its successor cannot be retired."""
+    first (T-114). A logged search and a graded population match (`evidence_population_match.target_population`, free
+    text with no foreign key, never fanned out to a successor) are RECORDS, kept as history and listed in the result,
+    never blocking; nothing re-tags them. A code another deprecated code names as its successor cannot be retired."""
     if bool(need) == bool(to_identity):
         raise Refusal("retire-identity: give exactly one of --need (an access-need code) and --to-identity (an "
                       "identity code). Nothing was written.")

@@ -1135,7 +1135,7 @@ else:
         record("T027-01", "amend-source sets code_currency_status to a member of the enum governance/tier-system.md ratifies, stamps "
                "code_currency_verified_at and _by_session itself, and ledgers the replaced value with the reason",
                err is None and tuple(_before) == (None, None, None) and _row[0] == _cv[0] and bool(_row[1])
-               and _row[2] == dbcore.session_stem(S) and "code_currency_status CORRECTED (T027 fixture: edition checked)" in _row[3], (err, tuple(_row)))
+               and _row[2] == dbcore.session_stem(S) and "code_currency_status RECORDED (T027 fixture: edition checked)" in _row[3] and "code_currency_status CORRECTED" not in _row[3], (err, tuple(_row)))
         res, err = ok(db.amend_source, _ref27, "code_currency_status", _cv[0], "again", session=S, dry_run=False)
         record("T027-02", "the same value again changes nothing", err is None and res["changed"] is False, (err, res))
         _rs = {"outside the enum": refusal(db.amend_source, _ref27, "code_currency_status", "CURRENT-ISH", "r", session=S, dry_run=True),
@@ -1242,6 +1242,31 @@ if _P_fig is not None:
                and _n["evidence"].get("not_narrowed") == ["examined_empty", "never_examined", "owed"], (_code, _n["evidence"]["held"][:3], _n["specification"]["owed"]))
     else:
         skip("T034-08", "no figure of the chosen parameter carries an identity code")
+
+if _P_fig is not None:
+    with scratch() as c:
+        _two = [r[0] for r in c.execute("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' AND parent_code IS NULL "
+                                        "ORDER BY identity_code LIMIT 2")]
+        c.execute("UPDATE base_taxonomy_identity SET parent_code=? WHERE identity_code=?", (_two[0], _two[1]))   # HAND, on the copy
+        c.execute("INSERT INTO determination_gates (parameter_id, identity_code, verdict, detail, raised_at, raised_by_session) "
+                  "VALUES (?,?,'QUESTION','T034 fixture','2026-11-16','TASK-FIXTURE')", (_P_fig, _two[1]))
+        c.commit()
+        _gid = c.execute("SELECT MAX(gate_id) FROM determination_gates").fetchone()[0]
+        _par = db.cell_status(_P_fig, identity=_two[0])["stages"]["specification"]["owed"]["open_gates"]
+        _kid = db.cell_status(_P_fig, identity=_two[1])["stages"]["specification"]["owed"]["open_gates"]
+        _sib = [r[0] for r in c.execute("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code NOT IN (?,?) AND identity_code<>'ALL' "
+                                        "ORDER BY identity_code LIMIT 1", _two)]
+        _oth = db.cell_status(_P_fig, identity=_sib[0])["stages"]["specification"]["owed"]["open_gates"] if _sib else None
+        record("T034-09", "an open gate on a child identity code is owed on the parent's cell (the engine's rule: the parent gathers the child's figures), on the "
+               "child's own, and not on an unrelated code's",
+               _gid in _par and _gid in _kid and _oth is not None and _gid not in _oth, (_gid, _par, _kid, _oth))
+    with scratch() as c:
+        _co = c.execute("SELECT jurisdiction_code FROM base_jurisdictions WHERE kind='country' ORDER BY 1 LIMIT 1").fetchone()[0]
+        c.execute("INSERT INTO base_jurisdictions (jurisdiction_code, kind, parent_code) VALUES (?, 'sub-national', ?)", (f"{_co}-ZZ", _co))   # HAND, on the copy
+        c.commit()
+        _sub, _top = db.cell_status(_P_fig, jurisdiction=f"{_co}-ZZ"), db.cell_status(_P_fig, jurisdiction=_co)
+        record("T034-10", "a sub-national jurisdiction is asked about at its country, so it answers as the country does and the report names the country",
+               _sub["stages"] == _top["stages"] and _sub["jurisdiction"] == _co, (_sub["jurisdiction"], _co))
 
 print("Section T048: an external root is registered by a verb, and a figure already written can point at it")
 _RT = next(iter(sorted(dbcore.schema_choices("external_root_registry", "root_type"))), None)

@@ -286,7 +286,7 @@ function homePage() {
       h("h1", null, "Guidebook database"),
       h("p", { class: "gl" }, "A copy of the database, opened on this device. Tap a table to read its rows. Nothing you do here changes the database; the answers you save are kept on this page only.")),
     h("a", { class: "item", href: "#waiting" }, h("span", { class: "top" }, h("span", { class: "nm" }, "Waiting on you"), h("span", { class: "n" }, fmt(open))),
-      h("span", { class: "gl" }, "Questions with the context to answer them: " + openDecisions().length + " decisions on the plan and " + (keys.length - openDecisions().length) + " rows in the database. " + (keys.length - open) + " answered on this page, and " + (META.decisions.length - openDecisions().length + queueRows().reduce((a, x) => a + x.ruled.length, 0)) + " already ruled in the ledger.")),
+      h("span", { class: "gl" }, "Questions with the context to answer them: " + openDecisions().length + " decisions on the plan and " + (keys.length - openDecisions().length) + " rows in the database. " + (keys.length - open) + " answered on this page, and " + (META.decisions.filter((d) => d.answered).length + queueRows().reduce((a, x) => a + x.ruled.length, 0)) + " already ruled in the ledger, and " + META.decisions.filter((d) => d.resolved_under_delegation && !d.answered).length + " resolved under delegation (not your words).")),
     find, sections,
     h("section", { class: "sec" }, h("h2", null, "Views · " + views.length),
       h("details", null, h("summary", null, "Saved queries that read the tables"), h("div", { class: "body" },
