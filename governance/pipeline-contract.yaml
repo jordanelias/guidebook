@@ -94,6 +94,25 @@ stages:
       direction recorded from an admitted source and not hand-set"); scripts/tests/
       test_run_pipeline_refusals.py section A6'
     check: null
+  re_entry:
+  - id: base-from-evidence-adjudication
+    from_stage: evidence
+    when: an observed phrase is adjudicated at judgment, and the adjudication names the observation it settles
+    carrier_table: term_adjudications
+    carrier_column: observation_id
+    references: TD section 3 boundary B12; REQ-029, REQ-033 (OD-18)
+  - id: base-from-judgment-adjudication
+    from_stage: judgment
+    when: a phrase met in a native-language reading is adjudicated, and the adjudication names the observation it settles
+    carrier_table: term_adjudications
+    carrier_column: observation_id
+    references: TD section 3 boundary B12; REQ-029, REQ-033, REQ-061 (OD-18)
+  - id: base-from-research-attested-form
+    from_stage: research
+    when: a form is found in an instrument of a pair, and its alias row names the URL where it was found
+    carrier_table: term_aliases
+    carrier_column: source_url
+    references: TD section 3 boundary B13; REQ-060 (OD-18)
 - id: research
   anchor: 'PI rule #7 (adversarial-research); rule #8 (PMP); workplan phase B'
   entry:
@@ -105,6 +124,26 @@ stages:
       confidence_interval, shift_conditions, named_dissenter) before status CLOSED.
     references: 'PI rule #7; DR-2026-05-09 adversarial-research-protocol'
     check: scripts/audit/research_protocol_audit.py
+  re_entry:
+  - id: research-from-evidence-mining
+    from_stage: evidence
+    when: a confirmed T1-T2 source is mined, and the mining search names the source it mines
+    carrier_table: search_executions
+    carrier_column: mined_ref_id
+    references: TD section 3 boundary B7; REQ-049 (OD-18)
+  - id: research-from-judgment-absence
+    from_stage: judgment
+    when: an absence finding whose tested values are not identified is raised as a follow-up on the extraction that records the absence
+    carrier_table: extraction_follow_ups
+    carrier_column: reason
+    carrier_value: absence-needs-tested-value
+    references: TD section 3 boundary B8; REQ-039 (OD-18); db.py raise-follow-up
+  - id: research-from-specification-gap
+    from_stage: specification
+    when: a cell has no determination row, and an open gap typed by the parameter and by the lens columns that apply states what is owed; a pending row for a lens no figure carries is never written (OD-08)
+    carrier_table: gaps
+    carrier_column: parameter_id
+    references: TD section 3 boundary B10; REQ-040 (OD-18, OD-08)
 - id: evidence
   anchor: 'EvidenceSource corpus (ENT-02); PI rule #2 (Sonnet evidence inventories)'
   entry:
@@ -146,6 +185,14 @@ stages:
       research_protocol_audit CHECK 8, which reads search_queries_used and is the only
       committed reader of that still-unreachable column'
     check: scripts/audit/provenance_artefact_audit.py
+  re_entry:
+  - id: evidence-from-specification-skim
+    from_stage: specification
+    when: a figure under a determination was read by skimming, and the extraction's own method cell says so; the engine names it as owing a dedicated reading. No follow-up row and no provisional state carry it until the owner answers OD-10
+    carrier_table: source_value_extractions
+    carrier_column: extraction_method
+    carrier_value: skim
+    references: TD section 3 boundary B11; REQ-037, REQ-038 (OD-18)
 - id: judgment
   anchor: the 4-state determination machine + convergence + directness (evidence-architecture.md §5)
   entry:
@@ -216,6 +263,14 @@ stages:
     references: 'references/project-standards.md, "Owner rulings 2026-10-29 (second)" OR-11a
       ("Yes, require a full-scope scan"); the scan contract (migration 103, v_scan_ledger)'
     check: scripts/audit/verified_scan_integrity.py
+  re_entry:
+  - id: judgment-from-specification-skim
+    from_stage: specification
+    when: a figure under a determination was read by skimming, and the extraction's own method cell says so; the engine names it as owing a dedicated reading. No follow-up row and no provisional state carry it until the owner answers OD-10
+    carrier_table: source_value_extractions
+    carrier_column: extraction_method
+    carrier_value: skim
+    references: TD section 3 boundary B11; REQ-037, REQ-038 (OD-18)
 - id: synthesis
   anchor: 'best_practice_synthesis / ISW; PI rule #9 (9-step); Opus-only (rule #2)'
   entry:

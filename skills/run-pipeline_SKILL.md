@@ -13,7 +13,9 @@ starts at stage 3. A stage is finished when its verification passes, not when it
 normal (a new lead goes back to research, a new concept to base); record why, at the moment of return, in the
 session record `sessions/<STEM>.md` (with `attestations/sessions_<STEM>.json`, validated against
 `schemas/attestation.schema.json`, CLAUDE.md rule 2), and commit both at the next natural break (rule 6). The
-database holds no marker for a return; the record and `scratchpad/<STEM>/commands.jsonl` are the trace. `session-consolidator` is a prior-version procedure and is not
+returns the contract has ruled, each with the row that carries it, are the `re_entry:` lists of
+`governance/pipeline-contract.yaml` (read the list of the stage you are returning to); no other return has a marker in
+the database, so the record and `scratchpad/<STEM>/commands.jsonl` are its trace. `session-consolidator` is a prior-version procedure and is not
 run. Derive every figure; paste no counts.
 
 | Variant | Starts at | Skips |

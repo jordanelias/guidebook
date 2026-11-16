@@ -22,12 +22,16 @@ Checks:
      `register-invariants` — which cites the quarantined register_integrity_check.py
      — reported VERIFIABLE. The one audit whose stated purpose is that "no stage
      cites a gate that does not exist" could not see a gate that does not run.
-  3. Enforcer self-verification (INFO) — for each VERIFIABLE check under scripts/,
+  3. Re-entry carriers (a stage's `re_entry:` list, OD-18) — every ruled return names a later
+     stage it comes back from, and a table, column and (for a state) value that exist in the
+     live schema. A carrier that does not exist is a return nothing can record. FAIL.
+  4. Enforcer self-verification (INFO) — for each VERIFIABLE check under scripts/,
      note whether it ships a `--selftest` (the evidence-architecture §10 rule that a
      check's passes count only once it is demonstrated firing on injected violations).
 
 Ships its mutation harness (`--selftest`): the canonical contract validates; a
-malformed / unknown-field contract is rejected; a phantom check path is classed BROKEN.
+malformed / unknown-field contract is rejected; a phantom check path is classed BROKEN; a
+re-entry whose carrier is missing, or whose source stage is not later, is reported.
 
 Exit code: 0 = contract valid and no BROKEN check; 1 = otherwise.
 
@@ -41,7 +45,9 @@ from pathlib import Path
 
 REPO = Path(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 sys.path.insert(0, str(REPO))
+sys.path.insert(0, str(REPO / "scripts"))
 
+import dbcore                                            # noqa: E402
 from schemas.pipeline_contract import PipelineContract   # noqa: E402
 
 CONTRACT_PATH = REPO / "governance" / "pipeline-contract.yaml"
@@ -107,6 +113,33 @@ def classify_check(path, registry=None):
     return "VERIFIABLE" if entry[1] == "ACTIVE" else "QUARANTINED"
 
 
+def re_entry_problems(contract, conn):
+    """Every `re_entry` that cannot work, as (location, why). Reads the schema, writes nothing.
+
+    A return is ruled back from a LATER stage, and is carried by a column that already exists;
+    a value, where the column is a state, is one its own CHECK admits (dbcore.check_values).
+    """
+    order = [st.id for st in contract.stages]
+    tables = {r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+    out = []
+    for st in contract.stages:
+        for r in st.re_entry or []:
+            loc = f"stage:{st.id}/{r.id}"
+            if r.from_stage not in order or order.index(r.from_stage) <= order.index(st.id):
+                out.append((loc, f"from_stage {r.from_stage!r} is not a later stage of the contract"))
+            if r.carrier_table not in tables:
+                out.append((loc, f"carrier table {r.carrier_table!r} does not exist"))
+                continue
+            cols = {c[1] for c in conn.execute(f'PRAGMA table_info("{r.carrier_table}")')}
+            if r.carrier_column not in cols:
+                out.append((loc, f"{r.carrier_table} has no column {r.carrier_column!r}"))
+            elif r.carrier_value is not None and r.carrier_value not in dbcore.check_values(
+                    conn, r.carrier_table, r.carrier_column):
+                out.append((loc, f"{r.carrier_value!r} is not in the CHECK of "
+                                 f"{r.carrier_table}.{r.carrier_column}"))
+    return out
+
+
 def _has_selftest(path):
     try:
         return "--selftest" in (REPO / path).read_text(encoding="utf-8", errors="replace")
@@ -162,13 +195,20 @@ def audit():
         for loc, cid in incomplete:
             print(f"      - {loc}/{cid}")
 
+    edges = [(st.id, r) for st in contract.stages for r in st.re_entry or []]
+    with dbcore.connect(readonly=True) as conn:
+        bad = re_entry_problems(contract, conn)
+    print(f"[3] re-entry carriers: {len(edges)} ruled returns, {len(bad)} with no working carrier")
+    for loc, why in bad:
+        print(f"    BROKEN: {loc} -- {why}")
+
     # Self-verification is a property of an ENFORCER (a path), not of a criterion:
     # count over the UNIQUE verifiable enforcer paths, not the criteria list (several
     # criteria reuse the same enforcer, e.g. validate_evidence_state.py x3).
     enforcers = sorted({check for _, _, check in verifiable})
     with_selftest = [p for p in enforcers if _has_selftest(p)]
     without_selftest = [p for p in enforcers if not _has_selftest(p)]
-    print(f"[3] INFO: {len(with_selftest)} of {len(enforcers)} UNIQUE enforcers ship a "
+    print(f"[4] INFO: {len(with_selftest)} of {len(enforcers)} UNIQUE enforcers ship a "
           f"--selftest; {len(without_selftest)} do not (a check's passes count only "
           f"after demonstrated firing — evidence-architecture §10). NOTE: a lower bound "
           f"— an enforcer whose mutation harness lives in scripts/tests/ reads as 'no':")
@@ -184,16 +224,18 @@ def audit():
         b = klasses.count("BROKEN") + klasses.count("QUARANTINED") + klasses.count("UNREGISTERED")
         print(f"    stage {st.id:11s}: {v} verifiable / {i} incomplete / {b} not-enforced")
 
-    print(f"\nEXAMINED: {len(list(contract.all_checks()))} contract criteria")
+    n_crit = len(list(contract.all_checks()))
+    print(f"\nEXAMINED: {n_crit + len(edges)} contract criteria and re-entry edges "
+          f"({len(edges)} of them re-entry edges)")
     print(SEP)
     # QUARANTINED and UNREGISTERED join BROKEN as failures. All three are the same
     # fault in different clothes — the contract asserts a criterion is enforced
     # when nothing enforces it. Counting only BROKEN was what let
     # `register-invariants` read green while pointing at a shelved script.
-    ok = not (broken or quarantined or unregistered)
+    ok = not (broken or quarantined or unregistered or bad)
     print(f"VERDICT: {'PASS' if ok else 'FAIL'}   "
           f"(broken={len(broken)}, quarantined={len(quarantined)}, "
-          f"unregistered={len(unregistered)}, incomplete={len(incomplete)}, "
+          f"unregistered={len(unregistered)}, re_entry_broken={len(bad)}, incomplete={len(incomplete)}, "
           f"verifiable={len(verifiable)})")
     print(SEP)
     return 0 if ok else 1
@@ -271,6 +313,51 @@ def selftest():
                         got == expected))
     results.append(("the live registry index lists this audit as an ACTIVE check",
                     _registry_index().get("scripts/audit/pipeline_contract_audit.py", (None, None))[1] == "ACTIVE"))
+
+    # T022: the re-entry list. The fixtures are a minimal contract with two stages and an in-memory
+    # TASK-FIXTURE schema, so no case names a live table; the last case reads the live contract.
+    import sqlite3
+    fx = sqlite3.connect(":memory:")
+    fx.execute("CREATE TABLE fx_carrier (k TEXT CHECK (k IN ('a','b')), p INTEGER)")   # TASK-FIXTURE
+
+    def with_edge(**kw):
+        d = _minimal_contract()
+        d["stages"].append({"id": "later", "anchor": "a", "entry": ["e"], "criteria": []})
+        edge = {"id": "r1", "from_stage": "later", "when": "w", "carrier_table": "fx_carrier",
+                "carrier_column": "p", "references": "x"}
+        edge.update(kw)
+        d["stages"][0]["re_entry"] = [edge]
+        return d
+
+    def problems(**kw):
+        return re_entry_problems(PipelineContract.model_validate(with_edge(**kw)), fx)
+
+    try:
+        PipelineContract.model_validate(with_edge())
+        loads = True
+    except ValidationError:
+        loads = False
+    results.append(("T022-01 a stage with a re_entry list validates", loads))
+    try:
+        PipelineContract.model_validate(with_edge(surprise="x"))
+        rejected3 = False
+    except ValidationError:
+        rejected3 = True
+    results.append(("T022-02 a re_entry with an unknown key is rejected (extra=forbid)", rejected3))
+    results.append(("T022-03 a carrier that exists reports no problem", problems() == []))
+    results.append(("T022-04 a carrier table that does not exist is reported",
+                    len(problems(carrier_table="fx_absent")) == 1))
+    results.append(("T022-05 a carrier column that does not exist is reported",
+                    len(problems(carrier_column="absent")) == 1))
+    results.append(("T022-06 a state value outside the column's own CHECK is reported",
+                    len(problems(carrier_column="k", carrier_value="c")) == 1
+                    and problems(carrier_column="k", carrier_value="a") == []))
+    results.append(("T022-07 a source stage that is not later is reported",
+                    len(problems(from_stage="research")) == 1))
+    with dbcore.connect(readonly=True) as live:
+        live_bad = re_entry_problems(PipelineContract.load(CONTRACT_PATH), live)
+    results.append(("T022-08 every re-entry carrier of the canonical contract exists in the live schema",
+                    live_bad == []))
 
     ok_all = True
     for name, passed in results:

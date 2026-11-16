@@ -60,6 +60,14 @@ def main():
         print(r.stdout + r.stderr)
     ok = ok and passed
 
+    # A ruled re-entry (T-022) names a carrier that exists: the audit reports none that does not.
+    passed = "re_entry_broken=0" in r.stdout and "re-entry carriers:" in r.stdout
+    n += 1
+    print(f"[{'PASS' if passed else 'FAIL'}] no re-entry names a carrier that does not exist")
+    if not passed:
+        print(r.stdout + r.stderr)
+    ok = ok and passed
+
     print(f"EXAMINED: {n} assertion(s)")
     print("RESULT:", "PASS" if ok else "FAIL")
     return 0 if ok else 1

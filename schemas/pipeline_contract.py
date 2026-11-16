@@ -19,12 +19,30 @@ class Criterion(BaseModel):
     check: Optional[str] = None   # repo-relative enforcer path, or None = declared-but-unenforced
 
 
+class ReEntry(BaseModel):
+    """A ruled return to this stage from a later one, and the row that carries it.
+
+    OD-18 (workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md): re-entry adds rows,
+    never rewrites an upstream row, and no carrier records a downstream use on an upstream row.
+    The carrier is a column that already exists: `pipeline_contract_audit` checks that it does.
+    """
+    model_config = ConfigDict(extra="forbid")
+    id: str
+    from_stage: str                       # the later stage the run comes back from
+    when: str                             # the condition that sends it back
+    carrier_table: str                    # the table whose row holds the return
+    carrier_column: str                   # the typed pointer, or the state cell, that marks it
+    carrier_value: Optional[str] = None   # a value of that column's own CHECK, when the column is a state
+    references: str                       # the boundary and the requirements that warrant it
+
+
 class Stage(BaseModel):
     model_config = ConfigDict(extra="forbid")
     id: str
     anchor: str
     entry: List[str]
     criteria: List[Criterion]
+    re_entry: Optional[List[ReEntry]] = None   # the ruled returns INTO this stage; None = none ruled
 
 
 class CrossStageGate(BaseModel):
