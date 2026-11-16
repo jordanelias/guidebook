@@ -83,9 +83,17 @@ def html_text(path, content_type=None):
     return "\n".join(ln for ln in lines if ln) + "\n"
 
 
+def _refuse(args, sentence):
+    """Say a refusal as `REFUSING: <sentence>` on stderr and keep it (T-088); the exit code is 2. `args` is the parsed
+    namespace: argparse takes abbreviations of any length, so the session is read from it."""
+    dbcore.record_refusal("scripts/research/full_text.py", sys.argv[1:], sentence, session=args.session)
+    print(f"REFUSING: {sentence}", file=sys.stderr)
+    return 2
+
+
 def main():
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap = dbcore.RecordingArgumentParser(description=__doc__,
+                                        formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--ref-id", required=True)
     ap.add_argument("--session", required=True,
                     help="the reading session; the derived text is written into its log")
@@ -99,13 +107,10 @@ def main():
         row = conn.execute("SELECT url, superseded_by_ref_id FROM evidence_sources "
                            "WHERE ref_id = ?", (ref,)).fetchone()
     if row is None:
-        print(f"REFUSING: {ref} is not an admitted source.", file=sys.stderr)
-        return 2
+        return _refuse(args, f"{ref} is not an admitted source.")
     if row["superseded_by_ref_id"]:
-        print(f"REFUSING: {ref} is superseded by {row['superseded_by_ref_id']} -- a "
-              f"tombstone is never read again; derive the replacement's text instead.",
-              file=sys.stderr)
-        return 2
+        return _refuse(args, f"{ref} is superseded by {row['superseded_by_ref_id']} -- a "
+                       f"tombstone is never read again; derive the replacement's text instead.")
 
     held = retrieval_log.artefacts_for_source(ref, row["url"])
     cands = [h for h in held if not h["derived"] and h["exists"]
@@ -113,10 +118,9 @@ def main():
     if args.artefact:
         pick = [h for h in cands if h["artefact"] == args.artefact]
         if not pick:
-            print(f"REFUSING: --artefact {args.artefact!r} is not a PDF or HTML file saved "
-                  f"for {ref}. Saved for it: "
-                  f"{[h['artefact'] for h in held] or 'nothing'}", file=sys.stderr)
-            return 2
+            return _refuse(args, f"--artefact {args.artefact!r} is not a PDF or HTML file saved "
+                           f"for {ref}. Saved for it: "
+                           f"{[h['artefact'] for h in held] or 'nothing'}")
         src = pick[0]
     else:
         pdfs = [h for h in cands if h["path"].suffix.lower() == ".pdf"]
@@ -162,9 +166,8 @@ def main():
                   if r.get("artefact") == dest.name and r.get("ref_id") == ref
                   and r.get("sha256") == sha]
     if dest.exists() and hashlib.sha256(dest.read_bytes()).hexdigest() != sha:
-        print(f"REFUSING: {dest} exists with different bytes. Artefacts are written once; "
-              f"derive into another session's log instead.", file=sys.stderr)
-        return 2
+        return _refuse(args, f"{dest} exists with different bytes. Artefacts are written once; "
+                       f"derive into another session's log instead.")
 
     print(f"source:      {ref} <- {src['session']}/{src['artefact']} ({src['via']})")
     if total is not None:
@@ -197,4 +200,8 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except Exception as exc:   # a defect, kept (session by argv scan) and then raised unchanged
+        dbcore.record_refusal("scripts/research/full_text.py", sys.argv[1:], f"{type(exc).__name__}: {exc}")
+        raise

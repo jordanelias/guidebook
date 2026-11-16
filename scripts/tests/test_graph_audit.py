@@ -24,8 +24,10 @@ def _run(args):
 
 def main():
     ok = True
+    n = 0   # assertions made, printed as EXAMINED
     r = _run(["--selftest"])
     passed = r.returncode == 0 and "SELFTEST: PASS" in r.stdout
+    n += 1
     print(f"[{'PASS' if passed else 'FAIL'}] graph_audit --selftest (mutation harness)")
     if not passed:
         print(r.stdout + r.stderr)
@@ -33,11 +35,13 @@ def main():
 
     r = _run([])
     passed = r.returncode == 0 and "VERDICT: PASS" in r.stdout
+    n += 1
     print(f"[{'PASS' if passed else 'FAIL'}] graph_audit clean run exits 0")
     if not passed:
         print(r.stdout + r.stderr)
     ok = ok and passed
 
+    print(f"EXAMINED: {n} assertion(s)")
     print("RESULT:", "PASS" if ok else "FAIL")
     return 0 if ok else 1
 

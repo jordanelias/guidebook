@@ -43,7 +43,6 @@ glossary:
   base_icf: "The WHO ICF classification codes the project uses, with their titles."
   base_parameters: "The design parameters a determination is made for, such as a slope or a width. Each points to a term."
   base_taxonomy_identity: "The groups of disabled people the guidebook recognises (the identity lens), arranged as a tree."
-  base_taxonomy_medical: "The medical-condition lens: conditions with their ICD-11 anchors."
   case_studies: "Built examples of accessible design, with building type, place, setting and the people served."
   citation_mining: "A record that a source's reference list (backward) or the works citing it (forward) were searched for further sources."
   conflicts: "Places where guidance for different groups of people pulls in opposite directions, and how each was resolved."
@@ -64,13 +63,12 @@ glossary:
   extraction_relations: "How one extracted figure relates to another: confirms, qualifies, derived from, and so on."
   gap_mining: "Records of searches run specifically to close a recorded gap."
   gaps: "Known weaknesses in the evidence: what is missing, how much it matters, and whether it is still open."
-  icf_medical_map: "Maps ICF codes to medical conditions."
   identity_icf_map: "Maps each group of people to the ICF codes that describe their functioning, with where each mapping came from."
-  identity_medical_map: "Maps each group of people to medical conditions."
   lang_jur_map: "Which languages are searched for which jurisdictions, and whether a language is primary there."
   life_stage_modifiers: "Life-stage modifiers, such as older adults and children, that apply across every group and need."
   observed_terms: "A phrase a source uses for a concept, recorded in the source's own words with where it appears. Not yet judged."
   parameter_declinations: "Terms considered as design parameters and turned down, with the reason. A declination can be revoked."
+  reading_deferrals: "A record that reading a source (or one parameter of it) was deliberately put off, with the reason and the date. It stops being listed when nothing is owed any longer (full readings cover it, or the source is recorded as unobtainable), and a merged parameter's or superseded source's deferral carries over to its replacement; the row itself is never edited or deleted."
   reasoning_doc_citations: "Claims quoted from older reasoning documents, with the source each one cited."
   research_code_leads: "Pointers to codes and standards worth fetching (jurisdiction, standard, clause). They say where to look, never what it says."
   rooms: "The kinds of room and space the guidebook covers, such as a bathroom, bedroom or canteen."
@@ -99,7 +97,7 @@ words:
   - term: determination
     meaning: "The project's answer for one parameter and one lens: a value or range, an evidence marker and a state. The engine computes it from the evidence; nobody types it."
   - term: lens
-    meaning: "Who or what an answer is for: an identity group (for example wheelchair users), an ICF function code, an access need or a medical condition. A determination has at least one."
+    meaning: "Who or what an answer is for: an identity group (for example wheelchair users), an ICF function code or an access need. A determination has at least one."
   - term: tiers
     meaning: "T1 is primary controlled research. Co-1 is lived-experience and participatory work, co-primary with T1. T2 is syntheses. Co-2 is occupational-therapy body guidelines. T3 is grey primary work. T4 to T6 are the regulatory stratum: standards, national frameworks and codes."
   - term: anchoring
@@ -121,7 +119,7 @@ decisions:
     question: "Should a figure reach a determination only through the lens tags written on that figure, and never through the crossing maps between identity groups, ICF codes and needs?"
     why_yours: "Decision D-0184 says yes and is adopted with review pending, waiting for you. It is a rule about how evidence reaches people, which is doctrine."
     context: |-
-      Every figure the project reads from a source is tagged with who it applies to: an identity group, an ICF function code, an access need, a medical condition. A determination is built for one parameter and one lens, for example 'running slope, wheelchair users'.
+      Every figure the project reads from a source is tagged with who it applies to: an identity group, an ICF function code or an access need. A determination is built for one parameter and one lens, for example 'running slope, wheelchair users'.
 
       D-0184 says a figure counts for a lens only if that lens is written on the figure itself. The alternative walks the crossing maps (identity to ICF to need) to decide which figures apply. D-0184 measured that traversal and rejected it, because it pulls in figures that do not apply.
 
@@ -165,7 +163,7 @@ decisions:
     question: "A figure holds one code for each model, yet a fact can concern several codes of one model, such as two ICF codes. How should figures and determinations carry them?"
     why_yours: "Your answer to OR-1 requires every relevant model to be filled out, and the present columns cannot hold more than one code per model. The choice changes the schema."
     context: |-
-      Each figure read from a source had four lens columns: identity group, ICF code, access need and medical condition. Each held one code. (Since migration 131 they are held empty and a figure's codes are rows of the lens link table; this question is what led to it.) A determination has the same four columns and can already fill several at once, for example identity MOB together with the ICF code d450.
+      Each figure read from a source had lens columns: identity group, ICF code, access need (and a medical condition, deleted by the owner on 2026-11-16). Each held one code. (Since migration 131 they are held empty and a figure's codes are rows of the lens link table; this question is what led to it.) A determination has the same columns and can already fill several at once, for example identity MOB together with the ICF code d450.
 
       Your answer to OR-1 says a determination should carry every relevant model. The crossing maps show that one identity group relates to several ICF codes: wheelchair users (MOB) map to d410, d420, d450, d455, d460, d465 and more, among them d450 Walking and d465 Moving around using equipment. A single figure about wheelchair users cannot name all of them in its one ICF column.
 
@@ -1116,7 +1114,7 @@ queue:
     table: determination_gates
     key: gate_id
     sql: |
-      SELECT gate_id AS id, 'parameter ' || parameter_id || ' · ' || coalesce(identity_code, icf_code, needs_code, medical_code, 'every lens') || ' · ' || verdict AS label
+      SELECT gate_id AS id, 'parameter ' || parameter_id || ' · ' || coalesce(identity_code, icf_code, needs_code, 'every lens') || ' · ' || verdict AS label
         FROM v_open_determination_gates ORDER BY gate_id
     question: "Resolve this gate, or leave it open?"
     why_yours: "A gate means a determination may rest on the wrong evidence, or, for a QUESTION, that someone has asked about it. Its own text names a resolution path."

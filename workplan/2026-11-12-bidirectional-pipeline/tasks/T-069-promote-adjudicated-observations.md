@@ -74,7 +74,7 @@ PY
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect. Every verb this task needs exists; it adds no code.
 
-1. **Select by the latest adjudication.** The candidates are the rows of section 3's query, re-run on `$SCRATCH/s.db`. **Chosen (authoring 2026-11-13): the latest adjudication governs**, not any adjudication. Rejected: the writer's own test, which accepts an observation if *some* adjudication names the term (`grep -n -A4 'def _names_term' scripts/db.py`); an observation re-adjudicated NOT-OURS after an earlier NAMES-EXISTING would pass it. That is a writer defect reported to the coordinator, not patched here (rule 10).
+1. **Select by the latest adjudication.** The candidates are the rows of section 3's query, re-run on `$SCRATCH/s.db`. **Chosen (authoring 2026-11-13): the latest adjudication governs**, not any adjudication. T-074 (tooling; preferably merged before this task, not a gate: on a base without it the writer accepts an outdated adjudication, so select by the latest yourself) made the writer's own test, `db._names_term`, ask the same question: it accepts an observation only if its LATEST adjudication (highest `adjudication_id`) names the term, and its refusal says `the latest adjudication of observation N does not name T`; selecting by the latest here and the writer agree, and a re-adjudicated observation (NAMES-EXISTING, then NOT-OURS) is refused by `add-alias` rather than passed.
 2. **Stop on a candidate whose pair is not held.** If any candidate prints `0` in the "pair held" column, do not promote it: OR-17 requires the phrase to be present in its prescribed jurisdiction and language, and a pair `lang_jur_map` does not hold is not prescribed. List it.
 3. **Promote, one call per candidate in the regulatory stratum:**
    ```
@@ -134,7 +134,7 @@ git commit -m "run-pipeline: promote adjudicated non-English observations to att
 - Do not write `data/guidebook.db` directly. Rows land only by the write path.
 - Do not type a phrase, an alias or a translation. Do not use `TRANSLATION`. Do not write a seed (`--seed`).
 - Do not promote a candidate outside the regulatory stratum while OI-55 (6) is unanswered; do not mint a term (NAMES-NEW) in this batch.
-- Do not put tooling in this pull request (CLAUDE.md rule 10). The `_names_term` defect is reported, not fixed here.
+- Do not put tooling in this pull request (CLAUDE.md rule 10). `db._names_term` was fixed by T-074 (once it is on the base) (tooling); do not touch it here.
 - Do not decide doctrine. Do not treat any `[A-Z]-NN` code as a container. Do not run `run_checks.py --all`, `bootstrap.sh`, or `pip install -r requirements.txt`. Do not push to `main`, rebase or force-push. Do not subscribe to pull-request activity.
 - Do not hand-type a count into any file or message; write the command that computes it.
 

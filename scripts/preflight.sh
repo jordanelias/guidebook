@@ -81,15 +81,22 @@ echo "===== preflight: registry selftest ====="
 python3 scripts/run_checks.py --selftest || exit 1
 echo
 
-if [ "$MODE_ALL" -eq 1 ]; then
-  python3 scripts/run_checks.py --all ${ARGS[@]+"${ARGS[@]}"}
-elif [ "$USER_KINDS" -eq 1 ]; then
-  python3 scripts/run_checks.py ${ARGS[@]+"${ARGS[@]}"}
-else
+# --base reaches run_checks.py in EVERY mode: it is the `@BASE@` the changeset-scoped checks
+# (research_tooling_separation, the attestation checks) diff against. In --all and --kinds mode
+# nothing else carried it, so a check diffed origin/main whatever base you named.
+if ! git rev-parse --verify --quiet "$BASE" >/dev/null; then
+  echo "preflight: base ref '$BASE' not found; fetching..." >&2
+  git fetch origin main --quiet 2>/dev/null || true
   if ! git rev-parse --verify --quiet "$BASE" >/dev/null; then
-    echo "preflight: base ref '$BASE' not found; fetching..." >&2
-    git fetch origin main --quiet 2>/dev/null || true
+    echo "PREFLIGHT: NOT RUN — base ref '$BASE' does not exist (a run that names a base it cannot read is not a gate)"
+    exit 2
   fi
+fi
+if [ "$MODE_ALL" -eq 1 ]; then
+  python3 scripts/run_checks.py --all --base "$BASE" ${ARGS[@]+"${ARGS[@]}"}
+elif [ "$USER_KINDS" -eq 1 ]; then
+  python3 scripts/run_checks.py --base "$BASE" ${ARGS[@]+"${ARGS[@]}"}
+else
   python3 scripts/run_checks.py --changed-from "$BASE" ${ARGS[@]+"${ARGS[@]}"}
 fi
 status=$?
@@ -98,6 +105,10 @@ echo
 if [ "$status" -eq 0 ]; then
   echo "PREFLIGHT: PASS — safe to push."
   echo "  (gated on your diff — run 'scripts/preflight.sh --all' for the full battery.)"
+elif [ "$status" -eq 2 ]; then
+  # run_checks.py exits 2 when it could not run the selection (an unknown --battery or --level, a
+  # selection that matched no check): nothing was gated, so neither PASS nor a list of failures fits.
+  echo "PREFLIGHT: NOT RUN — run_checks.py refused the selection (exit 2); read its message above."
 else
   echo "PREFLIGHT: FAIL — fix the blocking failures above before pushing."
   echo "  (stale context map? run: python3 scripts/generate/context_map.py)"

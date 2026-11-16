@@ -1298,6 +1298,7 @@ def selftest():
     import tempfile
     global DB_PATH
     if not DB_PATH.exists():
+        print("EXAMINED: 0")   # a skipped selftest examined nothing; the runner says so rather than PASS
         print("SELFTEST: SKIP — no live DB to clone schema from")
         return 0
     live = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
@@ -1713,6 +1714,7 @@ def selftest():
               "and must be listed with its reason as waived, not as a failure; see the R5 "
               "fixture comment in selftest().")
     if rc == 1 and not missed and not r9a_bad and not count_bad and not waiver_bad:
+        print(f"EXAMINED: {len(expected)} seeded rule(s)")
         print(f"SELFTEST: PASS — gate rejected the corpus AND all {len(expected)} "
               f"seeded rules fired")
         return 0

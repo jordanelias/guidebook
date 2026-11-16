@@ -158,7 +158,7 @@ Validates output from the jurisdiction-tracker skill before it is committed to s
 | Required fields | ERROR | Each entry has jurisdiction, standard_cited, current_version, status, last_checked |
 | Status enum | ERROR | Status is one of CURRENT, UPDATED, SUPERSEDED, WITHDRAWN |
 | Date format | ERROR | last_checked matches YYYY-MM-DD HH:MM |
-| Jurisdiction code | ERROR | jurisdiction resolves to a `base_jurisdictions` row or is a full country name mappable to a code |
+| Jurisdiction code | ERROR (a code outside the vocabulary) / WARNING (a full country name, reported as unrecognised) | jurisdiction resolves to a `base_jurisdictions` row; a full country name is not a code and is reported as unrecognised |
 | Duplicate detection | WARNING | Same jurisdiction-standard pair appearing twice with different statuses |
 
 ---

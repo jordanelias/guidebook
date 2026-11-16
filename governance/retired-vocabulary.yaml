@@ -949,6 +949,19 @@ deferred:
 # was considered against the admission test on 2026-08-05 and failed.
 rejected:
 
+  - tokens: [medical_code, base_taxonomy_medical, identity_medical_map, icf_medical_map, add-medical]
+    reason: >-
+      The medical lens was deleted by the owner on 2026-11-16 (ledger entry of that date; migration 138),
+      and a token is retired. Fails admission test 3 today: the hits left on the live surface are the
+      historical plans and analyses (workplan/2026-09-16-infrastructure-remediation-brief.md, the
+      2026-10-12 simplification and 2026-10-23 pipeline-resolution workplans, the 2026-09-10 runbook, the
+      2026-10-30 render pages, `01-handshake-ledger.md`, `POPULATION-UMBRELLAS-MEMO.md`, `T-018-design.md`,
+      the architecture specs) that name the lens as it WAS, which is accurate in a dated record; an
+      entry would flag every one and need an exemption for each. The guard is the ledger entry's
+      CONDITION and ACTION and the live callers swept out in the same change; promote the entry only when
+      a live (not dated) surface names the token again. Re-derive the hit list with
+      `git grep -l -F medical_code` before promoting.
+
   - tokens: [cell_id]
     reason: >-
       Retired with RV-020/RV-021 (renamed to `specification_id` by schema 055) but

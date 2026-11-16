@@ -13,9 +13,12 @@ from schemas import directness as d  # noqa: E402
 
 DB = os.environ.get("GUIDEBOOK_DB_PATH", "/tmp/work14.db")
 fails = []
+n_checked = 0   # assertions made, printed as EXAMINED (a [SKIP] asserts nothing and is not counted)
 
 
 def check(name, cond):
+    global n_checked
+    n_checked += 1
     print(f"  [{'PASS' if cond else 'FAIL'}] {name}")
     if not cond:
         fails.append(name)
@@ -142,5 +145,6 @@ if os.path.exists(DB):
 else:
     print(f"  [SKIP] live smoke — {DB} absent")
 
-print(f"\n{'ALL PASS' if not fails else 'FAILURES: ' + ', '.join(fails)}  ({'0' if not fails else len(fails)} failed)")
+print(f"\nEXAMINED: {n_checked} assertion(s)")
+print(f"{'ALL PASS' if not fails else 'FAILURES: ' + ', '.join(fails)}  ({'0' if not fails else len(fails)} failed)")
 sys.exit(1 if fails else 0)

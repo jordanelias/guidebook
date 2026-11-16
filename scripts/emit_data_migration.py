@@ -43,6 +43,9 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import dbcore  # noqa: E402  -- stdlib only
+
 MIGRATIONS_DIR = Path(__file__).parent / "migrations"
 
 RISKY_PATTERNS = [
@@ -616,6 +619,7 @@ def selftest():
             fails.append(f"[refuse] {name}: expected a violation, got none")
 
     n = len(accept_cases) + len(refuse_cases)
+    print(f"EXAMINED: {n} selftest case(s)")
     if fails:
         print("emit_data_migration selftest FAILURES:", file=sys.stderr)
         for f in fails:
@@ -641,8 +645,16 @@ def slugify_session(session: str) -> str:
     return s
 
 
+def _refuse(args, *lines):
+    """Say a refusal (each line on stderr, as it always was), keep it (T-088) and exit 1."""
+    dbcore.record_refusal("scripts/emit_data_migration.py", sys.argv[1:], " ".join(ln.strip() for ln in lines), session=args.session)
+    for ln in lines:
+        print(ln, file=sys.stderr)
+    sys.exit(1)
+
+
 def main():
-    p = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
+    p = dbcore.RecordingArgumentParser(description=__doc__.split('\n\n')[0])
     p.add_argument("--session", help="Session filename, e.g. session_2026-05-11g-citation-mining.md")
     p.add_argument("--summary", help="One-line description for the frontmatter header")
     p.add_argument("--input", help="Read SQL from this path (default: stdin)")
@@ -669,8 +681,7 @@ def main():
 
     sql = sql.strip()
     if not sql:
-        print("ERROR: empty SQL body", file=sys.stderr)
-        sys.exit(1)
+        _refuse(args, "ERROR: empty SQL body")
 
     # Risky-pattern warnings
     warnings = []
@@ -684,17 +695,13 @@ def main():
     # Audit-enforced integer ranges — BLOCKING (see RANGE_GUARDS rationale).
     range_violations = check_range_guards(sql)
     if range_violations:
-        print("  ERROR: value outside an audit-enforced range — migration NOT emitted.",
-              file=sys.stderr)
-        for col, val, lo, hi, enforced_by in range_violations:
-            print(f"    {col}: {val} is not permitted. Allowed range: {lo}-{hi} inclusive.",
-                  file=sys.stderr)
-            print(f"      Enforced by {enforced_by}. SQLite has no CHECK on this column, so a "
-                  f"bad value applies silently and only shows up as a lost integrity check.",
-                  file=sys.stderr)
-            print(f"      If the value is genuinely unknown, use NULL — not a placeholder "
-                  f"integer.", file=sys.stderr)
-        sys.exit(1)
+        _refuse(args, "  ERROR: value outside an audit-enforced range — migration NOT emitted.",
+                *[ln for col, val, lo, hi, enforced_by in range_violations for ln in (
+                    f"    {col}: {val} is not permitted. Allowed range: {lo}-{hi} inclusive.",
+                    f"      Enforced by {enforced_by}. SQLite has no CHECK on this column, so a "
+                    f"bad value applies silently and only shows up as a lost integrity check.",
+                    f"      If the value is genuinely unknown, use NULL — not a placeholder "
+                    f"integer.")])
 
     if args.force_timestamp:
         ts = args.force_timestamp
@@ -713,8 +720,7 @@ def main():
         out_path = Path(args.output_dir) / filename
         retries += 1
     if out_path.exists():
-        print(f"ERROR: filename collision unresolvable after {retries} retries: {out_path}", file=sys.stderr)
-        sys.exit(1)
+        _refuse(args, f"ERROR: filename collision unresolvable after {retries} retries: {out_path}")
 
     iso = datetime.now(timezone.utc).isoformat(timespec='seconds')
     header = f"""-- {filename}
@@ -763,15 +769,14 @@ def main():
         # Strip the leading generated comment block; everything after it is the payload.
         old_body = "".join(old_text.splitlines(keepends=True)[len(header.splitlines()):])
         if old_body.strip() == body.strip():
-            print(f"ERROR: this payload is byte-identical to {old_path.name}, already "
-                  f"emitted for session {args.session!r}. Emitting it again would apply "
-                  f"the same batch twice: migrate_db.py keys on the filename, so it "
-                  f"would treat both as distinct migrations and replay both. If this is "
-                  f"a genuine re-emission after the first was discarded, delete the "
-                  f"stale file; if you meant to correct an applied migration, rule 3 "
-                  f"says emit a COMPENSATING migration, which will not be byte-identical "
-                  f"to this one.", file=sys.stderr)
-            sys.exit(1)
+            _refuse(args, f"ERROR: this payload is byte-identical to {old_path.name}, already "
+                    f"emitted for session {args.session!r}. Emitting it again would apply "
+                    f"the same batch twice: migrate_db.py keys on the filename, so it "
+                    f"would treat both as distinct migrations and replay both. If this is "
+                    f"a genuine re-emission after the first was discarded, delete the "
+                    f"stale file; if you meant to correct an applied migration, rule 3 "
+                    f"says emit a COMPENSATING migration, which will not be byte-identical "
+                    f"to this one.")
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(header + body)

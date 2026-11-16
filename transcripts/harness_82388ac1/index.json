@@ -1,0 +1,149 @@
+[
+  {
+    "started": "2026-11-16T17:55:11",
+    "role": "other",
+    "bytes": 156015,
+    "agent_id_prefix": "a090a6ca",
+    "file": "2026-11-16T17-55-11_other_a090a6ca.jsonl"
+  },
+  {
+    "started": "2026-11-16T17:57:25",
+    "role": "other",
+    "bytes": 1109640,
+    "agent_id_prefix": "ace56191",
+    "file": "2026-11-16T17-57-25_other_ace56191.jsonl"
+  },
+  {
+    "started": "2026-11-16T18:02:40",
+    "role": "other",
+    "bytes": 622395,
+    "agent_id_prefix": "a3bcab3f",
+    "file": "2026-11-16T18-02-40_other_a3bcab3f.jsonl"
+  },
+  {
+    "started": "2026-11-16T18:02:40",
+    "role": "other",
+    "bytes": 722941,
+    "agent_id_prefix": "af00a55c",
+    "file": "2026-11-16T18-02-40_other_af00a55c.jsonl"
+  },
+  {
+    "started": "2026-11-16T18:08:10",
+    "role": "other",
+    "bytes": 1009429,
+    "agent_id_prefix": "a6ce1af7",
+    "file": "2026-11-16T18-08-10_other_a6ce1af7.jsonl"
+  },
+  {
+    "started": "2026-11-16T18:08:30",
+    "role": "other",
+    "bytes": 1302990,
+    "agent_id_prefix": "ae876510",
+    "file": "2026-11-16T18-08-30_other_ae876510.jsonl"
+  },
+  {
+    "started": "2026-11-16T18:34:24",
+    "role": "other",
+    "bytes": 1277894,
+    "agent_id_prefix": "ac99e6f9",
+    "file": "2026-11-16T18-34-24_other_ac99e6f9.jsonl"
+  },
+  {
+    "started": "2026-11-16T18:34:24",
+    "role": "other",
+    "bytes": 747943,
+    "agent_id_prefix": "accc4fed",
+    "file": "2026-11-16T18-34-24_other_accc4fed.jsonl"
+  },
+  {
+    "started": "2026-11-16T19:04:25",
+    "role": "other",
+    "bytes": 1069468,
+    "agent_id_prefix": "a9d921b2",
+    "file": "2026-11-16T19-04-25_other_a9d921b2.jsonl"
+  },
+  {
+    "started": "2026-11-16T19:04:25",
+    "role": "other",
+    "bytes": 889595,
+    "agent_id_prefix": "ae5ceb5b",
+    "file": "2026-11-16T19-04-25_other_ae5ceb5b.jsonl"
+  },
+  {
+    "started": "2026-11-16T19:34:14",
+    "role": "other",
+    "bytes": 612014,
+    "agent_id_prefix": "a854d244",
+    "file": "2026-11-16T19-34-14_other_a854d244.jsonl"
+  },
+  {
+    "started": "2026-11-16T19:34:14",
+    "role": "other",
+    "bytes": 929656,
+    "agent_id_prefix": "ad8432c6",
+    "file": "2026-11-16T19-34-14_other_ad8432c6.jsonl"
+  },
+  {
+    "started": "2026-11-16T19:47:49",
+    "role": "other",
+    "bytes": 600530,
+    "agent_id_prefix": "a2314e08",
+    "file": "2026-11-16T19-47-49_other_a2314e08.jsonl"
+  },
+  {
+    "started": "2026-11-16T19:47:49",
+    "role": "other",
+    "bytes": 2378813,
+    "agent_id_prefix": "a934df9f",
+    "file": "2026-11-16T19-47-49_other_a934df9f.jsonl"
+  },
+  {
+    "started": "2026-11-16T20:12:10",
+    "role": "other",
+    "bytes": 1728044,
+    "agent_id_prefix": "aafa08bb",
+    "file": "2026-11-16T20-12-10_other_aafa08bb.jsonl"
+  },
+  {
+    "started": "2026-11-16T20:12:10",
+    "role": "other",
+    "bytes": 823256,
+    "agent_id_prefix": "aca829af",
+    "file": "2026-11-16T20-12-10_other_aca829af.jsonl"
+  },
+  {
+    "started": "2026-11-16T21:02:05",
+    "role": "other",
+    "bytes": 815663,
+    "agent_id_prefix": "aa49cdec",
+    "file": "2026-11-16T21-02-05_other_aa49cdec.jsonl"
+  },
+  {
+    "started": "2026-11-16T21:02:05",
+    "role": "other",
+    "bytes": 1678109,
+    "agent_id_prefix": "acfd65f7",
+    "file": "2026-11-16T21-02-05_other_acfd65f7.jsonl"
+  },
+  {
+    "started": "2026-11-16T21:20:47",
+    "role": "other",
+    "bytes": 1668870,
+    "agent_id_prefix": "a4fe8dcf",
+    "file": "2026-11-16T21-20-47_other_a4fe8dcf.jsonl"
+  },
+  {
+    "started": "2026-11-16T21:22:25",
+    "role": "other",
+    "bytes": 634578,
+    "agent_id_prefix": "a3ca6ddf",
+    "file": "2026-11-16T21-22-25_other_a3ca6ddf.jsonl"
+  },
+  {
+    "started": "2026-11-16T21:40:17",
+    "role": "other",
+    "bytes": 2213393,
+    "agent_id_prefix": "af7c5181",
+    "file": "2026-11-16T21-40-17_other_af7c5181.jsonl"
+  }
+]

@@ -69,7 +69,7 @@ After multilingual-research completes:
      --slug {slug} \                   # omit for a search made for one parameter (--parameter {parameter_id}) or one source (--mined-ref-id); a search naming none is refused
      --language {lang_code} \
      --jurisdiction {jur_code} \        # omit if the search was not jurisdiction-scoped
-     --identity {identity_code} --icf {icf_code} --needs {need_code} \   # the lens this query covered; each optional and checked against its registry (--medical once that registry has rows)
+     --identity {identity_code} --icf {icf_code} --needs {need_code} \   # the lens this query covered; each optional and checked against its registry
      --query-text '{the query, exactly as fired}' \
      --form-id {rowid} --form-id {rowid} \   # repeatable: the rowid of each term_aliases row this query fired (select rowid, term_id, alias, language from term_aliases); stored by the form's key; a form's language must be the search's --language. --terms-used is refused
      --engine {pubmed|crossref|web|...} \
@@ -102,8 +102,8 @@ After multilingual-research completes:
    the pair stays on the owed list (`coverage --slug`, `v_coverage_priority`). That distinction is the thing the whole pipeline exists
    to preserve; a missing row erases it.
 
-   > Coverage is derived from the log (`v_coverage_jurisdiction` / `v_coverage_language` / `v_coverage_lens`); read it with
-   > `python3 scripts/db.py coverage --slug {slug}`. The hand-kept grids and their verbs are deleted.
+   > Coverage is derived from the log (`v_coverage_jurisdiction` / `v_coverage_language` / `v_coverage_lens` / `v_coverage_parameter_via_admission` (per parameter, through admissions)); read the first four with
+   > `python3 scripts/db.py coverage --slug {slug}`, and the last by selecting from it (`db.py` does not read it yet). The hand-kept grids and their verbs are deleted.
 
 4. **Add new evidence sources:**
    ```bash

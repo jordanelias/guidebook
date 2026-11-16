@@ -62,6 +62,21 @@ import dbcore                                                      # noqa: E402
 from dbcore import Refusal                                         # noqa: E402
 
 
+_ARGS = None   # main()'s parsed namespace: argparse takes abbreviations of any length, so the catch sites read the session from it
+
+
+def _record(sentence):
+    """Keep what this process said no to (T-088): a Refusal, a JSON error, a usage error, or a crash."""
+    dbcore.record_refusal("scripts/db.py", sys.argv[1:], sentence, session=getattr(_ARGS, "session", None))
+
+
+def _json_refusal(sentence):
+    """The verbs that answer in JSON refuse as `{"error": ...}` and exit 2: the same refusal as a `Refusal`, kept (T-088)."""
+    _record(sentence)
+    print(json.dumps({"error": sentence}))
+    sys.exit(2)
+
+
 def _retrieval_log():
     """`scripts/research/retrieval_log`, imported on first use.
 
@@ -302,7 +317,7 @@ def _check_language(conn, language: str, noun: str, flag: str = "--language") ->
 
 
 def insert_gap(data: dict, session: str, dry_run: bool = False) -> str:
-    """Insert a gap. A gap that has NO cell may name what it is a gap in (parameter, the four lens
+    """Insert a gap. A gap that has NO cell may name what it is a gap in (parameter, the three lens
     codes, jurisdiction, language); each is refused by name before any row is written, the way
     `log_search` refuses its own. A gap the assessment engine files for a pending cell names none of
     these: its cell already holds them, reached through the join `specifications.gap_register_id`
@@ -322,7 +337,7 @@ def insert_gap(data: dict, session: str, dry_run: bool = False) -> str:
             cell = conn.execute(
                 "SELECT specification_id, gap_register_id, state FROM specifications WHERE retired_at IS NULL "
                 "AND parameter_id=? AND identity_code IS ? AND icf_code IS ? AND needs_code IS ? "
-                "AND medical_code IS ? ORDER BY specification_id LIMIT 1",
+                "ORDER BY specification_id LIMIT 1",
                 [row["parameter_id"], *(row.get(c) for c in _LENS_COLUMNS)]).fetchone()
             if cell:
                 raise Refusal(
@@ -677,9 +692,17 @@ def log_mining(slug: str, ref_id: str, direction: str,
                      "updated_at=?, updated_by_session=? WHERE ref_id=?",
                      [status, ts, session, ref_id])
     out = {"logged": True, "status_set": status, "dry_run": dry_run}
-    if undischarged:
-        # The deferral this pass did not discharge stays visible -- see the else branch.
-        out["deferral_still_standing"] = undischarged
+    # The deferral this pass did not discharge stays visible -- see the else branch -- and so does any deferral the SAME
+    # source carries under ANOTHER slug: citation_mining_status is one flag for every slug, so this pass set it to
+    # 'mined' while that row's own deferred_reason stands (v_deferred_acts lists it from the row, not from the flag).
+    standing_here = [undischarged] if undischarged else []
+    if not deferred_reason:
+        with connect(True) as conn2:
+            standing_here += [f"[{r['slug']}] {r['deferred_reason']}" for r in conn2.execute(
+                "SELECT slug, deferred_reason FROM citation_mining WHERE global_ref_id = ? AND slug <> ? "
+                "AND deferred_reason IS NOT NULL ORDER BY slug", (ref_id, slug))]
+    if standing_here:
+        out["deferral_still_standing"] = "\n".join(standing_here)
     return out
 
 
@@ -735,7 +758,7 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
                origin: str = "planned", mined_ref_id: str = None,
                origin_pass_id: int = None, result_artefacts=None,
                identity_code: str = None, icf_code: str = None,
-               needs_code: str = None, medical_code: str = None,
+               needs_code: str = None,
                parameter_id: int = None, absence_class: str = None,
                gap_id: str = None, form_ids=None, dry_run: bool = False) -> int:
     """Append one row to search_executions. Returns its exec_id.
@@ -911,7 +934,7 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         # The lens this search covered (R18). Optional; write-once like the prior and the
         # jurisdiction, so a wrong code costs a compensating migration.
         "identity_code": identity_code, "icf_code": icf_code,
-        "needs_code": needs_code, "medical_code": medical_code,
+        "needs_code": needs_code,
         "parameter_id": parameter_id, "absence_class": absence_class,
         # The gap this search was run to close (nullable: most searches are not for a gap).
         "gap_id": gap_id,
@@ -1168,7 +1191,7 @@ def _gap_applies(row, lens, jurisdiction, lang, family=frozenset(), roll=lambda 
 
 
 def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs: str = None,
-                medical: str = None, jurisdiction: str = None, language: str = None) -> dict:
+                jurisdiction: str = None, language: str = None) -> dict:
     """Where one cell stands, stage by stage, read from the tables and nothing else (T-034).
 
     For a parameter, and optionally a lens, a jurisdiction and a language, each stage reports four lists of
@@ -1179,7 +1202,7 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
 
     A pair's scope is reported as it stands in `lang_jur_map.scope_status`: a NULL is reported as
     `scope_unrecorded` (owed, as `v_research_scope` reads it), never as in scope or out of it."""
-    given = {"identity_code": identity, "icf_code": icf, "needs_code": needs, "medical_code": medical}
+    given = {"identity_code": identity, "icf_code": icf, "needs_code": needs}
     lens = {k: v for k, v in given.items() if v}
     with connect(readonly=True) as conn:
         param = conn.execute("SELECT parameter_id, status FROM base_parameters WHERE parameter_id=?",
@@ -1259,7 +1282,7 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
                               "connections": ids("SELECT DISTINCT con_id FROM connection_targets WHERE parameter_id = ? ORDER BY con_id", parameter_id)},
                      "examined_empty": [], "never_examined": [],
                      "owed": {"open_gaps": [r["gap_id"] for r in conn.execute(
-                         "SELECT gap_id, identity_code, icf_code, needs_code, medical_code, jurisdiction, language FROM gaps "
+                         "SELECT gap_id, identity_code, icf_code, needs_code, jurisdiction, language FROM gaps "
                          "WHERE parameter_id = ? AND status LIKE 'OPEN%' ORDER BY gap_id", (parameter_id,))
                          if _gap_applies(r, lens, jurisdiction, lang, family, roll)]}}
         # ---- specification: the live determination(s) of the cell, their history, and the open gates ------
@@ -1267,7 +1290,7 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
         sp_args = [parameter_id, *lens.values()]
         _lensed = lambda r: not dbcore.lens_differs(r, lens, family)          # noqa: E731
         gates = [r["gate_id"] for r in conn.execute(
-            "SELECT gate_id, identity_code, icf_code, needs_code, medical_code FROM v_open_determination_gates "
+            "SELECT gate_id, identity_code, icf_code, needs_code FROM v_open_determination_gates "
             "WHERE parameter_id = ? ORDER BY gate_id", (parameter_id,)) if _lensed(r)]
         specification = {"held": [{"specification_id": r[0], "state": r[1]} for r in conn.execute(
                              sp.replace("SELECT specification_id", "SELECT specification_id, state")
@@ -1517,12 +1540,11 @@ def delete_connection(con_id: str, session: str, dry_run: bool = False):
 
 
 def _add_lens_flags(p):
-    """The four repeatable lens flags and their one warrant, for add-extraction and derive-extraction
+    """The three repeatable lens flags and their one warrant, for add-extraction and derive-extraction
     (a figure's lens is a set of links, OR-1c; argparse's default keeps only the last of a repeated flag)."""
     p.add_argument("--identity", action="append", help="base_taxonomy_identity.identity_code (repeatable)")
     p.add_argument("--icf", action="append", help="base_icf.icf_code — a real ICF b/d code (repeatable)")
     p.add_argument("--needs", action="append", help="access_needs.need_code (repeatable)")
-    p.add_argument("--medical", action="append", help="base_taxonomy_medical.medical_code (repeatable)")
     p.add_argument("--lens-basis", dest="lens_basis", choices=_lens_basis_choices(),
                    help="REQUIRED with any lens flag. Why the figure is stated in these groups (live "
                         "vocabulary, read from extraction_lens_links.basis's own CHECK): the figure's own "
@@ -1543,7 +1565,8 @@ def _vocab_help(column: str) -> str:
 
 
 def main():
-    parser = argparse.ArgumentParser(
+    global _ARGS
+    parser = dbcore.RecordingArgumentParser(
         description="Guidebook SQLite data layer CLI"
     )
     sub = parser.add_subparsers(dest="command")
@@ -2159,6 +2182,19 @@ def main():
     p_rsc.add_argument("--session", required=True)
     p_rsc.add_argument("--dry-run", action="store_true")
 
+    p_dfr = sub.add_parser(
+        "defer-reading",
+        help="Record that a source's reading is owed and deliberately not done yet (reading_deferrals). It ends "
+             "when nothing is owed any longer (full readings cover it), never by a write; `select * from v_deferred_acts order by deferred_at` lists every "
+             "deferred act with its age")
+    p_dfr.add_argument("--ref-id", required=True)
+    p_dfr.add_argument("--parameter", "--parameter-id", dest="parameter_id", type=int,
+                       help="the active parameter whose reading is deferred; omit to defer the whole-source "
+                            "catalogue reading")
+    p_dfr.add_argument("--reason", required=True, help="why the reading is not done now")
+    p_dfr.add_argument("--session", required=True)
+    p_dfr.add_argument("--dry-run", action="store_true")
+
     p_rp = sub.add_parser("retire-parameter",
                           help="Retire a parameter IN PLACE (status retired; reason "
                                "appended to notes); refused while a live determination or "
@@ -2184,7 +2220,7 @@ def main():
     p_rnt.add_argument("--term-id", dest="term_id", required=True)
     p_rnt.add_argument("--canonical-en", dest="canonical_en", required=True)
     p_rnt.add_argument("--from-observation", dest="from_observation", type=int,
-                       help="an English observation adjudicated to this term whose phrase "
+                       help="an observation whose LATEST adjudication names this term and whose phrase "
                             "contains the new name")
     p_rnt.add_argument("--ruling-quote", dest="ruling_quote",
                        help="the owner's words, verbatim, found exactly once in "
@@ -2458,7 +2494,6 @@ def main():
                              "which cells exist should do")
     p_gate.add_argument("--icf", help="base_icf.icf_code. The gate reaches every cell that does not carry a DIFFERENT ICF code (a cell with no ICF code is reached too, as an identity-keyed gate always was)")
     p_gate.add_argument("--needs", help="access_needs.need_code. Reaches every cell that does not carry a DIFFERENT need code")
-    p_gate.add_argument("--medical", help="base_taxonomy_medical.medical_code. Reaches every cell that does not carry a DIFFERENT medical code")
     p_gate.add_argument("--verdict", required=True,
                         choices=dbcore.schema_choices("determination_gates", "verdict"),
                         help="QUESTION records an objection to a published value: no source, no tier "
@@ -2486,37 +2521,6 @@ def main():
     p_rg.add_argument("--session", required=True)
     p_rg.add_argument("--dry-run", action="store_true")
 
-    # add-medical — the writer base_taxonomy_medical shipped without, and went on
-    # shipping without for the two weeks between migration 065 creating the table and
-    # 074 giving it something to point with. See insert_medical for the refusals.
-    p_md = sub.add_parser("add-medical",
-                          help="Mint a medical-lens row and at least one crossing "
-                               "(the FOURTH lens, D-0170)")
-    p_md.add_argument("--code", required=True, help="MD-<UPPER>, e.g. MD-AUTISM")
-    p_md.add_argument("--display-name", dest="display_name", required=True,
-                      help="the project's OWN name for the concept — not copied prose")
-    p_md.add_argument("--description", help="the project's OWN definition")
-    p_md.add_argument("--icd11", required=True,
-                      help="comma list of ICD-11 codes this ANCHORS to. A bare code is a "
-                           "fact; it is a pointer, not borrowed text (rule 5)")
-    p_md.add_argument("--icd11-payload", dest="icd11_payload",
-                      help="path under retrieval-log/ whose bytes CONTAIN every --icd11 "
-                           "code. ONLY this sets icd11_verified_at; absent means NULL, "
-                           "and NULL means not verified")
-    p_md.add_argument("--identity", help="base_taxonomy_identity.identity_code to cross to")
-    p_md.add_argument("--relationship", choices=dbcore.schema_choices("identity_medical_map", "relationship"),
-                      help="required with --identity")
-    p_md.add_argument("--icf", help="base_icf.icf_code to cross to")
-    p_md.add_argument("--role", choices=dbcore.schema_choices("icf_medical_map", "role"),
-                      help="required with --icf. No ALIAS: a diagnosis is never an alias "
-                           "of a functional demand (074)")
-    p_md.add_argument("--mapping-confidence", dest="mapping_confidence",
-                      choices=dbcore.schema_choices("icf_medical_map", "mapping_confidence"),
-                      help="required with --icf; functional-taxonomy §3.2")
-    p_md.add_argument("--note")
-    p_md.add_argument("--session", required=True)
-    p_md.add_argument("--dry-run", action="store_true")
-
     # add-extraction — the writer source_value_extractions shipped without. See
     # insert_extraction for the refusals, and for the three that are DELIBERATELY
     # ABSENT (uniqueness on (ref_id, parameter_id), a value-directness grade, and
@@ -2527,7 +2531,7 @@ def main():
     p_ax.add_argument("--ref-id", required=True, help="evidence_sources.ref_id — the source read")
     p_ax.add_argument("--parameter-id", dest="parameter_id", type=int, required=True,
                       help="base_parameters.parameter_id — THE SUBJECT (owner 2026-08-26)")
-    # The four lenses. At least one is required (D-0182); the CLI names them by lens
+    # The three lenses. At least one is required (D-0182); the CLI names them by lens
     # rather than by column so the operator is choosing a LENS, not filling a field. Each flag
     # may be repeated (OR-1c): one link per code, all with the warrant of --lens-basis.
     _add_lens_flags(p_ax)
@@ -2721,21 +2725,20 @@ def main():
     p_rx.add_argument("--session", required=True)
     p_rx.add_argument("--dry-run", action="store_true")
 
-    # amend-extraction -- _AMENDABLE_SVE_FIELDS ONLY. Everything else is a second
-    # row and a contest (D-0168), not an overwrite.
+    # amend-extraction -- the amendable columns (_amendable_sve_fields) ONLY. Everything else is a
+    # second row and a contest (D-0168), not an overwrite.
     p_amx = sub.add_parser("amend-extraction",
                            help="Change a gradeable field (see --field) on an existing "
                                 "row, with a reason ledgered into notes")
     p_amx.add_argument("--extraction-id", dest="extraction_id", type=int,
                        required=True)
-    # DERIVED from _AMENDABLE_SVE_FIELDS, not retyped. This list said
-    # ["figure_role", "comparator"] and went stale the moment the constant grew,
-    # which was rule 8's count of argparse choices= lists that duplicate a column's
-    # CHECK" in miniature -- one list fewer.
+    # No choices=: the amendable set is every live column less the named exclusions (GAP-013), so
+    # a list here would be the second home it removed; the writer's refusal names the live set.
     p_amx.add_argument("--field", required=True,
-                       choices=sorted(_AMENDABLE_SVE_FIELDS),
-                       help="ONLY these fields. A wrong claimed_value or claim_text is "
-                            "a SECOND ROW and a contest (D-0168), not an overwrite.")
+                       help="A column of source_value_extractions that is not excluded (the refusal "
+                            "lists them). claimed_value, claimed_unit and setting take a reformat "
+                            "only (same numbers; a unit already in the cell; an empty setting; OR-3). "
+                            "A different figure is a SECOND ROW and a contest (D-0168).")
     p_amx.add_argument("--value", required=True)
     p_amx.add_argument("--reason", required=True,
                        help="Why. Appended to notes, never overwriting it.")
@@ -2750,7 +2753,6 @@ def main():
     p_all.add_argument("--identity", help="base_taxonomy_identity.identity_code")
     p_all.add_argument("--icf", help="base_icf.icf_code — a real ICF b/d code")
     p_all.add_argument("--needs", help="access_needs.need_code")
-    p_all.add_argument("--medical", help="base_taxonomy_medical.medical_code")
     p_all.add_argument("--basis", required=True, choices=_lens_basis_choices(),
                        help="Live vocabulary, read from extraction_lens_links.basis's own CHECK ('carried' is "
                             "written only by migration 131)")
@@ -2772,7 +2774,9 @@ def main():
     p_dx = sub.add_parser("derive-extraction",
                           help="Write a computed (base+delta) extraction and the "
                                "derived_from edges that prove it")
-    p_dx.add_argument("--ref-id", required=True)
+    p_dx.add_argument("--ref-id", default=None,
+                      help="OPTIONAL check only: the derived row is filed under its inputs' source (the base's), "
+                           "and a different value is refused")
     p_dx.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
     _add_lens_flags(p_dx)
     p_dx.add_argument("--base", type=int, required=True,
@@ -2780,15 +2784,9 @@ def main():
     p_dx.add_argument("--delta", type=int, required=True,
                       help="extraction_id of the delta figure")
     p_dx.add_argument("--claimed-value", dest="claimed_value",
-                      help="Omit to compute base + delta")
-    p_dx.add_argument("--claimed-unit", dest="claimed_unit",
-                      help="Overrides the base figure's unit -- requires "
-                           "--conversion-note")
-    p_dx.add_argument("--comparator")
-    p_dx.add_argument("--conversion-note", dest="conversion_note",
-                      help="Required when --claimed-unit overrides the base/delta "
-                           "unit")
-    p_dx.add_argument("--claim-text", dest="claim_text", required=True)
+                      help="Omit to compute base + delta; a value given is CHECKED against it and refused if it differs. "
+                           "The comparator, the unit, the quote, the locator and the source are the inputs' and are "
+                           "never asked for")
     p_dx.add_argument("--session", required=True)
     p_dx.add_argument("--dry-run", action="store_true")
 
@@ -2839,7 +2837,7 @@ def main():
                            help="Read-only: where a cell stands at every stage (held, examined empty, never examined, "
                                 "owed), each as row ids")
     p_cs2.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
-    p_cs2.add_argument("--identity"); p_cs2.add_argument("--icf"); p_cs2.add_argument("--needs"); p_cs2.add_argument("--medical")
+    p_cs2.add_argument("--identity"); p_cs2.add_argument("--icf"); p_cs2.add_argument("--needs")
     p_cs2.add_argument("--jurisdiction", help="a code base_jurisdictions holds; narrows searches, pairs and figures")
     p_cs2.add_argument("--language", help="narrows searches and pairs")
 
@@ -2863,7 +2861,6 @@ def main():
     p_ag.add_argument("--identity", help="base_taxonomy_identity.identity_code the gap is in")
     p_ag.add_argument("--icf", help="base_icf.icf_code the gap is in")
     p_ag.add_argument("--needs", help="access_needs.need_code the gap is in")
-    p_ag.add_argument("--medical", help="base_taxonomy_medical.medical_code the gap is in")
     p_ag.add_argument("--jurisdiction", help="the jurisdiction the gap is in (omit for none)")
     p_ag.add_argument("--language", help="ISO 639-1 language the gap is in (omit for none)")
     p_ag.add_argument("--dry-run", action="store_true")
@@ -3003,8 +3000,6 @@ def main():
     p_ls.add_argument("--identity", help="base_taxonomy_identity.identity_code this search covered")
     p_ls.add_argument("--icf", help="base_icf.icf_code this search covered")
     p_ls.add_argument("--needs", help="access_needs.need_code this search covered")
-    p_ls.add_argument("--medical", help="base_taxonomy_medical.medical_code this search covered "
-                                        "(the registry holds no row until it is filled)")
     p_ls.add_argument("--gap-id", dest="gap_id",
                       help="gaps.gap_id this search was run to close (refused unless held)")
     p_ls.add_argument("--dry-run", action="store_true")
@@ -3296,7 +3291,7 @@ def main():
     p_ung.add_argument("--include-recent", action="store_true",
                        help="Include gaps with created_at within last 6 months (default: skip)")
 
-    args = parser.parse_args()
+    args = _ARGS = parser.parse_args()
 
     if not args.command:
         parser.print_help()
@@ -3375,7 +3370,7 @@ def main():
         _emit(get_coverage_completeness(args.slug))
 
     elif args.command == "cell-status":
-        _emit(cell_status(args.parameter_id, args.identity, args.icf, args.needs, args.medical,
+        _emit(cell_status(args.parameter_id, args.identity, args.icf, args.needs,
                           args.jurisdiction, args.language))
 
     elif args.command == "add-gap":
@@ -3393,7 +3388,7 @@ def main():
             data["section"] = args.section
         for col, val in (("parameter_id", args.parameter), ("identity_code", args.identity),
                          ("icf_code", args.icf), ("needs_code", args.needs),
-                         ("medical_code", args.medical), ("jurisdiction", args.jurisdiction),
+                         ("jurisdiction", args.jurisdiction),
                          ("language", args.language)):
             if val is not None:          # a blank is refused by insert_gap, not dropped here
                 data[col] = val
@@ -3458,7 +3453,7 @@ def main():
             origin_pass_id=args.origin_pass_id,
             result_artefacts=args.result_artefacts,
             identity_code=args.identity, icf_code=args.icf,
-            needs_code=args.needs, medical_code=args.medical,
+            needs_code=args.needs,
             parameter_id=args.parameter, absence_class=args.absence_class,
             gap_id=args.gap_id, form_ids=args.form_ids, dry_run=args.dry_run)
         _emit({"exec_id": exec_id, "slug": args.slug,
@@ -3662,6 +3657,10 @@ def main():
             "catalogue_version": args.catalogue_version, "notes": args.notes,
         }, session=args.session, dry_run=args.dry_run))
 
+    elif args.command == "defer-reading":
+        _emit(defer_reading(args.ref_id, args.parameter_id, args.reason, session=args.session,
+                            dry_run=args.dry_run))
+
     elif args.command == "retire-parameter":
         _emit(retire_parameter(args.parameter_id, args.reason, session=args.session,
                                dry_run=args.dry_run))
@@ -3758,7 +3757,7 @@ def main():
     elif args.command == "raise-determination-gate":
         _emit(raise_determination_gate(
             parameter_id=args.parameter_id, identity=args.identity,
-            icf=args.icf, needs=args.needs, medical=args.medical,
+            icf=args.icf, needs=args.needs,
             verdict=args.verdict, trigger_ref_id=args.trigger_ref_id,
             trigger_tier=args.trigger_tier,
             trigger_evidence_type=args.trigger_evidence_type,
@@ -3769,22 +3768,13 @@ def main():
             gate_id=args.gate_id, rationale=args.rationale,
             session=args.session, dry_run=args.dry_run))
 
-    elif args.command == "add-medical":
-        out = insert_medical(
-            code=args.code, display_name=args.display_name, icd11=args.icd11,
-            description=args.description, icd11_payload=args.icd11_payload,
-            identity=args.identity, relationship=args.relationship,
-            icf=args.icf, role=args.role, mapping_confidence=args.mapping_confidence,
-            note=args.note, session=args.session, dry_run=args.dry_run)
-        print(json.dumps(out, indent=2, ensure_ascii=False))
-
     elif args.command == "add-extraction":
         # The lens flags are named for the LENS and stored in the COLUMN; the mapping
         # is stated once, here, and mirrors db._LENS_COLUMNS' key order.
         _ax = {"ref_id": args.ref_id,
                "parameter_id": args.parameter_id,
                "identity_code": args.identity, "icf_code": args.icf,
-               "needs_code": args.needs, "medical_code": args.medical,
+               "needs_code": args.needs,
                "lens_basis": args.lens_basis, "lens_basis_text": args.lens_basis_text,
                "claim_type": args.claim_type, "claimed_value": args.claimed_value,
                "claimed_unit": args.claimed_unit, "claim_text": args.claim_text,
@@ -3856,7 +3846,7 @@ def main():
 
     elif args.command == "add-lens-link":
         _emit(add_lens_link(args.extraction_id, args.session, identity=args.identity, icf=args.icf,
-                            needs=args.needs, medical=args.medical, basis=args.basis,
+                            needs=args.needs, basis=args.basis,
                             basis_text=args.basis_text, dry_run=args.dry_run))
 
     elif args.command == "retire-lens-link":
@@ -3866,11 +3856,9 @@ def main():
         _emit(derive_extraction(
             ref_id=args.ref_id, parameter_id=args.parameter_id,
             identity=args.identity, icf=args.icf, needs=args.needs,
-            medical=args.medical, lens_basis=args.lens_basis,
+            lens_basis=args.lens_basis,
             lens_basis_text=args.lens_basis_text, base=args.base, delta=args.delta,
-            claimed_value=args.claimed_value, claimed_unit=args.claimed_unit,
-            comparator=args.comparator, conversion_note=args.conversion_note,
-            claim_text=args.claim_text, session=args.session, dry_run=args.dry_run))
+            claimed_value=args.claimed_value, session=args.session, dry_run=args.dry_run))
 
     elif args.command == "adjudicate-term":
         _emit(adjudicate_term(args.observation_id, args.outcome, args.rationale,
@@ -4141,21 +4129,16 @@ def main():
         try:
             strategy = json.loads(args.search_strategy)
         except json.JSONDecodeError as e:
-            print(json.dumps({"error": f"--search-strategy is not valid JSON: {e}"}))
-            sys.exit(2)
+            _json_refusal(f"--search-strategy is not valid JSON: {e}")
         # Validate outcome-specific required args (mirrors SQL CHECK)
         if args.outcome == "refined_by" and not args.refinement_dimension:
-            print(json.dumps({"error": "outcome=refined_by requires --refinement-dimension"}))
-            sys.exit(2)
+            _json_refusal("outcome=refined_by requires --refinement-dimension")
         if args.outcome == "divergent_no_supersession" and not args.divergence_notes:
-            print(json.dumps({"error": "outcome=divergent_no_supersession requires --divergence-notes"}))
-            sys.exit(2)
+            _json_refusal("outcome=divergent_no_supersession requires --divergence-notes")
         if args.outcome in ("superseded_by", "refined_by", "divergent_no_supersession") and not (sup_refs or sup_dois):
-            print(json.dumps({"error": f"outcome={args.outcome} requires --superseding-refs or --superseding-dois"}))
-            sys.exit(2)
+            _json_refusal(f"outcome={args.outcome} requires --superseding-refs or --superseding-dois")
         if args.outcome == "co1_addition_logged" and args.evidence_type != "co1":
-            print(json.dumps({"error": "outcome=co1_addition_logged only valid for evidence_type=co1"}))
-            sys.exit(2)
+            _json_refusal("outcome=co1_addition_logged only valid for evidence_type=co1")
         check_id = add_supersession_check(
             slug=args.slug, local_ref_id=args.local_ref, ref_id=args.ref,
             anchor_tier=args.tier, anchor_evidence_type=args.evidence_type,
@@ -4178,32 +4161,26 @@ def main():
         try:
             strategy = json.loads(args.search_strategy)
         except json.JSONDecodeError as e:
-            print(json.dumps({"error": f"--search-strategy is not valid JSON: {e}"}))
-            sys.exit(2)
+            _json_refusal(f"--search-strategy is not valid JSON: {e}")
         try:
             discoveries = json.loads(args.discoveries) if args.discoveries else []
             if not isinstance(discoveries, list):
                 raise Refusal("--discoveries must be a JSON array")
         except (json.JSONDecodeError, ValueError) as e:
-            print(json.dumps({"error": f"--discoveries: {e}"}))
-            sys.exit(2)
+            _json_refusal(f"--discoveries: {e}")
         try:
             cand_dois = json.loads(args.candidate_dois) if args.candidate_dois else []
             if not isinstance(cand_dois, list):
                 raise Refusal("--candidate-dois must be a JSON array")
         except (json.JSONDecodeError, ValueError) as e:
-            print(json.dumps({"error": f"--candidate-dois: {e}"}))
-            sys.exit(2)
+            _json_refusal(f"--candidate-dois: {e}")
         # Validate outcome-specific required args (mirrors SQL CHECK)
         if args.outcome == "closure_evidence_found" and not discoveries:
-            print(json.dumps({"error": "outcome=closure_evidence_found requires at least one entry in --discoveries"}))
-            sys.exit(2)
+            _json_refusal("outcome=closure_evidence_found requires at least one entry in --discoveries")
         if args.outcome == "gap_recategorized" and (not args.notes or len(args.notes) < 20):
-            print(json.dumps({"error": "outcome=gap_recategorized requires --notes (>=20 chars)"}))
-            sys.exit(2)
+            _json_refusal("outcome=gap_recategorized requires --notes (>=20 chars)")
         if args.outcome == "deferred" and (not args.notes or len(args.notes) < 10):
-            print(json.dumps({"error": "outcome=deferred requires --notes (>=10 chars)"}))
-            sys.exit(2)
+            _json_refusal("outcome=deferred requires --notes (>=10 chars)")
         gap_mining_id = add_gap_mining(
             gap_id=args.gap_id,
             search_strategy_record=json.dumps(strategy),
@@ -6985,7 +6962,8 @@ def adjudicate_term(observation_id: int, outcome: str, rationale: str, session: 
         if prior:
             print(f"NOTE: observation {observation_id} ({obs['surface_form']!r}) already "
                   f"adjudicated by {[r[0] for r in prior]}. Writing a second row -- "
-                  f"divergent judgements read as a contest, not as an error.",
+                  f"the latest one is the standing judgment (T-074): this row now governs what an "
+                  f"alias or a rename may rest on.",
                   file=sys.stderr)
         cols = ",".join(row)
         cur = conn.execute(f"INSERT INTO term_adjudications ({cols}) "
@@ -7152,6 +7130,11 @@ def insert_term(from_observation: int, canonical_en: str, rationale: str, sessio
         row.update(dbcore.stamp_for(conn, "terms", session))
         conn.execute(f"INSERT INTO terms ({','.join(row)}) "
                      f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+        _prior_adj = conn.execute("SELECT outcome, created_by_session FROM term_adjudications WHERE observation_id=? "
+                                  "ORDER BY adjudication_id DESC LIMIT 1", (from_observation,)).fetchone()
+        if _prior_adj is not None:
+            print(f"NOTE: observation {from_observation} was last adjudicated {_prior_adj[0]} by {_prior_adj[1]}. "
+                  f"This NAMES-NEW row is now the standing judgment (T-074) and overrides it.", file=sys.stderr)
         adj = {"observation_id": from_observation, "outcome": "NAMES-NEW",
                "term_id": term_id, "rationale": rationale}
         adj.update(dbcore.stamp_for(conn, "term_adjudications", session))
@@ -7191,208 +7174,6 @@ def _name_holder(conn, name, *, aliases=True, exclude_term=None):
         "SELECT term_id, alias_type FROM term_aliases WHERE lower(alias) = lower(?) "
         "AND (? IS NULL OR term_id IS NOT ?)", (name, exclude_term, exclude_term)).fetchone()
     return {"kind": "alias", "term_id": held[0], "detail": held[1]} if held else None
-
-
-_MD_CODE = re.compile(r"^MD-[A-Z]+(-[A-Z]+)*$")
-
-
-def insert_medical(code: str, display_name: str, icd11: str, session: str,
-                   description: str = None, icd11_payload: str = None,
-                   identity: str = None, relationship: str = None,
-                   icf: str = None, role: str = None, mapping_confidence: str = None,
-                   note: str = None, dry_run: bool = False):
-    """Mint a medical-lens row AND at least one crossing, in one act.
-
-    THE FOURTH LENS. D-0170 (2026-08-27) adopted it on the owner's ruling -- "yes we
-    include the medical model too. we give our users the choice of what model they want to
-    use to browse the site." `base_taxonomy_medical` was created by migration 065 and had
-    no writer for the fortnight since, which is why D-0182's own evidence could count "0
-    medical" attachment points. Migration 074 gave it the crossings; this gives it a verb.
-
-    ROW AND CROSSING TOGETHER, on the `insert_term` precedent. A medical row with no
-    crossing cannot be reached from any other lens, so the lens cannot switch into it --
-    D-0170's structural requirement, still binding even though D-0184 moved the render path
-    off traversal. Minting the row alone would satisfy a CHECK and defeat the purpose.
-
-    WHAT IT REFUSES, and why each refusal is the point:
-
-      A CODE OUTSIDE `^MD-[A-Z]+(-[A-Z]+)*$`. Letters only, so no medical code can ever
-      match the `\b[A-Z]-[0-9]{2}\b` prior-version item-code shape that CLAUDE.md §7
-      warns a grep will hand you. A digit in this namespace would collide with the exact
-      surface the owner deleted the item layer to get away from.
-
-      A VALUE-BEARING NAME OR DESCRIPTION, via the same `_VALUE_BEARING` that gates
-      `add-term` -- IMPORTED, not retyped, because two copies of one regex is rule 5 in
-      miniature. A diagnosis names the subject, never the determination.
-
-      NO CROSSING. `--identity` needs `--relationship`; `--icf` needs both `--role` and
-      `--mapping-confidence`; and at least one of the two must be present.
-
-      `--identity ALL`. ALL is a scope marker, not a population, and crossing a diagnosis
-      to "everyone" asserts the medical model as the frame rather than offering it as a
-      lens -- which is what D-0170's rationale exists to refuse.
-
-      A DUPLICATE CODE, with the existing row named, on the `add-term` NAMES-EXISTING
-      precedent: a second row for one concept is the dual home rule 5 forbids.
-
-    icd11_verified_at IS SET ONLY FROM BYTES. `--icd11-payload` must name a file under
-    `retrieval-log/` whose content contains every code in `--icd11`; otherwise the column
-    stays NULL and NULL means "not verified". This is `retrieval_log.py`'s artefact
-    discipline (CLAUDE.md §5(c)) applied to a vocabulary instead of a citation -- the 2026-
-    08-19 fabrication was bibliographic fields written from memory past six green gates, and
-    an anchor asserted from memory is the same act on a different column.
-
-    WHAT IS DELIBERATELY ABSENT: any writer for `display_name` or `description` that copies
-    text from a classification. The anchor points; the prose is ours. That is rule 5, and it
-    is also why the licensing question on WHO's terms does not reach these two columns --
-    see scratchpad/pr-134-repository-orientation/MEDICAL-LENS-LICENSING-STOP.md.
-    """
-    if not _MD_CODE.match(code or ""):
-        raise Refusal(
-            f"--code {code!r} REFUSED: medical codes are ^MD-[A-Z]+(-[A-Z]+)*$ -- letters "
-            f"only, no digits.\nA digit here would produce a token matching the prior-"
-            f"version item-code shape [A-Z]-NN that CLAUDE.md §7 warns every grep still "
-            f"meets. That surface is what the owner deleted the item layer to escape; this "
-            f"namespace does not rejoin it.")
-    for field, val, rx in (("--display-name", display_name, _VALUE_BEARING_NAME),
-                           ("--description", description, _VALUE_BEARING)):
-        vb = rx.search(val) if val else None
-        if vb:
-            raise Refusal(
-                f"{field} {val!r} REFUSED: it carries a number, a comparator or a min/max "
-                f"word ({vb.group(0)!r}), so it states a determination in its own name.\nA diagnosis names "
-                f"the SUBJECT. The value belongs in the determination, which the engine "
-                f"computes (owner 2026-09-09).")
-    if not (icd11 or "").strip():
-        raise Refusal(
-            "--icd11 REFUSED: empty. argparse requires the flag to be PRESENT but an empty "
-            "string satisfied it, and a row whose anchor points nowhere is worse than one "
-            "with no anchor at all -- it reads as satisfied.\nThe anchor is the entire reason "
-            "this row exists (rule 5: point, do not copy). Give at least one ICD-11 code or "
-            "BlockId.")
-    if identity and not relationship:
-        raise Refusal("--identity given without --relationship. Say HOW the diagnosis "
-                      "relates: names | member_of | identity_first.")
-    if icf and not (role and mapping_confidence):
-        raise Refusal("--icf needs both --role and --mapping-confidence. A crossing whose "
-                      "strength is unstated reads as high-predictive to the next reader, "
-                      "which is the inference D-0184 measured and rejected.")
-    if not identity and not icf:
-        raise Refusal(
-            "REFUSED: no crossing given. A medical row with no crossing cannot be reached "
-            "from any other lens, so the lens cannot switch into it (D-0170's structural "
-            "requirement).\nPass --identity/--relationship, or --icf/--role/"
-            "--mapping-confidence, or both.")
-    if identity == "ALL":
-        raise Refusal(
-            "--identity ALL REFUSED: ALL is a scope marker, not a population. Crossing a "
-            "diagnosis to every population asserts the medical model as the project's "
-            "FRAME rather than offering it as one lens among four -- the reading D-0170's "
-            "rationale exists to refuse.")
-
-    verified_at = None
-    if icd11_payload:
-        pay = Path(icd11_payload)
-        # READ ARCHIVE MEMBERS, NOT JUST RAW BYTES. The first version of this check
-        # substring-matched `pay.read_bytes()`, and the only artefact it will ever be
-        # pointed at is WHO's release file — a DEFLATE-COMPRESSED ZIP, in which no code
-        # occurs literally. Measured: b"MB56" in the raw zip -> False; in the decompressed
-        # member -> True. So the check refused the very payload that proves the anchor,
-        # and the ruling it enforces ("verified against the persisted release file at write
-        # time") was unexecutable. The MB5 verification of 2026-09-11 02:47 was done by
-        # hand in Python and never through this writer, while the record claimed otherwise.
-        bodies = _payload_bodies(pay, "--icd11-payload",
-                                 "icd11_verified_at is set from BYTES or not at all")
-        missing = [c.strip() for c in icd11.split(",")
-                   if c.strip() and not any(c.strip() in b for b in bodies)]
-        if missing:
-            raise Refusal(
-                f"--icd11-payload does not contain {missing!r}. REFUSED rather than stamped: "
-                f"a payload that does not mention the code verifies nothing, and a "
-                f"verification standing with no artefact behind it is the 2026-08-19 shape.")
-        # A REAL stamp, not a guarded one. The first draft of this line read
-        # `_now() if "_now" in globals() else None`, and _now() does not exist in this
-        # module -- so --icd11-payload would have validated the bytes and then written
-        # NULL anyway, leaving a verified anchor indistinguishable from an unverified
-        # one. A writer that silently does nothing is worse than one that refuses.
-        verified_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-    with connect(dry_run) as conn:
-        dup = conn.execute("SELECT medical_code, display_name FROM base_taxonomy_medical "
-                           "WHERE medical_code = ?", (code,)).fetchone()
-        if dup:
-            raise Refusal(
-                f"--code {code!r} REFUSED: already exists as {dup[1]!r}. Minting a second "
-                f"row for one concept is the dual home rule 5 forbids; add a crossing to "
-                f"the standing row instead.")
-        # PRE-CHECK THE CROSSING TARGETS. Without this, a typo'd --identity or --icf
-        # reached the INSERT and surfaced as `sqlite3.IntegrityError: FOREIGN KEY
-        # constraint failed` with a traceback naming a line number -- while a
-        # DOCTRINAL error (--identity ALL) got a full sentence. So the writer explained
-        # the subtle mistake and stack-traced the obvious one. That is the exact pattern
-        # PR #133 ("db.py's refusals become sentences too") existed to remove, and this
-        # writer reintroduced it. Found by driving the CLI, not by reading it.
-        # The transaction did roll back, so nothing was corrupted -- the defect was the
-        # message, which is still the difference between a user fixing a typo and a user
-        # filing a bug.
-        if identity:
-            dbcore.check_identity_live(conn, identity, "add-medical --identity")
-            if not conn.execute("SELECT 1 FROM base_taxonomy_identity WHERE identity_code = ?",
-                                (identity,)).fetchone():
-                near = [r[0] for r in conn.execute(
-                    "SELECT identity_code FROM base_taxonomy_identity ORDER BY identity_code")]
-                raise Refusal(
-                    f"--identity {identity!r} REFUSED: not an identity_code. The identity "
-                    f"lens is `base_taxonomy_identity`, and its live vocabulary is: {', '.join(near)}")
-        if icf:
-            # INVERTED 2026-09-13, and the old message is worth remembering because it
-            # stated the ruled-out state as doctrine: it read "specifications.icf_code FKs
-            # to `axes`, NOT to raw ICF b/d/e codes … a raw code would be refused by the
-            # FK". That was true of the schema and is now exactly backwards. Owner ruling,
-            # same day: "'AX-' for ICF should never ever exist anywhere", then "keep the
-            # ICF lens, give it real ICF codes". Migration 081 re-pointed all six icf_code
-            # columns at `base_icf`, so a raw ICF code is the ONLY thing accepted here and
-            # an AX- demand code is what the FK now refuses.
-            if not dbcore.exists(conn, "base_icf", "icf_code", icf):
-                raise Refusal(
-                    f"--icf {icf!r} REFUSED: not in `base_icf`, the ICF registry the lens "
-                    f"points at since migration 081.\n"
-                    f"If this is a real ICF code the registry does not yet hold, mint it:\n"
-                    f"  db.py add-icf-code --icf-code {icf} --session ...\n"
-                    f"If it is an AX- demand code, it is not an ICF code and never was "
-                    f"(owner ruling 2026-09-13).")
-        row = {"medical_code": code, "display_name": display_name,
-               "description": description, "icd11_anchors": icd11,
-               "icd11_verified_at": verified_at, "notes": note}
-        row = {k: v for k, v in row.items() if v is not None}
-        row.update(dbcore.stamp_for(conn, "base_taxonomy_medical", session))
-        conn.execute(
-            f"INSERT INTO base_taxonomy_medical ({','.join(row)}) "
-            f"VALUES ({','.join('?' * len(row))})", tuple(row.values()))
-        crossings = []
-        if identity:
-            c = {"identity_code": identity, "medical_code": code,
-                 "relationship": relationship, "notes": note}
-            c = {k: v for k, v in c.items() if v is not None}
-            c.update(dbcore.stamp_for(conn, "identity_medical_map", session))
-            conn.execute(f"INSERT INTO identity_medical_map ({','.join(c)}) "
-                         f"VALUES ({','.join('?' * len(c))})", tuple(c.values()))
-            crossings.append({"lens": "identity", "code": identity,
-                              "relationship": relationship})
-        if icf:
-            c = {"icf_code": icf, "medical_code": code, "role": role,
-                 "mapping_confidence": mapping_confidence, "notes": note}
-            c = {k: v for k, v in c.items() if v is not None}
-            c.update(dbcore.stamp_for(conn, "icf_medical_map", session))
-            conn.execute(f"INSERT INTO icf_medical_map ({','.join(c)}) "
-                         f"VALUES ({','.join('?' * len(c))})", tuple(c.values()))
-            crossings.append({"lens": "icf", "code": icf, "role": role,
-                              "mapping_confidence": mapping_confidence})
-        return {"medical_code": code, "display_name": display_name,
-                "icd11_anchors": icd11,
-                "icd11_verified_at": verified_at,
-                "anchor_verified": bool(verified_at),
-                "crossings": crossings, "dry_run": dry_run}
 
 
 def insert_parameter(term_id: str, session: str, notes: str = None,
@@ -7738,6 +7519,11 @@ _MERGE_KEEPS_HISTORY = {
         "a gate is raised against a parameter; merge-parameter refuses while either "
         "parameter has an OPEN gate, so what remains is resolved history and stays where "
         "it was raised"),
+    "reading_deferrals": (
+        "a deferral says a reading of THIS parameter was put off, and it is a record of when that was said. The "
+        "table has no notes column to carry a MERGED line, and none is needed: v_deferred_acts reads a merged "
+        "parameter's deferral as its merged_into parameter's (one hop), with the date it was first recorded, so the "
+        "row stays where it was raised and the view re-points it"),
 }
 
 #: The prior-version item-code shape CLAUDE.md section 7 warns every grep meets
@@ -7963,10 +7749,30 @@ def _alias_language(conn, language: str) -> str:
 
 
 def _names_term(conn, observation_id: int, term_id: str) -> bool:
-    """Does some adjudication of this observation name this term?"""
-    return conn.execute(
-        "SELECT 1 FROM term_adjudications WHERE observation_id = ? AND term_id = ?",
-        (observation_id, term_id)).fetchone() is not None
+    """Does the LATEST adjudication of this observation name this term?
+
+    Adjudications are appended, never edited (adjudicate_term: a disagreeing judgment is a second
+    row), so the latest one is the observation's standing judgment; an earlier one that named the
+    term and was later declined or re-pointed warrants nothing. Latest = highest adjudication_id
+    (the order the writer assigns; created_at is minute-resolution and can tie)."""
+    row = conn.execute(
+        "SELECT term_id FROM term_adjudications WHERE observation_id = ? "
+        "ORDER BY adjudication_id DESC LIMIT 1", (observation_id,)).fetchone()
+    return row is not None and row[0] == term_id
+
+
+def _not_named_msg(conn, verb: str, observation_id: int, term_id: str) -> str:
+    """The refusal's opening, shared by the callers of _names_term: it says WHICH case holds."""
+    row = conn.execute(
+        "SELECT adjudication_id, outcome, term_id, created_by_session FROM term_adjudications "
+        "WHERE observation_id = ? ORDER BY adjudication_id DESC LIMIT 1", (observation_id,)).fetchone()
+    if row is None:
+        what = "there is none"
+    elif row["term_id"]:
+        what = f"adjudication {row['adjudication_id']} ({row['created_by_session']}) names {row['term_id']}"
+    else:
+        what = f"adjudication {row['adjudication_id']} ({row['created_by_session']}) is {row['outcome']}"
+    return (f"{verb}: the latest adjudication of observation {observation_id} does not name {term_id}: {what}.")
 
 
 def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
@@ -7982,7 +7788,7 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
 
       --from-observation N  the new name comes from a phrase a source USES, in the
                             source's own language (owner E1, 2026-11-06: a concept first
-                            met outside English is named by that phrase), adjudicated to
+                            met outside English is named by that phrase), whose latest adjudication names
                             THIS term, whose surface form
                             contains the new name (the 2026-09-09 rule, kept by the owner
                             on 2026-10-09: names come from observed phrases);
@@ -7998,8 +7804,8 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
 
     REFUSES: neither or both warrants; a value-bearing name (_VALUE_BEARING, as add-term);
     a quote not exactly once in the ledger or not containing the name; an observation
-    not adjudicated to this term, or that does not contain the name; a name another term
-    holds.
+    whose latest adjudication does not name this term, or that does not contain the name; a name
+    another term holds.
     """
     new = (canonical_en or "").strip()
     if not new:
@@ -8050,10 +7856,11 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
                               f"observed term.")
             if not _names_term(conn, from_observation, term_id):
                 raise Refusal(
-                    f"rename-term: no adjudication of observation {from_observation} names "
-                    f"{term_id}. Judge first that the source's phrase names THIS concept "
-                    f"(db.py adjudicate-term --outcome NAMES-EXISTING --term-id {term_id}), "
-                    f"then rename from it. Nothing was written.")
+                    f"{_not_named_msg(conn, 'rename-term', from_observation, term_id)} "
+                    f"If the source's phrase does name THIS concept, judge it: db.py adjudicate-term "
+                    f"--observation-id {from_observation} --outcome NAMES-EXISTING --term-id {term_id} "
+                    f"--rationale ... --session ... (a later adjudication is the standing one), then rename "
+                    f"from it. Nothing was written.")
             if not _retrieval_log().phrase_in_quote(new, obs["surface_form"]):
                 raise Refusal(
                     f"rename-term: {new!r} is not in the observed phrase "
@@ -8156,8 +7963,8 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
 
     REFUSES: neither or several routes; an alias type outside the CHECK, DEPRECATED
     (rename-term's record) or TRANSLATION (a source's own phrase is not a rendering of the
-    English one, R11); an unknown term or observation; an observation no adjudication names
-    this term with, whose phrase is not inside its quote, or whose quote is not in a file
+    English one, R11); an unknown term or observation; an observation whose latest adjudication
+    does not name this term, whose phrase is not inside its quote, or whose quote is not in a file
     saved for its source (unless VERBATIM-EXEMPT); `instrument` for a source outside the
     regulatory stratum; a base route with no locator, a blank locator part, a URL that is
     not http(s)://host with no whitespace, a pair lang_jur_map lacks, or an attestation
@@ -8266,6 +8073,21 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
         if not dbcore.exists(conn, "terms", "term_id", term_id):
             raise Refusal(f"add-alias: {term_id!r}: no such term.")
         obs, note = None, None
+        if route == "base":
+            # The base route is "a form read where NO observation exists". A form an observation already
+            # records is judged there, and the latest adjudication governs (T-074): writing it here would
+            # carry a phrase the project declined into the vocabulary with a URL as its warrant.
+            for _o in conn.execute("SELECT observation_id FROM observed_terms WHERE lower(trim(surface_form)) = ? "
+                                   "AND upper(language) = upper(?) ORDER BY observation_id",
+                                   (alias.strip().lower(), language or "")).fetchall():
+                _latest = conn.execute("SELECT term_id FROM term_adjudications WHERE observation_id = ? "
+                                       "ORDER BY adjudication_id DESC LIMIT 1", (_o[0],)).fetchone()
+                if _latest is not None and _latest[0] is None:   # judged NOT-OURS or DEFERRED (an unjudged one is not a rejection)
+                    raise Refusal(
+                        f"{_not_named_msg(conn, 'add-alias', _o[0], term_id)} The base route is for a form no "
+                        f"observation covers; observation {_o[0]} records this phrase and its standing judgment "
+                        f"names no term. Judge it first (db.py adjudicate-term), then alias from the "
+                        f"observation (--observation-id {_o[0]}). Nothing was written.")
         if route == "observation":
             obs = conn.execute(
                 "SELECT o.observation_id, o.ref_id, o.surface_form, o.language, o.locator, "
@@ -8284,8 +8106,8 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
                     f"route with the instrument's own URL and clause. Nothing was written.")
             if not _names_term(conn, observation_id, term_id):
                 raise Refusal(
-                    f"add-alias: no adjudication of observation {observation_id} names "
-                    f"{term_id}. An alias says the source's phrase names THIS concept, which is "
+                    f"{_not_named_msg(conn, 'add-alias', observation_id, term_id)} "
+                    f"An alias says the source's phrase names THIS concept, which is "
                     f"a judgement: db.py adjudicate-term --observation-id {observation_id} "
                     f"--outcome NAMES-EXISTING --term-id {term_id} --rationale ... first.")
             quote = obs["context_quote"] or ""
@@ -8818,6 +8640,103 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
         return out
 
 
+#: The longest reason `defer-reading` takes: a deferral's reason is a sentence about why a reading waits, one line
+#: (the longest reason any deferral, search or mining, holds today is under this).
+_DEFER_REASON_MAX = 1000
+
+
+def defer_reading(ref_id: str, parameter_id, reason: str, session: str, dry_run: bool = False):
+    """Record that a READING of a source is owed and deliberately not done yet (migrations 141 and 142, T-079, AT-17).
+
+    "Deferred is okay so long as it runs eventually" (owner, 2026-09-18): a deferral is legitimate when it is on the
+    record with its date, so it can be listed and aged (`v_deferred_acts`). A pair no one has read is NOT-READ in
+    `v_scan_ledger` whether or not anyone decided to wait; this row says someone did, and why. THIS VERB WRITES
+    reading_deferrals AND NOTHING ELSE: the pair stays owed in the ledger, and the deferral ends by DERIVATION when
+    nothing is owed any longer. `parameter_id` None defers the whole-source catalogue reading.
+
+    WHAT IS OWED has one home, `v_reading_owed` (a ledger pair no full reading covers and the ledger does not read
+    BLOCKED), and `v_deferred_acts` reads it for the same question, so the verb accepts exactly what the view will list.
+
+    REFUSES (each names its ground, a next action, and that nothing was written): a missing session; a reason that is
+    blank, has no letter or digit, spans lines or exceeds `_DEFER_REASON_MAX`; an unknown or superseded source (the
+    replacement is what is owed: `_refuse_tombstone`); a parameter that does not exist or is not active (a merged one
+    names the survivor); a pair, or a whole source with no owed parameter, that a full reading already covers; a
+    source the ledger reads BLOCKED (the text cannot be had: not reading debt); a pair that already has a standing
+    deferral (asked of `v_deferred_acts`). A partial, fragment or abstract reading covers nothing here, as in the ledger."""
+    session = (session or "").strip()
+    if not session:
+        raise Refusal("defer-reading: --session is required and may not be blank (the session that records the "
+                      "deferral, e.g. session_YYYY-MM-DD-slug). Nothing was written.")
+    reason = dbcore.require_reason(reason, "defer-reading",
+                                   "A deferral that cannot say why is neglect, and the reason is what its age is read "
+                                   "against. Pass --reason with one line saying why the reading waits. Nothing was written.")
+    if "\n" in reason or "\r" in reason:
+        raise Refusal("defer-reading: --reason must be one line (no line break): say why the reading waits in a "
+                      "sentence and keep detail in the session record. Nothing was written.")
+    if not any(ch.isalnum() for ch in reason):
+        raise Refusal("defer-reading: --reason needs at least one letter or digit; a reason made of spaces, "
+                      "punctuation or invisible characters says nothing. Pass --reason with a sentence. "
+                      "Nothing was written.")
+    if len(reason) > _DEFER_REASON_MAX:
+        raise Refusal(f"defer-reading: --reason is {len(reason)} characters; the limit is {_DEFER_REASON_MAX}. Shorten "
+                      f"it to why the reading waits. Nothing was written.")
+    with connect(dry_run) as conn:
+        ref = dbcore.fold_ref(ref_id)
+        if conn.execute("SELECT 1 FROM evidence_sources WHERE ref_id = ?", (ref,)).fetchone() is None:
+            raise Refusal(f"defer-reading: {ref_id!r} is not an admitted source. Find the id with "
+                          f"`SELECT ref_id, title FROM evidence_sources WHERE title LIKE '%...%'`; a source not yet "
+                          f"admitted is admitted with db.py add-source first. Nothing was written.")
+        try:
+            _refuse_tombstone(conn, ref, "defer-reading")
+        except Refusal as exc:
+            succ = conn.execute("SELECT superseded_by_ref_id FROM evidence_sources WHERE ref_id = ?", (ref,)).fetchone()[0]
+            raise Refusal(f"{str(exc).removesuffix(' Nothing was written.')} Its replacement owes the reading: "
+                          f"`db.py defer-reading --ref-id {succ} ...`. Nothing was written.") from None
+        if parameter_id is not None:
+            try:
+                prow = _parameter_row(conn, parameter_id, "defer-reading")
+            except Refusal as exc:
+                raise Refusal(f"{exc} List them with `SELECT parameter_id, status FROM base_parameters`. "
+                              f"Nothing was written.") from None
+            if prow["status"] != "active":
+                survivor = (f" It was merged into parameter {prow['merged_into']}: pass `--parameter "
+                            f"{prow['merged_into']}`, which carries any deferral recorded on it."
+                            if prow["status"] == "merged" and prow["merged_into"] is not None else "")
+                raise Refusal(f"defer-reading: parameter {parameter_id} is {prow['status']}; a reading is owed only "
+                              f"for an active parameter.{survivor} List the active ones with `SELECT parameter_id "
+                              f"FROM base_parameters WHERE status = 'active'`. Nothing was written.")
+        where = f"{ref} for parameter {parameter_id}" if parameter_id is not None else f"{ref} for any active parameter"
+        # Owed = v_reading_owed, the one definition (the view of standing deferrals reads it too).
+        if conn.execute("SELECT 1 FROM v_reading_owed WHERE ref_id = ? AND parameter_id IS COALESCE(?, parameter_id) "
+                        "LIMIT 1", (ref, parameter_id)).fetchone() is None:
+            blocked = conn.execute("SELECT s.processing_blocked_reason FROM v_scan_ledger l "
+                                   "JOIN evidence_sources s ON s.ref_id = l.ref_id WHERE l.ref_id = ? "
+                                   "AND l.parameter_id IS COALESCE(?, l.parameter_id) AND l.status = 'BLOCKED' "
+                                   "LIMIT 1", (ref, parameter_id)).fetchone()
+            if blocked is not None:
+                raise Refusal(f"defer-reading: {where} reads BLOCKED in the ledger (processing_blocked_reason "
+                              f"{blocked[0]!r}): the full text cannot be had, so no reading is owed. If the text can be "
+                              f"had after all, obtain it and run db.py record-scan; if the block is wrong, correct it "
+                              f"with db.py amend-source. See `SELECT * FROM v_scan_ledger WHERE ref_id = '{ref}'`. "
+                              f"Nothing was written.")
+            raise Refusal(f"defer-reading: a full reading already covers {where}, so no reading is owed. See "
+                          f"`SELECT * FROM v_scan_ledger WHERE ref_id = '{ref}'`. Nothing was written.")
+        held = conn.execute("SELECT deferred_at, created_by_session FROM v_deferred_acts WHERE kind = 'reading' "
+                            "AND ref_id = ? AND parameter_id IS ?", (ref, parameter_id)).fetchone()
+        if held is not None:
+            raise Refusal(f"defer-reading: {ref} {'parameter ' + str(parameter_id) if parameter_id is not None else 'whole source'} "
+                          f"already has a standing deferral ({held['deferred_at']}, {held['created_by_session']}); a "
+                          f"second would list twice. It ends when a full reading covers the pair (db.py record-scan "
+                          f"--text-scope full). See `SELECT * FROM v_deferred_acts WHERE kind = 'reading'`. "
+                          f"Nothing was written.")
+        row = {"ref_id": ref, "parameter_id": parameter_id, "reason": reason}
+        row.update(dbcore.stamp_for(conn, "reading_deferrals", session))
+        cur = conn.execute(f"INSERT INTO reading_deferrals ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
+                           list(row.values()))
+        return {"deferral_id": cur.lastrowid, "ref_id": ref, "parameter_id": parameter_id,
+                "deferred_at": row["created_at"], "dry_run": dry_run}
+
+
 def _owner_approval(approval_ref: str, subject: str) -> str:
     """The approval heading for a base-vocabulary admission: one dated ledger entry whose heading begins "Owner"
     (the owner's own words). A delegated resolution is a model's, and any other entry (a session, a referral, a
@@ -9160,8 +9079,8 @@ def resolve_follow_up(follow_up_id: int, resolution: str, session: str,
 
 
 # --- H3/H4: the two tables migration 080 created ---------------------------------
-# Both shipped with no writer, which is the defect `insert_parameter` and
-# `insert_medical` were each written to close on their own table: a capturable table
+# Both shipped with no writer, which is the defect `insert_parameter`
+# was written to close on its own table: a capturable table
 # with nothing that can write it is unreachable through the sanctioned path, and the
 # next session reaches for hand SQL (CLAUDE.md section 4 -- "if you find one it cannot,
 # that is a coverage bug to fix, not a licence to bypass").
@@ -9290,8 +9209,7 @@ def insert_icf_code(*, icf_code: str, title: str = None, title_source: str = Non
     and never whether it was TRUE. An ICF title recalled rather than read is the same act
     in a smaller field. So `title` may only arrive with a `title_source`, which the schema
     enforces too — and when that source is a persisted payload, the title is checked
-    against its BYTES here, the same way `add-medical --icd11-payload` checks an ICD-11
-    anchor. A title with no payload is accepted and records its document, which is weaker
+    against its BYTES here. A title with no payload is accepted and records its document, which is weaker
     and is meant to read as weaker.
 
     A CODE WITH NO TITLE IS FINE and is the honest default: 43 of the 72 seeded codes are
@@ -9394,7 +9312,7 @@ def set_icf_title(*, icf_code: str, title: str, title_source: str = None,
 
 def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
                              identity: str = None, icf: str = None, needs: str = None,
-                             medical: str = None, trigger_ref_id: str = None,
+                             trigger_ref_id: str = None,
                              trigger_tier: int = None, trigger_evidence_type: str = None,
                              session: str, dry_run: bool = False):
     """Raise an H4 gate: a finding that caps a cell at `provisional` until resolved.
@@ -9477,8 +9395,7 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
                 f"the gate against EVERY lens on this parameter, which is what an audit "
                 f"that does not yet know which cells exist should do.")
         for _flag, _val, _tbl, _col in (("--icf", icf, "base_icf", "icf_code"),
-                                        ("--needs", needs, "access_needs", "need_code"),
-                                        ("--medical", medical, "base_taxonomy_medical", "medical_code")):
+                                        ("--needs", needs, "access_needs", "need_code")):
             if _val and not dbcore.exists(conn, _tbl, _col, _val):
                 raise Refusal(
                     f"{_flag} {_val!r} is not in {_tbl}. List the codes with SELECT {_col} FROM {_tbl}; "
@@ -9501,7 +9418,7 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
                     f"state the strength as your own finding.")
             trigger_tier, trigger_evidence_type = src["tier"], src["evidence_type"]
         row = {"parameter_id": parameter_id, "identity_code": identity, "icf_code": icf,
-               "needs_code": needs, "medical_code": medical,
+               "needs_code": needs,
                "verdict": verdict, "trigger_ref_id": trigger_ref_id,
                "trigger_tier": trigger_tier,
                "trigger_evidence_type": trigger_evidence_type, "detail": detail,
@@ -9509,8 +9426,7 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
         cur = conn.execute(f"INSERT INTO determination_gates ({','.join(row)}) "
                            f"VALUES ({','.join('?'*len(row))})", list(row.values()))
         return {"gate_id": cur.lastrowid, "parameter_id": parameter_id,
-                "identity_code": identity, "icf_code": icf, "needs_code": needs,
-                "medical_code": medical, "verdict": verdict,
+                "identity_code": identity, "icf_code": icf, "needs_code": needs, "verdict": verdict,
                 "trigger_tier": trigger_tier,
                 "trigger_evidence_type": trigger_evidence_type,
                 "trigger_strength_source": ("none: a question states no strength" if verdict == "QUESTION"
@@ -9561,7 +9477,7 @@ def resolve_determination_gate(*, gate_id: int, rationale: str, session: str,
                 "dry_run": dry_run}
 
 
-# The four lenses (owner 2026-08-28; CHECK relaxed to "at least one" by D-0182).
+# The three lenses (owner 2026-08-28, the medical lens deleted 2026-11-16; CHECK relaxed to "at least one" by D-0182).
 # Each column, the base registry its real FK points into, and that registry's key.
 # DERIVED FROM THE SCHEMA, not a vocabulary restated in code: the registries ARE the
 # vocabulary (CLAUDE.md §4). Mirrors assess_cell.LENS_COLUMNS deliberately — the
@@ -9577,7 +9493,6 @@ _LENS_COLUMNS = {
     # dropped its tables.
     "icf_code": ("base_icf", "icf_code"),
     "needs_code": ("access_needs", "need_code"),
-    "medical_code": ("base_taxonomy_medical", "medical_code"),
 }
 
 # Columns on source_value_extractions whose CHECK declares a closed vocabulary. The
@@ -9675,8 +9590,7 @@ def _fmt_num(x: float) -> str:
 def _payload_bodies(pay, flag: str, why: str):
     """Every readable text body inside a persisted payload, for a bytes-not-memory check.
 
-    FACTORED OUT 2026-09-13 so `set-icf-title` verifies an ICF title exactly the way
-    `add-medical --icd11-payload` verifies an ICD-11 anchor. Two copies of a
+    FACTORED OUT 2026-09-13 so `set-icf-title` reads the bytes of a persisted payload. Two copies of a
     bytes-verification would be two places for the archive-member bug below to come back.
 
     READS ARCHIVE MEMBERS, NOT JUST RAW BYTES, and that is the whole reason this is more
@@ -9954,6 +9868,41 @@ def _refuse_live_confirmation(conn, context, to_extraction):
             f"then re-determine. Nothing was written.")
 
 
+def _refuse_bad_derived_input(conn, context: str, inp):
+    """A figure a derived row is computed FROM must be one a source states and the engine could publish: a `claim` or
+    a `finding` (not a `condition`, not itself derived), not skimmed (`dbcore.NOT_PUBLISHABLE_METHODS`, the owner's
+    2026-10-09 rule) and not contradicted, with a quote of its own and a locator, as strict as R3 is for the same
+    source (a regulatory-stratum source, tier 4 to 6, needs a structured pinpoint, not only a prose section). The
+    ONE home of those rules for every writer of a `derived_from` edge (derive-extraction, add-extraction,
+    relate-extraction): a derived row stores neither quote nor locator (OD-40), so what it rests on is checked here."""
+    xid = inp["extraction_id"]
+    if inp["figure_role"] not in ("claim", "finding"):
+        raise Refusal(f"{context}: input {xid} is a {inp['figure_role']!r} row. A derived figure is computed from "
+                      f"figures a source states (a claim or a finding); a condition qualifies a figure and a derived "
+                      f"row has no words of its own. Nothing was written.")
+    if inp["extraction_method"] in dbcore.NOT_PUBLISHABLE_METHODS:
+        raise Refusal(f"{context}: input {xid} was read by {inp['extraction_method']!r}, which is not publishable "
+                      f"(owner 2026-10-09). A figure computed from it would carry the standing of a full reading it "
+                      f"does not have. Read the source in full first. Nothing was written.")
+    if (inp["extraction_status"] or "") == "contradicted":
+        raise Refusal(f"{context}: input {xid} is contradicted. Nothing computed from it stands. "
+                      f"Nothing was written.")
+    if not (inp["claim_text"] or "").strip():
+        raise Refusal(f"{context}: input {xid} has no quote of its own, and a derived figure's words are its inputs' "
+                      f"(an input that is itself derived has none). Derive from rows a source states. "
+                      f"Nothing was written.")
+    levels = [c for c in dbcore.columns(conn, "source_value_extractions") if c.startswith("loc_") and c != "loc_note"]
+    esc = "[UNVERIFIED-QUANT]" in (inp["notes"] or "")
+    pin = any(str(inp[c] or "").strip() for c in levels)
+    tier = conn.execute("SELECT tier FROM evidence_sources WHERE ref_id=?", (inp["ref_id"],)).fetchone()
+    regulatory = bool(tier and tier[0] is not None and int(tier[0]) >= 4)
+    if not esc and not pin and (regulatory or not str(inp["source_section"] or "").strip()):
+        raise Refusal(f"R3: derived figure's input {xid} has no locator" +
+                      (" a code, standard or statute numbers its clauses, so the pinpoint hierarchy is owed, not only a "
+                       "prose section" if regulatory and str(inp["source_section"] or "").strip() else "") +
+                      f", so the derived figure cannot be found again. Nothing written.")
+
+
 def _refuse_derived_mismatch(conn, extraction_id: int, context: str):
     """Refuse a derived figure that disagrees with its own base + delta: the ONE home of that arithmetic, run
     by every writer that can complete a derived row (add-extraction, relate-extraction, amend-extraction to
@@ -9965,14 +9914,22 @@ def _refuse_derived_mismatch(conn, extraction_id: int, context: str):
 
     WHAT IS NOT CHECKED: the view joins on equal units and plain numerals, so a row converted between units
     (a derived figure in mm over a base in m) or whose base is a range is not compared; integrity reports it
-    UNCHECKED. `--conversion-note` exists only on `derive-extraction` (not on this path), so on this path such a
-    row carries no record of its conversion."""
-    for bad in conn.execute("SELECT stored, recomputed FROM v_derived_figure_check WHERE derived_id = ?",
-                            (extraction_id,)).fetchall():
+    UNCHECKED. `derive-extraction` refuses two inputs in two units (T-063), so such a row can only arrive by
+    `add-extraction` / `relate-extraction` / `amend-extraction`, and it carries no record of its conversion."""
+    checked = conn.execute("SELECT stored, recomputed FROM v_derived_figure_check WHERE derived_id = ?",
+                           (extraction_id,)).fetchall()
+    for bad in checked:
         if abs(bad["recomputed"] - bad["stored"]) > 1e-9:
             raise Refusal(f"{context}: derived figure {bad['stored']} disagrees with its own base + delta "
                           f"({bad['recomputed']}). A derived figure that contradicts its inputs is the "
                           f"defect this check exists to stop. Nothing was written.")
+    roles = {r[0] for r in conn.execute("SELECT input_role FROM extraction_relations WHERE from_extraction_id = ? "
+                                        "AND relation = 'derived_from'", (extraction_id,))}
+    if not checked and {"base", "delta"} <= roles:
+        raise Refusal(f"{context}: derived figure {extraction_id} has a base and a delta but nothing can recompute "
+                      f"it: the check joins plain numerals in ONE unit, and a ratio, a range, a missing unit or two "
+                      f"units cannot be summed by it. A figure no check can recompute is a number trusted on faith. "
+                      f"Nothing was written.")
 
 
 def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
@@ -10023,7 +9980,7 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                 f"{context}: --to-extraction {to_extraction} is the same row this "
                 f"edge is FROM. A figure cannot be its own comparator.")
         target = conn.execute(
-            "SELECT ref_id FROM source_value_extractions WHERE extraction_id=?",
+            "SELECT * FROM source_value_extractions WHERE extraction_id=?",
             (to_extraction,)).fetchone()
         if target is None:
             raise Refusal(
@@ -10031,6 +9988,8 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                 f"condition_on/derived_from name a figure this project actually "
                 f"holds as a row -- extract it first, or use --to-label for a "
                 f"referent that is not yet its own row.")
+        if relation == "derived_from":
+            _refuse_bad_derived_input(conn, context, target)
         if relation in _ROW_ONLY_RELATIONS and target["ref_id"] != from_ref_id \
                 and not (cross_source_reason or "").strip():
             raise Refusal(
@@ -10253,7 +10212,7 @@ def _build_relation_groups(relations, to_extractions, to_labels, to_kinds, state
 
 
 # A FIGURE'S LENS LIVES IN extraction_lens_links (OR-1c, migration 131): one row per (figure, code), the
-# four typed columns of which a row states exactly one, and a warrant. The figure's own four columns are held
+# three typed columns of which a row states exactly one, and a warrant. The figure's own three columns are held
 # NULL by the table's CHECK. The helpers below are the one home of what a link write checks; insert_extraction
 # (every code of a new figure), add-lens-link and retire-lens-link all call them.
 
@@ -10300,8 +10259,7 @@ def _require_lens_warrant(conn, basis, basis_text, ref_id, claim_text, source_se
       study_participants  the study_population of an evidence_population_match row for the source (2026-08-25).
 
     Returns the stripped text. WHAT THIS DOES NOT CHECK: that the words name the lens code itself. The registries
-    do not hold a name for every code (about half the ICF d-codes have no title, access_needs has no name column,
-    base_taxonomy_medical is empty), so a name test cannot be derived for them; whether the words name the group
+    do not hold a name for every code (about half the ICF d-codes have no title, access_needs has no name column), so a name test cannot be derived for them; whether the words name the group
     is the judge's (D-2) and the recorded warrant is what a later reader audits."""
     allowed = set(_lens_basis_choices() or ())
     if basis not in allowed:
@@ -10372,6 +10330,10 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
       guarantee is the CLI's, not the schema's — say so rather than implying the
       table enforces it.
 
+    * EXCEPT for `figure_role='derived'` (T-063, OD-40): a derived row stores NO claim_text (one given is refused;
+      a figure a source states in words is a claim row) and, with no locator of its own, is checked for one on each
+      `derived_from` input instead of R3's two refusals. Its words and its place are its inputs'.
+
     * A `parameter_id` that is absent, or whose row is not `status='active'`. A
       determination keyed on a parameter folded into another is a determination about
       a subject that no longer stands on its own, and the FK cannot see the
@@ -10384,8 +10346,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
       table look healthy": the schema parses, a rebuild reproduces it exactly, and
       every gate stays green over a table that cannot accept a row. The refusal here
       names `db.py add-parameter` as the remedy. The same treatment is given to each
-      lens registry, because `base_taxonomy_medical` is ALSO empty and `--medical`
-      would fail the same silent way.
+      lens registry.
 
     * A lens code that is not live in its own registry — and a BLANK is not an
       absence. `--identity ""` is normalised to None before anything reads it:
@@ -10566,7 +10527,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         if not any(lens.values()):
             raise Refusal(
                 "an extraction must be stated in at least one lens (D-0182): pass one or "
-                "more of --identity / --icf / --needs / --medical. A value attached to no "
+                "more of --identity / --icf / --needs. A value attached to no "
                 "lens is a value about nobody.")
         for col, codes in lens.items():
             dup = sorted({c for c in codes if codes.count(c) > 1})
@@ -10579,11 +10540,22 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         # --- the claim -------------------------------------------------------
         claim_type = row.get("claim_type")
         value = row.get("claimed_value")
+        figure_role = row.get("figure_role")
+        # A DERIVED FIGURE HAS NO QUOTE OR LOCATOR OF ITS OWN (OD-40, delegated 2026-11-13): its words and its
+        # place are its inputs', reached through its `derived_from` edges, each of which carries its input's
+        # verified quote. A figure a source states in words is a claim row, never a derived one.
+        if figure_role == "derived":
+            if "claim_text" in row:
+                raise Refusal(
+                    "add-extraction: a derived figure carries no claim_text of its own: its words are its inputs', "
+                    "reached through its derived_from edges (OD-40). A figure the source states in words is a claim "
+                    "row (--figure-role claim); a computed one is written with db.py derive-extraction. "
+                    "Nothing was written.")
         # THE VERBATIM FLOOR. `--claim-text` is required at the parser, so this fires
         # on the PYTHON API path and on `--claim-text ""` — a blank is not a quote,
         # and normalising it to None here would restore exactly the zero-verbatim row
         # the requirement exists to forbid.
-        if not str(row.get("claim_text") or "").strip():
+        elif not str(row.get("claim_text") or "").strip():
             raise Refusal(
                 "--claim-text is required and must not be blank. Migration 073 retired "
                 "`parameter`, the last NOT NULL column that carried the source's own "
@@ -10597,12 +10569,13 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         # claimed_value 9999 with an invented claim_text landed and governed a cell.
         # `--verbatim-exempt` is the ledgered escape for text no artefact can carry, and
         # is itself refused when the text would have verified.
-        _exempt_note = _require_verbatim(
-            str(row["claim_text"]), row.get("ref_id"), "--claim-text",
-            "add-extraction", exempt_reason=verbatim_exempt, claimed_value=value,
-            claim_type=claim_type, value_as_written=row.get("value_as_written"))
-        if _exempt_note:
-            row["notes"] = ((row.get("notes") or "") + " " + _exempt_note).strip()
+        if figure_role != "derived":
+            _exempt_note = _require_verbatim(
+                str(row["claim_text"]), row.get("ref_id"), "--claim-text",
+                "add-extraction", exempt_reason=verbatim_exempt, claimed_value=value,
+                claim_type=claim_type, value_as_written=row.get("value_as_written"))
+            if _exempt_note:
+                row["notes"] = ((row.get("notes") or "") + " " + _exempt_note).strip()
 
         # THE LENS WARRANT: the words that name the group are the figure's own (or its source's).
         lens_basis_text = _require_lens_warrant(
@@ -10636,17 +10609,22 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 and c[1] != "loc_note"]
             _esc = "[UNVERIFIED-QUANT]" in (row.get("notes") or "")
             _pinpoint = any(str(row.get(c) or "").strip() for c in _levels)
+            # A DERIVED FIGURE WITH NO LOCATOR OF ITS OWN is found again through its inputs (OD-40): each
+            # `derived_from` edge must point at a row that has one, checked where the edge is written
+            # (`_refuse_bad_derived_input`), so every writer of such an edge applies the same rule.
+            _via_inputs = (figure_role == "derived" and not _esc and not _pinpoint
+                           and not str(row.get("source_section") or "").strip())
             # EVERY TIER NEEDS A LOCATOR (R3). Below the regulatory stratum the prose
             # `--source-section` is the honest locator for a paper; above it the pinpoint
             # hierarchy is demanded below. A quantified row with neither, and no
             # [UNVERIFIED-QUANT], is a number nobody can find again (2026-11-06).
-            if not _esc and not _pinpoint and not str(row.get("source_section") or "").strip():
+            if not _via_inputs and not _esc and not _pinpoint and not str(row.get("source_section") or "").strip():
                 raise Refusal(
                     f"R3: this row states a value with no locator -- no --source-section, "
                     f"none of {', '.join('--' + c.replace('_', '-') for c in _levels)}. A "
                     f"quantified claim names where it was read, or carries "
                     f"[UNVERIFIED-QUANT] in --notes to say it cannot. Nothing written.")
-            if _tier and _tier[0] is not None and int(_tier[0]) >= 4:
+            if _tier and _tier[0] is not None and int(_tier[0]) >= 4 and not _via_inputs:
                 if not _esc and not _pinpoint:
                     raise Refusal(
                         f"R3: {ref} is tier {int(_tier[0])} -- the regulatory stratum -- and this row "
@@ -10671,7 +10649,6 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 f"recorded absence, which is evidence, not a missing field.")
 
         # --- figure_role (migration 075) -------------------------------------
-        figure_role = row.get("figure_role")
         if not figure_role:
             raise Refusal(
                 "--figure-role is required. A value with no role reads as a claim, "
@@ -10729,15 +10706,18 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 "of five corridor-width sources in the live corpus state theirs "
                 "against a reference they name or invoke -- silence is not "
                 "'absolute', it is unchecked.")
-        if figure_role == "derived" and not any(
-                e.get("relation") == "derived_from" and e.get("input_role") == "base"
-                for e in relations):
-            raise Refusal(
-                "figure_role='derived' requires at least one derived_from edge "
-                "carrying --input-role base. A derived row with nothing pointing "
-                "at what it was computed FROM is a number trusted on faith, which "
-                "is exactly what v_derived_figure_check (migration 075) exists to "
-                "stop trusting silently.")
+        if figure_role == "derived":
+            _have = {e.get("input_role") for e in relations if e.get("relation") == "derived_from"}
+            if not {"base", "delta"} <= _have:
+                raise Refusal(
+                    "figure_role='derived' requires a derived_from edge carrying --input-role base AND one "
+                    "carrying --input-role delta (db.py derive-extraction writes both). A derived row with nothing "
+                    "pointing at what it was computed FROM, or with one input, is a number trusted on faith, "
+                    "which is exactly what v_derived_figure_check (migration 075) exists to stop trusting "
+                    "silently. Nothing was written.")
+            if claim_type != "numerical":
+                raise Refusal("figure_role='derived' is a computed number: --claim-type must be 'numerical'. "
+                              "A sentence a source states is a claim row. Nothing was written.")
 
         # A BYTE-IDENTICAL ROW IS A COPY, NOT A CONTEST. D-0168 protects a DIVERGENT second
         # reading; a row equal in every column the source supplied adds nothing a reader
@@ -10752,9 +10732,17 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         # THE LENS IS NOT PART OF THE ROW'S IDENTITY (migration 131): a figure is written once and stated in
         # each group by a link, so the same reading in another group is `add-lens-link`, never a second figure
         # (a second copy would count the one reading twice).
-        _dup = conn.execute(
-            "SELECT extraction_id FROM source_value_extractions WHERE " + " AND ".join(_preds)
-            + " LIMIT 1", [row[c] for c in _same_cols]).fetchone()
+        _dups = conn.execute(
+            "SELECT extraction_id FROM source_value_extractions WHERE " + " AND ".join(_preds),
+            [row[c] for c in _same_cols]).fetchall()
+        if figure_role == "derived":
+            # A derived row has no words of its own to tell two derivations apart, so what makes it a copy is the
+            # same inputs in the same roles: 5.5 + 9.25 and 10 + 4.75 are two derivations of one result.
+            _mine = {(e.get("to_extraction"), e.get("input_role")) for e in relations if e.get("relation") == "derived_from"}
+            _dups = [d for d in _dups if {(r[0], r[1]) for r in conn.execute(
+                "SELECT to_extraction_id, input_role FROM extraction_relations WHERE from_extraction_id=? "
+                "AND relation='derived_from'", (d[0],))} == _mine]
+        _dup = _dups[0] if _dups else None
         if _dup:
             raise Refusal(
                 f"add-extraction: extraction {_dup[0]} already carries this exact row "
@@ -10814,7 +10802,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
 
 
 def add_lens_link(extraction_id: int, session: str, *, identity: str = None, icf: str = None,
-                  needs: str = None, medical: str = None, basis: str = None, basis_text: str = None,
+                  needs: str = None, basis: str = None, basis_text: str = None,
                   dry_run: bool = False):
     """State an existing figure in ONE more lens code (OR-1c), with the words that warrant it.
 
@@ -10825,11 +10813,11 @@ def add_lens_link(extraction_id: int, session: str, *, identity: str = None, icf
     replaces a carried one in one act. The retirement is written first and its reason completed once
     the new link has an id: the partial unique index admits one live link per (figure, code)."""
     given = {col: code for col, code in (("identity_code", identity), ("icf_code", icf),
-                                         ("needs_code", needs), ("medical_code", medical))
+                                         ("needs_code", needs))
              if code is not None}
     if len(given) != 1:
-        raise Refusal(f"add-lens-link: name exactly one code, with one of --identity / --icf / --needs / "
-                      f"--medical (got {len(given)}). Repeat the verb for each code. Nothing was written.")
+        raise Refusal(f"add-lens-link: name exactly one code, with one of --identity / --icf / --needs "
+                      f"(got {len(given)}). Repeat the verb for each code. Nothing was written.")
     ((col, code),) = given.items()
     if not isinstance(code, str):
         raise Refusal(f"add-lens-link: {col} must be one code as text, got {code!r}. Nothing was written.")
@@ -10998,7 +10986,7 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
             "to_extraction_id": to_extraction, "dry_run": dry_run}
 
 
-# Only these two, ever. Every other column on this table is a SECOND ROW and a
+# Only these. Every other column on this table is a SECOND ROW and a
 # contest (D-0168) when it turns out wrong, not an overwrite -- the same rule
 # `add-population-match` states for itself by deliberately permitting a dissenting
 # second row. figure_role/comparator are GRADING columns migration 075 added NULL
@@ -11029,6 +11017,14 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
 # jurisdiction. Gated by dbcore.check_jurisdiction, so it widens WHO, not WHAT to. Like
 # add-extraction it holds no relation to the source's jurisdiction, and a value cannot be
 # cleared here (a blank is refused).
+# claimed_value, claimed_unit and setting ADDED by T-061 (prior workplan T-1b step 8). Owner, OR-3 (2026-10-29):
+# "Yes, reformat in place" -- a figure's value, unit or EMPTY setting is reformatted in place, with the same
+# numbers and quote, narrowing D-0168 for reformatting only. `_refuse_unless_reformat` is the whole of what
+# "reformat" means; a different figure is still a second row. The old text is not given a new home here:
+# the committed data migration that INSERTed the row holds it. `amend_extraction`'s generic trail
+# (" || date field SET old -> new (reason)" on notes) still runs for these fields as for every amendable one: it
+# was not added to and not removed. Whether that shape may stand under the owner's 2026-11-06 ruling ("a correction
+# appended to a note" is data in the wrong cell) is the owner's question, not settled here.
 def register_root(root_id: str, description: str, root_type: str, provenance: str, population_note: str,
                   notes: str, session: str, dry_run: bool = False):
     """Register an EXTERNAL root: a source of a figure that is not an admitted source of this corpus.
@@ -11070,47 +11066,172 @@ def register_root(root_id: str, description: str, root_type: str, provenance: st
     return {"root_id": root_id, "root_type": root_type, "dry_run": dry_run}
 
 
-_AMENDABLE_SVE_FIELDS = frozenset({"figure_role", "comparator",
-                                   "extraction_method", "extraction_status",
-                                   "root_type", "root_ref_id", "value_as_written",
-                                   "jurisdiction",
-                                   # device_class, added 2026-11-15 (T-055): T-102 records the device a figure states on
-                                   # a row already written; the engine does not read the column. The column's own CHECK
-                                   # (dbcore.check_values) and --reason are its gates.
-                                   "device_class",
-                                   # root_id, added 2026-11-15 (T-048): a figure already written can point at a root
-                                   # registered after it (`db.py register-root`). The registry-existence refusal is
-                                   # the generic dbcore.fk_declared below; the old value is kept in notes by the writer.
-                                   "root_id"})
+# THE AMENDABLE COLUMNS ARE DERIVED, NOT LISTED (GAP-013, CLAUDE.md rule 8): every live column of
+# source_value_extractions except these, each with the reason it is not amended in place. The list that stood here
+# grew by one column each time a row had already been written wrong (figure_role, comparator, extraction_method,
+# extraction_status, root_type, root_ref_id, value_as_written, jurisdiction, device_class, root_id, and then
+# claimed_value, claimed_unit, setting); inverted, a new column is amendable until someone names why it must not
+# be, and the burden of proof sits on the exclusions. Safety does not live in membership: it lives in the
+# per-field refusals of `amend_extraction` (dbcore.check_declared, dbcore.fk_declared, the figure_role,
+# extraction_status, value_as_written and reformat rules, the live-determination refusal over
+# dbcore.ENGINE_EXTRACTION_COLUMNS) and in --reason, all of which stay. This is source_value_extractions only:
+# evidence_sources' _AMENDABLE/_CORRECTABLE and one amend verb for every table are GAP-013's remainder.
+_NOT_AMENDABLE_SVE = {
+    **dict.fromkeys(("extraction_id", "ref_id", "slug", "parameter_id"),
+                    "the row's key: a figure about another source, slug or parameter is another row"),
+    **dict.fromkeys(("identity_code", "icf_code", "needs_code"),
+                    "the lens is a set of links (migration 131): db.py add-lens-link / retire-lens-link"),
+    **dict.fromkeys(("claim_type", "claim_text", "source_section"),
+                    "the claim and the place the source says it: a different one is a SECOND ROW and a contest (D-0168)"),
+    **dict.fromkeys(("file_anchor", "locator_scheme", "loc_note",
+                     *(f"loc_{k}{end}" for k in ("division", "part", "section", "subsection", "paragraph", "clause",
+                                                 "subclause") for end in ("", "_end"))),
+                    "where in the held file the quote stands: checked against the file when the row was written"),
+    **dict.fromkeys(("echo_of", "measurement_paradigm", "root_population_note", "root_classification_basis",
+                     "contested", "harm_finding", "promoted_to_rdc_id"),
+                    "set with the row (or its promotion) by the writer that grades it; no ruling opens it to amendment"),
+    **dict.fromkeys(("notes", "created_at", "created_by_session", "updated_at", "updated_by_session"),
+                    "the ledger the writer keeps: amend_extraction appends to it and stamps it"),
+}
+
+
+def _amendable_sve_fields(conn):
+    """The columns `amend_extraction` may change: the live columns of source_value_extractions less `_NOT_AMENDABLE_SVE`."""
+    return [c for c in dbcore.columns(conn, "source_value_extractions") if c not in _NOT_AMENDABLE_SVE]
+
+
+# A minus that is a sign: directly before a digit and not after a word character or a point (so the hyphen of `0-4.8`
+# and of `1-2` is not one, while `-8` and `0 to -4.8` are).
+_SIGNED = re.compile(r"(?<![\w.])[-\u2212](?=\d)")
+
+
+def _figure_numbers(text):
+    """The numbers a figure states, in order, each as its set of readings (`retrieval_log.number_tokens`, the reader
+    T-008's number rule uses); a ratio gives its two operands. `1:20` -> [{1}, {20}]; `30,0` -> [{30.0}];
+    `30,000` -> [{30000, 30.000}] (a lone group of three after a comma is ambiguous)."""
+    out = []
+    for kind, readings, _whole in _retrieval_log().number_tokens(text or ""):
+        if kind == "ratio":
+            out += [{r[0] for r in readings}, {r[1] for r in readings}]
+        else:
+            out.append(set(readings))
+    return out
+
+
+def _refuse_unless_reformat(row, field, value):
+    """OR-3 (owner 2026-10-29, "Yes, reformat in place"): what a reformat of a stored figure is. Anything else is a
+    second row and a contest (D-0168). Called by `amend_extraction` for a changed claimed_value, claimed_unit or
+    setting.
+
+      setting        only when the row's setting is empty.
+      claimed_value  a quantity claim (`dbcore.QUANTITY_CLAIM_TYPES`) only; the new value states the same numbers
+                     in the same order, each one of the old number's readings (so `6%` -> `6`, `30,0` -> `30.0`,
+                     `0-4.8` -> `0 to 4.8`, `1 in 12` -> `1:12`; never `1:20` -> `1:2.0` or `6` -> `60`); then
+                     T-008's number rule against the row's own quote, and the figure must read under the row's unit.
+      claimed_unit   `dbcore.unit_refusal`; the new unit LEADS the old cell, exactly as written and followed by
+                     whitespace or the end (a reformat drops the words after the unit, as in `% longitudinal gradient
+                     (maximum) where the rise is <= 0.6 m` -> `%`; it never picks another word of the cell, so
+                     `m` out of that cell, `MM` out of `mm`, and `dB` out of `dB(A)` are refused); then the row's
+                     value must read under the new unit.
+      all three      the row must not become a copy of another row (the measure `insert_extraction` uses).
+      claimed_value  a sign is part of the number: a `-` directly before a digit (not the hyphen of `0-4.8`) is
+                     counted in the old and the new text and the counts must agree.
+
+    NOT GUARDED: a stored value that is ambiguous (`30,000`) is read through T-008's rule only as far as the quote
+    settles it; no stored row is ambiguous today (checked with `retrieval_log.number_tokens` over every row), so the
+    rule is not built for it. A row of that shape is a second row with --value-as-written."""
+    ctx = f"amend-extraction --field {field}: extraction {row['extraction_id']}"
+    if field == "setting":
+        if (row["setting"] or "").strip():
+            raise Refusal(f"{ctx} already states setting {row['setting']!r}. Only an EMPTY setting is filled in "
+                          f"place (OR-3); a different applicability is a second row (db.py add-extraction). "
+                          f"Nothing was written.")
+        return
+    if field == "claimed_value":
+        if row["claim_type"] not in dbcore.QUANTITY_CLAIM_TYPES:
+            raise Refusal(f"{ctx} is a {row['claim_type']!r} claim, not a quantity: a reformat keeps a figure's "
+                          f"numbers, and a changed qualitative value is a second row (D-0168). Nothing was written.")
+        old, new = _figure_numbers(row["claimed_value"]), _figure_numbers(value)
+        if len(old) != len(new) or not all(len(n) == 1 and n <= o for n, o in zip(new, old)):
+            raise Refusal(f"{ctx}: {value!r} does not state the same numbers, in the same order, as "
+                          f"{row['claimed_value']!r}. A reformat keeps the numbers (OR-3); a different figure is a "
+                          f"second row and a contest (D-0168), and a figure the row holds in words is a second row "
+                          f"with --value-as-written. Nothing was written.")
+        if len(_SIGNED.findall(row["claimed_value"] or "")) != len(_SIGNED.findall(value)):
+            raise Refusal(f"{ctx}: {value!r} carries a different number of minus signs from "
+                          f"{row['claimed_value']!r}. A sign is part of the number (the engine reads -8 as minus eight); "
+                          f"turning a range hyphen into a minus, or dropping one, is a different figure, a second row "
+                          f"and a contest (D-0168). Nothing was written.")
+        _require_stated_numbers(row["claim_text"] or "", value, row["claim_type"], row["value_as_written"],
+                                "--claimed-value", "amend-extraction")
+        figure, unit = value, row["claimed_unit"]
+    else:
+        why = dbcore.unit_refusal(value)
+        if why:
+            raise Refusal(f"{ctx}: {why}. Nothing was written.")
+        cell = row["claimed_unit"] or ""
+        if not (cell.startswith(value) and (len(cell) == len(value) or cell[len(value)].isspace())):
+            raise Refusal(f"{ctx}: {value!r} does not lead the row's unit cell {cell!r}. A reformat drops the words "
+                          f"AFTER the unit (the cell reads unit first, then its conditions); choosing another word of "
+                          f"the cell, or another spelling of it, names a unit the row did not state, a new reading, "
+                          f"a second row (D-0168). Nothing was written.")
+        figure, unit = row["claimed_value"], value
+    why = dbcore.figure_refusal(figure, unit, row["comparator"], row["claim_type"])
+    if why:
+        raise Refusal(f"{ctx}: the figure would still not be readable: {why}. When both the value and the unit "
+                      f"need reformatting, reformat claimed_value first. Nothing was written.")
+
+
+_AMEND_COPY_IGNORE = frozenset({"extraction_id", "notes", "extraction_status", "extraction_method", "contested",
+                                "created_at", "created_by_session", "updated_at", "updated_by_session"})
+
+
+def _refuse_copy_after_amend(conn, row, field, value):
+    """An amendment must not leave the row a byte-identical copy of another (the measure `insert_extraction` applies
+    to a new row: every column the source supplies, not the notes, status, method, contest flag, ledger or id). A
+    reformat of one of two rows that restate the same fact would otherwise end in exactly the pair add-extraction
+    refuses, counted twice by anything that counts rows."""
+    cols = [c for c in row.keys() if c not in _AMEND_COPY_IGNORE]
+    vals = [value if c == field else row[c] for c in cols]
+    dup = conn.execute("SELECT extraction_id FROM source_value_extractions WHERE extraction_id <> ? AND "
+                       + " AND ".join(f'"{c}" IS ?' for c in cols) + " LIMIT 1", [row["extraction_id"], *vals]).fetchone()
+    if dup:
+        raise Refusal(f"amend-extraction --field {field}: extraction {row['extraction_id']} would become a "
+                      f"byte-identical copy of extraction {dup[0]} (same source, parameter, claim, value, unit, "
+                      f"text and locator). A copy is not a second reading; state the same figure in another lens "
+                      f"code with add-lens-link on one of them, and retire the other. Nothing was written.")
 
 
 def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                      session: str, dry_run: bool = False):
-    """Change a field of `_AMENDABLE_SVE_FIELDS` on an EXISTING row -- and ONLY those.
+    """Change an amendable column (`_amendable_sve_fields`) of an EXISTING row -- and ONLY those.
 
     Every other refusal here mirrors the one `insert_extraction` runs at write
     time, because grading a pre-existing row after the fact must not be able to
     reach a state add-extraction itself refuses to create.
+    claimed_value, claimed_unit and setting take only a reformat (OR-3, _refuse_unless_reformat).
     """
-    if field not in _AMENDABLE_SVE_FIELDS:
-        raise Refusal(
-            f"amend-extraction: --field {field!r} refused. Only "
-            f"{sorted(_AMENDABLE_SVE_FIELDS)} may be amended here -- a wrong "
-            f"claimed_value or claim_text is a SECOND ROW and a contest (D-0168), "
-            f"not an overwrite. Write another `db.py add-extraction` if the "
-            f"disagreement is over the value or the claim itself.")
-    reason = (reason or "").strip()
-    if not reason:
-        raise Refusal(
-            "amend-extraction: --reason is required. An amendment that cannot say "
-            "why cannot be contested.")
-    value = (value or "").strip()
-    if not value:
-        raise Refusal("amend-extraction: --value is required and must not be blank.")
     with dbcore.connect(dry_run) as conn:
+        amendable = _amendable_sve_fields(conn)
+        if field not in amendable:
+            raise Refusal(
+                f"amend-extraction: --field {field!r} refused. Only "
+                f"{sorted(amendable)} may be amended here -- a wrong "
+                f"claim_text, or a claimed_value with different numbers, is a SECOND ROW "
+                f"and a contest (D-0168), not an overwrite; a reformat with the same "
+                f"numbers is amended here (OR-3). Write another `db.py add-extraction` if "
+                f"the disagreement is over the value or the claim itself.")
+        reason = (reason or "").strip()
+        if not reason:
+            raise Refusal(
+                "amend-extraction: --reason is required. An amendment that cannot say "
+                "why cannot be contested.")
+        value = (value or "").strip()
+        if not value:
+            raise Refusal("amend-extraction: --value is required and must not be blank.")
         # SELECT * rather than a hand-listed column set. The list here was
         # "extraction_id, ref_id, figure_role, comparator, claim_type, notes" and
-        # broke with IndexError the moment _AMENDABLE_SVE_FIELDS grew -- a second
+        # broke with IndexError the moment the amendable set grew -- a second
         # place naming the amendable columns, one line below the constant that
         # names them. Two lists, one truth.
         row = conn.execute(
@@ -11199,6 +11320,32 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                     "reason": "already this value; the reason is recorded on notes",
                     "dry_run": dry_run}
 
+        if field == "figure_role" and row["figure_role"] == "derived" and value != "derived" \
+                and not (row["claim_text"] or "").strip():
+            raise Refusal(
+                f"amend-extraction --field figure_role: extraction {extraction_id} is a derived figure and has no "
+                f"words of its own (OD-40); turning it into a {value!r} row would assert a value with no quote and "
+                f"no locator, which add-extraction refuses at the verbatim floor. Retire it and extract the figure "
+                f"from the source's own sentence. Nothing was written.")
+        if field == "comparator":
+            if row["figure_role"] == "derived":
+                raise Refusal(
+                    f"amend-extraction --field comparator: extraction {extraction_id} is a derived figure and its "
+                    f"comparator is its inputs' (_derived_comparator); amend an input and derive again. "
+                    f"Nothing was written.")
+            _used = [r[0] for r in conn.execute(
+                "SELECT from_extraction_id FROM extraction_relations WHERE to_extraction_id=? AND relation='derived_from'",
+                (extraction_id,))]
+            if _used:
+                raise Refusal(
+                    f"amend-extraction --field comparator: extraction {extraction_id} is an input of derived "
+                    f"figure(s) {_used}, whose bound is computed from this comparator and would be left stale. Retire "
+                    f"the derived row(s) first, amend, and derive again. Nothing was written.")
+        if field in ("claimed_value", "claimed_unit", "setting"):
+            _refuse_unless_reformat(row, field, value)
+        if field in ("claimed_value", "claimed_unit", "setting", "comparator"):
+            _refuse_copy_after_amend(conn, row, field, value)
+
         # A CHANGE of a column the engine reads (figure_role, comparator, extraction_method here)
         # decides what a row supplies (a value, direction, a confirmation) and what bound it
         # composes, so the marker and the interval; a live determination was written on the
@@ -11232,13 +11379,23 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
             "changed": True, "dry_run": dry_run}
 
 
-def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
-                      delta: int, claim_text: str, session: str,
+def _derived_comparator(base_cmp, delta_cmp):
+    """The comparator of base + delta, by interval arithmetic: a point delta ('=') keeps the base's bound; a delta
+    bounded the same way as the base keeps that bound; anything else (a range, 'approx', opposite or mixed bounds,
+    a base with no comparator) bounds nothing, and None is returned."""
+    if delta_cmp == "=" and base_cmp in ("=", ">=", ">", "<=", "<"):
+        return base_cmp
+    if delta_cmp == base_cmp and base_cmp in (">=", ">", "<=", "<"):
+        return base_cmp
+    return None
+
+
+def derive_extraction(*, ref_id: str = None, parameter_id: int, base: int,
+                      delta: int, session: str,
                       dry_run: bool = False, identity: str = None, icf: str = None,
-                      needs: str = None, medical: str = None,
+                      needs: str = None,
                       lens_basis: str = None, lens_basis_text: str = None,
-                      claimed_value: str = None, claimed_unit: str = None,
-                      comparator: str = None, conversion_note: str = None):
+                      claimed_value: str = None):
     """Write a figure_role='derived' row computed as base + delta, plus the two
     derived_from edges `v_derived_figure_check` (migration 075) re-verifies it
     against -- a derived figure is never a number trusted on faith.
@@ -11249,27 +11406,22 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
     the ONE transaction inside that single `insert_extraction` call, the same
     guarantee every other caller of it gets.
 
-    KNOWN DEFECT, recorded by T-016 and NOT repaired here: this verb cannot write a row. Three independent
-    blockers stand in front of `insert_extraction`'s arithmetic, each reached once the one before is cleared
-    (tests T016-N11c, N11d, N11e assert them, and go red when the verb is repaired):
-      1. it passes no locator (no `source_section`, no `loc_*`), so R3 refuses every row it builds;
-      2. a value-supplying numerical row needs `--comparator` and `p_dx` has no default for it;
-      3. its `claim_text` is "the analyst's computation statement" (see the edge comment below), which the
-         verbatim check refuses unless a source says it in those words.
+    WHAT IT DERIVES, and what it never asks for (T-063, OD-40): the comparator (`_derived_comparator`) and the
+    unit are the inputs' (two inputs in two units are refused: no check recomputes a converted figure); the quote
+    and the locator are the inputs' too, reached through the two edges, each of which carries its input's quote.
+    A derived row stores neither; it is refused when an input lacks a quote or a locator. `ref_id` is NOT NULL, so
+    it is a POINTER to the base input's source (as `root_ref_id` is), not an attribution of the figure to it.
     The refusals reached through it carry the prefix `add-extraction:` (the writer is shared).
     """
     with dbcore.connect(dry_run, readonly=True) as conn:
-        base_row = conn.execute(
-            "SELECT extraction_id, ref_id, claimed_value, claimed_unit, claim_text "
-            "FROM source_value_extractions WHERE extraction_id=?", (base,)).fetchone()
+        cols = "*"
+        base_row = conn.execute(f"SELECT {cols} FROM source_value_extractions WHERE extraction_id=?", (base,)).fetchone()
         if base_row is None:
             raise Refusal(
                 f"derive-extraction: --base {base}: no such extraction. A derived "
                 f"figure is computed from a row this project actually holds, never "
                 f"invented -- extract the base figure first with add-extraction.")
-        delta_row = conn.execute(
-            "SELECT extraction_id, ref_id, claimed_value, claimed_unit, claim_text "
-            "FROM source_value_extractions WHERE extraction_id=?", (delta,)).fetchone()
+        delta_row = conn.execute(f"SELECT {cols} FROM source_value_extractions WHERE extraction_id=?", (delta,)).fetchone()
         if delta_row is None:
             raise Refusal(
                 f"derive-extraction: --delta {delta}: no such extraction. Extract "
@@ -11277,26 +11429,33 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
         if base == delta:
             raise Refusal("derive-extraction: --base and --delta must be different "
                           "rows -- a figure cannot be derived from itself twice.")
+        for _id, _row in ((base, base_row), (delta, delta_row)):
+            _refuse_bad_derived_input(conn, "derive-extraction", _row)
+        if base_row["ref_id"] != delta_row["ref_id"]:
+            raise Refusal(
+                f"derive-extraction: base {base} is from {base_row['ref_id']} and delta {delta} from "
+                f"{delta_row['ref_id']}. This verb adds figures ONE source states; a derivation across two documents "
+                f"is a synthesis act this verb does not write. Nothing was written.")
+        if ref_id is not None and ref_id != base_row["ref_id"]:
+            raise Refusal(
+                f"derive-extraction: --ref-id {ref_id} is not the inputs' source ({base_row['ref_id']}); the "
+                f"derived row is filed under its inputs' source and the flag is only a check. Omit it. "
+                f"Nothing was written.")
+        ref_id = base_row["ref_id"]
 
         base_unit, delta_unit = base_row["claimed_unit"], delta_row["claimed_unit"]
-        # ONE RULE, ONE REFUSAL: if the unit that will be STORED differs from what
-        # either input actually carries, a --claimed-unit and a --conversion-note are
-        # both mandatory. This was two sequential checks with two near-identical
-        # messages -- one for "base and delta disagree", one for "your override
-        # disagrees with base" -- which are the same rule seen from two sides, and
-        # which a later change to the reconciliation policy would have had to find in
-        # two places that only inspection kept in sync.
-        unit = claimed_unit or base_unit
-        if (base_unit != delta_unit or unit != base_unit) and not (
-                claimed_unit and (conversion_note or "").strip()):
+        if base_unit != delta_unit:
             raise Refusal(
-                f"derive-extraction: the unit this row would store ({unit!r}) is not "
-                f"the unit both inputs carry -- base (extraction {base}) is "
-                f"{base_unit!r}, delta (extraction {delta}) is {delta_unit!r}. Pass "
-                f"--claimed-unit WITH a --conversion-note saying how they reconcile, "
-                f"or fix the mismatched row first. Note that a converted row is "
-                f"invisible to v_derived_figure_check, which joins on equal units, so "
-                f"the conversion note is the only record of the arithmetic.")
+                f"derive-extraction: base {base} is stated in {base_unit!r} and delta {delta} in {delta_unit!r}. "
+                f"This verb adds figures stated in one unit; a converted figure is not recomputed by any check "
+                f"(v_derived_figure_check joins on equal units). Nothing was written.")
+        comparator = _derived_comparator(base_row["comparator"], delta_row["comparator"])
+        if comparator is None:
+            raise Refusal(
+                f"derive-extraction: the sum of base {base} ({base_row['comparator'] or 'no comparator'}) and delta "
+                f"{delta} ({delta_row['comparator'] or 'no comparator'}) is not a bound. A point delta ('=') moves "
+                f"the base's bound; two bounds of the same kind add. Set a missing comparator with "
+                f"amend-extraction --field comparator. Nothing was written.")
 
         def _num(x):
             try:
@@ -11304,37 +11463,33 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
             except (TypeError, ValueError):
                 return None
         bn, dn = _num(base_row["claimed_value"]), _num(delta_row["claimed_value"])
+        if bn is None or dn is None or base_unit is None:
+            raise Refusal(
+                f"derive-extraction: base {base} ({base_row['claimed_value']!r} {base_unit!r}) and delta {delta} "
+                f"({delta_row['claimed_value']!r} {delta_unit!r}) cannot be summed: both must be plain numerals in "
+                f"one stated unit (a ratio, a range or a figure with no unit is not added, and no check could "
+                f"recompute it, v_derived_figure_check). Nothing was written.")
         # A supplied --claimed-value is compared with base + delta by `_refuse_derived_mismatch`
         # (the one home of that arithmetic), inside `insert_extraction`'s transaction.
-        if claimed_value is None and bn is not None and dn is not None:
+        if claimed_value is None:
             claimed_value = _fmt_num(bn + dn)
-        elif claimed_value is None:
-            raise Refusal(
-                f"derive-extraction: --claimed-value is required when base or "
-                f"delta does not parse as a plain number (base extraction {base} "
-                f"= {base_row['claimed_value']!r}, delta extraction {delta} = "
-                f"{delta_row['claimed_value']!r}).")
 
         data = {"ref_id": ref_id, "parameter_id": parameter_id,
                 "identity_code": identity, "icf_code": icf, "needs_code": needs,
-                "medical_code": medical, "lens_basis": lens_basis,
+                "lens_basis": lens_basis,
                 "lens_basis_text": lens_basis_text, "claim_type": "numerical",
-                "claimed_value": claimed_value, "claimed_unit": unit,
-                "claim_text": claim_text, "figure_role": "derived",
+                "claimed_value": claimed_value, "claimed_unit": base_unit,
+                "figure_role": "derived",
                 "comparator": comparator, "extraction_method": "auto-mined",
                 "root_type": "derived_calculation", "root_ref_id": base_row["ref_id"]}
-        # EACH EDGE CARRIES ITS OWN TARGET'S QUOTE, not this row's claim_text.
-        # Corrected 2026-09-13 before first use. Every edge quote is checked as a
-        # byte-substring of a persisted retrieval artefact, and a derived row's
-        # claim_text is by its nature the analyst's computation statement -- not
-        # something any source said. Passing it as both edge quotes made this verb
-        # STRUCTURALLY UNABLE TO SUCCEED: the only path through it was a refusal,
-        # which is worse than a missing verb because it looks implemented.
-        #
-        # The base and delta rows' own claim_text values already passed that check
-        # when those rows were written, so using them is an APPLICATION of the rule
-        # rather than a carve-out from it -- and it is also the truer record: the
-        # warrant for "this figure derives from that one" is what that one says.
+        # EACH EDGE CARRIES ITS OWN TARGET'S QUOTE, not this row's (a derived row has none: OD-40).
+        # Every edge quote is checked as a byte-substring of a persisted retrieval artefact. The base and
+        # delta rows' own claim_text values already passed that check when those rows were written, so using
+        # them is an APPLICATION of the rule rather than a carve-out from it -- and it is also the truer
+        # record: the warrant for "this figure derives from that one" is what that one says. (Corrected
+        # 2026-09-13: passing the analyst's computation statement as both edge quotes made this verb
+        # structurally unable to succeed, which is worse than a missing verb because it looks implemented;
+        # T-063 then removed that statement, the locator and the comparator it also lacked.)
         relations = [
             {"relation": "derived_from", "to_extraction": base, "stated": "named",
              "quote": base_row["claim_text"], "input_role": "base"},
@@ -12457,5 +12612,9 @@ if __name__ == "__main__":
     try:
         main()
     except Refusal as exc:
+        _record(str(exc))
         sys.exit(f"REFUSING: {exc}")
+    except Exception as exc:   # a defect, kept and then raised unchanged: traceback and exit code are the evidence
+        _record(f"{type(exc).__name__}: {exc}")
+        raise
 

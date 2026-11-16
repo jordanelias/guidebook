@@ -36,17 +36,6 @@ stages:
       and so is a skill; treat a 0-row object as unproven, not clean); migration 064, which existed
       because 063 swept eight Python readers and six skills and missed v_item_provenance'
     check: scripts/audit/schema_reference_audit.py
-  - id: base-medical-lens-offered-not-adopted
-    kind: integrity
-    criterion: Every medical-lens row carries an MD- code with no digit, states no determination in
-      its own display_name or description, and is crossed to at least one other lens. A row nothing
-      crosses to is a dead end for the reader who selected that lens.
-    references: 'D-0170 (owner ruling 2026-08-27: "we give our users the choice of what model they
-      want to use to browse the site") — the lens is OFFERED, not adopted, and this is the half of
-      that ruling Layer 1 previously left unstated while db.py add-medical and migration 074''s CHECK
-      enforced it at Layer 2; CLAUDE.md §7 (the [A-Z]-NN item-code trap the MD- shape cannot collide
-      with); rule 5 (description is not a restatement of the identity row''s)'
-    check: scripts/audit/medical_lens_integrity.py
   - id: base-jurisdiction-vocabulary
     kind: integrity
     criterion: Every jurisdiction value resolves to the declared vocabulary.
@@ -189,9 +178,10 @@ stages:
       bare ratio with no linked run-length/landing condition, or a T1 finding recorded as an independent
       measurement when the source actually tested subjects against a code's own stated limit
       (audited_against), is content the book can print wrong rather than merely incomplete. condition_on
-      and derived_from both require a resolvable to_extraction_id; v_derived_figure_check recomputes any
-      row graded figure_role='derived' from its linked base/delta inputs rather than trusting the stored
-      value on faith, the same posture derivation_sha and K01 (scripts/tests/test_db_integrity.py) already
+      and derived_from both require a resolvable to_extraction_id; v_derived_figure_check recomputes a
+      row graded figure_role='derived' from its linked base/delta inputs (plain numerals in one unit) rather
+      than trusting the stored value on faith, and the writers refuse a derived row whose pair it cannot
+      recompute (T-063), the same posture derivation_sha and K01 (scripts/tests/test_db_integrity.py) already
       take toward a determination. Migration 075 shipped without a writer for the grading or the
       relations; db.py now has them (`add-extraction`, `amend-extraction`, `relate-extraction`,
       `derive-extraction`), and assess_cell.compose_value reads `condition_on` edges from governing rows
@@ -263,15 +253,6 @@ stages:
     criterion: A single-axis cell whose clinical sources are all Tier 3 is `provisional`, not `stated`.
     references: DR-2026-07-12-tier3-stated-threshold (A3)
     check: scripts/validate_evidence_state.py
-  - id: no-diagnosis-only-determination
-    kind: integrity
-    criterion: No determination is keyed on medical_code alone. A medical lens always accompanies at
-      least one of identity, ICF or access-need on the cell.
-    references: 'D-0170 offers the medical model as a reader''s choice and does not adopt it; a cell
-      whose only lens is a diagnosis renders as "this is what disabled people with condition X need",
-      which is that model as the PROJECT''S frame. D-0182 relaxed the lens CHECK to at-least-one,
-      which is what makes a medical-only cell writable and therefore worth gating.'
-    check: scripts/audit/medical_lens_integrity.py
   - id: derivation-handshake
     kind: integrity
     criterion: Determinations record derivation_paths (dual/population_only/function_only); a single-path

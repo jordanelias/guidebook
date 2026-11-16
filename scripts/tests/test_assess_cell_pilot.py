@@ -78,7 +78,7 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
     LENS (T-019). The engine reads a figure's lens only from `v_live_lens_links` (T-018), so the
     fixture holds the retired lens columns of `source_value_extractions` no longer and writes one
     link row per entry of the source's `lenses` key, defaulting to `row_lens` (most cases are
-    stated in `MOB`). Each entry is a dict of the link's four code columns.
+    stated in `MOB`). Each entry is a dict of the link's three code columns.
     """
     conn = sqlite3.connect(":memory:")
     conn.executescript("""
@@ -95,9 +95,9 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
       -- the only columns of it the engine reads.
       CREATE TABLE extraction_lens_links (
         link_id INTEGER PRIMARY KEY AUTOINCREMENT, extraction_id INT, identity_code TEXT,
-        icf_code TEXT, needs_code TEXT, medical_code TEXT, retired_at TEXT);
+        icf_code TEXT, needs_code TEXT, retired_at TEXT);
       CREATE VIEW v_live_lens_links AS
-        SELECT link_id, extraction_id, identity_code, icf_code, needs_code, medical_code
+        SELECT link_id, extraction_id, identity_code, icf_code, needs_code
           FROM extraction_lens_links WHERE retired_at IS NULL;
       CREATE TABLE evidence_population_match (
         match_id TEXT, ref_id TEXT, match_grade TEXT, target_population TEXT);
@@ -123,13 +123,13 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
         parent_code TEXT REFERENCES base_taxonomy_identity(identity_code));
       CREATE TABLE determination_gates (
         gate_id INTEGER PRIMARY KEY AUTOINCREMENT, parameter_id INTEGER,
-        identity_code TEXT, icf_code TEXT, needs_code TEXT, medical_code TEXT,
+        identity_code TEXT, icf_code TEXT, needs_code TEXT,
         verdict TEXT, trigger_ref_id TEXT, trigger_tier INT,
         trigger_evidence_type TEXT, detail TEXT, raised_at TEXT, raised_by_session TEXT,
         resolved_at TEXT, resolved_by_session TEXT, resolution_rationale TEXT);
       CREATE VIEW v_open_determination_gates AS
         SELECT g.gate_id, g.parameter_id, g.identity_code, g.icf_code, g.needs_code,
-               g.medical_code, g.verdict, g.trigger_ref_id,
+               g.verdict, g.trigger_ref_id,
                g.trigger_tier, g.trigger_evidence_type, g.detail, g.raised_at,
                g.raised_by_session
           FROM determination_gates g WHERE g.resolved_at IS NULL;
@@ -194,9 +194,9 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
 def link_lens(conn, extraction_id, lens):
     """One live link row for a fixture figure, carrying the codes of `lens` (a dict)."""
     conn.execute("INSERT INTO extraction_lens_links (extraction_id, identity_code, icf_code, "
-                 "needs_code, medical_code) VALUES (?,?,?,?,?)",
+                 "needs_code) VALUES (?,?,?,?)",
                  (extraction_id, lens.get("identity_code"), lens.get("icf_code"),
-                  lens.get("needs_code"), lens.get("medical_code")))
+                  lens.get("needs_code")))
 
 
 FAILED = []
@@ -313,7 +313,7 @@ def main():
 
     # 5b. A cell stated in NO identity lens leaves population-directness NOT_ASSESSED.
     # New with the 071 re-key: evidence_population_match.target_population is written in
-    # identity terms only, so a determination stated in ICF / access-need / medical terms
+    # identity terms only, so a determination stated in ICF / access-need terms
     # alone has nothing to attribute a match row TO. G2 says that dimension is unassessed,
     # not absent — it caps consolidation at DOWN-WEIGHTED and flags the source. The old
     # engine could not reach this state at all, because population was mandatory.
@@ -520,17 +520,15 @@ def main():
     c = synth_db([dict(T1), dict(T1)], icf_links=MOB_LINK)
     _gate_rows(c, ({"icf_code": "ICF-A"}, "QUESTION", None, None, "q-a"),
                ({"needs_code": "NEED-A"}, "QUESTION", None, None, "q-n"),
-               ({"medical_code": "MD-A"}, "QUESTION", None, None, "q-m"),
                ({"identity_code": "MOB", "icf_code": "ICF-A"}, "QUESTION", None, None, "q-ma"))
     _flag = lambda lens: sorted(g["why"] for g in derivation_handshake(c, 1, lens, [dict(T1)])[4])  # noqa: E731
-    _all = ["q-a", "q-m", "q-ma", "q-n"]
+    _all = ["q-a", "q-ma", "q-n"]
     expect("T021-04: a gate is skipped only when the cell carries a DIFFERENT code in a lens the gate names "
            "(a lens the cell does not carry never skips it, as before)",
-           _flag({"icf_code": "ICF-A"}) == _all and _flag({"icf_code": "ICF-B"}) == ["q-m", "q-n"]
-           and _flag({"needs_code": "NEED-B"}) == ["q-a", "q-m", "q-ma"]
-           and _flag({"medical_code": "MD-B"}) == ["q-a", "q-ma", "q-n"]
+           _flag({"icf_code": "ICF-A"}) == _all and _flag({"icf_code": "ICF-B"}) == ["q-n"]
+           and _flag({"needs_code": "NEED-B"}) == ["q-a", "q-ma"]
            and _flag({"identity_code": "MOB", "icf_code": "ICF-A"}) == _all
-           and _flag({"identity_code": "OTHER"}) == ["q-a", "q-m", "q-n"],
+           and _flag({"identity_code": "OTHER"}) == ["q-a", "q-n"],
            str([_flag({"icf_code": "ICF-A"}), _flag({"icf_code": "ICF-B"}), _flag({"needs_code": "NEED-B"})]))
     c.execute("UPDATE determination_gates SET resolved_at='2026-11-15', resolved_by_session='syn', "
               "resolution_rationale='answered' WHERE detail = 'q-a'")
@@ -945,7 +943,7 @@ def main():
         """Write the engine's answer into a bare `specifications` table, as main() would."""
         c.executescript("CREATE TABLE specifications (specification_id INTEGER PRIMARY KEY, "
                         "parameter_id INT, identity_code TEXT, icf_code TEXT, needs_code TEXT, "
-                        "medical_code TEXT, retired_at TEXT, rule_version TEXT, "
+                        "retired_at TEXT, rule_version TEXT, "
                         + ", ".join(STORED_ANSWER) + ")")
         c.execute("INSERT INTO specifications (parameter_id, identity_code, rule_version, "
                   + ", ".join(STORED_ANSWER) + ") VALUES (1, 'MOB', ?, " + ",".join("?" * len(STORED_ANSWER))
@@ -1324,11 +1322,11 @@ def main():
            and gov({"identity_code": "MOB", "icf_code": "d450"}) == ["REF-A"],
            f"{gov(_mob())} {gov({'icf_code': 'd450'})} {gov({'identity_code': 'MOB', 'icf_code': 'd450'})}")
 
-    for _model in ("icf_code", "needs_code", "medical_code"):
+    for _model in ("icf_code", "needs_code"):
         _one = [_fig("REF-A", "1:12", _mob(), {_model: "X1"})]
         d1, d2 = _cell19(_one, _mob()), _cell19(_one, {"identity_code": "MOB", _model: "X1"})
         expect(f"T019-07: (MOB) and (MOB, {_model}) over the same links differ in derivation_sha: the "
-               "hash carries all four lens codes, not the COALESCE key",
+               "hash carries all three lens codes, not the COALESCE key",
                d1["links"] == d2["links"] and d1["derivation_sha"] != d2["derivation_sha"],
                f"{d1['derivation_sha'][:12]} {d2['derivation_sha'][:12]}")
 
@@ -1453,9 +1451,9 @@ def main():
            and f"{_total - d['n_extractions_in_lens']} further extraction(s)" in _cause
            and d["n_extractions_outside_lens"] == _total - d["n_extractions_in_lens"] > 0, _cause)
 
-    # F6: every lens model gates a figure (needs and medical as well as identity and ICF); a code is
+    # F6: every lens model gates a figure (needs as well as identity and ICF); a code is
     # compared, never matched as a pattern; the sha cannot confuse two splits of the same characters.
-    for _model in ("icf_code", "needs_code", "medical_code"):
+    for _model in ("icf_code", "needs_code"):
         _AB = [_fig("REF-A", "1:12", _mob(), {_model: "X1"}), _fig("REF-B", "1:20", _mob())]
         _g = lambda cell: sorted(_cell19(_AB, cell)["governing_refs"])   # noqa: E731
         try:
@@ -1485,7 +1483,7 @@ def main():
     d = determine(_c, 1, _mob(), "syn-slug", "t019")
     expect("T019-27: the models a cell leaves NULL are read off its GOVERNING figures' LIVE links only: an "
            "out-of-lens figure, a non-governing finding and a retired link report nothing",
-           d["unkeyed_models"] == [] and _cell19(_AB, _mob())["unkeyed_models"] == ["medical_code"],
+           d["unkeyed_models"] == [] and _cell19(_AB, _mob())["unkeyed_models"] == ["needs_code"],
            str(d["unkeyed_models"]))
 
     # F7: AT-51 on a fixture where it is not vacuous: a figure carrying ALL is governing and not
@@ -1504,20 +1502,17 @@ def main():
     _v.executescript("CREATE TABLE base_taxonomy_identity (identity_code TEXT, status TEXT);"
                      "INSERT INTO base_taxonomy_identity VALUES ('OK','active'),('DEP','deprecated');"
                      "CREATE TABLE base_icf (icf_code TEXT); INSERT INTO base_icf VALUES ('d1');"
-                     "CREATE TABLE access_needs (need_code TEXT); INSERT INTO access_needs VALUES ('N1');"
-                     "CREATE TABLE base_taxonomy_medical (medical_code TEXT, status TEXT);"
-                     "INSERT INTO base_taxonomy_medical VALUES ('MD','active'),('SUP','superseded');")
+                     "CREATE TABLE access_needs (need_code TEXT); INSERT INTO access_needs VALUES ('N1');")
     def _refuses(lens):
         try:
             validate_lens(_v, dict(lens))
             return None
         except Refusal as e:
             return str(e)
-    expect("T019-28: validate_lens refuses a deprecated identity and a superseded medical code, and accepts "
+    expect("T019-28: validate_lens refuses a deprecated identity code, and accepts "
            "the live ones and a registry with no status",
            "deprecated" in (_refuses({"identity_code": "DEP"}) or "")
-           and "superseded" in (_refuses({"medical_code": "SUP"}) or "")
-           and _refuses({"identity_code": "OK", "icf_code": "d1", "needs_code": "N1", "medical_code": "MD"}) is None)
+           and _refuses({"identity_code": "OK", "icf_code": "d1", "needs_code": "N1"}) is None)
 
     # Live database, read-only (`determine` writes nothing). Every probe is chosen by query from the
     # figures' own live links; none is typed.
@@ -1623,15 +1618,14 @@ def main():
     _ro = sqlite3.connect(f"file:{os.path.join(REPO_ROOT, 'data', 'guidebook.db')}?mode=ro", uri=True)
     _cell = _ro.execute(
         "SELECT parameter_id, identity_code FROM specifications WHERE identity_code IS NOT NULL AND icf_code IS NULL "
-        "AND needs_code IS NULL AND medical_code IS NULL GROUP BY 1, 2 HAVING COUNT(*) >= 3 ORDER BY 1, 2 LIMIT 1").fetchone()
+        "AND needs_code IS NULL GROUP BY 1, 2 HAVING COUNT(*) >= 3 ORDER BY 1, 2 LIMIT 1").fetchone()
     _slug = _ro.execute("SELECT slug FROM slugs WHERE status='ACTIVE' ORDER BY slug LIMIT 1").fetchone()
     _ro.close()
     if not _cell or not _slug:
         print("      SKIPPED-NO-FIXTURE: T011 needs an identity-only cell with three determinations and an active slug")
     else:
         _tmp = tempfile.mkdtemp(prefix="t011-")
-        _CELLQ = ("FROM specifications WHERE parameter_id=? AND identity_code=? AND icf_code IS NULL AND needs_code IS NULL "
-                  "AND medical_code IS NULL")
+        _CELLQ = ("FROM specifications WHERE parameter_id=? AND identity_code=? AND icf_code IS NULL AND needs_code IS NULL")
         _SESS = "session_t011-fixture"
 
         def _sql_on(db_file, sql, *args):

@@ -98,7 +98,7 @@ NOT_DRIFT = {
     "retired_by_session", "retired_at", "updated_by_session",
     "started_at", "completed_at", "last_verified_at", "verified_at",
     "code_currency_verified_at", "code_currency_verified_by_session",
-    "icd11_verified_at", "decision_date", "pmp_last_walk_at",
+    "decision_date", "pmp_last_walk_at",
 }
 
 

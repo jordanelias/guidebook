@@ -46,7 +46,7 @@ def schema_ddl():
     # Everything else still comes from the baseline; only the re-keyed table is live.
     import sqlite3 as _sq
     con = _sq.connect("file:data/guidebook.db?mode=ro", uri=True)
-    # The re-keyed table carries real typed FKs into the four lens registries and
+    # The re-keyed table carries real typed FKs into the three lens registries and
     # base_parameters (owner 2026-08-28: "real FKs"), so the fixture needs those parents
     # or every INSERT dies on a missing table. Pulled live for the same reason as
     # specifications itself: they are the only place their current shape exists.
@@ -62,7 +62,7 @@ def schema_ddl():
         # now. A fixture without it builds a schema the validator cannot query at all.
         # `specification_source_links` 2026-09-21: the anti-hallucination gate reads the
         # junction now, not `specifications.governing_refs`. A fixture is a caller.
-        "  OR name IN ('base_parameters','base_icf','access_needs','base_taxonomy_medical',"
+        "  OR name IN ('base_parameters','base_icf','access_needs',"
         "              'convergence_sources','specification_source_links'))")]
     con.close()
     if not live:
@@ -335,7 +335,7 @@ try:
     # verb, and the engine determines it again; each check says one more live.
     _c4 = sqlite3.connect(f"file:{_T004_LIVE}?mode=ro", uri=True)
     _cell4 = _c4.execute("SELECT parameter_id, identity_code FROM specifications WHERE identity_code IS NOT NULL AND icf_code IS NULL "
-                         "AND needs_code IS NULL AND medical_code IS NULL GROUP BY 1, 2 ORDER BY COUNT(*) DESC, 1, 2 LIMIT 1").fetchone()
+                         "AND needs_code IS NULL GROUP BY 1, 2 ORDER BY COUNT(*) DESC, 1, 2 LIMIT 1").fetchone()
     _slug4 = _c4.execute("SELECT slug FROM slugs WHERE status='ACTIVE' ORDER BY slug LIMIT 1").fetchone()
     _c4.close()
     if not _cell4 or not _slug4:
@@ -344,7 +344,7 @@ try:
         _b = os.path.join(_tmp4, "b.db")
         shutil.copy(_T004_LIVE, _b)
         _lv = sqlite3.connect(_b).execute("SELECT specification_id FROM specifications WHERE parameter_id=? AND identity_code=? AND "
-                                          "icf_code IS NULL AND needs_code IS NULL AND medical_code IS NULL AND retired_at IS NULL",
+                                          "icf_code IS NULL AND needs_code IS NULL AND retired_at IS NULL",
                                           _cell4).fetchall()
         _prep = [subprocess.run([sys.executable, os.path.join(REPO, "scripts", "db.py"), "retire-specification", "--specification-id",
                                  str(sid), "--reason", "TASK-FIXTURE T004", "--session", "session_t004-fixture"],

@@ -7684,3 +7684,45 @@ CONDITION: any session citing the owner's 2026-10-12 sentences or the paragraph 
 ACTION: (1) Cite the quoted sentences, O1 to O8 and the ninth above, and nothing the paragraph adds. (2) Read no sentence as naming an object it does not name.
 DATE: 2026-11-15 — corrections by the recorder; the ninth sentence is the owner's, of 2026-10-12.
 
+
+## Owner instruction 2026-11-16 — the medical taxonomy, the medical maps and the medical codes are deleted
+
+**Owner's words, quoted (typed):**
+
+> "delete medical taxonomy , medical maps and medical codes btw"
+
+and, in the same session, on how the work is to be carried out (a process instruction, not a ruling on the lens):
+
+> "perform carefully thoroughly stacking all items into one batch for pr then running close sequence on that"
+
+**Readings.** [ASSUMPTION: "medical taxonomy" is the table `base_taxonomy_medical`; "medical maps" are `identity_medical_map` and `icf_medical_map`; "medical codes" are the `medical_code` column of every table that carried one (`gaps`, `specifications`, `search_executions`, `extraction_lens_links`, `determination_gates`, `source_value_extractions`) and the `MD-` code vocabulary — basis: the statement names the three things in the order the schema holds them, and no other object in the schema is called medical.] [ASSUMPTION: "delete" means the schema objects, the writer (`db.py add-medical`, `insert_medical`), every `--medical` flag, the check `medical_lens_integrity` and the contract criteria that read it, and the prose that offers the lens; it does not mean editing frozen records (ledger entries, `decisions/`, `sessions/`, committed migrations), which stay as the record of what was ruled when — basis: rule 0 of CLAUDE.md and `decisions/DR-2026-09-26-recurring-defect-shapes-remediation.md` on in-place edits.] [ASSUMPTION: the word "medical" in the `domain` of a term (`terms.domain`, `dbcore.NON_QUANTITY_DOMAINS`) names a kind of concept a parameter may not be, not the lens, and stays — basis: it is a vocabulary of terms, read by T-010's refusal, and no row of the deleted tables is involved.] [ASSUMPTION: the lens set becomes three, identity, ICF and access need, and the "at least one" rule of D-0182 reads over those three — basis: nothing in the statement adds a lens in its place.] No row was lost: every deleted table held no row and every deleted column was NULL on every row (measured before the migration was applied: the three tables held 0 rows, and `COUNT(medical_code)` was 0 on each of the six tables).
+
+**What it supersedes, on contact (rule 0).** None of these is edited; this entry is the record, as `Supersession record 2026-11-15 — three March 2026 rules overtaken, recorded by this entry (T-001)` records for a ledger target, and for the same reason (a `SUPERSEDES` pair cannot name a target in this ledger, and `decisions/` is not edited in place).
+1. The medical lens of `decisions/DR-2026-08-27-four-taxonomies-are-browsing-lenses.md` (D-0170: "we give our users the choice of what model they want to use to browse the site"), as to the medical taxonomy only; the identity, ICF and access-need lenses stand.
+2. `decisions/DR-2026-09-11-adjudication-delegated-medical-lens-enforced.md` and the ledger entries "Owner ruling 2026-09-11 — adjudication delegated for a named set; the medical lens gets filled", "Owner ruling 2026-09-11 — ICD-11 is the medical-lens source, at BLOCK grain, for correspondence", "The medical lens is DEMAND-POPULATED, not pre-populated — the owner's granularity doubt, measured" and its "CORRECTION, same day".
+3. The answer to OD-15 (the medical lens and the WHO licence), in "Owner answers 2026-11-12 — OD-04 (research scope), OD-23 …", which is moot with the lens.
+4. The count of four in the 2026-08-28 ruling ("four lens columns") and in D-0182's "at least one" (now of three); the clause that `population_code` is retired in favour of "the four".
+5. Remediation-plan tasks that exist for the medical lens (T-077, T-103) and the clauses of other task files that name it: each is amended in the pull request that carries this entry.
+
+**What it does not decide.** Whether a diagnosis may be recorded anywhere else (a term, an observed phrase, a note): it may, as the evidence states it; nothing in the schema keys on it. Whether the ICD-11 anchoring work already in the retrieval log is kept: it is a record and stays. The migration is `scripts/migrations/138_drop_medical_lens.sql`; the rule version of the determination engine moved to `pilot-7` because the derivation hash had a slot for the fourth lens (`test_db_integrity` K01 keeps `pilot-6` on the four-slot form).
+
+CONDITION: any session meeting `medical_code`, `base_taxonomy_medical`, `identity_medical_map`, `icf_medical_map`, `add-medical`, `--medical`, `MD-` codes, "the fourth lens", "four lens columns" or "the medical lens" outside a frozen record.
+ACTION: (1) Treat the lens as deleted: do not restore it, fill it or key a cell on it. (2) A phrase in a frozen record that offers it is history, not a gap. (3) A restatement outside the ledger that still names it is repaired where it stands. (4) The medical model as a *framing to avoid* (`voice-style`, `framing-checker`, the social-model posture of the mission) is doctrine and is untouched.
+DATE: 2026-11-16 — owner instruction (typed words, quoted above).
+
+## Correction 2026-11-16 — to the entry that deletes the medical lens: two earlier acceptances lose their premise (the `SCI` edge, OI-48), and one question the instruction does not answer
+
+Found by the read-only critic of the commit that carried the deletion, by searching the ledger for the medical lens in ACTION and answer lines rather than in titles. The entry "Owner instruction 2026-11-16 — the medical taxonomy, the medical maps and the medical codes are deleted" is not edited; it listed five things it supersedes and missed these.
+
+1. **"Owner clarification 2026-11-12 (seventh set) — SCI is basically WHEEL and LMB is basically PROSTH"**, ACTION (4): "Keep impairment level in the medical lens and ICF codes." Superseded as to the medical lens; the clause now reads "keep impairment level in ICF codes", where an ICF body-function code holds the function an injury changes and not the injury.
+2. **"Owner answers 2026-11-13 (tenth set) …", OI-48 — the `SCI` edge**, selected "Accept": "the injury and its level are held in the medical lens and ICF b-codes; `SCI` has no identity code of its own." The owner accepted that `SCI` loses its identity code **on that premise**. Half of the premise no longer exists. `SCI` is still active in `base_taxonomy_identity`, and no task has retired it (T-102 has not run).
+
+**The question this puts to the owner, not decided here:** with the medical lens gone, where is a spinal cord injury and its level held for a group the project serves, and is `SCI` still retired into `WHEEL` (the OI-48 answer) or kept as an identity code that the wheelchair-user code does not replace? [ASSUMPTION: T-102 must not retire `SCI` until the owner answers — basis: the acceptance was given on a premise the owner has since removed, and a retirement is not undone by the sanctioned verbs (`retire-identity` refuses a code that is another code's successor).] It is registered as OI-77 in `workplan/2026-11-12-bidirectional-pipeline/OPEN-ITEMS-PLAN.md` and named in `tasks/T-102-design.md` and `tasks/T-102-mobility-split.md` as a stop.
+
+**A second question the instruction leaves open:** eight live `terms` carry `domain = 'medical'` (search vocabulary: conditions and diagnoses a source names). They are not a lens and no cell is keyed on them, so they were kept. Whether "medical codes" reaches them is the owner's reading, not a fact.
+
+**CLAUDE.md rule 5.** Its sentence "A column a committed data migration INSERTs can never be dropped" was true of a drop the replay plan orders before those data migrations, and false of one it orders after them. Migration 138 drops `medical_code`, which many committed data migrations name, and the rebuild reproduces the database because `migrate_db.build_plan()` replays them first. The sentence is corrected in the same pull request to say that.
+
+CONDITION: any session meeting the `SCI` edge, OI-48, the seventh-set ACTION (4), or a task that places an impairment level in a lens.
+ACTION: (1) Read both clauses above as superseded as to the medical lens. (2) Do not run T-102's retirement of `SCI` before the owner answers OI-77. (3) Do not key a determination on a diagnosis term.
+DATE: 2026-11-16 — correction by the recorder; the questions are the owner's.

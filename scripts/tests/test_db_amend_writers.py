@@ -1582,7 +1582,7 @@ try:
            f"refusal={msg!r} control={ok_id!r}")
 
     # ── M: log-search records the lens a search covered (R18) ───────────────────────────
-    # Four optional columns on search_executions, each checked against the registry its own foreign
+    # Three optional columns on search_executions, each checked against the registry its own foreign
     # key names. Through argparse (run_cli), not the function: an unwired flag is invisible to a
     # function call, and the dispatch block is where the flags are passed on.
     lens_live = {"--identity": q("SELECT identity_code FROM base_taxonomy_identity ORDER BY 1 LIMIT 1")[0][0],
@@ -1596,17 +1596,17 @@ try:
 
     n_before = counts("search_executions")
     refused = {}
-    for flag in ("--identity", "--icf", "--needs", "--medical"):
+    for flag in ("--identity", "--icf", "--needs"):
         r = ls_lens(f"bad {flag}", flag, "NOT-A-CODE")
         refused[flag] = (r.returncode, "has no matching row in" in (r.stdout + r.stderr))
-    record("M01", "log-search refuses an unknown lens code on each of the four flags and writes nothing",
+    record("M01", "log-search refuses an unknown lens code on each of the three flags and writes nothing",
            all(rc != 0 and named for rc, named in refused.values()) and counts("search_executions") == n_before,
            f"{refused} rows {n_before} -> {counts('search_executions')}")
     r = ls_lens("live codes", *[x for kv in lens_live.items() for x in kv])
-    row = q("SELECT identity_code, icf_code, needs_code, medical_code FROM search_executions "
+    row = q("SELECT identity_code, icf_code, needs_code FROM search_executions "
             "WHERE query_text=?", "fixture M: live codes")
-    record("M02", "live codes land in their columns and the medical column stays NULL",
-           r.returncode == 0 and row == [(lens_live["--identity"], lens_live["--icf"], lens_live["--needs"], None)],
+    record("M02", "live codes land in their columns",
+           r.returncode == 0 and row == [(lens_live["--identity"], lens_live["--icf"], lens_live["--needs"])],
            f"rc={r.returncode} {r.stderr[-300:]} {row}")
     import importlib                                               # noqa: E402
     sys.path.insert(0, str(REPO / "scripts" / "research"))
@@ -1619,8 +1619,8 @@ try:
         captured = f"emit refused: {exc}"
     hit = [ln for ln in captured.splitlines() if ln.startswith('INSERT INTO "search_executions"')
            and "fixture M: live codes" in ln
-           # the four lens values, in column order; columns added after medical_code (absence_class,
-           # migration 119) follow them, so this does not pin where the statement ends
+           # the three lens values, in column order; columns added after them (absence_class,
+           # migration 119) follow, so this does not pin where the statement ends
            and ("'%s', '%s', '%s', NULL" % (lens_live["--identity"], lens_live["--icf"], lens_live["--needs"])) in ln]
     record("M03", "emit_batch_sql captures the lens columns of a logged search (the write can be shipped)",
            len(hit) == 1, captured[-400:])
@@ -1784,7 +1784,7 @@ try:
             return None, f"{exc.__class__.__name__}: {exc}"
 
     def t018_live(extraction_id):
-        rows, err = t018_read("SELECT identity_code, icf_code, needs_code, medical_code, basis FROM "
+        rows, err = t018_read("SELECT identity_code, icf_code, needs_code, basis FROM "
                               "v_live_lens_links WHERE extraction_id=? ORDER BY link_id", extraction_id)
         return rows, err
 
@@ -1810,12 +1810,12 @@ try:
     r01, fig01 = t018_add("two icf", "--icf", T18_D1, "--icf", T18_D2, "--lens-basis", "named_in_text",
                           "--lens-basis-text", "TASK-FIXTURE")
     live01, err01 = t018_live(fig01) if fig01 else (None, "no figure was written")
-    cols01 = q("SELECT identity_code, icf_code, needs_code, medical_code FROM source_value_extractions "
+    cols01 = q("SELECT identity_code, icf_code, needs_code FROM source_value_extractions "
                "WHERE extraction_id=?", fig01) if fig01 else None
     record("T018-01", "one figure with two ICF codes is stored once with two live links, and its own lens columns stay NULL",
            r01.returncode == 0 and live01 is not None
-           and sorted((x[1], x[4]) for x in live01) == sorted([(T18_D1, "named_in_text"), (T18_D2, "named_in_text")])
-           and cols01 == [(None, None, None, None)],
+           and sorted((x[1], x[3]) for x in live01) == sorted([(T18_D1, "named_in_text"), (T18_D2, "named_in_text")])
+           and cols01 == [(None, None, None)],
            f"rc={r01.returncode} {(r01.stdout + r01.stderr)[-250:]!r} links={live01} {err01} cols={cols01}")
 
     # A figure with exactly one link, for T018-02 and -03.
@@ -1939,15 +1939,26 @@ try:
                    "--basis-text", "   ", "--session", S)
     r11b = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--icf", "NOT-A-CODE", "--basis", "named_in_text",
                    "--basis-text", "TASK-FIXTURE", "--session", S)
-    medical_rows = q("SELECT COUNT(*) FROM base_taxonomy_medical")[0][0]
-    r11c = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--medical", "NOT-A-CODE", "--basis",
-                   "named_in_text", "--basis-text", "TASK-FIXTURE", "--session", S)
-    record("T018-11", "add-lens-link refuses a blank --basis-text, an unknown code and (derived) an empty registry, each in words",
+    record("T018-11", "add-lens-link refuses a blank --basis-text and an unknown code, each in words",
            r11a.returncode != 0 and "blank" in out_of(r11a)
            and r11b.returncode != 0 and "is not a live icf_code" in out_of(r11b)
-           and r11c.returncode != 0 and ("holds no rows" if medical_rows == 0 else "is not a live") in out_of(r11c)
            and n_links_now() == nl,
-           f"{out_of(r11a)[-120:]!r} | {out_of(r11b)[-120:]!r} | {out_of(r11c)[-120:]!r}")
+           f"{out_of(r11a)[-120:]!r} | {out_of(r11b)[-120:]!r}")
+
+    # T018-11b: a lens registry with no row is named, not left to `FOREIGN KEY constraint failed`. No live registry is
+    # empty any more (the medical one, the only one that was, was deleted 2026-11-16), so the refusal is exercised on a
+    # one-table in-memory database: the code is generic over every registry `_LENS_COLUMNS` names.
+    import db as _db_t18
+    _mem = sqlite3.connect(":memory:")
+    _tbl, _key = _db_t18._LENS_COLUMNS["icf_code"]
+    _mem.execute(f'CREATE TABLE "{_tbl}" ("{_key}" TEXT PRIMARY KEY)')
+    try:
+        _db_t18._require_lens_code(_mem, "icf_code", "ANY")
+        _empty_msg = None
+    except _db_t18.Refusal as _e:
+        _empty_msg = str(_e)
+    record("T018-11b", "a lens code against an EMPTY registry is refused in words ('holds no rows'), not left to the foreign key",
+           bool(_empty_msg) and "holds no rows" in _empty_msg and _tbl in _empty_msg, repr(_empty_msg)[:200])
 
     # T018-12: a retired identity is not newly used, by either writer. The state is set by SQL on the copy and undone.
     (dep,) = q("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code NOT IN ('ALL', ?) "
@@ -2056,7 +2067,7 @@ try:
       "created_at, created_by_session, ref_id) VALUES (?, ?, ?, ?, ?, 't', ?, ?)",
       f"TASK-FIXTURE-{ref17}", ref17, POP, "TASK-FIXTURE participants Zeta", grade, S, ref17)
     r18a = link17("--needs", needs17, "study_participants", "participants Zeta")
-    r18b = link17("--medical", "NOT-A-CODE", "study_participants", "participants Zeta")
+    r18b = link17("--icf", "NOT-A-CODE", "study_participants", "participants Zeta")
     PHRASE = "TASK-FIXTURE phrase only in a saved file"
     (T18_D3,) = q("SELECT icf_code FROM base_icf WHERE icf_code LIKE 'd%' ORDER BY icf_code LIMIT 1 OFFSET 2")[0]
     rl = db._retrieval_log()
@@ -2163,6 +2174,20 @@ try:
                "naming it",
                msg_amend and f"{SPEC_G}" in msg_amend and "retire-specification" in msg_amend,
                f"{msg_amend!r}")
+        # G04b (T-061 critic): the value and the unit of a figure in a live determination are engine columns, so the
+        # live-determination refusal covers them as it covers extraction_method. The reformat rule is switched off for
+        # this one call so the case reaches the refusal it names; it asserts membership of ENGINE_EXTRACTION_COLUMNS by
+        # behaviour, not by set arithmetic.
+        _reformat_rule = db._refuse_unless_reformat
+        db._refuse_unless_reformat = lambda *a, **k: None
+        try:
+            msg_val = refusal(db.amend_extraction, GOV_X, "claimed_value", "999", "fixture", S, dry_run=True)
+            msg_unit = refusal(db.amend_extraction, GOV_X, "claimed_unit", "zz-unit", "fixture", S, dry_run=True)
+        finally:
+            db._refuse_unless_reformat = _reformat_rule
+        record("G04b", "amend-extraction refuses a changed claimed_value or claimed_unit on a row in a live determination's provenance",
+               bool(msg_val) and "live determination" in msg_val and bool(msg_unit) and "live determination" in msg_unit,
+               f"{msg_val!r} | {msg_unit!r}")
         msg_excl = amend(OTHER_X) if OTHER_X else None
         record("G05", "...whatever part the row played: a row the determination only EXCLUDED is "
                "refused too, because regrading could promote it",
@@ -2602,6 +2627,481 @@ try:
                    rc5 == 1 and "delegated resolution" in out5, f"{rc5} {out5[-300:]}")
         finally:
             dbcore.LEDGER_PATH = REAL_LEDGER
+
+    # ── T079: a deferred reading is recorded, and every deferred act lists with its age from one view ──
+    # AT-17. A search, a mining pass, a reading and an adjudication can each be deferred ("deferred is okay so
+    # long as it runs eventually"); only the first two carried a date and nothing listed all four. Every
+    # fixture is made through the verbs; the states no verb makes are set by SQL and say so (HAND). Each case
+    # RECORDS a red line when the registry is absent, so a tree without it cannot pass by skipping.
+    import hashlib                                                         # noqa: E402
+    import re as _re79                                                     # noqa: E402
+    T079_READY = (hasattr(db, "defer_reading")
+                  and bool(q("SELECT 1 FROM sqlite_master WHERE name='reading_deferrals'"))
+                  and bool(q("SELECT 1 FROM sqlite_master WHERE name='v_deferred_acts'")))
+    if not T079_READY:
+        for tid in sorted(set(_re79.findall(r'"(T079-\d\d)"', pathlib.Path(__file__).read_text(encoding="utf-8")))):
+            record(tid, "the registry exists (reading_deferrals, v_deferred_acts, db.defer_reading)", False,
+                   "absent in this tree")
+    else:
+        rl79 = db._retrieval_log()
+        AUTH79 = db.parse_author_flags(["corp|Fixture Body"])
+        _n79 = iter(range(1, 10 ** 6))
+
+        def src79(label):
+            """A fixture source through the writer, titled so that no staged lead matches it."""
+            return db.insert_evidence_source(
+                {"year": 2020, "evidence_type": "code", "scope": "intrinsic", "verification_status": "UNVERIFIED",
+                 "source_type": dbcore.schema_choices("evidence_sources", "source_type")[0],
+                 "title": f"TASK-FIXTURE T079 {label} number {next(_n79)} on handrail finials"},
+                S, dry_run=False, authors=AUTH79)
+
+        def scan79(ref, scope="full", mode="catalogue", target=None):
+            """A reading through record-scan, over a derived text with one page marker (so `full` is allowed)."""
+            d = pathlib.Path(rl79.LOG_ROOT) / "session_fixture_t079"
+            d.mkdir(exist_ok=True)
+            txt = d / f"{ref}-{mode}-{scope}-text.txt"
+            txt.write_text("[PDF page 1 of 1]\nTASK-FIXTURE T079 reading text.\n")
+            rl79.record_file(txt, "session_fixture_t079", f"{ref}-payload.json", purpose="fixture text",
+                             ref_id=ref, kind="text-extraction")
+            rl79._ARTEFACT_INDEX.clear()
+            return db.record_scan({"ref_id": ref, "mode": mode, "target_parameter_id": target, "text_scope": scope,
+                                   "file_sha256": hashlib.sha256(txt.read_bytes()).hexdigest(),
+                                   "method": "full-read", "notes": "TASK-FIXTURE T079"}, session=S)
+
+        def vq(sql, *params):
+            """Rows, or None when the SQL cannot run (an absent view must turn a case red, not crash the run)."""
+            try:
+                return q(sql, *params)
+            except sqlite3.OperationalError as exc:
+                print(f"      DEFECT: {exc}")
+                return None
+
+        def standing(kind, ref=None, pid=None):
+            return vq("SELECT kind, ref_id, parameter_id, reason, deferred_at, created_by_session "
+                      "FROM v_deferred_acts WHERE kind=? AND ref_id IS ? AND parameter_id IS ?", kind, ref, pid)
+
+        def n_def():
+            return q("SELECT COUNT(*) FROM reading_deferrals")[0][0]
+
+        def defer(ref, pid, reason="TASK-FIXTURE T079: owed, not read yet", dry=False):
+            return refusal(db.defer_reading, ref, pid, reason, S, dry_run=dry)
+
+        P79 = [r[0] for r in q("SELECT parameter_id FROM base_parameters WHERE status='active' ORDER BY 1")]
+        PA, PB, PRET = P79[0], P79[1], P79[-1]
+        R1, R2, R3, R4, R5 = (src79(x) for x in ("one", "two", "three", "four", "five"))
+
+        # ── T079-01 (AT-17): the kinds list together, and an age window keeps the old rows and drops the new ──
+        # Nothing here depends on how many deferrals the corpus holds: each count is recomputed from the base tables
+        # by the rule the view states (created_at, the date first recorded), so a batch that defers or discharges
+        # something cannot turn the case red.
+        n_read0 = vq("SELECT COUNT(*) FROM v_deferred_acts WHERE kind='reading'")[0][0]
+        cli = run_cli("defer-reading", "--ref-id", R1, "--parameter", str(PA),
+                      "--reason", "TASK-FIXTURE T079: the full text is owed", "--session", S)
+        kinds = dict(vq("SELECT kind, COUNT(*) FROM v_deferred_acts GROUP BY 1") or [])
+        aged = dict(vq("SELECT kind, COUNT(*) FROM v_deferred_acts WHERE deferred_at < datetime('now', '-1 days') "
+                       "GROUP BY 1") or [])
+        AGE = "created_at < datetime('now', '-1 days')"
+        want = {"search": (q("SELECT COUNT(*) FROM search_executions WHERE deferred_reason IS NOT NULL")[0][0],
+                           q(f"SELECT COUNT(*) FROM search_executions WHERE deferred_reason IS NOT NULL AND {AGE}")[0][0]),
+                "mining": (q("SELECT COUNT(*) FROM citation_mining WHERE deferred_reason IS NOT NULL")[0][0],
+                           q(f"SELECT COUNT(*) FROM citation_mining WHERE deferred_reason IS NOT NULL AND {AGE}")[0][0])}
+        new_aged = vq("SELECT deferred_at < datetime('now', '-1 days') FROM v_deferred_acts "
+                      "WHERE kind='reading' AND ref_id=? AND parameter_id=?", R1, PA)
+        record("T079-01", "defer-reading lands through argparse; the view lists search, mining and reading, and "
+               "an age window keeps the older rows and excludes the new reading",
+               cli.returncode == 0 and kinds.get("reading", 0) == n_read0 + 1
+               and all(kinds.get(k, 0) == want[k][0] and aged.get(k, 0) == want[k][1] for k in want)
+               and new_aged == [(0,)],
+               f"rc={cli.returncode} {cli.stderr[:200]!r} kinds={kinds} aged={aged} want={want} new_aged={new_aged}")
+        got = standing("reading", R1, PA)
+        record("T079-06", "the new reading row carries its reason, session, and ref and parameter as columns",
+               bool(got) and got[0][3].startswith("TASK-FIXTURE T079") and got[0][5] == S
+               and q("SELECT status FROM v_scan_ledger WHERE ref_id=? AND parameter_id=?", R1, PA)[0][0] == "NOT-READ",
+               f"{got} (the pair stays owed in the ledger)")
+
+        # ── T079-02: every refusal fires, names its ground, and writes nothing ──
+        n0 = n_def()
+        retired_was = q("SELECT status FROM base_parameters WHERE parameter_id=?", PRET)[0][0]
+        w("UPDATE base_parameters SET status='retired' WHERE parameter_id=?", PRET)      # HAND: a retired parameter
+        R_OLD, R_NEW = src79("tombstone"), src79("successor")
+        w("UPDATE evidence_sources SET superseded_by_ref_id=? WHERE ref_id=?", R_NEW, R_OLD)   # HAND: a tombstone
+        scan79(R5, "full")                                  # R5 is fully read: nothing is owed on any pair
+        scan79(R4, "full", "targeted", PA)                  # R4: only PA is covered by a full reading
+        scan79(R3, "partial")                               # R3: a partial reading covers nothing
+        con79 = sqlite3.connect(DB)
+        unminted = dbcore.next_ref_id(con79)
+        con79.close()
+        m = {
+            "blank": defer(R2, PA, "   "),
+            "no such source": defer(unminted, PA),
+            "superseded": defer(R_OLD, PA),
+            "retired parameter": defer(R2, PRET),
+            "no such parameter": defer(R2, PRET + 1000),
+            "pair covered": defer(R4, PA),
+            "whole source covered": defer(R5, None),
+            "pair covered by a catalogue reading": defer(R5, PB),
+            "same pair twice": defer(R1, PA),
+        }
+        w("UPDATE base_parameters SET status=? WHERE parameter_id=?", retired_was, PRET)
+        need = {"blank": "reason", "no such source": "not an admitted source", "superseded": "superseded",
+                "retired parameter": "retired", "no such parameter": "no such parameter",
+                "pair covered": "full reading", "whole source covered": "full reading",
+                "pair covered by a catalogue reading": "full reading", "same pair twice": "already"}
+        bad = {k: m[k] for k, v in m.items() if not (v and v.startswith("defer-reading:") and need[k] in v)}
+        # F9: every refusal names a next action (T-043's cue: a verb, a query or a flag) and says nothing was written
+        CUE79 = _re79.compile(r"db\.py |SELECT |--[a-z]|git ls-files")
+        mute = {k: v for k, v in m.items() if not (v and CUE79.search(v) and v.rstrip().endswith("Nothing was written."))}
+        record("T079-02", "defer-reading refuses a blank reason, an unknown or superseded source, a retired or "
+               "unknown parameter, a pair a full reading covers and a second standing deferral, naming each ground, "
+               "a next action, and that nothing was written",
+               not bad and not mute and n_def() == n0,
+               f"unrefused or unnamed: {bad} no next action / no 'Nothing was written.': {mute} rows {n0}->{n_def()}")
+        cli2 = run_cli("defer-reading", "--ref-id", R2, "--parameter", str(PA), "--reason", " ", "--session", S)
+        record("T079-07", "through argparse a refusal exits non-zero with stderr starting REFUSING:",
+               cli2.returncode != 0 and cli2.stderr.startswith("REFUSING:"), f"{cli2.returncode} {cli2.stderr[:120]!r}")
+        # what is NOT refused: a partial reading covers nothing, a targeted full reading covers only its target,
+        # and a whole-source deferral is allowed while any pair is owed
+        ok_partial, ok_other_pair, ok_whole = defer(R3, PA), defer(R4, PB), defer(R4, None)
+        record("T079-08", "a partial reading, an uncovered pair of a partly read source and the whole source "
+               "(NULL parameter) of a source with owed pairs are all deferrable",
+               ok_partial is None and ok_other_pair is None and ok_whole is None and n_def() == n0 + 3,
+               f"{ok_partial!r} {ok_other_pair!r} {ok_whole!r} rows {n0}->{n_def()}")
+        twice_whole = defer(R4, None)
+        record("T079-17", "a second standing whole-source deferral (NULL parameter) is refused like a second pair",
+               twice_whole is not None and twice_whole.startswith("defer-reading:") and "already" in twice_whole,
+               f"{twice_whole!r}")
+        n1 = n_def()
+        dry = defer(R2, PA, dry=True)
+        record("T079-09", "--dry-run writes nothing", dry is None and n_def() == n1, f"{dry!r}")
+
+        # ── T079-03: the discharge is derived from a reading, never a write ──
+        listed_first = bool(standing("reading", R3, PA))
+        scan79(R3, "partial")
+        still_partial = bool(standing("reading", R3, PA))
+        scan79(R3, "full", "targeted", PB)
+        still_other = bool(standing("reading", R3, PA))
+        scan79(R3, "full", "targeted", PA)
+        gone = not standing("reading", R3, PA)
+        kept = q("SELECT COUNT(*) FROM reading_deferrals WHERE ref_id=? AND parameter_id=?", R3, PA)[0][0] == 1
+        record("T079-03", "a partial reading does not discharge; a full reading of another parameter does not; "
+               "a full reading of the pair does, and the deferral row stays as history",
+               listed_first and still_partial and still_other and gone and kept,
+               f"{listed_first} {still_partial} {still_other} {gone} {kept}")
+        before_whole = bool(standing("reading", R4, None))
+        scan79(R4, "partial")                               # a partial catalogue reading is not a full one
+        partial_only = bool(standing("reading", R4, None))
+        scan79(R4, "full", "targeted", PB)                  # a full TARGETED reading is not a full catalogue reading
+        targeted_only = bool(standing("reading", R4, None))
+        scan79(R4, "full")                                  # R4's whole-source deferral: a full catalogue reading
+        whole_gone = not standing("reading", R4, None)
+        record("T079-10", "a whole-source deferral is discharged by a full catalogue reading, not by a partial "
+               "one or a full targeted one", before_whole and partial_only and targeted_only and whole_gone,
+               f"{before_whole} {partial_only} {targeted_only} {whole_gone}")
+        # NO DATE CLAUSE (F2/F3/F4): a deferral stands iff its cell is, now, owed. R4 is read in full at the current
+        # version, so a deferral dated far in the future and one dated far in the past both leave the view.
+        w("INSERT INTO reading_deferrals (ref_id, parameter_id, reason, created_at, created_by_session) "
+          "VALUES (?, NULL, 'TASK-FIXTURE T079 dated later than every reading', '2999-01-01 00:00', ?)", R4, S)
+        later = standing("reading", R4, None)
+        w("INSERT INTO reading_deferrals (ref_id, parameter_id, reason, created_at, created_by_session) "
+          "VALUES (?, NULL, 'TASK-FIXTURE T079 dated before every reading', '2000-01-01 00:00', ?)", R4, S)
+        earlier = standing("reading", R4, None)
+        record("T079-11", "a deferral over a cell a full reading covers does not list, whatever its date (the date "
+               "is no discharge rule: a later-dated deferral cannot outlive the reading, an earlier one cannot hide)",
+               later == [] and earlier == [], f"{later} {earlier}")
+        # a later state change: a superseded source's deferral is its SUCCESSOR's (the replacement is what is owed),
+        # with the date the obligation was first recorded; a retired parameter's deferral leaves (nothing is owed)
+        w("UPDATE reading_deferrals SET created_at='2001-02-03 04:05' WHERE ref_id=? AND parameter_id=?", R1, PA)   # HAND: an old obligation
+        at_r1 = q("SELECT created_at FROM reading_deferrals WHERE ref_id=? AND parameter_id=?", R1, PA)[0][0]
+        w("UPDATE evidence_sources SET superseded_by_ref_id=? WHERE ref_id=?", R_NEW, R1)       # HAND: after the deferral
+        under_old = standing("reading", R1, PA)
+        under_new = standing("reading", R_NEW, PA)
+        twice_new = defer(R_NEW, PA)
+        w("UPDATE evidence_sources SET superseded_by_ref_id=NULL WHERE ref_id=?", R1)
+        w("UPDATE base_parameters SET status='retired' WHERE parameter_id=?", PA)               # HAND: after the deferral
+        gone_ret = not standing("reading", R1, PA)
+        w("UPDATE base_parameters SET status='active' WHERE parameter_id=?", PA)
+        back = bool(standing("reading", R1, PA))
+        record("T079-12", "a deferral on a source later superseded is its successor's, with its original date (and "
+               "the successor cannot be deferred a second time); one on a parameter later retired no longer lists; "
+               "both list again when the state is undone",
+               under_old == [] and len(under_new or []) == 1 and under_new[0][4] == at_r1
+               and twice_new is not None and "already" in twice_new and gone_ret and back,
+               f"old={under_old} new={under_new} at={at_r1} twice={twice_new} {gone_ret} {back}")
+
+        # ── T079-04: a mining deferral is discharged by log-mining, read from the owner's execution signal ──
+        mine = q("SELECT cm.slug, COALESCE(cm.global_ref_id, cm.local_ref_id) FROM citation_mining cm "
+                 "JOIN evidence_sources e ON e.ref_id = COALESCE(cm.global_ref_id, cm.local_ref_id) "
+                 "WHERE cm.deferred_reason IS NOT NULL AND e.citation_mining_status = 'deferred' ORDER BY 2 LIMIT 2")
+        (SL1, MR1), (SL2, MR2) = mine[0], mine[1]
+        mcount = lambda ref: vq("SELECT COUNT(*) FROM v_deferred_acts WHERE kind='mining' AND ref_id=?", ref)[0][0]  # noqa: E731
+        n_mine0 = vq("SELECT COUNT(*) FROM v_deferred_acts WHERE kind='mining'")[0][0]
+        dbl = mcount(MR1)
+        # a pass that RAN without --discharge-deferral leaves the deferral standing (one column, two directions)
+        out_a = db.log_mining(SL1, MR1, "backward", S, notes="TASK-FIXTURE T079: a pass that ran")
+        after_a = mcount(MR1)
+        db.log_mining(SL2, MR2, "backward", S, notes="TASK-FIXTURE T079: the pass that discharges",
+                      discharge_deferral=True)
+        after_b = mcount(MR2)
+        n_mine1 = vq("SELECT COUNT(*) FROM v_deferred_acts WHERE kind='mining'")[0][0]
+        status_b = q("SELECT citation_mining_status FROM evidence_sources WHERE ref_id=?", MR2)[0][0]
+        record("T079-04", "a mining deferral lists once; a pass without --discharge-deferral leaves it listed; "
+               "log-mining --discharge-deferral takes it out, with the source's status 'mined'",
+               dbl == 1 and after_a == 1 and after_b == 0 and n_mine1 == n_mine0 - 1 and status_b == "mined"
+               and bool(out_a.get("deferral_still_standing")),
+               f"{dbl} {after_a} {after_b} {n_mine0}->{n_mine1} {status_b} {out_a}")
+        # F1: the typed fact lives in the ROW. The source's status is one flag for every slug and both directions, so a
+        # pass that ran for another reason sets it to 'mined' and must not hide a standing deferral.
+        w("UPDATE evidence_sources SET citation_mining_status='mined' WHERE ref_id=?", MR1)     # HAND: the flag alone
+        sig = mcount(MR1)
+        w("UPDATE evidence_sources SET citation_mining_status='deferred' WHERE ref_id=?", MR1)
+        record("T079-13", "the source's citation_mining_status 'mined' does not take a mining deferral out of the view: "
+               "only clearing the row's own deferred_reason (--discharge-deferral) does", sig == 1, f"{sig}")
+        # the reproduction as the critic gave it: deferred under slug A, also linked to slug B, a pass logged for B
+        SLB = q("SELECT slug FROM slugs WHERE slug NOT IN (SELECT slug FROM source_slug_links WHERE ref_id=?) "
+                "ORDER BY slug LIMIT 1", MR1)[0][0]
+        db.link_source_slug(MR1, SLB, "TASK-FIXTURE T079: a second slug for the same source", S)
+        row_a = q("SELECT deferred_reason FROM citation_mining WHERE slug=? AND global_ref_id=?", SL1, MR1)[0][0]
+        out_b = db.log_mining(SLB, MR1, "backward", S, notes="TASK-FIXTURE T079: a pass for the other slug")
+        status_after = q("SELECT citation_mining_status FROM evidence_sources WHERE ref_id=?", MR1)[0][0]
+        record("T079-21", "a mining deferral under slug A still lists after an unrelated pass for slug B sets the "
+               "source to 'mined', and the pass's reply says the deferral still stands",
+               mcount(MR1) == 1 and row_a and row_a in (out_b.get("deferral_still_standing") or "")
+               and SL1 in (out_b.get("deferral_still_standing") or ""),
+               f"listed={mcount(MR1)} status={status_after} {out_b}")
+        w("UPDATE evidence_sources SET citation_mining_status='deferred' WHERE ref_id=?", MR1)
+
+        # a lead anchor (a ref that resolves in source_locators, not evidence_sources) has no status to read: its own
+        # deferred_reason is the signal, so it lists (an inner join to evidence_sources would drop it silently)
+        w("INSERT INTO citation_mining (slug, local_ref_id, global_ref_id, deferred_reason, created_at, created_by_session, "
+          "updated_at, updated_by_session) VALUES (?, 'LEAD-T079', NULL, 'TASK-FIXTURE T079: a lead anchor', "
+          "'2026-01-01 00:00', ?, '2026-01-01 00:00', ?)", A, S, S)
+        lead = vq("SELECT kind, ref_id, deferred_at FROM v_deferred_acts WHERE kind='mining' AND ref_id='LEAD-T079'")
+        record("T079-16", "a deferred mining row whose ref is no evidence_sources row (a lead anchor) lists, dated from "
+               "its row", lead == [("mining", "LEAD-T079", "2026-01-01 00:00")], f"{lead}")
+
+        # ── T079-05: the adjudication arm lists an observation whose LATEST adjudication is DEFERRED ──
+        LATEST79 = ("WITH l AS (SELECT a.* FROM term_adjudications a WHERE a.adjudication_id = "
+                    "(SELECT MAX(adjudication_id) FROM term_adjudications b WHERE b.observation_id = a.observation_id)) ")
+        pick = q(LATEST79 + "SELECT observation_id FROM l WHERE outcome='DEFERRED' ORDER BY 1 LIMIT 1")
+        if not pick:                                        # HAND (TASK-FIXTURE): adjudicate one DEFERRED on the copy
+            obs0 = q("SELECT observation_id FROM observed_terms ORDER BY 1 LIMIT 1")[0][0]
+            db.adjudicate_term(obs0, "DEFERRED", "TASK-FIXTURE T079: held", S)
+            pick = [(obs0,)]
+        OB = pick[0][0]
+        row = vq("SELECT kind, ref_id, reason, deferred_at, created_by_session, subject FROM v_deferred_acts "
+                 "WHERE kind='adjudication' AND subject LIKE ?", f"%observation {OB} %")
+        lat = q(LATEST79 + "SELECT rationale, created_at, created_by_session FROM l WHERE observation_id=?", OB)[0]
+        o_ref, o_form = q("SELECT ref_id, surface_form FROM observed_terms WHERE observation_id=?", OB)[0]
+        n_adj = vq("SELECT COUNT(*) FROM v_deferred_acts WHERE kind='adjudication'")[0][0]
+        n_adj_expect = q(LATEST79 + "SELECT COUNT(*) FROM l WHERE outcome='DEFERRED'")[0][0]
+        TERMX = q("SELECT term_id FROM terms ORDER BY term_id LIMIT 1")[0][0]
+        db.adjudicate_term(OB, "NAMES-EXISTING", "TASK-FIXTURE T079: settled", S, term_id=TERMX)
+        gone_adj = not vq("SELECT 1 FROM v_deferred_acts WHERE kind='adjudication' AND subject LIKE ?",
+                          f"%observation {OB} %")
+        # the reverse order: an older settled judgment and a newer DEFERRED one lists
+        db.adjudicate_term(OB, "DEFERRED", "TASK-FIXTURE T079: re-opened", S)
+        reopened = vq("SELECT reason FROM v_deferred_acts WHERE kind='adjudication' AND subject LIKE ?",
+                      f"%observation {OB} %")
+        record("T079-05", "an observation whose latest adjudication is DEFERRED lists with its source, surface form, "
+               "rationale, date and session; a later adjudication of another outcome takes it out; a newer DEFERRED "
+               "over an older outcome lists; 'DEFERRED' is in the column's CHECK",
+               len(row or []) == 1 and row[0][1] == o_ref and row[0][2] == lat[0] and row[0][3] == lat[1]
+               and row[0][4] == lat[2] and o_form in row[0][5] and n_adj == n_adj_expect and gone_adj
+               and bool(reopened) and reopened[0][0] == "TASK-FIXTURE T079: re-opened"
+               and "DEFERRED" in dbcore.check_values(sqlite3.connect(DB), "term_adjudications", "outcome"),
+               f"{row} {lat} {n_adj}/{n_adj_expect} gone={gone_adj} reopened={reopened}")
+
+        # two judgments in the SAME minute (created_at is minute-resolution): the higher adjudication_id governs
+        db.adjudicate_term(OB, "NAMES-EXISTING", "TASK-FIXTURE T079: settled again, same minute", S, term_id=TERMX)
+        tie = vq("SELECT 1 FROM v_deferred_acts WHERE kind='adjudication' AND subject LIKE ?", f"%observation {OB} %")
+        record("T079-18", "an observation judged DEFERRED and then settled in the same minute does not list (the "
+               "higher id governs, not the date)", tie == [], f"{tie}")
+        # a search that names no slug (a parameter, or a mined source) is deferred too, and lists
+        db.log_search(slug=None, parameter_id=PA, language="EN", query_text="TASK-FIXTURE T079: a slug-less search",
+                      engine="manual", depth_method="scoping", session=S, deferred_reason="TASK-FIXTURE T079: held",
+                      prior_expectation="fixture prior, written before the call")
+        slugless = vq("SELECT kind, parameter_id, reason FROM v_deferred_acts WHERE kind='search' AND parameter_id=?", PA)
+        record("T079-19", "a deferred search naming no slug lists, with its parameter",
+               slugless == [("search", PA, "TASK-FIXTURE T079: held")], f"{slugless}")
+
+        # merge-parameter finds every table holding a parameter_id from the live schema and REFUSES one with no notes
+        # column unless it is argued into _MERGE_KEEPS_HISTORY: reading_deferrals must be, or a deferral blocks a merge
+        def merge_try(fa, into):
+            try:
+                return db.merge_parameter(fa, into, "TASK-FIXTURE T079", S, dry_run=True)
+            except Refusal as exc:
+                return str(exc)
+        pair79 = next(((fa, into) for fa in P79 for into in P79 if fa != into
+                       and isinstance(merge_try(fa, into), dict)), None)     # two active parameters with no live work
+        merge79 = None
+        if pair79:
+            R6 = src79("six")
+            defer(R6, pair79[0], "TASK-FIXTURE T079: a deferral on the folded parameter")
+            merge79 = merge_try(*pair79)
+        record("T079-20", "merge-parameter is not blocked by a reading deferral on the folded parameter: the rows are "
+               "kept as history (no notes column to move them with)",
+               isinstance(merge79, dict) and "reading_deferrals.parameter_id" in merge79["kept_as_history"],
+               f"{merge79}")
+
+        # ── F3: the same-minute tie. A full catalogue reading, a parameter minted after it, a whole-source deferral ──
+        R10 = src79("ten")
+        scan79(R10, "full")
+        w("UPDATE source_scans SET catalogue_version=? WHERE ref_id=?", P79[-2], R10)    # HAND: P79[-1] minted after it
+        led10 = q("SELECT status FROM v_scan_ledger WHERE ref_id=? AND parameter_id=?", R10, P79[-1])[0][0]
+        first10 = defer(R10, None)
+        listed10 = bool(standing("reading", R10, None))
+        second10 = defer(R10, None)
+        record("T079-22", "a whole-source deferral recorded in the minute of a full catalogue reading that predates a "
+               "parameter lists (the ledger says that parameter is NOT-READ), and a second is refused",
+               led10 == "NOT-READ" and first10 is None and listed10 and second10 is not None and "already" in second10,
+               f"ledger={led10} first={first10!r} listed={listed10} second={second10!r}")
+
+        # ── F2: a whole-source deferral, then TARGETED full readings of every active parameter ──
+        R9 = src79("nine")
+        d9 = defer(R9, None)
+        for pid9 in P79:
+            scan79(R9, "full", "targeted", pid9)
+        listed9 = standing("reading", R9, None)
+        again9 = defer(R9, None)
+        record("T079-23", "a whole-source deferral followed by targeted full readings of every active parameter leaves "
+               "the view, and the verb agrees (it refuses a second: no reading is owed)",
+               d9 is None and listed9 == [] and again9 is not None and "full reading" in again9,
+               f"{d9!r} listed={listed9} {again9!r}")
+
+        # ── the verb and the view agree on every state of a cell (one definition of owed, read by both) ──
+        RA, RB, RC, RD, RE, RF, RG = (src79(f"matrix {x}") for x in "abcdefg")
+        scan79(RA, "full")                                          # RA: a full catalogue reading
+        scan79(RB, "full", "targeted", PA)                          # RB: a full targeted reading of PA only
+        scan79(RC, "partial")                                       # RC: a partial reading
+        for pid in P79:
+            if pid != PB:
+                scan79(RE, "full", "targeted", pid)                 # RE: every parameter but PB
+            scan79(RF, "full", "targeted", pid)                     # RF: every parameter, by targeted readings
+        w("UPDATE evidence_sources SET processing_blocked_reason='paywalled' WHERE ref_id=?", RG)   # HAND: a block
+        cells = [("pair covered by a catalogue reading", RA, PA, False),
+                 ("pair covered by a targeted reading", RB, PA, False),
+                 ("another pair of a targeted source", RB, PB, True),
+                 ("pair read only in part", RC, PA, True),
+                 ("pair never read", RD, PA, True),
+                 ("whole source, one parameter uncovered", RE, None, True),
+                 ("whole source, every parameter covered by a targeted reading", RF, None, False),
+                 ("blocked pair", RG, PA, False),
+                 ("blocked whole source", RG, None, False)]
+        split = {}
+        for label, cref, cpid, expect in cells:
+            verb_takes = defer(cref, cpid, dry=True) is None
+            w("INSERT INTO reading_deferrals (ref_id, parameter_id, reason, created_at, created_by_session) "
+              "VALUES (?, ?, 'TASK-FIXTURE T079 matrix', ?, ?)", cref, cpid, dbcore.now(), S)      # HAND: bypass the verb
+            view_lists = bool(standing("reading", cref, cpid))
+            w("DELETE FROM reading_deferrals WHERE reason='TASK-FIXTURE T079 matrix'")
+            if not (verb_takes == view_lists == expect):
+                split[label] = {"verb accepts": verb_takes, "view lists": view_lists, "owed": expect}
+        record("T079-24", "the verb accepts a deferral exactly when the view lists one for that cell, over a pair covered "
+               "by a catalogue or a targeted reading, a pair read in part or not at all, a whole source with one "
+               "parameter uncovered or none, and a blocked source", not split, f"{split}")
+
+        # ── F8: a blocked source is not reading debt (the ledger says so) ──
+        blk_pair, blk_whole = defer(RG, PA), defer(RG, None)
+        record("T079-25", "a source the ledger reads BLOCKED is refused, naming the block and what to do, with nothing written",
+               all(v and v.startswith("defer-reading:") and "paywalled" in v and "BLOCKED" in v
+                   and CUE79.search(v) and v.rstrip().endswith("Nothing was written.") for v in (blk_pair, blk_whole)),
+               f"{blk_pair!r} {blk_whole!r}")
+
+        # ── F6: the age is the date the obligation was first recorded; touching a row resets nothing ──
+        cm = q("SELECT slug, local_ref_id, COALESCE(global_ref_id, local_ref_id), created_at FROM citation_mining "
+               "WHERE deferred_reason IS NOT NULL ORDER BY 1, 2 LIMIT 1")[0]
+        se = q("SELECT exec_id, created_at FROM search_executions WHERE deferred_reason IS NOT NULL ORDER BY 1 LIMIT 1")[0]
+        w("UPDATE citation_mining SET updated_at='2999-01-01 00:00' WHERE slug=? AND local_ref_id=?", cm[0], cm[1])
+        w("UPDATE search_executions SET updated_at='2999-01-01 00:00' WHERE exec_id=?", se[0])
+        at_m = vq("SELECT deferred_at FROM v_deferred_acts WHERE kind='mining' AND subject=?", f"{cm[2]} {cm[0]}")
+        at_s = vq("SELECT deferred_at FROM v_deferred_acts WHERE kind='search' AND subject LIKE ?", f"exec {se[0]} %")
+        at_s = at_s or vq("SELECT deferred_at FROM v_deferred_acts WHERE kind='search' AND subject = ?", f"exec {se[0]}")
+        record("T079-26", "a deferred mining row and a deferred search keep the date first recorded when their "
+               "updated_at moves (an age that reset on a touch would hide an old obligation)",
+               at_m == [(cm[3],)] and at_s == [(se[1],)], f"mining {at_m} vs {cm[3]}; search {at_s} vs {se[1]}")
+
+        # a mining deferral on a source is not a reading deferral of it (the standing check reads kind='reading' only)
+        R7 = src79("seven")
+        w("INSERT INTO citation_mining (slug, local_ref_id, global_ref_id, deferred_reason, created_at, "
+          "created_by_session, updated_at, updated_by_session) VALUES (?, ?, ?, 'TASK-FIXTURE T079: a mining deferral "
+          "on the same source', '2026-01-01 00:00', ?, '2026-01-01 00:00', ?)", A, R7, R7, S, S)      # HAND
+        with_mining = defer(R7, None)
+        both7 = (vq("SELECT COUNT(*) FROM v_deferred_acts WHERE kind='mining' AND ref_id=?", R7),
+                 vq("SELECT COUNT(*) FROM v_deferred_acts WHERE kind='reading' AND ref_id=?", R7))
+        record("T079-27", "a standing mining deferral on a source does not refuse its reading deferral (the two are "
+               "different promises)", with_mining is None and both7 == ([(1,)], [(1,)]), f"{with_mining!r} {both7}")
+
+        # the CLI's --dry-run reaches the verb (argparse -> dispatch), so a dry run through the real entry point writes nothing
+        n_dry = n_def()
+        cli_dry = run_cli("defer-reading", "--ref-id", RD, "--parameter", str(PB),
+                          "--reason", "TASK-FIXTURE T079: a dry run through the CLI", "--session", S, "--dry-run")
+        record("T079-28", "defer-reading --dry-run through the CLI writes nothing",
+               cli_dry.returncode == 0 and n_def() == n_dry, f"rc={cli_dry.returncode} {cli_dry.stderr[:200]!r} {n_dry}->{n_def()}")
+
+        # a lower-case reference id folds to the stored one, as every other writer's does
+        R8 = src79("eight")
+        lower = defer(R8.lower(), PB)
+        stored = standing("reading", R8, PB)
+        record("T079-29", "a lower-case ref id is folded (dbcore.fold_ref) and the row is stored under the canonical id",
+               lower is None and len(stored or []) == 1, f"{lower!r} {stored}")
+
+        # F10: the session, and the shape of a reason
+        LIM79 = getattr(db, "_DEFER_REASON_MAX", 1000)
+        shape = {
+            "blank session": (refusal(db.defer_reading, R2, PB, "TASK-FIXTURE T079: why", "  ", dry_run=True), "session"),
+            "invisible reason": (defer(R2, PB, "\u200b\u200b\u200b", dry=True), "letter or digit"),
+            "multi-line reason": (defer(R2, PB, "line one\nline two", dry=True), "one line"),
+            "over-long reason": (defer(R2, PB, "x" * (LIM79 + 1), dry=True), str(LIM79)),
+        }
+        at_limit = defer(R2, PB, "x" * LIM79, dry=True)
+        cli_ws = run_cli("defer-reading", "--ref-id", R2, "--parameter", str(PB), "--reason", "TASK-FIXTURE T079: why",
+                         "--session", " ", "--dry-run")
+        bad_shape = {k: v for k, (v, tok) in shape.items()
+                     if not (v and v.startswith("defer-reading:") and tok in v and v.rstrip().endswith("Nothing was written."))}
+        record("T079-30", "a blank session, an invisible-only reason, a multi-line reason and one over the stated limit are "
+               "refused naming their ground; a reason at the limit passes",
+               not bad_shape and at_limit is None and cli_ws.returncode != 0 and cli_ws.stderr.startswith("REFUSING:"),
+               f"{bad_shape} at_limit={at_limit!r} cli={cli_ws.returncode} {cli_ws.stderr[:160]!r}")
+
+        # ── T079-14: the arms agree with the tables they read (derived, never typed), and no row lists twice ──
+        arms = dict(vq("SELECT kind, COUNT(*) FROM v_deferred_acts GROUP BY 1") or [])
+        want_search = q("SELECT COUNT(*) FROM search_executions WHERE deferred_reason IS NOT NULL")[0][0]
+        want_adj = q(LATEST79 + "SELECT COUNT(*) FROM l WHERE outcome='DEFERRED'")[0][0]
+        rows_total = vq("SELECT COUNT(*) FROM v_deferred_acts")[0][0]
+        distinct = vq("SELECT COUNT(*) FROM (SELECT DISTINCT kind, subject, deferred_at FROM v_deferred_acts)")[0][0]
+        record("T079-14", "the search and adjudication arms count what their tables hold, and no row is listed twice",
+               arms.get("search") == want_search and arms.get("adjudication") == want_adj and rows_total == distinct,
+               f"{arms} search={want_search} adj={want_adj} total={rows_total} distinct={distinct}")
+        record("T079-15", "reading_deferrals is in dbcore.writable_tables (the capture path sees it)",
+               "reading_deferrals" in dbcore.writable_tables(sqlite3.connect(DB)), "")
+
+        # ── F4 + F7: merge-parameter folds a parameter in. Its deferral is the survivor's, with its original date, and a
+        # full reading it re-points onto the survivor discharges a deferral of the survivor's pair (a REAL merge, last) ──
+        if pair79:
+            fa, into = pair79
+            R12, R13 = src79("twelve"), src79("thirteen")
+            defer(R12, fa, "TASK-FIXTURE T079: a deferral on the folded parameter, kept with its age")
+            defer(R13, into, "TASK-FIXTURE T079: a deferral on the survivor's pair")
+            scan79(R13, "full", "targeted", fa)
+            w("UPDATE source_scans SET created_at='2000-01-01 00:00' WHERE ref_id=?", R13)       # HAND: older than the deferral
+            w("UPDATE reading_deferrals SET created_at='2001-02-03 04:05' WHERE ref_id=? AND parameter_id=?", R12, fa)   # HAND: an old obligation
+            at12 = q("SELECT created_at FROM reading_deferrals WHERE ref_id=? AND parameter_id=?", R12, fa)[0][0]
+            listed_before = bool(standing("reading", R13, into))
+            merged = db.merge_parameter(fa, into, "TASK-FIXTURE T079", S)
+            moved12 = standing("reading", R12, into)
+            gone13 = standing("reading", R13, into)
+            again12, again13 = defer(R12, into), defer(R13, into)
+            on_folded = defer(R12, fa)
+            record("T079-31", "after a merge, a deferral on the folded parameter lists as the survivor's with its original "
+                   "date (and the survivor cannot be deferred again); a full reading the merge re-points onto the survivor "
+                   "discharges a deferral of its pair; the folded parameter cannot be deferred",
+                   isinstance(merged, dict) and listed_before and len(moved12 or []) == 1 and moved12[0][4] == at12
+                   and gone13 == [] and again12 is not None and "already" in again12
+                   and again13 is not None and "full reading" in again13
+                   and on_folded is not None and "merged" in on_folded and str(into) in on_folded,
+                   f"{merged} before={listed_before} {moved12} at={at12} {gone13} {again12!r} {again13!r} {on_folded!r}")
+        else:
+            record("T079-31", "a merge case needs two active parameters with no live work", False, "none on the copy")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

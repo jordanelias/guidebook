@@ -21,7 +21,7 @@ run. Derive every figure; paste no counts.
 | `full` (default) | stage 1 | nothing |
 | `from-evidence` | stage 3 | discovery searching only; every later gate still applies |
 
-**Where a cell stands:** a run started mid-pipeline reads `python3 scripts/db.py cell-status --parameter-id <id> [--identity|--icf|--needs|--medical <code>] [--jurisdiction <code>] [--language <L>]` first (read-only): per stage, row ids held, examined and found empty, never examined and owed, so work already done is not repeated and work owed is not skipped.
+**Where a cell stands:** a run started mid-pipeline reads `python3 scripts/db.py cell-status --parameter-id <id> [--identity|--icf|--needs <code>] [--jurisdiction <code>] [--language <L>]` first (read-only): per stage, row ids held, examined and found empty, never examined and owed, so work already done is not repeated and work owed is not skipped.
 
 **Open once:** `/session-open` first (it sets `CURRENT` before the first Bash call), then
 `bash .claude/hooks/ensure-deps.sh`, then `/orient`. Work on a scratch DB (CLAUDE.md §4): `cp data/guidebook.db $S/guidebook.db`
@@ -40,8 +40,11 @@ guidebook is a thinking tool, not an authority. Describe and attribute; show der
 never call a value correct, safe or adequate.
 
 **Scope (OR-8, OR-12a, ledger 2026-10-30).** Exhaustion is per parameter, per bucket member (a jurisdiction **with its
-associated language**, a `lang_jur_map` row). In scope: P1+P2+P3 (ledger 2026-10-30 item 7; list in
-`workplan/2026-10-30-ramp-spec-pages/HANDOFF.md` §3); Arabic, Bengali, Hindi and Swahili are scoped out for now. What
+associated language**, a `lang_jur_map` row). Read it per parameter from `v_coverage_parameter_via_admission` (one row per active
+parameter and owed pair: `searches_ran_in_pair` says whether anything was searched there, `searches_reaching_parameter` and
+`sources_admitted` say what reached THIS parameter through a published, unsuperseded figure; a row with `searches_ran_in_pair` above 0
+and the rest 0 is searched and found nothing, not unsearched; `jurisdiction_registered` 0 is a pair no search can be logged in). In scope: P1+P2+P3 (ledger 2026-10-30 item 7; list in
+`workplan/2026-10-30-ramp-spec-pages/HANDOFF.md` §3); Arabic, Bengali, Hindi and Swahili are scoped out for now (the fill of `scope_status` is a data task: until it is recorded every pair is owed and the view carries their rows). What
 is owed has one home, the view `v_research_scope`: every `lang_jur_map` row not recorded `scoped-out` in `scope_status`
 (column added by migration 122; the view by migration 123); a NULL is owed, so an unrecorded scope never shrinks the requirement, and the fill of the column is a
 data PR. `db.py coverage --slug` reads it and reports slug_status and merged_into, pairs_required, pairs_searched, pairs_unsearched (the
@@ -55,7 +58,7 @@ editions only.** T4–T6 values are accepted as baselines; do not trace their hi
 
 ## 1. base — read before touching a source
 The catalogue every source is read against: `base_parameters` + `terms`/`term_aliases`, the lenses
-(`base_taxonomy_identity`, `access_needs`, `base_icf`, `base_taxonomy_medical` — empty until its owed rows land),
+(`base_taxonomy_identity`, `access_needs`, `base_icf`),
 `slugs`, `lang_jur_map`. Codes AND names; no bare axis codes or population umbrellas.
 - **Equivalence before minting.** Search terms and aliases first. A phrase a source uses for a term we hold is an
   alias, reached only through the chain `observe-term` (its `--context-quote` must be found byte-for-byte in a file
@@ -137,7 +140,13 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   blocked. A full reading outranks the block (the pair reads READ-NOTHING-FOUND, or EXTRACTED once a row is written). A
   partial, fragment or abstract reading does not: the pair reads `BLOCKED` with that reading's scan beside it, which is not
   reading debt. "Abstract read, full text paywalled" is recorded as the abstract `record-scan` plus the reason, and the
-  full text stays owed while it can be obtained (Wayback first, CLAUDE.md §7). The writers refuse the two values that
+  full text stays owed while it can be obtained (Wayback first, CLAUDE.md §7). A reading put off on purpose, with the text
+  obtainable, is `defer-reading --ref-id … [--parameter …] --reason …` (no `--parameter`: the whole-source catalogue reading);
+  the pair stays owed in the ledger and the deferral lists in `v_deferred_acts` with the date it was first recorded. It
+  ends, with no write to the deferral, when nothing is owed any longer: `full` readings cover the pair (every active
+  parameter, for a whole-source deferral), or the ledger reads the source `BLOCKED`. A merged parameter's deferral is its
+  survivor's and a superseded source's is its successor's, with the same date. The verb refuses a source the ledger reads
+  `BLOCKED` and a pair a `full` reading covers. The writers refuse the two values that
   restate a typed fact: `no-quantified-claims` (a source read with nothing found is the reading, `record-scan
   --text-scope full`, and no extraction row; the ledger derives READ-NOTHING-FOUND from that) and `superseded` (the typed
   home is `evidence_sources.superseded_by_ref_id`, written by `supersede-source --ref-id A --by B --reason …`).
@@ -183,7 +192,7 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
 *(Your "evidence stage" adjudication lives here: CLAUDE.md §6 records the owner's 2026-08-27 ruling that the lens
 crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map.yaml` change.)*
 - `adjudicate-term` for every observed phrase (`NOT-OURS` and `DEFERRED` are answers). `add-extraction` per stated
-  figure: parameter, at least one lens (`--identity`, `--icf` code and name, `--needs`, `--medical`; an extraction
+  figure: parameter, at least one lens (`--identity`, `--icf` code and name, `--needs`; an extraction
   is stated in at least one lens, D-0182). Each flag repeats, one link per code in `extraction_lens_links` (the
   figure's own lens columns are held NULL), and `--lens-basis` with `--lens-basis-text` (the figure's own words that
   name the group) are required; a code with a different warrant, or a judged one that replaces a carried link, is
@@ -207,12 +216,14 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   cannot place on a scale (`8.33%`, `1/12`, `12:1`, `1 in 12`, a decimal comma, a non-ASCII digit, a bare number under
   `rise:run ratio`, `a:b` under another unit; the refusal names the fix); a value-supplying numerical row with no
   `--comparator`, also by `amend-extraction --field figure_role`; a `derived` figure that disagrees with its own base +
-  delta (`add-extraction`, `relate-extraction`, `amend-extraction`). The
+  delta (`add-extraction`, `relate-extraction`, `amend-extraction`). A stored figure whose value or unit the writer would now
+  refuse is reformatted in place with `amend-extraction --field claimed_value` (same numbers) and then `--field claimed_unit` (a
+  unit already in the cell), and an empty setting filled with `--field setting` (OR-3); a different figure is a second row. The
   exemption is accepted on a persisted page render, or on a source holding nothing decodable; the marker it writes
   names the renders, so the adversarial pass can check the locator against them; a
   byte-identical second row (a divergent reading is a contest, D-0168, and is written).
 - `relate-extraction` for comparators (`--cross-source <reason>` makes a condition drawn from another document an
-  explicit synthesis act; the quote verifies the from-source only), `derive-extraction` for computed figures,
+  explicit synthesis act; the quote verifies the from-source only), `derive-extraction` for computed figures (the comparator and the unit are its inputs'; a derived figure has no quote or locator of its own: its words and its place are its inputs', reached through its `derived_from` edges),
   `raise-follow-up` for doubtful rows — its `--reason` vocabulary is `extraction_follow_ups.reason` (`raise-follow-up
   --help` prints it, and says what each means: `absence-needs-tested-value` is only for a `claim_type='absent'` extraction whose tested value is still to find by backward citation mining; a doubt it cannot name is a GAP until the owner extends it).
 - `add-population-match` grades **identity only** (R13; children, general population, no participants are PROXY); ICF
@@ -259,7 +270,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
 
 ## 6. specification — the most accommodating value found, not the most common
 - The state is **computed**: `python3 scripts/assess/assess_cell.py --db $S/guidebook.db --emit-sql <file>
-  --parameter-id N --slug <slug> --identity|--icf|--needs|--medical <code> --session <STEM> --stamp <ISO instant>
+  --parameter-id N --slug <slug> --identity|--icf|--needs <code> --session <STEM> --stamp <ISO instant>
   [--report-json <file>]` per cell on the scratch DB (it takes `--db`, not `GUIDEBOOK_DB_PATH`; it writes the convergence
   row and the determination together; `--slug` names an existing topic, `SELECT slug FROM slugs`, and selects no
   evidence, and a slug that does not exist is refused). **A cell** is a parameter × the lens codes given (`specifications`' unique
@@ -289,8 +300,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
      the engine labels a code-only cell otherwise, that is an engine defect: tooling PR.
   3. The recorded rationale is the derivation (which sources, what they state, the rule version), not an endorsement.
 - `raise-determination-gate` caps a cell at provisional; with `--verdict QUESTION` (no source, no tier) it records an objection to a published cell, which flags the cell and never caps it.
-- Checks: `scripts/validate_evidence_state.py`, `scripts/audit/derivation_handshake_integrity.py`,
-  `scripts/audit/medical_lens_integrity.py`.
+- Checks: `scripts/validate_evidence_state.py`, `scripts/audit/derivation_handshake_integrity.py`.
 
 ## 7. render — read from the database at render time; commit nothing generated
 **Read first (merged PRs on the display of a specification item):** PR #205 (`workplan/2026-10-30-ramp-spec-pages/`:
@@ -359,7 +369,7 @@ examine nothing here, so run `--all` (measured against the ratcheting baseline) 
 fetches leave WebFetch ledger lines that `search_log_completeness` reads.
 
 ## Resume and exceptions
-Resume from live state, not memory: `/orient`; unadjudicated observations (`observed_terms` with no
+Resume from live state, not memory: `/orient`; deferred acts, with their age (`select * from v_deferred_acts order by deferred_at`: searches, mining passes, readings, and observations whose latest adjudication is `DEFERRED`); unadjudicated observations (`observed_terms` with no
 `term_adjudications` row); `scripts/audit/scan_debt.py`; open follow-ups (`extraction_follow_ups` with `resolved_at`
 NULL); parameters with extractions and no live specification (`specifications` with `retired_at IS NULL`; "best
 practice" is the `v_best_practice` subset); terms adjudicated `NAMES-NEW` that are neither a parameter nor declined
@@ -370,3 +380,5 @@ rows. A blocked source: Wayback, else admit UNVERIFIED with its `--processing-bl
 a completed unit of work. Finish: `scripts/preflight.sh` once, `run_checks.py --selftest` after any rename, commit
 scratchpad and transcripts (rule 6), open the PR last and unsubscribe_pr_activity at once (rule 9); research rows
 and tooling ship in separate PRs (rule 10).
+
+**When a writer refuses** (Layer 2 protocol; the capture is Layer 1, the `/batch-done` rule Layer 0): acknowledge (correct the call and write the row, if the refusal was right), or refuse-and-park (keep the refused argv, file a gap naming what is held back and go on: the batch is not held up), then replay (the parked content is written through the sanctioned writer in a later research PR, after the tooling PR that closes the gap has merged, rule 10). Never write the row by hand: the content waits in the refusal record, not in the database (`CLAUDE.md` rules 3 and 10; OD-54 is open). Every refusal a writer makes under the running `--session` is kept, its sentence and its argv, in `scratchpad/<session>/refusals.jsonl` of the checkout the writer ran from (a writer run from a worktree records into that worktree's scratchpad, under that worktree's `scratchpad/CURRENT`): a refusal, a usage error (an unknown vocabulary term is one: park it) and a crash. A script that takes no `--session`, or whose errors are not routed (`emit_batch_sql.py`, `migrate_db.py`, `retrieval_log.py`, `page_image.py`), and full_text.py's `NOTHING TO DERIVE` exit, its several-derivable-files exit and its missing-reader exit, keep nothing: read the message on the terminal. `python3 scripts/audit/refusal_register.py list` shows what the batch met (it exits 2, NOT RUN, when `scratchpad/CURRENT` names no existing `session_YYYY-MM-DD-...` folder) and `dispose` records what became of each by its id: retried (the corrected call succeeded), parked (with the gap's id, which `list` checks again each time: a closed gap puts the refusal back) or waived (with a reason of at least ten characters).

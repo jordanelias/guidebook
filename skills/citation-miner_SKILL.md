@@ -133,6 +133,8 @@ confirms a Tier 1–3 source:
    judgement that call needs is this skill's business: `deferred_reason` is one column
    while `backward`/`forward` are two, so a backward pass cannot tell whether the
    deferral on the row was its own. Decide, then say so with `--discharge-deferral`.
+   A pass logged for another slug does not discharge it either: `v_deferred_acts` lists a mining deferral for as long as
+   its own row holds the `deferred_reason`, and that pass's reply names the deferral that still stands.
    For what each flag does, run `python3 scripts/db.py log-mining --help` — **derive it
    there, never from this file.** (`gap-driven-mining_SKILL.md` records what copying
    costs: it instructed sessions to run a subcommand that never existed.)

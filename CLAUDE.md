@@ -35,7 +35,7 @@ python3 scripts/run_checks.py --selftest                   # AFTER ANY RENAME �
 
 Never re-run a check when nothing it reads has changed since its last run. Use `--battery <name> --kinds <kinds>`
 (or `--battery <name> --changed-from origin/main`) to answer a targeted question: `--battery` alone exits 2, the form runs the
-battery's checks of those kinds only (read `selected N of M`: a misspelt name selects 0 and still prints PASS), and `--all --battery <name>` runs the whole battery. Before trusting a green result, ask whether that check could have gone
+battery's checks of those kinds only (a misspelt `--battery` or `--level` name exits 2, and a selection that matches no check exits 2 as NOTHING-SELECTED; still read `selected N of M`), and `--all --battery <name>` runs the whole battery. Before trusting a green result, ask whether that check could have gone
 red on the defect in front of you. A check that is red on untouched `main`, or one that examined
 nothing, tells you nothing about your diff.
 
@@ -101,7 +101,8 @@ object as unproven, not clean.**
 *"It is better to have a table cell point to another table cell than to rewrite."* Each stage holds
 only its own data; anything earlier is reached by pointer on the shared reference ID.
 **A parity check is not a fix** — it makes a dual home survivable, therefore permanent. **A column a
-committed data migration INSERTs can never be dropped**: grep `scripts/migrations/data_*` first, then
+committed data migration INSERTs can be dropped only by a schema migration the replay plan orders after every one of them**
+(`migrate_db.build_plan()`; an `-- AFTER_DATA:` line places it): grep `scripts/migrations/data_*` first, then
 writer-retire, reader-retire, NULL forward.
 → **NOT ENFORCED — you are the gate.**
 
@@ -372,8 +373,9 @@ judgment. Zero links **after judgment** is a defect. Only Opus-class models writ
 **Both halves of the determination's key are RULED.**
 
 - **Lens.** Owner ruling 2026-08-28 (`references/project-standards.md`): any table attaching a
-  determination to a group of disabled people takes **four lens columns, one CHECK, real FKs, and
-  `population_code` is retired in favour of the four**. D-0182 relaxed that CHECK from "exactly one"
+  determination to a group of disabled people takes **three lens columns (identity, ICF, access need), one CHECK, real FKs, and
+  `population_code` is retired in favour of them**. The ruling named four; the owner deleted the fourth, the medical
+  lens, on 2026-11-16 (ledger entry of that date; migration 138). D-0182 relaxed that CHECK from "exactly one"
   to **at least one** (`COALESCE(...) IS NOT NULL`), which migration 065 built.
 - **Subject.** Owner ruling **2026-08-26** (`grep -n 'judgment object is the'
   references/project-standards.md`): *"The judgment object is the **canonical parameter**, and

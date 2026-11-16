@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-11-15 23:23 UTC from git HEAD 3bb08c10 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-11-16 22:25 UTC from git HEAD e045739c (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
- "user_version": 136,
+ "user_version": 142,
  "stages": [
   "base",
   "research",
@@ -188,24 +188,6 @@
     "updated_at",
     "superseded_by_need",
     "superseded_by_identity"
-   ]
-  },
-  "base_taxonomy_medical": {
-   "stage": "base",
-   "rows": 0,
-   "writers": [
-    "add-medical"
-   ],
-   "cols": [
-    "medical_code",
-    "display_name",
-    "description",
-    "status",
-    "notes",
-    "created_at",
-    "created_by_session",
-    "icd11_anchors",
-    "icd11_verified_at"
    ]
   },
   "case_studies": {
@@ -426,7 +408,6 @@
     "identity_code",
     "icf_code",
     "needs_code",
-    "medical_code",
     "verdict",
     "trigger_ref_id",
     "trigger_tier",
@@ -679,7 +660,6 @@
     "identity_code",
     "icf_code",
     "needs_code",
-    "medical_code",
     "basis",
     "basis_text",
     "retired_at",
@@ -765,25 +745,8 @@
     "identity_code",
     "icf_code",
     "needs_code",
-    "medical_code",
     "jurisdiction",
     "language"
-   ]
-  },
-  "icf_medical_map": {
-   "stage": "base",
-   "rows": 0,
-   "writers": [
-    "add-medical"
-   ],
-   "cols": [
-    "icf_code",
-    "medical_code",
-    "role",
-    "mapping_confidence",
-    "notes",
-    "created_at",
-    "created_by_session"
    ]
   },
   "identity_icf_map": {
@@ -806,21 +769,6 @@
     "retired_at",
     "retired_by_session",
     "retired_reason"
-   ]
-  },
-  "identity_medical_map": {
-   "stage": "base",
-   "rows": 0,
-   "writers": [
-    "add-medical"
-   ],
-   "cols": [
-    "identity_code",
-    "medical_code",
-    "relationship",
-    "notes",
-    "created_at",
-    "created_by_session"
    ]
   },
   "lang_jur_map": {
@@ -887,6 +835,21 @@
     "revoked_at",
     "revoked_by_session",
     "revocation_reason"
+   ]
+  },
+  "reading_deferrals": {
+   "stage": "evidence",
+   "rows": 0,
+   "writers": [
+    "defer-reading"
+   ],
+   "cols": [
+    "deferral_id",
+    "ref_id",
+    "parameter_id",
+    "reason",
+    "created_at",
+    "created_by_session"
    ]
   },
   "reasoning_doc_citations": {
@@ -1085,7 +1048,6 @@
     "identity_code",
     "icf_code",
     "needs_code",
-    "medical_code",
     "absence_class",
     "gap_id"
    ]
@@ -1199,7 +1161,6 @@
     "identity_code",
     "icf_code",
     "needs_code",
-    "medical_code",
     "jurisdiction",
     "setting",
     "claim_type",
@@ -1284,7 +1245,6 @@
     "identity_code",
     "icf_code",
     "needs_code",
-    "medical_code",
     "state",
     "design_scale",
     "convergence_id",
@@ -1584,12 +1544,6 @@
   },
   {
    "child": "determination_gates",
-   "col": "medical_code",
-   "parent": "base_taxonomy_medical",
-   "notnull": false
-  },
-  {
-   "child": "determination_gates",
    "col": "needs_code",
    "parent": "access_needs",
    "notnull": false
@@ -1644,12 +1598,6 @@
   },
   {
    "child": "extraction_lens_links",
-   "col": "medical_code",
-   "parent": "base_taxonomy_medical",
-   "notnull": false
-  },
-  {
-   "child": "extraction_lens_links",
    "col": "needs_code",
    "parent": "access_needs",
    "notnull": false
@@ -1692,12 +1640,6 @@
   },
   {
    "child": "gaps",
-   "col": "medical_code",
-   "parent": "base_taxonomy_medical",
-   "notnull": false
-  },
-  {
-   "child": "gaps",
    "col": "needs_code",
    "parent": "access_needs",
    "notnull": false
@@ -1721,18 +1663,6 @@
    "notnull": false
   },
   {
-   "child": "icf_medical_map",
-   "col": "medical_code",
-   "parent": "base_taxonomy_medical",
-   "notnull": true
-  },
-  {
-   "child": "icf_medical_map",
-   "col": "icf_code",
-   "parent": "base_icf",
-   "notnull": true
-  },
-  {
    "child": "identity_icf_map",
    "col": "icf_code",
    "parent": "base_icf",
@@ -1740,18 +1670,6 @@
   },
   {
    "child": "identity_icf_map",
-   "col": "identity_code",
-   "parent": "base_taxonomy_identity",
-   "notnull": true
-  },
-  {
-   "child": "identity_medical_map",
-   "col": "medical_code",
-   "parent": "base_taxonomy_medical",
-   "notnull": true
-  },
-  {
-   "child": "identity_medical_map",
    "col": "identity_code",
    "parent": "base_taxonomy_identity",
    "notnull": true
@@ -1767,6 +1685,18 @@
    "col": "term_id",
    "parent": "terms",
    "notnull": false
+  },
+  {
+   "child": "reading_deferrals",
+   "col": "parameter_id",
+   "parent": "base_parameters",
+   "notnull": false
+  },
+  {
+   "child": "reading_deferrals",
+   "col": "ref_id",
+   "parent": "evidence_sources",
+   "notnull": true
   },
   {
    "child": "reasoning_doc_citations",
@@ -1850,12 +1780,6 @@
    "child": "search_executions",
    "col": "gap_id",
    "parent": "gaps",
-   "notnull": false
-  },
-  {
-   "child": "search_executions",
-   "col": "medical_code",
-   "parent": "base_taxonomy_medical",
    "notnull": false
   },
   {
@@ -1950,12 +1874,6 @@
   },
   {
    "child": "source_value_extractions",
-   "col": "medical_code",
-   "parent": "base_taxonomy_medical",
-   "notnull": false
-  },
-  {
-   "child": "source_value_extractions",
    "col": "needs_code",
    "parent": "access_needs",
    "notnull": false
@@ -2034,12 +1952,6 @@
   },
   {
    "child": "specifications",
-   "col": "medical_code",
-   "parent": "base_taxonomy_medical",
-   "notnull": false
-  },
-  {
-   "child": "specifications",
    "col": "needs_code",
    "parent": "access_needs",
    "notnull": false
@@ -2112,30 +2024,6 @@
    "parent_written_by_same_verb": [
     "add-connection",
     "delete-connection"
-   ]
-  },
-  {
-   "child": "icf_medical_map",
-   "col": "medical_code",
-   "parent": "base_taxonomy_medical",
-   "notnull": true,
-   "verbs_child": [
-    "add-medical"
-   ],
-   "parent_written_by_same_verb": [
-    "add-medical"
-   ]
-  },
-  {
-   "child": "identity_medical_map",
-   "col": "medical_code",
-   "parent": "base_taxonomy_medical",
-   "notnull": true,
-   "verbs_child": [
-    "add-medical"
-   ],
-   "parent_written_by_same_verb": [
-    "add-medical"
    ]
   }
  ],
@@ -2222,6 +2110,24 @@
    "crosses": true,
    "rows": 35
   },
+  "v_coverage_parameter_via_admission": {
+   "reads": [
+    "base_jurisdictions",
+    "base_parameters",
+    "evidence_sources",
+    "search_admissions",
+    "search_executions",
+    "source_value_extractions"
+   ],
+   "stages": [
+    "base",
+    "evidence",
+    "judgment",
+    "research"
+   ],
+   "crosses": true,
+   "rows": 700
+  },
   "v_coverage_priority": {
    "reads": [
     "base_jurisdictions",
@@ -2234,6 +2140,25 @@
    ],
    "crosses": true,
    "rows": 7189
+  },
+  "v_deferred_acts": {
+   "reads": [
+    "base_parameters",
+    "citation_mining",
+    "evidence_sources",
+    "observed_terms",
+    "reading_deferrals",
+    "search_executions",
+    "term_adjudications"
+   ],
+   "stages": [
+    "base",
+    "evidence",
+    "judgment",
+    "research"
+   ],
+   "crosses": true,
+   "rows": 36
   },
   "v_derived_figure_check": {
    "reads": [
@@ -2347,6 +2272,12 @@
    ],
    "crosses": true,
    "rows": 0
+  },
+  "v_reading_owed": {
+   "reads": [],
+   "stages": [],
+   "crosses": false,
+   "rows": 520
   },
   "v_registry_duplicate_descriptions": {
    "reads": [
@@ -2570,13 +2501,6 @@
    "status": [
     "active",
     "deprecated"
-   ]
-  },
-  "base_taxonomy_medical": {
-   "status": [
-    "active",
-    "deprecated",
-    "superseded"
    ]
   },
   "case_studies": {
@@ -2867,31 +2791,11 @@
     "TRIAGE-NEEDED"
    ]
   },
-  "icf_medical_map": {
-   "role": [
-    "PRIMARY",
-    "SECONDARY",
-    "SITUATIONAL"
-   ],
-   "mapping_confidence": [
-    "high_predictive",
-    "moderate",
-    "low",
-    "minimal"
-   ]
-  },
   "identity_icf_map": {
    "mapping_confidence": [
     "high_predictive",
     "moderate_contextual",
     "low_indicative"
-   ]
-  },
-  "identity_medical_map": {
-   "relationship": [
-    "names",
-    "member_of",
-    "identity_first"
    ]
   },
   "lang_jur_map": {
@@ -3625,6 +3529,18 @@
    },
    "refusals": 12
   },
+  "defer-reading": {
+   "functions": [
+    "_emit",
+    "defer_reading"
+   ],
+   "writes": {
+    "reading_deferrals": [
+     "INSERT"
+    ]
+   },
+   "refusals": 11
+  },
   "retire-parameter": {
    "functions": [
     "_emit",
@@ -3700,7 +3616,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 30
+   "refusals": 31
   },
   "mint-term-from-catalogue": {
    "functions": [
@@ -3894,23 +3810,6 @@
    },
    "refusals": 3
   },
-  "add-medical": {
-   "functions": [
-    "insert_medical"
-   ],
-   "writes": {
-    "base_taxonomy_medical": [
-     "INSERT"
-    ],
-    "icf_medical_map": [
-     "INSERT"
-    ],
-    "identity_medical_map": [
-     "INSERT"
-    ]
-   },
-   "refusals": 11
-  },
   "add-extraction": {
    "functions": [
     "_build_relation_groups",
@@ -3928,7 +3827,7 @@
      "INSERT"
     ]
    },
-   "refusals": 28
+   "refusals": 30
   },
   "relate-extraction": {
    "functions": [
@@ -3954,7 +3853,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 9
+   "refusals": 12
   },
   "add-lens-link": {
    "functions": [
@@ -3997,7 +3896,7 @@
      "INSERT"
     ]
    },
-   "refusals": 5
+   "refusals": 8
   },
   "adjudicate-term": {
    "functions": [
@@ -4127,7 +4026,7 @@
      "INSERT"
     ]
    },
-   "refusals": 20
+   "refusals": 22
   },
   "add-source": {
    "functions": [
@@ -4202,6 +4101,7 @@
   },
   "add-supersession-check": {
    "functions": [
+    "_json_refusal",
     "add_supersession_check",
     "_emit"
    ],
@@ -4214,6 +4114,7 @@
   },
   "add-gap-mining": {
    "functions": [
+    "_json_refusal",
     "add_gap_mining",
     "_emit"
    ],
@@ -4267,6 +4168,36 @@
    "evidence": {
     "connection_targets": [
      "identity_code"
+    ],
+    "determination_gates": [
+     "identity_code",
+     "icf_code",
+     "needs_code"
+    ],
+    "extraction_lens_links": [
+     "identity_code",
+     "icf_code",
+     "needs_code"
+    ],
+    "gaps": [
+     "identity_code",
+     "icf_code",
+     "needs_code"
+    ],
+    "search_executions": [
+     "identity_code",
+     "icf_code",
+     "needs_code"
+    ],
+    "source_value_extractions": [
+     "identity_code",
+     "icf_code",
+     "needs_code"
+    ],
+    "specifications": [
+     "identity_code",
+     "icf_code",
+     "needs_code"
     ]
    }
   },
@@ -4334,7 +4265,7 @@
     "LED-166"
    ],
    "evidence": {
-    "icf_typed_columns_examined": 11,
+    "icf_typed_columns_examined": 10,
     "icf_columns_holding_AX": {},
     "AX_elsewhere_not_tested_by_this_ruling": {
      "access_need_icf.notes": 3,
@@ -4425,8 +4356,7 @@
     "lens_columns_on_search_executions": [
      "identity_code",
      "icf_code",
-     "needs_code",
-     "medical_code"
+     "needs_code"
     ],
     "tables": [
      "search_executions"
@@ -4565,7 +4495,7 @@
    "evidence": {}
   },
   "P-GT": {
-   "verdict": "PASS",
+   "verdict": "FAIL",
    "tests": "determination_gates carries all four lens columns",
    "atoms": [
     "LED-128"
@@ -4574,8 +4504,7 @@
     "lens_columns": [
      "identity_code",
      "icf_code",
-     "needs_code",
-     "medical_code"
+     "needs_code"
     ]
    }
   },
@@ -4645,21 +4574,6 @@
     "pairs": [],
     "with_a_db_py_verb": [],
     "parent_written_by_same_verb": {}
-   }
-  },
-  "P-MEDICAL": {
-   "verdict": "FAIL",
-   "tests": "a medical-lens value can be written (the lens registry holds a row)",
-   "atoms": [
-    "LED-154",
-    "LED-156",
-    "DRS-229"
-   ],
-   "evidence": {
-    "base_taxonomy_medical_rows": 0,
-    "writer_verbs": [
-     "add-medical"
-    ]
    }
   },
   "P-CO1-TYPE": {
@@ -4843,7 +4757,7 @@
  "capabilities": {
   "C1": {
    "name": "Mine one source across many parameters",
-   "overall": "BLOCKED",
+   "overall": "CAN",
    "predicates": [
     {
      "id": "C1.1",
@@ -4892,16 +4806,6 @@
      "atoms": [
       "LED-195",
       "LED-199"
-     ]
-    },
-    {
-     "id": "C1.6",
-     "says": "a value can be stated in every lens, including the medical lens",
-     "verdict": "FAIL",
-     "why": "P-MEDICAL = FAIL",
-     "atoms": [
-      "LED-110",
-      "LED-154"
      ]
     },
     {
@@ -5142,27 +5046,27 @@
  "capabilities_comparison": null,
  "examined": {
   "atoms in all (structure checked)": 2598,
-  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 361,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 351,
   "distinct quotes among all atoms": 2566,
   "status corrections owed (each atom's status re-read)": 12,
-  "conflicts (atoms, class, probe exist)": 32,
+  "conflicts (atoms, class, probe exist)": 31,
   "machine transitions": 43,
-  "transition evidence needles re-read": 74,
+  "transition evidence needles re-read": 76,
   "state vocabularies compared with a column's own CHECK": 11,
   "abstract machines (no single column holder)": 5,
-  "capability predicates": 28,
-  "probes run": 33,
-  "probes linted for a reachable PASS": 33,
-  "tables placed in a stage": 59
+  "capability predicates": 27,
+  "probes run": 32,
+  "probes linted for a reachable PASS": 32,
+  "tables placed in a stage": 57
  },
  "atoms_by_status": {
-  "ACTIVE": 2212,
-  "SUPERSEDED": 87,
+  "ACTIVE": 2211,
+  "SUPERSEDED": 88,
   "AMENDED": 73,
   "OPEN": 71,
   "PROPOSED": 129,
   "HISTORICAL": 26
  },
  "atoms_total": 2598,
- "conflicts_total": 32
+ "conflicts_total": 31
 }

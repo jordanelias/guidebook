@@ -33,7 +33,6 @@ capabilities:
       - {id: C1.3, kind: probe, probe: P-W, says: "one source can be harvested for more than one sense of the same phrase", atoms: [LED-197]}
       - {id: C1.4, kind: probe, probe: P-V2, says: "an extraction can be filed under a slug other than the one the source was admitted to", atoms: [LED-196, LED-201]}
       - {id: C1.5, kind: probe, probe: P-V, says: "a record exists of which parameters a source has been read for", atoms: [LED-195, LED-199]}
-      - {id: C1.6, kind: probe, probe: P-MEDICAL, says: "a value can be stated in every lens, including the medical lens", atoms: [LED-110, LED-154]}
       - {id: C1.7, kind: vocab, table: source_value_extractions, column: claim_type, value: qualitative, says: "arguments and qualitative findings can be captured as well as numbers", atoms: [SES-022, SES-023]}
       - {id: C1.8, kind: probe, probe: P-M, says: "a search records which slug x lens cells it covered", atoms: [LED-084, RES-04]}
 
@@ -89,7 +88,7 @@ components:
   - {name: "Term harvest (observe-term)", stage: evidence, C1: YES, C2: YES, C3: "--", C4: "--", note: "records any phrase a source uses, any number per source, unjudged; the entry point for new vocabulary."}
   - {name: "Adjudication and minting (adjudicate-term, add-term)", stage: judgment, C1: "--", C2: YES, C3: "--", C4: "--", note: "the only route from a phrase to a term; divergent judgments are allowed to stand as a contest."}
   - {name: "Parameter registry (add-parameter, decline-parameter, set-parameter-direction)", stage: base, C1: "--", C2: PARTIAL, C3: "--", C4: PARTIAL, note: "creates and declines; on the main tree nothing retires or merges a parameter (C2.5). Direction is the judgment the engine cannot make."}
-  - {name: "Lens registries (populations, base_icf, access_needs, base_taxonomy_medical)", stage: base, C1: PARTIAL, C2: PARTIAL, C3: "--", C4: PARTIAL, note: "add-extraction refuses a lens code whose registry is empty; the medical registry is empty (C1.6) and several base tables have no verb (C2.8)."}
+  - {name: "Lens registries (populations, base_icf, access_needs)", stage: base, C1: PARTIAL, C2: PARTIAL, C3: "--", C4: PARTIAL, note: "add-extraction refuses a lens code whose registry is empty; several base tables have no verb (C2.8)."}
   - {name: "Extraction (add-extraction, derive-extraction, amend-extraction)", stage: judgment, C1: PARTIAL, C2: "--", C3: PARTIAL, C4: YES, note: "one parameter per call; refuses a slug the source was not admitted to (C1.4); requires a lens; is what the engine gathers by parameter."}
   - {name: "Scan ledger (source_scans, v_scan_ledger)", stage: judgment, C1: "NO (main) / YES (unreleased branch)", C2: "--", C3: "--", C4: "--", note: "the (source x parameter) read-state record the scan contract needs; absent from the main tree (C1.5)."}
   - {name: "Determination engine (assess_cell)", stage: specification, C1: "--", C2: "--", C3: PARTIAL, C4: YES, note: "computes state per (parameter x one lens) cell per run and emits SQL; combines sources within a cell, not across parameters (C3.5); cannot reach a determination from findings plus a threshold (C3.4)."}

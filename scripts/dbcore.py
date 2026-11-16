@@ -34,11 +34,15 @@ That relative hop is the one piece of boilerplate consolidation cannot remove. I
 3-6 lines of per-file path/root/connect duplication and is identical everywhere but `N`.
 """
 
+import argparse
 import functools
+import json
 import os
 import re
 import sqlite3
 import subprocess
+import sys
+import uuid
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from fractions import Fraction
@@ -926,6 +930,132 @@ def next_ref_id(conn) -> str:
 
 
 # ---------------------------------------------------------------------------
+# The refusal record (T-088) — what a writer said no to, kept beside the batch that met it.
+# ---------------------------------------------------------------------------
+
+# What CLAUDE.md section 7 says `scratchpad/CURRENT` holds. No path separator, so a stem can never leave `scratchpad/`.
+SESSION_STEM = re.compile(r"session_\d{4}-\d\d-\d\d[\w.-]*", re.ASCII)
+
+# A flag whose NAME carries one of these WORDS (split on `-` and `_`, any case) has a secret for its value. Whole words, not
+# substrings: `--tokens 5`, `--author` and `--pass-id` (real flags) are not secrets. `p` is `-p`.
+_SECRET_WORDS = frozenset("token secret passwd password passphrase pwd credential credentials auth authorization key "
+                          "apikey pat bearer cookie p".split())
+
+_NOT_PATH = r"(?<![\w/.:~-])"      # a private path is rewritten only where a path STARTS: never inside a URL or a word
+_SCRUBS = (                         # (pattern, replacement), applied in this order to every stored string
+    (re.compile(r"(?<![\w/.:~-])/tmp/claude-\d+/-[^/\s'\"]*(?:/[0-9a-f]{8}-[0-9a-f-]{27})?"), "<scratch>"),
+    (re.compile(r"(\bhttps?://)[^/\s@'\"]+@"), r"\1<redacted>@"),
+    (re.compile(r"(\bhttps?://[^\s?'\"<>]*)\?[^\s'\"<>]*"), r"\1?<redacted>"),
+    (re.compile(r"(\bauthorization\s*[:=]\s*)(?:[A-Za-z]+\s+)?[^\s'\"]+", re.I), r"\1<redacted>"),
+    (re.compile(r"(\bbearer\s+)[^\s'\"]+", re.I), r"\1<redacted>"),
+    (re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+"), "<email>"),
+    (re.compile(_NOT_PATH + r"(?:/home/[^/\s'\"\\]+|/Users/[^/\s'\"\\]+|/root(?![\w-])|[A-Za-z]:\\Users\\[^\\\s'\"]+|~[A-Za-z_][\w.-]*)"), "~"),
+)
+
+
+def _secret_flag(tok):
+    """Whether `tok` is a flag (`--api_key`, `--auth=`, `-p`) whose value is a secret."""
+    return tok.startswith("-") and bool(_SECRET_WORDS & set(re.split(r"[-_]", tok.lstrip("-").partition("=")[0].lower())))
+
+
+def _secrets(argv):
+    """The values the secret-named flags of `argv` carry (`--x v` and `--x=v`)."""
+    out = set()
+    for i, tok in enumerate(argv):
+        if _secret_flag(tok):
+            name, eq, val = tok.partition("=")
+            nxt = argv[i + 1] if i + 1 < len(argv) else ""
+            out.add(val if eq else ("" if nxt.startswith("-") else nxt))
+    return out - {""}
+
+
+def _scrub(text, secrets=()):
+    """Nothing private reaches a line a pull request publishes (the repository is public and `scratchpad/` is committed).
+    ONE function for argv, sentence and db: every redacted VALUE wherever it recurs, URL queries and userinfo, an
+    Authorization or Bearer value, an email address, this repository's root (relative), a home or harness path (only
+    where a path starts: `https://x/home/y`, `/var/root/x` and `/root-dir` are left alone)."""
+    t = str(text)
+    for v in sorted(secrets, key=len, reverse=True):
+        t = re.sub(r"(?<!\w)" + re.escape(v) + r"(?!\w)", "<redacted>", t)
+    t = re.sub(_NOT_PATH + re.escape(str(REPO_ROOT)) + r"(/|(?![\w.-]))", lambda m: "" if m.group(1) == "/" else ".", t)
+    for pat, repl in _SCRUBS:
+        t = pat.sub(repl, t)
+    return t
+
+
+def _flag_value(argv, flag):
+    """The LAST value `--flag V` or `--flag=V` gives in `argv` (argparse takes the last), or None. Any prefix of `flag`
+    counts, as argparse allows (`--s`): the smallest one argparse could accept, so a record is never missed. Whether it
+    IS the flag is the caller's to check (`record_refusal` compares the value with the running session)."""
+    found = None
+    for i, tok in enumerate(argv):
+        name, eq, val = tok.partition("=")
+        if name.startswith("--") and name != "--" and flag.startswith(name):
+            found = val if eq else (argv[i + 1] if i + 1 < len(argv) else None)
+    return found
+
+
+def append_line(path, text):
+    """Append `text` as one line to `path`, starting a new line first when the file does not end with one (an interrupted
+    write must not glue the next record onto its stump). Bytes that are not UTF-8 are written as `\\udcXX` escapes."""
+    with open(path, "ab+") as fh:
+        lead = b""
+        if fh.seek(0, 2):
+            fh.seek(-1, 2)
+            lead = b"" if fh.read(1) == b"\n" else b"\n"
+        fh.write(lead + text.encode("utf-8", "backslashreplace") + b"\n")
+
+
+def record_refusal(script, argv, sentence, session=None, db=None):
+    """Keep one writer refusal in `scratchpad/<running session>/refusals.jsonl`; never raises.
+
+    Called at every place a writer says no, before it exits, so the sentence (the only record of what the batch held
+    and could not write) outlives the terminal. The session's command log keeps a hash of the output, not the words.
+    Captured only when the call's session IS the running one (`scratchpad/CURRENT`, a `session_YYYY-MM-DD-...` stem
+    whose folder exists under that exact name, CLAUDE.md section 7): a test or probe refusing under another session
+    would otherwise fill the batch's record with fixtures. `session` and `db` are what the caller's argparse parsed
+    (argparse takes abbreviations of any length); without them the argv is scanned for the smallest prefix argparse
+    could accept.
+
+    WHAT IS STORED, because the file is committed to a public repository (rule 6): `refusal_id` (a uuid: the key a
+    disposition names, since two refusals can share a `ts`), `ts` (to the microsecond), `session`, `script`, `verb`
+    (db.py's subcommand, else the script's own name), `argv` and `sentence` (both through `_scrub`) and `db` (a
+    repository-relative path, else `<outside-repo>/<file name>`). No output, no environment, no user name. The stage,
+    tables, rule ids and signature of a refusal are derived by its reader, never stored (rule 8).
+    """
+    try:
+        argv = [str(a) for a in argv]
+        stem = session_stem((REPO_ROOT / "scratchpad" / "CURRENT").read_text(encoding="utf-8-sig").strip())
+        given = session if session is not None else _flag_value(argv, "--session")
+        if not SESSION_STEM.fullmatch(stem) or session_stem(str(given)) != stem:
+            return
+        secrets, shown = _secrets(argv), db if db is not None else (_flag_value(argv, "--db") or db_path())
+        try:
+            shown = Path(str(shown)).resolve().relative_to(REPO_ROOT).as_posix()
+        except (ValueError, OSError):
+            shown = "<outside-repo>/" + re.split(r"[\\/]", str(shown))[-1]
+        line = {"refusal_id": uuid.uuid4().hex, "ts": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S.%f"),
+                "session": stem, "script": script,
+                "verb": argv[0] if script == "scripts/db.py" and argv else Path(script).stem,
+                "argv": [_scrub(a, secrets) for a in argv], "sentence": _scrub(sentence, secrets), "db": shown}
+        append_line(REPO_ROOT / "scratchpad" / stem / "refusals.jsonl", json.dumps(line, ensure_ascii=False))
+    except Exception:   # noqa: BLE001 -- the refusal's own message and exit are the product; the record is a courtesy
+        return
+
+
+class RecordingArgumentParser(argparse.ArgumentParser):
+    """An ArgumentParser whose usage error is kept like any other refusal, then said as argparse says it (same words,
+    same exit 2). The vocabularies are the schema's own CHECK, so `--category NEW-ONE` is a refusal to park, not noise.
+    Sub-parsers are this class too (`add_subparsers` builds `type(self)`)."""
+
+    def error(self, message):
+        parts = Path(sys.argv[0]).resolve().parts
+        script = "/".join(parts[len(parts) - 1 - parts[::-1].index("scripts"):]) if "scripts" in parts else parts[-1]
+        record_refusal(script, sys.argv[1:], message)
+        super().error(message)
+
+
+# ---------------------------------------------------------------------------
 # Refusal helpers — the CLI's value is that it REFUSES, and a refusal is only
 # trustworthy if its vocabulary is the live one.
 # ---------------------------------------------------------------------------
@@ -1141,7 +1271,7 @@ IDENTITY_FAMILY_SQL = ("(WITH RECURSIVE family AS (SELECT ? AS code UNION SELECT
                        "SELECT code FROM family)")
 
 
-LENS_ORDER = ("identity_code", "icf_code", "needs_code", "medical_code")
+LENS_ORDER = ("identity_code", "icf_code", "needs_code")
 
 
 def lens_differs(row, lens, family):
@@ -1459,8 +1589,8 @@ def check_jurisdiction(value, context: str):
 # seven: evidence_source_authors (where the 2026-08-19 author fabrication happened, so
 # the repair had to be hand-written through the same channel the fabrication entered
 # by), source_locators, observed_terms/term_adjudications, terms,
-# base_parameters/specifications, base_taxonomy_medical with the two medical crossing
-# maps, and extraction_relations. The eighth was found on 2026-09-13 by an audit and
+# base_parameters/specifications, the medical-lens tables (deleted 2026-11-16) with their
+# two crossing maps, and extraction_relations. The eighth was found on 2026-09-13 by an audit and
 # then immediately reproduced: the orchestrator added `specification_extraction_links`
 # in migration 077 and did not add it here — while reading the comment that recorded
 # the previous seven. Four further tables had been writable and invisible for longer

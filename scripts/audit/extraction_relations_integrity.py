@@ -172,8 +172,10 @@ def main() -> int:
     # d.claimed_unit = e.claimed_unit` and with GLOB tests for plain numerals. Every
     # other derived row is silently ABSENT from the view, so check 3 above reported
     # CLEAN over it having examined nothing -- and the excluded set is exactly the
-    # unit-converted rows, which `derive-extraction --claimed-unit --conversion-note`
-    # writes deliberately and which are the derived figures MOST likely to be wrong.
+    # unit-converted rows, which `derive-extraction` no longer writes (T-063: it refuses two
+    # units) but which can still arrive through `add-extraction`'s Python API, `relate-extraction`
+    # or `amend-extraction` with `derived_from` edges, and which are the derived figures MOST
+    # likely to be wrong.
     # Demonstrated by an adversarial pass 2026-09-13: a derived row stored as 999 cm
     # against a 0.3 m base+delta produced `VERDICT: CLEAN`.
     #

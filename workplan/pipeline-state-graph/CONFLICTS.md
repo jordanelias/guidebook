@@ -2,7 +2,7 @@
 
 _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjudicated disagreement between ACTIVE atoms, or between an atom and a measured mechanism; the mechanical detector's candidate pairs are not conflicts until they are written into `conflicts.yaml`. Nothing here is a ruling._
 
-32 entries. Severity: S1 11, S2 9, S3 12. Class: DOC-DOC 8, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 5, RULING-MECHANISM 12, RULING-RULING 3, UNRECORDED 1.
+31 entries. Severity: S1 10, S2 9, S3 12. Class: DOC-DOC 8, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 4, RULING-MECHANISM 12, RULING-RULING 3, UNRECORDED 1.
 
 ## Index
 
@@ -12,7 +12,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-005 | S1 | RULING-RULING | OWNER | -- | A T4-T6-only basis: never best-practice language, or weak-band best practice 'as currently known' |
 | C-017 | S1 | RULING-MECHANISM | OWNER | P-AXIS -> PASS, P-G -> PASS | 'Axes' is retired and its tables, column and check are dropped (step 1.4); the one-act sweep is partial and the documents still use the word |
 | C-019 | S1 | RULING-MECHANISM | OWNER | P-UNWRITABLE -> PASS | The item layer is deleted from the database (step 1.2) and is still the vocabulary of standing documents and process rules |
-| C-022 | S1 | RULING-DOC | OWNER+AGENT | P-MEDICAL -> FAIL | Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out |
 | C-028 | S1 | RULING-MECHANISM | OWNER+AGENT | P-QUARANTINE -> FAIL | Register invariants have no live gate (tier-consistency has one since step 1.6) |
 | C-032 | S1 | RULING-MECHANISM | OWNER+AGENT | P-V2 -> PASS | Scan contract (any source, all parameters, whatever slug) versus a writer that binds an extraction to the admitting slug |
 | C-034 | S1 | RULING-MECHANISM | AGENT | P-O -> FAIL | The vocabulary can grow only by add-term from an observation; several base tables have no sanctioned writer |
@@ -22,7 +21,7 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-013 | S2 | RULING-MECHANISM | AGENT | P-F -> FAIL | The tier verdict is a judgment output, but the tier column lives on evidence_sources and is written at admission |
 | C-014 | S2 | RULING-RULING | OWNER | -- | When does the crossing happen: at judgment, or is applicability a synthesis output? |
 | C-018 | S2 | RULING-MECHANISM | OWNER | P-C -> NOT-BUILT | 'We don't use the word population' -- the schema, the methodology and three DRs still do |
-| C-021 | S2 | RULING-MECHANISM | AGENT | P-GT -> PASS | determination_gates attaches to a group through one lens column |
+| C-021 | S2 | RULING-MECHANISM | AGENT | P-GT -> FAIL | determination_gates attaches to a group through one lens column |
 | C-023 | S2 | PROVENANCE | OWNER | -- | D-0184 (the lens is a column) is an agent decision awaiting owner review but is treated as binding |
 | C-031 | S2 | RULING-MECHANISM | AGENT | P-H -> FAIL | Retire in place requires every reader to filter status first -- some views do not |
 | C-036 | S2 | UNRECORDED | OWNER | P-LEDGER-GREP -> FAIL | Owner statements whose only home is a session record |
@@ -113,19 +112,6 @@ Atoms whose recorded status is behind a later statement. The atom files record e
   _atoms:_ `PRC-027`(act), `PRC-059`(act), `PRC-068`(act), `OPI-047`(ope), `OPI-048`(ame), `OPI-050`(act)
 
 **Direction.** Mechanism half executed: migration drop_item_layer_cluster dropped the tables, and the renderers that selected item_code went with step 1.1. Documents half OPEN: the rulings of 2026-08-26 and 2026-09-01 supersede the item-keyed sentences on contact, but RULINGS R36 assigns the edit of the taxonomy documents to an owner merge and no plan step makes it.
-
-## C-022 [S1] Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out
-
-**Class** RULING-DOC  ·  **Resolver** OWNER+AGENT  ·  **Confidence** high  ·  **Probe** `P-MEDICAL` = **FAIL**
-
-- D-0184 (2026-09-01, an agent decision awaiting owner review, C-023): populating base_taxonomy_medical is 'the owner's alone' (DG-NON).  
-  _atoms:_ `DRS-194`(act)
-- owner, 2026-09-11 (quoted): 'Fable 5.1 to adjudicate and resolve all items that are presented to me ... Ensure that medical gets filled out.'  
-  _atoms:_ `LED-154`(act), `DRS-229`(act), `DRS-231`(act)
-- D-0188's own text limits the delegation to the 'enumerated items and no further' -- which may be narrower than the owner's 'all items that are presented to me', depending on what was presented.  
-  _atoms:_ `DRS-232`(act), `DRS-233`(act)
-
-**Direction.** Rule 0: the owner's words of 2026-09-11 outrank D-0184's reservation to the extent of those words ('all items that are presented to me'; 'ensure that medical gets filled out'). D-0188's 'enumerated items and no further' is the agent's text and may be narrower than the owner's; whether that narrowing is intended is the owner's to confirm. Mechanism: add-extraction refuses a lens code whose registry table is empty; P-MEDICAL shows the medical registry empty although its writer (add-medical) exists. The instruction has not been executed.
 
 ## C-028 [S1] Register invariants have no live gate (tier-consistency has one since step 1.6)
 
@@ -244,14 +230,12 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 
 ## C-021 [S2] determination_gates attaches to a group through one lens column
 
-**Class** RULING-MECHANISM  ·  **Resolver** AGENT  ·  **Confidence** medium  ·  **Probe** `P-GT` = **PASS**
+**Class** RULING-MECHANISM  ·  **Resolver** AGENT  ·  **Confidence** medium  ·  **Probe** `P-GT` = **FAIL**
 
 - any table attaching a determination to a group has four lens columns.  
   _atoms:_ `LED-128`(act)
-- a medical lens always accompanies another lens; no determination is keyed on medical_code alone.  
-  _atoms:_ `PIP-04`(act)
 
-**Direction.** P-GT: determination_gates carries identity_code only. Whether PIP-04 is enforced anywhere is not probed; the specifications CHECK is 'at least one' (LED-130), which admits medical alone.
+**Direction.** P-GT: determination_gates carries identity_code only. The specifications CHECK is 'at least one' (LED-130). (PIP-04, the rule that no determination is keyed on a medical code alone, was superseded on 2026-11-16 with the medical lens.)
 
 ## C-023 [S2] D-0184 (the lens is a column) is an agent decision awaiting owner review but is treated as binding
 

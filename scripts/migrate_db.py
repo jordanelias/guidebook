@@ -591,7 +591,8 @@ def selftest() -> int:
     print("\n--- migrate_db selftest ---")
     for name, ok, detail in results:
         print(f"  {'PASS' if ok else '**FAIL**'}: {name}" + (f"  [{detail}]" if not ok else ""))
-    print(f"\nRESULTS: {len(results) - failures}/{len(results)} selftest cases pass")
+    print(f"\nEXAMINED: {len(results)} selftest case(s)")
+    print(f"RESULTS: {len(results) - failures}/{len(results)} selftest cases pass")
     if failures:
         print("SELFTEST: FAIL")
         return 1

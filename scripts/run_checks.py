@@ -33,10 +33,19 @@ Usage:
     python3 scripts/run_checks.py --explain --changed-from HEAD~1
     python3 scripts/run_checks.py --selftest
 
+THE BASE. A registered cmd may name `@BASE@`; it becomes the ref given to --changed-from (or to
+--base, which sets it alone for --all and --kinds runs), else origin/main. That is how a
+changeset-scoped check (research_tooling_separation, the attestation checks) diffs the base the
+gate was given rather than a literal in the registry.
+
+The summary names, apart from the verdict, what a green run does not show: SKIPPED (did not run),
+NOTHING-IN-SCOPE (ran, examined nothing) and NO-EXAMINED (ran, printed no count the runner can read).
+
 Exit codes:
     0  no blocking check failed
     1  at least one blocking check failed
-    2  the runner itself could not run (bad registry, bad arguments)
+    2  the runner itself could not run (bad registry, bad arguments, an unknown --battery or --level,
+       or a selection that matched no check: nothing ran, so nothing passed)
 
 Honours GUIDEBOOK_DB_PATH (default data/guidebook.db), per the repo-wide contract
 enforced by scripts/audit/db_path_env_audit.py.
@@ -85,6 +94,11 @@ DEFAULT_SESSION_POINTER = "LATEST"
 SESSION_POINTER = SESSION_POINTERS[DEFAULT_SESSION_POINTER]   # back-compat alias
 
 LEVELS = ("blocking", "advisory", "informational")
+
+# What `@BASE@` becomes in a registered cmd when the run was given no base. It is the default
+# every changeset-scoped script already carries, so a run without --changed-from/--base (CI's
+# battery jobs) behaves as it always did.
+DEFAULT_BASE = "origin/main"
 
 
 # ---------------------------------------------------------------- registry ---
@@ -208,11 +222,14 @@ def select(reg, kinds, batteries=None, levels=None, run_all=False):
 
 # ------------------------------------------------------------------- runner ---
 
-def expand(cmd, session):
-    return [part.replace("@SESSION@", session) for part in cmd]
+def expand(cmd, session, base=DEFAULT_BASE):
+    """Fill the two run-time facts a registered cmd may name: `@SESSION@` (the continuity
+    pointer) and `@BASE@` (the ref the gate was given). The base is a fact of THIS run, so it is
+    never written into the registry as a literal."""
+    return [part.replace("@SESSION@", session).replace("@BASE@", base) for part in cmd]
 
 
-def run_check(check, session, env, github=False):
+def run_check(check, session, env, github=False, base=DEFAULT_BASE):
     """Run one check. Returns (status, seconds, output) with status in
     PASS / FAIL / SKIP / ERROR.
 
@@ -222,7 +239,7 @@ def run_check(check, session, env, github=False):
     """
     pointer = check.get("session_pointer", DEFAULT_SESSION_POINTER)
     subject = session if pointer == DEFAULT_SESSION_POINTER else read_pointer(pointer)
-    cmd = expand(check["cmd"], subject)
+    cmd = expand(check["cmd"], subject, base)
     if check.get("requires_session") and not subject:
         # A BLOCKING check with no subject FAILS. It used to SKIP, and SKIP is
         # excluded from the verdict even at blocking level — so deleting one
@@ -423,6 +440,21 @@ def nothing_in_scope(output):
     return bool(NOTHING_IN_SCOPE_RE.search(output or ""))
 
 
+def no_examined(results):
+    """Ids of the checks that RAN and printed no count the runner can read.
+
+    `results` is [(check_id, status, output)]. A check that exited 0 printing neither a
+    line-anchored `EXAMINED: <n>` nor the NOTHING-IN-SCOPE verdict is invisible to the vacuity
+    guard and to the stale-claim detector: it reports PASS whether it examined 500 rows or none.
+    Reported, never failed (see the note under the C11 block: failing a check for its output
+    format is the wrong lever). SKIP and ERROR did not run, so they are not listed; NONE matched
+    by definition.
+    """
+    return [cid for cid, status, output in results
+            if status in ("PASS", "FAIL")
+            and not (EXAMINED_RE.search(output or "") or NOTHING_IN_SCOPE_RE.search(output or ""))]
+
+
 def report_line(check, status, elapsed):
     level = check.get("level", "blocking")
     mark = {"PASS": "[PASS]", "FAIL": "[FAIL]", "SKIP": "[SKIP]",
@@ -448,6 +480,9 @@ def main():
                     help="emit ONLY `kinds=`/`batteries=` lines for $GITHUB_OUTPUT, run nothing")
     ap.add_argument("--dry-run", action="store_true",
                     help="print the plan and the selection, run nothing (pairs with --explain)")
+    ap.add_argument("--base", metavar="REF",
+                    help="the ref changeset-scoped checks diff against (their `@BASE@`); "
+                         "defaults to --changed-from's REF, else " + DEFAULT_BASE)
     ap.add_argument("--registry", default=REGISTRY)
     args = ap.parse_args()
 
@@ -462,6 +497,22 @@ def main():
 
     if args.list:
         return do_list(reg)
+
+    # A name that selects nothing must be refused, not run: a misspelt battery used to select 0
+    # checks and print PASS, which is a gate that examined nothing reporting that it passed.
+    # The vocabularies are the registry's own (`batteries:`) and LEVELS, never a list kept here.
+    for flag, given, known in (("--battery", args.battery, reg["batteries"]),
+                               ("--level", args.level, LEVELS)):
+        unknown = {n.strip() for n in (given or "").split(",") if n.strip()} - set(known)
+        if unknown:
+            print(f"run_checks: unknown {flag} name(s): {', '.join(sorted(unknown))}", file=sys.stderr)
+            print(f"  known: {', '.join(known)}", file=sys.stderr)
+            return 2
+    if args.base and args.changed_from and args.base != args.changed_from:
+        print(f"run_checks: --base {args.base!r} and --changed-from {args.changed_from!r} name two "
+              f"bases; the gate has one.", file=sys.stderr)
+        return 2
+    base = args.base or args.changed_from or DEFAULT_BASE
 
     # --- work out kinds -----------------------------------------------------
     kinds, attribution, paths = set(), {}, []
@@ -538,6 +589,7 @@ def main():
         print(f"run_checks: kinds = {', '.join(sorted(kinds))}")
     if batteries:
         print(f"  batteries: {', '.join(sorted(batteries))}")
+    print(f"  base for changeset-scoped checks (@BASE@): {base}")
     print(f"  selected {len(active)} of {len(reg['checks'])} registered checks"
           f"  ({len(reg.get('quarantine', []))} quarantined, never selected)")
     print("=" * 78)
@@ -547,18 +599,27 @@ def main():
             print(f"  {'RUN ' if ok else 'skip'} {check['id']:38} {why}")
         print("-" * 78)
 
+    if not active:
+        # Valid names that match nothing together (a kind no check of that battery declares).
+        # Nothing ran, so nothing passed: say so, and do not exit 0 as if a gate had been applied.
+        print("RESULT: NOTHING-SELECTED — no registered check matches this selection, so nothing ran "
+              "and nothing passed.")
+        return 0 if args.dry_run else 2
+
     if args.dry_run:
         print("--dry-run: nothing was executed.")
         return 0
 
     # --- run ----------------------------------------------------------------
     failures, errors, skips, vacuous = [], [], [], []
+    results = []
     floor_claims = []
     no_floor_kinds = reg.get("no_floor_kinds") or {}
     for check in active:
         if args.github:
             print(f"::group::{check['id']}")
-        status, elapsed, output = run_check(check, session, env, args.github)
+        status, elapsed, output = run_check(check, session, env, args.github, base)
+        results.append((check["id"], status, output))
         line = report_line(check, status, elapsed)
         level = check.get("level", "blocking")
 
@@ -626,6 +687,11 @@ def main():
             print(f"  BLOCKING and vacuous ({len(blocking_vacuous)}): "
                   f"{', '.join(blocking_vacuous)} — a gate that examined nothing "
                   f"gated nothing.")
+    uncounted = no_examined(results)
+    if uncounted:
+        print(f"NO-EXAMINED ({len(uncounted)}): {', '.join(uncounted)}")
+        print("  These ran and printed no 'EXAMINED: <n>' line, so the vacuity guard and the "
+              "stale-claim detector cannot see them.")
     if floor_claims:
         stale_msgs = [(i, msg) for i, _, sev, msg in floor_claims if sev == "STALE"]
         if stale_msgs:
@@ -671,8 +737,10 @@ def selftest(reg):
     """C1-C8. Proves the registry is coherent and the classifier does what the
     comments claim — the repo's "passes count only after demonstrated firing" norm."""
     failures = []
+    ran = [0]   # cases asserted, printed as EXAMINED so a selftest that ran nothing cannot read as PASS
 
     def check(label, condition, detail=""):
+        ran[0] += 1
         if condition:
             print(f"  [PASS] {label}")
         else:
@@ -994,13 +1062,192 @@ def selftest(reg):
     unreadable = sorted(c["id"] for c in reg["checks"] if c.get("no_floor"))
     print(f"  [INFO] no_floor checks: {len(unreadable)} — any that print no line-anchored "
           f"'EXAMINED: <n>' are invisible to both the vacuity guard and the stale-claim "
-          f"detector; `--all` reports which")
+          f"detector; the NO-EXAMINED summary line of a run names them")
+
+    # --- C12: the gate reports against the base it was given, and says what each check examined ---
+    # T-075. Three things the gate claimed and did not do: a changeset-scoped check diffed against
+    # origin/main whatever base the gate was given; a check that printed no count looked like a
+    # check that examined something; and a misspelt --battery selected 0 checks and printed PASS.
+    # Each case below can go red: `_try` turns a crash of the code under test into a failed case.
+    def _try(label, fn):
+        try:
+            return fn()
+        except Exception as exc:  # noqa: BLE001
+            check(label, False, f"{type(exc).__name__}: {exc}")
+            return None
+
+    # T075-01 — `@BASE@` is substituted like `@SESSION@`; a run with no base gets the default.
+    got = _try("C12 T075-01 expand() takes a base",
+               lambda: (expand(["x", "--base", "@BASE@", "@SESSION@"], "S", base="R"),
+                        expand(["@BASE@"], "S")))
+    if got is not None:
+        check("C12 T075-01 `@BASE@` becomes the base, `@SESSION@` still the session; no base gives the default",
+              got == (["x", "--base", "R", "S"], [DEFAULT_BASE]), str(got))
+
+    # T075-02 — every registered check that diffs a base is given it. The set is DERIVED: a script
+    # whose argparse declares --base, or a cmd carrying the default base as a literal (the shape that
+    # made research_contract_baseline_ratchet read origin/main whatever the gate was given). An entry
+    # may be exempt only with its reason, and an exemption that no longer names a base-taking check
+    # is itself a failure.
+    # A WITNESS IS NOT A BASE (the critic of T-075): the ratchet compares the baseline file with a ref OUTSIDE the
+    # change, so that a committed raise cannot vouch for itself. Giving it `@BASE@` lets the branch under test (or
+    # any ref the caller names) be its own witness; it stays the literal default and the selftest holds it there.
+    WITNESS_NOT_BASE = {
+        "research_contract_baseline_ratchet": "its ref is a WITNESS outside the changeset, not a base to diff: a "
+                                              "ratchet that accepts the caller's ref is satisfied by a branch that "
+                                              "already carries the raise",
+    }
+    BASE_NOT_READ = {
+        "claims_docket": "its registered mode `check` reads the docket file and ignores --base; "
+                         "only `generate` diffs, and that mode is not registered",
+    }
+
+    def _declares_base(c):
+        exe = next((t for t in c["cmd"] if t.endswith(".py")), None)
+        path = os.path.join(REPO_ROOT, exe) if exe else None
+        src = open(path, encoding="utf-8").read() if path and os.path.exists(path) else ""
+        return bool(re.search(r"""add_argument\(\s*["']--base["']""", src))
+
+    def _takes_base(c):
+        return _declares_base(c) or DEFAULT_BASE in c["cmd"]
+
+    def _base_gaps(checks):
+        return [c["id"] for c in checks
+                if _takes_base(c) and c["id"] not in BASE_NOT_READ and c["id"] not in WITNESS_NOT_BASE
+                and not any("@BASE@" in t for t in c["cmd"])]
+
+    gaps = _try("C12 T075-02 base-taking checks derived", lambda: _base_gaps(reg["checks"]))
+    if gaps is not None:
+        check("C12 T075-02 every registered check that diffs a base is given `@BASE@`", not gaps, str(gaps))
+        carrying = [c for c in reg["checks"] if "@BASE@" in c["cmd"]]
+        check(f"C12 T075-02 the derivation has a subject ({len(carrying)} check(s) carry `@BASE@`)",
+              bool(carrying))
+        stale = [i for i in BASE_NOT_READ
+                 if not any(c["id"] == i and _takes_base(c) for c in reg["checks"])]
+        witness_bad = [i for i in WITNESS_NOT_BASE
+                       if not any(c["id"] == i and DEFAULT_BASE in c["cmd"] and not any("@BASE@" in t for t in c["cmd"])
+                                  for c in reg["checks"])]
+        check("C12 T075-02 a witness stays the literal ref and never takes `@BASE@` (a ratchet its own branch could satisfy)",
+              not witness_bad, str(witness_bad))
+        check("C12 T075-02 every exemption still names a base-taking check", not stale, str(stale))
+
+        # Seeded defects, over EVERY carrier: each entry rewritten the two ways it could regress.
+        def _mutate(checks, vid, fn):
+            return [dict(c, cmd=[fn(t) for t in c["cmd"]]) if c["id"] == vid else c for c in checks]
+
+        undetected_literal = [c["id"] for c in carrying if _base_gaps(
+            _mutate(reg["checks"], c["id"], lambda t: DEFAULT_BASE if t == "@BASE@" else t)) != [c["id"]]]
+        check("C12 T075-02 seeded: the default base written as a literal into any carrier turns the case red",
+              not undetected_literal, str(undetected_literal))
+        flagged = [c for c in carrying if _declares_base(c)]
+        undetected_strip = [c["id"] for c in flagged if _base_gaps(
+            _mutate(reg["checks"], c["id"], lambda t: "" if t == "@BASE@" else t)) != [c["id"]]]
+        check(f"C12 T075-02 seeded: `@BASE@` removed from any of the {len(flagged)} entries whose script "
+              f"declares --base turns the case red", bool(flagged) and not undetected_strip,
+              str(undetected_strip))
+        # DEFAULT_BASE is what a run with no base substitutes, so it must be the default each such
+        # script already carries; a run without --changed-from (CI's battery jobs) then behaves as before.
+        off = [c["id"] for c in flagged if DEFAULT_BASE not in open(os.path.join(
+            REPO_ROOT, next(t for t in c["cmd"] if t.endswith(".py"))), encoding="utf-8").read()]
+        check("C12 T075-02 DEFAULT_BASE is the default every --base-declaring script carries",
+              bool(flagged) and not off, str(off))
+
+    # T075-03 — the summary names a check that ran and printed no count, and no other.
+    listed = _try("C12 T075-03 no_examined() exists", lambda: no_examined([
+        ("a", "PASS", "ok"), ("b", "PASS", "EXAMINED: 3"), ("c", "PASS", "VERDICT: NOTHING-IN-SCOPE"),
+        ("d", "SKIP", "skipped"), ("e", "FAIL", "boom"), ("f", "PASS", "  EXAMINED: 0"),
+        ("g", "PASS", "we examined: 3 rows"), ("h", "ERROR", "executable not found")]))
+    if listed is not None:
+        check("C12 T075-03 only a check that RAN with no readable count is listed "
+              "(a mid-sentence 'examined' does not count)", listed == ["a", "e", "g"], str(listed))
+
+    # T075-04..08 drive the real command line over a throwaway registry: two checks, one printing
+    # a count and one not, each echoing the base it was handed.
+    import tempfile
+    import yaml as _y
+    bat = next(iter(reg["batteries"]))
+    with tempfile.TemporaryDirectory() as td:
+        probe = os.path.join(td, "probe.py")
+        with open(probe, "w", encoding="utf-8") as fh:
+            fh.write("import sys\nprint('EXAMINED: 1' if sys.argv[1] == 'count' else 'ok')\n"
+                     "print('BASEWAS=' + sys.argv[2])\n")
+
+        def _registry(name, ids):
+            body = dict(reg)
+            body["checks"] = [{"id": i, "cmd": ["python3", probe, i, "@BASE@"], "battery": bat,
+                               "kinds": ["always"], "level": "blocking", "basis": "hygiene",
+                               "cost": "fast", "no_floor": "selftest — a fixture"} for i in ids]
+            body["quarantine"] = []
+            path = os.path.join(td, name)
+            with open(path, "w", encoding="utf-8") as fh:
+                _y.safe_dump(body, fh)
+            return path
+
+        two = _registry("two.yaml", ["count", "silent"])
+        one = _registry("one.yaml", ["count"])
+        none_sel = _registry("none.yaml", [])
+
+        def _bases(*argv, regpath=two):
+            r = cli("--registry", regpath, "--github", *argv)
+            return r, [ln.split("=", 1)[1] for ln in r.stdout.splitlines() if ln.startswith("BASEWAS=")]
+
+        r, seen = _bases("--changed-from", "HEAD")
+        check("C12 T075-04 --changed-from REF reaches every registered cmd as `@BASE@`, and the header says which",
+              seen == ["HEAD", "HEAD"] and "(@BASE@): HEAD" in r.stdout, f"{seen} rc={r.returncode}")
+        r, seen = _bases("--kinds", "", "--base", "BASEX")
+        check("C12 T075-04 --base REF alone reaches them too (preflight --all / --kinds)",
+              seen == ["BASEX", "BASEX"], f"{seen} rc={r.returncode}")
+        r, seen = _bases("--kinds", "")
+        check("C12 T075-04 no base given: the default",
+              seen == [DEFAULT_BASE, DEFAULT_BASE], f"{seen} rc={r.returncode}")
+        r = cli("--registry", two, "--base", "A", "--changed-from", "HEAD", "--dry-run")
+        check("C12 T075-04 two different bases are refused, for that reason",
+              r.returncode == 2 and "two bases" in r.stderr, f"rc={r.returncode} {r.stderr.strip()[:100]}")
+
+        r, _ = _bases("--kinds", "")
+        line = next((ln for ln in r.stdout.splitlines() if ln.startswith("NO-EXAMINED")), "")
+        check("C12 T075-05 the run names the check that printed no count, and only it",
+              line == "NO-EXAMINED (1): silent", repr(line))
+        r, _ = _bases("--kinds", "", regpath=one)
+        check("C12 T075-05 and prints nothing when every check printed one",
+              "NO-EXAMINED" not in r.stdout, r.stdout[-300:])
+
+        r = cli("--registry", two, "--battery", bat + "x", "--kinds", "")
+        check("C12 T075-06 a misspelt --battery is refused (it used to select 0 and print PASS)",
+              r.returncode == 2 and "unknown --battery" in r.stderr and "RESULT: PASS" not in r.stdout,
+              f"rc={r.returncode} {r.stderr.strip()[:120]}")
+        r = cli("--registry", two, "--level", "blockingx", "--kinds", "")
+        check("C12 T075-06 a misspelt --level is refused", r.returncode == 2 and "unknown --level" in r.stderr,
+              f"rc={r.returncode}")
+        r = cli("--registry", two, "--battery", bat, "--kinds", "")
+        check("C12 T075-06 a real battery is not refused", r.returncode == 0 and "RESULT: PASS" in r.stdout,
+              f"rc={r.returncode}")
+
+        r = cli("--registry", none_sel, "--kinds", "")
+        check("C12 T075-07 a selection that selects nothing exits 2 and says NOTHING-SELECTED, not PASS",
+              r.returncode == 2 and "NOTHING-SELECTED" in r.stdout and "RESULT: PASS" not in r.stdout,
+              f"rc={r.returncode} {r.stdout[-200:]}")
+        r = cli("--registry", none_sel, "--kinds", "", "--dry-run")
+        check("C12 T075-07 a dry run of it reports the same and exits 0",
+              r.returncode == 0 and "NOTHING-SELECTED" in r.stdout, f"rc={r.returncode}")
+
+    # T075-08 — preflight.sh hands its base to run_checks.py in every mode. `--base` was parsed and
+    # then used only to build the --changed-from run, so `--all` and `--kinds` ignored it.
+    pre = os.path.join(REPO_ROOT, "scripts", "preflight.sh")
+    calls = [ln.strip() for ln in open(pre, encoding="utf-8").read().splitlines()
+             if "scripts/run_checks.py" in ln and not ln.lstrip().startswith("#") and "--selftest" not in ln]
+    unbased = [ln for ln in calls if '--base "$BASE"' not in ln and '--changed-from "$BASE"' not in ln]
+    check(f"C12 T075-08 each of the {len(calls)} run_checks.py invocations in preflight.sh carries the base",
+          len(calls) > 1 and not unbased, str(unbased))
+    check("C12 T075-08 preflight.sh says NOT RUN when run_checks.py refused the selection (exit 2)",
+          "PREFLIGHT: NOT RUN" in open(pre, encoding="utf-8").read())
 
     unattributed = [c["id"] for c in reg["checks"] if c.get("basis") == "unattributed"]
     print(f"  [INFO] checks with no stated authority: {len(unattributed)} of "
           f"{len(reg['checks'])} — ratchet this down, do not invent authorities")
 
     print("=" * 78)
+    print(f"EXAMINED: {ran[0]} case(s)")
     if failures:
         print(f"SELFTEST: FAIL — {len(failures)} check(s): {', '.join(failures)}")
         return 1

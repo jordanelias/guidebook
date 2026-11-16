@@ -161,7 +161,7 @@ A check red here was red before you touched anything (on 2026-11-13 `test_run_pi
 W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1)
 scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
 ```
-Run it once, in the background, when every edit is made; never `--all`; read the `RESULT` line, any `NOTHING-IN-SCOPE`, any blocking `FAIL`. `research_tooling_separation` reads `origin/main`: run `python3 scripts/audit/research_tooling_separation.py --base "$BASE"` by hand and treat a gate FAIL that disappears with `--base` as not yours. A check already red before your change tells you nothing about your diff: name it with its before and after lines.
+Run it once, in the background, when every edit is made; never `--all`; read the `RESULT` line, any `NOTHING-IN-SCOPE`, any blocking `FAIL`. `research_tooling_separation` reads `origin/main` unless T-075 is on the base: run `python3 scripts/audit/research_tooling_separation.py --base "$BASE"` by hand and treat a gate FAIL that disappears with `--base` as not yours. A check already red before your change tells you nothing about your diff: name it with its before and after lines.
 
 **The canonical database must not move:** `sha256sum data/guidebook.db` gives the value recorded in section 2.
 

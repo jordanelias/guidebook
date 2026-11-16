@@ -9,6 +9,7 @@ SessionStart contract names:
 python3 scripts/audit/research_batch_dod.py --session "$(cat scratchpad/CURRENT)"
 python3 scripts/audit/adversarial_pass_audit.py --session "$(cat scratchpad/CURRENT)"
 python3 scripts/audit/search_log_completeness.py --session "$(cat scratchpad/CURRENT)"
+python3 scripts/audit/refusal_register.py list --session "$(cat scratchpad/CURRENT)"
 ```
 
 The second line is RC4 (advisory): it FAILs if this session wrote to any of the 2026-08-19
@@ -30,6 +31,22 @@ not clear them. It witnesses WebSearch and WebFetch only: a search run through a
 (Consensus, PubMed, Scholar Gateway) leaves no line, so a PASS says nothing about those. R8 still
 owes each of them a `log-search` row, and `record_file` its result (DR-2026-09-26 §2.2b); the
 gate can check neither.
+
+The fourth line lists every writer refusal this batch met and exits 1 while any is undisposed. Each is kept in
+`scratchpad/<session>/refusals.jsonl` when it was made under the running `--session`: a refusal, a usage error
+(an unknown vocabulary term is one: argparse says it and the record keeps it) or a writer's crash. **It exits 2
+and prints `NOT RUN` when `scratchpad/CURRENT` does not name an existing `session_YYYY-MM-DD-...` folder** (a
+misspelt name, a branch slug, a folder never made): nothing could have been kept there, so nothing was examined, and
+that is not a pass. The gate does not run until `CURRENT` is fixed as `/session-open` sets it. An existing folder
+with no `refusals.jsonl` is a batch that met none (`EXAMINED: 0`). Not kept: a refusal of a script that takes no
+`--session` (`emit_batch_sql.py`) or whose errors are not routed (`migrate_db.py`, `retrieval_log.py`,
+`page_image.py`, and `full_text.py`'s `NOTHING TO DERIVE` exit, its several-derivable-files exit and its missing-reader exit): read those on the terminal. Every writer refusal this batch met is disposed before the batch is
+done: **retried** (the writer was right; the corrected call succeeded), **parked** (its content waits: file a gap
+with `db.py add-gap`, typed by its subject, and keep the refused argv, which is the replay command), or **waived**
+(with a reason of at least ten characters). Record each with
+`refusal_register.py dispose --session S --id K --as retried|parked|waived [--gap-id G] [--reason R]`, K being the id
+`list` prints. `list` checks every disposition again each time it runs: a parked gap that has since been closed puts
+the refusal back to UNDISPOSED. An undisposed refusal is a batch that is not done.
 
 **The session id is the bare stem in the DB and carries `.md` in pointer files.**
 Wrong form scopes the gate to zero rows and every rule reports PASS over an empty
@@ -69,8 +86,7 @@ all_sources = "--all" in sys.argv
 session = re.sub(r"\.md$", "", open("scratchpad/CURRENT").read().strip()) if os.path.exists("scratchpad/CURRENT") else ""
 VS = "x.figure_role IN ('claim','derived')"
 LENSES = (("identity_code", "SELECT identity_code FROM base_taxonomy_identity WHERE status='active'"),
-          ("needs_code", "SELECT need_code FROM access_needs"), ("icf_code", "SELECT icf_code FROM base_icf"),
-          ("medical_code", "SELECT medical_code FROM base_taxonomy_medical WHERE status='active'"))
+          ("needs_code", "SELECT need_code FROM access_needs"), ("icf_code", "SELECT icf_code FROM base_icf"))
 params = [r[0] for r in c.execute("SELECT parameter_id FROM base_parameters WHERE status='active' ORDER BY 1")]
 print("(1) LENS BY PARAMETER: distinct live value-supplying figures per (lens code, active parameter)")
 for col, reg in LENSES:
@@ -88,11 +104,11 @@ for col, reg in LENSES:
     for code, nz in cells: print(f"    {code}: {nz}")
 print("(2) LENS BY FIGURE: value-supplying figures with a live link")
 umbrella = {r[0] for r in c.execute("SELECT parent_code FROM base_taxonomy_identity WHERE parent_code IS NOT NULL")} | {"ALL"}
-rows = c.execute(f"SELECT x.extraction_id, group_concat(l.identity_code), group_concat(l.icf_code), group_concat(l.needs_code), "
-                 f"group_concat(l.medical_code) FROM source_value_extractions x JOIN v_live_lens_links l ON l.extraction_id = x.extraction_id "
+rows = c.execute(f"SELECT x.extraction_id, group_concat(l.identity_code), group_concat(l.icf_code), group_concat(l.needs_code) "
+                 f"FROM source_value_extractions x JOIN v_live_lens_links l ON l.extraction_id = x.extraction_id "
                  f"WHERE {VS} GROUP BY x.extraction_id").fetchall()
-ident_only = [r[0] for r in rows if r[1] and not (r[2] or r[3] or r[4])]
-umb_only = [r[0] for r in rows if r[1] and set(r[1].split(",")) <= umbrella and not (r[2] or r[3] or r[4])]
+ident_only = [r[0] for r in rows if r[1] and not (r[2] or r[3])]
+umb_only = [r[0] for r in rows if r[1] and set(r[1].split(",")) <= umbrella and not (r[2] or r[3])]
 print(f"  figures with a live link: {len(rows)}; identity links ONLY: {len(ident_only)}; filed only to ALL or a parent code: {len(umb_only)} {umb_only}")
 print("(3) GROUP WORDS WITH NO PARAMETER: observations whose latest adjudication is DEFERRED, NOT-OURS or none")
 q3 = ("SELECT o.ref_id, o.observation_id, o.surface_form, o.locator, COALESCE(a.outcome, 'none') FROM observed_terms o "

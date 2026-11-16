@@ -445,6 +445,7 @@ def selftest():
     # 15 content cases + binary skip + register parses + entries non-empty +
     # deferred present + rejected present + unknown-mode raises.
     n = len(CASES) + 6
+    print(f"EXAMINED: {n} selftest case(s)")
     if failures:
         print("retired_vocabulary_audit selftest FAILURES:")
         for f in failures:

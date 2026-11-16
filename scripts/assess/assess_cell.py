@@ -125,8 +125,11 @@ from schemas.evidence_state import (  # noqa: E402
     ConvergenceAssessment, EvidenceStateRecord, ProvisionalConfidenceFlag,
 )
 
-RULE_VERSION = "pilot-6"  # pilot-6 (T-019, prior workplan T-3): a figure reaches a cell only through the live lens
-#   links written on it (_lens_clause), and derivation_sha hashes all four lens codes of the cell. The
+RULE_VERSION = "pilot-7"  # pilot-7 (2026-11-16, the medical lens deleted by the owner): derivation_sha hashes the three lens codes of the
+#   cell, not four; the payload loses one `|`-joined slot, so test_db_integrity K01 keeps pilot-6 on the four-slot form
+#   (FOUR_LENS_SHA_VERSIONS). Nothing else in the engine changed.
+#   pilot-6 (T-019, prior workplan T-3): a figure reaches a cell only through the live lens
+#   links written on it (_lens_clause), and derivation_sha hashes all four lens codes of the cell (three from pilot-7). The
 #   payload changed: test_db_integrity K01 keeps the earlier link-set labels on the COALESCE key
 #   (COALESCE_LENS_SHA_VERSIONS).
 #   pilot-5 (T-017, prior workplan T-2): conditioned governing claims are branches, not the
@@ -208,7 +211,7 @@ def _is_disqualified(rec) -> bool:
         return True
     return status != "VERIFIED" and (rec.get("verification_disposition") or "") in DISQUALIFIED_DISPOSITION
 
-# THE FOUR LENSES (owner 2026-08-28; CHECK relaxed to "at least one" by D-0182).
+# THE THREE LENSES (owner 2026-08-28, the medical lens deleted 2026-11-16; CHECK relaxed to "at least one" by D-0182).
 # Each column, the base table its real FK points into, and that table's key. Derived
 # from the schema rather than restated as a vocabulary in code — the tables ARE the
 # vocabulary (CLAUDE.md §4).
@@ -220,15 +223,14 @@ LENS_COLUMNS = {
     # determination it feeds must name the lens the same way.
     "icf_code": ("base_icf", "icf_code"),
     "needs_code": ("access_needs", "need_code"),
-    "medical_code": ("base_taxonomy_medical", "medical_code"),
 }
 # COALESCE order, matching the table's own CHECK and test_db_integrity K01's sha payload.
 LENS_ORDER = dbcore.LENS_ORDER
-# A cell's identity in SQL: the parameter and the four lens codes, blank and NULL alike (the COALESCE of
+# A cell's identity in SQL: the parameter and the three lens codes, blank and NULL alike (the COALESCE of
 # `idx_spec_row_identity`, migration 071). One text, read by the already-determined refusal and by the
 # supersession link; `_cell_vals` gives its parameters.
 CELL_WHERE = ("parameter_id=? AND COALESCE(identity_code,'')=? AND COALESCE(icf_code,'')=? "
-              "AND COALESCE(needs_code,'')=? AND COALESCE(medical_code,'')=?")
+              "AND COALESCE(needs_code,'')=?")
 
 
 def _cell_vals(parameter_id, lens):
@@ -236,7 +238,7 @@ def _cell_vals(parameter_id, lens):
 
 
 def lens_key(lens):
-    """The single lens value a cell is identified by — COALESCE over the four.
+    """The single lens value a cell is identified by — COALESCE over the three.
 
     K01 hashes this, and the D-0182 CHECK guarantees it is never None for a row that
     reached the table. A cell may be stated in several lenses at once; the KEY is the
@@ -689,7 +691,7 @@ def _open_gates(conn, parameter_id, lens, best, questions_only=False):
     if _table_exists(conn, "determination_gates"):
         for g in conn.execute(
                 "SELECT gate_id, verdict, trigger_tier, trigger_evidence_type, "
-                "trigger_ref_id, detail, identity_code, icf_code, needs_code, medical_code "
+                "trigger_ref_id, detail, identity_code, icf_code, needs_code "
                 "FROM v_open_determination_gates WHERE parameter_id = ?", (parameter_id,)):
             # The identity lens counts through parent_code, as the figures do: a parent's cell gathers its descendants'
             # figures, so a gate on a descendant's code reaches it (the gate caps the figure wherever it is read); a gate
@@ -1000,8 +1002,8 @@ def population_match(conn, ref_id, population):
     it — the dimension stays NOT_ASSESSED (G2; a grade assessed against another
     population must never condition this cell)."""
     if not population:
-        # No identity lens on this cell — a determination stated only in ICF, access-need
-        # or medical terms has no population to attribute a match row TO. The dimension is
+        # No identity lens on this cell — a determination stated only in ICF or access-need
+        # terms has no population to attribute a match row TO. The dimension is
         # then unassessed rather than absent, which is G2 exactly: consolidation caps at
         # DOWN-WEIGHTED and the source is flagged. Never silently EXACT.
         return None
@@ -1198,13 +1200,13 @@ def regulatory_richness(t45, t6):
 
 
 def sha(parameter_id, lens, links, conditioned=()):
-    """Cell-scoped derivation sha: parameter + the four lens codes + the graded link set + the
+    """Cell-scoped derivation sha: parameter + the three lens codes + the graded link set + the
     conditioned governing claims + rule version, so pending cells do not all share one constant
     hash and staleness stays checkable.
 
     The payload is byte-for-byte what test_db_integrity K01 recomputes when it verifies a stored
     sha. Two implementations of one hash that disagree is a hash that attests nothing, so this one
-    and K01's move together or not at all. `lens` is the four-code dict from pilot-6 on, joined with
+    and K01's move together or not at all. `lens` is the code dict from pilot-6 on (four slots to pilot-6, three from pilot-7), joined with
     `|` in LENS_ORDER (a code never contains the separator, so two splits of the same characters
     across two models cannot collide); the earlier link-set labels hashed the COALESCE key
     (`lens_key()`), which K01 keeps for them (COALESCE_LENS_SHA_VERSIONS). The links are
@@ -1284,7 +1286,7 @@ def _confirmed_bands(conn, parameter_id, links, confirmer_anchors, lens):
 def determine(conn, parameter_id, lens, slug, note):
     """The pure determination function. Returns (record dicts for insert, log).
 
-    `lens` is the four-column dict; at least one value is non-None (D-0182). Only the
+    `lens` is the three-column dict; at least one value is non-None (D-0182). Only the
     identity lens conditions population-directness, because that is the only one
     evidence_population_match.target_population is written in — a cell in ICF or
     access-need terms alone leaves the dimension NOT_ASSESSED, which caps it at
@@ -1956,6 +1958,23 @@ class Refusal(ValueError):
     """
 
 
+_ARGS = None   # main()'s parsed namespace: argparse takes abbreviations of any length, so the session and --db are read from it
+
+
+def _record(sentence):
+    """Keep what this process said no to (T-088): a refusal, a usage error or a crash."""
+    dbcore.record_refusal("scripts/assess/assess_cell.py", sys.argv[1:], sentence,
+                          session=getattr(_ARGS, "session", None), db=getattr(_ARGS, "db", None))
+
+
+def _refuse(sentence, code=1):
+    """Say a refusal as `REFUSING: <sentence>` on stderr, keep it (T-088) and exit `code`.
+    Every place this engine says no goes through here, so none is left out of the batch's refusal record."""
+    _record(sentence)
+    print(f"REFUSING: {sentence}", file=sys.stderr)
+    sys.exit(code)
+
+
 def validate_parameter(conn, parameter_id):
     """The SUBJECT must exist and be alive (owner 2026-08-26; migration 071).
 
@@ -2007,7 +2026,7 @@ def validate_lens(conn, lens):
     if not lens_key(lens):
         raise Refusal(
             "a determination must be stated in at least one lens (D-0182): pass one or "
-            "more of --identity / --icf / --needs / --medical. A cell in no lens is a "
+            "more of --identity / --icf / --needs. A cell in no lens is a "
             "cell about nobody.")
     # A BLANK IS NOT AN ABSENCE. `--identity ""` used to skip validation here (falsy),
     # satisfy lens_key() at the NEXT lens (truthiness), and be INSERTed as '' — which
@@ -2038,7 +2057,7 @@ def validate_cell_undetermined(conn, parameter_id, lens):
     """This cell must not already carry a determination.
 
     `idx_spec_row_identity` (migration 071) is UNIQUE on the cell itself —
-    `parameter_id` plus the four lens columns COALESCEd to `''` — so a second run for
+    `parameter_id` plus the three lens columns COALESCEd to `''` — so a second run for
     the same cell has always been refused. It was refused in the WRONG PLACE. The
     refusal fired inside the `specifications` INSERT, after the whole determination had
     been computed, as an untranslated `sqlite3.IntegrityError: UNIQUE constraint failed:
@@ -2087,7 +2106,7 @@ def validate_cell_undetermined(conn, parameter_id, lens):
         f"  Nothing was computed; no SQL artifact was written; the database is "
         f"unchanged.\n"
         f"  This is not a fault in the run. `idx_spec_row_identity` is UNIQUE on "
-        f"(parameter_id, identity_code, icf_code, needs_code, medical_code) over LIVE "
+        f"(parameter_id, identity_code, icf_code, needs_code) over LIVE "
         f"rows, so a cell carries one live determination at a time.\n"
         f"  TO RE-DETERMINE, retire the standing one first — it stays in the table as "
         f"history:\n"
@@ -2097,7 +2116,7 @@ def validate_cell_undetermined(conn, parameter_id, lens):
         f"new determination links back to the retired one. Owner ruling 2026-09-16, "
         f"'retire in place, never hard-delete'.\n"
         f"  If you meant a DIFFERENT cell, the difference has to be in --parameter-id "
-        f"or in --identity/--icf/--needs/--medical. --slug is not part of the cell's "
+        f"or in --identity/--icf/--needs. --slug is not part of the cell's "
         f"identity: it records the topic, and changing it changes nothing here.")
 
 
@@ -2137,8 +2156,8 @@ def q(v):
 
 
 def main():
-    global SESSION, STAMP
-    ap = argparse.ArgumentParser(
+    global SESSION, STAMP, _ARGS
+    ap = dbcore.RecordingArgumentParser(
         description="Determine one cell: a parameter under one or more lenses.",
         epilog="--db IS WRITTEN, NOT ONLY READ. The engine gathers the cell's evidence "
                "from it and INSERTs the determination -- plus any gap and convergence "
@@ -2170,30 +2189,28 @@ def main():
     ap.add_argument("--identity", help="base_taxonomy_identity.identity_code")
     ap.add_argument("--icf", help="base_icf.icf_code — a real ICF b/d code")
     ap.add_argument("--needs", help="access_needs.need_code")
-    ap.add_argument("--medical", help="base_taxonomy_medical.medical_code")
     ap.add_argument("--note", default="", help="why this cell is being determined")
     ap.add_argument("--session", required=True)
     ap.add_argument("--stamp", required=True,
                     help="fixed timestamp, e.g. '2026-09-09 00:00:00'. An INPUT, never "
                          "now(): the engine run twice must be byte-identical.")
     ap.add_argument("--report-json", default=None)
-    args = ap.parse_args()
+    args = _ARGS = ap.parse_args()
     if os.path.abspath(args.db) == os.path.abspath(os.path.join(REPO_ROOT, "data", "guidebook.db")):
-        sys.exit("REFUSING: this engine never writes the canonical DB (owner-gated).")
+        _refuse("this engine never writes the canonical DB (owner-gated).")
     # The DB holds the bare session stem; the pointer form carries `.md` (CLAUDE.md section 7), and
     # a wrong form scopes a gate to nothing. A stamp is stored verbatim, so it is refused unless it
     # has the shape every live created_at has: dbcore.now() is 'YYYY-MM-DD HH:MM', and the engine's
     # own examples add seconds. Both refusals precede every write.
     if not re.fullmatch(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?", args.stamp):
-        print(f"REFUSING: --stamp {args.stamp!r} is not 'YYYY-MM-DD HH:MM' or 'YYYY-MM-DD "
-              f"HH:MM:SS' (the shape dbcore.now() writes; no 'T', no zone). It is stored as "
-              f"created_at, so a foreign shape would sit beside every other row's. Nothing was "
-              f"written.", file=sys.stderr)
-        sys.exit(2)
+        _refuse(f"--stamp {args.stamp!r} is not 'YYYY-MM-DD HH:MM' or 'YYYY-MM-DD "
+                f"HH:MM:SS' (the shape dbcore.now() writes; no 'T', no zone). It is stored as "
+                f"created_at, so a foreign shape would sit beside every other row's. Nothing was "
+                f"written.", 2)
     SESSION, STAMP = re.sub(r"\.md$", "", args.session), args.stamp
 
     lens = {"identity_code": args.identity, "icf_code": args.icf,
-            "needs_code": args.needs, "medical_code": args.medical}
+            "needs_code": args.needs}
 
     conn = sqlite3.connect(args.db)
     # FKs OFF is the sqlite3 default, so the engine was writing rows into its scratch DB
@@ -2304,7 +2321,7 @@ def main():
         # that never reaches its column is the same defect as a column nothing reads.
         vals = (specification_id, det["parameter_id"],
                 det["lens"]["identity_code"], det["lens"]["icf_code"],
-                det["lens"]["needs_code"], det["lens"]["medical_code"],
+                det["lens"]["needs_code"],
                 det["state"], det["design_scale"],
                 this_conv,
                 json.dumps(conf["present"]) if conf else None,
@@ -2346,7 +2363,7 @@ def main():
                 det["derivation_rationale"], det["cultural_claim_anchor"],
                 STAMP, SESSION, STAMP, SESSION)
         cols = ("specification_id, parameter_id, "
-                "identity_code, icf_code, needs_code, medical_code, "
+                "identity_code, icf_code, needs_code, "
                 "state, design_scale, convergence_id, "
                 "confidence_dimensions_present, confidence_dimensions_absent, "
                 "confidence_synthesis_basis, gap_register_id, not_applicable_rationale, "
@@ -2506,17 +2523,21 @@ if __name__ == "__main__":
     try:
         main()
     except Refusal as exc:
-        sys.exit(f"REFUSING: {exc}")
+        _refuse(str(exc))
     except sqlite3.IntegrityError as exc:
         # Belt and braces on the one constraint an operator meets by ordinary use.
         # validate_cell_undetermined() restates this index's own COALESCE expression,
         # so reaching here means the two have drifted — which is worth saying plainly
         # rather than as a bare constraint name.
         if "idx_spec_row_identity" in str(exc):
-            sys.exit("REFUSING: this cell is already determined — "
-                     "`idx_spec_row_identity` refused a second row for the same "
-                     "parameter × lens, at the INSERT rather than at the "
-                     "pre-flight check that should have caught it "
-                     "(validate_cell_undetermined). There is no re-determination path; "
-                     "revisiting a determined cell needs a supersede design first.")
+            _refuse("this cell is already determined — "
+                    "`idx_spec_row_identity` refused a second row for the same "
+                    "parameter × lens, at the INSERT rather than at the "
+                    "pre-flight check that should have caught it "
+                    "(validate_cell_undetermined). There is no re-determination path; "
+                    "revisiting a determined cell needs a supersede design first.")
+        _record(f"{type(exc).__name__}: {exc}")
+        raise
+    except Exception as exc:   # a defect, kept and then raised unchanged: traceback and exit code are the evidence
+        _record(f"{type(exc).__name__}: {exc}")
         raise

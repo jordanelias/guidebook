@@ -177,7 +177,7 @@ scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "
 ```
 - Run it once, when every edit is made, before the commit; do not run `run_checks.py` separately, and never `--all`. It takes several minutes: run it in the background with a long timeout.
 - In `gate.txt` read the `RESULT` line, any check under `NOTHING-IN-SCOPE` (it has not passed: say so), and any blocking `FAIL`.
-- `research_tooling_separation` reads `origin/main`, not `$BASE`: run `python3 scripts/audit/research_tooling_separation.py --base "$BASE"` once by hand and report that result; a gate FAIL that disappears with `--base` is not yours.
+- `research_tooling_separation` reads `origin/main`, not `$BASE`, until T-075 (`@BASE@`) is merged: run `python3 scripts/audit/research_tooling_separation.py --base "$BASE"` once by hand and report that result; a gate FAIL that disappears with `--base` is not yours.
 
 **The canonical database moves only by `scripts/migrate_db.py`**, and the rebuild reproduces it (section 4).
 

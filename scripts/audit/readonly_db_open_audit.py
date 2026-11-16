@@ -323,6 +323,7 @@ def selftest():
         if got != want_offender:
             fails.append(f"{name}: expected offender={want_offender}, got {got}")
     n = len(cases)
+    print(f"EXAMINED: {n} selftest case(s)")
     if fails:
         print("readonly_db_open_audit selftest FAILURES:")
         for f in fails:
