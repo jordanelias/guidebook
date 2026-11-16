@@ -692,9 +692,17 @@ def log_mining(slug: str, ref_id: str, direction: str,
                      "updated_at=?, updated_by_session=? WHERE ref_id=?",
                      [status, ts, session, ref_id])
     out = {"logged": True, "status_set": status, "dry_run": dry_run}
-    if undischarged:
-        # The deferral this pass did not discharge stays visible -- see the else branch.
-        out["deferral_still_standing"] = undischarged
+    # The deferral this pass did not discharge stays visible -- see the else branch -- and so does any deferral the SAME
+    # source carries under ANOTHER slug: citation_mining_status is one flag for every slug, so this pass set it to
+    # 'mined' while that row's own deferred_reason stands (v_deferred_acts lists it from the row, not from the flag).
+    standing_here = [undischarged] if undischarged else []
+    if not deferred_reason:
+        with connect(True) as conn2:
+            standing_here += [f"[{r['slug']}] {r['deferred_reason']}" for r in conn2.execute(
+                "SELECT slug, deferred_reason FROM citation_mining WHERE global_ref_id = ? AND slug <> ? "
+                "AND deferred_reason IS NOT NULL ORDER BY slug", (ref_id, slug))]
+    if standing_here:
+        out["deferral_still_standing"] = "\n".join(standing_here)
     return out
 
 
@@ -2176,8 +2184,8 @@ def main():
 
     p_dfr = sub.add_parser(
         "defer-reading",
-        help="Record that a source's reading is owed and deliberately not done yet (reading_deferrals). Discharged "
-             "by a full reading, never by a write; `select * from v_deferred_acts order by deferred_at` lists every "
+        help="Record that a source's reading is owed and deliberately not done yet (reading_deferrals). It ends "
+             "when nothing is owed any longer (full readings cover it), never by a write; `select * from v_deferred_acts order by deferred_at` lists every "
              "deferred act with its age")
     p_dfr.add_argument("--ref-id", required=True)
     p_dfr.add_argument("--parameter", "--parameter-id", dest="parameter_id", type=int,
@@ -7512,11 +7520,10 @@ _MERGE_KEEPS_HISTORY = {
         "parameter has an OPEN gate, so what remains is resolved history and stays where "
         "it was raised"),
     "reading_deferrals": (
-        "a deferral says a reading of THIS parameter was put off, and v_deferred_acts lists it only while the "
-        "parameter is active, so the folded parameter's rows leave the view when it becomes 'merged' and stay as "
-        "the record of what was put off. The table has no notes column to carry a MERGED line, and the survivor's "
-        "pair is read from the ledger (still owed until a full reading covers it): it loses the deferral's date, "
-        "not the debt, and `defer-reading` records a fresh one"),
+        "a deferral says a reading of THIS parameter was put off, and it is a record of when that was said. The "
+        "table has no notes column to carry a MERGED line, and none is needed: v_deferred_acts reads a merged "
+        "parameter's deferral as its merged_into parameter's (one hop), with the date it was first recorded, so the "
+        "row stays where it was raised and the view re-points it"),
 }
 
 #: The prior-version item-code shape CLAUDE.md section 7 warns every grep meets
@@ -8633,46 +8640,95 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
         return out
 
 
+#: The longest reason `defer-reading` takes: a deferral's reason is a sentence about why a reading waits, one line
+#: (the longest reason any deferral, search or mining, holds today is under this).
+_DEFER_REASON_MAX = 1000
+
+
 def defer_reading(ref_id: str, parameter_id, reason: str, session: str, dry_run: bool = False):
-    """Record that a READING of a source is owed and deliberately not done yet (migration 141, T-079, AT-17).
+    """Record that a READING of a source is owed and deliberately not done yet (migrations 141 and 142, T-079, AT-17).
 
     "Deferred is okay so long as it runs eventually" (owner, 2026-09-18): a deferral is legitimate when it is on the
     record with its date, so it can be listed and aged (`v_deferred_acts`). A pair no one has read is NOT-READ in
     `v_scan_ledger` whether or not anyone decided to wait; this row says someone did, and why. THIS VERB WRITES
-    reading_deferrals AND NOTHING ELSE: the pair stays owed in the ledger, and the deferral is discharged by DERIVATION
-    when a full reading covers it (the view reads `v_scan_ledger`, never a flag a writer sets). `parameter_id` None
-    defers the whole-source catalogue reading.
+    reading_deferrals AND NOTHING ELSE: the pair stays owed in the ledger, and the deferral ends by DERIVATION when
+    nothing is owed any longer. `parameter_id` None defers the whole-source catalogue reading.
 
-    REFUSES: a blank reason; an unknown or superseded source (the replacement is what is owed: `_refuse_tombstone`);
-    a parameter that does not exist or is not active; a pair a full reading already covers, or, for the whole source,
-    a source with no active parameter left without one (nothing is owed); a pair that already has a standing deferral
-    (asked of `v_deferred_acts`, the one definition of "standing"). A partial, fragment or abstract reading covers
-    nothing here, as in the ledger."""
+    WHAT IS OWED has one home, `v_reading_owed` (a ledger pair no full reading covers and the ledger does not read
+    BLOCKED), and `v_deferred_acts` reads it for the same question, so the verb accepts exactly what the view will list.
+
+    REFUSES (each names its ground, a next action, and that nothing was written): a missing session; a reason that is
+    blank, has no letter or digit, spans lines or exceeds `_DEFER_REASON_MAX`; an unknown or superseded source (the
+    replacement is what is owed: `_refuse_tombstone`); a parameter that does not exist or is not active (a merged one
+    names the survivor); a pair, or a whole source with no owed parameter, that a full reading already covers; a
+    source the ledger reads BLOCKED (the text cannot be had: not reading debt); a pair that already has a standing
+    deferral (asked of `v_deferred_acts`). A partial, fragment or abstract reading covers nothing here, as in the ledger."""
+    session = (session or "").strip()
+    if not session:
+        raise Refusal("defer-reading: --session is required and may not be blank (the session that records the "
+                      "deferral, e.g. session_YYYY-MM-DD-slug). Nothing was written.")
     reason = dbcore.require_reason(reason, "defer-reading",
-                                   "A deferral that cannot say why is neglect, and the reason is what its age is read against.")
+                                   "A deferral that cannot say why is neglect, and the reason is what its age is read "
+                                   "against. Pass --reason with one line saying why the reading waits. Nothing was written.")
+    if "\n" in reason or "\r" in reason:
+        raise Refusal("defer-reading: --reason must be one line (no line break): say why the reading waits in a "
+                      "sentence and keep detail in the session record. Nothing was written.")
+    if not any(ch.isalnum() for ch in reason):
+        raise Refusal("defer-reading: --reason needs at least one letter or digit; a reason made of spaces, "
+                      "punctuation or invisible characters says nothing. Pass --reason with a sentence. "
+                      "Nothing was written.")
+    if len(reason) > _DEFER_REASON_MAX:
+        raise Refusal(f"defer-reading: --reason is {len(reason)} characters; the limit is {_DEFER_REASON_MAX}. Shorten "
+                      f"it to why the reading waits. Nothing was written.")
     with connect(dry_run) as conn:
         ref = dbcore.fold_ref(ref_id)
         if conn.execute("SELECT 1 FROM evidence_sources WHERE ref_id = ?", (ref,)).fetchone() is None:
-            raise Refusal(f"defer-reading: {ref_id!r} is not an admitted source.")
-        _refuse_tombstone(conn, ref, "defer-reading")
+            raise Refusal(f"defer-reading: {ref_id!r} is not an admitted source. Find the id with "
+                          f"`SELECT ref_id, title FROM evidence_sources WHERE title LIKE '%...%'`; a source not yet "
+                          f"admitted is admitted with db.py add-source first. Nothing was written.")
+        try:
+            _refuse_tombstone(conn, ref, "defer-reading")
+        except Refusal as exc:
+            succ = conn.execute("SELECT superseded_by_ref_id FROM evidence_sources WHERE ref_id = ?", (ref,)).fetchone()[0]
+            raise Refusal(f"{str(exc).removesuffix(' Nothing was written.')} Its replacement owes the reading: "
+                          f"`db.py defer-reading --ref-id {succ} ...`. Nothing was written.") from None
         if parameter_id is not None:
-            prow = _parameter_row(conn, parameter_id, "defer-reading")
+            try:
+                prow = _parameter_row(conn, parameter_id, "defer-reading")
+            except Refusal as exc:
+                raise Refusal(f"{exc} List them with `SELECT parameter_id, status FROM base_parameters`. "
+                              f"Nothing was written.") from None
             if prow["status"] != "active":
+                survivor = (f" It was merged into parameter {prow['merged_into']}: pass `--parameter "
+                            f"{prow['merged_into']}`, which carries any deferral recorded on it."
+                            if prow["status"] == "merged" and prow["merged_into"] is not None else "")
                 raise Refusal(f"defer-reading: parameter {parameter_id} is {prow['status']}; a reading is owed only "
-                              f"for an active parameter. Nothing was written.")
-        # Owed = the ledger's own reading of the pair: a FULL reading is the only thing that covers it.
-        owed = conn.execute("SELECT 1 FROM v_scan_ledger WHERE ref_id = ? AND parameter_id IS COALESCE(?, parameter_id) "
-                            "AND COALESCE(text_scope, '') <> 'full' LIMIT 1", (ref, parameter_id)).fetchone()
-        if owed is None:
-            raise Refusal(f"defer-reading: a full reading already covers "
-                          f"{ref + ' for parameter ' + str(parameter_id) if parameter_id is not None else ref + ' for every active parameter'}"
-                          f", so no reading is owed. Nothing was written.")
+                              f"for an active parameter.{survivor} List the active ones with `SELECT parameter_id "
+                              f"FROM base_parameters WHERE status = 'active'`. Nothing was written.")
+        where = f"{ref} for parameter {parameter_id}" if parameter_id is not None else f"{ref} for any active parameter"
+        # Owed = v_reading_owed, the one definition (the view of standing deferrals reads it too).
+        if conn.execute("SELECT 1 FROM v_reading_owed WHERE ref_id = ? AND parameter_id IS COALESCE(?, parameter_id) "
+                        "LIMIT 1", (ref, parameter_id)).fetchone() is None:
+            blocked = conn.execute("SELECT s.processing_blocked_reason FROM v_scan_ledger l "
+                                   "JOIN evidence_sources s ON s.ref_id = l.ref_id WHERE l.ref_id = ? "
+                                   "AND l.parameter_id IS COALESCE(?, l.parameter_id) AND l.status = 'BLOCKED' "
+                                   "LIMIT 1", (ref, parameter_id)).fetchone()
+            if blocked is not None:
+                raise Refusal(f"defer-reading: {where} reads BLOCKED in the ledger (processing_blocked_reason "
+                              f"{blocked[0]!r}): the full text cannot be had, so no reading is owed. If the text can be "
+                              f"had after all, obtain it and run db.py record-scan; if the block is wrong, correct it "
+                              f"with db.py amend-source. See `SELECT * FROM v_scan_ledger WHERE ref_id = '{ref}'`. "
+                              f"Nothing was written.")
+            raise Refusal(f"defer-reading: a full reading already covers {where}, so no reading is owed. See "
+                          f"`SELECT * FROM v_scan_ledger WHERE ref_id = '{ref}'`. Nothing was written.")
         held = conn.execute("SELECT deferred_at, created_by_session FROM v_deferred_acts WHERE kind = 'reading' "
                             "AND ref_id = ? AND parameter_id IS ?", (ref, parameter_id)).fetchone()
         if held is not None:
             raise Refusal(f"defer-reading: {ref} {'parameter ' + str(parameter_id) if parameter_id is not None else 'whole source'} "
-                          f"already has a standing deferral ({held['deferred_at']}, {held['created_by_session']}). A "
-                          f"second would reset nothing and list twice. Nothing was written.")
+                          f"already has a standing deferral ({held['deferred_at']}, {held['created_by_session']}); a "
+                          f"second would list twice. It ends when a full reading covers the pair (db.py record-scan "
+                          f"--text-scope full). See `SELECT * FROM v_deferred_acts WHERE kind = 'reading'`. "
+                          f"Nothing was written.")
         row = {"ref_id": ref, "parameter_id": parameter_id, "reason": reason}
         row.update(dbcore.stamp_for(conn, "reading_deferrals", session))
         cur = conn.execute(f"INSERT INTO reading_deferrals ({','.join(row)}) VALUES ({','.join('?' * len(row))})",

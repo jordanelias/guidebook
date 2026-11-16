@@ -142,8 +142,11 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   reading debt. "Abstract read, full text paywalled" is recorded as the abstract `record-scan` plus the reason, and the
   full text stays owed while it can be obtained (Wayback first, CLAUDE.md §7). A reading put off on purpose, with the text
   obtainable, is `defer-reading --ref-id … [--parameter …] --reason …` (no `--parameter`: the whole-source catalogue reading);
-  the pair stays owed in the ledger, the deferral lists in `v_deferred_acts` with its date, and a
-  `full` reading that covers it ends it, with no write to the deferral. The writers refuse the two values that
+  the pair stays owed in the ledger and the deferral lists in `v_deferred_acts` with the date it was first recorded. It
+  ends, with no write to the deferral, when nothing is owed any longer: `full` readings cover the pair (every active
+  parameter, for a whole-source deferral), or the ledger reads the source `BLOCKED`. A merged parameter's deferral is its
+  survivor's and a superseded source's is its successor's, with the same date. The verb refuses a source the ledger reads
+  `BLOCKED` and a pair a `full` reading covers. The writers refuse the two values that
   restate a typed fact: `no-quantified-claims` (a source read with nothing found is the reading, `record-scan
   --text-scope full`, and no extraction row; the ledger derives READ-NOTHING-FOUND from that) and `superseded` (the typed
   home is `evidence_sources.superseded_by_ref_id`, written by `supersede-source --ref-id A --by B --reason …`).

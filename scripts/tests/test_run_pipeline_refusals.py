@@ -937,6 +937,45 @@ for _need, _label in ((_a_exec and _a_ref, "unlink-admission"), (_a_term, "decli
     if not _need:
         skip("T043", f"{_label}: the live database offers no row to build the refusal on")
 
+# T-079: `defer-reading`'s refusals name the way forward too. Each state is built on a scratch copy (HAND where no writer
+# builds it) and every message must also say that nothing was written.
+_dr_msgs = {}
+if hasattr(db, "defer_reading"):
+    with scratch() as _sc:
+        _owed = [tuple(r) for r in _sc.execute("SELECT o.ref_id, o.parameter_id FROM v_reading_owed o JOIN v_scan_ledger l "
+                                               "USING (ref_id, parameter_id) WHERE l.status = 'NOT-READ' ORDER BY 1, 2").fetchall()]
+        _full = _sc.execute("SELECT ref_id, parameter_id FROM v_scan_ledger WHERE text_scope = 'full' ORDER BY 1, 2 LIMIT 1").fetchone()
+        _refs = sorted({r for r, _ in _owed})                 # sources with a pair nobody has read at all
+        if len(_refs) >= 3 and _full:
+            (_r1, _p1) = _owed[0]
+            _r2, _p2 = next(o for o in _owed if o[0] == _refs[1])
+            _r3 = _refs[2]
+            _why = "TASK-FIXTURE T079: a reason"
+            _dr_msgs["unknown source"] = (refusal(db.defer_reading, _NOID, _p1, _why, S, dry_run=True), "SELECT ref_id")
+            _dr_msgs["unknown parameter"] = (refusal(db.defer_reading, _r1, 2 ** 30, _why, S, dry_run=True),
+                                             "SELECT parameter_id, status FROM base_parameters")
+            _dr_msgs["already covered"] = (refusal(db.defer_reading, _full[0], _full[1], _why, S, dry_run=True),
+                                           "SELECT * FROM v_scan_ledger")
+            _dr_msgs["blank session"] = (refusal(db.defer_reading, _r1, _p1, _why, "  ", dry_run=True), "session_YYYY")
+            _dr_msgs["a reason of invisible characters"] = (refusal(db.defer_reading, _r1, _p1, "\u200b", S, dry_run=True),
+                                                            "--reason")
+            db.defer_reading(_r1, _p1, _why, S)                                        # a real deferral, then a second
+            _dr_msgs["already standing"] = (refusal(db.defer_reading, _r1, _p1, _why, S, dry_run=True), "db.py record-scan")
+            hand("UPDATE evidence_sources SET processing_blocked_reason='paywalled' WHERE ref_id=?", _r2)     # HAND: a block
+            _dr_msgs["blocked source"] = (refusal(db.defer_reading, _r2, _p2, _why, S, dry_run=True), "db.py amend-source")
+            hand("UPDATE evidence_sources SET superseded_by_ref_id=? WHERE ref_id=?", _r1, _r3)           # HAND: a tombstone
+            _dr_msgs["superseded source"] = (refusal(db.defer_reading, _r3, _p1, _why, S, dry_run=True), "db.py defer-reading")
+            hand("UPDATE base_parameters SET status='retired' WHERE parameter_id=?", _p1)                  # HAND: a retired one
+            _dr_msgs["retired parameter"] = (refusal(db.defer_reading, _r1, _p1, _why, S, dry_run=True), "SELECT parameter_id")
+for _j, (_what, (_msg, _tok)) in enumerate(_dr_msgs.items(), 1):
+    record(f"T043-DR{_j:02d}", f"defer-reading, {_what}: the refusal names the way forward ({_tok!r}), says nothing was written, "
+           f"and every `db.py` verb it names exists",
+           bool(_msg) and _msg.startswith("defer-reading:") and _tok in _msg and bool(_CUE.search(_msg))
+           and _msg.rstrip().endswith("Nothing was written.") and _verb_exists(_msg), _msg)
+if hasattr(db, "defer_reading") and len(_dr_msgs) < 9:
+    skip("T043-DR", "the live database offers no three owed sources and a fully read pair to build the refusals on")
+
+
 print("Section T021: a question about a published cell is an open gate with no tier")
 _P_Q = next((p for p in P_ACTIVE), None)
 _ICF = scalar("SELECT icf_code FROM base_icf ORDER BY icf_code LIMIT 1")
