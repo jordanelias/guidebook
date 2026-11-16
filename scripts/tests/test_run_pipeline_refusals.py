@@ -1080,7 +1080,7 @@ else:
                all(v and "not an entry that records the owner" in v for v in _no_owner.values())
                and all(v and "delegated resolution" in v for v in _deleg.values()), (_no_owner, _deleg))
         res, err = ok(db.amend_identity, _CODE, "T025 renamed", None, None, _OWNER_H, "T025 fixture", **_R)
-        _name = scalar("SELECT 1") and c.execute("SELECT display_name FROM base_taxonomy_identity WHERE identity_code=?", (_CODE,)).fetchone()[0]
+        _name = c.execute("SELECT display_name FROM base_taxonomy_identity WHERE identity_code=?", (_CODE,)).fetchone()[0]
         res2, err2 = ok(db.amend_identity, _CODE, "T025 renamed", None, None, _OWNER_H, "again", **_R)
         record("T025-08", "amend-identity changes the given field and prints the value it replaces; the same value again changes nothing",
                err is None and res["changed"] and res["replaced"] == {"display_name": "T025 fixture group"} and _name == "T025 renamed"
@@ -1148,9 +1148,8 @@ else:
         _st = {"tier below 4": refusal(db.amend_source, _ref27_t1, "code_currency_status", _cv[0], "r", session=S, dry_run=True) if _ref27_t1 else "n/a",
                "tombstone": refusal(db.amend_source, _ref27_tomb, "code_currency_status", _cv[0], "r", session=S, dry_run=True) if _ref27_tomb else "n/a"}
         record("T027-06", "code currency is refused for a source below tier 4 and for a tombstone, and writing it does not flip metadata_integrity_status",
-               all(v and ("T4-T6" in v or v == "n/a") for k, v in _st.items() if k == "tier below 4")
-               and all(v and ("tombstone" in v or v == "n/a") for k, v in _st.items() if k == "tombstone")
-               and c.execute("SELECT metadata_integrity_status IS NOT 'CORRECTED' FROM evidence_sources WHERE ref_id=?", (_ref27,)).fetchone()[0] in (0, 1)
+               bool(_st["tier below 4"]) and ("T4-T6" in _st["tier below 4"] or _st["tier below 4"] == "n/a")
+               and bool(_st["tombstone"]) and ("tombstone" in _st["tombstone"] or _st["tombstone"] == "n/a")
                and _before_mis == c.execute("SELECT metadata_integrity_status FROM evidence_sources WHERE ref_id=?", (_ref27,)).fetchone()[0], (_st,))
         _stamp0 = c.execute("SELECT code_currency_verified_at FROM evidence_sources WHERE ref_id=?", (_ref27,)).fetchone()[0]
         res, err = ok(db.amend_source, _ref27, "code_currency_notes", "checked against the issuing body's page", "T027 note", session=S, dry_run=False)
@@ -1331,8 +1330,8 @@ with scratch() as c:
         record("T054-01", "retire-identity --need deprecates the code in place with that need as its one successor, deletes nothing and reports the approval",
                err is None and tuple(_r) == ("deprecated", _NEED54, None) and c.execute("SELECT COUNT(*) FROM base_taxonomy_identity").fetchone()[0] == _n0
                and res["approval_ref"] == _HA, (err, tuple(_r)))
-        res, err = ok(db.retire_identity, _b, None, _carried[0] if False else _free[2] if len(_free) > 2 else None, _HB, "T054 fixture", **_R) if len(_free) > 2 else (None, "no third free code")
         if len(_free) > 2:
+            res, err = ok(db.retire_identity, _b, None, _free[2], _HB, "T054 fixture", **_R)
             _r2 = c.execute("SELECT status, superseded_by_need, superseded_by_identity FROM base_taxonomy_identity WHERE identity_code=?", (_b,)).fetchone()
             record("T054-02", "retire-identity --to-identity deprecates the code with that identity as its one successor",
                    err is None and tuple(_r2) == ("deprecated", None, _free[2]), (err, tuple(_r2)))
@@ -3288,7 +3287,6 @@ if feature("T010-01", "the rule dbcore.NON_QUANTITY_DOMAINS exists, holds at lea
 print("Section T015: the coverage views fold a language to the map's case; observe-term and add-source refuse a language the "
       "map does not hold and store the map's spelling; an English source sorts as English in any case")
 _MAP = [r[0] for r in q("SELECT DISTINCT language FROM lang_jur_map ORDER BY 1")]
-_n_lang = lambda c, sql: c.execute(sql).fetchone()[0]  # noqa: E731
 record("T015-01", "the coverage views hold one row per slug and language: the distinct languages of v_coverage_language equal the "
        "folded distinct languages of the searches, and no (slug, language) pair is split by case in either view",
        scalar("SELECT COUNT(DISTINCT language) FROM v_coverage_language")

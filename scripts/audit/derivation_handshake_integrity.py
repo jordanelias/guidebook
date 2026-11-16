@@ -57,6 +57,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
+import dbcore                                                  # noqa: E402  -- stdlib only; the lens rule has one home there
 
 # G3's predicate, IMPORTED AND NEVER RETYPED (rule 5). `grain_for()` is the one home of
 # "which Co-1 provenance is population-grain community knowledge", and
@@ -154,9 +156,8 @@ def main(argv=None):
         for g in open_by_param.get(pid, []):
             if g["verdict"] == "QUESTION":
                 continue                       # flags the cell, never caps it (OD-21): no tier to weigh
-            if any(g[c] and s.get(c) and g[c] != s[c]
-                   for c in ("identity_code", "icf_code", "needs_code", "medical_code") if c in g):
-                continue                       # a gate on another lens
+            if dbcore.lens_differs(g, s, dbcore.identity_family(con, s.get("identity_code"))):
+                continue                       # a gate on another lens (the identity lens through its descendants, as the engine reads it)
             if g["trigger_tier"] > best:
                 continue                       # correctly non-binding: see the guard above
             if s["state"] == "stated":

@@ -1135,10 +1135,23 @@ def check_declared(conn, table: str, column: str, value, context: str):
 
 
 # An identity code and every code below it through `parent_code`: the set a cell keyed on that code gathers (T-055).
-# One home for the engine (`assess_cell._IDENTITY_FAMILY`, inline in its SQL) and for `db.py cell-status`.
+# One home for `assess_cell._lens_clause` and `db.py cell-status`.
 IDENTITY_FAMILY_SQL = ("(WITH RECURSIVE family AS (SELECT ? AS code UNION SELECT i.identity_code "
                        "FROM base_taxonomy_identity i JOIN family f ON i.parent_code = f.code) "
                        "SELECT code FROM family)")
+
+
+LENS_ORDER = ("identity_code", "icf_code", "needs_code", "medical_code")
+
+
+def lens_differs(row, lens, family):
+    """True when `row` (a gate or a gap) names a code in a lens the cell states that is not the cell's. For the identity lens
+    "not the cell's" means outside the cell's code and its descendants (`family`, from `identity_family`): a parent's cell
+    gathers its descendants' figures, so a gate on a descendant reaches it. One home for the engine, `db.py cell-status` and
+    the derivation-handshake audit."""
+    cols = row.keys()
+    return any(c in cols and row[c] and lens.get(c) and (row[c] not in family if c == "identity_code" else row[c] != lens[c])
+               for c in LENS_ORDER)
 
 
 def identity_family(conn, code):

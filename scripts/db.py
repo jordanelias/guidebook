@@ -1159,21 +1159,10 @@ def get_unmined_sources(slug: str) -> list[dict]:
     return [dict(r) for r in rows]
 
 
-_CELL_LENS_TABLES = (("identity_code", "base_taxonomy_identity", "identity_code"), ("icf_code", "base_icf", "icf_code"),
-                     ("needs_code", "access_needs", "need_code"), ("medical_code", "base_taxonomy_medical", "medical_code"))
-
-
-def _lens_differs(row, lens, family):
-    """True when `row` (a gate or a gap) names a code in a lens the cell states that is not the cell's: for the identity lens
-    "not the cell's" means outside the cell's code and its descendants, as the engine reads a gate (`assess_cell._open_gates`)."""
-    return any(row[c] and lens.get(c) and (row[c] not in family if c == "identity_code" else row[c] != lens[c])
-               for c in ("identity_code", "icf_code", "needs_code", "medical_code"))
-
-
 def _gap_applies(row, lens, jurisdiction, lang, family=frozenset(), roll=lambda j: j):
     """A gap names the subject it is about; it is skipped for a cell only when it names a DIFFERENT code in a lens the cell
     states, or a different jurisdiction or language than the one asked for (the rule the engine applies to a gate)."""
-    return not (_lens_differs(row, lens, family)
+    return not (dbcore.lens_differs(row, lens, family)
                 or (jurisdiction and row["jurisdiction"] and roll(row["jurisdiction"]) != jurisdiction)
                 or (lang and row["language"] and row["language"].upper() != lang))
 
@@ -1198,7 +1187,7 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
         if param is None:
             raise Refusal(f"cell-status: parameter_id {parameter_id}: no such parameter. List them with SELECT "
                           f"parameter_id FROM base_parameters.")
-        for col, tbl, key in _CELL_LENS_TABLES:
+        for col, (tbl, key) in _LENS_COLUMNS.items():
             if lens.get(col) and not dbcore.exists(conn, tbl, key, lens[col]):
                 raise Refusal(f"cell-status: {col} {lens[col]!r} is not in {tbl}. List the codes with SELECT "
                               f"{key} FROM {tbl}.")
@@ -1255,14 +1244,13 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
                                % ",".join("?" * len(st)), parameter_id, *st)
         evidence = {"held": scan("EXTRACTED", "STATED-ABSENT"), "examined_empty": scan("READ-NOTHING-FOUND"),
                     "never_examined": scan("NOT-READ"), "owed": {"read_in_part_only": scan("READ-PARTIAL")}}
+        qs = ",".join("?" * len(extractions)) or "NULL"
         if lens or jurisdiction:
             # `held` is narrowed to the sources of the figures that survived the filter; the other three lists are per
             # (source, parameter) in the scan ledger and are NOT narrowed by a lens or a jurisdiction.
-            _qs = ",".join("?" * len(extractions)) or "NULL"
-            _kept = set(ids(f"SELECT DISTINCT ref_id FROM source_value_extractions WHERE extraction_id IN ({_qs})", *extractions))
+            _kept = set(ids(f"SELECT DISTINCT ref_id FROM source_value_extractions WHERE extraction_id IN ({qs})", *extractions))
             evidence["held"] = [r for r in evidence["held"] if r in _kept]
             evidence["not_narrowed"] = ["examined_empty", "never_examined", "owed"]
-        qs = ",".join("?" * len(extractions)) or "NULL"
         judgment = {"held": extractions, "examined_empty": [], "never_examined": [],
                     "owed": {"open_follow_ups": ids(f"SELECT follow_up_id FROM extraction_follow_ups WHERE resolved_at "
                                                     f"IS NULL AND extraction_id IN ({qs}) ORDER BY follow_up_id", *extractions)}}
@@ -1277,7 +1265,7 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
         # ---- specification: the live determination(s) of the cell, their history, and the open gates ------
         sp = "SELECT specification_id FROM specifications WHERE parameter_id = ?" + "".join(f" AND {c} = ?" for c in lens)
         sp_args = [parameter_id, *lens.values()]
-        _lensed = lambda r: not _lens_differs(r, lens, family)          # noqa: E731
+        _lensed = lambda r: not dbcore.lens_differs(r, lens, family)          # noqa: E731
         gates = [r["gate_id"] for r in conn.execute(
             "SELECT gate_id, identity_code, icf_code, needs_code, medical_code FROM v_open_determination_gates "
             "WHERE parameter_id = ? ORDER BY gate_id", (parameter_id,)) if _lensed(r)]
@@ -6473,7 +6461,7 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         row = conn.execute(f"SELECT ref_id, {field}, verification_method, "
                            f"verification_disposition, verification_closure_reason, "
                            f"verification_attempt_count, "
-                           f"metadata_integrity_detail "
+                           f"metadata_integrity_detail, metadata_integrity_status "
                            f"FROM evidence_sources WHERE ref_id=?", [ref_id]).fetchone()
         if row is None:
             raise Refusal(f"{ref_id}: no such evidence source.")
@@ -6660,8 +6648,7 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
             f"metadata_integrity_status=?, metadata_integrity_detail=?, "
             f"updated_at=?, updated_by_session=? WHERE ref_id=?",
             _vals + [("CORRECTED" if field not in ("code_currency_status", "code_currency_notes")
-                      else conn.execute("SELECT metadata_integrity_status FROM evidence_sources WHERE ref_id=?",
-                                        (ref_id,)).fetchone()[0]),     # a currency statement is not a metadata correction
+                      else row["metadata_integrity_status"]),     # a currency statement is not a metadata correction
                      ledger.lstrip(" |"),
                      stamp["created_at"], stamp["created_by_session"], ref_id])
         out = {"ref_id": ref_id, "field": field, "changed": True,
@@ -8875,7 +8862,6 @@ def add_lang_jur_pair(language: str, jurisdiction: str, role: str, notes: str, a
         new_language = not conn.execute("SELECT 1 FROM lang_jur_map WHERE language=?", (language,)).fetchone()
         row = {"language": language, "jurisdiction": jurisdiction, "role": role, "notes": notes or None}
         row.update(dbcore.stamp_for(conn, "lang_jur_map", session))
-        row = {k: v for k, v in row.items() if k in dbcore.columns(conn, "lang_jur_map")}
         conn.execute(f"INSERT INTO lang_jur_map ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
                      list(row.values()))
     return {"language": language, "jurisdiction": jurisdiction, "role": role, "new_language": new_language,
@@ -8930,7 +8916,6 @@ def add_identity(code: str, display_name: str, category: str, description: str, 
         row = {"identity_code": code, "display_name": display_name.strip(), "category": category,
                "description": description.strip(), "parent_code": parent or None}
         row.update(dbcore.stamp_for(conn, "base_taxonomy_identity", session))
-        row = {k: v for k, v in row.items() if k in dbcore.columns(conn, "base_taxonomy_identity")}
         conn.execute(f"INSERT INTO base_taxonomy_identity ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
                      list(row.values()))
     return {"identity_code": code, "parent_code": parent or None, "approval_ref": heading, "dry_run": dry_run}
@@ -8970,13 +8955,13 @@ def amend_identity(code: str, display_name: str, description: str, category: str
 
 
 #: Tables whose identity codes are RECORDS of what was logged or graded, not live subjects a retirement must move.
-_IDENTITY_RECORD_TABLES = ("search_executions", "evidence_population_match")
+_IDENTITY_RECORD_COLS = {"search_executions": "identity_code", "evidence_population_match": "target_population"}
 
 
 def _identity_records(conn, code):
     """How many records name `code` and stay as history across a retirement: (table.column, n)."""
     out = []
-    for t, col in (("search_executions", "identity_code"), ("evidence_population_match", "target_population")):
+    for t, col in _IDENTITY_RECORD_COLS.items():
         if col in set(dbcore.columns(conn, t)):
             n = conn.execute(f'SELECT COUNT(*) FROM "{t}" WHERE "{col}" = ?', (code,)).fetchone()[0]
             if n:
@@ -8995,7 +8980,7 @@ def _identity_carriers(conn, code):
     # written, and no verb re-tags either, so counting them would make a retirement impossible (the 2026-11-15
     # critic showed SCI could not be retired). They are counted apart by `_identity_records`.
     pairs = [(t, f[3]) for t in tables for f in conn.execute(f'PRAGMA foreign_key_list("{t}")')
-             if f[2] == "base_taxonomy_identity" and t not in _IDENTITY_RECORD_TABLES]
+             if f[2] == "base_taxonomy_identity" and t not in _IDENTITY_RECORD_COLS]
     for t, col in pairs:
         cols = set(dbcore.columns(conn, t))
         if col not in cols:
@@ -11080,7 +11065,6 @@ def register_root(root_id: str, description: str, root_type: str, provenance: st
                "provenance": provenance.strip(), "root_population_note": population_note or None,
                "notes": notes or None}
         row.update(dbcore.stamp_for(conn, "external_root_registry", session))
-        row = {k: v for k, v in row.items() if k in dbcore.columns(conn, "external_root_registry")}
         conn.execute(f"INSERT INTO external_root_registry ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
                      list(row.values()))
     return {"root_id": root_id, "root_type": root_type, "dry_run": dry_run}

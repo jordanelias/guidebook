@@ -223,7 +223,7 @@ LENS_COLUMNS = {
     "medical_code": ("base_taxonomy_medical", "medical_code"),
 }
 # COALESCE order, matching the table's own CHECK and test_db_integrity K01's sha payload.
-LENS_ORDER = ("identity_code", "icf_code", "needs_code", "medical_code")
+LENS_ORDER = dbcore.LENS_ORDER
 # A cell's identity in SQL: the parameter and the four lens codes, blank and NULL alike (the COALESCE of
 # `idx_spec_row_identity`, migration 071). One text, read by the already-determined refusal and by the
 # supersession link; `_cell_vals` gives its parameters.
@@ -251,7 +251,6 @@ def lens_key(lens):
 # The identity lens is the one lens with a hierarchy (base_taxonomy_identity.parent_code): a cell keyed on a code
 # gathers the figures linked to that code or to any code whose parent_code chain reaches it (T-055). Derived from
 # the registry on every gather, never a list. UNION, not UNION ALL, so a cycle ends.
-_IDENTITY_FAMILY = dbcore.IDENTITY_FAMILY_SQL
 
 
 def _lens_clause(lens, alias):
@@ -269,7 +268,7 @@ def _lens_clause(lens, alias):
     impose nothing and gather by parameter alone, which is the defect this closes, so it is refused."""
     parts = [(f"EXISTS (SELECT 1 FROM v_live_lens_links k WHERE "
               f"k.extraction_id = {alias}.extraction_id AND k.{c} "
-              + (f"IN {_IDENTITY_FAMILY}" if c == "identity_code" else "= ?") + ")", lens[c])
+              + (f"IN {dbcore.IDENTITY_FAMILY_SQL}" if c == "identity_code" else "= ?") + ")", lens[c])
              for c in LENS_ORDER if lens.get(c)]
     if not parts:
         raise Refusal("a cell states at least one lens (D-0182); gathering without one would "
@@ -695,8 +694,7 @@ def _open_gates(conn, parameter_id, lens, best, questions_only=False):
             # The identity lens counts through parent_code, as the figures do: a parent's cell gathers its descendants'
             # figures, so a gate on a descendant's code reaches it (the gate caps the figure wherever it is read); a gate
             # on the parent's code does not reach a child's cell, which does not gather the parent's own figures.
-            if any(gv and lens.get(col) and (lens[col] != gv if col != "identity_code" else gv not in family)
-                   for col, gv in zip(("identity_code", "icf_code", "needs_code", "medical_code"), g[6:10])):
+            if dbcore.lens_differs(dict(zip(dbcore.LENS_ORDER, g[6:10])), lens, family):
                 continue                      # a gate on another lens
             if g[1] == "QUESTION":
                 # An objection to a published value, recorded as an open gate (OD-21). It FLAGS the cell and never
