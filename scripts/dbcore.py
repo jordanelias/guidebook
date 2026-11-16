@@ -35,6 +35,7 @@ That relative hop is the one piece of boilerplate consolidation cannot remove. I
 """
 
 import functools
+import json
 import os
 import re
 import sqlite3
@@ -923,6 +924,78 @@ def next_ref_id(conn) -> str:
     the copy rule 5 forbids. There is no allocator and there should not be one.
     """
     return "REF-%05d" % (ref_id_high_water(conn) + 1)
+
+
+# ---------------------------------------------------------------------------
+# The refusal record (T-088) — what a writer said no to, kept beside the batch that met it.
+# ---------------------------------------------------------------------------
+
+_SECRET_FLAG = re.compile(r"token|secret|passw|credential|api-?key", re.I)
+_PRIVATE_PATH = re.compile(r"/(?:home|Users)/[^/\s\"']+|/root\b")
+
+
+def _flag_value(argv, flag, min_len):
+    """The LAST value `--flag V` or `--flag=V` gives in `argv` (argparse takes the last), or None. A prefix of
+    `flag` at least `min_len` long counts, as argparse allows (`--ses`); `min_len` is where it stops being unique."""
+    found = None
+    for i, tok in enumerate(argv):
+        name, eq, val = str(tok).partition("=")
+        if len(name) >= min_len and flag.startswith(name) and name.startswith("--"):
+            found = val if eq else (str(argv[i + 1]) if i + 1 < len(argv) else None)
+    return found
+
+
+def _scrub(text):
+    """Nothing private reaches a line a pull request publishes: this repository's root is written as a relative
+    path and any home directory as `~`."""
+    return _PRIVATE_PATH.sub("~", str(text).replace(str(REPO_ROOT) + "/", "").replace(str(REPO_ROOT), "."))
+
+
+def record_refusal(script, argv, sentence):
+    """Keep one writer refusal in `scratchpad/<running session>/refusals.jsonl`; never raises.
+
+    Called at every place a writer says no, before it exits, so the sentence (the only record of what the batch held
+    and could not write) outlives the terminal. The session's command log keeps a hash of the output, not the words.
+    Captured only when `--session` in `argv` IS the running session (`scratchpad/CURRENT`, whose folder must exist
+    under that exact name, CLAUDE.md section 7): a test or probe refusing under another session would otherwise fill
+    the batch's record with fixtures.
+
+    WHAT IS STORED, because the file is committed to a public repository (rule 6): `ts` (to the microsecond: two
+    refusals in one minute are one retry loop, and `refusal_register.py dispose` names a refusal by it), `session`,
+    `script`, `verb` (db.py's subcommand, else the script's own name), `argv` and `sentence` (the repository root
+    written relative, any home directory as `~`, the value after a flag named like a token, secret, password,
+    credential or api key replaced), and `db` (the `--db` value, else the database this process opens, scrubbed the
+    same way). Nothing else: no output, no environment, no user name. The stage, tables, rule ids and signature of a
+    refusal are derived by its reader from these fields, never stored (rule 8).
+    """
+    try:
+        argv = [str(a) for a in argv]
+        stem = (REPO_ROOT / "scratchpad" / "CURRENT").read_text(encoding="utf-8").strip()
+        stem = session_stem(stem)
+        if not stem or "/" in stem:      # the folder must already exist under that exact name: the append below never creates it
+            return
+        given = _flag_value(argv, "--session", 5)
+        if given is None or session_stem(given) != stem:
+            return
+        clean, hide = [], False
+        for tok in argv:
+            name, eq, _ = tok.partition("=")
+            if hide:
+                clean.append("<redacted>")
+                hide = False
+            elif tok.startswith("--") and _SECRET_FLAG.search(name):
+                clean.append(f"{name}=<redacted>" if eq else tok)
+                hide = not eq
+            else:
+                clean.append(_scrub(tok))
+        line = {"ts": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S.%f"), "session": stem, "script": script,
+                "verb": argv[0] if script == "scripts/db.py" and argv else Path(script).stem,
+                "argv": clean, "sentence": _scrub(sentence),
+                "db": _scrub(_flag_value(argv, "--db", 4) or db_path())}
+        with open(REPO_ROOT / "scratchpad" / stem / "refusals.jsonl", "a", encoding="utf-8") as fh:
+            fh.write(json.dumps(line, ensure_ascii=False) + "\n")
+    except Exception:   # noqa: BLE001 -- the refusal's own message and exit are the product; the record is a courtesy
+        return
 
 
 # ---------------------------------------------------------------------------

@@ -655,6 +655,7 @@ writers:
     - evidence_population_match
     - evidence_source_authors
     - evidence_sources
+    - gaps
     - lang_jur_map
     - parameter_declinations
     - search_admissions

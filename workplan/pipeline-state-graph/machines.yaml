@@ -473,10 +473,11 @@ machines:
   - id: M10.t5
     from: "ADVERSARIAL"
     to: "DOD-GATED"
-    via: "/batch-done (research_batch_dod, adversarial_pass_audit, search_log_completeness on CURRENT)"
-    guards: ["the session id is the bare stem in the DB and carries .md in pointer files; the wrong form scopes the gate to zero rows"]
+    via: "/batch-done (research_batch_dod, adversarial_pass_audit, search_log_completeness, refusal_register on CURRENT)"
+    guards: ["the session id is the bare stem in the DB and carries .md in pointer files; the wrong form scopes the gate to zero rows", "every writer refusal the batch met is disposed (retried, parked with a gap, or waived with a reason): an undisposed refusal is a batch that is not done"]
     evidence:
       - {file: .claude/commands/batch-done.md, needle: "research_batch_dod.py --session"}
+      - {file: .claude/commands/batch-done.md, needle: "refusal_register.py list --session"}
   - id: M10.t6
     from: "DOD-GATED"
     to: "EMITTED"

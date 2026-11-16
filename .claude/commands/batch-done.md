@@ -9,6 +9,7 @@ SessionStart contract names:
 python3 scripts/audit/research_batch_dod.py --session "$(cat scratchpad/CURRENT)"
 python3 scripts/audit/adversarial_pass_audit.py --session "$(cat scratchpad/CURRENT)"
 python3 scripts/audit/search_log_completeness.py --session "$(cat scratchpad/CURRENT)"
+python3 scripts/audit/refusal_register.py list --session "$(cat scratchpad/CURRENT)"
 ```
 
 The second line is RC4 (advisory): it FAILs if this session wrote to any of the 2026-08-19
@@ -30,6 +31,13 @@ not clear them. It witnesses WebSearch and WebFetch only: a search run through a
 (Consensus, PubMed, Scholar Gateway) leaves no line, so a PASS says nothing about those. R8 still
 owes each of them a `log-search` row, and `record_file` its result (DR-2026-09-26 §2.2b); the
 gate can check neither.
+
+The fourth line lists every writer refusal this batch met (each is kept in `scratchpad/<session>/refusals.jsonl`,
+for a call made under the running session) and exits 1 while any is undisposed. Every writer refusal this batch met is disposed before the batch is done: **retried** (the writer was
+right; the corrected call succeeded), **parked** (its content waits: file a gap with `db.py add-gap`, typed by its
+subject, and keep the refused argv, which is the replay command), or **waived** (with a reason). Record each with
+`refusal_register.py dispose --session S --ts T --as retried|parked|waived [--gap-id G] [--reason R]`. An undisposed
+refusal is a batch that is not done.
 
 **The session id is the bare stem in the DB and carries `.md` in pointer files.**
 Wrong form scopes the gate to zero rows and every rule reports PASS over an empty

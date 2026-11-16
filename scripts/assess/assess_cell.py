@@ -1958,6 +1958,14 @@ class Refusal(ValueError):
     """
 
 
+def _refuse(sentence, code=1):
+    """Say a refusal as `REFUSING: <sentence>` on stderr, keep it (T-088: `dbcore.record_refusal`) and exit `code`.
+    Every place this engine says no goes through here, so none is left out of the batch's refusal record."""
+    dbcore.record_refusal("scripts/assess/assess_cell.py", sys.argv[1:], sentence)
+    print(f"REFUSING: {sentence}", file=sys.stderr)
+    sys.exit(code)
+
+
 def validate_parameter(conn, parameter_id):
     """The SUBJECT must exist and be alive (owner 2026-08-26; migration 071).
 
@@ -2180,17 +2188,16 @@ def main():
     ap.add_argument("--report-json", default=None)
     args = ap.parse_args()
     if os.path.abspath(args.db) == os.path.abspath(os.path.join(REPO_ROOT, "data", "guidebook.db")):
-        sys.exit("REFUSING: this engine never writes the canonical DB (owner-gated).")
+        _refuse("this engine never writes the canonical DB (owner-gated).")
     # The DB holds the bare session stem; the pointer form carries `.md` (CLAUDE.md section 7), and
     # a wrong form scopes a gate to nothing. A stamp is stored verbatim, so it is refused unless it
     # has the shape every live created_at has: dbcore.now() is 'YYYY-MM-DD HH:MM', and the engine's
     # own examples add seconds. Both refusals precede every write.
     if not re.fullmatch(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?", args.stamp):
-        print(f"REFUSING: --stamp {args.stamp!r} is not 'YYYY-MM-DD HH:MM' or 'YYYY-MM-DD "
-              f"HH:MM:SS' (the shape dbcore.now() writes; no 'T', no zone). It is stored as "
-              f"created_at, so a foreign shape would sit beside every other row's. Nothing was "
-              f"written.", file=sys.stderr)
-        sys.exit(2)
+        _refuse(f"--stamp {args.stamp!r} is not 'YYYY-MM-DD HH:MM' or 'YYYY-MM-DD "
+                f"HH:MM:SS' (the shape dbcore.now() writes; no 'T', no zone). It is stored as "
+                f"created_at, so a foreign shape would sit beside every other row's. Nothing was "
+                f"written.", 2)
     SESSION, STAMP = re.sub(r"\.md$", "", args.session), args.stamp
 
     lens = {"identity_code": args.identity, "icf_code": args.icf,
@@ -2507,17 +2514,17 @@ if __name__ == "__main__":
     try:
         main()
     except Refusal as exc:
-        sys.exit(f"REFUSING: {exc}")
+        _refuse(str(exc))
     except sqlite3.IntegrityError as exc:
         # Belt and braces on the one constraint an operator meets by ordinary use.
         # validate_cell_undetermined() restates this index's own COALESCE expression,
         # so reaching here means the two have drifted — which is worth saying plainly
         # rather than as a bare constraint name.
         if "idx_spec_row_identity" in str(exc):
-            sys.exit("REFUSING: this cell is already determined — "
-                     "`idx_spec_row_identity` refused a second row for the same "
-                     "parameter × lens, at the INSERT rather than at the "
-                     "pre-flight check that should have caught it "
-                     "(validate_cell_undetermined). There is no re-determination path; "
-                     "revisiting a determined cell needs a supersede design first.")
+            _refuse("this cell is already determined — "
+                    "`idx_spec_row_identity` refused a second row for the same "
+                    "parameter × lens, at the INSERT rather than at the "
+                    "pre-flight check that should have caught it "
+                    "(validate_cell_undetermined). There is no re-determination path; "
+                    "revisiting a determined cell needs a supersede design first.")
         raise

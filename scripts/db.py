@@ -62,6 +62,13 @@ import dbcore                                                      # noqa: E402
 from dbcore import Refusal                                         # noqa: E402
 
 
+def _json_refusal(sentence):
+    """The verbs that answer in JSON refuse as `{"error": ...}` and exit 2: the same refusal as a `Refusal`, kept (T-088)."""
+    dbcore.record_refusal("scripts/db.py", sys.argv[1:], sentence)
+    print(json.dumps({"error": sentence}))
+    sys.exit(2)
+
+
 def _retrieval_log():
     """`scripts/research/retrieval_log`, imported on first use.
 
@@ -4105,21 +4112,16 @@ def main():
         try:
             strategy = json.loads(args.search_strategy)
         except json.JSONDecodeError as e:
-            print(json.dumps({"error": f"--search-strategy is not valid JSON: {e}"}))
-            sys.exit(2)
+            _json_refusal(f"--search-strategy is not valid JSON: {e}")
         # Validate outcome-specific required args (mirrors SQL CHECK)
         if args.outcome == "refined_by" and not args.refinement_dimension:
-            print(json.dumps({"error": "outcome=refined_by requires --refinement-dimension"}))
-            sys.exit(2)
+            _json_refusal("outcome=refined_by requires --refinement-dimension")
         if args.outcome == "divergent_no_supersession" and not args.divergence_notes:
-            print(json.dumps({"error": "outcome=divergent_no_supersession requires --divergence-notes"}))
-            sys.exit(2)
+            _json_refusal("outcome=divergent_no_supersession requires --divergence-notes")
         if args.outcome in ("superseded_by", "refined_by", "divergent_no_supersession") and not (sup_refs or sup_dois):
-            print(json.dumps({"error": f"outcome={args.outcome} requires --superseding-refs or --superseding-dois"}))
-            sys.exit(2)
+            _json_refusal(f"outcome={args.outcome} requires --superseding-refs or --superseding-dois")
         if args.outcome == "co1_addition_logged" and args.evidence_type != "co1":
-            print(json.dumps({"error": "outcome=co1_addition_logged only valid for evidence_type=co1"}))
-            sys.exit(2)
+            _json_refusal("outcome=co1_addition_logged only valid for evidence_type=co1")
         check_id = add_supersession_check(
             slug=args.slug, local_ref_id=args.local_ref, ref_id=args.ref,
             anchor_tier=args.tier, anchor_evidence_type=args.evidence_type,
@@ -4142,32 +4144,26 @@ def main():
         try:
             strategy = json.loads(args.search_strategy)
         except json.JSONDecodeError as e:
-            print(json.dumps({"error": f"--search-strategy is not valid JSON: {e}"}))
-            sys.exit(2)
+            _json_refusal(f"--search-strategy is not valid JSON: {e}")
         try:
             discoveries = json.loads(args.discoveries) if args.discoveries else []
             if not isinstance(discoveries, list):
                 raise Refusal("--discoveries must be a JSON array")
         except (json.JSONDecodeError, ValueError) as e:
-            print(json.dumps({"error": f"--discoveries: {e}"}))
-            sys.exit(2)
+            _json_refusal(f"--discoveries: {e}")
         try:
             cand_dois = json.loads(args.candidate_dois) if args.candidate_dois else []
             if not isinstance(cand_dois, list):
                 raise Refusal("--candidate-dois must be a JSON array")
         except (json.JSONDecodeError, ValueError) as e:
-            print(json.dumps({"error": f"--candidate-dois: {e}"}))
-            sys.exit(2)
+            _json_refusal(f"--candidate-dois: {e}")
         # Validate outcome-specific required args (mirrors SQL CHECK)
         if args.outcome == "closure_evidence_found" and not discoveries:
-            print(json.dumps({"error": "outcome=closure_evidence_found requires at least one entry in --discoveries"}))
-            sys.exit(2)
+            _json_refusal("outcome=closure_evidence_found requires at least one entry in --discoveries")
         if args.outcome == "gap_recategorized" and (not args.notes or len(args.notes) < 20):
-            print(json.dumps({"error": "outcome=gap_recategorized requires --notes (>=20 chars)"}))
-            sys.exit(2)
+            _json_refusal("outcome=gap_recategorized requires --notes (>=20 chars)")
         if args.outcome == "deferred" and (not args.notes or len(args.notes) < 10):
-            print(json.dumps({"error": "outcome=deferred requires --notes (>=10 chars)"}))
-            sys.exit(2)
+            _json_refusal("outcome=deferred requires --notes (>=10 chars)")
         gap_mining_id = add_gap_mining(
             gap_id=args.gap_id,
             search_strategy_record=json.dumps(strategy),
@@ -12551,5 +12547,6 @@ if __name__ == "__main__":
     try:
         main()
     except Refusal as exc:
+        dbcore.record_refusal("scripts/db.py", sys.argv[1:], str(exc))
         sys.exit(f"REFUSING: {exc}")
 
