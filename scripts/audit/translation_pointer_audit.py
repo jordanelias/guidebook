@@ -39,8 +39,7 @@ def main():
         if not conn.execute("SELECT 1 FROM sqlite_master WHERE name='translations'").fetchone():
             print("translation_pointer_audit: the translations table is absent", file=sys.stderr)
             return 2
-        rows = conn.execute("SELECT * FROM translations WHERE status IN ('translated', 'reviewed') "
-                            "AND superseded_by_translation_id IS NULL ORDER BY translation_id").fetchall()
+        rows = conn.execute("SELECT * FROM v_translations_current ORDER BY translation_id").fetchall()
         bad = []
         for r in rows:
             tid, where = r["translation_id"], (r["source_table"], r["source_column"], r["source_row_key"])

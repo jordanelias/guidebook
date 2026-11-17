@@ -448,6 +448,33 @@ record("T049-84", "a rejected row WITH its reason is accepted by the schema (the
        not insert_refused(f"{TRANSLATED}, reviewed_by_kind, reviewed_by_name, reviewed_at, review_reason",
                           "'rejected', 'x', 'model', 'a', 'model', 'b', 'now', 'why'"))
 record("T049-85", "translations is in the captured set the writers derive", "translations" in dbcore.writable_tables(con))
+# the refusals of request/record that the first cases did not hold (found by seeding each away: the suite stayed green)
+if not plain or plain["lang"] not in LANGS or len(langs_for(plain, 8)) < 6:
+    skip("T049-87..T049-90", "no non-English figure whose language the map holds, or too few other languages")
+else:
+    LC = langs_for(plain, 8)[5]
+    cellp = ("source_value_extractions", "claim_text", str(plain["id"]))
+    record("T049-87", "a request in the pointed row's own language is refused: there is nothing to translate",
+           refused_for("nothing to translate", db.request_translation, *cellp, plain["lang"], JUDGMENT, session=S))
+    record("T049-88", "a blank --session is refused by the request and by the record",
+           refused_for("--session is required", db.request_translation, *cellp, LC, JUDGMENT, session="  ")
+           and refused_for("--session is required", db.record_translation, "TASK-FIXTURE x", source_table=cellp[0],
+                           source_column=cellp[1], source_row_key=cellp[2], target_language=LC, stage=JUDGMENT,
+                           translator_kind="model", translator_name="t", session=" "))
+    record("T049-89", "a target language the map does not hold is refused",
+           refused_for("is not a language lang_jur_map holds", db.request_translation, *cellp, "ZZ-NOT-A-LANGUAGE",
+                       JUDGMENT, session=S))
+    kinds = sorted(dbcore.check_values(con, "translations", "translator_kind"))
+    try:
+        db.record_translation("TASK-FIXTURE x", source_table=cellp[0], source_column=cellp[1], source_row_key=cellp[2],
+                              target_language=LC, stage=JUDGMENT, translator_kind="zz_not_a_kind",
+                              translator_name="t", session=S)
+        said = ""
+    except Refusal as exc:
+        said = str(exc)
+    record("T049-90", "a translator kind outside the column's CHECK is refused, naming the kinds the CHECK holds",
+           bool(kinds) and all(k in said for k in kinds), said)
+
 audit = subprocess.run([sys.executable, "scripts/audit/translation_pointer_audit.py"], capture_output=True, text=True,
                        env={**os.environ, "GUIDEBOOK_DB_PATH": DB})
 n_current = q("SELECT count(*) FROM v_translations_current")[0][0]

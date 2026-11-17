@@ -23,3 +23,18 @@ Not repaired (a design or owner question, or data):
 4. **B11 and the two skim edges share one carrier**, so the edge cannot tell an evidence-origin return from a judgment-origin one. They are two edges because the boundary table has two re-entry stages; whether a single edge with two target stages is better is a design question for `governance/pipeline-contract.yaml`.
 5. **The graph ingest ignores `re_entry`** (`scripts/audit/graph/extract_contract.py` renders stages and criteria only), so the ruled returns are absent from the state graph. A later task that renders them owns it; the end-of-batch sweep regenerates the derived files.
 6. **B9 and B14 are not entered**: the boundary table marks them "ledger" and "inferred", not "ruled".
+
+## T-049 (commit 3818ed33; critic repairs in the commit after it)
+
+Stopped once: the executor's section 3 flag `--source-row-key` ended in a secret word (`key`), and `dbcore._secret_flag` redacts such a flag's value in the refusal recorder (T-088, case T088-05b). Renamed the FLAG to `--source-row-id` (the column stays `source_row_key`); exempting it would weaken a T-088 guard. The task file records the rename.
+
+Repaired: the definition of "current" had three homes (the view, `_current_translation`, the audit); the verbs and the audit now read `v_translations_current`; four refusals no test held now have a case each, each run red on a seeded defect (T049-87 own-language request, T049-88 blank session, T049-89 unknown target language, T049-90 translator kind outside the CHECK, which names the kinds the CHECK holds); T-037's task file now states that the renderer must hash-check a translation before showing it.
+
+Not repaired (the spec's own wording, a design or owner question):
+1. **OD-30 is recorded, not enforced, at the read surface.** The view admits `translated` rows (T-049 item 2) and the reader gate is T-037's (item 8). The commit message of 3818ed33 says the registry entries check that no translation is shown unreviewed; they check pointer, hash and numbers. The claim is history; this note corrects it.
+2. **The reviewer check is a case-insensitive name compare** (item 8). A near-identical name, the same session and a non-Opus model all pass; the database cannot verify a model class. Whether the review's session must differ from the translator's is a rule the file does not state (task file, design question (b)).
+3. **A translation equal to its original is accepted**: no flag carries the original, but the text a translator supplies is not compared with it (design question (c)).
+4. **The number rule refuses `1 200 mm` to `1,200 mm`, and passes a reordered pair, a changed unit and a flipped comparator** (item 5; design question (a)). A change to item 5 and T-008's reader.
+5. **A stale translation stays in the view** after its original changes; the verbs refuse it and the advisory audit reports it, and T-037 must check the hash (now stated in its file). A stale `requested` row has no verb that closes it.
+6. **The joined-cells census examines no translation column** while the table holds no row (it counts columns with data). Re-run it after the first translation is written.
+7. **`translations` rows and other tables' keys are translatable cells** (`translations.translated_text`, `evidence_sources.ref_id`): the file lists no translatable tables, by design.

@@ -12859,9 +12859,8 @@ def _current_translation(conn, table, column, key, language, excluding=None):
     """The id and status of the current (translated or reviewed, not retired) translation of this cell into this
     language other than `excluding`, else None."""
     return conn.execute(
-        "SELECT translation_id, status FROM translations WHERE source_table=? AND source_column=? "
-        "AND source_row_key=? AND target_language=? AND status IN ('translated', 'reviewed') "
-        "AND superseded_by_translation_id IS NULL AND translation_id IS NOT ?",
+        "SELECT translation_id, status FROM v_translations_current WHERE source_table=? AND source_column=? "
+        "AND source_row_key=? AND target_language=? AND translation_id IS NOT ?",
         (table, column, key, language, excluding)).fetchone()
 
 
