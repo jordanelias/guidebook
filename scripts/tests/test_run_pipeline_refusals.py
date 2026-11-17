@@ -3710,7 +3710,12 @@ with scratch() as c:
            "r8":  "The shared path is graded at 1:8 over its first span.",
            "r12": "A ramp is graded at 1:12 where the rise is small.",
            "r14": "The side ramp is graded at 1:14 beside the stair.",
-           "r6":  "The threshold ramp is graded at 1:6 across the door."}
+           "r6":  "The threshold ramp is graded at 1:6 across the door.",
+           "e1":  "The kerb ramp grade is 6% at the crossing.",
+           "e2":  "The landing grade is 7% at the corner.",
+           "r4":  "The drive ramp is graded at 1:4 beside the garage.",
+           "r3":  "The loading ramp is graded at 1:3 beside the dock.",
+           "r2":  "The temporary ramp is graded at 1:2 beside the hall."}
     FAM = next(m for fam in dbcore.NOTATION_FAMILIES.values() for m in fam if dbcore.ratio_notation(m))
     ref93 = new_source(verified=True)
     held_text(ref93, "\n".join(T93.values()))
@@ -3770,6 +3775,16 @@ with scratch() as c:
     refused93("T093-03c", "a unit that is not a family member (`ratio of widths`) is refused though it holds the old cell",
               G93, "ratio of widths", "does not lead")
     refused93("T093-03d", "an empty unit cell is not amended to the family member", H93, FAM, "does not lead")
+    # An empty cell states no unit, so no unit may be put there as a reformat: `%` is a family member and an empty pattern
+    # matches on a boundary (the first version of this branch accepted every NULL-unit row, 45 on the live copy).
+    E1, E2 = put93("e1", "6", "%", ""), put93("e2", "7", "%", None)
+    refused93("T093-04", "an empty unit cell is not amended to `%`", E1, "%", "does not lead")
+    refused93("T093-04b", "a NULL unit cell is not amended to `%`", E2, "%", "does not lead")
+    # Only the old cell that IS the member's last word, in the member's own case, is a reformat.
+    R4, R3, R2 = put93("r4", "1:4", FAM, "Ratio"), put93("r3", "1:3", FAM, "run ratio"), put93("r2", "1:2", FAM, "rise")
+    refused93("T093-05", "a different case (`Ratio`) is not the bare word: refused", R4, FAM, "does not lead")
+    refused93("T093-05b", "a cell that is two words of the member (`run ratio`) is not a bare `ratio`: refused", R3, FAM, "does not lead")
+    refused93("T093-05c", "a cell that is a first word of the member (`rise`) is refused", R2, FAM, "does not lead")
 
 print("Section T067: v_coverage_parameter_via_admission is one row per active parameter and owed pair, counted through admissions (OR-8)")
 # Nothing below names a count, id or code: the pair, the parameter and the source are chosen by query, and the oracle for the grain is
