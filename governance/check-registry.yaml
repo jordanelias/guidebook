@@ -1409,6 +1409,33 @@ checks:
   basis: hygiene
   cost: fast
   no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
+- id: translation_pointer_audit
+  cmd:
+  - python3
+  - scripts/audit/translation_pointer_audit.py
+  battery: data
+  kinds:
+  - data
+  level: advisory
+  basis: unattributed
+  cost: fast
+  no_floor: 'vocabulary-owed — no translation has been recorded, so the subject is empty; translations are OWED
+    by the pipeline (owner, 2026-11-12: everything non-English is translated, by default at the stage the contract''s
+    translation rule names), not removed. The first run that examines a row contradicts this reason, which is the
+    signal to ratchet to min_items 1.'
+- id: test_translations
+  cmd:
+  - python3
+  - scripts/tests/test_translations.py
+  battery: tests
+  kinds:
+  - tooling
+  - schema
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures (a scratch copy of the database written through the translation
+    verbs, a temporary copy of the contract); a floor would count the wrong thing
 quarantine:
 - id: validate_db
   cmd:

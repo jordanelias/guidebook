@@ -362,3 +362,8 @@ cross_stage:
     patched with hand SQL disguised as a schema fix.
   references: 'DR-2026-09-26-recurring-defect-shapes-remediation.md section 6 (RC6); CLAUDE.md section 2'
   check: scripts/audit/research_tooling_separation.py
+# The default stage for translations, held once (T-049; owner 2026-11-12: "we can set a rule for synthesis to
+# translate"). A request that names no due stage falls due here, computed when read and never stored. Appended
+# at the end: hand-written atoms cite the lines above by number.
+translation:
+  default_stage: synthesis

@@ -1091,6 +1091,39 @@ def exists(conn, table: str, column: str, value) -> bool:
     return row is not None
 
 
+def single_key(conn, table: str):
+    """The name of `table`'s single-column declared primary key, else None (no key, or a key of several columns)."""
+    pk = [c[1] for c in conn.execute('PRAGMA table_info("%s")' % table) if c[5]]
+    return pk[0] if len(pk) == 1 else None
+
+
+def read_cell(conn, table: str, column: str, row_key):
+    """The text cell a translation pointer names: (text, key, None), or (None, None, why it does not resolve).
+
+    ONE RULE for resolving `translations.source_*` (T-049), read by the three translation verbs and by
+    translation_pointer_audit alike. The table and the column are looked up in the live schema, so any text cell
+    of any table can be pointed at provided the table has a single-column declared primary key (`single_key`;
+    never a rowid, which a table without an integer key can renumber on a rebuild). The cell must be text and not
+    blank. `key` is the row's key as the table stores it, as text, so `019` and `19` name one row once.
+    """
+    if not conn.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (table,)).fetchone():
+        return None, None, f"{table!r} is not a table of this database"
+    if column not in {c[1] for c in conn.execute('PRAGMA table_info("%s")' % table)}:
+        return None, None, f"{table!r} has no column {column!r}"
+    pk = single_key(conn, table)
+    if pk is None:
+        return None, None, (f"{table!r} has no single-column primary key, so a row of it cannot be pointed at "
+                            f"(never by rowid)")
+    row = conn.execute('SELECT typeof("%s"), "%s", "%s" FROM "%s" WHERE "%s" = ?' % (column, column, pk, table, pk),
+                       (row_key,)).fetchone()
+    if row is None:
+        return None, None, f"{table!r} has no row {pk} = {row_key!r}"
+    if row[0] != "text" or not row[1].strip():
+        return None, None, (f"{table}.{column} at {pk} = {row_key!r} is "
+                            f"{'blank' if row[0] == 'text' else row[0]}, not text")
+    return row[1], str(row[2]), None
+
+
 def live_vocab(conn, table: str, column: str) -> set:
     """The set of values a column actually holds today.
 

@@ -7,7 +7,7 @@ extra='forbid', matching the repo's config-schema style. No DB coupling.
 """
 from typing import List, Literal, Optional
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, model_validator
 
 
 class Criterion(BaseModel):
@@ -53,6 +53,11 @@ class CrossStageGate(BaseModel):
     check: Optional[str] = None
 
 
+class Translation(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    default_stage: str   # the stage a translation request falls due at when it names none; one of `stages`
+
+
 class PipelineContract(BaseModel):
     model_config = ConfigDict(extra="forbid")
     version: int
@@ -64,6 +69,14 @@ class PipelineContract(BaseModel):
     spine: str
     stages: List[Stage]
     cross_stage: List[CrossStageGate]
+    translation: Optional[Translation] = None   # the translation rule (T-049); None = none ruled
+
+    @model_validator(mode="after")
+    def _translation_stage_is_a_stage(self):
+        if self.translation and self.translation.default_stage not in {s.id for s in self.stages}:
+            raise ValueError(f"translation.default_stage {self.translation.default_stage!r} is not a "
+                             f"stage id of this contract: {[s.id for s in self.stages]}")
+        return self
 
     def all_checks(self):
         """Yield (location, criterion_id, check_path_or_None) across the whole contract."""

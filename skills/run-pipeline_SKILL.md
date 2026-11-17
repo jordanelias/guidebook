@@ -187,6 +187,12 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   `add-source --slug` leaves it empty, this fills it once and refuses to overwrite grounds). Debt:
   `scripts/audit/scan_debt.py`, `v_scan_ledger`.
 - Economics and case studies go in their tables (R12).
+- **Text you cannot read** (a quotation, a term or a title in another language): `request-translation --source-table
+  ... --source-column ... --source-row-id ... --target-language ... --stage <this stage>` points at the cell, then
+  `record-translation` files the translation in `translations`; it is refused if it adds, drops or changes a number of
+  the original. Never write a paraphrase into a source column, and never retype the original: a translation is a row
+  that points at the cell. `--target-language` has no default (OD-02); one shown to a reader is reviewed with
+  `review-translation` by an Opus-class instance other than its translator (OD-30).
 - Checks: `scripts/audit/metadata_integrity_audit.py`, `scripts/audit/provenance_artefact_audit.py`,
   `scripts/audit/observation_verbatim_audit.py`.
 
@@ -245,6 +251,9 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   NO-COVERING-READING.
 
 ## 5. synthesis — read rows against each other
+- Translations due here are listed by `db.py translations --due-at synthesis`: the default stage is the translation
+  rule's default stage in `governance/pipeline-contract.yaml`, and a request may carry its own `--due-stage`. Read
+  them through `v_translations_current`, never as a source column.
 - For each parameter cluster ask which **other** parameters, populations or equipment change it (swept-path figures for
   different wheelchairs set different turning spaces, corridor widths, door approaches). File each dependency as a
   **typed edge between extractions** where one figure is computed from or conditioned on another, which may cross

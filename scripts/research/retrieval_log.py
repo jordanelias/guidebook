@@ -579,10 +579,12 @@ _BIBLIO_FIELDS = (
 PAYLOAD_FIELDS = _BIBLIO_FIELDS
 
 # Columns any one of which may legitimately carry the payload's title. A
-# non-English source stores its native title in `pub_title` and the English in
-# `pub_title_en`, so a payload title matching EITHER is a match. Checked as a set,
-# never as a single column, or every Japanese admission reads as a fabrication.
-_TITLE_COLS = ("pub_title", "pub_title_en", "original_title", "chapter_title", "book_title")
+# non-English source stores its native title in `pub_title` or `original_title`, so a
+# payload title matching ANY of them is a match. Checked as a set, never as a single
+# column, or every Japanese admission reads as a fabrication. A title's English
+# translation is a `translations` row (T-049), our text and not the source's, so it is
+# not compared with a payload: the retired `pub_title_en` column is not read here.
+_TITLE_COLS = ("pub_title", "original_title", "chapter_title", "book_title")
 
 
 
@@ -1879,7 +1881,7 @@ def _verify_presence(session, unparsed):
     ASSERTED, and failed when absent from every one of the row's artefacts: each stored
     PERSON's last_name (is_corporate=0), and the title's first segment -- from any of
     _TITLE_COLS, checked as a set as the JSON path does, because a non-English source
-    stores its native title in pub_title and the English beside it.
+    stores its native title in pub_title or original_title.
     REPORTED, never failed: a corporate_name that is absent. A corporate author is often
     a gloss this project adds ('Republic of Korea' on a Korean statute), which is a
     convention and not a fabrication.

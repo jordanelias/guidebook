@@ -32,6 +32,7 @@ CLI usage:
     python3 scripts/db.py --help
 """
 
+import hashlib
 import json
 import os
 import re
@@ -3310,6 +3311,62 @@ def main():
     p_ung.add_argument("--include-recent", action="store_true",
                        help="Include gaps with created_at within last 6 months (default: skip)")
 
+    # translations (T-049): a typed home for translations, attached by pointer
+    def _pointer_args(p, required):
+        p.add_argument("--source-table", required=required, help="The table of the cell to translate")
+        p.add_argument("--source-column", required=required, help="Its text column")
+        p.add_argument("--source-row-id", dest="source_row_key", required=required,
+                       help="The row's single-column primary key. The cell is READ by this verb and only its hash "
+                            "is stored; the original is never retyped and never touched")
+        p.add_argument("--target-language", required=required,
+                       help="A language lang_jur_map holds. No default (OD-02)")
+        p.add_argument("--stage", required=required,
+                       help="The pipeline stage making the request (a stage id of governance/pipeline-contract.yaml)")
+        p.add_argument("--due-stage",
+                       help="Override: the stage this request falls due at. Omit to let the contract's "
+                            "translation rule decide when it is listed")
+
+    p_rqt = sub.add_parser("request-translation",
+                           help="Ask for a translation of one cell (a pointer, never a copy)")
+    _pointer_args(p_rqt, True)
+    p_rqt.add_argument("--session", required=True)
+    p_rqt.add_argument("--dry-run", action="store_true")
+
+    p_rct = sub.add_parser("record-translation",
+                           help="Record a translation: of a request (--translation-id) or, opening one in the same "
+                                "call, of a pointer. Refused if it adds, drops or changes a number of the original")
+    p_rct.add_argument("--translation-id", type=int, help="The request to answer. Or give the pointer instead")
+    _pointer_args(p_rct, False)
+    p_rct.add_argument("--text", required=True, help="The translation")
+    p_rct.add_argument("--translator-kind", required=True,
+                       help="The kind of translator: the vocabulary of translations.translator_kind")
+    p_rct.add_argument("--translator-name", required=True,
+                       help="The model id, the tool and version, or the person")
+    p_rct.add_argument("--supersedes", type=int,
+                       help="A current translation of the same cell and language that this one corrects; "
+                            "it is retired in place")
+    p_rct.add_argument("--session", required=True)
+    p_rct.add_argument("--dry-run", action="store_true")
+
+    p_rvt = sub.add_parser("review-translation",
+                           help="Review a translation. One shown to a reader is reviewed by an Opus-class "
+                                "instance other than its translator (OD-30)")
+    p_rvt.add_argument("--translation-id", type=int, required=True)
+    p_rvt.add_argument("--verdict", required=True,
+                       help="reviewed (a reader may be shown it) or rejected (--reason required)")
+    p_rvt.add_argument("--reviewer-kind", required=True,
+                       help="The kind of reviewer: the vocabulary of translations.reviewed_by_kind")
+    p_rvt.add_argument("--reviewer-name", required=True,
+                       help="Who reviewed it; never the translator. Its class is recorded by name, not verified")
+    p_rvt.add_argument("--reason", help="Why; required to reject")
+    p_rvt.add_argument("--session", required=True)
+    p_rvt.add_argument("--dry-run", action="store_true")
+
+    p_trl = sub.add_parser("translations", help="List the open translation requests due at a stage (read-only)")
+    p_trl.add_argument("--due-at", required=True,
+                       help="A stage id: lists open requests whose due stage is this one, by the row's override "
+                            "or else by the translation rule of governance/pipeline-contract.yaml")
+
     args = _ARGS = parser.parse_args()
 
     if not args.command:
@@ -4242,6 +4299,26 @@ def main():
         )
         _emit(rows)
 
+    elif args.command == "request-translation":
+        _emit(request_translation(args.source_table, args.source_column, args.source_row_key,
+                                  args.target_language, args.stage, args.due_stage,
+                                  session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "record-translation":
+        _emit(record_translation(args.text, args.translator_kind, args.translator_name,
+                                 translation_id=args.translation_id, source_table=args.source_table,
+                                 source_column=args.source_column, source_row_key=args.source_row_key,
+                                 target_language=args.target_language, stage=args.stage,
+                                 due_stage=args.due_stage, supersedes=args.supersedes,
+                                 session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "review-translation":
+        _emit(review_translation(args.translation_id, args.verdict, args.reviewer_kind, args.reviewer_name,
+                                 args.reason, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "translations":
+        _emit(translations_due(args.due_at))
+
 
 
 # --- Additional Python functions ---
@@ -4714,8 +4791,7 @@ def _correctable():
     Not a second list. `_BIBLIO_FIELDS` in retrieval_log is what --verify-authors can
     actually prove against a payload, and this dict's contract is to be exactly that set
     -- so it is that set, plus `pub_title`, which the verifier checks through `_TITLE_COLS`
-    instead (a non-English source stores its native title in pub_title and the English in
-    pub_title_en, so the verifier compares a SET of columns where this writer targets one).
+    instead (the verifier compares a SET of title columns where this writer targets one).
     That exception is stated here rather than left implicit.
     """
     retrieval_log = _retrieval_log()
@@ -12695,6 +12771,298 @@ def insert_locator(data: dict, session: str, dry_run: bool = False) -> str:
         conn.execute(f"INSERT INTO source_locators ({cols}) VALUES ({','.join('?'*len(row))})",
                      list(row.values()))
     return ref
+
+
+# --- translations (T-049) ---------------------------------------------------------------------
+# A translation POINTS at the cell it translates (translations.source_*) and never replaces or copies it; the
+# original is untouched by construction. The default stage a request falls due at is a RULE held once in
+# governance/pipeline-contract.yaml, read through `_translation_contract` and computed when listed, never stored
+# and never written in this block. The pointer is resolved by `dbcore.read_cell` and nothing else.
+
+
+def _translation_contract(contract_path=None):
+    """The pipeline contract through its schema model: the one reader of the translation rule and of the stage ids.
+    `contract_path` exists so a test can load a changed copy; the CLI does not expose it."""
+    from schemas.pipeline_contract import PipelineContract
+    return PipelineContract.load(contract_path or dbcore.REPO_ROOT / "governance" / "pipeline-contract.yaml")
+
+
+def _translation_stage(contract, stage, flag):
+    ids = [st.id for st in contract.stages]
+    if stage not in ids:
+        raise Refusal(f"{flag} {stage!r} is not a stage id of governance/pipeline-contract.yaml "
+                      f"({', '.join(ids)}). Nothing was written.")
+    return stage
+
+
+def _cell_language(conn, table, key):
+    """The language the pointed row records: its own `lang_detected`, else its own `language` (whichever the table
+    has and is not NULL), else, when it has a `ref_id`, that source's `evidence_sources.lang_detected`. None when the
+    row leads to none. Compared upper-cased by the caller: stored values are mixed-case."""
+    cols = {c[1] for c in conn.execute('PRAGMA table_info("%s")' % table)}
+    pk = dbcore.single_key(conn, table)
+    for col in ("lang_detected", "language"):
+        if col in cols:
+            r = conn.execute('SELECT "%s" FROM "%s" WHERE "%s" = ?' % (col, table, pk), (key,)).fetchone()
+            if r and r[0]:
+                return r[0]
+    if "ref_id" in cols:
+        r = conn.execute('SELECT e.lang_detected FROM evidence_sources e JOIN "%s" t ON t.ref_id = e.ref_id '
+                         'WHERE t."%s" = ?' % (table, pk), (key,)).fetchone()
+        if r and r[0]:
+            return r[0]
+    return None
+
+
+def translation_sha256(text):
+    """The hash of a cell's text, as `translations.source_sha256` holds it. One home: the verbs and the audit."""
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def translation_claimed_value(conn, source_table, source_column, source_row_key):
+    """The verified `claimed_value` of the figure whose `claim_text` a translation translates, else None. It is the
+    numeral of a number the source may write in words, so the translation may state it."""
+    if (source_table, source_column) != ("source_value_extractions", "claim_text"):
+        return None
+    r = conn.execute("SELECT claimed_value FROM source_value_extractions WHERE extraction_id = ?",
+                     (source_row_key,)).fetchone()
+    return r[0] if r else None
+
+
+def translation_number_gaps(original, translation, claimed_value=None):
+    """(dropped, added): the numbers `original` states that `translation` does not, and the numbers `translation`
+    states that neither `original` nor `claimed_value` does. The fidelity rule of `record-translation`.
+
+    The reader is `retrieval_log.number_tokens` (T-008). Both texts first pass through `_cjk_to_arabic` (so 十二分の一
+    states 12 and 1 and a correct `1:12` is not an added figure) and are read on the quote side, where the operands of
+    a symbol ratio and the pieces of a space-grouped number count as stated. The sets of readings are compared, not
+    ratio tokens and not counts: a number is matched when one of its readings is a reading of some number of the other
+    (an ambiguous `1.200` matches 1.2 or 1200), and a number stated twice need not be stated twice. `claimed_value`
+    is read on the claim side (no CJK step, no operands).
+    """
+    rl = _retrieval_log()
+
+    def stated(text, **kw):
+        return [set(readings) for kind, readings, _ in rl.number_tokens(text, **kw) if kind == "num"]
+
+    def shown(sets):
+        return sorted({"/".join(sorted(str(x) for x in s)) for s in sets})
+
+    orig = stated(_cjk_to_arabic(original or ""), quote_side=True)
+    trans = stated(_cjk_to_arabic(translation or ""), quote_side=True)
+    extra = stated(str(claimed_value)) if claimed_value is not None else []
+    return (shown(o for o in orig if not any(o & t for t in trans)),
+            shown(t for t in trans if not any(t & o for o in orig + extra)))
+
+
+def _current_translation(conn, table, column, key, language, excluding=None):
+    """The id and status of the current (translated or reviewed, not retired) translation of this cell into this
+    language other than `excluding`, else None."""
+    return conn.execute(
+        "SELECT translation_id, status FROM translations WHERE source_table=? AND source_column=? "
+        "AND source_row_key=? AND target_language=? AND status IN ('translated', 'reviewed') "
+        "AND superseded_by_translation_id IS NULL AND translation_id IS NOT ?",
+        (table, column, key, language, excluding)).fetchone()
+
+
+def _refuse_second_translation(conn, table, column, key, language, excluding, context):
+    held = _current_translation(conn, table, column, key, language, excluding)
+    if held:
+        raise Refusal(f"{context}: this cell is already translated into {language} as translation "
+                      f"{held['translation_id']} ({held['status']}). A corrected translation is a new row that "
+                      f"retires the old one: record-translation --supersedes {held['translation_id']}. "
+                      f"Nothing was written.")
+
+
+def _require_translation_session(session, context):
+    if not (session or "").strip():
+        raise Refusal(f"{context}: --session is required and may not be blank. Nothing was written.")
+
+
+def _open_translation_request(conn, table, column, row_key, language, stage, due_stage, contract, session, context,
+                              replacing=None):
+    """Validate a pointer against the live schema and open the request, or find the one already open for the same
+    pointer, hash and language. Returns (translation_id, created)."""
+    text, key, why = dbcore.read_cell(conn, table, column, row_key)
+    if why:
+        raise Refusal(f"{context}: the pointer does not resolve: {why}. Nothing was written.")
+    lang = _check_language(conn, language, "translation", "--target-language")
+    src = _cell_language(conn, table, key)
+    if src and src.strip().upper() == lang.upper():
+        raise Refusal(f"{context}: the pointed row is recorded in {src.strip().upper()}, the target language. "
+                      f"There is nothing to translate. Nothing was written.")
+    _translation_stage(contract, stage, "--stage")
+    if due_stage is not None:
+        _translation_stage(contract, due_stage, "--due-stage")
+    _refuse_second_translation(conn, table, column, key, lang, replacing, context)
+    sha = translation_sha256(text)
+    open_one = conn.execute(
+        "SELECT translation_id FROM translations WHERE source_table=? AND source_column=? AND source_row_key=? "
+        "AND source_sha256=? AND target_language=? AND status='requested' AND superseded_by_translation_id IS NULL",
+        (table, column, key, sha, lang)).fetchone()
+    if open_one:
+        return open_one[0], False
+    row = {"source_table": table, "source_column": column, "source_row_key": key, "source_sha256": sha,
+           "target_language": lang, "status": "requested", "requested_at_stage": stage, "due_stage": due_stage}
+    row.update(dbcore.stamp_for(conn, "translations", session))
+    cur = conn.execute(f"INSERT INTO translations ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
+                       list(row.values()))
+    return cur.lastrowid, True
+
+
+def request_translation(source_table, source_column, source_row_key, target_language, stage, due_stage=None, *,
+                        session, dry_run=False, contract_path=None):
+    """Ask for a translation of one cell. The cell is read here and only its hash is stored: no argument carries
+    the original. Refused: a pointer that does not resolve (no such table or column, a table with no single-column
+    primary key, no such row, a cell that is not text or is empty), a target language lang_jur_map does not hold or
+    that is the pointed row's own language, a stage that is not a stage id of the contract, and a cell that already
+    has a current translation into that language (the refusal names `--supersedes`)."""
+    _require_translation_session(session, "request-translation")
+    contract = _translation_contract(contract_path)
+    with connect(dry_run) as conn:
+        tid, created = _open_translation_request(conn, source_table, source_column, source_row_key, target_language,
+                                                 stage, due_stage, contract, session, "request-translation")
+    return {"translation_id": tid, "created": created, "status": "requested", "dry_run": dry_run}
+
+
+def record_translation(text, translator_kind, translator_name, *, translation_id=None, source_table=None,
+                       source_column=None, source_row_key=None, target_language=None, stage=None, due_stage=None,
+                       supersedes=None, session, dry_run=False, contract_path=None):
+    """Answer a request by id, or open and answer one in one call by pointer (exactly one of the two forms).
+
+    Refused: both forms or neither; a translation that adds, drops or changes a number of the original
+    (`translation_number_gaps`); a cell whose hash no longer matches the request's (request it again); a request
+    that is not `requested`. `--supersedes M` retires translation M in place, in the same transaction; it is refused
+    unless M is translated or reviewed, not already retired, and translates the same pointer into the same language.
+    The original is never touched."""
+    ctx = "record-translation"
+    _require_translation_session(session, ctx)
+    pointer = (source_table, source_column, source_row_key, target_language, stage)
+    if translation_id is not None and any(p is not None for p in pointer + (due_stage,)):
+        raise Refusal(f"{ctx}: pass --translation-id OR the pointer (--source-table, --source-column, "
+                      f"--source-row-id, --target-language, --stage), never both. Nothing was written.")
+    if translation_id is None and not all((p or "").strip() for p in pointer):
+        raise Refusal(f"{ctx}: pass --translation-id, or the whole pointer: --source-table, --source-column, "
+                      f"--source-row-id, --target-language and --stage. Nothing was written.")
+    text, name = (text or "").strip(), (translator_name or "").strip()
+    if not text:
+        raise Refusal(f"{ctx}: --text is blank. Nothing was written.")
+    if not name:
+        raise Refusal(f"{ctx}: --translator-name is required: the model id, the tool and version, or the person. "
+                      f"Nothing was written.")
+    contract = _translation_contract(contract_path)
+    with connect(dry_run) as conn:
+        dbcore.check_declared(conn, "translations", "translator_kind", translator_kind, ctx)
+        old = None
+        if supersedes is not None:
+            old = conn.execute("SELECT * FROM translations WHERE translation_id=?", (supersedes,)).fetchone()
+            if not old or old["status"] not in ("translated", "reviewed") or old["superseded_by_translation_id"]:
+                raise Refusal(f"{ctx}: --supersedes {supersedes} is not a current translation (translated or "
+                              f"reviewed, and not already retired). Nothing was written.")
+        if translation_id is None:
+            tid, _ = _open_translation_request(conn, source_table, source_column, source_row_key, target_language,
+                                               stage, due_stage, contract, session, ctx, replacing=supersedes)
+        else:
+            tid = translation_id
+        req = conn.execute("SELECT * FROM translations WHERE translation_id=?", (tid,)).fetchone()
+        if not req:
+            raise Refusal(f"{ctx}: no translation request {tid}. Nothing was written.")
+        if req["status"] != "requested":
+            raise Refusal(f"{ctx}: translation {tid} is {req['status']}, not requested. A corrected translation "
+                          f"is a new row: record it against the pointer with --supersedes {tid}. "
+                          f"Nothing was written.")
+        where = (req["source_table"], req["source_column"], req["source_row_key"], req["target_language"])
+        if old and (old["source_table"], old["source_column"], old["source_row_key"],
+                    old["target_language"]) != where:
+            raise Refusal(f"{ctx}: --supersedes {supersedes} translates a different cell or language. "
+                          f"Nothing was written.")
+        _refuse_second_translation(conn, *where, supersedes, ctx)
+        original, _, why = dbcore.read_cell(conn, *where[:3])
+        if why:
+            raise Refusal(f"{ctx}: the pointer no longer resolves: {why}. Nothing was written.")
+        if translation_sha256(original) != req["source_sha256"]:
+            raise Refusal(f"{ctx}: the original cell has changed since request {tid} was made (its hash no longer "
+                          f"matches). Request the translation again. Nothing was written.")
+        dropped, added = translation_number_gaps(original, text, translation_claimed_value(conn, *where[:3]))
+        if dropped or added:
+            raise Refusal(f"{ctx}: the translation does not state the original's numbers. Dropped: "
+                          f"{dropped or 'none'}; added: {added or 'none'}. Every number the original states as a "
+                          f"numeral is stated in the translation, and every number the translation states is the "
+                          f"original's (or the figure's verified claimed_value). Nothing was written.")
+        stamp = dbcore.upd(session)
+        conn.execute("UPDATE translations SET translated_text=?, status='translated', translator_kind=?, "
+                     "translator_name=?, updated_at=?, updated_by_session=? WHERE translation_id=?",
+                     (text, translator_kind, name, stamp["updated_at"], stamp["updated_by_session"], tid))
+        if old:
+            conn.execute("UPDATE translations SET superseded_by_translation_id=?, updated_at=?, "
+                         "updated_by_session=? WHERE translation_id=?",
+                         (tid, stamp["updated_at"], stamp["updated_by_session"], supersedes))
+    return {"translation_id": tid, "status": "translated", "supersedes": supersedes, "dry_run": dry_run}
+
+
+def review_translation(translation_id, verdict, reviewer_kind, reviewer_name, reason=None, *, session,
+                       dry_run=False):
+    """Review a translation: `reviewed` (a reader may be shown it) or `rejected` (`--reason` required, written to
+    `review_reason`). OD-30: a translation shown to a reader is reviewed by an Opus-class instance other than its
+    translator; the database records the reviewer's name and cannot verify its class, and render shows only
+    `reviewed` rows. Refused: a verdict other than the two statuses a review sets, a blank reviewer, the translator
+    as reviewer (compared case-insensitively), a row that is not `translated` or is retired, and a `reviewed`
+    verdict on a cell whose hash no longer matches (reject it and request again)."""
+    ctx = "review-translation"
+    _require_translation_session(session, ctx)
+    if verdict not in ("reviewed", "rejected"):
+        raise Refusal(f"{ctx}: --verdict is reviewed or rejected, not {verdict!r}. Nothing was written.")
+    name, reason = (reviewer_name or "").strip(), (reason or "").strip() or None
+    if not name:
+        raise Refusal(f"{ctx}: --reviewer-name is required: the model id, the tool or the person who reviewed it. "
+                      f"Nothing was written.")
+    if verdict == "rejected" and not reason:
+        raise Refusal(f"{ctx}: --reason is required to reject a translation. Nothing was written.")
+    with connect(dry_run) as conn:
+        dbcore.check_declared(conn, "translations", "reviewed_by_kind", reviewer_kind, ctx)
+        row = conn.execute("SELECT * FROM translations WHERE translation_id=?", (translation_id,)).fetchone()
+        if not row:
+            raise Refusal(f"{ctx}: no translation {translation_id}. Nothing was written.")
+        if row["status"] != "translated" or row["superseded_by_translation_id"]:
+            raise Refusal(f"{ctx}: translation {translation_id} is {row['status']}"
+                          f"{' and retired' if row['superseded_by_translation_id'] else ''}; only a translated, "
+                          f"current translation is reviewed. Nothing was written.")
+        if name.casefold() == row["translator_name"].casefold():
+            raise Refusal(f"{ctx}: the reviewer ({name}) is the translator. A translation shown to a reader is "
+                          f"reviewed by an Opus-class instance other than its translator (OD-30). "
+                          f"Nothing was written.")
+        if verdict == "reviewed":
+            original, _, why = dbcore.read_cell(conn, row["source_table"], row["source_column"],
+                                                row["source_row_key"])
+            if why or translation_sha256(original) != row["source_sha256"]:
+                raise Refusal(f"{ctx}: the original cell no longer matches the one translated "
+                              f"({why or 'its hash changed'}). Reject this translation and request it again. "
+                              f"Nothing was written.")
+        stamp = dbcore.upd(session)
+        conn.execute("UPDATE translations SET status=?, reviewed_by_kind=?, reviewed_by_name=?, reviewed_at=?, "
+                     "review_reason=?, updated_at=?, updated_by_session=? WHERE translation_id=?",
+                     (verdict, reviewer_kind, name, stamp["updated_at"], reason, stamp["updated_at"],
+                      stamp["updated_by_session"], translation_id))
+    return {"translation_id": translation_id, "status": verdict, "dry_run": dry_run}
+
+
+def translations_due(stage, contract_path=None):
+    """The open requests (`requested`, not retired) that fall due at `stage`: the row's own `due_stage` where it has
+    one, else the translation rule's default stage, read from the contract when asked and never stored. Refused when
+    the contract holds no translation rule."""
+    contract = _translation_contract(contract_path)
+    _translation_stage(contract, stage, "--due-at")
+    if contract.translation is None:
+        raise Refusal("governance/pipeline-contract.yaml holds no translation rule, so no request has a default "
+                      "stage. Nothing was read.")
+    default = contract.translation.default_stage
+    with connect(readonly=True) as conn:
+        rows = conn.execute(
+            "SELECT translation_id, source_table, source_column, source_row_key, target_language, "
+            "requested_at_stage, due_stage FROM translations "
+            "WHERE status='requested' AND superseded_by_translation_id IS NULL ORDER BY translation_id").fetchall()
+    return [dict(r, due_stage=r["due_stage"] or default, due_by="row" if r["due_stage"] else "rule")
+            for r in rows if (r["due_stage"] or default) == stage]
 
 
 if __name__ == "__main__":
