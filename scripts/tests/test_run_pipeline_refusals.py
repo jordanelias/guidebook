@@ -4690,7 +4690,7 @@ if feature("T088-10", "the reader exists", REG88 is not None, f"scripts/audit/re
 # T088-17: the Layer 0 rule and the Layer 2 protocol say what the code does.
 _bd = re.sub(r"\s+", " ", (REPO / ".claude" / "commands" / "batch-done.md").read_text(encoding="utf-8"))
 _sk = re.sub(r"\s+", " ", (REPO / "skills" / "run-pipeline_SKILL.md").read_text(encoding="utf-8"))
-_line = 'python3 scripts/audit/refusal_register.py list --session "$(cat scratchpad/CURRENT)"'
+_line = 'python3 scripts/audit/refusal_register.py classes --session "$(cat scratchpad/CURRENT)"'
 try:
     _named, _exempt = set(NOT_ROUTED88), EXEMPT88
     _nosession = [rel for rel in ("scripts/research/emit_batch_sql.py",) if rel not in dict(writers88())]
@@ -4698,12 +4698,169 @@ except NameError:
     _named, _nosession = set(), []
 _names_ok = bool(_named) and bool(_nosession) and all(pathlib.Path(n).name in _bd and pathlib.Path(n).name in _sk for n in _named | set(_nosession)) \
     and all(v[2] in _bd and v[2] in _sk for v in EXEMPT88.values() if v[2])
-record("T088-17", "/batch-done runs `refusal_register.py list` on CURRENT, says it exits 2 / NOT RUN when CURRENT's folder is missing, says an undisposed refusal is a batch not done, "
+record("T088-17", "/batch-done runs `refusal_register.py classes` on CURRENT, says it exits 2 / NOT RUN when CURRENT's folder is missing, says an undisposed refusal is a batch not done, "
        "and names the scripts that keep nothing (derived: the ones the T088-09 sweep leaves out, and a script with no --session); the skill's resume section says what to do when a writer refuses",
        _line in _bd and "An undisposed refusal is a batch that is not done" in _bd and "NOT RUN" in _bd and "exits 2" in _bd and "--id K" in _bd
        and "When a writer refuses" in _sk and "refusal_register.py list" in _sk and "NOT RUN" in _sk and "worktree" in _sk and "usage error" in _sk and _names_ok
        and all(w in _sk and w in _bd for w in ("retried", "parked", "waived")), (_line in _bd, "When a writer refuses" in _sk, _names_ok))
 # T088-END
+
+# T089-BEGIN
+# ---------------------------------------------------------------------------------------------------------------------
+print("Section T089: the refusal register reads every session's refusals, groups them into classes and cues the stages")
+# T-089. The refusals of every committed session (`register`), and their classes with the CUE a batch is given (`classes`). The
+# fixtures are built by `record_refusal` through real writer runs (never typed JSON), in a temporary git tree that holds its own
+# `scratchpad/`; the stages, tables, checks and skill headings the cases expect are read from the state graph, the registry and
+# the skill here, never typed, so a case cannot agree with the reader by sharing a list with it.
+S89A, S89B, S89C = (f"session_2026-11-16-t089-fixture-{x}" for x in "abc")
+_SK89 = (REPO / "skills" / "run-pipeline_SKILL.md").read_text(encoding="utf-8")
+
+
+def sect89(out, title):
+    """{class: count} of the `  Nx  class` lines of the `CLASSES by <title>` section of a `classes` run."""
+    got, on = {}, False
+    for ln in out.splitlines():
+        if ln.startswith("CLASSES by "):
+            on = ln == f"CLASSES by {title}"
+        elif on and (m := re.match(r"^  (\d+)x  (.*)$", ln)):
+            got[m.group(2)] = int(m.group(1))
+    return got
+
+
+def detail89(out, key):
+    """The detail line that follows the class line `key`."""
+    ls = out.splitlines()
+    return next((ls[k + 1] for k, ln in enumerate(ls) if re.match(r"^  \d+x  ", ln) and ln.split("x  ", 1)[1] == key), "")
+
+
+@contextlib.contextmanager
+def tree89(gap):
+    """The T089 fixture, inside `root88`: session A (an add-gap refusal parked on `gap`, an add-extraction usage error
+    retried), session B (an add-gap refusal with another parameter id, undisposed; a full_text usage error, waived), both
+    committed (`git add`) in a temporary git tree, and session C (an add-gap refusal, uncommitted). Yields (tree, ids by label)."""
+    ids = {}
+    with root88(S89A, S89A) as b:
+        for st in (S89B, S89C):
+            (b / "scratchpad" / st).mkdir()
+        gapargv = ["add-gap", "--category", "SW", "--priority", "P1", "--description", "x", "--parameter"]
+        for st, label, script, argv in ((S89A, "gap_a", "scripts/db.py", [*gapargv, _SUCH88]),
+                                        (S89A, "ext_a", "scripts/db.py", ["add-extraction"]),
+                                        (S89B, "gap_b", "scripts/db.py", [*gapargv, str(int(_SUCH88) - 1)]),
+                                        (S89B, "ft_b", "scripts/research/full_text.py", []),
+                                        (S89C, "gap_c", "scripts/db.py", [*gapargv, str(int(_SUCH88) - 2)])):
+            (b / "scratchpad" / "CURRENT").write_text(st + "\n", encoding="utf-8")
+            run88(script, *argv, "--session", st)
+            ids[label] = lines88(b, st)[-1]
+        subprocess.run(["git", "-C", str(b), "init", "-q"], check=True)
+        subprocess.run(["git", "-C", str(b), "add", f"scratchpad/{S89A}", f"scratchpad/{S89B}"], check=True)
+        assert reg88("dispose", "--session", S89A, "--id", rid88(ids["gap_a"]), "--as", "parked", "--gap-id", gap)[0] == 0
+        assert reg88("dispose", "--session", S89A, "--id", rid88(ids["ext_a"]), "--as", "retried")[0] == 0
+        assert reg88("dispose", "--session", S89B, "--id", rid88(ids["ft_b"]), "--as", "waived", "--reason", "TASK-FIXTURE: not content")[0] == 0
+        yield b, ids
+
+
+with scratch() as c89:
+    _gap89 = json.loads(cli("add-gap", "--category", "SW", "--priority", "P3", "--description", "TASK-FIXTURE T089 parked gap", "--session", S).stdout)["gap_id"]
+    _db89 = os.environ["GUIDEBOOK_DB_PATH"]
+    with tree89(_gap89) as (b89, ids89):
+        reg_all = reg88("register", "--db", _db89)
+        reg_c = reg88("register", "--session", S89C, "--db", _db89)
+        cls_all = reg88("classes")
+        cls_a = reg88("classes", "--session", S89A)
+        cls_b = reg88("classes", "--session", S89B)
+        # a line nobody can read, in a session that is otherwise fully disposed
+        with open(file88(b89, S89A), "a", encoding="utf-8") as fh:
+            fh.write("{this is not json\n")
+        bad_reg, bad_cls, bad_all = reg88("register"), reg88("classes", "--session", S89A), reg88("classes")
+        _f = file88(b89, S89A)
+        _f.write_bytes(_f.read_bytes().replace(b"{this is not json\n", b""))
+        # the parked gap is closed afterwards: the disposition no longer holds, in the register and in the gate
+        hand("UPDATE gaps SET status='CLOSED-FIXED' WHERE gap_id=?", _gap89)
+        closed_reg, closed_cls = reg88("register", "--db", _db89), reg88("classes", "--session", S89A)
+        hand("UPDATE gaps SET status='OPEN' WHERE gap_id=?", _gap89)
+        notrun = {"a session with no folder": reg88("classes", "--session", "session_2026-11-16-t089-nowhere"),
+                  "register, a session with no folder": reg88("register", "--session", "session_2026-11-16-t089-nowhere")}
+    with root88(S89A, S89A):        # not a git tree: what is committed cannot be known
+        notrun["classes, not a git tree"], notrun["register, not a git tree"] = reg88("classes"), reg88("register")
+
+_n89 = len(("gap_a", "ext_a", "gap_b", "ft_b"))
+record("T089-01", "`register` lists every instance of both committed sessions (ts, verb, argv, sentence) with its disposition, and the gap's live category and status; "
+       "the uncommitted session's file is added only by --session; EXAMINED counts instances and sessions",
+       reg_all[0] == 0 and f"EXAMINED: {_n89} refusal(s) in 2 session(s)" in reg_all[1]
+       and all(ids89[k]["ts"] in reg_all[1] for k in ("gap_a", "ext_a", "gap_b", "ft_b")) and ids89["gap_c"]["ts"] not in reg_all[1]
+       and f"parked {_gap89}" in reg_all[1] and f"[gap {_gap89}: category SW, status OPEN]" in reg_all[1]
+       and "retried" in reg_all[1] and "waived (TASK-FIXTURE: not content)" in reg_all[1] and reg_all[1].count("-> UNDISPOSED") == 1
+       and " ".join(ids89["gap_a"]["argv"]) in reg_all[1] and ids89["gap_a"]["sentence"] in reg_all[1]
+       and reg_c[0] == 0 and f"EXAMINED: {_n89 + 1} refusal(s) in 3 session(s)" in reg_c[1] and ids89["gap_c"]["ts"] in reg_c[1], (reg_all, reg_c))
+
+sig89 = getattr(REG88, "signature", lambda sentence: None)       # absent before T-089: the case then fails, the file does not stop
+_sig_a, _sig_b = sig89(ids89["gap_a"]["sentence"]), sig89(ids89["gap_b"]["sentence"])
+_sigs89 = sect89(cls_all[1], "signature")
+record("T089-02", "two refusals whose sentences differ only in a number, a quoted value or an id fall in one signature class; two different sentences do not",
+       _sig_a is not None and _sig_a == _sig_b and ids89["gap_a"]["sentence"] != ids89["gap_b"]["sentence"] and _sigs89.get(_sig_a) == 2
+       and sorted(_sigs89.values()) == [1, 1, 2] and sig89(ids89["ext_a"]["sentence"]) != sig89(ids89["ft_b"]["sentence"])
+       and sig89("no 'a b' for REF-12 in session_2026-11-16-x (GAP-A-1, TERM-22) at 3.5") == sig89('no "c" for REF-345 in session_2027-01-01-y (GAP-B-9, TERM-1) at 40')
+       and sig89("it doesn't hold, isn't it") == "it doesn't hold, isn't it", (_sigs89, _sig_a, _sig_b))
+
+sys.path.insert(0, str(REPO / "workplan" / "pipeline-state-graph"))
+import build_graph as bg89  # noqa: E402  -- the state graph's own builder: what the reader must agree with
+_t89 = bg89.Tree(REPO)
+_want89 = {st: 1 for st in {_t89.stage(t) for t in _t89.verbs["add-extraction"]["writes"]}}
+_stages89 = sect89(cls_all[1], "stage")
+record("T089-03", "the stage of an add-extraction refusal is the stage the state graph gives the tables that verb writes (read from `Tree`); a verb the builder does not know "
+       "(full_text) prints `?`, never a guess",
+       "full_text" not in _t89.verbs and bool(_want89) and all(_stages89.get(st) == _want89[st] for st in _want89)
+       and _stages89.get("?") == 1 and _stages89.get(_t89.stage("gaps")) == 2, (_stages89, _want89))
+
+_reg89 = _t89.registry["checks"]
+_by_basis = {c["id"] for c in _reg89 if str(c.get("basis", "")).startswith("judgment/")}
+_tabs89 = list(_t89.verbs["add-extraction"]["writes"])
+_by_table = set()
+for _c in _reg89:
+    _py = next((p_ for p_ in (REPO / str(x) for x in _c.get("cmd", [])) if p_.suffix == ".py" and p_.is_file()), None)
+    if _py and any(re.search(rf"\b{t}\b", _py.read_text(encoding="utf-8", errors="replace")) for t in _tabs89):
+        _by_table.add(_c["id"])
+_cue89 = next((ln for ln in cls_all[1].splitlines() if ln.startswith("CUE judgment:")), "")
+_got89 = set(re.split(r",\s*", _cue89.split("re-run ", 1)[1].split(";", 1)[0])) if "re-run " in _cue89 else set()
+_head89 = re.search(r"^## (\d+\. judgment — .*)$", _SK89, re.M)
+record("T089-04", "the cue for a judgment-stage refusal names every registered check whose basis begins `judgment/` and every check whose script names a table the verb writes "
+       "(both read here from the registry and the scripts), and the skill's heading for that stage; a stage that is not one of the pipeline's has no cue",
+       bool(_by_basis) and _got89 == _by_basis | _by_table and bool(_head89) and f're-read "{_head89.group(1)}"' in _cue89
+       and not any(ln.startswith(("CUE ?", f"CUE {_t89.stage('gaps')}")) for ln in cls_all[1].splitlines()), (_cue89, _by_basis, _by_table))
+
+record("T089-05", "`classes --session` exits 1 for the session with an undisposed refusal and 0 for the fully disposed one, and prints only that session's refusals",
+       cls_b[0] == 1 and "UNDISPOSED: 1" in cls_b[1] and cls_a[0] == 0 and "UNDISPOSED: 0" in cls_a[1]
+       and "EXAMINED: 2 refusal(s) in 1 session(s)" in cls_a[1] and "EXAMINED: 2 refusal(s) in 1 session(s)" in cls_b[1]
+       and "CUE judgment:" in cls_a[1] and "CUE judgment:" not in cls_b[1] and cls_all[0] == 0 and f"EXAMINED: {_n89} refusal(s) in 2 session(s)" in cls_all[1], (cls_a, cls_b))
+
+_gl = detail89(cls_all[1], _sig_a)
+record("T089-06", "a class shows its count, sessions, first and last seen, share undisposed and what its instances were disposed as and filed under: parked with the gap's category, retried, "
+       "waived with its reason",
+       "sessions 2" in _gl and ids89["gap_a"]["ts"] in _gl and ids89["gap_b"]["ts"] in _gl and "undisposed 1/2" in _gl and "parked(SW) 1" in _gl
+       and "retried 1" in detail89(cls_all[1], sig89(ids89["ext_a"]["sentence"]))
+       and "waived (TASK-FIXTURE: not content) 1" in detail89(cls_all[1], sig89(ids89["ft_b"]["sentence"])), (_gl, cls_all[1][:900]))
+
+record("T089-07", "an unreadable line is reported by `register` and `classes`, never skipped: `classes --session` exits 1 although every refusal there is disposed",
+       bad_reg[0] == 1 and "PROBLEM" in bad_reg[1] and "unreadable" in bad_reg[1] and bad_cls[0] == 1 and "UNDISPOSED: 0" in bad_cls[1] and "PROBLEM" in bad_cls[1]
+       and bad_all[0] == 1 and "PROBLEM" in bad_all[1], (bad_reg, bad_cls))
+
+record("T089-08", "a parked gap closed afterwards puts the refusal back to UNDISPOSED in `register` (the gap's live status shown) and in the `classes --session` gate, as in `list`",
+       "UNDISPOSED (the parked disposition no longer holds" in closed_reg[1] and "status CLOSED-FIXED" in closed_reg[1]
+       and closed_cls[0] == 1 and "UNDISPOSED: 1" in closed_cls[1], (closed_reg, closed_cls))
+
+record("T089-09", "a session that is not a folder, and a tree where what is committed cannot be known, are NOT RUN (exit 2, nothing examined), not a clean `EXAMINED: 0`",
+       all(v[0] == 2 and v[1].startswith("NOT RUN:") and "EXAMINED" not in v[1].replace("NOT EXAMINED", "") for v in notrun.values()), notrun)
+
+_bd89 = (REPO / ".claude" / "commands" / "batch-done.md").read_text(encoding="utf-8")
+_fence89 = re.search(r"```\n(.*?)```", _bd89, re.S).group(1)
+_flat89 = re.sub(r"\s+", " ", _bd89)
+record("T089-10", "/batch-done's gate block runs `refusal_register.py classes` on CURRENT (no longer `list` there), and says to run each CUE line's checks once and re-read its skill section "
+       "before calling the batch done and to say in the pull request what each showed",
+       'python3 scripts/audit/refusal_register.py classes --session "$(cat scratchpad/CURRENT)"' in _fence89 and "refusal_register.py list" not in _fence89
+       and "For each `CUE` line" in _flat89 and "run the named checks once and re-read the named skill section before calling the batch done" in _flat89
+       and "say in the pull request what each showed" in _flat89 and "An undisposed refusal is a batch that is not done" in _flat89,
+       (_fence89,))
+# T089-END
 
 
 finish()
