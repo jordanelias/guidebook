@@ -2776,7 +2776,7 @@ def main():
     p_amx.add_argument("--field", required=True,
                        help="A column of source_value_extractions that is not excluded (the refusal "
                             "lists them). claimed_value, claimed_unit and setting take a reformat "
-                            "only (same numbers; a unit already in the cell; an empty setting; OR-3). "
+                            "only (same numbers; a unit already in the cell, or its notation family's spelling of it; an empty setting; OR-3). "
                             "A different figure is a SECOND ROW and a contest (D-0168).")
     p_amx.add_argument("--value", required=True)
     p_amx.add_argument("--reason", required=True,
@@ -11326,7 +11326,9 @@ def _refuse_unless_reformat(row, field, value):
                      whitespace or the end (a reformat drops the words after the unit, as in `% longitudinal gradient
                      (maximum) where the rise is <= 0.6 m` -> `%`; it never picks another word of the cell, so
                      `m` out of that cell, `MM` out of `mm`, and `dB` out of `dB(A)` are refused); then the row's
-                     value must read under the new unit.
+                     value must read under the new unit. Or, under OD-41 (a), a family member of
+                     `dbcore.NOTATION_FAMILIES` that contains the old cell on word boundaries (`ratio` ->
+                     `rise:run ratio`), when the figure reads under it.
       all three      the row must not become a copy of another row (the measure `insert_extraction` uses).
       claimed_value  a sign is part of the number: a `-` directly before a digit (not the hyphen of `0-4.8`) is
                      counted in the old and the new text and the counts must agree.
@@ -11364,7 +11366,9 @@ def _refuse_unless_reformat(row, field, value):
         if why:
             raise Refusal(f"{ctx}: {why}. Nothing was written.")
         cell = row["claimed_unit"] or ""
-        if not (cell.startswith(value) and (len(cell) == len(value) or cell[len(value)].isspace())):
+        # OD-41 (a): a notation-family member that holds the old cell as whole words is the same notation spelled out.
+        grows = bool(dbcore.notation_family(value)) and _as_whole_words(cell.strip(), value)
+        if not (grows or (cell.startswith(value) and (len(cell) == len(value) or cell[len(value)].isspace()))):
             raise Refusal(f"{ctx}: {value!r} does not lead the row's unit cell {cell!r}. A reformat drops the words "
                           f"AFTER the unit (the cell reads unit first, then its conditions); choosing another word of "
                           f"the cell, or another spelling of it, names a unit the row did not state, a new reading, "

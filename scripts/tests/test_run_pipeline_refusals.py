@@ -3698,6 +3698,79 @@ with scratch() as c:
         record("T061-17", "a column added to the table is amendable until someone names why it must not be (the default is derived, not listed)",
                "zz_t061_probe" in db._amendable_sve_fields(c), None)
 
+print("Section T093: a bare `ratio` unit reformats to `rise:run ratio` (OD-41 (a)); no other unit gains words")
+with scratch() as c:
+    # The history shape (a bare `ratio` cell) is written valid through the writer, then put into that shape by HAND; the
+    # verb under test then amends it. Nothing below names a stored id, count or unit spelling: the live row is chosen by
+    # query, and the family member is read from dbcore.NOTATION_FAMILIES.
+    T93 = {"r20": "Every ramp in the survey had a slope of 1:20 over its full length.",
+           "r16": "The ramp slope of 1:16 applies to the entrance ramp.",
+           "pct": "The gradient is not to exceed 5% on any run of the ramp.",
+           "r10": "A slope of 1:10 is the steepest the guidance tolerates for a short ramp.",
+           "r8":  "The shared path is graded at 1:8 over its first span.",
+           "r12": "A ramp is graded at 1:12 where the rise is small.",
+           "r14": "The side ramp is graded at 1:14 beside the stair.",
+           "r6":  "The threshold ramp is graded at 1:6 across the door."}
+    FAM = next(m for fam in dbcore.NOTATION_FAMILIES.values() for m in fam if dbcore.ratio_notation(m))
+    ref93 = new_source(verified=True)
+    held_text(ref93, "\n".join(T93.values()))
+    hand_scan(c, ref93, "full")
+    P93 = P_ACTIVE[0]
+
+    def put93(key, value, unit, cell, cmp_="<="):
+        xid = db.insert_extraction(extraction(ref93, P93, claim_text=T93[key], claimed_value=value, claimed_unit=unit,
+                                              comparator=cmp_), session=S, dry_run=False, relations=[])["extraction_id"]
+        hand("UPDATE source_value_extractions SET claimed_value=?, claimed_unit=? WHERE extraction_id=?", value, cell, xid)
+        return xid
+
+    def row93(xid):
+        return c.execute("SELECT * FROM source_value_extractions WHERE extraction_id=?", (xid,)).fetchone()
+
+    def amend93(x, f, v):
+        return db.amend_extraction(x, f, v, "T093 fixture", session=S, dry_run=False)
+
+    def refused93(tid, name, x, v, needle):
+        before = row93(x)["claimed_unit"]
+        r = refusal(amend93, x, "claimed_unit", v)
+        record(tid, name, r and needle in r and row93(x)["claimed_unit"] == before, r)
+
+    # The first live bare-`ratio` row, by query, taken before any fixture: amended in place on the copy.
+    live93 = c.execute("SELECT extraction_id FROM source_value_extractions WHERE claimed_unit='ratio' "
+                       "ORDER BY extraction_id LIMIT 1").fetchone()
+    A93 = put93("r20", "1:20", FAM, "ratio")                  # a bare-`ratio` row: the figure reads under the family member
+    B93 = put93("r16", "1:16", FAM, "ratio")
+    C93 = put93("pct", "5", "%", "%")                          # a `%` row
+    D93 = put93("r10", "1:10", FAM, "ratio")
+    hand("UPDATE source_value_extractions SET claimed_value='10' WHERE extraction_id=?", D93)   # a bare number
+    E93 = put93("r8", "1:8", FAM, "ratio of widths")           # a cell that holds `ratio` but is not the family member's whole
+    F93 = put93("r12", "1:12", FAM, "rat")                     # a prefix of a word, not a word
+    G93 = put93("r14", "1:14", FAM, "ratio")
+    H93 = put93("r6", "1:6", FAM, "")                          # an empty cell
+    stored93 = dict(row93(A93))
+
+    r, err = ok(amend93, A93, "claimed_unit", FAM)
+    now = row93(A93)
+    record("T093-01", "a bare-`ratio` row is amended to the notation family's `a:b` member in place: value and quote unchanged, "
+           "the old unit in notes", err is None and now["claimed_unit"] == FAM and now["claimed_value"] == stored93["claimed_value"]
+           and now["claim_text"] == stored93["claim_text"] and f"claimed_unit SET ratio -> {FAM}" in (now["notes"] or ""), err)
+    if live93 is None:
+        skip("T093-01b", "no live bare-`ratio` row is left to amend (T-086 has amended them)")
+    else:
+        r, err = ok(amend93, live93[0], "claimed_unit", FAM)
+        record("T093-01b", "the first live bare-`ratio` row (by query) is amended on the copy", err is None
+               and row93(live93[0])["claimed_unit"] == FAM, err)
+    refused93("T093-02", "the same kind of row to `mm` is still refused with T-061's message", B93, "mm", "does not lead")
+    refused93("T093-02b", "a `%` row is not amended to the `a:b` member (the old cell is not in the new unit)", C93, FAM, "does not lead")
+    refused93("T093-02c", "a bare number (`10`) under `ratio` is not amended to the `a:b` member: the figure does not read there",
+              D93, FAM, "still not be readable")
+    refused93("T093-03", "a family member must hold the old cell: `ratio of widths` is not made `rise:run ratio`", E93, FAM,
+              "does not lead")
+    refused93("T093-03b", "a cell that is not a word of the family member (`rat`) is refused: word boundaries, not a substring",
+              F93, FAM, "does not lead")
+    refused93("T093-03c", "a unit that is not a family member (`ratio of widths`) is refused though it holds the old cell",
+              G93, "ratio of widths", "does not lead")
+    refused93("T093-03d", "an empty unit cell is not amended to the family member", H93, FAM, "does not lead")
+
 print("Section T067: v_coverage_parameter_via_admission is one row per active parameter and owed pair, counted through admissions (OR-8)")
 # Nothing below names a count, id or code: the pair, the parameter and the source are chosen by query, and the oracle for the grain is
 # the base tables. Everything built is built on a scratch copy and is TASK-FIXTURE.
