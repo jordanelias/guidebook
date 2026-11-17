@@ -9,7 +9,7 @@ SessionStart contract names:
 python3 scripts/audit/research_batch_dod.py --session "$(cat scratchpad/CURRENT)"
 python3 scripts/audit/adversarial_pass_audit.py --session "$(cat scratchpad/CURRENT)"
 python3 scripts/audit/search_log_completeness.py --session "$(cat scratchpad/CURRENT)"
-python3 scripts/audit/refusal_register.py list --session "$(cat scratchpad/CURRENT)"
+python3 scripts/audit/refusal_register.py classes --session "$(cat scratchpad/CURRENT)"
 ```
 
 The second line is RC4 (advisory): it FAILs if this session wrote to any of the 2026-08-19
@@ -32,7 +32,7 @@ not clear them. It witnesses WebSearch and WebFetch only: a search run through a
 owes each of them a `log-search` row, and `record_file` its result (DR-2026-09-26 §2.2b); the
 gate can check neither.
 
-The fourth line lists every writer refusal this batch met and exits 1 while any is undisposed. Each is kept in
+The fourth line groups every writer refusal this batch met (by signature, verb, stage and cited rule id) and exits 1 while any is undisposed, and a `PROBLEM` line (an unreadable, foreign, duplicated or orphan line) and a `REFUSING` exit (the state graph's `build_graph.py` missing, for example) are red too, not only an undisposed refusal; `refusal_register.py list --session "$(cat scratchpad/CURRENT)"` prints each one with its id. Each is kept in
 `scratchpad/<session>/refusals.jsonl` when it was made under the running `--session`: a refusal, a usage error
 (an unknown vocabulary term is one: argparse says it and the record keeps it) or a writer's crash. **It exits 2
 and prints `NOT RUN` when `scratchpad/CURRENT` does not name an existing `session_YYYY-MM-DD-...` folder** (a
@@ -47,6 +47,8 @@ with `db.py add-gap`, typed by its subject, and keep the refused argv, which is 
 `refusal_register.py dispose --session S --id K --as retried|parked|waived [--gap-id G] [--reason R]`, K being the id
 `list` prints. `list` checks every disposition again each time it runs: a parked gap that has since been closed puts
 the refusal back to UNDISPOSED. An undisposed refusal is a batch that is not done.
+
+For each `CUE` line the fourth line prints, run the named checks once and re-read the named skill section before calling the batch done; say in the pull request what each showed. A refusal in a batch is the sign that the stage it names may not have been performed as the skill says.
 
 **The session id is the bare stem in the DB and carries `.md` in pointer files.**
 Wrong form scopes the gate to zero rows and every rule reports PASS over an empty

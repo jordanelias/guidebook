@@ -152,8 +152,11 @@ machines:
       - "refused for a DECLINED term; refused for a value-bearing name; one parameter per term"
       - "refused (T-010) for a term filed under a domain in dbcore.NON_QUANTITY_DOMAINS, before the declination test; the way out is decline-parameter (a lens or a method) or amend-term --field domain (a quantity filed wrongly)"
       - "DELIBERATELY NOT refused: a term with no adjudication (the base vocabulary predates observe/adjudicate)"
+      - "refused (T-020), after the refusals above, without a --quantity-kind that is a row of base_quantity_kinds, without a --quantity-kind-observation-id that is a row of observed_terms, or when that observation's context_quote holds no digit; the answer and its warrant are written on the row"
       - "created active; there is no --status and no --merged-into"
     evidence:
+      - {file: scripts/db.py, func: insert_parameter, needle: "A parameter is a quantity: say which kind"}
+      - {file: scripts/db.py, func: insert_parameter, needle: "holds no digit in"}
       - {file: scripts/db.py, func: insert_parameter, needle: "was DECLINED as a parameter by"}
       - {file: scripts/db.py, func: insert_parameter, needle: "One parameter per term"}
       - {file: scripts/db.py, func: insert_parameter, needle: "DELIBERATELY NOT REFUSED: a term with no adjudication"}
@@ -477,7 +480,7 @@ machines:
     guards: ["the session id is the bare stem in the DB and carries .md in pointer files; the wrong form scopes the gate to zero rows", "every writer refusal the batch met is disposed (retried, parked with a gap, or waived with a reason): an undisposed refusal is a batch that is not done"]
     evidence:
       - {file: .claude/commands/batch-done.md, needle: "research_batch_dod.py --session"}
-      - {file: .claude/commands/batch-done.md, needle: "refusal_register.py list --session"}
+      - {file: .claude/commands/batch-done.md, needle: "refusal_register.py classes --session"}
   - id: M10.t6
     from: "DOD-GATED"
     to: "EMITTED"

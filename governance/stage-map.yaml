@@ -81,6 +81,10 @@ judged_on: '2026-09-17'
 # executor of T-018 under T-018-design.md. A figure's lens codes are the crossing, which is judgment's
 # output (CLAUDE.md §6); its parent row, `source_value_extractions`, is already judgment; and its other
 # foreign keys point into `base`, which is not a stage, so the table crosses no stage.
+#
+# 2026-11-17, tooling T-049 (migration 144): `translations` as CROSS-STAGE, the value the gap register takes: a
+# translation points into whichever stage holds the cell it translates and any stage may request one, so it has no
+# single home (it is stage content, not a record of a diff, so not `infrastructure`).
 judged_against: 'CLAUDE.md §3 stage table; stage ids from governance/pipeline-contract.yaml'
 
 tables:
@@ -93,6 +97,7 @@ tables:
   base_icf: base
   base_jurisdictions: base
   base_parameters: base
+  base_quantity_kinds: base
   base_taxonomy_identity: base
   case_studies: evidence
   citation_mining: research
@@ -140,6 +145,7 @@ tables:
   term_adjudications: judgment
   term_aliases: base
   terms: base
+  translations: cross-stage
   weighting_profile: render
 
 # Where the repository contradicts ITSELF about a table's stage, name the table here with BOTH readings and their

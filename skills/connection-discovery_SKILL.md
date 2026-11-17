@@ -64,8 +64,9 @@ conflated) are named in a GAP for the cluster so the pass is not lost.
 ## Step 0 — Scope and dedup
 State the scope (a parameter, a slug or a cluster), what identifies it, and the mode. Load existing connections
 for the scope (`python3 scripts/db.py connections --status PENDING`, then join `connection_targets` on
-`parameter_id` or `slug` in a read-only query). A new connection with the same targets and `connection_type` as
-an existing one is a duplicate: `add-connection` refuses it, naming the existing id.
+`parameter_id` or `slug` in a read-only query, keeping only `connections.retired_at IS NULL`: a retired connection is
+a withdrawn claim, kept as a row and not live). A new connection with the same targets and `connection_type` as
+a live one is a duplicate: `add-connection` refuses it, naming the existing id; a retired one does not block it.
 
 ## Step 1 — Read, by mode
 Read the live determination and every extraction for the parameter in full; for `evidence`, also open gaps

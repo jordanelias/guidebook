@@ -13,7 +13,9 @@ starts at stage 3. A stage is finished when its verification passes, not when it
 normal (a new lead goes back to research, a new concept to base); record why, at the moment of return, in the
 session record `sessions/<STEM>.md` (with `attestations/sessions_<STEM>.json`, validated against
 `schemas/attestation.schema.json`, CLAUDE.md rule 2), and commit both at the next natural break (rule 6). The
-database holds no marker for a return; the record and `scratchpad/<STEM>/commands.jsonl` are the trace. `session-consolidator` is a prior-version procedure and is not
+returns the contract has ruled, each with the row that carries it, are the `re_entry:` lists of
+`governance/pipeline-contract.yaml` (read the list of the stage you are returning to); no other return has a marker in
+the database, so the record and `scratchpad/<STEM>/commands.jsonl` are its trace. `session-consolidator` is a prior-version procedure and is not
 run. Derive every figure; paste no counts.
 
 | Variant | Starts at | Skips |
@@ -79,7 +81,7 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   adjudication together; it refuses a near match (shared tokens with a term or an alias that is not a `model_seed`) unless `--distinct-from
   TERM-ID` names it and the rationale says why. `adjudicate-term` never writes NAMES-NEW. Owner approval is the data
   PR the owner reads (OR-17: "bulk, with me reading the PR"); `add-parameter` and `decline-parameter` take no
-  approval flag — `--approval-ref` belongs to the catalogue route (`mint-term-from-catalogue`, D3) and to `add-alias --seed owner_supplied` only.
+  approval flag; `--approval-ref` is the flag of the verbs that record an approval (derive them: `grep -n -F -- '"--approval-ref"' scripts/db.py`). `add-parameter` takes instead `--quantity-kind` and `--quantity-kind-observation-id` (T-020): the kind of quantity, from `base_quantity_kinds`, and the observation whose quote states a value of it.
 - `set-parameter-direction --ref-id` records which way is better **from an admitted source** that holds an
   extraction for the parameter (ledger 2026-10-30, ACTION 6; stored in `base_parameters.direction_ref_id`); a
   direction with no source is refused. Without a direction stage 6 cannot select a value and says so in its gap. A
@@ -185,6 +187,12 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   `add-source --slug` leaves it empty, this fills it once and refuses to overwrite grounds). Debt:
   `scripts/audit/scan_debt.py`, `v_scan_ledger`.
 - Economics and case studies go in their tables (R12).
+- **Text you cannot read** (a quotation, a term or a title in another language): `request-translation --source-table
+  ... --source-column ... --source-row-id ... --target-language ... --stage <this stage>` points at the cell, then
+  `record-translation` files the translation in `translations`; it is refused if it adds, drops or changes a number of
+  the original. Never write a paraphrase into a source column, and never retype the original: a translation is a row
+  that points at the cell. `--target-language` has no default (OD-02); one shown to a reader is reviewed with
+  `review-translation` by an Opus-class instance other than its translator (OD-30).
 - Checks: `scripts/audit/metadata_integrity_audit.py`, `scripts/audit/provenance_artefact_audit.py`,
   `scripts/audit/observation_verbatim_audit.py`.
 
@@ -218,7 +226,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   `--comparator`, also by `amend-extraction --field figure_role`; a `derived` figure that disagrees with its own base +
   delta (`add-extraction`, `relate-extraction`, `amend-extraction`). A stored figure whose value or unit the writer would now
   refuse is reformatted in place with `amend-extraction --field claimed_value` (same numbers) and then `--field claimed_unit` (a
-  unit already in the cell), and an empty setting filled with `--field setting` (OR-3); a different figure is a second row. The
+  unit already in the cell, or a notation family's spelling of it: `ratio` to `rise:run ratio`, OD-41 (a)), and an empty setting filled with `--field setting` (OR-3); a different figure is a second row. The
   exemption is accepted on a persisted page render, or on a source holding nothing decodable; the marker it writes
   names the renders, so the adversarial pass can check the locator against them; a
   byte-identical second row (a divergent reading is a contest, D-0168, and is written).
@@ -243,6 +251,9 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   NO-COVERING-READING.
 
 ## 5. synthesis — read rows against each other
+- Translations due here are listed by `db.py translations --due-at synthesis`: the default stage is the translation
+  rule's default stage in `governance/pipeline-contract.yaml`, and a request may carry its own `--due-stage`. Read
+  them through `v_translations_current`, never as a source column.
 - For each parameter cluster ask which **other** parameters, populations or equipment change it (swept-path figures for
   different wheelchairs set different turning spaces, corridor widths, door approaches). File each dependency as a
   **typed edge between extractions** where one figure is computed from or conditioned on another, which may cross

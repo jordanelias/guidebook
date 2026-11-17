@@ -32,6 +32,7 @@ CLI usage:
     python3 scripts/db.py --help
 """
 
+import hashlib
 import json
 import os
 import re
@@ -245,8 +246,8 @@ def insert_connection(data: dict, targets: list[tuple[str, object]],
         # THE SKILL SAYS "skip duplicates"; the writer holds it: the same type over the same
         # target set is one relationship, already recorded.
         want = sorted((k, str(v)) for k, v in targets)
-        for (cid,) in conn.execute("SELECT con_id FROM connections WHERE connection_type IS ?",
-                                   (ctype,)):
+        for (cid,) in conn.execute("SELECT con_id FROM connections WHERE connection_type IS ? AND retired_at IS NULL",
+                                   (ctype,)):   # a retired connection is withdrawn history: it does not block a new one
             got = sorted((k, str(r[0])) for k in _CONNECTION_TARGET_KINDS for r in conn.execute(
                 f"SELECT {k} FROM connection_targets WHERE con_id=? AND {k} IS NOT NULL", (cid,)))
             if got == want:
@@ -272,7 +273,12 @@ def update_connection_status(con_id: str, status: str,
     with connect(dry_run) as conn:
         if not dbcore.exists(conn, "connections", "con_id", con_id):
             raise Refusal(f"update-connection: {con_id} is not a connection. Nothing was written. "
-                          f"`db.py connections` lists the ids; `db.py add-connection` writes a new one.")
+                          f"`db.py connections` lists the live ids (a retired connection stays a row and is not listed); "
+                          f"`db.py add-connection` writes a new one.")
+        if conn.execute("SELECT retired_at FROM connections WHERE con_id=?", [con_id]).fetchone()[0]:
+            raise Refusal(f"update-connection: {con_id} is retired: a retired connection is the record of a claim that "
+                          f"was withdrawn and its status is not changed afterwards. To record the relationship again, "
+                          f"add a new connection (db.py add-connection). Nothing was written.")
         dbcore.check_declared(conn, "connections", "status", status, "update-connection --status")
         conn.execute(
             "UPDATE connections SET status=?, updated_at=?, updated_by_session=? WHERE con_id=?",
@@ -1112,7 +1118,7 @@ def get_connections(status: str = None, confidence: str = None,
         q = """
             SELECT confidence, COUNT(*) AS cnt
             FROM connections
-            WHERE 1=1
+            WHERE retired_at IS NULL
         """
         params = []
         if status:
@@ -1132,7 +1138,7 @@ def get_connections(status: str = None, confidence: str = None,
                                           'methodology ' || ct.methodology), ', ') AS targets
         FROM connections c
         LEFT JOIN connection_targets ct USING (con_id)
-        WHERE 1=1
+        WHERE c.retired_at IS NULL
     """
     params = []
     if status:
@@ -1279,7 +1285,8 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
                                                     f"IS NULL AND extraction_id IN ({qs}) ORDER BY follow_up_id", *extractions)}}
         # ---- synthesis: what weighs these figures together, and the gaps still open on the parameter -------
         synthesis = {"held": {"conflicts": ids("SELECT conflict_id FROM conflicts WHERE parameter_id = ? ORDER BY conflict_id", parameter_id),
-                              "connections": ids("SELECT DISTINCT con_id FROM connection_targets WHERE parameter_id = ? ORDER BY con_id", parameter_id)},
+                              "connections": ids("SELECT DISTINCT ct.con_id FROM connection_targets ct JOIN connections c USING (con_id) "
+                                              "WHERE ct.parameter_id = ? AND c.retired_at IS NULL ORDER BY ct.con_id", parameter_id)},
                      "examined_empty": [], "never_examined": [],
                      "owed": {"open_gaps": [r["gap_id"] for r in conn.execute(
                          "SELECT gap_id, identity_code, icf_code, needs_code, jurisdiction, language FROM gaps "
@@ -1521,19 +1528,33 @@ def get_conflicts(domain: str = None,
     return rows
 
 
-def delete_connection(con_id: str, session: str, dry_run: bool = False):
-    """Hard-delete a connection and its targets. Use sparingly — for data corrections only.
+def delete_connection(con_id: str, reason: str, session: str, dry_run: bool = False):
+    """Retire a connection IN PLACE (T-050, OD-29): the verb keeps its name, nothing is deleted.
 
-    REFUSES an id that is not a connection (T-006): the two DELETEs match nothing for a mistyped id, and the
+    A connection is a data row under the owner's ruling of 2026-09-16 (retire in place, never hard-delete): the
+    row and its targets stay, `retired_at`, `retired_by_session` and `retirement_reason` are set, and every reader
+    that lists connections filters on `retired_at IS NULL`. A genuine deletion is an exception only the owner
+    rules on. A target of a retired connection is retired through its pointer, so `connection_targets` is untouched.
+
+    REFUSES an id that is not a connection (T-006): the UPDATE would match nothing for a mistyped id, and the
     verb used to answer `{"deleted": ...}` all the same, so a session believed the wrong link was gone while it
     was still there. The id is looked up in `connections` itself, so `connection_targets` rows with no
-    connection (not constructible through db.py) are refused too."""
+    connection (not constructible through db.py) are refused too. Also REFUSES a blank reason and a connection
+    that is already retired (the first reason is the record)."""
+    reason = dbcore.require_reason(reason, f"delete-connection {con_id!r}",
+                                   "A retirement that cannot say why erases a claim without a trace.")
     with connect(dry_run) as conn:
         if not dbcore.exists(conn, "connections", "con_id", con_id):
             raise Refusal(f"delete-connection: {con_id!r} is not a connection. Nothing was written. "
-                          f"`db.py connections` lists the ids that exist.")
-        conn.execute("DELETE FROM connection_targets WHERE con_id=?", [con_id])
-        conn.execute("DELETE FROM connections WHERE con_id=?", [con_id])
+                          f"`db.py connections` lists the live ids (a retired connection stays a row and is not listed).")
+        was = conn.execute("SELECT retired_at FROM connections WHERE con_id=?", [con_id]).fetchone()[0]
+        if was is not None:
+            raise Refusal(f"delete-connection: {con_id} is already retired (since {was}); its first reason stands. "
+                          f"Nothing was written.")
+        stamp = dbcore.now()
+        conn.execute("UPDATE connections SET retired_at=?, retired_by_session=?, retirement_reason=?, "
+                     "updated_at=?, updated_by_session=? WHERE con_id=?",
+                     [stamp, dbcore.session_stem(session), reason, stamp, dbcore.session_stem(session), con_id])
 
 
 # --- CLI ---
@@ -1927,14 +1948,13 @@ def main():
     p_la.add_argument("--dry-run", action="store_true")
 
     p_ula = sub.add_parser("unlink-admission",
-                           help="Remove a WRONG admission edge (the corrective half of "
-                                "link-admission); the removed edge is kept in the search's "
-                                "findings_note. Capture with emit_batch_sql.py "
-                                "--allow-delete search_admissions")
+                           help="Retire a WRONG admission edge in place (the corrective half of "
+                                "link-admission): the edge stays as a row with the reason and the "
+                                "session; a re-admission is a new search (log-search)")
     p_ula.add_argument("--exec-id", required=True, type=int)
     p_ula.add_argument("--ref-id", required=True)
     p_ula.add_argument("--reason", required=True,
-                       help="Why the edge is wrong. Appended to the search's findings_note.")
+                       help="Why the edge is wrong. Stored in the edge's retirement_reason.")
     p_ula.add_argument("--session", required=True)
     p_ula.add_argument("--dry-run", action="store_true")
 
@@ -2131,9 +2151,28 @@ def main():
                            "it, or amend-term --field domain), declined, value-bearing or "
                            "already a parameter. A NAMES-NEW/NAMES-EXISTING adjudication is "
                            "REPORTED as provenance, not required (insert_parameter)")
+    p_ap.add_argument("--quantity-kind", dest="quantity_kind",
+                      help="the kind of quantity this parameter measures: a kind_id of base_quantity_kinds "
+                           "(the refusal lists them; db.py add-quantity-kind adds one). Two cases are two "
+                           "parameters only when they cannot be placed on one scale or their accessibility "
+                           "directions differ.")
+    p_ap.add_argument("--quantity-kind-observation-id", dest="quantity_kind_observation_id", type=int,
+                      help="the observed_terms row (db.py observe-term) whose verbatim context_quote shows a "
+                           "source stating a value of this quantity: the warrant for the kind")
     p_ap.add_argument("--notes")
     p_ap.add_argument("--session", required=True)
     p_ap.add_argument("--dry-run", action="store_true")
+
+    # add-quantity-kind — a quantity kind is added by data, on a ledger pointer (T-020).
+    p_aqk = sub.add_parser("add-quantity-kind",
+                           help="Admit a quantity kind to base_quantity_kinds, on a recorded approval")
+    p_aqk.add_argument("--kind-id", dest="kind_id", required=True,
+                       help="lower-case letters and underscores, a letter first")
+    p_aqk.add_argument("--definition", required=True, help="what the quantity is; no value, no digit")
+    p_aqk.add_argument("--approval-ref", dest="approval_ref", required=True,
+                       help="the dated `## ` heading of the ledger entry that admits the kind")
+    p_aqk.add_argument("--session", required=True)
+    p_aqk.add_argument("--dry-run", action="store_true")
 
     # decline-parameter — the other answer to "is this term a parameter?" (migration 101).
     # See decline_parameter for its refusals; revoke-declination (below) reverses one.
@@ -2737,7 +2776,7 @@ def main():
     p_amx.add_argument("--field", required=True,
                        help="A column of source_value_extractions that is not excluded (the refusal "
                             "lists them). claimed_value, claimed_unit and setting take a reformat "
-                            "only (same numbers; a unit already in the cell; an empty setting; OR-3). "
+                            "only (same numbers; a unit already in the cell, or its notation family's spelling of it; an empty setting; OR-3). "
                             "A different figure is a SECOND ROW and a contest (D-0168).")
     p_amx.add_argument("--value", required=True)
     p_amx.add_argument("--reason", required=True,
@@ -3208,8 +3247,10 @@ def main():
 
     # delete-connection
     p_dc = sub.add_parser("delete-connection",
-                           help="Hard-delete a connection by CON-ID (data corrections only)")
+                           help="RETIRE a connection by CON-ID in place (T-050: the row and its targets stay, "
+                                "with the reason; a genuine deletion is the owner's to rule on)")
     p_dc.add_argument("--con-id", required=True)
+    p_dc.add_argument("--reason", required=True, help="Why the connection is withdrawn. Stored in retirement_reason.")
     p_dc.add_argument("--session", required=True)
     p_dc.add_argument("--dry-run", action="store_true")
 
@@ -3290,6 +3331,62 @@ def main():
                        help="Include NOT-ADDRESSABLE gaps in results (default: ADDRESSABLE only)")
     p_ung.add_argument("--include-recent", action="store_true",
                        help="Include gaps with created_at within last 6 months (default: skip)")
+
+    # translations (T-049): a typed home for translations, attached by pointer
+    def _pointer_args(p, required):
+        p.add_argument("--source-table", required=required, help="The table of the cell to translate")
+        p.add_argument("--source-column", required=required, help="Its text column")
+        p.add_argument("--source-row-id", dest="source_row_key", required=required,
+                       help="The row's single-column primary key. The cell is READ by this verb and only its hash "
+                            "is stored; the original is never retyped and never touched")
+        p.add_argument("--target-language", required=required,
+                       help="A language lang_jur_map holds. No default (OD-02)")
+        p.add_argument("--stage", required=required,
+                       help="The pipeline stage making the request (a stage id of governance/pipeline-contract.yaml)")
+        p.add_argument("--due-stage",
+                       help="Override: the stage this request falls due at. Omit to let the contract's "
+                            "translation rule decide when it is listed")
+
+    p_rqt = sub.add_parser("request-translation",
+                           help="Ask for a translation of one cell (a pointer, never a copy)")
+    _pointer_args(p_rqt, True)
+    p_rqt.add_argument("--session", required=True)
+    p_rqt.add_argument("--dry-run", action="store_true")
+
+    p_rct = sub.add_parser("record-translation",
+                           help="Record a translation: of a request (--translation-id) or, opening one in the same "
+                                "call, of a pointer. Refused if it adds, drops or changes a number of the original")
+    p_rct.add_argument("--translation-id", type=int, help="The request to answer. Or give the pointer instead")
+    _pointer_args(p_rct, False)
+    p_rct.add_argument("--text", required=True, help="The translation")
+    p_rct.add_argument("--translator-kind", required=True,
+                       help="The kind of translator: the vocabulary of translations.translator_kind")
+    p_rct.add_argument("--translator-name", required=True,
+                       help="The model id, the tool and version, or the person")
+    p_rct.add_argument("--supersedes", type=int,
+                       help="A current translation of the same cell and language that this one corrects; "
+                            "it is retired in place")
+    p_rct.add_argument("--session", required=True)
+    p_rct.add_argument("--dry-run", action="store_true")
+
+    p_rvt = sub.add_parser("review-translation",
+                           help="Review a translation. One shown to a reader is reviewed by an Opus-class "
+                                "instance other than its translator (OD-30)")
+    p_rvt.add_argument("--translation-id", type=int, required=True)
+    p_rvt.add_argument("--verdict", required=True,
+                       help="reviewed (a reader may be shown it) or rejected (--reason required)")
+    p_rvt.add_argument("--reviewer-kind", required=True,
+                       help="The kind of reviewer: the vocabulary of translations.reviewed_by_kind")
+    p_rvt.add_argument("--reviewer-name", required=True,
+                       help="Who reviewed it; never the translator. Its class is recorded by name, not verified")
+    p_rvt.add_argument("--reason", help="Why; required to reject")
+    p_rvt.add_argument("--session", required=True)
+    p_rvt.add_argument("--dry-run", action="store_true")
+
+    p_trl = sub.add_parser("translations", help="List the open translation requests due at a stage (read-only)")
+    p_trl.add_argument("--due-at", required=True,
+                       help="A stage id: lists open requests whose due stage is this one, by the row's override "
+                            "or else by the translation rule of governance/pipeline-contract.yaml")
 
     args = _ARGS = parser.parse_args()
 
@@ -3637,8 +3734,15 @@ def main():
             term_id=args.term_id,
             notes=args.notes,
             session=args.session,
+            quantity_kind=args.quantity_kind,
+            quantity_kind_observation_id=args.quantity_kind_observation_id,
             dry_run=args.dry_run,
         ))
+
+    elif args.command == "add-quantity-kind":
+        _emit(insert_quantity_kind(
+            kind_id=args.kind_id, definition=args.definition, approval_ref=args.approval_ref,
+            session=args.session, dry_run=args.dry_run))
 
     elif args.command == "decline-parameter":
         _emit(decline_parameter(
@@ -4118,8 +4222,8 @@ def main():
         _emit(result)
 
     elif args.command == "delete-connection":
-        delete_connection(args.con_id, session=args.session, dry_run=args.dry_run)
-        _emit({"deleted": args.con_id, "dry_run": args.dry_run})
+        delete_connection(args.con_id, args.reason, session=args.session, dry_run=args.dry_run)
+        _emit({"retired": args.con_id, "dry_run": args.dry_run})
 
     elif args.command == "add-supersession-check":
         # DR-2026-05-24 — per-anchor-source supersession outcome
@@ -4215,6 +4319,26 @@ def main():
             include_recent=args.include_recent,
         )
         _emit(rows)
+
+    elif args.command == "request-translation":
+        _emit(request_translation(args.source_table, args.source_column, args.source_row_key,
+                                  args.target_language, args.stage, args.due_stage,
+                                  session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "record-translation":
+        _emit(record_translation(args.text, args.translator_kind, args.translator_name,
+                                 translation_id=args.translation_id, source_table=args.source_table,
+                                 source_column=args.source_column, source_row_key=args.source_row_key,
+                                 target_language=args.target_language, stage=args.stage,
+                                 due_stage=args.due_stage, supersedes=args.supersedes,
+                                 session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "review-translation":
+        _emit(review_translation(args.translation_id, args.verdict, args.reviewer_kind, args.reviewer_name,
+                                 args.reason, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "translations":
+        _emit(translations_due(args.due_at))
 
 
 
@@ -4688,8 +4812,7 @@ def _correctable():
     Not a second list. `_BIBLIO_FIELDS` in retrieval_log is what --verify-authors can
     actually prove against a payload, and this dict's contract is to be exactly that set
     -- so it is that set, plus `pub_title`, which the verifier checks through `_TITLE_COLS`
-    instead (a non-English source stores its native title in pub_title and the English in
-    pub_title_en, so the verifier compares a SET of columns where this writer targets one).
+    instead (the verifier compares a SET of title columns where this writer targets one).
     That exception is stated here rather than left implicit.
     """
     retrieval_log = _retrieval_log()
@@ -5831,7 +5954,8 @@ def link_admission(exec_id: int, ref_id: str, reason: str, session: str,
     is two tables agreeing about one fact, not a verification of the fact. And
     search_candidates.exec_id has been wrong before -- candidates 107, 108 and 114 (see
     reattribute_candidate). The truth of the edge rests on the session that logged the
-    candidate against this search. A wrong edge is removed with unlink-admission. This
+    candidate against this search. A wrong edge is retired with unlink-admission (T-050: it stays
+    as a row, and link-admission then refuses it and names log-search). This
     is not hypothetical: both edges batch 20 first wrote with this verb copied proxy
     filings (batch 19 had put candidates 124 and 125 on the nearest logged search because
     the steps that surfaced them were never logged). They were moved on 2026-09-26 --
@@ -5872,8 +5996,16 @@ def link_admission(exec_id: int, ref_id: str, reason: str, session: str,
                 f"admission edge written without that is an attribution nobody recorded -- "
                 f"the fabrication research_protocol_audit names. If the search that "
                 f"admitted it was never logged, log it with log-search --admitted-ref-id.")
+        withdrawn = conn.execute("SELECT retired_at FROM search_admissions WHERE exec_id=? AND ref_id=? "
+                                 "AND retired_at IS NOT NULL", [exec_id, ref]).fetchone()
+        if withdrawn:
+            raise Refusal(
+                f"exec {exec_id} -> {ref}: REFUSED. This edge was retired at {withdrawn[0]}: it is the record of a "
+                f"claim that was withdrawn, and a retired edge is never un-retired in place. If this search did "
+                f"surface the source, log that as a new search (db.py log-search ... --admitted-ref-id {ref}) and "
+                f"link it there. Nothing was written.")
         admitting = [r[0] for r in conn.execute(
-            "SELECT exec_id FROM search_admissions WHERE ref_id=?", [ref])]
+            "SELECT exec_id FROM search_admissions WHERE ref_id=? AND retired_at IS NULL", [ref])]
         stamp = dbcore.now()
         added = exec_id not in admitting
         if added:
@@ -5881,7 +6013,7 @@ def link_admission(exec_id: int, ref_id: str, reason: str, session: str,
             edge.update(dbcore.stamp_for(conn, "search_admissions", session))
             conn.execute(f"INSERT INTO search_admissions ({','.join(edge)}) "
                          f"VALUES ({','.join('?' * len(edge))})", list(edge.values()))
-        edges = conn.execute("SELECT COUNT(*) FROM search_admissions WHERE exec_id=?",
+        edges = conn.execute("SELECT COUNT(*) FROM search_admissions WHERE exec_id=? AND retired_at IS NULL",
                              [exec_id]).fetchone()[0]
         was = ex["results_admitted"] or 0
         count = _results_admitted_after(was, edges, linked=True)
@@ -5910,60 +6042,52 @@ def link_admission(exec_id: int, ref_id: str, reason: str, session: str,
 
 def unlink_admission(exec_id: int, ref_id: str, reason: str, session: str,
                      dry_run: bool = False):
-    """Remove an admission edge that is wrong. The corrective half of link-admission.
+    """Retire an admission edge that is wrong, IN PLACE. The corrective half of link-admission.
 
-    ADDED 2026-09-26. db.py had no DELETE or UPDATE on search_admissions at all, so a
-    wrong edge -- however it got there: a mis-typed --admitted-ref-id, or a
-    link-admission that faithfully copied a candidate's wrong exec_id -- could not be
-    corrected through any sanctioned path. Shaped like reattribute_candidate: the move
-    needs a reason, and the removed edge is kept in the search's findings_note, because
-    the junction row itself is gone.
+    ADDED 2026-09-26 as a DELETE; CHANGED T-050 (OD-29) to a retirement, under the owner's ruling of 2026-09-16
+    ("RETIRE IN PLACE, NEVER HARD-DELETE"). A wrong edge -- a mis-typed --admitted-ref-id, or a link-admission that
+    faithfully copied a candidate's wrong exec_id -- stays a row with `retired_at`, `retired_by_session` and
+    `retirement_reason` set: the record that the claim was made, when, and why it was withdrawn. It is no longer
+    copied into the search's findings_note. Every reader of the table filters on `retired_at IS NULL`
+    (v_source_admission, v_coverage_parameter_via_admission, and the scripts that read the table), and
+    link-admission refuses a retired edge and names log-search. A genuine deletion is an exception only the owner
+    rules on, and no writer deletes from search_admissions, so emit_batch_sql refuses --allow-delete for it by itself.
 
-    results_admitted drops by the edge removed, never below the edges that remain (the
-    rule _results_admitted_after states). It does not touch the candidate
-    row: if the candidate's own exec_id is what was wrong, correct it with
-    reattribute-candidate as well -- the result names any candidate that still points
+    results_admitted drops by the edge retired, never below the unretired edges that remain (the rule
+    _results_admitted_after states). It does not touch the candidate row: if the candidate's own exec_id is what
+    was wrong, correct it with reattribute-candidate as well -- the result names any candidate that still points
     at this search, so the second half is not forgotten.
-
-    CAPTURING IT. This is a DELETE, and the capture path is additive by default: run
-    emit_batch_sql.py with --allow-delete search_admissions, which renders the removed
-    row as a keyed DELETE (only for a table a writer here deletes from). Found the first
-    time the verb was used for real (GAP-050's repair, 2026-09-26): emit refused the
-    scratch, correctly, until that opt-in existed.
     """
     reason = dbcore.require_reason(
         reason, f"exec {exec_id} -> {ref_id}",
-        "Removing a provenance edge without saying why erases an attribution without "
+        "Retiring a provenance edge without saying why erases an attribution without "
         "a trace of what replaced it.")
     with connect(dry_run) as conn:
         ref = dbcore.fold_ref(ref_id)
-        ex = conn.execute("SELECT exec_id, findings_note, results_admitted "
+        ex = conn.execute("SELECT exec_id, results_admitted "
                           "FROM search_executions WHERE exec_id=?", [exec_id]).fetchone()
         if ex is None:
             raise Refusal(f"exec {exec_id}: no such search execution.")
-        if not conn.execute("SELECT 1 FROM search_admissions WHERE exec_id=? AND ref_id=?",
-                            [exec_id, ref]).fetchone():
-            raise Refusal(f"exec {exec_id} -> {ref}: no such admission edge to remove. List the "
+        edge = conn.execute("SELECT retired_at FROM search_admissions WHERE exec_id=? AND ref_id=?",
+                            [exec_id, ref]).fetchone()
+        if edge is None:
+            raise Refusal(f"exec {exec_id} -> {ref}: no such admission edge to retire. List the "
                           f"edges a source holds with SELECT exec_id FROM search_admissions "
-                          f"WHERE ref_id = '{ref}'.")
-        conn.execute("DELETE FROM search_admissions WHERE exec_id=? AND ref_id=?",
-                     [exec_id, ref])
-        edges = conn.execute("SELECT COUNT(*) FROM search_admissions WHERE exec_id=?",
+                          f"WHERE ref_id = '{ref}' AND retired_at IS NULL.")
+        if edge[0] is not None:
+            raise Refusal(f"exec {exec_id} -> {ref}: this edge is already retired (since {edge[0]}); its first "
+                          f"reason stands. Nothing was written.")
+        stamp = dbcore.now()
+        conn.execute("UPDATE search_admissions SET retired_at=?, retired_by_session=?, retirement_reason=? "
+                     "WHERE exec_id=? AND ref_id=?",
+                     [stamp, dbcore.session_stem(session), reason, exec_id, ref])
+        edges = conn.execute("SELECT COUNT(*) FROM search_admissions WHERE exec_id=? AND retired_at IS NULL",
                              [exec_id]).fetchone()[0]
         was = ex["results_admitted"] or 0
         count = _results_admitted_after(was, edges, linked=False)
-        detail = f"{ref}: {reason}"
         if count != was:
-            detail += f" results_admitted {was} -> {count}."
-        # One stamp for both the note's date and updated_at (GAP-053, migration 100),
-        # so they cannot disagree -- link_admission's own pattern.
-        stamp = dbcore.now()
-        conn.execute("UPDATE search_executions SET results_admitted=?, findings_note=?, "
-                     "updated_at=?, updated_by_session=? WHERE exec_id=?",
-                     [count, dbcore.append_dated_note(ex["findings_note"],
-                                                      "ADMISSION UNLINKED", session, detail,
-                                                      stamp),
-                      stamp, session, exec_id])
+            conn.execute("UPDATE search_executions SET results_admitted=?, updated_at=?, updated_by_session=? "
+                         "WHERE exec_id=?", [count, stamp, session, exec_id])
         still = [r[0] for r in conn.execute(
             "SELECT candidate_id FROM search_candidates WHERE exec_id=? "
             "AND resolved_ref_id=?", [exec_id, ref])]
@@ -7177,6 +7301,7 @@ def _name_holder(conn, name, *, aliases=True, exclude_term=None):
 
 
 def insert_parameter(term_id: str, session: str, notes: str = None,
+                     quantity_kind: str = None, quantity_kind_observation_id: int = None,
                      dry_run: bool = False):
     """Promote an adjudicated term into `base_parameters` — THE SUBJECT of a determination.
 
@@ -7221,6 +7346,16 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
     * A value-bearing name. `add-term` already refuses one, but a term minted before
       that guard existed could still carry it, and promotion to parameter is the last
       gate before the name becomes a determination's subject.
+
+    * (T-020) No quantity kind, or one not a row of `base_quantity_kinds`; no warrant, or one that is not a row
+      of `observed_terms`; a warrant whose `context_quote` holds no digit. Whether a term names an element or a
+      quantity is a judgment no script can compute (CLAUDE.md rule 8), so the writer asks for it, constrained to
+      the live kinds, and records the answer on the row with a POINTER to the observation that warrants it (rule 5:
+      the source's words already have a home). Checked after every refusal above, so each keeps its own message.
+      The writer does not require the observation to be adjudicated to this term and does not compare its words
+      with the term's name (R11: a source's phrase is not normalised): a determined operator can still point
+      `grab bar` at an observation stating a length. The promotion is then recorded with its warrant and
+      contestable, not prevented.
 
     DELIBERATELY ABSENT, and must stay absent: no --status and no --merged-into. A
     parameter is created active. Merging one into another is a different act on an
@@ -7299,7 +7434,32 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 f"(status {clash['status']}). One parameter per term — a second row is "
                 f"the dual home rule 5 forbids.\n"
                 f"Key the determination on parameter_id {clash['parameter_id']}.")
-        row = {"term_id": term_id, "status": "active", "notes": notes}
+        kinds = [r[0] for r in conn.execute("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id")]
+        quantity_kind = str(quantity_kind or "").strip()
+        if quantity_kind not in kinds:
+            raise Refusal(
+                f"{term_id} ({term['canonical_en']!r}): --quantity-kind {quantity_kind or '(none)'!r} is not a "
+                f"kind of base_quantity_kinds. A parameter is a quantity: say which kind. The kinds are "
+                f"{kinds}; a kind that is missing is added by data: db.py add-quantity-kind --kind-id ... "
+                f"--definition ... --approval-ref '<dated ledger heading>' --session ... Nothing was written.\n"
+                f"Two cases are two parameters only when they cannot be placed on one scale or their "
+                f"accessibility directions differ.")
+        warrant = (conn.execute("SELECT observation_id, context_quote FROM observed_terms WHERE observation_id=?",
+                                [quantity_kind_observation_id]).fetchone()
+                   if quantity_kind_observation_id is not None else None)
+        if warrant is None:
+            raise Refusal(
+                f"{term_id} ({term['canonical_en']!r}): --quantity-kind-observation-id "
+                f"{quantity_kind_observation_id!r} is not a row of observed_terms. The kind {quantity_kind!r} is a "
+                f"judgment and needs its warrant: the observation (db.py observe-term) whose verbatim "
+                f"context_quote shows a source stating a value of this quantity. Nothing was written.")
+        if not any(ch.isdigit() for ch in (warrant["context_quote"] or "")):
+            raise Refusal(
+                f"{term_id} ({term['canonical_en']!r}): observation {warrant['observation_id']} holds no digit in "
+                f"its context_quote; a passage stating no value cannot show what the quantity is measured in. "
+                f"Point --quantity-kind-observation-id at an observation that does. Nothing was written.")
+        row = {"term_id": term_id, "status": "active", "notes": notes,
+               "quantity_kind": quantity_kind, "quantity_kind_observation_id": warrant["observation_id"]}
         row.update(dbcore.stamp_for(conn, "base_parameters", session))
         cur = conn.execute(f"INSERT INTO base_parameters ({','.join(row)}) "
                            f"VALUES ({','.join('?'*len(row))})", list(row.values()))
@@ -7308,7 +7468,41 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 "provenance": ("adjudicated" if adj else "base-vocabulary"),
                 "adjudicated_by": (adj["adjudication_id"] if adj else None),
                 "outcome": (adj["outcome"] if adj else None),
+                "quantity_kind": quantity_kind,
+                "quantity_kind_observation_id": warrant["observation_id"],
                 "dry_run": dry_run}
+
+
+def insert_quantity_kind(kind_id: str, definition: str, approval_ref: str, session: str,
+                         dry_run: bool = False):
+    """Admit a quantity kind to `base_quantity_kinds` (T-020, OD-24): a kind is added by data, on a ledger pointer.
+
+    Refuses a blank session, an id that is not lower-case letters and underscores with a letter first, a definition
+    holding a digit (a kind is not a value), an `--approval-ref` that is not exactly one dated `## ` heading of the
+    ledger (`dbcore.require_approval_heading`, the lookup `mint-term-from-catalogue` uses), and an existing kind.
+    What stays unproved is that the entry approves THIS kind: the operator answers for the match.
+    """
+    kind_id, definition = (kind_id or "").strip(), (definition or "").strip()
+    if not (session or "").strip():
+        raise Refusal("add-quantity-kind: --session is required and may not be blank.")
+    if not re.fullmatch(r"[a-z][a-z_]*", kind_id):
+        raise Refusal(f"add-quantity-kind: --kind-id {kind_id!r} must be lower-case letters and underscores, "
+                      f"a letter first (the shape of the seeded kinds).")
+    if not definition or any(ch.isdigit() for ch in definition):
+        raise Refusal(f"add-quantity-kind: --definition {definition!r} must be present and carry no digit: a kind "
+                      f"names a quantity, never a value.")
+    approval_ref = dbcore.require_approval_heading(approval_ref, "add-quantity-kind")
+    with connect(dry_run) as conn:
+        held = conn.execute("SELECT kind_id, approval_ref FROM base_quantity_kinds WHERE kind_id=?",
+                            [kind_id]).fetchone()
+        if held:
+            raise Refusal(f"add-quantity-kind: {kind_id!r} is already a kind (admitted by "
+                          f"{held['approval_ref']!r}). Nothing was written.")
+        row = {"kind_id": kind_id, "definition": definition, "approval_ref": approval_ref}
+        row.update(dbcore.stamp_for(conn, "base_quantity_kinds", session))
+        conn.execute(f"INSERT INTO base_quantity_kinds ({','.join(row)}) "
+                     f"VALUES ({','.join('?' * len(row))})", list(row.values()))
+        return {"kind_id": kind_id, "approval_ref": approval_ref, "dry_run": dry_run}
 
 
 def decline_parameter(term_id: str, reason: str, session: str, dry_run: bool = False):
@@ -7458,7 +7652,7 @@ def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str
         if row is None:
             raise Refusal(
                 f"parameter_id {parameter_id}: no such parameter. Mint one from a term "
-                f"first: db.py add-parameter --term-id TERM-NNN --session ...")
+                f"first: db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-observation-id N --session ...")
         if not dbcore.exists(conn, "evidence_sources", "ref_id", ref_id):
             raise Refusal(f"--ref-id {ref_id} is not an admitted source. The direction is "
                           f"read from a document this project holds; admit it first.")
@@ -9380,7 +9574,7 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
         if param is None:
             raise Refusal(
                 f"parameter_id {parameter_id}: no such parameter. Mint one from a term:\n"
-                f"  db.py add-parameter --term-id TERM-NNN --session ...")
+                f"  db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-observation-id N --session ...")
         if param["status"] != "active":
             raise Refusal(
                 f"parameter {parameter_id} is {param['status']}"
@@ -10493,13 +10687,13 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 "bare INSERT would fail with `FOREIGN KEY constraint failed` — a refusal "
                 "that names neither the cause nor the fix (CLAUDE.md §4).\n"
                 "Mint the subject first, from an adjudicated term:\n"
-                "  db.py add-parameter --term-id TERM-NNN --session ...")
+                "  db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-observation-id N --session ...")
         prow = conn.execute("SELECT status, merged_into FROM base_parameters "
                             "WHERE parameter_id=?", (pid,)).fetchone()
         if prow is None:
             raise Refusal(
                 f"parameter_id {pid}: no such parameter. Mint one from a term:\n"
-                f"  db.py add-parameter --term-id TERM-NNN --session ...")
+                f"  db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-observation-id N --session ...")
         if prow["status"] != "active":
             target = f" (merged into {prow['merged_into']})" if prow["merged_into"] else ""
             raise Refusal(
@@ -11132,7 +11326,9 @@ def _refuse_unless_reformat(row, field, value):
                      whitespace or the end (a reformat drops the words after the unit, as in `% longitudinal gradient
                      (maximum) where the rise is <= 0.6 m` -> `%`; it never picks another word of the cell, so
                      `m` out of that cell, `MM` out of `mm`, and `dB` out of `dB(A)` are refused); then the row's
-                     value must read under the new unit.
+                     value must read under the new unit. Or, under OD-41 (a), a family member of
+                     `dbcore.NOTATION_FAMILIES` that contains the old cell on word boundaries (`ratio` ->
+                     `rise:run ratio`), when the figure reads under it.
       all three      the row must not become a copy of another row (the measure `insert_extraction` uses).
       claimed_value  a sign is part of the number: a `-` directly before a digit (not the hyphen of `0-4.8`) is
                      counted in the old and the new text and the counts must agree.
@@ -11170,7 +11366,12 @@ def _refuse_unless_reformat(row, field, value):
         if why:
             raise Refusal(f"{ctx}: {why}. Nothing was written.")
         cell = row["claimed_unit"] or ""
-        if not (cell.startswith(value) and (len(cell) == len(value) or cell[len(value)].isspace())):
+        # OD-41 (a): a notation-family member whose LAST word is the old cell, exactly (case included), is the same
+        # notation spelled out (`ratio` -> `rise:run ratio`). The old cell must hold a word: an empty cell is no unit
+        # and gains none, and no other unit gains words.
+        tail = (value.split() or [""])[-1]
+        grows = bool(dbcore.notation_family(value)) and bool(cell.strip()) and cell.strip() == tail and cell.strip() != value.strip()
+        if not (grows or (cell.startswith(value) and (len(cell) == len(value) or cell[len(value)].isspace()))):
             raise Refusal(f"{ctx}: {value!r} does not lead the row's unit cell {cell!r}. A reformat drops the words "
                           f"AFTER the unit (the cell reads unit first, then its conditions); choosing another word of "
                           f"the cell, or another spelling of it, names a unit the row did not state, a new reading, "
@@ -12599,6 +12800,297 @@ def insert_locator(data: dict, session: str, dry_run: bool = False) -> str:
         conn.execute(f"INSERT INTO source_locators ({cols}) VALUES ({','.join('?'*len(row))})",
                      list(row.values()))
     return ref
+
+
+# --- translations (T-049) ---------------------------------------------------------------------
+# A translation POINTS at the cell it translates (translations.source_*) and never replaces or copies it; the
+# original is untouched by construction. The default stage a request falls due at is a RULE held once in
+# governance/pipeline-contract.yaml, read through `_translation_contract` and computed when listed, never stored
+# and never written in this block. The pointer is resolved by `dbcore.read_cell` and nothing else.
+
+
+def _translation_contract(contract_path=None):
+    """The pipeline contract through its schema model: the one reader of the translation rule and of the stage ids.
+    `contract_path` exists so a test can load a changed copy; the CLI does not expose it."""
+    from schemas.pipeline_contract import PipelineContract
+    return PipelineContract.load(contract_path or dbcore.REPO_ROOT / "governance" / "pipeline-contract.yaml")
+
+
+def _translation_stage(contract, stage, flag):
+    ids = [st.id for st in contract.stages]
+    if stage not in ids:
+        raise Refusal(f"{flag} {stage!r} is not a stage id of governance/pipeline-contract.yaml "
+                      f"({', '.join(ids)}). Nothing was written.")
+    return stage
+
+
+def _cell_language(conn, table, key):
+    """The language the pointed row records: its own `lang_detected`, else its own `language` (whichever the table
+    has and is not NULL), else, when it has a `ref_id`, that source's `evidence_sources.lang_detected`. None when the
+    row leads to none. Compared upper-cased by the caller: stored values are mixed-case."""
+    cols = {c[1] for c in conn.execute('PRAGMA table_info("%s")' % table)}
+    pk = dbcore.single_key(conn, table)
+    for col in ("lang_detected", "language"):
+        if col in cols:
+            r = conn.execute('SELECT "%s" FROM "%s" WHERE "%s" = ?' % (col, table, pk), (key,)).fetchone()
+            if r and r[0]:
+                return r[0]
+    if "ref_id" in cols:
+        r = conn.execute('SELECT e.lang_detected FROM evidence_sources e JOIN "%s" t ON t.ref_id = e.ref_id '
+                         'WHERE t."%s" = ?' % (table, pk), (key,)).fetchone()
+        if r and r[0]:
+            return r[0]
+    return None
+
+
+def translation_sha256(text):
+    """The hash of a cell's text, as `translations.source_sha256` holds it. One home: the verbs and the audit."""
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def translation_claimed_value(conn, source_table, source_column, source_row_key):
+    """The verified `claimed_value` of the figure whose `claim_text` a translation translates, else None. It is the
+    numeral of a number the source may write in words, so the translation may state it."""
+    if (source_table, source_column) != ("source_value_extractions", "claim_text"):
+        return None
+    r = conn.execute("SELECT claimed_value FROM source_value_extractions WHERE extraction_id = ?",
+                     (source_row_key,)).fetchone()
+    return r[0] if r else None
+
+
+def translation_number_gaps(original, translation, claimed_value=None):
+    """(dropped, added): the numbers `original` states that `translation` does not, and the numbers `translation`
+    states that neither `original` nor `claimed_value` does. The fidelity rule of `record-translation`.
+
+    The reader is `retrieval_log.number_tokens` (T-008). Both texts first pass through `_cjk_to_arabic` (so 十二分の一
+    states 12 and 1 and a correct `1:12` is not an added figure) and are read on the quote side, where the operands of
+    a symbol ratio and the pieces of a space-grouped number count as stated. The sets of readings are compared, not
+    ratio tokens and not counts: a number is matched when one of its readings is a reading of some number of the other
+    (an ambiguous `1.200` matches 1.2 or 1200), and a number stated twice need not be stated twice. `claimed_value`
+    is read on the claim side (no CJK step, no operands).
+    """
+    rl = _retrieval_log()
+
+    def stated(text, **kw):
+        return [set(readings) for kind, readings, _ in rl.number_tokens(text, **kw) if kind == "num"]
+
+    def shown(sets):
+        return sorted({"/".join(sorted(str(x) for x in s)) for s in sets})
+
+    orig = stated(_cjk_to_arabic(original or ""), quote_side=True)
+    trans = stated(_cjk_to_arabic(translation or ""), quote_side=True)
+    extra = stated(str(claimed_value)) if claimed_value is not None else []
+    return (shown(o for o in orig if not any(o & t for t in trans)),
+            shown(t for t in trans if not any(t & o for o in orig + extra)))
+
+
+def _current_translation(conn, table, column, key, language, excluding=None):
+    """The id and status of the current (translated or reviewed, not retired) translation of this cell into this
+    language other than `excluding`, else None."""
+    return conn.execute(
+        "SELECT translation_id, status FROM v_translations_current WHERE source_table=? AND source_column=? "
+        "AND source_row_key=? AND target_language=? AND translation_id IS NOT ?",
+        (table, column, key, language, excluding)).fetchone()
+
+
+def _refuse_second_translation(conn, table, column, key, language, excluding, context):
+    held = _current_translation(conn, table, column, key, language, excluding)
+    if held:
+        raise Refusal(f"{context}: this cell is already translated into {language} as translation "
+                      f"{held['translation_id']} ({held['status']}). A corrected translation is a new row that "
+                      f"retires the old one: record-translation --supersedes {held['translation_id']}. "
+                      f"Nothing was written.")
+
+
+def _require_translation_session(session, context):
+    if not (session or "").strip():
+        raise Refusal(f"{context}: --session is required and may not be blank. Nothing was written.")
+
+
+def _open_translation_request(conn, table, column, row_key, language, stage, due_stage, contract, session, context,
+                              replacing=None):
+    """Validate a pointer against the live schema and open the request, or find the one already open for the same
+    pointer, hash and language. Returns (translation_id, created)."""
+    text, key, why = dbcore.read_cell(conn, table, column, row_key)
+    if why:
+        raise Refusal(f"{context}: the pointer does not resolve: {why}. Nothing was written.")
+    lang = _check_language(conn, language, "translation", "--target-language")
+    src = _cell_language(conn, table, key)
+    if src and src.strip().upper() == lang.upper():
+        raise Refusal(f"{context}: the pointed row is recorded in {src.strip().upper()}, the target language. "
+                      f"There is nothing to translate. Nothing was written.")
+    _translation_stage(contract, stage, "--stage")
+    if due_stage is not None:
+        _translation_stage(contract, due_stage, "--due-stage")
+    _refuse_second_translation(conn, table, column, key, lang, replacing, context)
+    sha = translation_sha256(text)
+    open_one = conn.execute(
+        "SELECT translation_id FROM translations WHERE source_table=? AND source_column=? AND source_row_key=? "
+        "AND source_sha256=? AND target_language=? AND status='requested' AND superseded_by_translation_id IS NULL",
+        (table, column, key, sha, lang)).fetchone()
+    if open_one:
+        return open_one[0], False
+    row = {"source_table": table, "source_column": column, "source_row_key": key, "source_sha256": sha,
+           "target_language": lang, "status": "requested", "requested_at_stage": stage, "due_stage": due_stage}
+    row.update(dbcore.stamp_for(conn, "translations", session))
+    cur = conn.execute(f"INSERT INTO translations ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
+                       list(row.values()))
+    return cur.lastrowid, True
+
+
+def request_translation(source_table, source_column, source_row_key, target_language, stage, due_stage=None, *,
+                        session, dry_run=False, contract_path=None):
+    """Ask for a translation of one cell. The cell is read here and only its hash is stored: no argument carries
+    the original. Refused: a pointer that does not resolve (no such table or column, a table with no single-column
+    primary key, no such row, a cell that is not text or is empty), a target language lang_jur_map does not hold or
+    that is the pointed row's own language, a stage that is not a stage id of the contract, and a cell that already
+    has a current translation into that language (the refusal names `--supersedes`)."""
+    _require_translation_session(session, "request-translation")
+    contract = _translation_contract(contract_path)
+    with connect(dry_run) as conn:
+        tid, created = _open_translation_request(conn, source_table, source_column, source_row_key, target_language,
+                                                 stage, due_stage, contract, session, "request-translation")
+    return {"translation_id": tid, "created": created, "status": "requested", "dry_run": dry_run}
+
+
+def record_translation(text, translator_kind, translator_name, *, translation_id=None, source_table=None,
+                       source_column=None, source_row_key=None, target_language=None, stage=None, due_stage=None,
+                       supersedes=None, session, dry_run=False, contract_path=None):
+    """Answer a request by id, or open and answer one in one call by pointer (exactly one of the two forms).
+
+    Refused: both forms or neither; a translation that adds, drops or changes a number of the original
+    (`translation_number_gaps`); a cell whose hash no longer matches the request's (request it again); a request
+    that is not `requested`. `--supersedes M` retires translation M in place, in the same transaction; it is refused
+    unless M is translated or reviewed, not already retired, and translates the same pointer into the same language.
+    The original is never touched."""
+    ctx = "record-translation"
+    _require_translation_session(session, ctx)
+    pointer = (source_table, source_column, source_row_key, target_language, stage)
+    if translation_id is not None and any(p is not None for p in pointer + (due_stage,)):
+        raise Refusal(f"{ctx}: pass --translation-id OR the pointer (--source-table, --source-column, "
+                      f"--source-row-id, --target-language, --stage), never both. Nothing was written.")
+    if translation_id is None and not all((p or "").strip() for p in pointer):
+        raise Refusal(f"{ctx}: pass --translation-id, or the whole pointer: --source-table, --source-column, "
+                      f"--source-row-id, --target-language and --stage. Nothing was written.")
+    text, name = (text or "").strip(), (translator_name or "").strip()
+    if not text:
+        raise Refusal(f"{ctx}: --text is blank. Nothing was written.")
+    if not name:
+        raise Refusal(f"{ctx}: --translator-name is required: the model id, the tool and version, or the person. "
+                      f"Nothing was written.")
+    contract = _translation_contract(contract_path)
+    with connect(dry_run) as conn:
+        dbcore.check_declared(conn, "translations", "translator_kind", translator_kind, ctx)
+        old = None
+        if supersedes is not None:
+            old = conn.execute("SELECT * FROM translations WHERE translation_id=?", (supersedes,)).fetchone()
+            if not old or old["status"] not in ("translated", "reviewed") or old["superseded_by_translation_id"]:
+                raise Refusal(f"{ctx}: --supersedes {supersedes} is not a current translation (translated or "
+                              f"reviewed, and not already retired). Nothing was written.")
+        if translation_id is None:
+            tid, _ = _open_translation_request(conn, source_table, source_column, source_row_key, target_language,
+                                               stage, due_stage, contract, session, ctx, replacing=supersedes)
+        else:
+            tid = translation_id
+        req = conn.execute("SELECT * FROM translations WHERE translation_id=?", (tid,)).fetchone()
+        if not req:
+            raise Refusal(f"{ctx}: no translation request {tid}. Nothing was written.")
+        if req["status"] != "requested":
+            raise Refusal(f"{ctx}: translation {tid} is {req['status']}, not requested. A corrected translation "
+                          f"is a new row: record it against the pointer with --supersedes {tid}. "
+                          f"Nothing was written.")
+        where = (req["source_table"], req["source_column"], req["source_row_key"], req["target_language"])
+        if old and (old["source_table"], old["source_column"], old["source_row_key"],
+                    old["target_language"]) != where:
+            raise Refusal(f"{ctx}: --supersedes {supersedes} translates a different cell or language. "
+                          f"Nothing was written.")
+        _refuse_second_translation(conn, *where, supersedes, ctx)
+        original, _, why = dbcore.read_cell(conn, *where[:3])
+        if why:
+            raise Refusal(f"{ctx}: the pointer no longer resolves: {why}. Nothing was written.")
+        if translation_sha256(original) != req["source_sha256"]:
+            raise Refusal(f"{ctx}: the original cell has changed since request {tid} was made (its hash no longer "
+                          f"matches). Request the translation again. Nothing was written.")
+        dropped, added = translation_number_gaps(original, text, translation_claimed_value(conn, *where[:3]))
+        if dropped or added:
+            raise Refusal(f"{ctx}: the translation does not state the original's numbers. Dropped: "
+                          f"{dropped or 'none'}; added: {added or 'none'}. Every number the original states as a "
+                          f"numeral is stated in the translation, and every number the translation states is the "
+                          f"original's (or the figure's verified claimed_value). Nothing was written.")
+        stamp = dbcore.upd(session)
+        conn.execute("UPDATE translations SET translated_text=?, status='translated', translator_kind=?, "
+                     "translator_name=?, updated_at=?, updated_by_session=? WHERE translation_id=?",
+                     (text, translator_kind, name, stamp["updated_at"], stamp["updated_by_session"], tid))
+        if old:
+            conn.execute("UPDATE translations SET superseded_by_translation_id=?, updated_at=?, "
+                         "updated_by_session=? WHERE translation_id=?",
+                         (tid, stamp["updated_at"], stamp["updated_by_session"], supersedes))
+    return {"translation_id": tid, "status": "translated", "supersedes": supersedes, "dry_run": dry_run}
+
+
+def review_translation(translation_id, verdict, reviewer_kind, reviewer_name, reason=None, *, session,
+                       dry_run=False):
+    """Review a translation: `reviewed` (a reader may be shown it) or `rejected` (`--reason` required, written to
+    `review_reason`). OD-30: a translation shown to a reader is reviewed by an Opus-class instance other than its
+    translator; the database records the reviewer's name and cannot verify its class, and render shows only
+    `reviewed` rows. Refused: a verdict other than the two statuses a review sets, a blank reviewer, the translator
+    as reviewer (compared case-insensitively), a row that is not `translated` or is retired, and a `reviewed`
+    verdict on a cell whose hash no longer matches (reject it and request again)."""
+    ctx = "review-translation"
+    _require_translation_session(session, ctx)
+    if verdict not in ("reviewed", "rejected"):
+        raise Refusal(f"{ctx}: --verdict is reviewed or rejected, not {verdict!r}. Nothing was written.")
+    name, reason = (reviewer_name or "").strip(), (reason or "").strip() or None
+    if not name:
+        raise Refusal(f"{ctx}: --reviewer-name is required: the model id, the tool or the person who reviewed it. "
+                      f"Nothing was written.")
+    if verdict == "rejected" and not reason:
+        raise Refusal(f"{ctx}: --reason is required to reject a translation. Nothing was written.")
+    with connect(dry_run) as conn:
+        dbcore.check_declared(conn, "translations", "reviewed_by_kind", reviewer_kind, ctx)
+        row = conn.execute("SELECT * FROM translations WHERE translation_id=?", (translation_id,)).fetchone()
+        if not row:
+            raise Refusal(f"{ctx}: no translation {translation_id}. Nothing was written.")
+        if row["status"] != "translated" or row["superseded_by_translation_id"]:
+            raise Refusal(f"{ctx}: translation {translation_id} is {row['status']}"
+                          f"{' and retired' if row['superseded_by_translation_id'] else ''}; only a translated, "
+                          f"current translation is reviewed. Nothing was written.")
+        if name.casefold() == row["translator_name"].casefold():
+            raise Refusal(f"{ctx}: the reviewer ({name}) is the translator. A translation shown to a reader is "
+                          f"reviewed by an Opus-class instance other than its translator (OD-30). "
+                          f"Nothing was written.")
+        if verdict == "reviewed":
+            original, _, why = dbcore.read_cell(conn, row["source_table"], row["source_column"],
+                                                row["source_row_key"])
+            if why or translation_sha256(original) != row["source_sha256"]:
+                raise Refusal(f"{ctx}: the original cell no longer matches the one translated "
+                              f"({why or 'its hash changed'}). Reject this translation and request it again. "
+                              f"Nothing was written.")
+        stamp = dbcore.upd(session)
+        conn.execute("UPDATE translations SET status=?, reviewed_by_kind=?, reviewed_by_name=?, reviewed_at=?, "
+                     "review_reason=?, updated_at=?, updated_by_session=? WHERE translation_id=?",
+                     (verdict, reviewer_kind, name, stamp["updated_at"], reason, stamp["updated_at"],
+                      stamp["updated_by_session"], translation_id))
+    return {"translation_id": translation_id, "status": verdict, "dry_run": dry_run}
+
+
+def translations_due(stage, contract_path=None):
+    """The open requests (`requested`, not retired) that fall due at `stage`: the row's own `due_stage` where it has
+    one, else the translation rule's default stage, read from the contract when asked and never stored. Refused when
+    the contract holds no translation rule."""
+    contract = _translation_contract(contract_path)
+    _translation_stage(contract, stage, "--due-at")
+    if contract.translation is None:
+        raise Refusal("governance/pipeline-contract.yaml holds no translation rule, so no request has a default "
+                      "stage. Nothing was read.")
+    default = contract.translation.default_stage
+    with connect(readonly=True) as conn:
+        rows = conn.execute(
+            "SELECT translation_id, source_table, source_column, source_row_key, target_language, "
+            "requested_at_stage, due_stage FROM translations "
+            "WHERE status='requested' AND superseded_by_translation_id IS NULL ORDER BY translation_id").fetchall()
+    return [dict(r, due_stage=r["due_stage"] or default, due_by="row" if r["due_stage"] else "rule")
+            for r in rows if (r["due_stage"] or default) == stage]
 
 
 if __name__ == "__main__":

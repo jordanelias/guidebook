@@ -145,5 +145,96 @@
     "bytes": 2213393,
     "agent_id_prefix": "af7c5181",
     "file": "2026-11-16T21-40-17_other_af7c5181.jsonl"
+  },
+  {
+    "started": "2026-11-16T23:29:23",
+    "role": "other",
+    "bytes": 537231,
+    "agent_id_prefix": "aadcde62",
+    "file": "2026-11-16T23-29-23_other_aadcde62.jsonl"
+  },
+  {
+    "started": "2026-11-16T23:52:06",
+    "role": "other",
+    "bytes": 1200376,
+    "agent_id_prefix": "a4949d84",
+    "file": "2026-11-16T23-52-06_other_a4949d84.jsonl"
+  },
+  {
+    "started": "2026-11-17T00:00:03",
+    "role": "other",
+    "bytes": 399697,
+    "agent_id_prefix": "a05f3777",
+    "file": "2026-11-17T00-00-03_other_a05f3777.jsonl"
+  },
+  {
+    "started": "2026-11-17T00:05:23",
+    "role": "other",
+    "bytes": 1448277,
+    "agent_id_prefix": "a3efd729",
+    "file": "2026-11-17T00-05-23_other_a3efd729.jsonl"
+  },
+  {
+    "started": "2026-11-17T00:25:58",
+    "role": "other",
+    "bytes": 537579,
+    "agent_id_prefix": "ab6fcba9",
+    "file": "2026-11-17T00-25-58_other_ab6fcba9.jsonl"
+  },
+  {
+    "started": "2026-11-17T00:35:00",
+    "role": "other",
+    "bytes": 1239498,
+    "agent_id_prefix": "ac5bcc7f",
+    "file": "2026-11-17T00-35-00_other_ac5bcc7f.jsonl"
+  },
+  {
+    "started": "2026-11-17T00:56:01",
+    "role": "other",
+    "bytes": 748528,
+    "agent_id_prefix": "affbe318",
+    "file": "2026-11-17T00-56-01_other_affbe318.jsonl"
+  },
+  {
+    "started": "2026-11-17T01:36:42",
+    "role": "other",
+    "bytes": 573458,
+    "agent_id_prefix": "ae2d1b63",
+    "file": "2026-11-17T01-36-42_other_ae2d1b63.jsonl"
+  },
+  {
+    "started": "2026-11-17T01:39:29",
+    "role": "other",
+    "bytes": 1085191,
+    "agent_id_prefix": "a46999fc",
+    "file": "2026-11-17T01-39-29_other_a46999fc.jsonl"
+  },
+  {
+    "started": "2026-11-17T01:55:05",
+    "role": "other",
+    "bytes": 535718,
+    "agent_id_prefix": "aaa0c04b",
+    "file": "2026-11-17T01-55-05_other_aaa0c04b.jsonl"
+  },
+  {
+    "started": "2026-11-17T01:56:41",
+    "role": "planner",
+    "bytes": 2302304,
+    "agent_id_prefix": "a37346b9",
+    "file": "2026-11-17T01-56-41_planner_a37346b9.jsonl"
+  },
+  {
+    "started": "2026-11-17T02:13:56",
+    "role": "other",
+    "bytes": 826606,
+    "agent_id_prefix": "ae401b49",
+    "file": "2026-11-17T02-13-56_other_ae401b49.jsonl"
+  },
+  {
+    "started": "2026-11-17T02:43:02",
+    "role": "other",
+    "bytes": 529068,
+    "agent_id_prefix": "a2ed7d9a",
+    "file": "2026-11-17T02-43-02_other_a2ed7d9a.jsonl"
   }
 ]

@@ -7,7 +7,7 @@ extra='forbid', matching the repo's config-schema style. No DB coupling.
 """
 from typing import List, Literal, Optional
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, model_validator
 
 
 class Criterion(BaseModel):
@@ -19,12 +19,30 @@ class Criterion(BaseModel):
     check: Optional[str] = None   # repo-relative enforcer path, or None = declared-but-unenforced
 
 
+class ReEntry(BaseModel):
+    """A ruled return to this stage from a later one, and the row that carries it.
+
+    OD-18 (workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md): re-entry adds rows,
+    never rewrites an upstream row, and no carrier records a downstream use on an upstream row.
+    The carrier is a column that already exists: `pipeline_contract_audit` checks that it does.
+    """
+    model_config = ConfigDict(extra="forbid")
+    id: str
+    from_stage: str                       # the later stage the run comes back from
+    when: str                             # the condition that sends it back
+    carrier_table: str                    # the table whose row holds the return
+    carrier_column: str                   # the typed pointer, or the state cell, that marks it
+    carrier_value: Optional[str] = None   # a value of that column's own CHECK, when the column is a state
+    references: str                       # the boundary and the requirements that warrant it
+
+
 class Stage(BaseModel):
     model_config = ConfigDict(extra="forbid")
     id: str
     anchor: str
     entry: List[str]
     criteria: List[Criterion]
+    re_entry: Optional[List[ReEntry]] = None   # the ruled returns INTO this stage; None = none ruled
 
 
 class CrossStageGate(BaseModel):
@@ -33,6 +51,11 @@ class CrossStageGate(BaseModel):
     criterion: str
     references: str
     check: Optional[str] = None
+
+
+class Translation(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    default_stage: str   # the stage a translation request falls due at when it names none; one of `stages`
 
 
 class PipelineContract(BaseModel):
@@ -46,6 +69,14 @@ class PipelineContract(BaseModel):
     spine: str
     stages: List[Stage]
     cross_stage: List[CrossStageGate]
+    translation: Optional[Translation] = None   # the translation rule (T-049); None = none ruled
+
+    @model_validator(mode="after")
+    def _translation_stage_is_a_stage(self):
+        if self.translation and self.translation.default_stage not in {s.id for s in self.stages}:
+            raise ValueError(f"translation.default_stage {self.translation.default_stage!r} is not a "
+                             f"stage id of this contract: {[s.id for s in self.stages]}")
+        return self
 
     def all_checks(self):
         """Yield (location, criterion_id, check_path_or_None) across the whole contract."""

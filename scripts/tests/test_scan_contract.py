@@ -239,6 +239,15 @@ try:
         if not db._VALUE_BEARING.search(q("SELECT canonical_en FROM terms WHERE term_id=?",
                                           t)[0][0])
         and q("SELECT domain FROM terms WHERE term_id=?", t)[0][0] not in dbcore.NON_QUANTITY_DOMAINS]
+    # T-020: a promotion names a quantity kind and an observation whose quote holds a digit; both derived.
+    KIND = q("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id LIMIT 1")[0][0]
+    WARRANT = q("SELECT observation_id FROM observed_terms WHERE context_quote GLOB '*[0-9]*' "
+                "ORDER BY observation_id LIMIT 1")[0][0]
+
+    def promote(term_id):
+        return attempt(db.insert_parameter, term_id, S, quantity_kind=KIND,
+                       quantity_kind_observation_id=WARRANT)
+
     PAGES = ["Fixture page one: the clear width of a door leaf is measured here.",
              "Fixture page two: the clear width of a corridor route is measured here.",
              "Fixture page three: the turnwise clearance zone of a wheelchair."]
@@ -323,7 +332,7 @@ try:
     # ── terms and parameters for the later sections, minted through the writers ──────
     P = {}
     for key, tid in zip(("A", "B", "C", "D", "E", "R"), FREE):
-        out = attempt(db.insert_parameter, tid, S)
+        out = promote(tid)
         P[key] = out.get("parameter_id")
     TERM_R = FREE[5]
 
@@ -416,7 +425,7 @@ try:
            and ledger(REF_A, P["B"]) == ("READ-NOTHING-FOUND", "full"),
            (ledger(REF_A, P["A"]), ledger(REF_A, P["B"])))
     # Q4: a parameter promoted AFTER the reading is NOT-READ for that source.
-    late = attempt(db.insert_parameter, FREE[6], S).get("parameter_id")
+    late = promote(FREE[6]).get("parameter_id")
     record("S12", "a parameter promoted after the reading is NOT-READ for that source "
            "(back-fill debt is visible, Q4)",
            ledger(REF_A, late) == ("NOT-READ", None), ledger(REF_A, late))
@@ -609,7 +618,7 @@ try:
     expect_refusal("V02", "revoke-declination refuses a decision reference that does not resolve",
                    "--decision-ref", revoke, TD, "fixture", "a decision somewhere", S)
     v3 = attempt(revoke, TD, "fixture: it is a quantity after all", DR, S)
-    p3 = attempt(db.insert_parameter, TD, S)
+    p3 = promote(TD)
     record("V03", "a revoked declination is history: the row stays, revoked, and "
            "add-parameter now promotes the term",
            v3.get("revoked") is True and p3.get("parameter_id")
@@ -1618,8 +1627,7 @@ try:
     emit_mod = importlib.import_module("emit_batch_sql")
     out_sql = os.path.join(TMP, "capture.sql")
     try:
-        emit_mod.emit(DB, str(REPO / "data" / "guidebook.db"), out_sql,
-                      allow_delete=["search_admissions"])
+        emit_mod.emit(DB, str(REPO / "data" / "guidebook.db"), out_sql)
         sql = open(out_sql, encoding="utf-8").read()
     except SystemExit as exc:
         sql = f"emit refused: {exc}"

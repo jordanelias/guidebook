@@ -852,7 +852,7 @@ record("N08", "update-connection refuses an unknown con_id", r and ABSENT_CON in
 res, err = ok(db.update_connection_status, NEXT_CON, "CONSUMED", session=S, dry_run=True)
 record("N09", "a CHECK status on a live connection is accepted", err is None, err)
 _n_con = [scalar(f"SELECT COUNT(*) FROM {t}") for t in ("connections", "connection_targets")]
-_rs = {how: refusal(db.delete_connection, who, session=S, dry_run=dry)
+_rs = {how: refusal(db.delete_connection, who, "T006 fixture reason", session=S, dry_run=dry)
        for how, who, dry in (("absent, dry", ABSENT_CON, True), ("absent, for real", ABSENT_CON, False),
                              ("lower case", NEXT_CON.lower(), False), ("padded", f" {NEXT_CON} ", False))}
 record("T006-01", "delete-connection refuses an id that is not a connection, for real and under --dry-run and for a case or "
@@ -867,20 +867,30 @@ with scratch() as c:                   # the copy holds NEXT_CON, written above;
                      [("parameter_id", P1), ("parameter_id", _P3)], session=S, dry_run=False) if _P3 else (None, "no third parameter")
     _tot = lambda: [c.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0] for t in ("connections", "connection_targets")]  # noqa: E731
     _before = _tot()
-    res, err = ok(db.delete_connection, NEXT_CON, session=S, dry_run=False)
+    res, err = ok(db.delete_connection, NEXT_CON, "T006 fixture reason", session=S, dry_run=False)
     left = [c.execute(f"SELECT COUNT(*) FROM {t} WHERE con_id=?", (NEXT_CON,)).fetchone()[0]
             for t in ("connections", "connection_targets")]
     kept = [c.execute(f"SELECT COUNT(*) FROM {t} WHERE con_id=?", (_other,)).fetchone()[0]
             for t in ("connections", "connection_targets")] if _other else None
-    record("T006-02", "delete-connection deletes the connection it is given and its targets, and only those: a second connection "
-           "and its targets are still there", err is None and _e2 is None and left == [0, 0] and kept == [1, 2]
-           and _tot() == [_before[0] - 1, _before[1] - 2], (err, _e2, left, kept, _before, _tot()))
+    _mark = c.execute("SELECT retired_by_session, retirement_reason, retired_at IS NOT NULL FROM connections WHERE con_id=?",
+                      (NEXT_CON,)).fetchone()
+    _live = [r["con_id"] for r in db.get_connections()]       # the reader a session lists connections through
+    record("T006-02", "delete-connection (T-050: RETIRES, keeps its name) marks the connection it is given and keeps it and its targets "
+           "as rows: a second connection is untouched and the table totals do not move",
+           err is None and _e2 is None and left == [1, 2] and kept == [1, 2] and tuple(_mark) == (S, "T006 fixture reason", 1)
+           and NEXT_CON not in _live and _other in _live and _tot() == _before, (err, _e2, left, kept, _mark, _before, _tot()))
+    record("T050-06", "a retired connection is refused a second retirement, naming the verb and nothing written, and keeps its "
+           "first reason",
+           (refusal(db.delete_connection, NEXT_CON, "another reason", session=S, dry_run=False) or "").count("already retired") == 1
+           and c.execute("SELECT retirement_reason FROM connections WHERE con_id=?", (NEXT_CON,)).fetchone()[0] == "T006 fixture reason",
+           None)
     # A connection whose target rows are gone is still a connection: the lookup is in `connections`, not in its targets.
     if _other:
         hand("DELETE FROM connection_targets WHERE con_id=?", _other)
-        _res, _e3 = ok(db.delete_connection, _other, session=S, dry_run=False)
-        record("T006-03", "a connection with no target rows is still found, and deleted",
-               _e3 is None and scalar("SELECT COUNT(*) FROM connections WHERE con_id=?", _other) == 0, _e3)
+        _res, _e3 = ok(db.delete_connection, _other, "T006 fixture reason", session=S, dry_run=False)
+        record("T006-03", "a connection with no target rows is still found, and retired",
+               _e3 is None and c.execute("SELECT COUNT(*) FROM connections WHERE con_id=? AND retired_at IS NOT NULL",
+                                         (_other,)).fetchone()[0] == 1, _e3)
     else:
         skip("T006-03", "no second connection could be built on the copy")
 
@@ -3308,6 +3318,20 @@ else:
 print("Section T010: add-parameter refuses a term whose domain holds lenses, methods or bodies of law, adapts the next action "
       "to the term's declination, and amend-term can correct a term's domain")
 _NQ = getattr(dbcore, "NON_QUANTITY_DOMAINS", None)
+
+
+def _one(sql, *p):
+    """A scalar, or None where the table does not exist (the unchanged schema: T020-01 says so, not a crash here)."""
+    try:
+        return scalar(sql, *p)
+    except sqlite3.OperationalError:
+        return None
+
+
+# T-020: a promotion names a quantity kind and an observation whose quote holds a digit; both derived, never typed.
+_KIND = _one("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id LIMIT 1")
+_OBS_NUM = _one("SELECT observation_id FROM observed_terms WHERE context_quote GLOB '*[0-9]*' ORDER BY observation_id LIMIT 1")
+_FULL = dict(quantity_kind=_KIND, quantity_kind_observation_id=_OBS_NUM)
 # The six the T-010 task names are a floor the rule may grow from, not shrink from (a pin of a judged rule, not a second home).
 _TASK_SIX = {"functional_axis", "population", "medical", "methodology", "legal", "economics"}
 if feature("T010-01", "the rule dbcore.NON_QUANTITY_DOMAINS exists, holds at least the six the task names, and every member is a "
@@ -3359,7 +3383,7 @@ if feature("T010-01", "the rule dbcore.NON_QUANTITY_DOMAINS exists, holds at lea
     if _ok_dom is None:
         skip("T010-04", "no free term in a domain a live parameter has")
     else:
-        _res, _err = ok(db.insert_parameter, _undeclined(_ok_dom)[0], S, dry_run=True)
+        _res, _err = ok(db.insert_parameter, _undeclined(_ok_dom)[0], S, dry_run=True, **_FULL)
         record("T010-04", f"a free term of a live parameter's domain ({_ok_dom}) is still promoted (dry run)", _err is None, _err)
     record("T010-05", "no live parameter sits in a refused domain",
            not {dbcore.domain_key(d) for d in _live} & set(_NQ), _live)
@@ -3397,7 +3421,7 @@ if feature("T010-01", "the rule dbcore.NON_QUANTITY_DOMAINS exists, holds at lea
                _err is None and _res["changed"] and scalar("SELECT domain FROM terms WHERE term_id=?", _mis) == _own, _err or _res)
         db.amend_term(_mis, "domain", _ok_dom, "T010 probe: a quantity filed under the wrong domain", S)
         _note = scalar("SELECT scope_note FROM terms WHERE term_id=?", _mis) or ""
-        _res, _err = ok(db.insert_parameter, _mis, S, dry_run=True)
+        _res, _err = ok(db.insert_parameter, _mis, S, dry_run=True, **_FULL)
         record("T010-10", "after the real amend, the old domain and the reason are recorded in the term's trail, and the term the "
                "refusal turned away is promoted (dry run)",
                _err is None and f"domain was: '{_own}'" in _note and "a quantity filed under the wrong domain" in _note
@@ -3410,6 +3434,82 @@ if feature("T010-01", "the rule dbcore.NON_QUANTITY_DOMAINS exists, holds at lea
                if scalar("SELECT COUNT(*) FROM terms WHERE domain=? AND term_id<>?", d, _p)}
         record("T010-11", "amend-term refuses to move a term that is already a parameter into ANY refused domain",
                bool(_rs) and all(v and "already a parameter" in v for v in _rs.values()), _rs)
+
+
+# ───────────── T-020: add-parameter requires a quantity kind and the observation that warrants it ─────────────
+print("Section A7c: add-parameter requires a quantity kind and its warrant (T-020)")
+if feature("T020-01", "base_quantity_kinds exists and db.insert_quantity_kind exists",
+           _KIND is not None and hasattr(db, "insert_quantity_kind"), "base_quantity_kinds / db.insert_quantity_kind"):
+    record("T020-01", "base_quantity_kinds exists and db.insert_quantity_kind exists", True)
+    _kinds = [r[0] for r in q("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id")]
+    _free = [t for (t,) in q("SELECT t.term_id FROM terms t WHERE t.term_id NOT IN (SELECT term_id FROM base_parameters) "
+                             "AND t.term_id NOT IN (SELECT term_id FROM parameter_declinations WHERE revoked_at IS NULL) "
+                             "ORDER BY t.term_id")
+             if not db._VALUE_BEARING_NAME.search(scalar("SELECT canonical_en FROM terms WHERE term_id=?", t))
+             and dbcore.domain_key(scalar("SELECT domain FROM terms WHERE term_id=?", t)) not in _NQ]
+    _no_digit = scalar("SELECT observation_id FROM observed_terms WHERE context_quote NOT GLOB '*[0-9]*' ORDER BY observation_id LIMIT 1")
+    _no_obs = scalar("SELECT COALESCE(MAX(observation_id), 0) + 1 FROM observed_terms")
+    if not _free or _OBS_NUM is None:
+        skip("T020-02..T020-08", "no free term, or no observation whose quote holds a digit")
+    else:
+        _t = _free[0]
+        _r = refusal(db.insert_parameter, _t, S, dry_run=True)
+        record("T020-02", "a free term with no kind is refused, naming every kind_id of the table and the verb that adds one",
+               _r and all(k in _r for k in _kinds) and "add-quantity-kind" in _r and "Nothing was written" in _r, _r)
+        _r = refusal(db.insert_parameter, _t, S, quantity_kind="zz_" + _kinds[0], dry_run=True)
+        record("T020-03", "the same term with a kind that is not in the table is refused", _r and "zz_" + _kinds[0] in _r and all(k in _r for k in _kinds), _r)
+        _r1 = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, dry_run=True)
+        _r2 = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, quantity_kind_observation_id=_no_obs, dry_run=True)
+        record("T020-04", "a kind and no observation id, or an id that is not a row of observed_terms, is refused, naming the flag",
+               _r1 and _r2 and "--quantity-kind-observation-id" in _r1 and "--quantity-kind-observation-id" in _r2 and "observe-term" in _r2, (_r1, _r2))
+        if _no_digit is None:
+            skip("T020-05", "no observation whose context_quote holds no digit")
+        else:
+            _r = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, quantity_kind_observation_id=_no_digit, dry_run=True)
+            record("T020-05", "a kind and an observation whose quote holds no digit is refused", _r and "no digit" in _r and "Nothing was written" in _r, _r)
+        with scratch() as c:           # a real write on the scratch copy
+            _res, _err = ok(db.insert_parameter, _t, S, notes="TASK-FIXTURE", **_FULL)
+            _row = c.execute("SELECT quantity_kind, quantity_kind_observation_id, created_by_session FROM base_parameters WHERE term_id=?", (_t,)).fetchone()
+            record("T020-06", "a kind and an observation whose quote holds a digit is accepted; the row carries both values and the session",
+                   _err is None and _row and tuple(_row) == (_KIND, _OBS_NUM, S) and _res["quantity_kind"] == _KIND
+                   and _res["quantity_kind_observation_id"] == _OBS_NUM, (_err, _row))
+        _nq = next((t for d in sorted(_NQ) for (t,) in q("SELECT term_id FROM terms WHERE term_id NOT IN (SELECT term_id FROM base_parameters) "
+                                                         "AND lower(trim(domain)) = ? ORDER BY term_id", d)), None)
+        if _nq is None:
+            skip("T020-07", "no unpromoted term of a refused domain")
+        else:
+            _r = refusal(db.insert_parameter, _nq, S, dry_run=True, **_FULL)
+            record("T020-07", "no refusal weakened: a term of a refused domain, given a full kind and warrant, still gets T-010's domain message",
+                   _r and "decline-parameter" in _r and "is filed under the domain" in _r, _r)
+        _heading = scalar("SELECT approval_ref FROM base_quantity_kinds ORDER BY kind_id LIMIT 1")
+        _fx = "task_fixture_kind"
+        with scratch() as c:
+            _bad = [refusal(db.insert_quantity_kind, _fx, "a fixture quantity", a, S) for a in ("", "## Nothing 2099-01-01 — no such entry")]
+            # each ill-shaped id fails one rule alone (a capital, a space, a digit), so a loosened pattern turns one probe green
+            _bad += [refusal(db.insert_quantity_kind, i, "a fixture quantity", _heading, S) for i in ("Capital", "has space", "digit1")]
+            _bad += [refusal(db.insert_quantity_kind, _fx, "a fixture quantity of 3 parts", _heading, S),
+                     refusal(db.insert_quantity_kind, _KIND, "a fixture quantity", _heading, S)]
+            _res, _err = ok(db.insert_quantity_kind, _fx, "a fixture quantity", _heading, S)
+            _res2, _err2 = ok(db.insert_parameter, _t, S, notes="TASK-FIXTURE", quantity_kind=_fx, quantity_kind_observation_id=_OBS_NUM)
+            # the refusal names the kinds the TABLE holds now: the fixture kind, which no code could have typed, is listed
+            _r_after = refusal(db.insert_parameter, _free[1] if len(_free) > 1 else _t, S, quantity_kind="zz_" + _fx, dry_run=True)
+            record("T020-08", "add by data: insert_quantity_kind refuses a missing or unresolvable approval, an ill-shaped id (each rule alone), a digit in the "
+                   "definition and an existing id; with a ledger heading it writes a kind, add-parameter then accepts it, and the refusal then lists it (no file edited)",
+                   all(_bad) and _err is None and _err2 is None and _r_after and _fx in _r_after, (_bad, _err, _err2, _r_after))
+    # T020-09: the new refusals come AFTER every earlier one, so a term an earlier refusal stops is told that reason, never "name a kind".
+    _held = scalar("SELECT term_id FROM base_parameters ORDER BY parameter_id LIMIT 1")
+    if _held is None or not _free:
+        skip("T020-09", "no live parameter, or no free term to give a value-bearing name on the scratch copy")
+    else:
+        _r_held = refusal(db.insert_parameter, _held, S, dry_run=True)
+        with scratch() as c:           # the live terms hold no unpromoted value-bearing name: build one on the copy
+            c.execute("UPDATE terms SET canonical_en = canonical_en || ' 25' WHERE term_id=?", (_free[0],))
+            c.commit()                 # insert_parameter opens its own connection to the copy
+            _r_vb = refusal(db.insert_parameter, _free[0], S, dry_run=True)
+        record("T020-09", "order: a term that is already a parameter, or whose name states a determination, gets that refusal when no kind is given, "
+               "not the kind refusal",
+               _r_held and "One parameter per term" in _r_held and "--quantity-kind" not in _r_held
+               and _r_vb and "states a determination in its own name" in _r_vb and "--quantity-kind" not in _r_vb, (_r_held, _r_vb))
 
 
 # ───────────── T-015: a language is one of the map's, whatever its letter case ─────────────
@@ -3598,6 +3698,94 @@ with scratch() as c:
         record("T061-17", "a column added to the table is amendable until someone names why it must not be (the default is derived, not listed)",
                "zz_t061_probe" in db._amendable_sve_fields(c), None)
 
+print("Section T093: a bare `ratio` unit reformats to `rise:run ratio` (OD-41 (a)); no other unit gains words")
+with scratch() as c:
+    # The history shape (a bare `ratio` cell) is written valid through the writer, then put into that shape by HAND; the
+    # verb under test then amends it. Nothing below names a stored id, count or unit spelling: the live row is chosen by
+    # query, and the family member is read from dbcore.NOTATION_FAMILIES.
+    T93 = {"r20": "Every ramp in the survey had a slope of 1:20 over its full length.",
+           "r16": "The ramp slope of 1:16 applies to the entrance ramp.",
+           "pct": "The gradient is not to exceed 5% on any run of the ramp.",
+           "r10": "A slope of 1:10 is the steepest the guidance tolerates for a short ramp.",
+           "r8":  "The shared path is graded at 1:8 over its first span.",
+           "r12": "A ramp is graded at 1:12 where the rise is small.",
+           "r14": "The side ramp is graded at 1:14 beside the stair.",
+           "r6":  "The threshold ramp is graded at 1:6 across the door.",
+           "e1":  "The kerb ramp grade is 6% at the crossing.",
+           "e2":  "The landing grade is 7% at the corner.",
+           "r4":  "The drive ramp is graded at 1:4 beside the garage.",
+           "r3":  "The loading ramp is graded at 1:3 beside the dock.",
+           "r2":  "The temporary ramp is graded at 1:2 beside the hall."}
+    FAM = next(m for fam in dbcore.NOTATION_FAMILIES.values() for m in fam if dbcore.ratio_notation(m))
+    ref93 = new_source(verified=True)
+    held_text(ref93, "\n".join(T93.values()))
+    hand_scan(c, ref93, "full")
+    P93 = P_ACTIVE[0]
+
+    def put93(key, value, unit, cell, cmp_="<="):
+        xid = db.insert_extraction(extraction(ref93, P93, claim_text=T93[key], claimed_value=value, claimed_unit=unit,
+                                              comparator=cmp_), session=S, dry_run=False, relations=[])["extraction_id"]
+        hand("UPDATE source_value_extractions SET claimed_value=?, claimed_unit=? WHERE extraction_id=?", value, cell, xid)
+        return xid
+
+    def row93(xid):
+        return c.execute("SELECT * FROM source_value_extractions WHERE extraction_id=?", (xid,)).fetchone()
+
+    def amend93(x, f, v):
+        return db.amend_extraction(x, f, v, "T093 fixture", session=S, dry_run=False)
+
+    def refused93(tid, name, x, v, needle):
+        before = row93(x)["claimed_unit"]
+        r = refusal(amend93, x, "claimed_unit", v)
+        record(tid, name, r and needle in r and row93(x)["claimed_unit"] == before, r)
+
+    # The first live bare-`ratio` row, by query, taken before any fixture: amended in place on the copy.
+    live93 = c.execute("SELECT extraction_id FROM source_value_extractions WHERE claimed_unit='ratio' "
+                       "ORDER BY extraction_id LIMIT 1").fetchone()
+    A93 = put93("r20", "1:20", FAM, "ratio")                  # a bare-`ratio` row: the figure reads under the family member
+    B93 = put93("r16", "1:16", FAM, "ratio")
+    C93 = put93("pct", "5", "%", "%")                          # a `%` row
+    D93 = put93("r10", "1:10", FAM, "ratio")
+    hand("UPDATE source_value_extractions SET claimed_value='10' WHERE extraction_id=?", D93)   # a bare number
+    E93 = put93("r8", "1:8", FAM, "ratio of widths")           # a cell that holds `ratio` but is not the family member's whole
+    F93 = put93("r12", "1:12", FAM, "rat")                     # a prefix of a word, not a word
+    G93 = put93("r14", "1:14", FAM, "ratio")
+    H93 = put93("r6", "1:6", FAM, "")                          # an empty cell
+    stored93 = dict(row93(A93))
+
+    r, err = ok(amend93, A93, "claimed_unit", FAM)
+    now = row93(A93)
+    record("T093-01", "a bare-`ratio` row is amended to the notation family's `a:b` member in place: value and quote unchanged, "
+           "the old unit in notes", err is None and now["claimed_unit"] == FAM and now["claimed_value"] == stored93["claimed_value"]
+           and now["claim_text"] == stored93["claim_text"] and f"claimed_unit SET ratio -> {FAM}" in (now["notes"] or ""), err)
+    if live93 is None:
+        skip("T093-01b", "no live bare-`ratio` row is left to amend (T-086 has amended them)")
+    else:
+        r, err = ok(amend93, live93[0], "claimed_unit", FAM)
+        record("T093-01b", "the first live bare-`ratio` row (by query) is amended on the copy", err is None
+               and row93(live93[0])["claimed_unit"] == FAM, err)
+    refused93("T093-02", "the same kind of row to `mm` is still refused with T-061's message", B93, "mm", "does not lead")
+    refused93("T093-02b", "a `%` row is not amended to the `a:b` member (the old cell is not in the new unit)", C93, FAM, "does not lead")
+    refused93("T093-02c", "a bare number (`10`) under `ratio` is not amended to the `a:b` member: the figure does not read there",
+              D93, FAM, "still not be readable")
+    refused93("T093-03", "a family member must hold the old cell: `ratio of widths` is not made `rise:run ratio`", E93, FAM,
+              "does not lead")
+    refused93("T093-03b", "a cell that is not a word of the family member (`rat`) is refused: word boundaries, not a substring",
+              F93, FAM, "does not lead")
+    refused93("T093-03c", "a unit that is not a family member (`ratio of widths`) is refused though it holds the old cell",
+              G93, "ratio of widths", "does not lead")
+    refused93("T093-03d", "an empty unit cell is not amended to the family member", H93, FAM, "does not lead")
+    # An empty cell states no unit, so no unit may be put there as a reformat: `%` is a family member and an empty pattern
+    # matches on a boundary (the first version of this branch accepted every NULL-unit row, 45 on the live copy).
+    E1, E2 = put93("e1", "6", "%", ""), put93("e2", "7", "%", None)
+    refused93("T093-04", "an empty unit cell is not amended to `%`", E1, "%", "does not lead")
+    refused93("T093-04b", "a NULL unit cell is not amended to `%`", E2, "%", "does not lead")
+    # Only the old cell that IS the member's last word, in the member's own case, is a reformat.
+    R4, R3, R2 = put93("r4", "1:4", FAM, "Ratio"), put93("r3", "1:3", FAM, "run ratio"), put93("r2", "1:2", FAM, "rise")
+    refused93("T093-05", "a different case (`Ratio`) is not the bare word: refused", R4, FAM, "does not lead")
+    refused93("T093-05b", "a cell that is two words of the member (`run ratio`) is not a bare `ratio`: refused", R3, FAM, "does not lead")
+    refused93("T093-05c", "a cell that is a first word of the member (`rise`) is refused", R2, FAM, "does not lead")
+
 print("Section T067: v_coverage_parameter_via_admission is one row per active parameter and owed pair, counted through admissions (OR-8)")
 # Nothing below names a count, id or code: the pair, the parameter and the source are chosen by query, and the oracle for the grain is
 # the base tables. Everything built is built on a scratch copy and is TASK-FIXTURE.
@@ -3667,6 +3855,20 @@ else:
                "searches_reaching_parameter and sources_admitted to one and leaves searches_naming_parameter alone; the only other rows that "
                "move are the pair's rows for the other active parameters the same source holds, and no row of any other pair moves",
                same, moved[:3])
+    with scratch() as c:        # T-050: a retired admission reaches nothing (the view that still counted one would fail nothing else)
+        before = view67(c)
+        src = seed(c)
+        _exec = c.execute("SELECT exec_id FROM search_admissions WHERE ref_id=?", (src,)).fetchone()[0]
+        _row = lambda: [r for r in view67(c) if r[:3] == (P67, L67, J67)][0]  # noqa: E731
+        _seen = (_row()[5:], c.execute("SELECT COUNT(*) FROM v_source_admission WHERE exec_id=? AND ref_id=?", (_exec, src)).fetchone()[0])
+        c.execute("UPDATE search_admissions SET retired_at='2026-01-01T00:00:00Z', retired_by_session=?, retirement_reason='TASK-FIXTURE T050' "
+                  "WHERE exec_id=? AND ref_id=?", (S, _exec, src))   # HAND: the same write unlink-admission makes, so the case reads the view alone
+        c.commit()
+        record("T050-05", "retiring an admission drops searches_reaching_parameter and sources_admitted for the pair back to what they were "
+               "before the admission, moves no other row, and takes the edge out of v_source_admission",
+               _seen == ((1, 1), 1) and view67(c) == before and _row()[5:] == (0, 0)
+               and c.execute("SELECT COUNT(*) FROM v_source_admission WHERE exec_id=? AND ref_id=?", (_exec, src)).fetchone()[0] == 0,
+               (_seen, _row()))
     with scratch() as c:
         before = view67(c)
         seed(c, deferred="TASK-FIXTURE: deliberately not searched")
@@ -4576,7 +4778,7 @@ if feature("T088-10", "the reader exists", REG88 is not None, f"scripts/audit/re
 # T088-17: the Layer 0 rule and the Layer 2 protocol say what the code does.
 _bd = re.sub(r"\s+", " ", (REPO / ".claude" / "commands" / "batch-done.md").read_text(encoding="utf-8"))
 _sk = re.sub(r"\s+", " ", (REPO / "skills" / "run-pipeline_SKILL.md").read_text(encoding="utf-8"))
-_line = 'python3 scripts/audit/refusal_register.py list --session "$(cat scratchpad/CURRENT)"'
+_line = 'python3 scripts/audit/refusal_register.py classes --session "$(cat scratchpad/CURRENT)"'
 try:
     _named, _exempt = set(NOT_ROUTED88), EXEMPT88
     _nosession = [rel for rel in ("scripts/research/emit_batch_sql.py",) if rel not in dict(writers88())]
@@ -4584,12 +4786,238 @@ except NameError:
     _named, _nosession = set(), []
 _names_ok = bool(_named) and bool(_nosession) and all(pathlib.Path(n).name in _bd and pathlib.Path(n).name in _sk for n in _named | set(_nosession)) \
     and all(v[2] in _bd and v[2] in _sk for v in EXEMPT88.values() if v[2])
-record("T088-17", "/batch-done runs `refusal_register.py list` on CURRENT, says it exits 2 / NOT RUN when CURRENT's folder is missing, says an undisposed refusal is a batch not done, "
+record("T088-17", "/batch-done runs `refusal_register.py classes` on CURRENT, says it exits 2 / NOT RUN when CURRENT's folder is missing, says an undisposed refusal is a batch not done, "
        "and names the scripts that keep nothing (derived: the ones the T088-09 sweep leaves out, and a script with no --session); the skill's resume section says what to do when a writer refuses",
        _line in _bd and "An undisposed refusal is a batch that is not done" in _bd and "NOT RUN" in _bd and "exits 2" in _bd and "--id K" in _bd
        and "When a writer refuses" in _sk and "refusal_register.py list" in _sk and "NOT RUN" in _sk and "worktree" in _sk and "usage error" in _sk and _names_ok
        and all(w in _sk and w in _bd for w in ("retried", "parked", "waived")), (_line in _bd, "When a writer refuses" in _sk, _names_ok))
 # T088-END
+
+# T089-BEGIN
+# ---------------------------------------------------------------------------------------------------------------------
+print("Section T089: the refusal register reads every session's refusals, groups them into classes and cues the stages")
+# T-089. The refusals of every committed session (`register`), and their classes with the CUE a batch is given (`classes`). The
+# fixtures are built by `record_refusal` through real writer runs (never typed JSON), in a temporary git tree that holds its own
+# `scratchpad/`; the stages, tables, checks and skill headings the cases expect are read from the state graph, the registry and
+# the skill here, never typed, so a case cannot agree with the reader by sharing a list with it.
+S89A, S89B, S89C = (f"session_2026-11-16-t089-fixture-{x}" for x in "abc")
+_SK89 = (REPO / "skills" / "run-pipeline_SKILL.md").read_text(encoding="utf-8")
+
+
+def sect89(out, title):
+    """{class: count} of the `  Nx  class` lines of the `CLASSES by <title>` section of a `classes` run."""
+    got, on = {}, False
+    for ln in out.splitlines():
+        if ln.startswith("CLASSES by "):
+            on = ln == f"CLASSES by {title}"
+        elif on and (m := re.match(r"^  (\d+)x  (.*)$", ln)):
+            got[m.group(2)] = int(m.group(1))
+    return got
+
+
+def detail89(out, key):
+    """The detail line that follows the class line `key`."""
+    ls = out.splitlines()
+    return next((ls[k + 1] for k, ln in enumerate(ls) if re.match(r"^  \d+x  ", ln) and ln.split("x  ", 1)[1] == key), "")
+
+
+@contextlib.contextmanager
+def tree89(gap):
+    """The T089 fixture, inside `root88`: session A (an add-gap refusal parked on `gap`, an add-extraction usage error
+    retried), session B (an add-gap refusal with another parameter id, undisposed; a full_text usage error, waived), both
+    committed (`git add`) in a temporary git tree, and session C (an add-gap refusal, uncommitted). Yields (tree, ids by label)."""
+    ids = {}
+    with root88(S89A, S89A) as b:
+        for st in (S89B, S89C):
+            (b / "scratchpad" / st).mkdir()
+        gapargv = ["add-gap", "--category", "SW", "--priority", "P1", "--description", "x", "--parameter"]
+        for st, label, script, argv in ((S89A, "gap_a", "scripts/db.py", [*gapargv, _SUCH88]),
+                                        (S89A, "ext_a", "scripts/db.py", ["add-extraction"]),
+                                        (S89B, "gap_b", "scripts/db.py", [*gapargv, str(int(_SUCH88) - 1)]),
+                                        (S89B, "ft_b", "scripts/research/full_text.py", []),
+                                        (S89C, "gap_c", "scripts/db.py", [*gapargv, str(int(_SUCH88) - 2)])):
+            (b / "scratchpad" / "CURRENT").write_text(st + "\n", encoding="utf-8")
+            run88(script, *argv, "--session", st)
+            ids[label] = lines88(b, st)[-1]
+        subprocess.run(["git", "-C", str(b), "init", "-q"], check=True)
+        subprocess.run(["git", "-C", str(b), "add", f"scratchpad/{S89A}", f"scratchpad/{S89B}"], check=True)
+        assert reg88("dispose", "--session", S89A, "--id", rid88(ids["gap_a"]), "--as", "parked", "--gap-id", gap)[0] == 0
+        assert reg88("dispose", "--session", S89A, "--id", rid88(ids["ext_a"]), "--as", "retried")[0] == 0
+        assert reg88("dispose", "--session", S89B, "--id", rid88(ids["ft_b"]), "--as", "waived", "--reason", "TASK-FIXTURE: not content")[0] == 0
+        yield b, ids
+
+
+with scratch() as c89:
+    _gap89 = json.loads(cli("add-gap", "--category", "SW", "--priority", "P3", "--description", "TASK-FIXTURE T089 parked gap", "--session", S).stdout)["gap_id"]
+    _db89 = os.environ["GUIDEBOOK_DB_PATH"]
+    with tree89(_gap89) as (b89, ids89):
+        reg_all = reg88("register", "--db", _db89)
+        reg_c = reg88("register", "--session", S89C, "--db", _db89)
+        cls_all = reg88("classes")
+        cls_a = reg88("classes", "--session", S89A)
+        cls_b = reg88("classes", "--session", S89B)
+        # a line nobody can read, in a session that is otherwise fully disposed
+        with open(file88(b89, S89A), "a", encoding="utf-8") as fh:
+            fh.write("{this is not json\n")
+        bad_reg, bad_cls, bad_all = reg88("register"), reg88("classes", "--session", S89A), reg88("classes")
+        _f = file88(b89, S89A)
+        _f.write_bytes(_f.read_bytes().replace(b"{this is not json\n", b""))
+        # the parked gap is closed afterwards: the disposition no longer holds, in the register and in the gate
+        hand("UPDATE gaps SET status='CLOSED-FIXED' WHERE gap_id=?", _gap89)
+        closed_reg, closed_cls = reg88("register", "--db", _db89), reg88("classes", "--session", S89A)
+        hand("UPDATE gaps SET status='OPEN' WHERE gap_id=?", _gap89)
+        notrun = {"a session with no folder": reg88("classes", "--session", "session_2026-11-16-t089-nowhere"),
+                  "register, a session with no folder": reg88("register", "--session", "session_2026-11-16-t089-nowhere")}
+    with root88(S89A, S89A):        # not a git tree: what is committed cannot be known
+        notrun["classes, not a git tree"], notrun["register, not a git tree"] = reg88("classes"), reg88("register")
+
+_n89 = len(("gap_a", "ext_a", "gap_b", "ft_b"))
+record("T089-01", "`register` lists every instance of both committed sessions (ts, verb, argv, sentence) with its disposition, and the gap's live category and status; "
+       "the uncommitted session's file is added only by --session; EXAMINED counts instances and sessions",
+       reg_all[0] == 0 and f"EXAMINED: {_n89} refusal(s) in 2 session(s)" in reg_all[1]
+       and all(ids89[k]["ts"] in reg_all[1] for k in ("gap_a", "ext_a", "gap_b", "ft_b")) and ids89["gap_c"]["ts"] not in reg_all[1]
+       and f"parked {_gap89}" in reg_all[1] and f"[gap {_gap89}: category SW, status OPEN]" in reg_all[1]
+       and "retried" in reg_all[1] and "waived (TASK-FIXTURE: not content)" in reg_all[1] and reg_all[1].count("-> UNDISPOSED") == 1
+       and " ".join(ids89["gap_a"]["argv"]) in reg_all[1] and ids89["gap_a"]["sentence"] in reg_all[1]
+       and reg_c[0] == 0 and f"EXAMINED: {_n89 + 1} refusal(s) in 3 session(s)" in reg_c[1] and ids89["gap_c"]["ts"] in reg_c[1], (reg_all, reg_c))
+
+sig89 = getattr(REG88, "signature", lambda sentence: None)       # absent before T-089: the case then fails, the file does not stop
+_sig_a, _sig_b = sig89(ids89["gap_a"]["sentence"]), sig89(ids89["gap_b"]["sentence"])
+_sigs89 = sect89(cls_all[1], "signature")
+record("T089-02", "two refusals whose sentences differ only in a number, a quoted value or an id fall in one signature class; two different sentences do not",
+       _sig_a is not None and _sig_a == _sig_b and ids89["gap_a"]["sentence"] != ids89["gap_b"]["sentence"] and _sigs89.get(_sig_a) == 2
+       and sorted(_sigs89.values()) == [1, 1, 2] and sig89(ids89["ext_a"]["sentence"]) != sig89(ids89["ft_b"]["sentence"])
+       and sig89("no 'a b' for REF-12 in session_2026-11-16-x (GAP-A-1, TERM-22) at 3.5") == sig89('no "c" for REF-345 in session_2027-01-01-y (GAP-B-9, TERM-1) at 40')
+       and sig89("it doesn't hold, isn't it") == "it doesn't hold, isn't it", (_sigs89, _sig_a, _sig_b))
+
+sys.path.insert(0, str(REPO / "workplan" / "pipeline-state-graph"))
+import build_graph as bg89  # noqa: E402  -- the state graph's own builder: what the reader must agree with
+_t89 = bg89.Tree(REPO)
+_want89 = {st: 1 for st in {_t89.stage(t) for t in _t89.verbs["add-extraction"]["writes"]}}
+_stages89 = sect89(cls_all[1], "stage")
+record("T089-03", "the stage of an add-extraction refusal is the stage the state graph gives the tables that verb writes (read from `Tree`); a verb the builder does not know "
+       "(full_text) prints `?`, never a guess",
+       "full_text" not in _t89.verbs and bool(_want89) and all(_stages89.get(st) == _want89[st] for st in _want89)
+       and _stages89.get("?") == 1 and _stages89.get(_t89.stage("gaps")) == 2, (_stages89, _want89))
+
+_reg89 = _t89.registry["checks"]
+_by_basis = {c["id"] for c in _reg89 if str(c.get("basis", "")).startswith("judgment/")}
+_tabs89 = list(_t89.verbs["add-extraction"]["writes"])
+_by_table = set()
+for _c in _reg89:
+    _py = next((p_ for p_ in (REPO / str(x) for x in _c.get("cmd", [])) if p_.suffix == ".py" and p_.is_file()), None)
+    if _py and any(re.search(rf"\b{t}\b", _py.read_text(encoding="utf-8", errors="replace")) for t in _tabs89):
+        _by_table.add(_c["id"])
+_cue89 = next((ln for ln in cls_all[1].splitlines() if ln.startswith("CUE judgment:")), "")
+_got89 = set(re.split(r",\s*", _cue89.split("re-run ", 1)[1].split(";", 1)[0])) if "re-run " in _cue89 else set()
+_head89 = re.search(r"^## (\d+\. judgment — .*)$", _SK89, re.M)
+record("T089-04", "the cue for a judgment-stage refusal names every registered check whose basis begins `judgment/` and every check whose script names a table the verb writes "
+       "(both read here from the registry and the scripts), and the skill's heading for that stage; a stage that is not one of the pipeline's has no cue",
+       bool(_by_basis) and _got89 == _by_basis | _by_table and bool(_head89) and f're-read "{_head89.group(1)}"' in _cue89
+       and not any(ln.startswith(("CUE ?", f"CUE {_t89.stage('gaps')}")) for ln in cls_all[1].splitlines()), (_cue89, _by_basis, _by_table))
+
+record("T089-05", "`classes --session` exits 1 for the session with an undisposed refusal and 0 for the fully disposed one, and prints only that session's refusals",
+       cls_b[0] == 1 and "UNDISPOSED: 1" in cls_b[1] and cls_a[0] == 0 and "UNDISPOSED: 0" in cls_a[1]
+       and "EXAMINED: 2 refusal(s) in 1 session(s)" in cls_a[1] and "EXAMINED: 2 refusal(s) in 1 session(s)" in cls_b[1]
+       and "CUE judgment:" in cls_a[1] and "CUE judgment:" not in cls_b[1] and cls_all[0] == 0 and f"EXAMINED: {_n89} refusal(s) in 2 session(s)" in cls_all[1], (cls_a, cls_b))
+
+_gl = detail89(cls_all[1], _sig_a)
+record("T089-06", "a class shows its count, sessions, first and last seen, share undisposed and what its instances were disposed as and filed under: parked with the gap's category, retried, "
+       "waived with its reason",
+       "sessions 2" in _gl and ids89["gap_a"]["ts"] in _gl and ids89["gap_b"]["ts"] in _gl and "undisposed 1/2" in _gl and "parked(SW) 1" in _gl
+       and "retried 1" in detail89(cls_all[1], sig89(ids89["ext_a"]["sentence"]))
+       and "waived (TASK-FIXTURE: not content) 1" in detail89(cls_all[1], sig89(ids89["ft_b"]["sentence"])), (_gl, cls_all[1][:900]))
+
+record("T089-07", "an unreadable line is reported by `register` and `classes`, never skipped: `classes --session` exits 1 although every refusal there is disposed",
+       bad_reg[0] == 1 and "PROBLEM" in bad_reg[1] and "unreadable" in bad_reg[1] and bad_cls[0] == 1 and "UNDISPOSED: 0" in bad_cls[1] and "PROBLEM" in bad_cls[1]
+       and bad_all[0] == 1 and "PROBLEM" in bad_all[1], (bad_reg, bad_cls))
+
+record("T089-08", "a parked gap closed afterwards puts the refusal back to UNDISPOSED in `register` (the gap's live status shown) and in the `classes --session` gate, as in `list`",
+       "UNDISPOSED (the parked disposition no longer holds" in closed_reg[1] and "status CLOSED-FIXED" in closed_reg[1]
+       and closed_cls[0] == 1 and "UNDISPOSED: 1" in closed_cls[1], (closed_reg, closed_cls))
+
+record("T089-09", "a session that is not a folder, and a tree where what is committed cannot be known, are NOT RUN (exit 2, nothing examined), not a clean `EXAMINED: 0`",
+       all(v[0] == 2 and v[1].startswith("NOT RUN:") and "EXAMINED" not in v[1].replace("NOT EXAMINED", "") for v in notrun.values()), notrun)
+
+_bd89 = (REPO / ".claude" / "commands" / "batch-done.md").read_text(encoding="utf-8")
+_fence89 = re.search(r"```\n(.*?)```", _bd89, re.S).group(1)
+_flat89 = re.sub(r"\s+", " ", _bd89)
+record("T089-10", "/batch-done's gate block runs `refusal_register.py classes` on CURRENT (no longer `list` there), and says to run each CUE line's checks once and re-read its skill section "
+       "before calling the batch done and to say in the pull request what each showed",
+       'python3 scripts/audit/refusal_register.py classes --session "$(cat scratchpad/CURRENT)"' in _fence89 and "refusal_register.py list" not in _fence89
+       and "For each `CUE` line" in _flat89 and "run the named checks once and re-read the named skill section before calling the batch done" in _flat89
+       and "say in the pull request what each showed" in _flat89 and "An undisposed refusal is a batch that is not done" in _flat89,
+       (_fence89,))
+# T089-11..15: the repairs of the adversarial pass. Each fixture is a temporary git tree whose refusals are kept by `record_refusal`.
+def safe89(*argv):
+    """`reg88`, but an exception the reader let out is a result (exit -1), not the end of this file."""
+    try:
+        return reg88(*argv)
+    except Exception as exc:   # noqa: BLE001
+        return -1, "", f"{type(exc).__name__}: {exc}"
+
+
+def git89(b):
+    subprocess.run(["git", "-C", str(b), "init", "-q"], check=True)
+    subprocess.run(["git", "-C", str(b), "add", "scratchpad"], check=True)
+
+
+with root88(S89A, S89A) as b89:
+    refuse88(["add-gap", "--session", S89A], "a refusal; Nothing was written.")
+    git89(b89)
+    nodb = b89 / "no-such-database.db"
+    db_reg = safe89("register", "--db", str(nodb))
+    db_ok = safe89("register", "--db", os.environ["GUIDEBOOK_DB_PATH"])
+record("T089-11", "`register --db <a path that is not a file>` is NOT RUN (exit 2, no EXAMINED line, the path named) and never falls back to the default database; an existing one still reads",
+       db_reg[0] == 2 and db_reg[1].startswith("NOT RUN:") and "no-such-database.db" in db_reg[1] and "EXAMINED" not in db_reg[1].replace("NOT EXAMINED", "")
+       and db_ok[0] == 0 and "EXAMINED: 1 refusal(s) in 1 session(s)" in db_ok[1], (db_reg, db_ok))
+
+with root88(S89A, S89A) as b89:
+    refuse88(["add-gap", "--session", S89A], "a refusal; Nothing was written.")
+    _good = lines88(b89, S89A)[0]
+    _mut = [{"sentence": 5}, {"argv": "add-gap"}, {"db": 7}, {"refusal_id": ["x"]}, {"verb": {"a": 1}}]
+    with open(file88(b89, S89A), "a", encoding="utf-8") as fh:
+        for k, m in enumerate(_mut):
+            fh.write(json.dumps({**_good, "refusal_id": f"{k:032d}", **m}) + "\n")
+        fh.write(json.dumps({"kind": "disposition", "refusal_id": _good["refusal_id"], "as": "waived", "reason": 12345, "ts": "x"}) + "\n")
+    git89(b89)
+    nt = {"list": safe89("list", "--session", S89A), "register": safe89("register"), "classes": safe89("classes", "--session", S89A)}
+record("T089-12", "a line with a field that is not text (sentence, argv, db, refusal_id, verb, a disposition's reason) is a PROBLEM line in `list`, `register` and `classes` (exit 1, one per bad line, "
+       "not examined as a refusal), never a TypeError",
+       all(v[0] == 1 and v[1].count("PROBLEM") == len(_mut) + 1 and "is not text" in v[1] and "EXAMINED: 1 refusal(s)" in v[1] for v in nt.values()), nt)
+
+with root88(S89A, S89A) as b89:
+    _long = "x " * 200
+    for tail in ("alpha", "beta"):
+        refuse88(["add-gap", "--session", S89A], f"{_long}{tail}")
+    git89(b89)
+    cut = safe89("classes", "--session", S89A)
+_sigl = [ln for ln in cut[1].split("CLASSES by verb")[0].splitlines() if re.match(r"^  \d+x  ", ln)]
+_digests = {hashlib.sha256(sig89(f"{_long}{t}").encode("utf-8")).hexdigest()[:8] for t in ("alpha", "beta")}
+record("T089-13", "two classes whose keys are cut for display differ in what is printed: a cut key ends with a digest of the full key",
+       cut[0] == 1 and len(_sigl) == 2 and len(set(_sigl)) == 2 and all(any(ln.endswith(f"[{d}]") for ln in _sigl) for d in _digests), (cut[0], _sigl))
+
+_lists = [c for c in bg89.Tree(REPO).registry["checks"] if isinstance(c.get("basis"), list) and c["basis"]]
+if not _lists:
+    skip("T089-14", "the registry holds no check with a list-valued basis")
+else:
+    _lb = _lists[0]
+    _stage14 = _lb["basis"][-1].split("/")[0]
+    _verb14 = next((v for v in sorted(_t89.verbs) if any(_t89.stage(t) == _stage14 for t in _t89.verbs[v]["writes"])), None)
+    with root88(S89A, S89A) as b89:
+        if _verb14:
+            refuse88([_verb14, "--session", S89A], "a refusal; Nothing was written.", script="scripts/db.py")
+        cue14 = safe89("classes", "--session", S89A)
+    _line14 = next((ln for ln in cue14[1].splitlines() if ln.startswith(f"CUE {_stage14}:")), "")
+    record("T089-14", "the cue reads a list-valued `basis`: a check is cued for a stage if any of its basis entries begins with it (the check, its last entry's stage and a verb writing a table of that stage "
+           "are all read from the registry and the state graph)",
+           bool(_verb14) and _lb["id"] in set(re.split(r",\s*", _line14.split("re-run ", 1)[-1].split(";", 1)[0])), (_lb["id"], _stage14, _verb14, _line14[:300]))
+
+_bd15 = re.sub(r"\s+", " ", (REPO / ".claude" / "commands" / "batch-done.md").read_text(encoding="utf-8"))
+_gate15 = _bd15.split("The fourth line", 1)[-1].split("Each is kept in", 1)[0]
+record("T089-15", "/batch-done says a `PROBLEM` line and a `REFUSING` exit are red too, not only an undisposed refusal",
+       "`PROBLEM`" in _gate15 and "`REFUSING`" in _gate15 and "red too" in _gate15 and "not only an undisposed refusal" in _gate15, _gate15[:400])
+# T089-END
 
 
 finish()

@@ -994,7 +994,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # NAMES-EXISTING counts as well as NAMES-NEW: a phrase naming a term we already hold is
     # still a concept the source states a figure for. Every named term can be disposed of by
     # one call, add-parameter or decline-parameter, and neither refuses for want of anything
-    # this batch must first do, so the rule does not hold red a batch that did its judging.
+    # this batch cannot supply (the exceptions follow), so the rule does not hold red a batch that did its judging.
     # ONE EXCEPTION, stated rather than discovered: add-parameter refuses a term whose
     # canonical_en carries a value (db.py _VALUE_BEARING) and canonical_en has no amend
     # path, so such a term could be disposed of only by a declination that would be untrue.
@@ -1005,6 +1005,8 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # disposed of by decline-parameter; a quantity filed under the wrong domain by amend-term --field
     # domain. A body of law or a cost term is neither: OD-53 lets a batch decline only elements, lens
     # terms and methods, never a quantity, so for those the term stays undisposed and a GAP is filed.
+    # A THIRD, since T-020: add-parameter also asks for a quantity kind (a row of base_quantity_kinds) and the
+    # observation that warrants it, so the disposal is one call only once the batch has judged the kind.
     # THE PREDICATE IS WIDER THAN THE RULE'S TITLE. Nothing here can tell whether a source
     # states a figure for a named concept, so every named term must be disposed of, figure
     # or none. A disposition is per term and corpus-wide, so that costs one call per term
@@ -1038,7 +1040,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
         fail("R16",
              "%d of %d term(s) named by adjudications of %s observations hold "
              "neither a parameter nor a declination: %s. A concept a source states a figure "
-             "for is filed against a parameter (db.py add-parameter --term-id T) or, if it is "
+             "for is filed against a parameter (db.py add-parameter --term-id T --quantity-kind K --quantity-kind-observation-id N) or, if it is "
              "not a quantity under determination (an element, a lens term, a method), "
              "declined with its reason (db.py decline-parameter --term-id T --reason ...)" % (
                  len(undisposed), n_named, whose,
@@ -1140,11 +1142,11 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # `log-search --origin lead-index ... --admitted-ref-id R`; for an old row,
     # `link-admission`. Corpus rows owed it when this landed (derive:
     # SELECT ref_id FROM evidence_sources e WHERE NOT EXISTS (SELECT 1 FROM
-    # search_admissions a WHERE a.ref_id = e.ref_id)); --all counts them against the
+    # search_admissions a WHERE a.ref_id = e.ref_id AND a.retired_at IS NULL)); --all counts them against the
     # baseline, which ratchets down only.
     orphans = [r[0] for r in _rows(
         cx, "SELECT e.ref_id FROM evidence_sources e WHERE NOT EXISTS (SELECT 1 FROM "
-            "search_admissions a WHERE a.ref_id = e.ref_id)" + escope
+            "search_admissions a WHERE a.ref_id = e.ref_id AND a.retired_at IS NULL)" + escope
             + " ORDER BY e.ref_id", sargs)]
     if orphans:
         fail("R17",

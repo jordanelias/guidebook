@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-11-16 22:25 UTC from git HEAD e045739c (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-11-17 03:00 UTC from git HEAD 7ef011d1 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
- "user_version": 142,
+ "user_version": 145,
  "stages": [
   "base",
   "research",
@@ -165,7 +165,25 @@
     "updated_by_session",
     "direction_rationale",
     "accessibility_direction",
-    "direction_ref_id"
+    "direction_ref_id",
+    "quantity_kind",
+    "quantity_kind_observation_id"
+   ]
+  },
+  "base_quantity_kinds": {
+   "stage": "base",
+   "rows": 6,
+   "writers": [
+    "add-quantity-kind"
+   ],
+   "cols": [
+    "kind_id",
+    "definition",
+    "approval_ref",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
    ]
   },
   "base_taxonomy_identity": {
@@ -286,8 +304,7 @@
    "stage": "synthesis",
    "rows": 0,
    "writers": [
-    "add-connection",
-    "delete-connection"
+    "add-connection"
    ],
    "cols": [
     "target_id",
@@ -319,7 +336,10 @@
     "created_at",
     "created_by_session",
     "updated_at",
-    "updated_by_session"
+    "updated_by_session",
+    "retired_at",
+    "retired_by_session",
+    "retirement_reason"
    ]
   },
   "convergence_assessment": {
@@ -943,7 +963,10 @@
     "exec_id",
     "ref_id",
     "created_at",
-    "created_by_session"
+    "created_by_session",
+    "retired_at",
+    "retired_by_session",
+    "retirement_reason"
    ]
   },
   "search_candidates": {
@@ -1379,6 +1402,38 @@
     "catalogue_approval_ref"
    ]
   },
+  "translations": {
+   "stage": "cross-stage",
+   "rows": 0,
+   "writers": [
+    "request-translation",
+    "record-translation",
+    "review-translation"
+   ],
+   "cols": [
+    "translation_id",
+    "source_table",
+    "source_column",
+    "source_row_key",
+    "source_sha256",
+    "target_language",
+    "translated_text",
+    "status",
+    "translator_kind",
+    "translator_name",
+    "requested_at_stage",
+    "due_stage",
+    "reviewed_by_kind",
+    "reviewed_by_name",
+    "reviewed_at",
+    "review_reason",
+    "superseded_by_translation_id",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
   "weighting_profile": {
    "stage": "render",
    "rows": 5,
@@ -1414,6 +1469,18 @@
    "child": "base_jurisdictions",
    "col": "parent_code",
    "parent": "base_jurisdictions",
+   "notnull": false
+  },
+  {
+   "child": "base_parameters",
+   "col": "quantity_kind_observation_id",
+   "parent": "observed_terms",
+   "notnull": false
+  },
+  {
+   "child": "base_parameters",
+   "col": "quantity_kind",
+   "parent": "base_quantity_kinds",
    "notnull": false
   },
   {
@@ -2009,6 +2076,12 @@
    "col": "term_id",
    "parent": "terms",
    "notnull": true
+  },
+  {
+   "child": "translations",
+   "col": "superseded_by_translation_id",
+   "parent": "translations",
+   "notnull": false
   }
  ],
  "unwritable": [
@@ -2018,12 +2091,10 @@
    "parent": "connections",
    "notnull": true,
    "verbs_child": [
-    "add-connection",
-    "delete-connection"
+    "add-connection"
    ],
    "parent_written_by_same_verb": [
-    "add-connection",
-    "delete-connection"
+    "add-connection"
    ]
   }
  ],
@@ -2353,6 +2424,16 @@
    ],
    "crosses": true,
    "rows": 88
+  },
+  "v_translations_current": {
+   "reads": [
+    "translations"
+   ],
+   "stages": [
+    "cross-stage"
+   ],
+   "crosses": false,
+   "rows": 0
   },
   "v_unregistered_roots": {
    "reads": [
@@ -3113,6 +3194,28 @@
     "references/co2-verified-sources.json",
     "_archived/data/corpus-pre-reset-2026-08-06.db"
    ]
+  },
+  "translations": {
+   "status": [
+    "requested",
+    "translated",
+    "reviewed",
+    "rejected"
+   ],
+   "translator_kind": [
+    "model",
+    "tool",
+    "person"
+   ],
+   "reviewed_by_kind": [
+    "model",
+    "tool",
+    "person"
+   ],
+   "NOT": [
+    "reviewed",
+    "rejected"
+   ]
   }
  },
  "verbs": {
@@ -3352,7 +3455,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 3
+   "refusals": 4
   },
   "unlink-admission": {
    "functions": [
@@ -3361,13 +3464,13 @@
    ],
    "writes": {
     "search_admissions": [
-     "DELETE"
+     "UPDATE"
     ],
     "search_executions": [
      "UPDATE"
     ]
    },
-   "refusals": 2
+   "refusals": 3
   },
   "amend-population-match": {
    "functions": [
@@ -3503,7 +3606,19 @@
      "INSERT"
     ]
    },
-   "refusals": 6
+   "refusals": 9
+  },
+  "add-quantity-kind": {
+   "functions": [
+    "_emit",
+    "insert_quantity_kind"
+   ],
+   "writes": {
+    "base_quantity_kinds": [
+     "INSERT"
+    ]
+   },
+   "refusals": 4
   },
   "decline-parameter": {
    "functions": [
@@ -3995,7 +4110,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 1
+   "refusals": 2
   },
   "unmined": {
    "functions": [
@@ -4090,14 +4205,11 @@
     "_emit"
    ],
    "writes": {
-    "connection_targets": [
-     "DELETE"
-    ],
     "connections": [
-     "DELETE"
+     "UPDATE"
     ]
    },
-   "refusals": 1
+   "refusals": 2
   },
   "add-supersession-check": {
    "functions": [
@@ -4144,6 +4256,51 @@
    ],
    "writes": {},
    "refusals": 0
+  },
+  "request-translation": {
+   "functions": [
+    "_emit",
+    "request_translation"
+   ],
+   "writes": {
+    "translations": [
+     "INSERT"
+    ]
+   },
+   "refusals": 0
+  },
+  "record-translation": {
+   "functions": [
+    "_emit",
+    "record_translation"
+   ],
+   "writes": {
+    "translations": [
+     "INSERT",
+     "UPDATE"
+    ]
+   },
+   "refusals": 11
+  },
+  "review-translation": {
+   "functions": [
+    "_emit",
+    "review_translation"
+   ],
+   "writes": {
+    "translations": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 7
+  },
+  "translations": {
+   "functions": [
+    "_emit",
+    "translations_due"
+   ],
+   "writes": {},
+   "refusals": 1
   }
  },
  "probes": {
@@ -4620,8 +4777,9 @@
     "CLM-029"
    ],
    "evidence": {
-    "count": 6,
+    "count": 7,
     "with_live_rows": [
+     "base_parameters.quantity_kind_observation_id -> observed_terms",
      "base_parameters.direction_ref_id -> evidence_sources",
      "search_admissions.ref_id -> evidence_sources",
      "search_candidates.resolved_ref_id -> evidence_sources",
@@ -4630,6 +4788,12 @@
      "term_aliases.observation_id -> observed_terms"
     ],
     "all": [
+     {
+      "fk": "base_parameters.quantity_kind_observation_id -> observed_terms",
+      "from_stage": "base",
+      "to_stage": "evidence",
+      "child_rows": 10
+     },
      {
       "fk": "base_parameters.direction_ref_id -> evidence_sources",
       "from_stage": "base",
@@ -5051,13 +5215,13 @@
   "status corrections owed (each atom's status re-read)": 12,
   "conflicts (atoms, class, probe exist)": 31,
   "machine transitions": 43,
-  "transition evidence needles re-read": 76,
+  "transition evidence needles re-read": 78,
   "state vocabularies compared with a column's own CHECK": 11,
   "abstract machines (no single column holder)": 5,
   "capability predicates": 27,
   "probes run": 32,
   "probes linted for a reachable PASS": 32,
-  "tables placed in a stage": 57
+  "tables placed in a stage": 59
  },
  "atoms_by_status": {
   "ACTIVE": 2211,

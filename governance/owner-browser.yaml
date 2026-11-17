@@ -89,6 +89,7 @@ glossary:
   term_adjudications: "The decision about an observed phrase: it names an existing term, names a new one, is not ours, or is deferred, with the reason."
   term_aliases: "Alternative names for each term, by language and jurisdiction, used when searching."
   terms: "The project's vocabulary: each concept's canonical English name and definition."
+  translations: "A translation of one cell of another table (a quotation, a term or a title), pointing at the cell it translates, with who translated it, who reviewed it and whether it was accepted."
   weighting_profile: "How evidence tiers are weighted and presented for each audience and use."
 
 words:

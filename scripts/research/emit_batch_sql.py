@@ -19,9 +19,10 @@ scratch is REFUSED rather than rendered as a DELETE: a research batch adds
 evidence, and a missing row means the scratch drifted from the canonical base
 (usually a stale copy), which is a mistake to surface, not to replay.
 
-ONE NARROW EXCEPTION, opt-in (2026-09-26). Some db.py writers delete on purpose --
-`unlink-admission` removes a wrong search_admissions edge -- and an additive-only
-capture made that sanctioned write impossible to ship. `--allow-delete TABLE` renders
+ONE NARROW EXCEPTION, opt-in (2026-09-26). Some db.py writers delete on purpose, and an
+additive-only capture made such a write impossible to ship (`unlink-admission` was the
+first; since T-050 it retires the edge in place and deletes nothing, so it is captured as
+an UPDATE and `--allow-delete search_admissions` refuses). `--allow-delete TABLE` renders
 the missing rows of TABLE as DELETEs, and only when a writer in scripts/ actually
 deletes from TABLE (dbcore.deletable_tables, derived from the writers the way the
 capture set is). Every other missing row is still refused, so a stale copy is still
@@ -220,7 +221,7 @@ def emit(scratch_path, canonical_path, out_path, allow_delete=(), replay_path=No
         sys.exit(f"ERROR: {len(missing)} row(s) exist in the canonical DB but not in the "
                  "scratch. The batch path is additive — this means the scratch was copied "
                  "from a different base, or rows were deleted. Refusing to emit. If a "
-                 "sanctioned writer deleted them on purpose (unlink-admission), name the "
+                 "sanctioned writer deleted them on purpose, name the "
                  "table with --allow-delete.")
 
     # Deletions first, children before parents (the reverse of the replay order), so a
@@ -444,8 +445,8 @@ def main():
     p.add_argument("--out", default="-", help="Write SQL here ('-' for stdout)")
     p.add_argument("--allow-delete", action="append", default=[], metavar="TABLE",
                    help="Render rows missing from the scratch in TABLE as DELETEs. Only for a "
-                        "table a sanctioned writer deletes from (e.g. search_admissions, "
-                        "unlink-admission); repeatable. Everything else stays additive.")
+                        "table a sanctioned writer deletes from (dbcore.deletable_tables); "
+                        "repeatable. Everything else stays additive.")
     p.add_argument("--selftest", action="store_true", help="Run the round-trip tests and exit")
     args = p.parse_args()
     if args.selftest:
