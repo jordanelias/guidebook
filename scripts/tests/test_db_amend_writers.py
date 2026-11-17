@@ -290,6 +290,11 @@ try:
            msg and "already retired" in msg
            and q("SELECT retirement_reason FROM search_admissions WHERE exec_id=? AND ref_id=?", E1, REF)
            == [("fixture: the edge was wrong",)], f"got {msg!r}")
+    db.resolve_candidate(candidate(E1, "c1b"), "ADMITTED", "fixture re-description", S, admitted_ref_id=REF2)
+    db.link_admission(E1, REF2, "fixture: a different source", S)
+    record("T050-10", "link-admission counts LIVE edges: after one edge of the search was retired a new one gives 1, not 2",
+           exec_row(E1)[0] == 1 and q("SELECT COUNT(*) FROM search_admissions WHERE exec_id=? AND retired_at IS NULL", E1)[0][0] == 1,
+           f"results_admitted={exec_row(E1)[0]}")
     try:
         w("UPDATE search_admissions SET retired_at='2026-01-01T00:00:00Z' WHERE exec_id=? AND ref_id=?", E2, REF)
         half = None
@@ -644,6 +649,7 @@ try:
                f"rc={r.returncode} {r.stderr[-300:]!r}")
         # T-050 (OD-29): delete-connection retires the connection in place, through the CLI's own dispatch.
         n_con, n_tgt = counts("connections", "connection_targets")
+        held_before = minted in db.cell_status(pid)["stages"]["synthesis"]["held"]["connections"]
         r_noreason = run_cli("delete-connection", "--con-id", str(minted), "--session", S)
         r = run_cli("delete-connection", "--con-id", str(minted), "--reason", "fixture: filed in error", "--session", S)
         record("T050-03", "delete-connection --reason RETIRES the connection: the verb keeps its name, the connection and its "
@@ -655,10 +661,27 @@ try:
                and minted not in {c["con_id"] for c in json.loads(run_cli("connections").stdout)},
                f"rc={r_noreason.returncode},{r.returncode} {r.stderr[-300:]!r}")
         r2 = run_cli("delete-connection", "--con-id", str(minted), "--reason", "again", "--session", S)
+        record("T050-07", "cell-status lists a live connection of the parameter and drops it once retired",
+               held_before and minted not in db.cell_status(pid)["stages"]["synthesis"]["held"]["connections"], held_before)
         record("T050-04", "a second delete-connection of a retired connection refuses, names the verb and keeps the first reason",
                r2.returncode == 1 and "already retired" in r2.stderr
                and q("SELECT retirement_reason FROM connections WHERE con_id=?", minted) == [("fixture: filed in error",)],
                f"rc={r2.returncode} {r2.stderr[-300:]!r}")
+        # The same relationship, recorded again after it was withdrawn: the retired row does not block it. Its status
+        # may not change afterwards. The status asked for is derived: a value the column's own CHECK holds and the row lacks.
+        again = run_cli("add-connection", "--confidence", "MODERATE", "--connection-type", "CROSS-PARAMETER",
+                        "--filed-in", a_slug, "--description", "fixture", "--source-skill", "fixture",
+                        "--parameter", str(pid), "--parameter", str(pid2), "--methodology", "fixture method", "--session", S)
+        record("T050-08", "a connection retired in place does not block recording the same relationship again (the duplicate "
+               "check reads live connections only)", again.returncode == 0, f"rc={again.returncode} {again.stderr[-300:]!r}")
+        other = next(v for v in sorted(dbcore.check_values(sqlite3.connect(DB), "connections", "status"))
+                     if v != q("SELECT status FROM connections WHERE con_id=?", minted)[0][0])
+        r3 = run_cli("update-connection", "--con-id", str(minted), "--status", other, "--session", S)
+        record("T050-09", "update-connection refuses a retired connection, names the way to record it again and changes nothing",
+               r3.returncode == 1 and "retired" in r3.stderr and "add-connection" in r3.stderr
+               and q("SELECT status FROM connections WHERE con_id=?", minted)[0][0] != other, f"rc={r3.returncode} {r3.stderr[-300:]!r}")
+        if again.returncode == 0:           # leave the table as the later cases expect it
+            run_cli("delete-connection", "--con-id", json.loads(again.stdout)["con_id"], "--reason", "fixture", "--session", S)
         r = run_cli("add-connection", "--con-id", "CON-9991", "--confidence", "MODERATE",
                     "--connection-type", "CROSS-PARAMETER", "--filed-in", a_slug,
                     "--description", "fixture", "--source-skill", "fixture", "--parameter", "999999",

@@ -246,8 +246,8 @@ def insert_connection(data: dict, targets: list[tuple[str, object]],
         # THE SKILL SAYS "skip duplicates"; the writer holds it: the same type over the same
         # target set is one relationship, already recorded.
         want = sorted((k, str(v)) for k, v in targets)
-        for (cid,) in conn.execute("SELECT con_id FROM connections WHERE connection_type IS ?",
-                                   (ctype,)):
+        for (cid,) in conn.execute("SELECT con_id FROM connections WHERE connection_type IS ? AND retired_at IS NULL",
+                                   (ctype,)):   # a retired connection is withdrawn history: it does not block a new one
             got = sorted((k, str(r[0])) for k in _CONNECTION_TARGET_KINDS for r in conn.execute(
                 f"SELECT {k} FROM connection_targets WHERE con_id=? AND {k} IS NOT NULL", (cid,)))
             if got == want:
@@ -273,7 +273,12 @@ def update_connection_status(con_id: str, status: str,
     with connect(dry_run) as conn:
         if not dbcore.exists(conn, "connections", "con_id", con_id):
             raise Refusal(f"update-connection: {con_id} is not a connection. Nothing was written. "
-                          f"`db.py connections` lists the ids; `db.py add-connection` writes a new one.")
+                          f"`db.py connections` lists the live ids (a retired connection stays a row and is not listed); "
+                          f"`db.py add-connection` writes a new one.")
+        if conn.execute("SELECT retired_at FROM connections WHERE con_id=?", [con_id]).fetchone()[0]:
+            raise Refusal(f"update-connection: {con_id} is retired: a retired connection is the record of a claim that "
+                          f"was withdrawn and its status is not changed afterwards. To record the relationship again, "
+                          f"add a new connection (db.py add-connection). Nothing was written.")
         dbcore.check_declared(conn, "connections", "status", status, "update-connection --status")
         conn.execute(
             "UPDATE connections SET status=?, updated_at=?, updated_by_session=? WHERE con_id=?",
@@ -1541,7 +1546,7 @@ def delete_connection(con_id: str, reason: str, session: str, dry_run: bool = Fa
     with connect(dry_run) as conn:
         if not dbcore.exists(conn, "connections", "con_id", con_id):
             raise Refusal(f"delete-connection: {con_id!r} is not a connection. Nothing was written. "
-                          f"`db.py connections` lists the ids that exist.")
+                          f"`db.py connections` lists the live ids (a retired connection stays a row and is not listed).")
         was = conn.execute("SELECT retired_at FROM connections WHERE con_id=?", [con_id]).fetchone()[0]
         if was is not None:
             raise Refusal(f"delete-connection: {con_id} is already retired (since {was}); its first reason stands. "
