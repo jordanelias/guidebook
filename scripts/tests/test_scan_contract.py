@@ -1627,8 +1627,7 @@ try:
     emit_mod = importlib.import_module("emit_batch_sql")
     out_sql = os.path.join(TMP, "capture.sql")
     try:
-        emit_mod.emit(DB, str(REPO / "data" / "guidebook.db"), out_sql,
-                      allow_delete=["search_admissions"])
+        emit_mod.emit(DB, str(REPO / "data" / "guidebook.db"), out_sql)
         sql = open(out_sql, encoding="utf-8").read()
     except SystemExit as exc:
         sql = f"emit refused: {exc}"

@@ -307,11 +307,11 @@ def run_checks(db_path):
     else:
         _prov = conn.execute("""
             SELECT COUNT(DISTINCT c.candidate_id) FROM search_candidates c
-            JOIN search_admissions a ON a.ref_id = c.resolved_ref_id
+            JOIN search_admissions a ON a.ref_id = c.resolved_ref_id AND a.retired_at IS NULL
             WHERE c.exec_id IS NOT NULL
               AND NOT EXISTS (SELECT 1 FROM search_admissions a2
                               WHERE a2.ref_id = c.resolved_ref_id
-                                AND a2.exec_id = c.exec_id)
+                                AND a2.exec_id = c.exec_id AND a2.retired_at IS NULL)
         """).fetchone()[0]
         record("S01", "a candidate and its admission AGREE on which search "
               "(agreement, not truth -- RC1, DR-2026-09-26 2.2f: this compares two "
@@ -323,7 +323,7 @@ def run_checks(db_path):
                f"the search that really surfaced them" if _prov else "",
                subject=subj("SELECT COUNT(DISTINCT c.candidate_id) "
                             "FROM search_candidates c "
-                            "JOIN search_admissions a ON a.ref_id = c.resolved_ref_id "
+                            "JOIN search_admissions a ON a.ref_id = c.resolved_ref_id AND a.retired_at IS NULL "
                             "WHERE c.exec_id IS NOT NULL"))
 
     # evidence_sources.tier is a bare INTEGER: no CHECK constraint, and

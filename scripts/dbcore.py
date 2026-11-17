@@ -1820,9 +1820,11 @@ def deletable_tables(conn) -> set:
 
     ADDED 2026-09-26. The capture path (scripts/research/emit_batch_sql.py) was additive
     only, and rightly refuses by default to turn a row missing from a scratch into a
-    DELETE: that is usually a stale copy. But db.py has writers that delete on purpose --
-    unlink-admission removes a wrong search_admissions edge -- and an additive-only
-    capture made that sanctioned write unshippable. emit_batch_sql renders a DELETE only
+    DELETE: that is usually a stale copy. But db.py has writers that delete on purpose,
+    and an additive-only capture made such a write unshippable. (unlink-admission was the
+    first; since T-050 it retires the edge in place and deletes nothing, so
+    search_admissions is no longer in this set and --allow-delete refuses it by itself.)
+    emit_batch_sql renders a DELETE only
     for a table in this set AND named by the operator (--allow-delete), so the default
     stays additive and nothing here is a list maintained beside the writers.
     """
@@ -1959,8 +1961,9 @@ def _selftest() -> int:
         check("every NOT_CAPTURED entry states a reason",
               all(isinstance(v, str) and v.strip() for v in NOT_CAPTURED.values()))
         _del = deletable_tables(_st_con)
-        check("deletable_tables() sees unlink-admission's table, and is a subset of the "
-              "capture set", "search_admissions" in _del and _del <= set(_tbls),
+        check("deletable_tables() is a subset of the capture set, and no longer holds search_admissions "
+              "(unlink-admission retires in place, T-050: a table nothing deletes from is refused by --allow-delete)",
+              "search_admissions" not in _del and _del <= set(_tbls),
               "got %s" % sorted(_del))
     finally:
         _st_con.close()

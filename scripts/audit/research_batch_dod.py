@@ -1142,11 +1142,11 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # `log-search --origin lead-index ... --admitted-ref-id R`; for an old row,
     # `link-admission`. Corpus rows owed it when this landed (derive:
     # SELECT ref_id FROM evidence_sources e WHERE NOT EXISTS (SELECT 1 FROM
-    # search_admissions a WHERE a.ref_id = e.ref_id)); --all counts them against the
+    # search_admissions a WHERE a.ref_id = e.ref_id AND a.retired_at IS NULL)); --all counts them against the
     # baseline, which ratchets down only.
     orphans = [r[0] for r in _rows(
         cx, "SELECT e.ref_id FROM evidence_sources e WHERE NOT EXISTS (SELECT 1 FROM "
-            "search_admissions a WHERE a.ref_id = e.ref_id)" + escope
+            "search_admissions a WHERE a.ref_id = e.ref_id AND a.retired_at IS NULL)" + escope
             + " ORDER BY e.ref_id", sargs)]
     if orphans:
         fail("R17",

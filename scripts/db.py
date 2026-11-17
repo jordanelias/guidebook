@@ -1113,7 +1113,7 @@ def get_connections(status: str = None, confidence: str = None,
         q = """
             SELECT confidence, COUNT(*) AS cnt
             FROM connections
-            WHERE 1=1
+            WHERE retired_at IS NULL
         """
         params = []
         if status:
@@ -1133,7 +1133,7 @@ def get_connections(status: str = None, confidence: str = None,
                                           'methodology ' || ct.methodology), ', ') AS targets
         FROM connections c
         LEFT JOIN connection_targets ct USING (con_id)
-        WHERE 1=1
+        WHERE c.retired_at IS NULL
     """
     params = []
     if status:
@@ -1280,7 +1280,8 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
                                                     f"IS NULL AND extraction_id IN ({qs}) ORDER BY follow_up_id", *extractions)}}
         # ---- synthesis: what weighs these figures together, and the gaps still open on the parameter -------
         synthesis = {"held": {"conflicts": ids("SELECT conflict_id FROM conflicts WHERE parameter_id = ? ORDER BY conflict_id", parameter_id),
-                              "connections": ids("SELECT DISTINCT con_id FROM connection_targets WHERE parameter_id = ? ORDER BY con_id", parameter_id)},
+                              "connections": ids("SELECT DISTINCT ct.con_id FROM connection_targets ct JOIN connections c USING (con_id) "
+                                              "WHERE ct.parameter_id = ? AND c.retired_at IS NULL ORDER BY ct.con_id", parameter_id)},
                      "examined_empty": [], "never_examined": [],
                      "owed": {"open_gaps": [r["gap_id"] for r in conn.execute(
                          "SELECT gap_id, identity_code, icf_code, needs_code, jurisdiction, language FROM gaps "
@@ -1522,19 +1523,33 @@ def get_conflicts(domain: str = None,
     return rows
 
 
-def delete_connection(con_id: str, session: str, dry_run: bool = False):
-    """Hard-delete a connection and its targets. Use sparingly — for data corrections only.
+def delete_connection(con_id: str, reason: str, session: str, dry_run: bool = False):
+    """Retire a connection IN PLACE (T-050, OD-29): the verb keeps its name, nothing is deleted.
 
-    REFUSES an id that is not a connection (T-006): the two DELETEs match nothing for a mistyped id, and the
+    A connection is a data row under the owner's ruling of 2026-09-16 (retire in place, never hard-delete): the
+    row and its targets stay, `retired_at`, `retired_by_session` and `retirement_reason` are set, and every reader
+    that lists connections filters on `retired_at IS NULL`. A genuine deletion is an exception only the owner
+    rules on. A target of a retired connection is retired through its pointer, so `connection_targets` is untouched.
+
+    REFUSES an id that is not a connection (T-006): the UPDATE would match nothing for a mistyped id, and the
     verb used to answer `{"deleted": ...}` all the same, so a session believed the wrong link was gone while it
     was still there. The id is looked up in `connections` itself, so `connection_targets` rows with no
-    connection (not constructible through db.py) are refused too."""
+    connection (not constructible through db.py) are refused too. Also REFUSES a blank reason and a connection
+    that is already retired (the first reason is the record)."""
+    reason = dbcore.require_reason(reason, f"delete-connection {con_id!r}",
+                                   "A retirement that cannot say why erases a claim without a trace.")
     with connect(dry_run) as conn:
         if not dbcore.exists(conn, "connections", "con_id", con_id):
             raise Refusal(f"delete-connection: {con_id!r} is not a connection. Nothing was written. "
                           f"`db.py connections` lists the ids that exist.")
-        conn.execute("DELETE FROM connection_targets WHERE con_id=?", [con_id])
-        conn.execute("DELETE FROM connections WHERE con_id=?", [con_id])
+        was = conn.execute("SELECT retired_at FROM connections WHERE con_id=?", [con_id]).fetchone()[0]
+        if was is not None:
+            raise Refusal(f"delete-connection: {con_id} is already retired (since {was}); its first reason stands. "
+                          f"Nothing was written.")
+        stamp = dbcore.now()
+        conn.execute("UPDATE connections SET retired_at=?, retired_by_session=?, retirement_reason=?, "
+                     "updated_at=?, updated_by_session=? WHERE con_id=?",
+                     [stamp, dbcore.session_stem(session), reason, stamp, dbcore.session_stem(session), con_id])
 
 
 # --- CLI ---
@@ -1928,14 +1943,13 @@ def main():
     p_la.add_argument("--dry-run", action="store_true")
 
     p_ula = sub.add_parser("unlink-admission",
-                           help="Remove a WRONG admission edge (the corrective half of "
-                                "link-admission); the removed edge is kept in the search's "
-                                "findings_note. Capture with emit_batch_sql.py "
-                                "--allow-delete search_admissions")
+                           help="Retire a WRONG admission edge in place (the corrective half of "
+                                "link-admission): the edge stays as a row with the reason and the "
+                                "session; a re-admission is a new search (log-search)")
     p_ula.add_argument("--exec-id", required=True, type=int)
     p_ula.add_argument("--ref-id", required=True)
     p_ula.add_argument("--reason", required=True,
-                       help="Why the edge is wrong. Appended to the search's findings_note.")
+                       help="Why the edge is wrong. Stored in the edge's retirement_reason.")
     p_ula.add_argument("--session", required=True)
     p_ula.add_argument("--dry-run", action="store_true")
 
@@ -3228,8 +3242,10 @@ def main():
 
     # delete-connection
     p_dc = sub.add_parser("delete-connection",
-                           help="Hard-delete a connection by CON-ID (data corrections only)")
+                           help="RETIRE a connection by CON-ID in place (T-050: the row and its targets stay, "
+                                "with the reason; a genuine deletion is the owner's to rule on)")
     p_dc.add_argument("--con-id", required=True)
+    p_dc.add_argument("--reason", required=True, help="Why the connection is withdrawn. Stored in retirement_reason.")
     p_dc.add_argument("--session", required=True)
     p_dc.add_argument("--dry-run", action="store_true")
 
@@ -4201,8 +4217,8 @@ def main():
         _emit(result)
 
     elif args.command == "delete-connection":
-        delete_connection(args.con_id, session=args.session, dry_run=args.dry_run)
-        _emit({"deleted": args.con_id, "dry_run": args.dry_run})
+        delete_connection(args.con_id, args.reason, session=args.session, dry_run=args.dry_run)
+        _emit({"retired": args.con_id, "dry_run": args.dry_run})
 
     elif args.command == "add-supersession-check":
         # DR-2026-05-24 — per-anchor-source supersession outcome
@@ -5933,7 +5949,8 @@ def link_admission(exec_id: int, ref_id: str, reason: str, session: str,
     is two tables agreeing about one fact, not a verification of the fact. And
     search_candidates.exec_id has been wrong before -- candidates 107, 108 and 114 (see
     reattribute_candidate). The truth of the edge rests on the session that logged the
-    candidate against this search. A wrong edge is removed with unlink-admission. This
+    candidate against this search. A wrong edge is retired with unlink-admission (T-050: it stays
+    as a row, and link-admission then refuses it and names log-search). This
     is not hypothetical: both edges batch 20 first wrote with this verb copied proxy
     filings (batch 19 had put candidates 124 and 125 on the nearest logged search because
     the steps that surfaced them were never logged). They were moved on 2026-09-26 --
@@ -5974,8 +5991,16 @@ def link_admission(exec_id: int, ref_id: str, reason: str, session: str,
                 f"admission edge written without that is an attribution nobody recorded -- "
                 f"the fabrication research_protocol_audit names. If the search that "
                 f"admitted it was never logged, log it with log-search --admitted-ref-id.")
+        withdrawn = conn.execute("SELECT retired_at FROM search_admissions WHERE exec_id=? AND ref_id=? "
+                                 "AND retired_at IS NOT NULL", [exec_id, ref]).fetchone()
+        if withdrawn:
+            raise Refusal(
+                f"exec {exec_id} -> {ref}: REFUSED. This edge was retired at {withdrawn[0]}: it is the record of a "
+                f"claim that was withdrawn, and a retired edge is never un-retired in place. If this search did "
+                f"surface the source, log that as a new search (db.py log-search ... --admitted-ref-id {ref}) and "
+                f"link it there. Nothing was written.")
         admitting = [r[0] for r in conn.execute(
-            "SELECT exec_id FROM search_admissions WHERE ref_id=?", [ref])]
+            "SELECT exec_id FROM search_admissions WHERE ref_id=? AND retired_at IS NULL", [ref])]
         stamp = dbcore.now()
         added = exec_id not in admitting
         if added:
@@ -5983,7 +6008,7 @@ def link_admission(exec_id: int, ref_id: str, reason: str, session: str,
             edge.update(dbcore.stamp_for(conn, "search_admissions", session))
             conn.execute(f"INSERT INTO search_admissions ({','.join(edge)}) "
                          f"VALUES ({','.join('?' * len(edge))})", list(edge.values()))
-        edges = conn.execute("SELECT COUNT(*) FROM search_admissions WHERE exec_id=?",
+        edges = conn.execute("SELECT COUNT(*) FROM search_admissions WHERE exec_id=? AND retired_at IS NULL",
                              [exec_id]).fetchone()[0]
         was = ex["results_admitted"] or 0
         count = _results_admitted_after(was, edges, linked=True)
@@ -6012,60 +6037,52 @@ def link_admission(exec_id: int, ref_id: str, reason: str, session: str,
 
 def unlink_admission(exec_id: int, ref_id: str, reason: str, session: str,
                      dry_run: bool = False):
-    """Remove an admission edge that is wrong. The corrective half of link-admission.
+    """Retire an admission edge that is wrong, IN PLACE. The corrective half of link-admission.
 
-    ADDED 2026-09-26. db.py had no DELETE or UPDATE on search_admissions at all, so a
-    wrong edge -- however it got there: a mis-typed --admitted-ref-id, or a
-    link-admission that faithfully copied a candidate's wrong exec_id -- could not be
-    corrected through any sanctioned path. Shaped like reattribute_candidate: the move
-    needs a reason, and the removed edge is kept in the search's findings_note, because
-    the junction row itself is gone.
+    ADDED 2026-09-26 as a DELETE; CHANGED T-050 (OD-29) to a retirement, under the owner's ruling of 2026-09-16
+    ("RETIRE IN PLACE, NEVER HARD-DELETE"). A wrong edge -- a mis-typed --admitted-ref-id, or a link-admission that
+    faithfully copied a candidate's wrong exec_id -- stays a row with `retired_at`, `retired_by_session` and
+    `retirement_reason` set: the record that the claim was made, when, and why it was withdrawn. It is no longer
+    copied into the search's findings_note. Every reader of the table filters on `retired_at IS NULL`
+    (v_source_admission, v_coverage_parameter_via_admission, and the scripts that read the table), and
+    link-admission refuses a retired edge and names log-search. A genuine deletion is an exception only the owner
+    rules on, and no writer deletes from search_admissions, so emit_batch_sql refuses --allow-delete for it by itself.
 
-    results_admitted drops by the edge removed, never below the edges that remain (the
-    rule _results_admitted_after states). It does not touch the candidate
-    row: if the candidate's own exec_id is what was wrong, correct it with
-    reattribute-candidate as well -- the result names any candidate that still points
+    results_admitted drops by the edge retired, never below the unretired edges that remain (the rule
+    _results_admitted_after states). It does not touch the candidate row: if the candidate's own exec_id is what
+    was wrong, correct it with reattribute-candidate as well -- the result names any candidate that still points
     at this search, so the second half is not forgotten.
-
-    CAPTURING IT. This is a DELETE, and the capture path is additive by default: run
-    emit_batch_sql.py with --allow-delete search_admissions, which renders the removed
-    row as a keyed DELETE (only for a table a writer here deletes from). Found the first
-    time the verb was used for real (GAP-050's repair, 2026-09-26): emit refused the
-    scratch, correctly, until that opt-in existed.
     """
     reason = dbcore.require_reason(
         reason, f"exec {exec_id} -> {ref_id}",
-        "Removing a provenance edge without saying why erases an attribution without "
+        "Retiring a provenance edge without saying why erases an attribution without "
         "a trace of what replaced it.")
     with connect(dry_run) as conn:
         ref = dbcore.fold_ref(ref_id)
-        ex = conn.execute("SELECT exec_id, findings_note, results_admitted "
+        ex = conn.execute("SELECT exec_id, results_admitted "
                           "FROM search_executions WHERE exec_id=?", [exec_id]).fetchone()
         if ex is None:
             raise Refusal(f"exec {exec_id}: no such search execution.")
-        if not conn.execute("SELECT 1 FROM search_admissions WHERE exec_id=? AND ref_id=?",
-                            [exec_id, ref]).fetchone():
-            raise Refusal(f"exec {exec_id} -> {ref}: no such admission edge to remove. List the "
+        edge = conn.execute("SELECT retired_at FROM search_admissions WHERE exec_id=? AND ref_id=?",
+                            [exec_id, ref]).fetchone()
+        if edge is None:
+            raise Refusal(f"exec {exec_id} -> {ref}: no such admission edge to retire. List the "
                           f"edges a source holds with SELECT exec_id FROM search_admissions "
-                          f"WHERE ref_id = '{ref}'.")
-        conn.execute("DELETE FROM search_admissions WHERE exec_id=? AND ref_id=?",
-                     [exec_id, ref])
-        edges = conn.execute("SELECT COUNT(*) FROM search_admissions WHERE exec_id=?",
+                          f"WHERE ref_id = '{ref}' AND retired_at IS NULL.")
+        if edge[0] is not None:
+            raise Refusal(f"exec {exec_id} -> {ref}: this edge is already retired (since {edge[0]}); its first "
+                          f"reason stands. Nothing was written.")
+        stamp = dbcore.now()
+        conn.execute("UPDATE search_admissions SET retired_at=?, retired_by_session=?, retirement_reason=? "
+                     "WHERE exec_id=? AND ref_id=?",
+                     [stamp, dbcore.session_stem(session), reason, exec_id, ref])
+        edges = conn.execute("SELECT COUNT(*) FROM search_admissions WHERE exec_id=? AND retired_at IS NULL",
                              [exec_id]).fetchone()[0]
         was = ex["results_admitted"] or 0
         count = _results_admitted_after(was, edges, linked=False)
-        detail = f"{ref}: {reason}"
         if count != was:
-            detail += f" results_admitted {was} -> {count}."
-        # One stamp for both the note's date and updated_at (GAP-053, migration 100),
-        # so they cannot disagree -- link_admission's own pattern.
-        stamp = dbcore.now()
-        conn.execute("UPDATE search_executions SET results_admitted=?, findings_note=?, "
-                     "updated_at=?, updated_by_session=? WHERE exec_id=?",
-                     [count, dbcore.append_dated_note(ex["findings_note"],
-                                                      "ADMISSION UNLINKED", session, detail,
-                                                      stamp),
-                      stamp, session, exec_id])
+            conn.execute("UPDATE search_executions SET results_admitted=?, updated_at=?, updated_by_session=? "
+                         "WHERE exec_id=?", [count, stamp, session, exec_id])
         still = [r[0] for r in conn.execute(
             "SELECT candidate_id FROM search_candidates WHERE exec_id=? "
             "AND resolved_ref_id=?", [exec_id, ref])]

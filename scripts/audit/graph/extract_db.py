@@ -84,7 +84,9 @@ def extract(gdb, store):
         if table == "connections" and "description" in cols:
             keep = keep + ["description"]
         sel = ", ".join([pk] + keep) if keep else pk
-        for row in cur.execute(f"SELECT {sel} FROM {table}").fetchall():
+        # A retired connection (T-050, OD-29) is history, not a live node (guarded: a database that predates the column).
+        live = " WHERE retired_at IS NULL" if table == "connections" and "retired_at" in cols else ""
+        for row in cur.execute(f"SELECT {sel} FROM {table}{live}").fetchall():
             key = row[pk]
             if key is None:
                 continue
@@ -100,8 +102,10 @@ def extract(gdb, store):
         for fk in _fk_list(cur, t):
             parent, from_col, to_col = fk[2], fk[3], fk[4]
             if parent == "evidence_sources" and to_col == "ref_id":
+                # A retired row (T-050: search_admissions) is a withdrawn claim, not a citation.
+                live = " AND retired_at IS NULL" if "retired_at" in _columns(cur, t) else ""
                 refs = cur.execute(
-                    f"SELECT DISTINCT {from_col} FROM {t} WHERE {from_col} IS NOT NULL"
+                    f"SELECT DISTINCT {from_col} FROM {t} WHERE {from_col} IS NOT NULL{live}"
                 ).fetchall()
                 for (ref,) in refs:
                     store.add_edge(node_id("db_table", t), node_id("source", str(ref)),
@@ -112,8 +116,10 @@ def extract(gdb, store):
     # one kind a graph node is built for. A slug the slugs table lacks (a write with foreign keys off)
     # becomes an unresolved identifier edge. Guarded: a DB without a slugs table must not crash the build.
     if "connection_targets" in tables and "slug" in _columns(cur, "connection_targets"):
+        live = (" AND con_id IN (SELECT con_id FROM connections WHERE retired_at IS NULL)"
+                if "retired_at" in _columns(cur, "connections") else "")      # a retired connection's targets go with it
         for con_id, slug in cur.execute(
-                "SELECT con_id, slug FROM connection_targets WHERE slug IS NOT NULL").fetchall():
+                f"SELECT con_id, slug FROM connection_targets WHERE slug IS NOT NULL{live}").fetchall():
             if "slugs" in tables and slug in _slug_cache(cur):
                 dst = node_id("slug", slug)
             else:

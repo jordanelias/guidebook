@@ -263,15 +263,40 @@ try:
            refusal(db.unlink_admission, E1, REF2, "r", S) is not None)
     record("U02", "refuses a blank reason",
            refusal(db.unlink_admission, E1, REF, "", S) is not None)
+    n_edges = q("SELECT COUNT(*) FROM search_admissions")[0][0]
+    seen = q("SELECT COUNT(*) FROM v_source_admission WHERE exec_id=? AND ref_id=?", E1, REF)[0][0]
     out = db.unlink_admission(E1, REF, "fixture: the edge was wrong", S)
     n, note = exec_row(E1)
-    record("U03", "removes the edge, lowers the count by one, keeps the edge in the note, "
-           "and names the candidate still pointing here",
-           not q("SELECT 1 FROM search_admissions WHERE exec_id=? AND ref_id=?", E1, REF)
-           and n == 0 and "ADMISSION UNLINKED" in note and REF in note
-           and out["candidates_still_naming_this_search"] == [C1], f"out={out} n={n}")
-    record("U04", "the edge can be linked again after an unlink (the fix is reversible)",
-           db.link_admission(E1, REF, "relinked", S)["edge_added"] is True)
+    edge = q("SELECT retired_at IS NOT NULL, retired_by_session, retirement_reason FROM search_admissions "
+             "WHERE exec_id=? AND ref_id=?", E1, REF)
+    record("U03", "RETIRES the edge in place (T-050): the row stays, the three retired columns are set, the count drops "
+           "by one, the note carries no second copy of the retirement, and the candidate still pointing here is named",
+           edge == [(1, S, "fixture: the edge was wrong")]
+           and q("SELECT COUNT(*) FROM search_admissions")[0][0] == n_edges
+           and n == 0 and "ADMISSION UNLINKED" not in note
+           and out["candidates_still_naming_this_search"] == [C1], f"out={out} n={n} edge={edge}")
+    record("T050-01", "a retired edge is gone from v_source_admission, the one pointer from a source to the search that "
+           "admitted it (the view still showed it before the retirement)",
+           seen == 1 and q("SELECT COUNT(*) FROM v_source_admission WHERE exec_id=? AND ref_id=?", E1, REF)[0][0] == 0,
+           f"before={seen}")
+    msg = refusal(db.link_admission, E1, REF, "relinked", S)
+    record("U04", "link-admission on an edge that exists retired REFUSES and names log-search: the retired edge is the "
+           "record of a withdrawn claim and is never un-retired in place",
+           msg and "log-search" in msg and "Nothing was written" in msg
+           and q("SELECT retired_at IS NOT NULL FROM search_admissions WHERE exec_id=? AND ref_id=?", E1, REF) == [(1,)],
+           f"got {msg!r}")
+    msg = refusal(db.unlink_admission, E1, REF, "a second, different reason", S)
+    record("U05", "a second unlink of a retired edge refuses and leaves the first reason as it was",
+           msg and "already retired" in msg
+           and q("SELECT retirement_reason FROM search_admissions WHERE exec_id=? AND ref_id=?", E1, REF)
+           == [("fixture: the edge was wrong",)], f"got {msg!r}")
+    try:
+        w("UPDATE search_admissions SET retired_at='2026-01-01T00:00:00Z' WHERE exec_id=? AND ref_id=?", E2, REF)
+        half = None
+    except sqlite3.IntegrityError as exc:
+        half = str(exc)
+    record("T050-02", "the schema holds the three retired columns together: setting one alone is refused by the table's CHECK",
+           half is not None and "CHECK" in half, f"got {half!r}")
 
     # ── P: amend-population-match ────────────────────────────────────────────
     mid = db.insert_population_match({"ref_id": REF, "target_population": POP,
@@ -617,6 +642,23 @@ try:
                    "extraction_id FROM connection_targets WHERE con_id=?", minted))
                == [(0, 1, None, None, None), (1, 0, None, None, None), (1, 0, None, None, None)],
                f"rc={r.returncode} {r.stderr[-300:]!r}")
+        # T-050 (OD-29): delete-connection retires the connection in place, through the CLI's own dispatch.
+        n_con, n_tgt = counts("connections", "connection_targets")
+        r_noreason = run_cli("delete-connection", "--con-id", str(minted), "--session", S)
+        r = run_cli("delete-connection", "--con-id", str(minted), "--reason", "fixture: filed in error", "--session", S)
+        record("T050-03", "delete-connection --reason RETIRES the connection: the verb keeps its name, the connection and its "
+               "targets stay as rows, the three retired columns are set, and `db.py connections` no longer lists it; without "
+               "--reason argparse refuses and nothing moves",
+               r_noreason.returncode != 0 and r.returncode == 0 and counts("connections", "connection_targets") == (n_con, n_tgt)
+               and q("SELECT retired_by_session, retirement_reason, retired_at IS NOT NULL FROM connections WHERE con_id=?", minted)
+               == [(S, "fixture: filed in error", 1)]
+               and minted not in {c["con_id"] for c in json.loads(run_cli("connections").stdout)},
+               f"rc={r_noreason.returncode},{r.returncode} {r.stderr[-300:]!r}")
+        r2 = run_cli("delete-connection", "--con-id", str(minted), "--reason", "again", "--session", S)
+        record("T050-04", "a second delete-connection of a retired connection refuses, names the verb and keeps the first reason",
+               r2.returncode == 1 and "already retired" in r2.stderr
+               and q("SELECT retirement_reason FROM connections WHERE con_id=?", minted) == [("fixture: filed in error",)],
+               f"rc={r2.returncode} {r2.stderr[-300:]!r}")
         r = run_cli("add-connection", "--con-id", "CON-9991", "--confidence", "MODERATE",
                     "--connection-type", "CROSS-PARAMETER", "--filed-in", a_slug,
                     "--description", "fixture", "--source-skill", "fixture", "--parameter", "999999",

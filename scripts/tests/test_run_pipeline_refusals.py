@@ -852,7 +852,7 @@ record("N08", "update-connection refuses an unknown con_id", r and ABSENT_CON in
 res, err = ok(db.update_connection_status, NEXT_CON, "CONSUMED", session=S, dry_run=True)
 record("N09", "a CHECK status on a live connection is accepted", err is None, err)
 _n_con = [scalar(f"SELECT COUNT(*) FROM {t}") for t in ("connections", "connection_targets")]
-_rs = {how: refusal(db.delete_connection, who, session=S, dry_run=dry)
+_rs = {how: refusal(db.delete_connection, who, "T006 fixture reason", session=S, dry_run=dry)
        for how, who, dry in (("absent, dry", ABSENT_CON, True), ("absent, for real", ABSENT_CON, False),
                              ("lower case", NEXT_CON.lower(), False), ("padded", f" {NEXT_CON} ", False))}
 record("T006-01", "delete-connection refuses an id that is not a connection, for real and under --dry-run and for a case or "
@@ -867,20 +867,30 @@ with scratch() as c:                   # the copy holds NEXT_CON, written above;
                      [("parameter_id", P1), ("parameter_id", _P3)], session=S, dry_run=False) if _P3 else (None, "no third parameter")
     _tot = lambda: [c.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0] for t in ("connections", "connection_targets")]  # noqa: E731
     _before = _tot()
-    res, err = ok(db.delete_connection, NEXT_CON, session=S, dry_run=False)
+    res, err = ok(db.delete_connection, NEXT_CON, "T006 fixture reason", session=S, dry_run=False)
     left = [c.execute(f"SELECT COUNT(*) FROM {t} WHERE con_id=?", (NEXT_CON,)).fetchone()[0]
             for t in ("connections", "connection_targets")]
     kept = [c.execute(f"SELECT COUNT(*) FROM {t} WHERE con_id=?", (_other,)).fetchone()[0]
             for t in ("connections", "connection_targets")] if _other else None
-    record("T006-02", "delete-connection deletes the connection it is given and its targets, and only those: a second connection "
-           "and its targets are still there", err is None and _e2 is None and left == [0, 0] and kept == [1, 2]
-           and _tot() == [_before[0] - 1, _before[1] - 2], (err, _e2, left, kept, _before, _tot()))
+    _mark = c.execute("SELECT retired_by_session, retirement_reason, retired_at IS NOT NULL FROM connections WHERE con_id=?",
+                      (NEXT_CON,)).fetchone()
+    _live = [r["con_id"] for r in db.get_connections()]       # the reader a session lists connections through
+    record("T006-02", "delete-connection (T-050: RETIRES, keeps its name) marks the connection it is given and keeps it and its targets "
+           "as rows: a second connection is untouched and the table totals do not move",
+           err is None and _e2 is None and left == [1, 2] and kept == [1, 2] and tuple(_mark) == (S, "T006 fixture reason", 1)
+           and NEXT_CON not in _live and _other in _live and _tot() == _before, (err, _e2, left, kept, _mark, _before, _tot()))
+    record("T050-06", "a retired connection is refused a second retirement, naming the verb and nothing written, and keeps its "
+           "first reason",
+           (refusal(db.delete_connection, NEXT_CON, "another reason", session=S, dry_run=False) or "").count("already retired") == 1
+           and c.execute("SELECT retirement_reason FROM connections WHERE con_id=?", (NEXT_CON,)).fetchone()[0] == "T006 fixture reason",
+           None)
     # A connection whose target rows are gone is still a connection: the lookup is in `connections`, not in its targets.
     if _other:
         hand("DELETE FROM connection_targets WHERE con_id=?", _other)
-        _res, _e3 = ok(db.delete_connection, _other, session=S, dry_run=False)
-        record("T006-03", "a connection with no target rows is still found, and deleted",
-               _e3 is None and scalar("SELECT COUNT(*) FROM connections WHERE con_id=?", _other) == 0, _e3)
+        _res, _e3 = ok(db.delete_connection, _other, "T006 fixture reason", session=S, dry_run=False)
+        record("T006-03", "a connection with no target rows is still found, and retired",
+               _e3 is None and c.execute("SELECT COUNT(*) FROM connections WHERE con_id=? AND retired_at IS NOT NULL",
+                                         (_other,)).fetchone()[0] == 1, _e3)
     else:
         skip("T006-03", "no second connection could be built on the copy")
 
@@ -3757,6 +3767,20 @@ else:
                "searches_reaching_parameter and sources_admitted to one and leaves searches_naming_parameter alone; the only other rows that "
                "move are the pair's rows for the other active parameters the same source holds, and no row of any other pair moves",
                same, moved[:3])
+    with scratch() as c:        # T-050: a retired admission reaches nothing (the view that still counted one would fail nothing else)
+        before = view67(c)
+        src = seed(c)
+        _exec = c.execute("SELECT exec_id FROM search_admissions WHERE ref_id=?", (src,)).fetchone()[0]
+        _row = lambda: [r for r in view67(c) if r[:3] == (P67, L67, J67)][0]  # noqa: E731
+        _seen = (_row()[5:], c.execute("SELECT COUNT(*) FROM v_source_admission WHERE exec_id=? AND ref_id=?", (_exec, src)).fetchone()[0])
+        c.execute("UPDATE search_admissions SET retired_at='2026-01-01T00:00:00Z', retired_by_session=?, retirement_reason='TASK-FIXTURE T050' "
+                  "WHERE exec_id=? AND ref_id=?", (S, _exec, src))   # HAND: the same write unlink-admission makes, so the case reads the view alone
+        c.commit()
+        record("T050-05", "retiring an admission drops searches_reaching_parameter and sources_admitted for the pair back to what they were "
+               "before the admission, moves no other row, and takes the edge out of v_source_admission",
+               _seen == ((1, 1), 1) and view67(c) == before and _row()[5:] == (0, 0)
+               and c.execute("SELECT COUNT(*) FROM v_source_admission WHERE exec_id=? AND ref_id=?", (_exec, src)).fetchone()[0] == 0,
+               (_seen, _row()))
     with scratch() as c:
         before = view67(c)
         seed(c, deferred="TASK-FIXTURE: deliberately not searched")
