@@ -35,6 +35,7 @@ a stated place (owner, 2026-11-12). `list` re-checks every disposition when it l
   waived   nothing is held back, and --reason says why
 """
 import argparse
+import hashlib
 import json
 import re
 import subprocess
@@ -83,6 +84,20 @@ def _key(rec):
     return rec.get("refusal_id") or rec.get("ts")
 
 
+REFUSAL_TEXT = ("refusal_id", "ts", "session", "script", "verb", "sentence", "db")     # the fields the readers use as text
+DISP_TEXT = ("refusal_id", "refusal_ts", "gap_id", "reason", "ts")
+
+
+def _not_text(rec, names):
+    """Why `rec` cannot be read, or None: a field the readers use as text that is neither text nor absent, or an `argv` that is not a list."""
+    for k in names:
+        if rec.get(k) is not None and not isinstance(rec[k], str):
+            return f"{k} is not text"
+    if rec.get("argv") is not None and not isinstance(rec["argv"], list):
+        return "argv is not a list"
+    return None
+
+
 def _read(stem):
     """(refusals, dispositions, unreadable) of the session's file: three lists of (line number, record). A file that
     does not exist is three empty lists, not an error. A line that is not a JSON object, or has an unknown `kind`,
@@ -100,6 +115,8 @@ def _read(stem):
             rec = None
         if not isinstance(rec, dict):
             bad.append((n, "not a JSON object"))
+        elif (why := _not_text(rec, DISP_TEXT if rec.get("kind") == "disposition" else REFUSAL_TEXT)):
+            bad.append((n, why))
         elif "kind" not in rec:
             refusals.append((n, rec))
         elif rec["kind"] == "disposition":
@@ -121,6 +138,8 @@ def _db_with_gaps(refusal, db=None):
     path), else the one this process opens (GUIDEBOOK_DB_PATH, else the canonical file): an `<outside-repo>/...` name
     cannot be opened from here."""
     named = refusal.get("db")
+    if db and not Path(db).is_file():
+        raise Refused(f"--db {db} is not a file")
     for p in ([Path(db)] if db else [dbcore.REPO_ROOT / named] if named else []) + [dbcore.db_path()]:
         if p.is_file():
             return p
@@ -278,8 +297,10 @@ def _gap(refusal, gap_id, db, cache):
 
 def _instances(args, whole):
     """Every refusal in scope as a dict, and the problems and sessions read. Disposition, gap category and status are read here."""
-    out, problems, stems, cache = [], [], _sessions(args, whole), {}
     db = getattr(args, "db", None)
+    if db and not Path(db).is_file():
+        raise NotRun(f"--db {db} is not a file: no gap could be looked up, and the default database is not substituted")
+    out, problems, stems, cache = [], [], _sessions(args, whole), {}
     for stem in stems:
         entries, probs = _audit(stem, db)
         problems += [f"{stem} {p}" for p in probs]
@@ -332,7 +353,8 @@ def _cue(tree, stage, tables, texts):
     """`CUE <stage>: re-run <check ids>; re-read "<heading>"`: the checks whose basis begins `<stage>/` or whose script
     names a table the refused verbs write in that stage, and the skill's `## N. <stage> -` heading."""
     ids = sorted({c["id"] for c in tree.registry["checks"]
-                  if str(c.get("basis", "")).startswith(stage + "/") or _names_a_table(c, tables, texts)})
+                  if any(str(b).startswith(stage + "/") for b in (c.get("basis") if isinstance(c.get("basis"), list) else [c.get("basis", "")]))
+                  or _names_a_table(c, tables, texts)})
     heads = [m.group(1) for m in re.finditer(rf"^## (\d+\. {re.escape(stage)} \u2014 .*)$",
                                              (CODE_ROOT / SKILL).read_text(encoding="utf-8"), re.M)]
     return (f"CUE {stage}: re-run {', '.join(ids) if ids else '(no registered check)'}; "
@@ -355,11 +377,17 @@ def _triage(items):
     return ", ".join(f"{k} {v}" for k, v in sorted(n.items())) or "none disposed"
 
 
+def _shown(key, width=240):
+    """The class key as printed: a key cut for display ends with a digest of the FULL key, so two classes never print as one line."""
+    text = _one_line(key, 10**9)
+    return text if len(text) <= width else f"{text[:width]}... [{hashlib.sha256(str(key).encode('utf-8')).hexdigest()[:8]}]"
+
+
 def _print_group(title, groups):
     print(f"CLASSES by {title}")
     for key, items in sorted(groups.items(), key=lambda kv: (-len(kv[1]), str(kv[0]))):
         ts = sorted(i["ts"] for i in items)
-        print(f"  {len(items)}x  {_one_line(key, 240)}")
+        print(f"  {len(items)}x  {_shown(key)}")
         print(f"      sessions {len({i['session'] for i in items})}, first {ts[0]}, last {ts[-1]}, "
               f"undisposed {sum(i['undisposed'] for i in items)}/{len(items)}; triage: {_triage(items)}")
 

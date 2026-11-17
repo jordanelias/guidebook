@@ -32,7 +32,7 @@ not clear them. It witnesses WebSearch and WebFetch only: a search run through a
 owes each of them a `log-search` row, and `record_file` its result (DR-2026-09-26 §2.2b); the
 gate can check neither.
 
-The fourth line groups every writer refusal this batch met (by signature, verb, stage and cited rule id) and exits 1 while any is undisposed; `refusal_register.py list --session "$(cat scratchpad/CURRENT)"` prints each one with its id. Each is kept in
+The fourth line groups every writer refusal this batch met (by signature, verb, stage and cited rule id) and exits 1 while any is undisposed, and a `PROBLEM` line (an unreadable, foreign, duplicated or orphan line) and a `REFUSING` exit (the state graph's `build_graph.py` missing, for example) are red too, not only an undisposed refusal; `refusal_register.py list --session "$(cat scratchpad/CURRENT)"` prints each one with its id. Each is kept in
 `scratchpad/<session>/refusals.jsonl` when it was made under the running `--session`: a refusal, a usage error
 (an unknown vocabulary term is one: argparse says it and the record keeps it) or a writer's crash. **It exits 2
 and prints `NOT RUN` when `scratchpad/CURRENT` does not name an existing `session_YYYY-MM-DD-...` folder** (a

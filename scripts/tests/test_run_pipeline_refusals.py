@@ -4860,6 +4860,75 @@ record("T089-10", "/batch-done's gate block runs `refusal_register.py classes` o
        and "For each `CUE` line" in _flat89 and "run the named checks once and re-read the named skill section before calling the batch done" in _flat89
        and "say in the pull request what each showed" in _flat89 and "An undisposed refusal is a batch that is not done" in _flat89,
        (_fence89,))
+# T089-11..15: the repairs of the adversarial pass. Each fixture is a temporary git tree whose refusals are kept by `record_refusal`.
+def safe89(*argv):
+    """`reg88`, but an exception the reader let out is a result (exit -1), not the end of this file."""
+    try:
+        return reg88(*argv)
+    except Exception as exc:   # noqa: BLE001
+        return -1, "", f"{type(exc).__name__}: {exc}"
+
+
+def git89(b):
+    subprocess.run(["git", "-C", str(b), "init", "-q"], check=True)
+    subprocess.run(["git", "-C", str(b), "add", "scratchpad"], check=True)
+
+
+with root88(S89A, S89A) as b89:
+    refuse88(["add-gap", "--session", S89A], "a refusal; Nothing was written.")
+    git89(b89)
+    nodb = b89 / "no-such-database.db"
+    db_reg = safe89("register", "--db", str(nodb))
+    db_ok = safe89("register", "--db", os.environ["GUIDEBOOK_DB_PATH"])
+record("T089-11", "`register --db <a path that is not a file>` is NOT RUN (exit 2, no EXAMINED line, the path named) and never falls back to the default database; an existing one still reads",
+       db_reg[0] == 2 and db_reg[1].startswith("NOT RUN:") and "no-such-database.db" in db_reg[1] and "EXAMINED" not in db_reg[1].replace("NOT EXAMINED", "")
+       and db_ok[0] == 0 and "EXAMINED: 1 refusal(s) in 1 session(s)" in db_ok[1], (db_reg, db_ok))
+
+with root88(S89A, S89A) as b89:
+    refuse88(["add-gap", "--session", S89A], "a refusal; Nothing was written.")
+    _good = lines88(b89, S89A)[0]
+    _mut = [{"sentence": 5}, {"argv": "add-gap"}, {"db": 7}, {"refusal_id": ["x"]}, {"verb": {"a": 1}}]
+    with open(file88(b89, S89A), "a", encoding="utf-8") as fh:
+        for k, m in enumerate(_mut):
+            fh.write(json.dumps({**_good, "refusal_id": f"{k:032d}", **m}) + "\n")
+        fh.write(json.dumps({"kind": "disposition", "refusal_id": _good["refusal_id"], "as": "waived", "reason": 12345, "ts": "x"}) + "\n")
+    git89(b89)
+    nt = {"list": safe89("list", "--session", S89A), "register": safe89("register"), "classes": safe89("classes", "--session", S89A)}
+record("T089-12", "a line with a field that is not text (sentence, argv, db, refusal_id, verb, a disposition's reason) is a PROBLEM line in `list`, `register` and `classes` (exit 1, one per bad line, "
+       "not examined as a refusal), never a TypeError",
+       all(v[0] == 1 and v[1].count("PROBLEM") == len(_mut) + 1 and "is not text" in v[1] and "EXAMINED: 1 refusal(s)" in v[1] for v in nt.values()), nt)
+
+with root88(S89A, S89A) as b89:
+    _long = "x " * 200
+    for tail in ("alpha", "beta"):
+        refuse88(["add-gap", "--session", S89A], f"{_long}{tail}")
+    git89(b89)
+    cut = safe89("classes", "--session", S89A)
+_sigl = [ln for ln in cut[1].split("CLASSES by verb")[0].splitlines() if re.match(r"^  \d+x  ", ln)]
+_digests = {hashlib.sha256(sig89(f"{_long}{t}").encode("utf-8")).hexdigest()[:8] for t in ("alpha", "beta")}
+record("T089-13", "two classes whose keys are cut for display differ in what is printed: a cut key ends with a digest of the full key",
+       cut[0] == 1 and len(_sigl) == 2 and len(set(_sigl)) == 2 and all(any(ln.endswith(f"[{d}]") for ln in _sigl) for d in _digests), (cut[0], _sigl))
+
+_lists = [c for c in bg89.Tree(REPO).registry["checks"] if isinstance(c.get("basis"), list) and c["basis"]]
+if not _lists:
+    skip("T089-14", "the registry holds no check with a list-valued basis")
+else:
+    _lb = _lists[0]
+    _stage14 = _lb["basis"][-1].split("/")[0]
+    _verb14 = next((v for v in sorted(_t89.verbs) if any(_t89.stage(t) == _stage14 for t in _t89.verbs[v]["writes"])), None)
+    with root88(S89A, S89A) as b89:
+        if _verb14:
+            refuse88([_verb14, "--session", S89A], "a refusal; Nothing was written.", script="scripts/db.py")
+        cue14 = safe89("classes", "--session", S89A)
+    _line14 = next((ln for ln in cue14[1].splitlines() if ln.startswith(f"CUE {_stage14}:")), "")
+    record("T089-14", "the cue reads a list-valued `basis`: a check is cued for a stage if any of its basis entries begins with it (the check, its last entry's stage and a verb writing a table of that stage "
+           "are all read from the registry and the state graph)",
+           bool(_verb14) and _lb["id"] in set(re.split(r",\s*", _line14.split("re-run ", 1)[-1].split(";", 1)[0])), (_lb["id"], _stage14, _verb14, _line14[:300]))
+
+_bd15 = re.sub(r"\s+", " ", (REPO / ".claude" / "commands" / "batch-done.md").read_text(encoding="utf-8"))
+_gate15 = _bd15.split("The fourth line", 1)[-1].split("Each is kept in", 1)[0]
+record("T089-15", "/batch-done says a `PROBLEM` line and a `REFUSING` exit are red too, not only an undisposed refusal",
+       "`PROBLEM`" in _gate15 and "`REFUSING`" in _gate15 and "red too" in _gate15 and "not only an undisposed refusal" in _gate15, _gate15[:400])
 # T089-END
 
 
