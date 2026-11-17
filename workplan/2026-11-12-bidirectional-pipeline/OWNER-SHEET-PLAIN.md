@@ -305,6 +305,41 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 **To answer:** "OD-67: A", "B" or "C". *This holds the research pass that adds the links, and through it the pass that gives stored code figures their groups, the choice of the best value, and the first published values.*
 
+## 19. One word, two languages, two meanings: a clash? (OD-68)
+
+**The situation.** Sometimes the same written word is a name for one thing in one language and for something else in another language. The tools could treat that as a clash and refuse it, or treat the two as separate names that happen to be spelled alike.
+
+- **A. Separate names.** *What it means:* each word is read in its own language. A new check still shows a reviewer any pair of topics that a translation or a search aid links, so real duplicates are still caught.
+- **B. A clash, refused.** *What it means:* a name already used in any language blocks the same spelling for a different topic.
+- **C. A clash, but allowed with a reason.** *What it means:* as B, but the person recording it can say why they differ, and that reason is kept.
+
+**Assistant's recommendation (not a ruling): A.**
+
+**To answer:** "OD-68: A", "B" or "C". *This holds nothing; the current behaviour (B) stays until you answer.*
+
+## 20. What did you mean by "category"? (OD-69)
+
+**The situation.** You asked how the pipeline handles "determining category". It could mean: **(a)** the topic area of a concept (circulation, acoustics, lighting, wayfinding and so on); **(b)** the kind of source, which sets how strong it is; **(c)** the kind of claim; **(d)** the kind of measurement (a length, a ratio …); **(e)** the scale (a fixture, a room, a building). (b) to (e) are already recorded. The topic area (a) is typed freely today, so a misspelling makes a new area and nobody has approved the list.
+
+- **A. (a), with a fixed list you approve once** and only you change. *What it means:* the list is seeded from the areas in use and shown to you once.
+- **B. (a), left as free text.** *What it means:* nothing is built; the risk above stays.
+- **C. You meant (b), (c), (d) or (e).** *What it means:* nothing is built; say which.
+
+**Assistant's recommendation (not a ruling): A.**
+
+**To answer:** "OD-69: A", "B" or "C (and which)". *This holds one task (T-135).*
+
+## 21. Is a source's strength worked out from what kind of source it is? (OD-70)
+
+**The situation.** The August restart plan says a source's tier (how strong it is) is "permanently manual". In practice a person or model decides what kind of source it is and how widely it applies, and the tier then follows from those by the tier ladder. You said on 9 September, "you have to compute it. I can't handle this load manually", but that was written down as being about the published values only.
+
+- **A. Yes: the kind and reach are judged, the tier is worked out.** *What it means:* nothing changes; the record is corrected.
+- **B. No: the tier is set by hand.** *What it means:* a small change stops the tools checking the tier against the ladder.
+
+**Assistant's recommendation (not a ruling): A.**
+
+**To answer:** "OD-70: A" or "B". *This holds nothing.*
+
 ---
 
 _The nine decisions the assistant settled, for your information (one of them, OD-43, is now yours). Each was confirmed, with corrections, by the independent check. Any of them can be reversed with a line such as "OD-43: no, …":_
