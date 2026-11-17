@@ -122,9 +122,13 @@ def re_entry_problems(contract, conn):
     order = [st.id for st in contract.stages]
     tables = {r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
     out = []
+    seen = set()
     for st in contract.stages:
         for r in st.re_entry or []:
             loc = f"stage:{st.id}/{r.id}"
+            if r.id in seen:
+                out.append((loc, f"re-entry id {r.id!r} is held twice"))
+            seen.add(r.id)
             if r.from_stage not in order or order.index(r.from_stage) <= order.index(st.id):
                 out.append((loc, f"from_stage {r.from_stage!r} is not a later stage of the contract"))
             if r.carrier_table not in tables:
@@ -354,6 +358,15 @@ def selftest():
                     and problems(carrier_column="k", carrier_value="a") == []))
     results.append(("T022-07 a source stage that is not later is reported",
                     len(problems(from_stage="research")) == 1))
+    two = with_edge()
+    two["stages"][0]["re_entry"].append(dict(two["stages"][0]["re_entry"][0]))
+    results.append(("T022-09 an edge id held twice is reported",
+                    len(re_entry_problems(PipelineContract.model_validate(two), fx)) == 1))
+    back = with_edge()                 # the edge sits on the later stage and names the EARLIER one: not a return
+    back["stages"][1]["re_entry"] = [dict(back["stages"][0]["re_entry"][0], from_stage=back["stages"][0]["id"])]
+    back["stages"][0]["re_entry"] = []
+    results.append(("T022-10 a source stage EARLIER than the stage's own is reported (not only the stage itself)",
+                    len(re_entry_problems(PipelineContract.model_validate(back), fx)) == 1))
     with dbcore.connect(readonly=True) as live:
         live_bad = re_entry_problems(PipelineContract.load(CONTRACT_PATH), live)
     results.append(("T022-08 every re-entry carrier of the canonical contract exists in the live schema",

@@ -11,6 +11,7 @@ Usage:
     python3 scripts/tests/test_pipeline_contract.py
 """
 import os
+import re
 import subprocess
 import sys
 
@@ -61,7 +62,8 @@ def main():
     ok = ok and passed
 
     # A ruled re-entry (T-022) names a carrier that exists: the audit reports none that does not.
-    passed = "re_entry_broken=0" in r.stdout and "re-entry carriers:" in r.stdout
+    m = re.search(r"re-entry carriers: (\d+) ruled returns", r.stdout)
+    passed = "re_entry_broken=0" in r.stdout and bool(m) and int(m.group(1)) > 0   # none ruled is not a pass: deleting every edge must fail
     n += 1
     print(f"[{'PASS' if passed else 'FAIL'}] no re-entry names a carrier that does not exist")
     if not passed:

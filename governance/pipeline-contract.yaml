@@ -95,18 +95,6 @@ stages:
       test_run_pipeline_refusals.py section A6'
     check: null
   re_entry:
-  - id: base-from-evidence-adjudication
-    from_stage: evidence
-    when: an observed phrase is adjudicated at judgment, and the adjudication names the observation it settles
-    carrier_table: term_adjudications
-    carrier_column: observation_id
-    references: TD section 3 boundary B12; REQ-029, REQ-033 (OD-18)
-  - id: base-from-judgment-adjudication
-    from_stage: judgment
-    when: a phrase met in a native-language reading is adjudicated, and the adjudication names the observation it settles
-    carrier_table: term_adjudications
-    carrier_column: observation_id
-    references: TD section 3 boundary B12; REQ-029, REQ-033, REQ-061 (OD-18)
   - id: base-from-research-attested-form
     from_stage: research
     when: a form is found in an instrument of a pair, and its alias row names the URL where it was found
@@ -127,7 +115,7 @@ stages:
   re_entry:
   - id: research-from-evidence-mining
     from_stage: evidence
-    when: a confirmed T1-T2 source is mined, and the mining search names the source it mines
+    when: a source is mined, and the mining search names the source it mines
     carrier_table: search_executions
     carrier_column: mined_ref_id
     references: TD section 3 boundary B7; REQ-049 (OD-18)
@@ -188,7 +176,7 @@ stages:
   re_entry:
   - id: evidence-from-specification-skim
     from_stage: specification
-    when: a figure under a determination was read by skimming, and the extraction's own method cell says so; the engine names it as owing a dedicated reading. No follow-up row and no provisional state carry it until the owner answers OD-10
+    when: 'a figure was read by skimming, and the extraction''s own method cell says so; a determination that rests on it is named by the engine as owing a dedicated reading. OD-10 (answered 2026-11-12): a re-read owed is a reading''s own status, a preliminary reading or a follow-up; this carrier marks the skim and does not replace either'
     carrier_table: source_value_extractions
     carrier_column: extraction_method
     carrier_value: skim
@@ -266,7 +254,7 @@ stages:
   re_entry:
   - id: judgment-from-specification-skim
     from_stage: specification
-    when: a figure under a determination was read by skimming, and the extraction's own method cell says so; the engine names it as owing a dedicated reading. No follow-up row and no provisional state carry it until the owner answers OD-10
+    when: 'a figure was read by skimming, and the extraction''s own method cell says so; a determination that rests on it is named by the engine as owing a dedicated reading. OD-10 (answered 2026-11-12): a re-read owed is a reading''s own status, a preliminary reading or a follow-up; this carrier marks the skim and does not replace either'
     carrier_table: source_value_extractions
     carrier_column: extraction_method
     carrier_value: skim
