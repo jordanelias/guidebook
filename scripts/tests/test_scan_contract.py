@@ -575,20 +575,23 @@ try:
                    rename, TR, other_name, "fixture", S, from_observation=OTZ)
     old_name = q("SELECT canonical_en FROM terms WHERE term_id=?", TR)[0][0]
     old_scope = q("SELECT scope_note FROM terms WHERE term_id=?", TR)[0][0]
+    # OD-71: a pick rests on a form the base holds, so the observed phrase is recorded as TR's form first.
+    attempt(fn("add_alias"), TR, OTZ, "SYNONYM", S)
+    FTZ = q("SELECT form_id FROM term_aliases WHERE term_id=? AND alias='turnwise clearance zone'", TR)
     n7 = attempt(rename, TR, "turnwise clearance zone", "fixture: the sources' own phrase",
                  S, from_observation=OTZ)
     alias = q("SELECT alias_type, language, notes FROM term_aliases WHERE term_id=? AND "
               "alias=?", TR, old_name)
     trow = q("SELECT canonical_en, scope_note FROM terms WHERE term_id=?", TR)[0]
-    pick7 = q("SELECT former_label, form_id, observation_id, ruling_quote, judge, reason FROM "
+    pick7 = q("SELECT former_label, form_id, ref_id, ruling_quote, judge, reason FROM "
               "term_label_picks WHERE term_id=?", TR)
     # T-028: the label is not a form, so the former label is not written into term_aliases, and a
     # correction appended to a note is a fact in the wrong cell (2026-11-06): one pick row holds it.
     record("N07", "rename-term renames from the observation; the old label is NOT written as an alias, "
            "scope_note is unchanged, and one term_label_picks row holds the former label, the "
-           "observation, the judge and the reason",
-           trow[0] == "turnwise clearance zone" and alias == [] and trow[1] == old_scope
-           and pick7 == [(old_name, None, OTZ, None, "TASK-FIXTURE judge",
+           "form holding the observed phrase, the source as provenance (ref_id), the judge and the reason",
+           trow[0] == "turnwise clearance zone" and alias == [] and trow[1] == old_scope and FTZ
+           and pick7 == [(old_name, FTZ[0][0], REF_A, None, "TASK-FIXTURE judge",
                           "fixture: the sources' own phrase")],
            f"{n7} {alias} {trow} {pick7}")
     ap = subprocess.run([sys.executable, str(REPO / "scripts" / "audit" /
@@ -829,6 +832,14 @@ try:
     o_nl = attempt(observe, obs("turnwise clearance zone", "PDF page 3 / nl",
                                 "the turnwise clearance zone of a wheelchair", language="NL"), S)
     attempt(adj, o_nl.get("observation_id"), "NAMES-EXISTING", "fixture", S, term_id=FREE[16])
+    # T028-20 (OD-71): with no form of FREE[16] holding the observed phrase, the pick has no base warrant
+    # and is refused, naming add-alias; once the phrase is recorded as its form, the rename is accepted.
+    m20 = refusal(rename, FREE[16], "turnwise clearance", "fixture: native name", S,
+                  from_observation=o_nl.get("observation_id"), dry_run=True)
+    record("T028-20", "rename-term --from-observation is refused while the term holds no form of the observed "
+           "phrase (a pick rests on a base form, OD-71), naming add-alias",
+           m20 and "holds no form" in m20 and "add-alias --observation-id" in m20, m20)
+    attempt(fn("add_alias"), FREE[16], o_nl.get("observation_id"), "SYNONYM", S)
     n10 = attempt(rename, FREE[16], "turnwise clearance", "fixture: native name", S,
                   from_observation=o_nl.get("observation_id"), dry_run=True)
     record("N10b", "rename-term accepts a non-English observation as the warrant for a native name",
@@ -1601,7 +1612,7 @@ try:
                      "FROM term_aliases WHERE term_id=? ORDER BY form_id", term)
 
         def picks_of(term):
-            return q("SELECT former_label, form_id, observation_id, ruling_quote, judge, reason "
+            return q("SELECT former_label, form_id, ref_id, ruling_quote, judge, reason "
                      "FROM term_label_picks WHERE term_id=? ORDER BY pick_id", term)
 
         def names(term):
@@ -1710,26 +1721,27 @@ try:
                     and not db._VALUE_BEARING.search(f"{a} {b}")
                     and not q("SELECT 1 FROM terms WHERE lower(canonical_en)=?", f"{a} {b}")
                     and not q("SELECT 1 FROM term_aliases WHERE lower(alias)=?", f"{a} {b}")), None)
-        routes7 = [(TA28, F7, dict(from_form=fid7), "form_id", fid7),
+        f28 = q("SELECT form_id FROM term_aliases WHERE term_id=? AND alias='turnwise clearance zone'", TB28)
+        routes7 = [(TA28, F7, dict(from_form=fid7), "form_id", fid7, None),
                    (TB28, "turnwise clearance", dict(from_observation=o28.get("observation_id")),
-                    "observation_id", o28.get("observation_id")),
-                   (TA28, RN7, dict(ruling_quote=QUOTE), "ruling_quote", (QUOTE or "").strip())]
+                    "form_id", f28[0][0] if f28 else -1, REF_A),
+                   (TA28, RN7, dict(ruling_quote=QUOTE), "ruling_quote", (QUOTE or "").strip(), None)]
         ok7 = bool(RN7 and fid7)
-        for term7, new7, kw7, col7, val7 in routes7:
+        for term7, new7, kw7, col7, val7, ref7 in routes7:
             m7 = refusal(_rename, term7, new7, "TASK-FIXTURE: picked", T28S, **kw7)
             old7, scope7 = (q("SELECT canonical_en, scope_note FROM terms WHERE term_id=?", term7) or [(None, None)])[0]
             n7p = len(picks_of(term7))
             w7 = attempt(_rename, term7, new7, "TASK-FIXTURE: picked", T28S, judge=JUDGE, **kw7)
-            last = q(f"SELECT former_label, {col7}, judge, (form_id IS NOT NULL) + (observation_id IS NOT NULL) + "
-                     f"(ruling_quote IS NOT NULL) FROM term_label_picks WHERE term_id=? ORDER BY pick_id DESC LIMIT 1",
-                     term7)
+            last = q(f"SELECT former_label, {col7}, judge, (form_id IS NOT NULL) + (ruling_quote IS NOT NULL), "
+                     f"ref_id FROM term_label_picks WHERE term_id=? ORDER BY pick_id DESC LIMIT 1", term7)
             ok7 = ok7 and bool(m7 and "--judge" in m7) and len(picks_of(term7)) == n7p + 1 \
-                and last == [(old7, val7, JUDGE, 1)] \
+                and last == [(old7, val7, JUDGE, 1, ref7)] \
                 and q("SELECT canonical_en, scope_note FROM terms WHERE term_id=?", term7) == [(new7, scope7)]
             if not ok7:
                 print(f"      T028-07 route {col7}: {m7!r} {w7} {last}")
         record("T028-07", "rename-term refuses each route (form, observation, ruling) without --judge; with it each "
-               "writes one term_label_picks row (former label, the one pointer, the judge) and no AMENDED trailer",
+               "writes one term_label_picks row (former label, the one base warrant: the form or the quote, the "
+               "judge, the source as provenance on the observation route) and no AMENDED trailer",
                ok7, (RN7, fid7))
 
         # T028-08: DOMAIN is refused naming --usage-type; a usage outside the column's CHECK is refused; one
@@ -1921,6 +1933,31 @@ try:
         bad19 = {k: v for k, v in out19.items() if [m.get("term_id") for m in v.get("seed_matches") or []] != [TB28]}
         record("T028-19", "add-term (both routes), add-alias, rename-term and mint-term-from-catalogue each report "
                "the seed holding the name in seed_matches and write or accept as before", not bad19, bad19)
+
+        # T028-21 (OD-71): base tables are derived from the stage map; a base table holds no foreign key into
+        # another stage other than a nullable provenance ref_id. Asserted for the table this task owns,
+        # term_label_picks; the other base tables' foreign keys into evidence and judgment are listed, not
+        # failed here (term_aliases.observation_id waits on the owner's answer on an absorbed observation's
+        # attestation; term_relations is T-029's; base_parameters' are T-020's and the 2026-10-30 ruling's).
+        import yaml as _yaml
+        SM = _yaml.safe_load((REPO / "governance" / "stage-map.yaml").read_text(encoding="utf-8"))["tables"]
+        c21 = sqlite3.connect(DB)
+        try:
+            v21 = []
+            for t21 in sorted(t for t, st in SM.items() if st == "base"):
+                cols = {r[1]: r[3] for r in c21.execute(f'PRAGMA table_info("{t21}")')}
+                for f in c21.execute(f'PRAGMA foreign_key_list("{t21}")'):
+                    if SM.get(f[2]) != "base" and not (f[3] == "ref_id" and not cols.get(f[3])):
+                        v21.append((t21, f[3], f[2], SM.get(f[2])))
+        finally:
+            c21.close()
+        others21 = [v for v in v21 if v[0] != "term_label_picks"]
+        if others21:
+            print(f"      REPORTED (other base tables, not this task's): {others21}")
+        record("T028-21", "term_label_picks, a base table by the stage map, holds no foreign key into another stage; "
+               "its ref_id is a plain provenance cell",
+               SM.get("term_label_picks") == "base" and not [v for v in v21 if v[0] == "term_label_picks"]
+               and "ref_id" in [r[1] for r in q("PRAGMA table_info(term_label_picks)")], v21)
 
 
     # ── T029: typed pointers from one term to another, each with its warrant (AT-67; migration 147). Probes are

@@ -8411,7 +8411,9 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
     name is reached, never copied (rule 5). The label is not a form (OD-03), so the former
     label is NOT written into term_aliases and no AMENDED trailer is appended to scope_note
     (the owner's schema-shape statement of 2026-11-06: a correction appended to a note is a fact
-    in the wrong cell): one term_label_picks row holds the former label, the route's one pointer,
+    in the wrong cell): one term_label_picks row holds the former label, the route's one warrant (the
+    form, or the ruling quote; --from-observation's warrant is this term's form holding the observed
+    phrase, and the observation's source is kept as ref_id, provenance only, OD-71),
     the judge and the reason. No other term may hold the new name, as a label or as an attested
     English form (_name_holder); a seed never refuses (E4).
 
@@ -8501,10 +8503,24 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
                     f"rename-term: {new!r} is not in the observed phrase "
                     f"{obs['surface_form']!r}. A name taken from a source is the source's "
                     f"words. Nothing was written.")
+            # OD-71 (owner 2026-11-18): the pick's warrant is the base's own -- the form this term holds
+            # with the observed phrase in its language; the observation's source is kept as ref_id,
+            # provenance only, which no check reads.
+            held = conn.execute("SELECT form_id, alias_type FROM term_aliases WHERE term_id = ? AND alias = ? "
+                                "AND upper(language) = upper(?) ORDER BY form_id",
+                                (term_id, obs["surface_form"], obs["language"] or "EN")).fetchall()
+            held = [h["form_id"] for h in held if h["alias_type"] not in _non_member_types(conn)]
+            if not held:
+                raise Refusal(
+                    f"rename-term: {term_id} holds no form {obs['surface_form']!r} "
+                    f"({obs['language'] or 'EN'}). A label pick rests on a form the base holds (OD-71, "
+                    f"2026-11-18: the base grounds itself): record the phrase first (db.py add-alias "
+                    f"--observation-id {from_observation}), then rename from it. Nothing was written.")
+            from_form = held[0]
         stamp = dbcore.now()
         pick = {"term_id": term_id, "former_label": old, "form_id": from_form,
-                "observation_id": from_observation,
                 "ruling_quote": ruling_quote.strip() if ruling_quote else None,
+                "ref_id": obs["ref_id"] if from_observation is not None else None,
                 "judge": judge, "reason": reason}
         pick.update(dbcore.stamp_for(conn, "term_label_picks", session))
         pick_id = conn.execute(f"INSERT INTO term_label_picks ({','.join(pick)}) "
