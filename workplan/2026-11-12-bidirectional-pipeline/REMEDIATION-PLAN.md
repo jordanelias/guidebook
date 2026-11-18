@@ -1,6 +1,6 @@
 # Remediation plan, in batches by dependency
 
-_Generated 2026-11-17 02:59 UTC from the 120 task files (77 open, 43 merged) at commit 7ef011d1 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
+_Generated 2026-11-17 04:31 UTC from the 120 task files (77 open, 43 merged) at commit 10709dbd by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
 
 **What this is.** The entry document for a Sonnet executor. `REMEDIATION-WORKPLAN.md` is the index (why, owner decision register, Definition of Done); `tasks/T-<id>-*.md` is the one self-contained file per task; this file says **in what order, in what groups, and where to stop.** Evidence base: `01-handshake-ledger.md` and the audit in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/`.
 
@@ -70,7 +70,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 | [T-119](tasks/T-119-ledger-unification-entry.md) | The ledger's unification entry: best, most common, minimum; showing and grading (with its  | 0 (now) | TOOLING | NOT FOR SONNET | no | — | not piloted |
 | [T-123](tasks/T-123-parameter-directions-from-sources.md) | Each parameter with figures gets an accessibility direction read from an admitted source,  | research | RESEARCH | NOT FOR SONNET | no | — | not piloted |
 | [T-126](tasks/T-126-code-value-lens-at-recording.md) | A code value's lens is assigned by contextual judgment when its row is recorded, with its  | 1 (now) | TOOLING | NOT FOR SONNET | no | — | not piloted |
-| [T-135](tasks/T-135-domain-vocabulary.md) | A concept's domain comes from a vocabulary the schema holds, and the non-quantity domains  | 4 | TOOLING | OWNER: OD-69 (no status line); NOT FOR SONNET | no | — | not piloted |
+| [T-135](tasks/T-135-domain-vocabulary.md) | A concept's domain comes from a vocabulary the schema holds, and the non-quantity domains  | 4 | TOOLING | OWNER: OD-69 (REFERRED BACK TO THE OWNER); NOT FOR SONNET | no | — | not piloted |
 
 **Lanes** (parallel across, serial within; the shared file is the reason):
 
@@ -284,13 +284,13 @@ Every register decision (`grep -o -E '^### OD-[0-9]+' REMEDIATION-WORKPLAN.md`),
 | OD-46 | CLOSED (REFERRED BACK TO THE OWNER) | T-084 | T-085 | 1 |
 | OD-48 | CLOSED (REFERRED BACK TO THE OWNER) | T-056 | T-115 | 1 |
 | OD-67 | CLOSED (REFERRED BACK TO THE OWNER) | T-128 | T-037, T-038, T-039, T-059, T-068, T-110, T-115, T-117, T-118, T-122, T-124, T-125, T-127, T-132, T-133 | 2 |
-| OD-69 | CLOSED (no status line) | T-135 | — | 1 |
+| OD-69 | CLOSED (REFERRED BACK TO THE OWNER) | T-135 | — | 1 |
 
-### Standing, blocks no task: CLOSED, and no task's gate reads it (8)
+### Standing, blocks no task: CLOSED, and no task's gate reads it (6)
 
-OD-17 (DEFERRED BY THE OWNER), OD-47 (REFERRED BACK TO THE OWNER), OD-51 (REFERRED BACK TO THE OWNER), OD-52 (REFERRED BACK TO THE OWNER), OD-54 (REFERRED BACK TO THE OWNER), OD-62 (REFERRED BACK TO THE OWNER), OD-68 (no status line), OD-70 (no status line)
+OD-17 (DEFERRED BY THE OWNER), OD-47 (REFERRED BACK TO THE OWNER), OD-51 (REFERRED BACK TO THE OWNER), OD-52 (REFERRED BACK TO THE OWNER), OD-54 (REFERRED BACK TO THE OWNER), OD-62 (REFERRED BACK TO THE OWNER)
 
-### Open by the ledger gate (57)
+### Open by the ledger gate (59)
 
 | Decision | Gate | Read by |
 |---|---|---|
@@ -351,6 +351,8 @@ OD-17 (DEFERRED BY THE OWNER), OD-47 (REFERRED BACK TO THE OWNER), OD-51 (REFERR
 | OD-64 | OPEN (owner) | T-117 |
 | OD-65 | OPEN (owner) | T-059 |
 | OD-66 | OPEN (owner) | no task gate |
+| OD-68 | OPEN (owner) | no task gate |
+| OD-70 | OPEN (owner) | no task gate |
 
 ## NOT FOR SONNET
 

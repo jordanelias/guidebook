@@ -1059,3 +1059,5 @@ assignment; population-of-study grading and its mismatch note; R15 re-descriptio
 the Co-1 waiver text; anything touching `specifications` or the reasoning doc, which sits at the
 Opus synthesis floor behind the B-before-E gate. The contract's premise is that these are judgment
 acts machinery can only *check*.
+
+> **⚠ SUPERSEDED IN PART 2026-11-17 — APPENDED, NOT EDITED.** The sentence above lists the assignment of a tier, and of an evidence type, among the acts that are permanently manual. The owner answered OD-70 on 2026-11-17 (`references/project-standards.md`, "Owner answers 2026-11-17 — OD-68 …"): "OD-70: type and scope judged, tier computed". The evidence type and the scope remain judged and recorded; the TIER is computed from them by `derive_tier`, and `adjudication_integrity` holds the stored tier to the computation. The paragraph above is left exactly as ratified, per the append-not-edit practice the callouts of §12.1 and §12.2 already follow. (The owner's ruling of 2026-09-09 (evening) had already superseded this sentence as it applies to `specifications`.)

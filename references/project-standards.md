@@ -7726,3 +7726,45 @@ Found by the read-only critic of the commit that carried the deletion, by search
 CONDITION: any session meeting the `SCI` edge, OI-48, the seventh-set ACTION (4), or a task that places an impairment level in a lens.
 ACTION: (1) Read both clauses above as superseded as to the medical lens. (2) Do not run T-102's retirement of `SCI` before the owner answers OI-77. (3) Do not key a determination on a diagnosis term.
 DATE: 2026-11-16 — correction by the recorder; the questions are the owner's.
+
+## Owner answers 2026-11-17 — OD-68 (one written word naming different concepts in two languages), OD-69 (what "category" means) and OD-70 (who assigns the evidence tier)
+
+Given in the session `session_2026-11-16-remediation-batch-1-tooling-stack` (https://claude.ai/code/session_01Ub36iMfdrQNV9XzGP4dyZm), in one typed message after pull request 238 registered the three questions (`workplan/2026-11-12-bidirectional-pipeline/PROPAGATION-AND-CONSOLIDATION-ADJUDICATION.md`; the register in `REMEDIATION-WORKPLAN.md`). Server-clock times were not captured; derive them from the preserved transcript (`git grep -n -F "different but how could this happen" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "od68 different but how could this happen in first place"
+>
+> "od69 like the overall class of a parameter eg circulation for all the ones that deal with ramps and stairs and corridors and doors etc. the project is supposed to be like that"
+>
+> "od70 yes"
+
+**Readings.**
+
+- [ASSUMPTION: OD-68. "different" selects "two independent names": the same written word attested for one concept in one language and for another in a second language is two names, not a clash — basis: the word, against the three options the register gave]. The second clause is a question to the recorder, not a ruling, and is not recorded as one. It was answered in the session: it happens because a form is attested in its own language and a word in one language can mean another thing in a second (a homograph), and because a model-generated alias can attach a form to the wrong concept; the live database already holds forms under two concepts (`select lower(alias), count(distinct term_id) from term_aliases group by 1 having count(distinct term_id) > 1`).
+- [ASSUMPTION: OD-69, part (a). "category" in the owner's question of 2026-11-16 means a concept's topic area, the overall class of a parameter: "circulation" for the parameters about ramps, stairs, corridors and doors, with the project organised by such classes — basis: the words and the example; it is the register's option (a), and `terms.domain` already carries `circulation`]. [GAP: whether the classes are a fixed list, who confirms the list, and which of the domains now in use are topic areas and which are kinds of concept that a parameter may not be (`functional_axis`, `methodology`, `medical`, `legal`, `economics`, `population` are the ones `dbcore.NON_QUANTITY_DOMAINS` refuses) are NOT answered; the owner's words name the class and say the project "is supposed to be like that", and say nothing of a list. They are not read in.]
+- [ASSUMPTION: OD-70. "yes" answers the register's question as put: the tier is computed from a judged evidence type and scope; the type and the scope stay judged and recorded — basis: the question's own wording and the owner's words of 2026-09-09 (evening), "you have to compute it. I can't handle this load manually"].
+
+OD-68: two independent names
+OD-68 STATUS: ANSWERED BY THE OWNER
+
+OD-69: (a) a concept's topic area, the overall class of a parameter; the fixed list is not answered
+OD-69 STATUS: REFERRED BACK TO THE OWNER
+
+OD-70: type and scope judged, tier computed
+OD-70 STATUS: ANSWERED BY THE OWNER
+
+SUPERSEDES: decisions/DR-2026-08-19-research-restart-operative-instrument.md :: "tier and evidence-type"
+  BY: references/project-standards.md :: "OD-70: type and scope judged, tier computed"
+
+**What the answers do.**
+
+- **OD-68.** A name is screened for a clash only within its own language; the same written word in another language is another name. T-028's screens change their reach accordingly. **The code does not change here:** `db.py _near_terms` compares across every language today, so until T-028 changes it a foreign homograph can still block a name. T-130 still proposes a pair where a seed or a reviewed translation bridges the two forms, and a judge decides; it gains no fifth proposal reason. T-129 and T-130 work under either answer and are unaffected.
+- **OD-69.** The meaning is settled: a topic area of a concept. T-135 stays held until the owner confirms the list and says whether it is fixed; no session adds a domain, and none reads the 18 values now in use (`select domain, count(*) from terms group by 1`) as the confirmed list. The other readings of "category" (an evidence type, a claim type, a quantity kind, a design scale) are not what was meant and need no task.
+- **OD-70.** The tier is computed by `derive_tier` from the judged evidence type and scope, as `adjudication_integrity` already holds it. DR-2026-08-19 §12.5's "tier and evidence-type assignment" is superseded as to the TIER only; the evidence type and the scope remain judged. Nothing in the code changes.
+
+**What they do not decide.** The list of topic areas, whether it is fixed and who may change it (OD-69); how a form that two concepts already hold in one language is resolved (a merge or a `distinct` judgment, T-129).
+
+CONDITION: any session screening a name across languages, proposing consolidation candidates, assigning or changing a concept's domain, executing T-135, or meeting §12.5's "tier and evidence-type assignment".
+ACTION: (1) Treat a written word in two languages as two names (OD-68). (2) Read "category" as a concept's topic area, and do not execute T-135 or add or change a domain until the owner confirms the list (OD-69). (3) Compute the tier from the judged type and scope (OD-70). (4) Ask the owner the open part of OD-69 in its plain form; do not resolve it under delegation.
+DATE: 2026-11-17 — owner answers (typed words, quoted above).

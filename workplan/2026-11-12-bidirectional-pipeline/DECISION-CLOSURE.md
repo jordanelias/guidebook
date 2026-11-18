@@ -434,7 +434,7 @@ OD-17 blocks nothing; ask it after T-022 merges. **Added 2026-11-13:** OD-40 to 
 **Evidence.** `grep -n -F "Correction and registration 2026-11-15" references/project-standards.md`; `MAPPING-DESIGN.md` §2(b) and §6; `tasks/T-128-population-icf-rows-for-proposals.md`.
 **Answer in one line.** `OD-67: yes, one answer on the full list` · `OD-67: row by row` · `OD-67: no new rows`
 
-### 30. OD-68: one written word naming different concepts in two languages: a clash, or two independent names? (holds no task) — REFERRED TO YOU 2026-11-17
+### 30. OD-68: one written word naming different concepts in two languages: a clash, or two independent names? (holds no task) — ANSWERED 2026-11-17: two independent names
 **Question.** The same written string can be a recorded name of one concept in one language and of a different concept in another. Should the tools refuse that as a clash, or treat the two as independent names?
 **Why it is yours.** It decides how the base names concepts in every language (your 2026-11-06 statements on forms and on English as one column).
 **Options.** (a) Two independent names. (b) A clash, refused. (c) A clash, which an operator may record as two concepts with a reason.
@@ -442,7 +442,7 @@ OD-17 blocks nothing; ask it after T-022 merges. **Added 2026-11-13:** OD-40 to 
 **Evidence.** `tasks/T-028-design.md` section 15 (4); `PROPAGATION-AND-CONSOLIDATION-ADJUDICATION.md` gaps G3 and G4.
 **Answer in one line.** `OD-68: two independent names` · `OD-68: a clash, refused` · `OD-68: a clash, recorded with --distinct-from`
 
-### 31. OD-69: what did "category" mean in your question of 2026-11-16, and is a concept's topic area a fixed list? (holds T-135) — REFERRED TO YOU 2026-11-17
+### 31. OD-69: what did "category" mean in your question of 2026-11-16, and is a concept's topic area a fixed list? (holds T-135) — PART ANSWERED 2026-11-17: topic area; the fixed list is still yours
 **Question.** You asked how the pipeline handles "determining category". Which did you mean: (a) a concept's topic area (circulation, acoustics, lighting, wayfinding …), (b) the kind of source, which sets its tier, (c) the kind of claim, (d) the kind of quantity, or (e) the scale? If (a): should the list of topic areas be fixed, confirmed by you once, and changed only by you?
 **Why it is yours.** The book's categories are its structure. Today the topic area is free text: any spelling makes a new one.
 **Options.** (a) with a fixed list (T-135 builds it, seeded from the areas in use). (a) as free text (nothing built). (b) to (e) (nothing built: each is already recorded; the adjudication's section 1 says where).
@@ -450,7 +450,7 @@ OD-17 blocks nothing; ask it after T-022 merges. **Added 2026-11-13:** OD-40 to 
 **Evidence.** `PROPAGATION-AND-CONSOLIDATION-ADJUDICATION.md` section 1 (Q1) and gap G12; `tasks/T-135-domain-vocabulary.md`.
 **Answer in one line.** `OD-69: (a), a fixed list I confirm` · `OD-69: (a), free text` · `OD-69: (b)` / `(c)` / `(d)` / `(e)`
 
-### 32. OD-70: is a source's tier computed from its judged evidence type and scope? (holds no task) — REFERRED TO YOU 2026-11-17
+### 32. OD-70: is a source's tier computed from its judged evidence type and scope? (holds no task) — ANSWERED 2026-11-17: yes, tier computed
 **Question.** The August restart instrument lists "tier and evidence-type assignment" as permanently manual. The pipeline judges a source's evidence type and scope and computes the tier from them by the tier ladder. Your 2026-09-09 ruling ("you have to compute it") was recorded as reaching determinations only. Is the tier computed?
 **Why it is yours.** Who assigns evidence tiers is doctrine.
 **Options.** (a) Type and scope judged, tier computed (nothing changes in the code; the ledger records it). (b) The tier assigned by hand (a tooling task removes the computation's hold).
