@@ -7807,3 +7807,32 @@ OD-72 STATUS: REFERRED BACK TO THE OWNER
 CONDITION: any session adding or changing a base table, a base writer, or the displayed name of a concept; any session meeting `term_label_picks.observation_id`, the warrant keys of `term_relations`, or "first recorded" in `v_term_names`.
 ACTION: (1) Write a base row's justification into the base's own columns; add no foreign key from a base table into evidence or judgment; a `ref_id` may be kept as plain provenance, a cell nothing depends on (OD-71). (2) Do not choose the displayed name by `MIN(form_id)` or by recency; until the owner specifies the test, the view keeps showing the name by the form's number and picks by a named judge stay as recorded (OD-72). (3) Ask the owner the open parts in their plain form; do not resolve them under delegation.
 DATE: 2026-11-18 — owner statements (typed words, quoted above).
+
+## Owner statement 2026-11-18 (second) — OD-72 refined: record the forms as written, count them, a preferred display term, and CSA and ISO first for terminology
+
+Given in the session `session_2026-11-16-remediation-batch-1-tooling-stack` (https://claude.ai/code/session_01Ub36iMfdrQNV9XzGP4dyZm), in one typed message after the entry "Owner statements 2026-11-18 — OD-71 …" recorded OD-72 as a direction (a convergence test on the appearances of a form, or the owner rules). Server-clock times were not captured; derive them from the preserved transcript (`git grep -n -F "I would prefer to prioritize CSA/ISO" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "for the displayed name of parameter, record it in whatever form and then have a preferred display term column maybe"
+>
+> "but we're basically just counting the number of times it appears written in a given way. I would prefer to prioritize CSA/ISO for terminology"
+
+**Readings.**
+
+- [ASSUMPTION: every written form of a concept is recorded as found, without choosing one at recording; the displayed name is a separate, derived choice — basis: "record it in whatever form"].
+- [ASSUMPTION: the concept (or parameter) carries a cell for its preferred display term, separate from the forms it was found in — basis: "have a preferred display term column maybe"; "maybe" marks it as a proposal the owner offers, not a settled design].
+- [ASSUMPTION: OD-72's "what counts as an appearance": an occurrence of a form written in a given way, that is, one row of `term_aliases` (one per occurrence since migration 146), so the convergence test is a count of how often each way of writing a form appears for the concept — basis: "just counting the number of times it appears written in a given way"].
+- [ASSUMPTION: "prioritize CSA/ISO for terminology": a form attested in a CSA or an ISO instrument takes priority over a form attested elsewhere when the displayed name is chosen — basis: the words; "I would prefer" marks a preference].
+- [GAP: how the priority combines with the count (a CSA or ISO form wins whatever the count; or it only breaks a tie; or it weights the count), whether "CSA/ISO" means those two bodies exactly or standards bodies in general, which of their documents are terminology sources, and the tolerance, the tie, a concept with no form and a concept first met outside English (the rest of OD-72) are NOT stated. They are not read in.]
+
+OD-72: displayed name from a count of the appearances of each written form, a preferred-display-term cell, CSA and ISO forms prioritized; the combination rule is not specified
+OD-72 STATUS: REFERRED BACK TO THE OWNER
+
+**What it does.** It narrows OD-72 (it does not close it): the test is a count of appearances (answering what counts as one), recording is separate from displaying, a preferred-display-term cell is proposed, and CSA and ISO come first for terminology. It does not withdraw OD-38's "until a named judge picks; the pick is recorded with its reason".
+
+**What it does not decide.** The combination rule above; whether the preferred-display cell lives on the concept or on the parameter (the owner wrote "displayed name of parameter"); whether it is derived (a view) or stored (a cell) and, if stored, who writes it.
+
+CONDITION: any session choosing or storing the displayed name of a concept or a parameter, or editing `v_term_names`.
+ACTION: (1) Record every written form as found; do not choose a name at recording (OD-72). (2) Do not build the displayed-name rule until the owner confirms the combination rule; `v_term_names` keeps its ordering and has no reader. (3) The coordinator's recommended rule, for the owner to confirm in one answer: a CSA or ISO form of the concept if one is attested in an instrument of that body; otherwise the most frequent written form; a named judge's pick overrides and is recorded with its reason; a concept with no form shows its English label.
+DATE: 2026-11-18 — owner statement (typed words, quoted above).
