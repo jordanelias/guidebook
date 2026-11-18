@@ -1827,6 +1827,101 @@ try:
                c12[0] and "not an attested member form" in c12[0] and c12[1] and "not an attested member form"
                in c12[1] and c12[2] and "that form's text" in c12[2], c12)
 
+        # T028-13 (OD-68, _name_holder): a name is compared with labels only when it is English, and with
+        # attested forms only of its own language: the same word in another language is no clash.
+        c13 = sqlite3.connect(DB)
+        try:
+            h13 = [db._name_holder(c13, n, l)["clashes"] for n, l in
+                   ((LAB28[1], NONEN[0]), (LAB28[1], "EN"), (F7, NONEN[0]), (F7, "EN"))]
+        finally:
+            c13.close()
+        record("T028-13", "_name_holder: a label is no clash for a non-English name and is one for the English "
+               "name; an attested English form is no clash in another language and is one in English",
+               h13[0] == [] and [c["term_id"] for c in h13[1] if c["kind"] == "label"] == [LAB28[0]]
+               and h13[2] == [] and [c["term_id"] for c in h13[3]] == [TA28], h13)
+
+        # T028-14 (OD-68, _near_terms through a writer): add-term --first-form with a name near another term's
+        # attested English form is accepted in another language and refused in English.
+        N14 = f"{F7} {W[9]}"
+        k14 = dict(first_form=N14, attestation="other_source", judge=JUDGE, dry_run=True, **LOCK)
+        w14 = attempt(ins, None, f"{W[2]} {W[8]} label", "TASK-FIXTURE: another language", T28S,
+                      form_language=NONEN[0], form_jurisdiction=NONEN[1], **k14)
+        m14 = refusal(ins, None, N14, "TASK-FIXTURE: English", T28S, form_language="EN",
+                      form_jurisdiction=ENSC[0], **k14)
+        record("T028-14", "add-term --first-form: a name near an attested English form of another term is accepted "
+               "in another language (two independent names) and refused in English (a near match)",
+               w14.get("term_id") and m14 and "near match" in m14 and TA28 in m14, (w14, m14))
+
+        # T028-15: add-term --first-form refuses a phrase whose observation is judged NOT-OURS, as the base route
+        # of add-alias does (one helper for both).
+        P15 = "corridor route is measured"
+        o15 = attempt(observe, obs(P15, "PDF page 2 / T028-15",
+                                   "the clear width of a corridor route is measured here"), S).get("observation_id")
+        attempt(adj, o15, "NOT-OURS", "TASK-FIXTURE: not a concept of ours", S)
+        n15 = q("SELECT COUNT(*) FROM terms")[0][0]
+        m15 = [refusal(ins, None, P15, "TASK-FIXTURE", T28S, first_form=P15, form_language="EN",
+                       form_jurisdiction=ENSC[0], attestation="other_source", judge=JUDGE, **LOCK),
+               refusal(aliasfn28, TA28, None, "SYNONYM", T28S, alias=P15, language="EN", jurisdiction=ENSC[0],
+                       attestation="other_source", **LOCK)]
+        record("T028-15", "add-term --first-form and add-alias's base route both refuse a phrase whose observation's "
+               "standing judgment names no term, naming the observation; no term is written",
+               all(m and f"observation {o15}" in m and "base route is for a form no observation covers" in m
+                   for m in m15) and q("SELECT COUNT(*) FROM terms")[0][0] == n15, m15)
+
+        # T028-16: rename-term --from-form refuses a form whose language is not the English label's.
+        fid16 = q("SELECT form_id FROM term_aliases WHERE term_id=? AND alias=?", TA28, F1)
+        m16 = refusal(_rename, TA28, F1, "TASK-FIXTURE", T28S, from_form=fid16[0][0] if fid16 else -1, judge=JUDGE)
+        record("T028-16", "rename-term --from-form refuses a non-English form as the English label, naming the "
+               "next action", m16 and "English label" in m16 and "add-alias" in m16, m16)
+
+        # T028-17: rename-term --from-form refuses an attested NARROWER form: a related search string is not a
+        # name of the concept (the member rule, read from v_term_names).
+        F17 = f"{W[3]} {W[5]}"
+        w17 = attempt(aliasfn28, TA28, None, "NARROWER", T28S, alias=F17, language="EN", jurisdiction=ENSC[0],
+                      attestation="other_source", **LOCK)
+        m17 = refusal(_rename, TA28, F17, "TASK-FIXTURE", T28S, from_form=w17.get("form_id", -1), judge=JUDGE)
+        record("T028-17", "rename-term --from-form refuses an attested NARROWER form (not a member form)",
+               w17.get("form_id") and m17 and "not an attested member form" in m17, (w17, m17))
+
+        # T028-18: alias_provenance_audit is NOT RUN (exit 2, no EXAMINED line, the cause named) when the
+        # zero-result search read cannot run; it never reports an empty subject. Fixture: a copy whose junction
+        # lacks form_id (SQL on a second copy).
+        DB18 = os.path.join(TMP, "t028-18.db")
+        shutil.copy(DB, DB18)
+        c18 = sqlite3.connect(DB18)
+        c18.execute("ALTER TABLE search_execution_forms RENAME COLUMN form_id TO taskfixture_fid")
+        c18.commit()
+        c18.close()
+        a18 = subprocess.run([sys.executable, str(REPO / "scripts" / "audit" / "alias_provenance_audit.py")],
+                             env={**ENV, "GUIDEBOOK_DB_PATH": DB18}, capture_output=True, text=True)
+        record("T028-18", "alias_provenance_audit exits 2 NOT RUN, with no EXAMINED line and the cause named, when "
+               "the zero-result search read cannot run",
+               a18.returncode == 2 and "NOT RUN" in a18.stdout and "EXAMINED" not in a18.stdout
+               and "form_id" in a18.stdout, (a18.returncode, a18.stdout[-300:]))
+
+        # T028-19 (E4; task file section 4 item 2): every writer whose name screen ran reports the seeds that
+        # hold the name, as information that refuses nothing: add-term on both routes, add-alias, rename-term,
+        # mint-term-from-catalogue.
+        P19 = "measured here"
+        x("INSERT INTO term_aliases (term_id, alias, language, alias_type, notes, created_at, "
+          "created_by_session, updated_at, updated_by_session, attestation) VALUES (?, ?, ?, 'SYNONYM', "
+          "'model-generated TASK-FIXTURE', 't', ?, 't', ?, 'model_seed')", TB28, P19, EN28, T28S, T28S)
+        o19 = attempt(observe, obs(P19, "PDF page 1 / T028-19",
+                                   "the clear width of a door leaf is measured here"), S).get("observation_id")
+        out19 = {
+            "add-term --from-observation": attempt(ins, o19, P19, "TASK-FIXTURE", T28S, dry_run=True),
+            "add-term --first-form": attempt(ins, None, S5, "TASK-FIXTURE", T28S, first_form=S5, form_language="EN",
+                                             form_jurisdiction=ENSC[0], attestation="other_source", judge=JUDGE,
+                                             dry_run=True, **LOCK),
+            "mint-term-from-catalogue": attempt(mint, **mt(canonical_en=S5), dry_run=True),
+            "add-alias": attempt(aliasfn28, TA28, None, "SYNONYM", T28S, alias=S5, language="EN",
+                                 jurisdiction=ENSC[0], attestation="other_source", **LOCK)}
+        out19["rename-term"] = attempt(_rename, TA28, S5, "TASK-FIXTURE: seed report", T28S,
+                                       from_form=out19["add-alias"].get("form_id", -1), judge=JUDGE)
+        bad19 = {k: v for k, v in out19.items() if [m.get("term_id") for m in v.get("seed_matches") or []] != [TB28]}
+        record("T028-19", "add-term (both routes), add-alias, rename-term and mint-term-from-catalogue each report "
+               "the seed holding the name in seed_matches and write or accept as before", not bad19, bad19)
+
 
     # ── A: the observation-quote backstop can go red ─────────────────────────────────
     a1 = run_audit("observation_verbatim_audit.py")

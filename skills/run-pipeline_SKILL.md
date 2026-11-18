@@ -85,11 +85,11 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   adjudication together, and writes the observed phrase as the concept's first form (`unrecorded` until its quote is
   verified, then promoted by `add-alias`); the English label must sit inside the phrase only when the phrase is English.
   A concept met in a located form with no observation is minted by `add-term --first-form` with its language,
-  jurisdiction, locator and `--attestation`, an English descriptive `--canonical-en`, and `--judge`. Both refuse a label
+  jurisdiction, locator and `--attestation`, an English descriptive `--canonical-en`, and `--judge`. Both refuse a phrase whose observation is judged to name no term, a label
   another term holds, a form another term holds attested in the same language, and a near match (shared tokens with an
   attested form of the same language, or with a label when the name is English; a seed never counts, E4; a word in
   another language is another name, OD-68) unless `--distinct-from TERM-ID` names it and the rationale says why.
-  `rename-term` takes one warrant (`--from-form <form_id>`, `--from-observation` or `--ruling-quote`) and `--judge`, and
+  `rename-term` takes one warrant (`--from-form <form_id>`, an attested English member form of the term; `--from-observation`; or `--ruling-quote`) and `--judge`, and
   records the former label in `term_label_picks`. `adjudicate-term` never writes NAMES-NEW. Owner approval is the data
   PR the owner reads (OR-17: "bulk, with me reading the PR"); `add-parameter` and `decline-parameter` take no
   approval flag; `--approval-ref` is the flag of the verbs that record an approval (derive them: `grep -n -F -- '"--approval-ref"' scripts/db.py`). `add-parameter` takes instead `--quantity-kind` and `--quantity-kind-observation-id` (T-020): the kind of quantity, from `base_quantity_kinds`, and the observation whose quote states a value of it.
