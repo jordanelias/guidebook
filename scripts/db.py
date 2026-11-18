@@ -2218,7 +2218,8 @@ def main():
                        help="Live vocabulary, read from term_relations.kind's own CHECK (the migration's DDL "
                             "comment defines each kind and its direction)")
     p_atr.add_argument("--to-term", dest="to_term", required=True, help="terms.term_id the row points at")
-    p_atr.add_argument("--reason", required=True, help="Why, in words (the judge's reason)")
+    p_atr.add_argument("--reason", help="Why, in words (the judge's reason). Optional: the warrant is the "
+                                        "row that says so; a blank reason is refused")
     p_atr.add_argument("--observation-id", dest="observation_id", type=int,
                        help="The warrant: the observed_terms row whose quote says so (exactly one warrant flag)")
     p_atr.add_argument("--extraction-id", dest="extraction_id", type=int,
@@ -7838,7 +7839,17 @@ def decline_parameter(term_id: str, reason: str, session: str, dry_run: bool = F
                 "dry_run": dry_run}
 
 
-def add_term_relation(from_term: str, kind: str, to_term: str, reason: str, session: str, *,
+def _term_id_order(term_id: str):
+    """The sort key of a term id: the number after its hyphen, then the text (`TERM-999` is below `TERM-1000`).
+    The same rule as migration 148's CHECK on a `distinct` row; an id without the form `PREFIX-NNN` is refused."""
+    head, hyphen, tail = term_id.partition("-")
+    if not (hyphen and tail.isdigit()):
+        raise Refusal(f"add-term-relation: term id {term_id!r} is not of the form PREFIX-NNN, so its order is "
+                      f"not defined. Nothing was written.")
+    return int(tail), term_id
+
+
+def add_term_relation(from_term: str, kind: str, to_term: str, reason, session: str, *,
                       observation_id: int = None, extraction_id: int = None, adjudication_id: int = None,
                       dry_run: bool = False):
     """Write one `term_relations` row: '<from term> <kind> <to term>', with the row that says so (T-029).
@@ -7849,8 +7860,10 @@ def add_term_relation(from_term: str, kind: str, to_term: str, reason: str, sess
     unknown term; the same term twice; no warrant, or more than one; a warrant row that does not exist; and a second
     live row of the same kind for the same pair in either direction (retire the held one first, with its reason). A
     `distinct` row is stored with the lower term id first, as the CHECK requires; the result names the order written."""
-    reason = dbcore.require_reason(reason, "add-term-relation",
-                                   why="A relation that cannot say why cannot be contested.")
+    if reason is not None and not reason.strip():
+        raise Refusal("add-term-relation: --reason is blank. Give the reason in words or leave the flag out; the "
+                      "warrant is the row that says so. Nothing was written.")
+    reason = reason.strip() if reason is not None else None
     warrants = {col: val for col, val in (("observation_id", observation_id), ("extraction_id", extraction_id),
                                           ("adjudication_id", adjudication_id)) if val is not None}
     if len(warrants) != 1:
@@ -7870,8 +7883,32 @@ def add_term_relation(from_term: str, kind: str, to_term: str, reason: str, sess
                               f"mint the missing one first (observe-term, then add-term --from-observation). "
                               f"Nothing was written.")
         if from_term == to_term:
-            raise Refusal(f"add-term-relation: {from_term} is both ends. A term is not related to itself. "
-                          f"Nothing was written.")
+            raise Refusal(f"add-term-relation: {from_term} is both ends. A term is not related to itself: name "
+                          f"two different terms in --from-term and --to-term. Nothing was written.")
+        if kind == "element has provision" and wcol == "adjudication_id":
+            raise Refusal("add-term-relation: an `element has provision` row rests on the source statement that "
+                          "says the element should carry the provision (OD-56): name its observation "
+                          "(--observation-id) or its extraction (--extraction-id), not an adjudication. Nothing "
+                          "was written.")
+        if kind == "element has parameter":
+            par = conn.execute("SELECT parameter_id, status, merged_into FROM base_parameters WHERE term_id=?",
+                               (to_term,)).fetchone()
+            seen = set()
+            while par is not None and par["status"] == "merged" and par["parameter_id"] not in seen:
+                seen.add(par["parameter_id"])
+                nxt = conn.execute("SELECT parameter_id, status, merged_into, term_id FROM base_parameters "
+                                   "WHERE parameter_id=?", (par["merged_into"],)).fetchone()
+                if nxt is None:
+                    break
+                if nxt["status"] == "active":
+                    raise Refusal(f"add-term-relation: {to_term}'s parameter {par['parameter_id']} was merged into "
+                                  f"parameter {nxt['parameter_id']} (term {nxt['term_id']}). Name that term in "
+                                  f"--to-term. Nothing was written.")
+                par = nxt
+            if par is not None and par["status"] != "active":
+                raise Refusal(f"add-term-relation: {to_term}'s parameter {par['parameter_id']} is {par['status']}, "
+                              f"so no element has it. Name a term whose parameter is active, or relate the "
+                              f"element to nothing. Nothing was written.")
         if not conn.execute(f'SELECT 1 FROM "{wtable}" WHERE "{wkey}"=?', (wval,)).fetchone():
             raise Refusal(f"add-term-relation: --{wcol.replace('_', '-')} {wval}: no such row in {wtable}. The "
                           f"warrant is the row that says so; record it first. Nothing was written.")
@@ -7887,7 +7924,7 @@ def add_term_relation(from_term: str, kind: str, to_term: str, reason: str, sess
                 f"pair, in one direction or the other. Retire it first with retire-term-relation --relation-id "
                 f"{held['relation_id']} --reason ... if it is wrong. Nothing was written.")
         if kind == "distinct":
-            from_term, to_term = lo, hi
+            from_term, to_term = sorted((from_term, to_term), key=_term_id_order)
         row = {"from_term_id": from_term, "kind": kind, "to_term_id": to_term, "reason": reason, wcol: wval}
         row.update(dbcore.stamp_for(conn, "term_relations", session))
         cur = conn.execute(f"INSERT INTO term_relations ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
@@ -7907,7 +7944,9 @@ def retire_term_relation(relation_id: int, reason: str, session: str, dry_run: b
         row = conn.execute("SELECT relation_id, retired_at FROM term_relations WHERE relation_id=?",
                            (relation_id,)).fetchone()
         if row is None:
-            raise Refusal(f"retire-term-relation: relation {relation_id}: no such relation. Nothing was written.")
+            raise Refusal(f"retire-term-relation: relation {relation_id}: no such relation. Read the ids with "
+                          f"`select relation_id, from_term_id, kind, to_term_id from term_relations where "
+                          f"retired_at is null`. Nothing was written.")
         if row["retired_at"] is not None:
             raise Refusal(f"retire-term-relation: relation {relation_id} was retired at {row['retired_at']}. A "
                           f"retired relation is not revived; write a new one with add-term-relation. Nothing "
@@ -7922,24 +7961,51 @@ def element_parameters(element: str):
     """Read-only (T-029; read by T-033 and render): an element term's parameters and its provisions.
 
     The live `element has parameter` and `element has provision` rows from the element, each with the term it
-    points at, that term's parameter if it has one (`base_parameters.term_id`, looked up and never copied), the
-    reason and the warrant pointer. A provision whose term also carries a parameter is printed as it is: the
-    provision is not a parameter (OD-56), and the reader does not hide the contradiction."""
+    points at, the reason and the warrant pointer. A parameter is looked up, never copied (`base_parameters.term_id`),
+    and a merged parameter is followed through `merged_into` to the one that stands, as `v_deferred_acts` does:
+    `parameter_id` and `parameter_term_id` are the standing parameter's, `merged_from_parameter_id` the one the row
+    was written against. `parameter_id` is null for a term that is not (yet) a parameter, and `declined` says that
+    the term carries a live declination (it is not to be a parameter). A provision is not a parameter (OD-56), so
+    a provision whose term carries a parameter is printed as it is, not hidden."""
     with connect(readonly=True) as conn:
         el = conn.execute("SELECT term_id, canonical_en FROM terms WHERE term_id=?", (element,)).fetchone()
         if el is None:
             raise Refusal(f"element-parameters: --element {element!r}: no such term. Name a held term_id "
                           f"(select term_id, canonical_en from terms).")
+
+        def standing(term_id):
+            par = conn.execute("SELECT parameter_id, term_id, status, merged_into FROM base_parameters "
+                               "WHERE term_id=?", (term_id,)).fetchone()
+            first, seen = (par["parameter_id"] if par else None), set()
+            while par is not None and par["status"] == "merged" and par["parameter_id"] not in seen:
+                seen.add(par["parameter_id"])
+                nxt = conn.execute("SELECT parameter_id, term_id, status, merged_into FROM base_parameters "
+                                   "WHERE parameter_id=?", (par["merged_into"],)).fetchone()
+                if nxt is None:
+                    break
+                par = nxt
+            return first, par
+
         out = {"element": {"term_id": el["term_id"], "label": el["canonical_en"]}}
         for key, kind in (("parameters", "element has parameter"), ("provisions", "element has provision")):
-            out[key] = [dict(r) for r in conn.execute(
-                "SELECT r.relation_id, r.to_term_id AS term_id, t.canonical_en AS label, p.parameter_id, "
-                "p.status AS parameter_status, r.reason, r.observation_id, r.extraction_id, r.adjudication_id, "
-                "r.created_by_session, r.created_at "
-                "FROM term_relations r JOIN terms t ON t.term_id = r.to_term_id "
-                "LEFT JOIN base_parameters p ON p.term_id = r.to_term_id "
-                "WHERE r.from_term_id=? AND r.kind=? AND r.retired_at IS NULL ORDER BY r.relation_id",
-                (element, kind))]
+            rows = []
+            for r in conn.execute(
+                    "SELECT r.relation_id, r.to_term_id AS term_id, t.canonical_en AS label, r.reason, "
+                    "r.observation_id, r.extraction_id, r.adjudication_id, r.created_by_session, r.created_at, "
+                    "EXISTS (SELECT 1 FROM parameter_declinations d WHERE d.term_id = r.to_term_id "
+                    "AND d.revoked_at IS NULL) AS declined "
+                    "FROM term_relations r JOIN terms t ON t.term_id = r.to_term_id "
+                    "WHERE r.from_term_id=? AND r.kind=? AND r.retired_at IS NULL ORDER BY r.relation_id",
+                    (element, kind)):
+                first, par = standing(r["term_id"])
+                row = dict(r)
+                row["declined"] = bool(row["declined"])
+                row["parameter_id"] = par["parameter_id"] if par else None
+                row["parameter_term_id"] = par["term_id"] if par else None
+                row["parameter_status"] = par["status"] if par else None
+                row["merged_from_parameter_id"] = first if par and first != par["parameter_id"] else None
+                rows.append(row)
+            out[key] = rows
         return out
 
 
