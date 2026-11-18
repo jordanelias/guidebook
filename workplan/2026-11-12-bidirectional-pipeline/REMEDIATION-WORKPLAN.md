@@ -1328,6 +1328,15 @@ Each entry was written as **OWNER DECISION REQUIRED**; its status line says what
 - **Tasks blocked until answered.** None.
 - **Where the evidence is.** `PROPAGATION-AND-CONSOLIDATION-ADJUDICATION.md` gap G14 and section 8 (the draft ledger entry)
 
+### OD-71  The base grounds itself: how evidence that allowed a new term, form or parameter is absorbed
+
+- **Status (2026-11-18): ANSWERED BY THE OWNER** (ledger: `grep -n -F "OD-71 STATUS:" references/project-standards.md`, entry "Owner statements 2026-11-18 — OD-71 …"). Raised by the coordinator after the second tooling stack's critics found that `term_label_picks.observation_id` (T-028) and the warrant keys of `term_relations` (T-029) point from base tables into the evidence stage, against the owner's statement of 2026-11-06 (seventh). **The ruling:** the base grounds itself, except that evidence which allowed a new term, form or parameter to be found may be pointed to as its justification; that justification is then absorbed into the base's own columns and grounded as if it were always there, to prevent loops, recursion and sequencing conflicts. A `ref_id` may be kept beside it as provenance only, a cell nothing depends on. **Holds:** no task by gate; it requires compensating changes to T-028 and T-029 (repair commits of the second stack), and binds every later base table that carries a warrant (T-107, T-129, T-130).
+- **Not decided:** whether the absorbed grounding repeats the quoted words or only the locator; how an existing pointer is migrated.
+
+### OD-72  How a concept's displayed name is chosen
+
+- **Status (2026-11-18): REFERRED BACK TO THE OWNER** (ledger: `grep -n -F "OD-72 STATUS:" references/project-standards.md`). The owner's direction: not "first recorded" (OD-38, 2026-11-12) but "likely a convergence test for number of term appearances for concept, or I rule". A direction, not a decision: "likely". **Questions in plain words:** what counts as an appearance (a row of `term_aliases`; a row per language and jurisdiction; a source), what tolerance the convergence has, how a tie is broken, a concept with no form, and how "a concept first met outside English" is decided. **Holds:** no task; `v_term_names` (T-028) has no reader and keeps ordering by the form's number, and a named judge's pick stays as recorded.
+
 ## 9. Retained stress-test value
 
 Three rounds of stress scripts found defects that no registered check finds. What is kept and why is in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/RETAINED.md` (the owner permitted retention: `grep -n -F "retain" references/project-standards.md | tail -3`).

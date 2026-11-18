@@ -7768,3 +7768,42 @@ SUPERSEDES: decisions/DR-2026-08-19-research-restart-operative-instrument.md :: 
 CONDITION: any session screening a name across languages, proposing consolidation candidates, assigning or changing a concept's domain, executing T-135, or meeting §12.5's "tier and evidence-type assignment".
 ACTION: (1) Treat a written word in two languages as two names (OD-68). (2) Read "category" as a concept's topic area, and do not execute T-135 or add or change a domain until the owner confirms the list (OD-69). (3) Compute the tier from the judged type and scope (OD-70). (4) Ask the owner the open part of OD-69 in its plain form; do not resolve it under delegation.
 DATE: 2026-11-17 — owner answers (typed words, quoted above).
+
+## Owner statements 2026-11-18 — OD-71 (the base grounds itself, and how evidence that allowed a new term, form or parameter is absorbed) and OD-72 (how a concept's displayed name is chosen)
+
+Given in the session `session_2026-11-16-remediation-batch-1-tooling-stack` (https://claude.ai/code/session_01Ub36iMfdrQNV9XzGP4dyZm), in four typed messages while the second tooling stack was being built, the first after the coordinator reported that `term_label_picks.observation_id` and the warrant keys of `term_relations` point from base tables into the evidence stage, the third after the coordinator put the two questions of the term-name view (the sweep list of `session_2026-11-18-remediation-batch-1-tooling-stack-2`) to the owner, and the fourth in answer to the coordinator's one question whether a base row may keep a source's `ref_id`. Server-clock times were not captured; derive them from the preserved transcript (`git grep -n -F "absorbed by base and grounded" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "then the base grounds itself except for when evidence that allows for new terms/aliases/parameters to be found is pointed to as justification"
+>
+> "but this justification should then be absorbed by base and grounded as if it were always there to prevent loops/recursion/sequencing conflicts"
+>
+> "likely have to do a convergence test for number of term appearances for concept or I rule"
+>
+> "ref_id as provenance? sure. but it's ONLY for provenance"
+
+**Readings.**
+
+- [ASSUMPTION: OD-71. A base row (a term, a form of it, a parameter, a relation, a label pick) may cite the evidence row (an observation, a source, an extraction) that allowed the item to be found, as its justification; that is the exception to "the base grounds itself" (2026-11-06, seventh statement) — basis: the first sentence].
+- [ASSUMPTION: OD-71. "absorbed by base and grounded as if it were always there" means the base keeps the justification in its OWN columns (what was found and where: the form, its language and jurisdiction, the source's URL, page and line, and the quoted words), so the base row reads, checks and orders without any evidence row, and nothing in the base waits on that evidence being admitted, adjudicated or verified, or is sequenced after it; the evidence stage keeps its own judgment, tier and verification of the source, which the base does not hold — basis: the second sentence and its stated purpose, "to prevent loops/recursion/sequencing conflicts"; this keeps CLAUDE.md rule 5 (a fact in one home) where it can: where a form was found is the base's fact, the source's standing is the evidence stage's].
+- [ASSUMPTION: OD-71. A base row may keep the source's `ref_id` (or an observation id) beside the absorbed grounding, and that is ONLY provenance: nothing in the base validates against it, orders after it, joins through it to decide a state, or waits on it; a base writer neither requires it nor refuses a row for lacking it — basis: "ref_id as provenance? sure. but it's ONLY for provenance"]. The wording of the owner's second statement on whether the quoted words are repeated in the base row (or only the locator) is NOT stated and is not read in.
+- [ASSUMPTION: OD-72. "number of term appearances for concept" means the number of occurrences of a form among a concept's forms (the rows of `term_aliases`, one per occurrence since migration 146), and "a convergence test" means the displayed name is the form whose appearances converge, and "or I rule" means the owner may set the name by a named judge's pick as OD-38 already provides — basis: the words; "likely" marks a direction, not a settled rule].
+- OD-72 is a DIRECTION, not a decision: "likely have to do". It moves OD-38's "first recorded" (2026-11-12, fifth set) toward a count of appearances; it does not withdraw OD-38's "until a named judge picks; the pick is recorded with its reason".
+
+OD-71: the base grounds itself; evidence that allowed a new term, form or parameter is absorbed into the base's own columns
+OD-71 STATUS: ANSWERED BY THE OWNER
+
+OD-72: displayed name by a convergence test on the appearances of a form for a concept, or the owner's ruling; the test is not specified
+OD-72 STATUS: REFERRED BACK TO THE OWNER
+
+**What it does.**
+
+- **OD-71.** A base table holds no foreign key into the evidence stage and no pointer that a base row's validity waits on. Where a base row is justified by evidence, the justification is written into the base row's own cells. Sequencing runs one way only: evidence may be found and named from the base; the base is never ordered after evidence. It reaches `term_label_picks.observation_id` and `add-term --from-observation`'s hold of a form `unrecorded` until a quote verifies (T-028), the warrant keys of `term_relations` (T-029), `term_aliases`' own source columns, and any later base table that carries a warrant.
+- **OD-72.** The displayed name of a concept stops reading "first recorded" and reads a count of appearances, unless a named judge has picked; the owner is to specify the test.
+
+**What it does not decide.** OD-71: whether the absorbed grounding repeats the quoted words or only the locator; how an existing pointer is migrated. OD-72: what counts as an appearance (a row of `term_aliases`; a row per language and jurisdiction; a source), the tolerance of the convergence, the tie, a concept with no form, and how "a concept first met outside English" is decided (the second question of the sweep list).
+
+CONDITION: any session adding or changing a base table, a base writer, or the displayed name of a concept; any session meeting `term_label_picks.observation_id`, the warrant keys of `term_relations`, or "first recorded" in `v_term_names`.
+ACTION: (1) Write a base row's justification into the base's own columns; add no foreign key from a base table into evidence or judgment; a `ref_id` may be kept as plain provenance, a cell nothing depends on (OD-71). (2) Do not choose the displayed name by `MIN(form_id)` or by recency; until the owner specifies the test, the view keeps showing the name by the form's number and picks by a named judge stay as recorded (OD-72). (3) Ask the owner the open parts in their plain form; do not resolve them under delegation.
+DATE: 2026-11-18 — owner statements (typed words, quoted above).
