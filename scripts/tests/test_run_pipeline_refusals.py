@@ -3338,10 +3338,11 @@ def _one(sql, *p):
         return None
 
 
-# T-020: a promotion names a quantity kind and an observation whose quote holds a digit; both derived, never typed.
+# T-020, T-083: a promotion names a quantity kind (derived, never typed) and where a source states a value of it, held
+# on the parameter's own row (OD-71; the locator is a fixture).
 _KIND = _one("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id LIMIT 1")
-_OBS_NUM = _one("SELECT observation_id FROM observed_terms WHERE context_quote GLOB '*[0-9]*' ORDER BY observation_id LIMIT 1")
-_FULL = dict(quantity_kind=_KIND, quantity_kind_observation_id=_OBS_NUM)
+_WARRANT = dict(quantity_kind_source_url="https://example.org/task-fixture", quantity_kind_source_page="TASK-FIXTURE")
+_FULL = dict(quantity_kind=_KIND, **_WARRANT)
 # The six the T-010 task names are a floor the rule may grow from, not shrink from (a pin of a judged rule, not a second home).
 _TASK_SIX = {"functional_axis", "population", "medical", "methodology", "legal", "economics"}
 if feature("T010-01", "the rule dbcore.NON_QUANTITY_DOMAINS exists, holds at least the six the task names, and every member is a "
@@ -3457,10 +3458,10 @@ if feature("T020-01", "base_quantity_kinds exists and db.insert_quantity_kind ex
                              "ORDER BY t.term_id")
              if not db._VALUE_BEARING_NAME.search(scalar("SELECT canonical_en FROM terms WHERE term_id=?", t))
              and dbcore.domain_key(scalar("SELECT domain FROM terms WHERE term_id=?", t)) not in _NQ]
-    _no_digit = scalar("SELECT observation_id FROM observed_terms WHERE context_quote NOT GLOB '*[0-9]*' ORDER BY observation_id LIMIT 1")
-    _no_obs = scalar("SELECT COALESCE(MAX(observation_id), 0) + 1 FROM observed_terms")
-    if not _free or _OBS_NUM is None:
-        skip("T020-02..T020-08", "no free term, or no observation whose quote holds a digit")
+    # a ref_id no source holds: OD-71 keeps it as provenance only, so the writer must not validate it
+    _no_ref = "TASK-FIXTURE-" + str(scalar("SELECT COUNT(*) FROM evidence_sources"))
+    if not _free:
+        skip("T020-02..T020-08", "no free term")
     else:
         _t = _free[0]
         _r = refusal(db.insert_parameter, _t, S, dry_run=True)
@@ -3468,21 +3469,29 @@ if feature("T020-01", "base_quantity_kinds exists and db.insert_quantity_kind ex
                _r and all(k in _r for k in _kinds) and "add-quantity-kind" in _r and "Nothing was written" in _r, _r)
         _r = refusal(db.insert_parameter, _t, S, quantity_kind="zz_" + _kinds[0], dry_run=True)
         record("T020-03", "the same term with a kind that is not in the table is refused", _r and "zz_" + _kinds[0] in _r and all(k in _r for k in _kinds), _r)
+        _url = _WARRANT["quantity_kind_source_url"]
         _r1 = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, dry_run=True)
-        _r2 = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, quantity_kind_observation_id=_no_obs, dry_run=True)
-        record("T020-04", "a kind and no observation id, or an id that is not a row of observed_terms, is refused, naming the flag",
-               _r1 and _r2 and "--quantity-kind-observation-id" in _r1 and "--quantity-kind-observation-id" in _r2 and "observe-term" in _r2, (_r1, _r2))
-        if _no_digit is None:
-            skip("T020-05", "no observation whose context_quote holds no digit")
-        else:
-            _r = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, quantity_kind_observation_id=_no_digit, dry_run=True)
-            record("T020-05", "a kind and an observation whose quote holds no digit is refused", _r and "no digit" in _r and "Nothing was written" in _r, _r)
+        _r2 = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, quantity_kind_source_url=_url, dry_run=True)
+        _r3 = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, quantity_kind_source_page="TASK-FIXTURE", dry_run=True)
+        record("T020-04", "a kind with no warrant, a URL with no page or clause, or a page with no URL is refused, naming the warrant "
+               "flags (OD-71: the warrant is held on the row)",
+               all(r and "--quantity-kind-source-url" in r and "--quantity-kind-source-page" in r and "--quantity-kind-source-clause" in r
+                   and "Nothing was written" in r for r in (_r1, _r2, _r3)), (_r1, _r2, _r3))
+        _bad = {"not http": dict(_WARRANT, quantity_kind_source_url="ftp://example.org/x"),
+                "blank page beside a clause": dict(_WARRANT, quantity_kind_source_page="  ", quantity_kind_source_clause="TASK-FIXTURE"),
+                "line 0": dict(_WARRANT, quantity_kind_source_line=0)}
+        _rb = {k: refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, dry_run=True, **v) for k, v in _bad.items()}
+        record("T020-05", "a malformed warrant is refused, each fault alone, naming its own flag (a non-http URL, a blank page, a line of 0)",
+               "--quantity-kind-source-url" in (_rb["not http"] or "") and "--quantity-kind-source-page" in (_rb["blank page beside a clause"] or "")
+               and "--quantity-kind-source-line" in (_rb["line 0"] or ""), _rb)
         with scratch() as c:           # a real write on the scratch copy
-            _res, _err = ok(db.insert_parameter, _t, S, notes="TASK-FIXTURE", **_FULL)
-            _row = c.execute("SELECT quantity_kind, quantity_kind_observation_id, created_by_session FROM base_parameters WHERE term_id=?", (_t,)).fetchone()
-            record("T020-06", "a kind and an observation whose quote holds a digit is accepted; the row carries both values and the session",
-                   _err is None and _row and tuple(_row) == (_KIND, _OBS_NUM, S) and _res["quantity_kind"] == _KIND
-                   and _res["quantity_kind_observation_id"] == _OBS_NUM, (_err, _row))
+            _res, _err = ok(db.insert_parameter, _t, S, notes="TASK-FIXTURE", quantity_kind_ref_id=_no_ref, **_FULL)
+            _row = c.execute("SELECT quantity_kind, quantity_kind_source_url, quantity_kind_source_page, quantity_kind_ref_id, "
+                             "created_by_session FROM base_parameters WHERE term_id=?", (_t,)).fetchone()
+            record("T020-06", "a kind and a located warrant is accepted; the row carries the kind, the locator, the ref_id as given "
+                   "(provenance only: one no source holds is not refused) and the session",
+                   _err is None and _row and tuple(_row) == (_KIND, _url, "TASK-FIXTURE", _no_ref, S) and _res["quantity_kind"] == _KIND
+                   and _res["quantity_kind_source_url"] == _url, (_err, _row))
         _nq = next((t for d in sorted(_NQ) for (t,) in q("SELECT term_id FROM terms WHERE term_id NOT IN (SELECT term_id FROM base_parameters) "
                                                          "AND lower(trim(domain)) = ? ORDER BY term_id", d)), None)
         if _nq is None:
@@ -3500,7 +3509,7 @@ if feature("T020-01", "base_quantity_kinds exists and db.insert_quantity_kind ex
             _bad += [refusal(db.insert_quantity_kind, _fx, "a fixture quantity of 3 parts", _heading, S),
                      refusal(db.insert_quantity_kind, _KIND, "a fixture quantity", _heading, S)]
             _res, _err = ok(db.insert_quantity_kind, _fx, "a fixture quantity", _heading, S)
-            _res2, _err2 = ok(db.insert_parameter, _t, S, notes="TASK-FIXTURE", quantity_kind=_fx, quantity_kind_observation_id=_OBS_NUM)
+            _res2, _err2 = ok(db.insert_parameter, _t, S, notes="TASK-FIXTURE", quantity_kind=_fx, **_WARRANT)
             # the refusal names the kinds the TABLE holds now: the fixture kind, which no code could have typed, is listed
             _r_after = refusal(db.insert_parameter, _free[1] if len(_free) > 1 else _t, S, quantity_kind="zz_" + _fx, dry_run=True)
             record("T020-08", "add by data: insert_quantity_kind refuses a missing or unresolvable approval, an ill-shaped id (each rule alone), a digit in the "

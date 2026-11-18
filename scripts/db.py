@@ -2186,12 +2186,21 @@ def main():
                            "(the refusal lists them; db.py add-quantity-kind adds one). Two cases are two "
                            "parameters only when they cannot be placed on one scale or their accessibility "
                            "directions differ.")
-    p_ap.add_argument("--quantity-kind-observation-id", dest="quantity_kind_observation_id", type=int,
-                      help="the observed_terms row (db.py observe-term) whose verbatim context_quote shows a "
-                           "source stating a value of this quantity: the warrant for the kind")
+    _kind_warrant_flags(p_ap)
     p_ap.add_argument("--notes")
     p_ap.add_argument("--session", required=True)
     p_ap.add_argument("--dry-run", action="store_true")
+
+    # set-parameter-kind -- the kind and its warrant on a parameter that already exists (T-083), written once.
+    p_spk = sub.add_parser("set-parameter-kind",
+                           help="Set the quantity kind and where a source states a value of it on an existing "
+                                "active parameter that has none (written once)")
+    p_spk.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
+    p_spk.add_argument("--quantity-kind", dest="quantity_kind",
+                       help="a kind_id of base_quantity_kinds (the refusal lists them; db.py add-quantity-kind adds one)")
+    _kind_warrant_flags(p_spk)
+    p_spk.add_argument("--session", required=True)
+    p_spk.add_argument("--dry-run", action="store_true")
 
     # add-quantity-kind — a quantity kind is added by data, on a ledger pointer (T-020).
     p_aqk = sub.add_parser("add-quantity-kind",
@@ -3827,9 +3836,14 @@ def main():
             notes=args.notes,
             session=args.session,
             quantity_kind=args.quantity_kind,
-            quantity_kind_observation_id=args.quantity_kind_observation_id,
             dry_run=args.dry_run,
+            **_kind_warrant_args(args),
         ))
+
+    elif args.command == "set-parameter-kind":
+        _emit(set_parameter_kind(
+            parameter_id=args.parameter_id, quantity_kind=args.quantity_kind, session=args.session,
+            dry_run=args.dry_run, **_kind_warrant_args(args)))
 
     elif args.command == "add-quantity-kind":
         _emit(insert_quantity_kind(
@@ -7570,7 +7584,9 @@ def _name_holder(conn, name, language, *, exclude_term=None):
 
 
 def insert_parameter(term_id: str, session: str, notes: str = None,
-                     quantity_kind: str = None, quantity_kind_observation_id: int = None,
+                     quantity_kind: str = None, quantity_kind_source_url: str = None,
+                     quantity_kind_source_page: str = None, quantity_kind_source_line: int = None,
+                     quantity_kind_source_clause: str = None, quantity_kind_ref_id: str = None,
                      dry_run: bool = False):
     """Promote an adjudicated term into `base_parameters` — THE SUBJECT of a determination.
 
@@ -7616,15 +7632,15 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
       that guard existed could still carry it, and promotion to parameter is the last
       gate before the name becomes a determination's subject.
 
-    * (T-020) No quantity kind, or one not a row of `base_quantity_kinds`; no warrant, or one that is not a row
-      of `observed_terms`; a warrant whose `context_quote` holds no digit. Whether a term names an element or a
-      quantity is a judgment no script can compute (CLAUDE.md rule 8), so the writer asks for it, constrained to
-      the live kinds, and records the answer on the row with a POINTER to the observation that warrants it (rule 5:
-      the source's words already have a home). Checked after every refusal above, so each keeps its own message.
-      The writer does not require the observation to be adjudicated to this term and does not compare its words
-      with the term's name (R11: a source's phrase is not normalised): a determined operator can still point
-      `grab bar` at an observation stating a length. The promotion is then recorded with its warrant and
-      contestable, not prevented.
+    * (T-020, T-083) No quantity kind, or one not a row of `base_quantity_kinds`; no warrant, or a malformed one
+      (`_kind_refusal`, shared with `set-parameter-kind`). Whether a term names an element or a quantity is a
+      judgment no script can compute (CLAUDE.md rule 8), so the writer asks for it, constrained to the live kinds,
+      and records the answer on the row with its warrant: where a source states a value of the quantity, held in
+      the row's own cells (OD-71: the base grounds itself; `--quantity-kind-ref-id` is provenance only). Checked
+      after every refusal above, so each keeps its own message. A determined operator can still point `grab bar`
+      at a page stating a length; the promotion is then recorded with its warrant and contestable, not prevented.
+      NOT CHECKED SINCE MIGRATION 155: that the warrant's words hold a digit (T-020 read it from the observation
+      the row pointed at; OD-71 removed the pointer, and whether the quoted words are kept is the owner's).
 
     DELIBERATELY ABSENT, and must stay absent: no --status and no --merged-into. A
     parameter is created active. Merging one into another is a different act on an
@@ -7703,32 +7719,10 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 f"(status {clash['status']}). One parameter per term — a second row is "
                 f"the dual home rule 5 forbids.\n"
                 f"Key the determination on parameter_id {clash['parameter_id']}.")
-        kinds = [r[0] for r in conn.execute("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id")]
-        quantity_kind = str(quantity_kind or "").strip()
-        if quantity_kind not in kinds:
-            raise Refusal(
-                f"{term_id} ({term['canonical_en']!r}): --quantity-kind {quantity_kind or '(none)'!r} is not a "
-                f"kind of base_quantity_kinds. A parameter is a quantity: say which kind. The kinds are "
-                f"{kinds}; a kind that is missing is added by data: db.py add-quantity-kind --kind-id ... "
-                f"--definition ... --approval-ref '<dated ledger heading>' --session ... Nothing was written.\n"
-                f"Two cases are two parameters only when they cannot be placed on one scale or their "
-                f"accessibility directions differ.")
-        warrant = (conn.execute("SELECT observation_id, context_quote FROM observed_terms WHERE observation_id=?",
-                                [quantity_kind_observation_id]).fetchone()
-                   if quantity_kind_observation_id is not None else None)
-        if warrant is None:
-            raise Refusal(
-                f"{term_id} ({term['canonical_en']!r}): --quantity-kind-observation-id "
-                f"{quantity_kind_observation_id!r} is not a row of observed_terms. The kind {quantity_kind!r} is a "
-                f"judgment and needs its warrant: the observation (db.py observe-term) whose verbatim "
-                f"context_quote shows a source stating a value of this quantity. Nothing was written.")
-        if not any(ch.isdigit() for ch in (warrant["context_quote"] or "")):
-            raise Refusal(
-                f"{term_id} ({term['canonical_en']!r}): observation {warrant['observation_id']} holds no digit in "
-                f"its context_quote; a passage stating no value cannot show what the quantity is measured in. "
-                f"Point --quantity-kind-observation-id at an observation that does. Nothing was written.")
-        row = {"term_id": term_id, "status": "active", "notes": notes,
-               "quantity_kind": quantity_kind, "quantity_kind_observation_id": warrant["observation_id"]}
+        kind = _kind_refusal(conn, f"{term_id} ({term['canonical_en']!r})", "add-parameter", quantity_kind,
+                             quantity_kind_source_url, quantity_kind_source_page, quantity_kind_source_line,
+                             quantity_kind_source_clause, quantity_kind_ref_id)
+        row = {"term_id": term_id, "status": "active", "notes": notes, **kind}
         row.update(dbcore.stamp_for(conn, "base_parameters", session))
         cur = conn.execute(f"INSERT INTO base_parameters ({','.join(row)}) "
                            f"VALUES ({','.join('?'*len(row))})", list(row.values()))
@@ -7737,9 +7731,101 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 "provenance": ("adjudicated" if adj else "base-vocabulary"),
                 "adjudicated_by": (adj["adjudication_id"] if adj else None),
                 "outcome": (adj["outcome"] if adj else None),
-                "quantity_kind": quantity_kind,
-                "quantity_kind_observation_id": warrant["observation_id"],
+                **kind,
                 "dry_run": dry_run}
+
+
+def _kind_warrant_flags(p):
+    """The warrant flags of add-parameter and set-parameter-kind: one spelling for both (T-083)."""
+    p.add_argument("--quantity-kind-source-url", dest="quantity_kind_source_url",
+                   help="the warrant for the kind (OD-71: held on the parameter's own row): the http(s) URL of a "
+                        "source that states a value of this quantity; with --quantity-kind-source-page or "
+                        "--quantity-kind-source-clause")
+    p.add_argument("--quantity-kind-source-page", dest="quantity_kind_source_page",
+                   help="the page where the value is stated (this or --quantity-kind-source-clause)")
+    p.add_argument("--quantity-kind-source-line", dest="quantity_kind_source_line", type=int, help="line, optional")
+    p.add_argument("--quantity-kind-source-clause", dest="quantity_kind_source_clause",
+                   help="the clause where the value is stated (or --quantity-kind-source-page)")
+    p.add_argument("--quantity-kind-ref-id", dest="quantity_kind_ref_id",
+                   help="the source's ref_id, as PROVENANCE ONLY: validated against nothing, read by no decision (OD-71)")
+
+
+def _kind_warrant_args(args):
+    return {k: getattr(args, k) for k in ("quantity_kind_source_url", "quantity_kind_source_page",
+                                          "quantity_kind_source_line", "quantity_kind_source_clause",
+                                          "quantity_kind_ref_id")}
+
+
+def _kind_refusal(conn, label, verb, quantity_kind, source_url, source_page, source_line, source_clause, ref_id):
+    """The refusals on a parameter's quantity kind and its warrant, one home for add-parameter and set-parameter-kind
+    (T-020, T-083): the kind is a row of `base_quantity_kinds` (the refusal names every kind and the verb that adds
+    one); the warrant says where a source states a value of the quantity, in the row's own cells (OD-71: a URL and a
+    page or a clause, checked as add-alias checks a locator). `ref_id` is provenance only: kept, never checked.
+    Returns the cells to write."""
+    kinds = [r[0] for r in conn.execute("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id")]
+    quantity_kind = str(quantity_kind or "").strip()
+    if quantity_kind not in kinds:
+        raise Refusal(
+            f"{label}: --quantity-kind {quantity_kind or '(none)'!r} is not a "
+            f"kind of base_quantity_kinds. A parameter is a quantity: say which kind. The kinds are "
+            f"{kinds}; a kind that is missing is added by data: db.py add-quantity-kind --kind-id ... "
+            f"--definition ... --approval-ref '<dated ledger heading>' --session ... Nothing was written.\n"
+            f"Two cases are two parameters only when they cannot be placed on one scale or their "
+            f"accessibility directions differ.")
+    stripped = [v.strip() if isinstance(v, str) else v for v in (source_url, source_page, source_clause)]
+    if not stripped[0] or not (stripped[1] or stripped[2]):
+        raise Refusal(
+            f"{label}: the kind {quantity_kind!r} is a judgment and needs its warrant, held on the parameter's own "
+            f"row (OD-71): where a source states a value of this quantity. Give --quantity-kind-source-url and "
+            f"--quantity-kind-source-page or --quantity-kind-source-clause (--quantity-kind-source-line is "
+            f"optional; --quantity-kind-ref-id, the source's ref_id, is provenance only). Nothing was written.")
+    url, page, clause = _check_base_locator(verb, [], source_url, source_page, source_line, source_clause,
+                                            prefix="quantity-kind-")
+    ref_id = (ref_id.strip() or None) if isinstance(ref_id, str) else ref_id
+    return {"quantity_kind": quantity_kind, "quantity_kind_source_url": url, "quantity_kind_source_page": page,
+            "quantity_kind_source_line": source_line, "quantity_kind_source_clause": clause,
+            "quantity_kind_ref_id": ref_id}
+
+
+def set_parameter_kind(parameter_id: int, quantity_kind: str, session: str, quantity_kind_source_url: str = None,
+                       quantity_kind_source_page: str = None, quantity_kind_source_line: int = None,
+                       quantity_kind_source_clause: str = None, quantity_kind_ref_id: str = None,
+                       dry_run: bool = False):
+    """Set the quantity kind and its warrant on a parameter that already exists (T-083; T-109 is its reader).
+
+    Refuses, in this order: an unknown parameter; one that is not active (a merge names its survivor); the shared
+    refusals of `_kind_refusal`; a parameter whose kind is already set (WRITE-ONCE: a kind that changed under a
+    parameter would change what every stored figure of it means; no overwrite path is built); a LIVE determination
+    or an OPEN gate on it (`_refuse_live_work`: a determination computed before the parameter had a kind would
+    silently gain one). Then one UPDATE of the kind and warrant cells with the updated_* stamp."""
+    with connect(dry_run) as conn:
+        row = _parameter_row(conn, parameter_id, "set-parameter-kind")
+        label = f"{row['term_id']} ({row['canonical_en']!r})"
+        if row["status"] != "active":
+            target = (f" into {row['merged_into']}: set the kind on the survivor, parameter {row['merged_into']}"
+                      if row["merged_into"] else ": a retired parameter takes no kind")
+            raise Refusal(f"set-parameter-kind: parameter {parameter_id} {label} is {row['status']}{target}. "
+                          f"Nothing was written.")
+        kind = _kind_refusal(conn, label, "set-parameter-kind", quantity_kind, quantity_kind_source_url,
+                             quantity_kind_source_page, quantity_kind_source_line, quantity_kind_source_clause,
+                             quantity_kind_ref_id)
+        held = conn.execute("SELECT quantity_kind, quantity_kind_source_url, quantity_kind_source_page, "
+                            "quantity_kind_source_clause FROM base_parameters WHERE parameter_id = ?",
+                            (parameter_id,)).fetchone()
+        if held["quantity_kind"] is not None:
+            raise Refusal(
+                f"set-parameter-kind: parameter {parameter_id} {label} already has the kind "
+                f"{held['quantity_kind']!r}, warranted by {held['quantity_kind_source_url']} "
+                f"(page {held['quantity_kind_source_page']!r}, clause {held['quantity_kind_source_clause']!r}). A kind "
+                f"is written once: a different kind is a new decision about what the parameter is; file a GAP "
+                f"naming the parameter and the evidence. Nothing was written.")
+        _refuse_live_work(conn, parameter_id, "set-parameter-kind")
+        sets = dict(kind)
+        sets.update(_updated(conn, "base_parameters", session, dbcore.now()))
+        conn.execute("UPDATE base_parameters SET " + ", ".join(f"{k} = ?" for k in sets)
+                     + " WHERE parameter_id = ?", list(sets.values()) + [parameter_id])
+        return {"parameter_id": parameter_id, "term_id": row["term_id"], "canonical_en": row["canonical_en"],
+                **kind, "dry_run": dry_run}
 
 
 def insert_quantity_kind(kind_id: str, definition: str, approval_ref: str, session: str,
@@ -8091,7 +8177,7 @@ def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str
         if row is None:
             raise Refusal(
                 f"parameter_id {parameter_id}: no such parameter. Mint one from a term "
-                f"first: db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-observation-id N --session ...")
+                f"first: db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-source-url U --quantity-kind-source-page P --session ...")
         if not dbcore.exists(conn, "evidence_sources", "ref_id", ref_id):
             raise Refusal(f"--ref-id {ref_id} is not an admitted source. The direction is "
                           f"read from a document this project holds; admit it first.")
@@ -8579,11 +8665,13 @@ def _regulatory_pairs():
     return {k for k, tier in TIER_MAP.items() if tier >= _REGULATORY_FROM_TIER}
 
 
-def _check_base_locator(verb, required, source_url, source_page, source_line, source_clause):
+def _check_base_locator(verb, required, source_url, source_page, source_line, source_clause,
+                        prefix=""):
     """The base route's refusals before the database is read, one home for add-alias and add-term
-    --first-form (T-028): the named flags present, a page or a clause, no blank locator part, an
-    http(s) URL with a host and no whitespace, a line of 1 or more. Returns the trimmed URL, page and
-    clause (a blank locator part is no locator: trimmed, then refused by name)."""
+    --first-form (T-028) and the quantity-kind warrant (T-083, its flags spelled with `prefix`): the named
+    flags present, a page or a clause, no blank locator part, an http(s) URL with a host and no whitespace,
+    a line of 1 or more. Returns the trimmed URL, page and clause (a blank locator part is no locator:
+    trimmed, then refused by name)."""
     source_url, source_page, source_clause = ((v.strip() if isinstance(v, str) else v)
                                               for v in (source_url, source_page, source_clause))
     missing = [f for f, v in required if not (v.strip() if isinstance(v, str) else v)]
@@ -8593,14 +8681,14 @@ def _check_base_locator(verb, required, source_url, source_page, source_line, so
         raise Refusal(f"{verb}: the base route needs --source-page or --source-clause: the "
                       "locator is the warrant, and a URL alone does not say where the form "
                       "is used. Nothing was written.")
-    for flag, v in (("--source-page", source_page), ("--source-clause", source_clause)):
+    for flag, v in ((f"--{prefix}source-page", source_page), (f"--{prefix}source-clause", source_clause)):
         if v is not None and not v:
             raise Refusal(f"{verb}: {flag} is blank. Give the page or clause, or omit it.")
     if source_url is not None and not re.fullmatch(r"https?://[^/\s]\S*", source_url):
-        raise Refusal(f"{verb}: --source-url {source_url!r} is not an http(s) URL with a host "
+        raise Refusal(f"{verb}: --{prefix}source-url {source_url!r} is not an http(s) URL with a host "
                       f"and no whitespace.")
     if source_line is not None and source_line < 1:
-        raise Refusal(f"{verb}: --source-line is a line number, 1 or more.")
+        raise Refusal(f"{verb}: --{prefix}source-line is a line number, 1 or more.")
     return source_url, source_page, source_clause
 
 
@@ -10181,7 +10269,7 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
         if param is None:
             raise Refusal(
                 f"parameter_id {parameter_id}: no such parameter. Mint one from a term:\n"
-                f"  db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-observation-id N --session ...")
+                f"  db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-source-url U --quantity-kind-source-page P --session ...")
         if param["status"] != "active":
             raise Refusal(
                 f"parameter {parameter_id} is {param['status']}"
@@ -11296,13 +11384,13 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 "bare INSERT would fail with `FOREIGN KEY constraint failed` — a refusal "
                 "that names neither the cause nor the fix (CLAUDE.md §4).\n"
                 "Mint the subject first, from an adjudicated term:\n"
-                "  db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-observation-id N --session ...")
+                "  db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-source-url U --quantity-kind-source-page P --session ...")
         prow = conn.execute("SELECT status, merged_into FROM base_parameters "
                             "WHERE parameter_id=?", (pid,)).fetchone()
         if prow is None:
             raise Refusal(
                 f"parameter_id {pid}: no such parameter. Mint one from a term:\n"
-                f"  db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-observation-id N --session ...")
+                f"  db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-source-url U --quantity-kind-source-page P --session ...")
         if prow["status"] != "active":
             target = f" (merged into {prow['merged_into']})" if prow["merged_into"] else ""
             raise Refusal(

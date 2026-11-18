@@ -239,14 +239,14 @@ try:
         if not db._VALUE_BEARING.search(q("SELECT canonical_en FROM terms WHERE term_id=?",
                                           t)[0][0])
         and q("SELECT domain FROM terms WHERE term_id=?", t)[0][0] not in dbcore.NON_QUANTITY_DOMAINS]
-    # T-020: a promotion names a quantity kind and an observation whose quote holds a digit; both derived.
+    # T-020, T-083: a promotion names a quantity kind (derived) and where a source states a value of it, held on
+    # the parameter's own row (OD-71; a fixture locator).
     KIND = q("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id LIMIT 1")[0][0]
-    WARRANT = q("SELECT observation_id FROM observed_terms WHERE context_quote GLOB '*[0-9]*' "
-                "ORDER BY observation_id LIMIT 1")[0][0]
 
     def promote(term_id):
         return attempt(db.insert_parameter, term_id, S, quantity_kind=KIND,
-                       quantity_kind_observation_id=WARRANT)
+                       quantity_kind_source_url="https://example.org/task-fixture",
+                       quantity_kind_source_page="TASK-FIXTURE")
 
     PAGES = ["Fixture page one: the clear width of a door leaf is measured here.",
              "Fixture page two: the clear width of a corridor route is measured here.",

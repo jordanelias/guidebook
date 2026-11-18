@@ -100,6 +100,8 @@ from dbcore import Refusal  # noqa: E402
 
 # T-007: add-source refuses a source with no standing or no type. Both values are read from
 # the columns' own CHECKs; UNVERIFIED needs no verification method, so no other refusal fires.
+# T-083: the warrant of a quantity kind is a locator held on the parameter's own row (OD-71); this one is a fixture.
+KIND_WARRANT = dict(quantity_kind_source_url="https://example.org/task-fixture", quantity_kind_source_page="TASK-FIXTURE")
 SRC_STANDING = ("--verification-status", "UNVERIFIED",
                 "--source-type", dbcore.schema_choices("evidence_sources", "source_type")[0])
 sys.path.insert(0, str(REPO))
@@ -431,14 +433,10 @@ try:
                f"got {msg!r}")
         record("D03", "refuses a blank reason, and writes nothing",
                refusal(decline, TD, "   ", S) is not None and not declinations(TD))
-        # T-020: a promotion names a kind (the first row of base_quantity_kinds, derived) and an observation whose
-        # quote holds a digit (a fixture sighting, made through the writer like the terms above).
+        # T-020, T-083: a promotion names a kind (the first row of base_quantity_kinds, derived) and where a source
+        # states a value of it, in the row's own cells (OD-71; a fixture locator).
         KIND = q("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id LIMIT 1")[0][0]
-        WARRANT = db.observe_term(dict(sighting(BODYLESS, "fixture phrase: warrant"),
-                                       context_quote="a fixture sentence using fixture phrase: warrant, 9 once"),
-                                  S)["observation_id"]
-        pid = db.insert_parameter(TP, S, quantity_kind=KIND,
-                                  quantity_kind_observation_id=WARRANT)["parameter_id"]
+        pid = db.insert_parameter(TP, S, quantity_kind=KIND, **KIND_WARRANT)["parameter_id"]
         msg = refusal(decline, TP, WHY, S)
         record("D04", "refuses a term that is already a parameter, naming the parameter_id",
                msg and f"parameter {pid}" in msg and not declinations(TP), f"got {msg!r}")
@@ -3174,6 +3172,102 @@ try:
                    f"{merged} before={listed_before} {moved12} at={at12} {gone13} {again12!r} {again13!r} {on_folded!r}")
         else:
             record("T079-31", "a merge case needs two active parameters with no live work", False, "none on the copy")
+
+    # ── T083: set-parameter-kind sets the kind and its warrant on an existing parameter, once ─────────────────
+    # What reaches the guidebook without it: T-109 could give the live parameters their kind only by hand SQL, and a
+    # parameter with no kind cannot have its units checked against the right family. Probes are derived on the copy.
+    print("Section T083: set-parameter-kind (the kind and its warrant on an existing parameter, written once)")
+    FREE_P = ("SELECT parameter_id FROM base_parameters p WHERE status='active' AND quantity_kind IS NULL "
+              "AND NOT EXISTS (SELECT 1 FROM specifications s WHERE s.parameter_id=p.parameter_id AND s.retired_at IS NULL) "
+              "AND NOT EXISTS (SELECT 1 FROM determination_gates g WHERE g.parameter_id=p.parameter_id AND g.resolved_at IS NULL) "
+              "ORDER BY parameter_id")
+    free_p = [r[0] for r in q(FREE_P)]
+    kinds83 = [r[0] for r in q("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id")]
+    W83 = dict(KIND_WARRANT, quantity_kind_ref_id="TASK-FIXTURE")
+    if len(free_p) < 3 or not kinds83:
+        record("T083-00", "three active parameters with no kind and no live work, and a kind", False, f"{free_p} {kinds83}")
+    else:
+        p1, p2, p3 = free_p[:3]
+        cols = [r[1] for r in q("PRAGMA table_info(base_parameters)")]
+        kind_cols = {"quantity_kind", "quantity_kind_source_url", "quantity_kind_source_page", "quantity_kind_source_line",
+                     "quantity_kind_source_clause", "quantity_kind_ref_id", "updated_at", "updated_by_session"}
+        before = dict(zip(cols, q("SELECT * FROM base_parameters WHERE parameter_id=?", p1)[0]))
+        cp = run_cli("set-parameter-kind", "--parameter-id", str(p1), "--quantity-kind", kinds83[0],
+                     "--quantity-kind-source-url", W83["quantity_kind_source_url"],
+                     "--quantity-kind-source-page", W83["quantity_kind_source_page"],
+                     "--quantity-kind-ref-id", W83["quantity_kind_ref_id"], "--session", S)
+        after = dict(zip(cols, q("SELECT * FROM base_parameters WHERE parameter_id=?", p1)[0]))
+        record("T083-01", "set-parameter-kind (through argparse) writes the kind, the locator and the ref_id on an existing "
+               "parameter, stamps updated_*, and leaves every other column unchanged",
+               cp.returncode == 0 and after["quantity_kind"] == kinds83[0]
+               and after["quantity_kind_source_url"] == W83["quantity_kind_source_url"]
+               and after["quantity_kind_source_page"] == W83["quantity_kind_source_page"]
+               and after["quantity_kind_ref_id"] == "TASK-FIXTURE" and after["updated_by_session"] == S
+               and all(after[c] == before[c] for c in cols if c not in kind_cols),
+               f"rc={cp.returncode} {cp.stderr[-300:]!r} {after}")
+        spk = db.set_parameter_kind
+        r_unknown = refusal(spk, p2, "zz_" + kinds83[0], S, **W83)
+        r_none = refusal(spk, p2, kinds83[0], S)
+        r_nopage = refusal(spk, p2, kinds83[0], S, quantity_kind_source_url=W83["quantity_kind_source_url"])
+        r_url = refusal(spk, p2, kinds83[0], S, **dict(W83, quantity_kind_source_url="ftp://example.org/x"))
+        record("T083-02", "the shared refusals fire through the new verb: an unknown kind (naming every kind and add-quantity-kind), "
+               "no warrant, a URL with no page or clause, a non-http URL; nothing written",
+               r_unknown and all(k in r_unknown for k in kinds83) and "add-quantity-kind" in r_unknown
+               and r_none and "--quantity-kind-source-url" in r_none and r_nopage and "--quantity-kind-source-page" in r_nopage
+               and r_url and "--quantity-kind-source-url" in r_url
+               and q("SELECT quantity_kind FROM base_parameters WHERE parameter_id=?", p2)[0][0] is None,
+               (r_unknown, r_none, r_nopage, r_url))
+        other = kinds83[-1]
+        r_again = refusal(spk, p1, other, S, **W83)
+        record("T083-03", "a second call on the same parameter is refused (written once), naming the stored kind and its warrant, "
+               "and the stored kind is unchanged",
+               r_again and repr(kinds83[0]) in r_again and W83["quantity_kind_source_url"] in r_again and "written once" in r_again
+               and q("SELECT quantity_kind FROM base_parameters WHERE parameter_id=?", p1)[0][0] == kinds83[0], r_again)
+        db.retire_parameter(p2, "TASK-FIXTURE T083: a retired parameter", S)
+        r_ret = refusal(spk, p2, kinds83[0], S, **W83)
+        db.merge_parameter(p3, free_p[3] if len(free_p) > 3 else p1, "TASK-FIXTURE T083: a merged parameter", S)
+        surv = q("SELECT merged_into FROM base_parameters WHERE parameter_id=?", p3)[0][0]
+        r_mer = refusal(spk, p3, kinds83[0], S, **W83)
+        gated = q("SELECT g.parameter_id FROM determination_gates g JOIN base_parameters p USING (parameter_id) "
+                  "WHERE g.resolved_at IS NULL AND p.status='active' AND p.quantity_kind IS NULL ORDER BY 1 LIMIT 1")
+        r_gate = refusal(spk, gated[0][0], kinds83[0], S, **W83) if gated else "SKIPPED-NO-FIXTURE"
+        spec = q("SELECT s.specification_id, s.parameter_id FROM specifications s JOIN base_parameters p USING (parameter_id) "
+                 "WHERE s.retired_at IS NOT NULL AND p.status='active' AND p.quantity_kind IS NULL ORDER BY 1 LIMIT 1")
+        if spec:
+            con83 = sqlite3.connect(DB)
+            unretire(con83, spec[0][0])          # HAND, on the copy: a TASK-FIXTURE live determination (no writer revives one)
+            con83.commit()
+            con83.close()
+            r_live = refusal(spk, spec[0][1], kinds83[0], S, **W83)
+            reretire(spec[0][0])
+        else:
+            r_live = "SKIPPED-NO-FIXTURE"
+        record("T083-04", "a retired parameter is refused; a merged one names its survivor; a live determination and an open gate "
+               "on the parameter are refused (SKIPPED-NO-FIXTURE where the copy holds none)",
+               r_ret and "retired" in r_ret and r_mer and "merged" in r_mer and f"parameter {surv}" in r_mer
+               and r_gate and ("OPEN determination gate" in r_gate or r_gate == "SKIPPED-NO-FIXTURE")
+               and r_live and ("LIVE determination" in r_live or r_live == "SKIPPED-NO-FIXTURE"),
+               (r_ret, r_mer, r_gate, r_live))
+        if gated:
+            print(f"      open-gate probe: parameter {gated[0][0]}")
+        if not spec:
+            print("      SKIPPED-NO-FIXTURE: no retired specification on an active parameter with no kind (live-determination probe)")
+        free_t = [t for (t,) in q("SELECT term_id FROM terms WHERE term_id NOT IN (SELECT term_id FROM base_parameters) "
+                                  "AND term_id NOT IN (SELECT term_id FROM parameter_declinations) ORDER BY term_id")
+                  if not db._VALUE_BEARING_NAME.search(q("SELECT canonical_en FROM terms WHERE term_id=?", t)[0][0])
+                  and dbcore.domain_key(q("SELECT domain FROM terms WHERE term_id=?", t)[0][0]) not in dbcore.NON_QUANTITY_DOMAINS]
+        free_p2 = [r[0] for r in q(FREE_P)]
+        if not free_t or not free_p2:
+            record("T083-05", "a free term and a free parameter to compare the two callers' messages", False, f"{free_t[:1]} {free_p2[:1]}")
+        else:
+            def tail(m):
+                return m.split("): ", 1)[1] if m and "): " in m else m
+            pairs = [(refusal(db.insert_parameter, free_t[0], S, dry_run=True, **kw),
+                      refusal(spk, free_p2[0], kw.pop("quantity_kind", None), S, dry_run=True, **kw))
+                     for kw in (dict(), dict(quantity_kind="zz_fixture"), dict(quantity_kind=kinds83[0]))]
+            record("T083-05", "add-parameter and set-parameter-kind give the same kind and warrant refusals, word for word after "
+                   "the term label (one home, _kind_refusal)",
+                   all(a and b and tail(a) == tail(b) for a, b in pairs), pairs)
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 
