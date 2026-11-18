@@ -7836,3 +7836,27 @@ OD-72 STATUS: REFERRED BACK TO THE OWNER
 CONDITION: any session choosing or storing the displayed name of a concept or a parameter, or editing `v_term_names`.
 ACTION: (1) Record every written form as found; do not choose a name at recording (OD-72). (2) Do not build the displayed-name rule until the owner confirms the combination rule; `v_term_names` keeps its ordering and has no reader. (3) The coordinator's recommended rule, for the owner to confirm in one answer: a CSA or ISO form of the concept if one is attested in an instrument of that body; otherwise the most frequent written form; a named judge's pick overrides and is recorded with its reason; a concept with no form shows its English label.
 DATE: 2026-11-18 — owner statement (typed words, quoted above).
+
+## Owner statement 2026-11-18 (third) — OD-69: the list of topic areas is not fixed
+
+Given in the session `session_2026-11-16-remediation-batch-1-tooling-stack` (https://claude.ai/code/session_01Ub36iMfdrQNV9XzGP4dyZm), in one typed message answering the question the entry "Owner answers 2026-11-17 — OD-68 …" left open under OD-69 (is the list of classes fixed, and which of the domains in use are the classes). Server-clock times were not captured; derive them from the preserved transcript (`git grep -n -F "list of topic areas is not fixed" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "list of topic areas is not fixed"
+
+**Readings.**
+
+- [ASSUMPTION: the classes of a concept (a topic area such as circulation) are an open set: a new class is added when the work finds one, and no closed list is confirmed by the owner once and changed only by the owner — basis: the words; it is the register's "without a fixed list"].
+- [GAP: whether the column then stays free text (no vocabulary, the register's "(a), free text": nothing built, the defect of rule 8 accepted), or becomes a vocabulary held as rows that is extended by data with a warrant and no code edit (as the quantity kinds are: `base_quantity_kinds`, OD-24), is NOT stated. Which of the 18 values in `terms.domain` are classes, and which are kinds of concept a parameter may not be (`dbcore.NON_QUANTITY_DOMAINS`), is also not stated. They are not read in.]
+
+OD-69: (a) a concept's topic area, the overall class of a parameter; the list is not fixed; whether it is free text or a vocabulary extended by data is not answered
+OD-69 STATUS: REFERRED BACK TO THE OWNER
+
+**What it does.** The first of OD-69's two open parts is answered: the list is not fixed, so T-135's "seeded from the list the owner confirms, changed only by the owner" is not the design. T-135 stays held.
+
+**What it does not decide.** The form (free text, or rows extended by data with a warrant: the coordinator recommends the second, because it keeps a vocabulary that readers and the `NON_QUANTITY_DOMAINS` rule can derive from while leaving the set open); the non-quantity domains; and whether an existing value is renamed or merged.
+
+CONDITION: any session assigning or changing a concept's domain, or executing T-135.
+ACTION: (1) Do not treat the 18 values in use as a closed or confirmed list (OD-69). (2) Do not execute T-135 until the owner answers the form; its design (a table seeded from a confirmed list) no longer fits. (3) Ask the owner the form in its plain form; do not resolve it under delegation.
+DATE: 2026-11-18 — owner statement (typed words, quoted above).
