@@ -98,9 +98,10 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   its `alias_type` (the column's own CHECK holds the values). `term_relations` relates a **term to another term**, by its
   `kind` (the column's own CHECK holds the values; the migration's DDL comment defines each kind and which way it reads).
   T-032's relation rows relate a **provision to a provision** at synthesis, judged at the Opus floor (OD-25).
-  `add-term-relation --from-term --kind --to-term` plus exactly one of `--observation-id`, `--extraction-id`
-  or `--adjudication-id` (the row that says so; an `element has provision` row takes the first two only, OD-56) and an
-  optional `--reason` writes one row; `retire-term-relation --relation-id --reason` changes
+  `add-term-relation --from-term --kind --to-term` writes one row grounded in the base's own cells (OD-71): where a
+  source says so (`--source-url` with `--source-page` or `--source-clause`, and `--source-line`), required for every
+  kind but `distinct`, which rests on its `--reason` (a provision is never justified by a reason alone, OD-56); the
+  source's `--ref-id` is provenance only and nothing reads it. `retire-term-relation --relation-id --reason` changes
   it (a relation is retired, never UPDATEd); `element-parameters --element` reads an element's parameters (a merged one followed to the parameter that
   stands) and provisions. There is no `equivalent` kind: two terms that name one concept are merged (T-129), not pointed at, and
   until that merge verb exists (T-129) they are left as they are and listed. A provision whose question is whether it is present

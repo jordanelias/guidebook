@@ -2218,14 +2218,15 @@ def main():
                        help="Live vocabulary, read from term_relations.kind's own CHECK (the migration's DDL "
                             "comment defines each kind and its direction)")
     p_atr.add_argument("--to-term", dest="to_term", required=True, help="terms.term_id the row points at")
-    p_atr.add_argument("--reason", help="Why, in words (the judge's reason). Optional: the warrant is the "
-                                        "row that says so; a blank reason is refused")
-    p_atr.add_argument("--observation-id", dest="observation_id", type=int,
-                       help="The warrant: the observed_terms row whose quote says so (exactly one warrant flag)")
-    p_atr.add_argument("--extraction-id", dest="extraction_id", type=int,
-                       help="The warrant: the source_value_extractions row that says so")
-    p_atr.add_argument("--adjudication-id", dest="adjudication_id", type=int,
-                       help="The warrant: the term_adjudications row that says so")
+    p_atr.add_argument("--reason", help="Why, in words (the judge's reason). Required for `distinct`, which "
+                                        "rests on it; optional otherwise; a blank one is refused")
+    p_atr.add_argument("--source-url", dest="source_url", help="where a source says so (OD-71: the base holds its "
+                       "own justification); required with --source-page or --source-clause for every kind but `distinct`")
+    p_atr.add_argument("--source-page", dest="source_page", help="page (or this or --source-clause)")
+    p_atr.add_argument("--source-line", dest="source_line", type=int, help="line, optional")
+    p_atr.add_argument("--source-clause", dest="source_clause", help="clause (or --source-page)")
+    p_atr.add_argument("--ref-id", dest="ref_id", help="the source's ref_id, as PROVENANCE ONLY: validated "
+                       "against nothing, and no decision reads it (OD-71)")
     p_atr.add_argument("--session", required=True)
     p_atr.add_argument("--dry-run", action="store_true")
 
@@ -3821,8 +3822,8 @@ def main():
     elif args.command == "add-term-relation":
         _emit(add_term_relation(
             args.from_term, args.kind, args.to_term, args.reason, args.session,
-            observation_id=args.observation_id, extraction_id=args.extraction_id,
-            adjudication_id=args.adjudication_id, dry_run=args.dry_run))
+            source_url=args.source_url, source_page=args.source_page, source_line=args.source_line,
+            source_clause=args.source_clause, ref_id=args.ref_id, dry_run=args.dry_run))
 
     elif args.command == "retire-term-relation":
         _emit(retire_term_relation(args.relation_id, args.reason, args.session, dry_run=args.dry_run))
@@ -7850,31 +7851,35 @@ def _term_id_order(term_id: str):
 
 
 def add_term_relation(from_term: str, kind: str, to_term: str, reason, session: str, *,
-                      observation_id: int = None, extraction_id: int = None, adjudication_id: int = None,
-                      dry_run: bool = False):
-    """Write one `term_relations` row: '<from term> <kind> <to term>', with the row that says so (T-029).
+                      source_url: str = None, source_page: str = None, source_line: int = None,
+                      source_clause: str = None, ref_id: str = None, dry_run: bool = False):
+    """Write one `term_relations` row: '<from term> <kind> <to term>', grounded in the base's own cells (T-029; OD-71).
 
     The kinds are the column's own CHECK (`dbcore.check_declared`); the migration's DDL comment says what each means
     and which way it reads. There is no `equivalent` kind: two terms that name one concept are merged (T-129), never
-    pointed at. Refuses, each sentence naming the next act: a kind the CHECK does not hold; a blank reason; an
-    unknown term; the same term twice; no warrant, or more than one; a warrant row that does not exist; and a second
-    live row of the same kind for the same pair in either direction (retire the held one first, with its reason). A
-    `distinct` row is stored with the lower term id first, as the CHECK requires; the result names the order written."""
+    pointed at. The justification is the row's own: where a source says so (`--source-url` and a page or a clause,
+    checked as add-alias checks them) for every kind but `distinct`, which rests on its `--reason`; `--ref-id` is
+    provenance only and nothing reads it. Refuses, each sentence naming the next act: a kind the CHECK does not hold;
+    a blank reason; no locator on a kind that needs one, or a partial or malformed one; no reason on `distinct`; an
+    unknown term; the same term twice; an `element has parameter` row to a term whose parameter is merged or retired;
+    and a second live row of the same kind for the same pair in either direction (retire the held one first, with its
+    reason). A `distinct` row is stored with the lower term id first, as the CHECK requires."""
     if reason is not None and not reason.strip():
-        raise Refusal("add-term-relation: --reason is blank. Give the reason in words or leave the flag out; the "
-                      "warrant is the row that says so. Nothing was written.")
+        raise Refusal("add-term-relation: --reason is blank. Give the reason in words or leave the flag out. "
+                      "Nothing was written.")
     reason = reason.strip() if reason is not None else None
-    warrants = {col: val for col, val in (("observation_id", observation_id), ("extraction_id", extraction_id),
-                                          ("adjudication_id", adjudication_id)) if val is not None}
-    if len(warrants) != 1:
-        raise Refusal(
-            f"add-term-relation: name exactly one warrant (got {len(warrants)}): --observation-id, "
-            f"--extraction-id or --adjudication-id, the row of the source or the judgment that says the terms "
-            f"are so related. Nothing was written.")
-    ((wcol, wval),) = warrants.items()
-    wtable, wkey = {"observation_id": ("observed_terms", "observation_id"),
-                    "extraction_id": ("source_value_extractions", "extraction_id"),
-                    "adjudication_id": ("term_adjudications", "adjudication_id")}[wcol]
+    located = any(v is not None for v in (source_url, source_page, source_line, source_clause))
+    if kind == "distinct":
+        if reason is None:
+            raise Refusal("add-term-relation: a `distinct` row rests on the judge's reason: give --reason (why the "
+                          "two terms are two concepts). Nothing was written.")
+    elif not located:
+        raise Refusal(f"add-term-relation: a `{kind}` row rests on where a source says so: give --source-url and "
+                      f"--source-page or --source-clause (a --reason alone justifies only a `distinct` row). "
+                      f"Nothing was written.")
+    if located:
+        source_url, source_page, source_clause = _check_base_locator(
+            "add-term-relation", [("--source-url", source_url)], source_url, source_page, source_line, source_clause)
     with connect(dry_run) as conn:
         dbcore.check_declared(conn, "term_relations", "kind", kind, "add-term-relation")
         for flag, tid in (("--from-term", from_term), ("--to-term", to_term)):
@@ -7885,11 +7890,6 @@ def add_term_relation(from_term: str, kind: str, to_term: str, reason, session: 
         if from_term == to_term:
             raise Refusal(f"add-term-relation: {from_term} is both ends. A term is not related to itself: name "
                           f"two different terms in --from-term and --to-term. Nothing was written.")
-        if kind == "element has provision" and wcol == "adjudication_id":
-            raise Refusal("add-term-relation: an `element has provision` row rests on the source statement that "
-                          "says the element should carry the provision (OD-56): name its observation "
-                          "(--observation-id) or its extraction (--extraction-id), not an adjudication. Nothing "
-                          "was written.")
         if kind == "element has parameter":
             par = conn.execute("SELECT parameter_id, status, merged_into FROM base_parameters WHERE term_id=?",
                                (to_term,)).fetchone()
@@ -7909,9 +7909,6 @@ def add_term_relation(from_term: str, kind: str, to_term: str, reason, session: 
                 raise Refusal(f"add-term-relation: {to_term}'s parameter {par['parameter_id']} is {par['status']}, "
                               f"so no element has it. Name a term whose parameter is active, or relate the "
                               f"element to nothing. Nothing was written.")
-        if not conn.execute(f'SELECT 1 FROM "{wtable}" WHERE "{wkey}"=?', (wval,)).fetchone():
-            raise Refusal(f"add-term-relation: --{wcol.replace('_', '-')} {wval}: no such row in {wtable}. The "
-                          f"warrant is the row that says so; record it first. Nothing was written.")
         lo, hi = sorted((from_term, to_term))
         held = conn.execute(
             "SELECT relation_id, from_term_id, to_term_id, created_by_session FROM term_relations "
@@ -7925,12 +7922,15 @@ def add_term_relation(from_term: str, kind: str, to_term: str, reason, session: 
                 f"{held['relation_id']} --reason ... if it is wrong. Nothing was written.")
         if kind == "distinct":
             from_term, to_term = sorted((from_term, to_term), key=_term_id_order)
-        row = {"from_term_id": from_term, "kind": kind, "to_term_id": to_term, "reason": reason, wcol: wval}
+        row = {"from_term_id": from_term, "kind": kind, "to_term_id": to_term, "reason": reason,
+               "source_url": source_url, "source_page": source_page, "source_line": source_line,
+               "source_clause": source_clause, "ref_id": ref_id}
         row.update(dbcore.stamp_for(conn, "term_relations", session))
         cur = conn.execute(f"INSERT INTO term_relations ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
                            list(row.values()))
         return {"relation_id": cur.lastrowid, "from_term_id": from_term, "kind": kind, "to_term_id": to_term,
-                "warrant": {wcol: wval}, "created_by_session": row.get("created_by_session"),
+                "grounded_at": {"source_url": source_url, "source_page": source_page, "source_line": source_line,
+                                "source_clause": source_clause}, "created_by_session": row.get("created_by_session"),
                 "dry_run": dry_run}
 
 
@@ -7961,7 +7961,7 @@ def element_parameters(element: str):
     """Read-only (T-029; read by T-033 and render): an element term's parameters and its provisions.
 
     The live `element has parameter` and `element has provision` rows from the element, each with the term it
-    points at, the reason and the warrant pointer. A parameter is looked up, never copied (`base_parameters.term_id`),
+    points at, the reason, where it was found (the base's own locator cells) and the provenance `ref_id`. A parameter is looked up, never copied (`base_parameters.term_id`),
     and a merged parameter is followed through `merged_into` to the one that stands, as `v_deferred_acts` does:
     `parameter_id` and `parameter_term_id` are the standing parameter's, `merged_from_parameter_id` the one the row
     was written against. `parameter_id` is null for a term that is not (yet) a parameter, and `declined` says that
@@ -7991,7 +7991,8 @@ def element_parameters(element: str):
             rows = []
             for r in conn.execute(
                     "SELECT r.relation_id, r.to_term_id AS term_id, t.canonical_en AS label, r.reason, "
-                    "r.observation_id, r.extraction_id, r.adjudication_id, r.created_by_session, r.created_at, "
+                    "r.source_url, r.source_page, r.source_line, r.source_clause, r.ref_id, r.created_by_session, "
+                    "r.created_at, "
                     "EXISTS (SELECT 1 FROM parameter_declinations d WHERE d.term_id = r.to_term_id "
                     "AND d.revoked_at IS NULL) AS declined "
                     "FROM term_relations r JOIN terms t ON t.term_id = r.to_term_id "

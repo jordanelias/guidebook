@@ -1938,7 +1938,7 @@ try:
         # another stage other than a nullable provenance ref_id. Asserted for the table this task owns,
         # term_label_picks; the other base tables' foreign keys into evidence and judgment are listed, not
         # failed here (term_aliases.observation_id waits on the owner's answer on an absorbed observation's
-        # attestation; term_relations is T-029's; base_parameters' are T-020's and the 2026-10-30 ruling's).
+        # attestation; term_relations, T-029's, is asserted since migration 151; base_parameters' are T-020's and the 2026-10-30 ruling's).
         import yaml as _yaml
         SM = _yaml.safe_load((REPO / "governance" / "stage-map.yaml").read_text(encoding="utf-8"))["tables"]
         c21 = sqlite3.connect(DB)
@@ -1951,17 +1951,19 @@ try:
                         v21.append((t21, f[3], f[2], SM.get(f[2])))
         finally:
             c21.close()
-        others21 = [v for v in v21 if v[0] != "term_label_picks"]
+        others21 = [v for v in v21 if v[0] not in ("term_label_picks", "term_relations")]
         if others21:
             print(f"      REPORTED (other base tables, not this task's): {others21}")
-        record("T028-21", "term_label_picks, a base table by the stage map, holds no foreign key into another stage; "
-               "its ref_id is a plain provenance cell",
-               SM.get("term_label_picks") == "base" and not [v for v in v21 if v[0] == "term_label_picks"]
+        record("T028-21", "term_label_picks and term_relations, base tables by the stage map, hold no foreign key into "
+               "another stage; each ref_id is a plain provenance cell",
+               SM.get("term_label_picks") == "base" and SM.get("term_relations") == "base"
+               and not [v for v in v21 if v[0] in ("term_label_picks", "term_relations")]
+               and "ref_id" in [r[1] for r in q("PRAGMA table_info(term_relations)")]
                and "ref_id" in [r[1] for r in q("PRAGMA table_info(term_label_picks)")], v21)
 
 
-    # ── T029: typed pointers from one term to another, each with its warrant (AT-67; migration 147). Probes are
-    # derived by query; every fixture is labelled TASK-FIXTURE and lives on the copy.
+    # ── T029: typed pointers from one term to another, grounded in the base's own cells (AT-67; migrations 147,
+    # 148, 151; OD-71). Probes are derived by query; every fixture is labelled TASK-FIXTURE and lives on the copy.
     T29S = "session_2026-11-18-t029-task-fixture"
     con = sqlite3.connect(DB)
     try:
@@ -1969,75 +1971,77 @@ try:
                                                 "(SELECT term_id FROM base_parameters) ORDER BY term_id")]
         PARAM29 = con.execute("SELECT term_id, parameter_id FROM base_parameters WHERE status = 'active' "
                               "ORDER BY parameter_id LIMIT 1").fetchone()
-        W29 = {"observation_id": con.execute("SELECT MIN(observation_id) FROM observed_terms").fetchone()[0],
-               "extraction_id": con.execute("SELECT MIN(extraction_id) FROM source_value_extractions").fetchone()[0],
-               "adjudication_id": con.execute("SELECT MIN(adjudication_id) FROM term_adjudications").fetchone()[0]}
         KINDS29 = sorted(dbcore.check_values(con, "term_relations", "kind") or [])
     except sqlite3.OperationalError as exc:
         if not _absent_schema(exc):
             raise
-        nonparam29, PARAM29, W29, KINDS29 = [], None, {}, []
+        nonparam29, PARAM29, KINDS29 = [], None, []
     finally:
         con.close()
-    if len(nonparam29) < 3 or not PARAM29 or not all(W29.values()):
-        print("      SKIPPED-NO-FIXTURE: T029 needs three terms that are not parameters, an active parameter and "
-              "one observation, extraction and adjudication")
-        record("T029-00", "the T029 fixtures exist (three non-parameter terms, an active parameter, three warrants)",
-               False, (len(nonparam29), PARAM29, W29))
+    if len(nonparam29) < 3 or not PARAM29:
+        print("      SKIPPED-NO-FIXTURE: T029 needs three terms that are not parameters and an active parameter")
+        record("T029-00", "the T029 fixtures exist (three non-parameter terms, an active parameter)",
+               False, (len(nonparam29), PARAM29))
     else:
         E29, P29, O29 = nonparam29[:3]
         PT29, PID29 = PARAM29
         K_PROV, K_PAR = "element has provision", "element has parameter"
+        URL29 = "https://example.org/task-fixture-t029"
+        LOC29 = dict(source_url=URL29, source_page="3", source_line=12)      # where a source says so
+        LOC29B = dict(source_url=URL29, source_clause="TASK-FIXTURE 4.1")
         addrel = fn("add_term_relation")
         retrel = fn("retire_term_relation")
         elemread = fn("element_parameters")
 
         def rels(sql="", *a):
-            return q("SELECT relation_id, from_term_id, kind, to_term_id, reason, observation_id, extraction_id, "
-                     "adjudication_id, created_by_session, retired_at FROM term_relations " + sql, *a)
+            return q("SELECT relation_id, from_term_id, kind, to_term_id, reason, source_url, source_page, "
+                     "source_line, source_clause, ref_id, created_by_session, retired_at FROM term_relations "
+                     + sql, *a)
 
-        # T029-01 (AT-67, OD-56): a row of kind `element has provision` between two held terms, with a warrant, is
-        # accepted and the reader prints it among the element's provisions (and not among its parameters).
-        a1 = attempt(addrel, E29, K_PROV, P29, "TASK-FIXTURE: the element should carry the provision", T29S,
-                     observation_id=W29["observation_id"])
+        # T029-01 (AT-67, OD-56): a row of kind `element has provision` between two held terms, with where a source
+        # says so, is accepted and the reader prints it among the element's provisions (and not among its
+        # parameters), with the locator it was grounded in.
+        a1 = attempt(addrel, E29, K_PROV, P29, "TASK-FIXTURE: the element should carry the provision", T29S, **LOC29)
         r1 = attempt(elemread, E29)
-        record("T029-01", "an `element has provision` row between two held terms, with a warrant, is accepted and "
-               "printed by element-parameters among the provisions with its warrant pointer and reason",
+        pv1 = (r1.get("provisions") or [{}])[0]
+        record("T029-01", "an `element has provision` row between two held terms, grounded in a locator, is "
+               "accepted and printed by element-parameters among the provisions with its locator and reason",
                a1.get("relation_id") and [p["term_id"] for p in r1.get("provisions", [])] == [P29]
                and r1.get("parameters") == []
-               and r1["provisions"][0]["observation_id"] == W29["observation_id"]
-               and r1["provisions"][0]["reason"] == "TASK-FIXTURE: the element should carry the provision"
-               and r1["provisions"][0]["created_by_session"] == T29S, (a1, r1))
+               and (pv1.get("source_url"), pv1.get("source_page"), pv1.get("source_line"),
+                    pv1.get("source_clause")) == (URL29, "3", 12, None)
+               and pv1.get("reason") == "TASK-FIXTURE: the element should carry the provision"
+               and pv1.get("created_by_session") == T29S, (a1, r1))
 
         # T029-02 (AT-67): a kind outside the CHECK is refused, naming the CHECK's own set; nothing is written.
         n02 = len(rels())
-        e2 = refusal(addrel, E29, "equivalent", O29, "TASK-FIXTURE", T29S, observation_id=W29["observation_id"])
+        e2 = refusal(addrel, E29, "equivalent", O29, "TASK-FIXTURE", T29S, **LOC29)
         record("T029-02", "a kind outside the column's CHECK (`equivalent`) is refused, naming the CHECK's set, and "
                "nothing is written; the set is the column's own and holds `distinct`",
                e2 and all(k in e2 for k in KINDS29) and "equivalent" not in KINDS29 and "distinct" in KINDS29
                and len(rels()) == n02, (e2, KINDS29))
 
         # T029-03: `element has parameter` reads the parameter of the term it points at by looking it up.
-        a3 = attempt(addrel, E29, K_PAR, PT29, "TASK-FIXTURE: the element's dimension", T29S,
-                     extraction_id=W29["extraction_id"])
+        a3 = attempt(addrel, E29, K_PAR, PT29, "TASK-FIXTURE: the element's dimension", T29S, **LOC29B)
         r3 = attempt(elemread, E29)
         pr3 = r3.get("parameters", [])
         record("T029-03", "an `element has parameter` row is printed among the parameters with the parameter the "
-               "term carries (looked up, not copied); a provision that carries no parameter prints none",
+               "term carries (looked up, not copied) and its clause locator; a provision that carries no "
+               "parameter prints none",
                a3.get("relation_id") and len(pr3) == 1 and pr3[0]["term_id"] == PT29
-               and pr3[0]["parameter_id"] == PID29 and pr3[0]["extraction_id"] == W29["extraction_id"]
+               and pr3[0]["parameter_id"] == PID29 and pr3[0]["source_clause"] == "TASK-FIXTURE 4.1"
                and [p["parameter_id"] for p in r3["provisions"]] == [None], (a3, r3))
 
         # T029-04 (amendment 1): `distinct` is stored with the lower term id first whichever way the pair is named,
-        # and a second live row for the pair is refused naming the held row, in either direction.
+        # rests on its reason alone, and a second live row for the pair is refused naming the held row.
         lo, hi = sorted((P29, O29))
-        a4 = attempt(addrel, hi, "distinct", lo, "TASK-FIXTURE: two concepts", T29S,
-                     adjudication_id=W29["adjudication_id"])
-        e4a = refusal(addrel, lo, "distinct", hi, "TASK-FIXTURE: again", T29S, adjudication_id=W29["adjudication_id"])
-        e4b = refusal(addrel, hi, "distinct", lo, "TASK-FIXTURE: again", T29S, adjudication_id=W29["adjudication_id"])
+        a4 = attempt(addrel, hi, "distinct", lo, "TASK-FIXTURE: two concepts", T29S)
+        e4a = refusal(addrel, lo, "distinct", hi, "TASK-FIXTURE: again", T29S)
+        e4b = refusal(addrel, hi, "distinct", lo, "TASK-FIXTURE: again", T29S)
         r4 = rels("WHERE kind = 'distinct'")
-        record("T029-04", "a `distinct` row is stored lower id first whichever way it is named; a second live row of "
-               "the pair, either way round, is refused naming the held relation and retire-term-relation",
+        record("T029-04", "a `distinct` row, justified by its reason alone, is stored lower id first whichever way "
+               "it is named; a second live row of the pair, either way round, is refused naming the held relation "
+               "and retire-term-relation",
                a4.get("relation_id") and (a4.get("from_term_id"), a4.get("to_term_id")) == (lo, hi)
                and [(r[1], r[3]) for r in r4] == [(lo, hi)]
                and all(e and str(a4["relation_id"]) in e and "retire-term-relation" in e for e in (e4a, e4b)),
@@ -2045,32 +2049,38 @@ try:
 
         # T029-05 (rule 5): the converse of a directed row is a second home of one fact, refused by the same
         # index; a different kind between the same pair is not.
-        a5 = attempt(addrel, E29, "broader", O29, "TASK-FIXTURE: broader", T29S, observation_id=W29["observation_id"])
-        e5 = refusal(addrel, O29, "broader", E29, "TASK-FIXTURE: converse", T29S, observation_id=W29["observation_id"])
-        a5b = attempt(addrel, O29, "part of", E29, "TASK-FIXTURE: another kind", T29S,
-                      observation_id=W29["observation_id"])
+        a5 = attempt(addrel, E29, "broader", O29, "TASK-FIXTURE: broader", T29S, **LOC29)
+        e5 = refusal(addrel, O29, "broader", E29, "TASK-FIXTURE: converse", T29S, **LOC29)
+        a5b = attempt(addrel, O29, "part of", E29, "TASK-FIXTURE: another kind", T29S, **LOC29)
         record("T029-05", "the converse of a live directed row is refused naming the held relation; a different "
                "kind for the same pair is accepted", a5.get("relation_id") and e5 and str(a5["relation_id"]) in e5
                and a5b.get("relation_id"), (a5, e5, a5b))
 
-        # T029-06: the warrant is exactly one pointer to a row that exists.
+        # T029-06 (OD-71): the justification is the base's own cells. Each of these is refused, naming what is
+        # required, and writes nothing: no locator on a kind but `distinct` (a reason alone does not justify it),
+        # a URL with no page or clause, a page with no URL, a URL that is not http(s), a line below 1, a blank
+        # page, and a `distinct` row with no reason.
         n06 = len(rels())
-        e6 = {"none": refusal(addrel, E29, "adjacent", O29, "TASK-FIXTURE", T29S),
-              "two": refusal(addrel, E29, "adjacent", O29, "TASK-FIXTURE", T29S,
-                             observation_id=W29["observation_id"], extraction_id=W29["extraction_id"]),
-              "absent": refusal(addrel, E29, "adjacent", O29, "TASK-FIXTURE", T29S,
-                                extraction_id=(W29["extraction_id"] or 0) + 10 ** 9)}
-        record("T029-06", "no warrant, two warrants and a warrant row that does not exist are each refused, naming "
-               "the next act, and write nothing",
-               e6["none"] and e6["two"] and "exactly one warrant" in e6["none"] + e6["two"]
-               and e6["absent"] and "no such row in source_value_extractions" in e6["absent"]
-               and len(rels()) == n06, e6)
+        e6 = {"none": refusal(addrel, E29, "adjacent", O29, "TASK-FIXTURE: reason only", T29S),
+              "url only": refusal(addrel, E29, "adjacent", O29, "TASK-FIXTURE", T29S, source_url=URL29),
+              "page only": refusal(addrel, E29, "adjacent", O29, "TASK-FIXTURE", T29S, source_page="3"),
+              "scheme": refusal(addrel, E29, "adjacent", O29, "TASK-FIXTURE", T29S, source_url="ftp://x.org/a",
+                                source_page="3"),
+              "line": refusal(addrel, E29, "adjacent", O29, "TASK-FIXTURE", T29S, source_line=0, **LOC29B),
+              "blank page": refusal(addrel, E29, "adjacent", O29, "TASK-FIXTURE", T29S, source_url=URL29,
+                                    source_page="  ", source_clause="c"),
+              "distinct no reason": refusal(addrel, E29, "distinct", O29, None, T29S, **LOC29),
+              "distinct partial locator": refusal(addrel, E29, "distinct", O29, "TASK-FIXTURE", T29S,
+                                                  source_url=URL29)}
+        record("T029-06", "no locator, a partial or malformed one, and a `distinct` row with no reason are each "
+               "refused, naming what is required, and write nothing",
+               all(e6.values()) and "--source-url" in e6["none"] and "--source-page or --source-clause" in e6["none"]
+               and "--reason" in e6["distinct no reason"] and len(rels()) == n06, e6)
 
         # T029-07: a blank reason, an unknown term and one term at both ends are each refused.
-        e7 = {"reason": refusal(addrel, E29, "adjacent", O29, "   ", T29S, observation_id=W29["observation_id"]),
-              "term": refusal(addrel, E29, "adjacent", "TASK-FIXTURE-NO-SUCH-TERM", "TASK-FIXTURE", T29S,
-                              observation_id=W29["observation_id"]),
-              "self": refusal(addrel, E29, "adjacent", E29, "TASK-FIXTURE", T29S, observation_id=W29["observation_id"])}
+        e7 = {"reason": refusal(addrel, E29, "adjacent", O29, "   ", T29S, **LOC29),
+              "term": refusal(addrel, E29, "adjacent", "TASK-FIXTURE-NO-SUCH-TERM", "TASK-FIXTURE", T29S, **LOC29),
+              "self": refusal(addrel, E29, "adjacent", E29, "TASK-FIXTURE", T29S, **LOC29)}
         record("T029-07", "a blank reason, an unknown term and the same term at both ends are each refused and "
                "write nothing", e7["reason"] and "--reason" in e7["reason"] and e7["term"] and "no such term" in
                e7["term"] and e7["self"] and "both ends" in e7["self"] and "two different terms" in e7["self"]
@@ -2083,11 +2093,10 @@ try:
         d8 = attempt(retrel, id8, "TASK-FIXTURE: the source was withdrawn", T29S)
         again8 = refusal(retrel, id8, "TASK-FIXTURE: again", T29S)
         nosuch8 = refusal(retrel, 10 ** 9, "TASK-FIXTURE: none", T29S)
-        row8 = q("SELECT retired_at, retired_by_session, retirement_reason, reason, kind FROM term_relations "
-                 "WHERE relation_id=?", id8)
+        row8 = q("SELECT retired_at, retired_by_session, retirement_reason, reason, kind, source_url FROM "
+                 "term_relations WHERE relation_id=?", id8)
         r8 = attempt(elemread, E29)
-        w8 = attempt(addrel, E29, K_PROV, P29, "TASK-FIXTURE: written again", T29S,
-                     observation_id=W29["observation_id"])
+        w8 = attempt(addrel, E29, K_PROV, P29, "TASK-FIXTURE: written again", T29S, **LOC29)
         record("T029-08", "retire-term-relation retires in place with a reason (the row stays, its other cells "
                "untouched), refuses a blank reason, a retired row and an unknown one; the reader drops it; the "
                "pair can be written again", z8 and d8.get("retired") is True and again8 and "retired at" in again8
@@ -2095,6 +2104,7 @@ try:
                and row8 and row8[0][0] and row8[0][1] == dbcore.session_stem(T29S)
                and row8[0][2] == "TASK-FIXTURE: the source was withdrawn"
                and row8[0][3] == "TASK-FIXTURE: the element should carry the provision" and row8[0][4] == K_PROV
+               and row8[0][5] == URL29
                and r8.get("provisions") == [] and w8.get("relation_id") and w8["relation_id"] != id8,
                (z8, d8, again8, nosuch8, row8, r8, w8))
 
@@ -2109,21 +2119,21 @@ try:
                 return str(exc)
             finally:
                 c.close()
-        ins = ("INSERT INTO term_relations (from_term_id, kind, to_term_id, reason, {w}, created_at, "
-               "created_by_session) VALUES (?, ?, ?, 'TASK-FIXTURE', ?, 't', 't')")
+        ins = ("INSERT INTO term_relations (from_term_id, kind, to_term_id, reason, source_url, source_page, "
+               "created_at, created_by_session) VALUES (?, ?, ?, ?, ?, ?, 't', 't')")
         lo9, hi9 = sorted((E29, O29))        # a pair with no live `distinct` row, so only the CHECK can refuse
         raw9 = {
-            "a": ("no warrant", raw("INSERT INTO term_relations (from_term_id, kind, to_term_id, reason, created_at, "
-                                    "created_by_session) VALUES (?, 'adjacent', ?, 'TASK-FIXTURE', 't', 't')",
-                                    E29, P29)),
-            "b": ("a `distinct` row stored higher id first",
-                  raw(ins.format(w="observation_id"), hi9, "distinct", lo9, W29["observation_id"])),
-            "c": ("one term at both ends", raw(ins.format(w="observation_id"), E29, "adjacent", E29,
-                                               W29["observation_id"])),
-            "e": ("a kind outside the CHECK", raw(ins.format(w="observation_id"), E29, "equivalent", O29,
-                                                  W29["observation_id"])),
-            "f": ("the converse of a live row of the same kind",
-                  raw(ins.format(w="observation_id"), O29, "broader", E29, W29["observation_id"]))}
+            "a": ("no locator on a kind but `distinct`", raw(ins, E29, "adjacent", P29, "TASK-FIXTURE", None, None)),
+            "b": ("a `distinct` row stored higher id first", raw(ins, hi9, "distinct", lo9, "TASK-FIXTURE", None,
+                                                                 None)),
+            "c": ("one term at both ends", raw(ins, E29, "adjacent", E29, "TASK-FIXTURE", URL29, "3")),
+            "e": ("a kind outside the CHECK", raw(ins, E29, "equivalent", O29, "TASK-FIXTURE", URL29, "3")),
+            "f": ("the converse of a live row of the same kind", raw(ins, O29, "broader", E29, "TASK-FIXTURE",
+                                                                    URL29, "3")),
+            "g": ("a `distinct` row with no reason", raw(ins, lo9, "distinct", hi9, None, None, None)),
+            "h": ("a page with no URL", raw(ins, lo9, "distinct", hi9, "TASK-FIXTURE", None, "3")),
+            "i": ("a URL that is not http(s)", raw(ins, E29, "adjacent", P29, "TASK-FIXTURE", "ftp://x.org/a", "3")),
+        }
         # T029-09d: the three retirement cells are set together or not at all, and none is blank: every partial
         # combination and every blank one, derived by looping over the three columns, is refused.
         RET = ("retired_at", "retired_by_session", "retirement_reason")
@@ -2166,10 +2176,11 @@ try:
                r11.returncode == 1 and r11.stderr.startswith("REFUSING:") and "no such term" in r11.stderr
                and "Traceback" not in r11.stderr, (r11.returncode, r11.stderr[-200:]))
 
-        # T029-12: the CLI is wired for each verb and takes a kind containing spaces; the vocabulary offered is
-        # the CHECK's own (no list typed in the test or in the parser).
+        # T029-12: the CLI is wired for each verb, takes a kind containing spaces and the grounding flags; the
+        # vocabulary offered is the CHECK's own.
         r12 = run("add-term-relation", "--from-term", O29, "--kind", "adjacent", "--to-term", P29, "--reason",
-                  "TASK-FIXTURE: via the CLI", "--extraction-id", str(W29["extraction_id"]), "--session", T29S)
+                  "TASK-FIXTURE: via the CLI", "--source-url", URL29, "--source-clause", "TASK-FIXTURE 9",
+                  "--ref-id", "TASK-FIXTURE-REF", "--session", T29S)
         id12 = json.loads(r12.stdout).get("relation_id") if r12.returncode == 0 and r12.stdout.strip() else None
         r12b = run("retire-term-relation", "--relation-id", str(id12), "--reason", "TASK-FIXTURE: via the CLI",
                    "--session", T29S)
@@ -2180,9 +2191,7 @@ try:
                and q("SELECT retired_at IS NOT NULL FROM term_relations WHERE relation_id=?", id12) == [(1,)],
                (r12.returncode, r12.stderr[-200:], r12b.returncode, r12b.stderr[-200:]))
 
-        # T029-12b: the parser's --kind choices are READ from the column's CHECK, never a typed list (rule 8): the
-        # `choices` of the --kind argument of add-term-relation is a call of dbcore.schema_choices naming the
-        # table and the column.
+        # T029-12b: the parser's --kind choices are READ from the column's CHECK, never a typed list (rule 8).
         import ast
         tree12 = ast.parse((REPO / "scripts" / "db.py").read_text(encoding="utf-8"))
         kind_calls = [n for n in ast.walk(tree12) if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
@@ -2196,25 +2205,21 @@ try:
                and [a.value for a in ch12[0].args if isinstance(a, ast.Constant)] == ["term_relations", "kind"],
                [ast.dump(c) for c in ch12])
 
-        # T029-13 (OD-56): an `element has provision` row rests on an observation or an extraction, never an
-        # adjudication: refused by the writer naming OD-56, and by the schema; an `element has parameter` row is
-        # not so restricted (the ledger names the rule for provisions only).
+        # T029-13 (OD-56, OD-71): a provision is justified by where a source says the element should carry it,
+        # never by a reason alone (the old rule, that an adjudication is no warrant, in the base's own terms): the
+        # writer refuses it naming the locator, and the schema refuses it; with a locator it is accepted.
         n13 = len(rels())
-        e13 = refusal(addrel, O29, K_PROV, P29, None, T29S, adjudication_id=W29["adjudication_id"])
-        r13 = raw("INSERT INTO term_relations (from_term_id, kind, to_term_id, adjudication_id, created_at, "
-                  "created_by_session) VALUES (?, 'element has provision', ?, ?, 't', 't')", O29, P29,
-                  W29["adjudication_id"])
-        a13 = attempt(addrel, O29, K_PROV, P29, None, T29S, extraction_id=W29["extraction_id"])
-        record("T029-13", "an `element has provision` row with an adjudication warrant is refused by the writer "
-               "(naming OD-56 and the two warrants it takes) and by the schema; one with an extraction is accepted",
-               e13 and "OD-56" in e13 and "--observation-id" in e13 and r13 and len(rels()) == n13 + 1
-               and a13.get("relation_id"), (e13, r13, a13))
+        e13 = refusal(addrel, O29, K_PROV, P29, "TASK-FIXTURE: a reason alone", T29S)
+        r13 = raw(ins, O29, K_PROV, P29, "TASK-FIXTURE: a reason alone", None, None)
+        a13 = attempt(addrel, O29, K_PROV, P29, None, T29S, **LOC29B)
+        record("T029-13", "an `element has provision` row with a reason and no locator is refused by the writer "
+               "(naming --source-url) and by the schema; one with a locator is accepted",
+               e13 and "--source-url" in e13 and r13 and a13.get("relation_id") and len(rels()) == n13 + 1,
+               (e13, r13, a13))
 
-        # T029-14: the reason is optional (a relation rests on its warrant), a blank one is refused by the writer
-        # and the schema.
-        a14 = attempt(addrel, O29, "part of", P29, None, T29S, observation_id=W29["observation_id"])
-        r14 = raw("INSERT INTO term_relations (from_term_id, kind, to_term_id, reason, observation_id, created_at, "
-                  "created_by_session) VALUES (?, 'adjacent', ?, '  ', ?, 't', 't')", E29, P29, W29["observation_id"])
+        # T029-14: the reason is optional off `distinct`, a blank one is refused by the schema.
+        a14 = attempt(addrel, O29, "part of", P29, None, T29S, **LOC29)
+        r14 = raw(ins, E29, "adjacent", P29, "  ", URL29, "3")
         record("T029-14", "a relation with no reason is accepted and holds NULL there; a blank reason is refused by "
                "the schema", a14.get("relation_id") and q("SELECT reason FROM term_relations WHERE relation_id=?",
                                                           a14["relation_id"]) == [(None,)] and r14, (a14, r14))
@@ -2238,16 +2243,15 @@ try:
                    for n in ("keep", "fold", "gone")}
             x("INSERT INTO parameter_declinations (term_id, reason, created_at, created_by_session) "
               "VALUES (?, 'TASK-FIXTURE', 't', ?)", FT["nope"], T29S)
-            w15 = {n: attempt(addrel, E29, K_PAR, FT[n], None, T29S, observation_id=W29["observation_id"])
-                   for n in ("fold", "nope")}
+            w15 = {n: attempt(addrel, E29, K_PAR, FT[n], None, T29S, **LOC29) for n in ("fold", "nope")}
             x("UPDATE base_parameters SET status='merged', merged_into=? WHERE parameter_id=?", pid["keep"],
               pid["fold"])
             x("UPDATE base_parameters SET status='retired' WHERE parameter_id=?", pid["gone"])
             r15 = attempt(elemread, E29)
             by15 = {p["term_id"]: p for p in r15.get("parameters", [])}
-            e15m = refusal(addrel, E29, K_PAR, FT["fold"], None, T29S, extraction_id=W29["extraction_id"])
-            e15r = refusal(addrel, E29, K_PAR, FT["gone"], None, T29S, observation_id=W29["observation_id"])
-            a15 = attempt(addrel, E29, K_PAR, FT["keep"], None, T29S, observation_id=W29["observation_id"])
+            e15m = refusal(addrel, E29, K_PAR, FT["fold"], None, T29S, **LOC29B)
+            e15r = refusal(addrel, E29, K_PAR, FT["gone"], None, T29S, **LOC29)
+            a15 = attempt(addrel, E29, K_PAR, FT["keep"], None, T29S, **LOC29)
             record("T029-15a", "the reader follows a merged parameter to the one that stands (its id and term, and "
                    "the id it was written against)", by15.get(FT["fold"], {}).get("parameter_id") == pid["keep"]
                    and by15[FT["fold"]]["parameter_term_id"] == FT["keep"]
@@ -2262,13 +2266,29 @@ try:
 
             # T029-16: `distinct` is stored lower first by the number after the hyphen (a text order puts the
             # 10001 id before the 9998 one); the schema holds the same order.
-            a16 = attempt(addrel, FT["hi"], "distinct", FT["lo"], None, T29S, observation_id=W29["observation_id"])
-            r16 = raw("INSERT INTO term_relations (from_term_id, kind, to_term_id, observation_id, created_at, "
-                      "created_by_session) VALUES (?, 'distinct', ?, ?, 't', 't')", FT["hi"], FT["gone"],
-                      W29["observation_id"])
+            a16 = attempt(addrel, FT["hi"], "distinct", FT["lo"], "TASK-FIXTURE: two", T29S)
+            r16 = raw(ins, FT["hi"], "distinct", FT["gone"], "TASK-FIXTURE: two", None, None)
             record("T029-16", "a `distinct` row between a 4-digit and a 5-digit id is stored with the numerically "
                    "lower id first, whichever way it is named, and the schema refuses the other order",
                    (a16.get("from_term_id"), a16.get("to_term_id")) == (FT["lo"], FT["hi"]) and r16, (a16, r16))
+
+        # T029-17 (OD-71): term_relations is a base table by the stage map and holds no foreign key into another
+        # stage (its only foreign keys are into terms); its ref_id is a plain provenance cell: any text is
+        # accepted, validated against nothing, printed by the reader and read by no decision.
+        import yaml as _yaml
+        SM29 = _yaml.safe_load((REPO / "governance" / "stage-map.yaml").read_text(encoding="utf-8"))["tables"]
+        fk29 = [(f[2], SM29.get(f[2])) for f in q("PRAGMA foreign_key_list(term_relations)")]
+        cols29 = {r[1]: r[2] for r in q("PRAGMA table_info(term_relations)")}
+        a17 = attempt(addrel, O29, "adjacent", E29, "TASK-FIXTURE: provenance", T29S, ref_id="TASK-FIXTURE-NOT-A-REF",
+                      **LOC29)
+        a17b = attempt(addrel, P29, "adjacent", E29, "TASK-FIXTURE: no provenance", T29S, **LOC29)
+        record("T029-17", "term_relations, a base table, holds no foreign key into another stage; ref_id is a "
+               "plain nullable cell, accepted unvalidated and equally absent",
+               SM29.get("term_relations") == "base" and fk29 and all(st == "base" for _, st in fk29)
+               and "ref_id" in cols29 and a17.get("relation_id") and a17b.get("relation_id")
+               and q("SELECT ref_id FROM term_relations WHERE relation_id IN (?, ?) ORDER BY relation_id",
+                     a17["relation_id"], a17b["relation_id"]) == [("TASK-FIXTURE-NOT-A-REF",), (None,)],
+               (fk29, a17, a17b))
 
     # ── A: the observation-quote backstop can go red ─────────────────────────────────
     a1 = run_audit("observation_verbatim_audit.py")
