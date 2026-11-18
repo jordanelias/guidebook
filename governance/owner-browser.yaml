@@ -89,6 +89,7 @@ glossary:
   term_adjudications: "The decision about an observed phrase: it names an existing term, names a new one, is not ours, or is deferred, with the reason."
   term_aliases: "The names of each concept as sources use them, one row per occurrence (language, jurisdiction, where it is used, how it is attested), plus the search aids nobody has attested yet."
   term_label_picks: "Who picked each concept's label, why, and the label it replaced."
+  term_relations: "How one concept relates to another, by a typed kind: the row that says so, why, who judged it, and whether it still stands; a relation is changed by retiring it with a reason."
   terms: "The project's vocabulary: each concept, its English descriptive label (ours, not a source's name) and definition."
   translations: "A translation of one cell of another table (a quotation, a term or a title), pointing at the cell it translates, with who translated it, who reviewed it and whether it was accepted."
   weighting_profile: "How evidence tiers are weighted and presented for each audience and use."

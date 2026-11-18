@@ -93,6 +93,17 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   records the former label in `term_label_picks`. `adjudicate-term` never writes NAMES-NEW. Owner approval is the data
   PR the owner reads (OR-17: "bulk, with me reading the PR"); `add-parameter` and `decline-parameter` take no
   approval flag; `--approval-ref` is the flag of the verbs that record an approval (derive them: `grep -n -F -- '"--approval-ref"' scripts/db.py`). `add-parameter` takes instead `--quantity-kind` and `--quantity-kind-observation-id` (T-020): the kind of quantity, from `base_quantity_kinds`, and the observation whose quote states a value of it.
+- **Three places record a likeness, and a fact lives in one of them.** `term_aliases` relates a **phrase** to a term, by
+  its `alias_type` (the column's own CHECK holds the values). `term_relations` relates a **term to another term**, by its
+  `kind` (the column's own CHECK holds the values; the migration's DDL comment defines each kind and which way it reads).
+  T-032's relation rows relate a **provision to a provision** at synthesis, judged at the Opus floor (OD-25).
+  `add-term-relation --from-term --kind --to-term --reason` plus exactly one of `--observation-id`, `--extraction-id`
+  or `--adjudication-id` (the row that says so) writes one row; `retire-term-relation --relation-id --reason` changes
+  it (a relation is retired, never UPDATEd); `element-parameters --element` reads an element's parameters and
+  provisions. There is no `equivalent` kind: two terms that name one concept are merged (T-129), not pointed at, and
+  until that merge verb exists (T-129) they are left as they are and listed. A provision whose question is whether it is present
+  (a hearing loop, a visual alarm) is related to its element by `element has provision` and is never made a parameter
+  (OD-56).
 - `set-parameter-direction --ref-id` records which way is better **from an admitted source** that holds an
   extraction for the parameter (ledger 2026-10-30, ACTION 6; stored in `base_parameters.direction_ref_id`); a
   direction with no source is refused. Without a direction stage 6 cannot select a value and says so in its gap. A

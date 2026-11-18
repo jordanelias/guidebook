@@ -145,6 +145,7 @@ tables:
   term_adjudications: judgment
   term_aliases: base
   term_label_picks: base
+  term_relations: base
   terms: base
   translations: cross-stage
   weighting_profile: render

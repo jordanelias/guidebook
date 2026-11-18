@@ -2207,6 +2207,40 @@ def main():
     p_dp.add_argument("--session", required=True)
     p_dp.add_argument("--dry-run", action="store_true")
 
+    # add-term-relation / retire-term-relation / element-parameters -- typed pointers from one term to another
+    # (T-029, migration 147). The kinds are the column's own CHECK; each row names its warrant.
+    p_atr = sub.add_parser("add-term-relation",
+                           help="Record that one term is related to another by a kind, with the row that says "
+                                "so (term_relations)")
+    p_atr.add_argument("--from-term", dest="from_term", required=True,
+                       help="terms.term_id the row reads from: '<from> <kind> <to>'")
+    p_atr.add_argument("--kind", required=True, choices=dbcore.schema_choices("term_relations", "kind"),
+                       help="Live vocabulary, read from term_relations.kind's own CHECK (the migration's DDL "
+                            "comment defines each kind and its direction)")
+    p_atr.add_argument("--to-term", dest="to_term", required=True, help="terms.term_id the row points at")
+    p_atr.add_argument("--reason", required=True, help="Why, in words (the judge's reason)")
+    p_atr.add_argument("--observation-id", dest="observation_id", type=int,
+                       help="The warrant: the observed_terms row whose quote says so (exactly one warrant flag)")
+    p_atr.add_argument("--extraction-id", dest="extraction_id", type=int,
+                       help="The warrant: the source_value_extractions row that says so")
+    p_atr.add_argument("--adjudication-id", dest="adjudication_id", type=int,
+                       help="The warrant: the term_adjudications row that says so")
+    p_atr.add_argument("--session", required=True)
+    p_atr.add_argument("--dry-run", action="store_true")
+
+    p_rtr = sub.add_parser("retire-term-relation",
+                           help="Retire one term relation in place, with a reason (a relation is changed by "
+                                "retiring it, never by an UPDATE)")
+    p_rtr.add_argument("--relation-id", dest="relation_id", type=int, required=True)
+    p_rtr.add_argument("--reason", required=True)
+    p_rtr.add_argument("--session", required=True)
+    p_rtr.add_argument("--dry-run", action="store_true")
+
+    p_ep = sub.add_parser("element-parameters",
+                          help="Read-only: the parameters and the provisions a building element is related to "
+                               "by live term_relations rows, each with its warrant")
+    p_ep.add_argument("--element", required=True, help="terms.term_id of the building element")
+
     # Tooling T1 (owner approval D8, 2026-10-09): the reading record, the vocabulary
     # lifecycle, the catalogue minting route and extraction follow-ups. Each function's
     # docstring holds its refusals; vocabularies are read from each column's CHECK.
@@ -3782,6 +3816,18 @@ def main():
             session=args.session,
             dry_run=args.dry_run,
         ))
+
+    elif args.command == "add-term-relation":
+        _emit(add_term_relation(
+            args.from_term, args.kind, args.to_term, args.reason, args.session,
+            observation_id=args.observation_id, extraction_id=args.extraction_id,
+            adjudication_id=args.adjudication_id, dry_run=args.dry_run))
+
+    elif args.command == "retire-term-relation":
+        _emit(retire_term_relation(args.relation_id, args.reason, args.session, dry_run=args.dry_run))
+
+    elif args.command == "element-parameters":
+        _emit(element_parameters(args.element))
 
     elif args.command == "record-scan":
         _emit(record_scan({
@@ -7790,6 +7836,111 @@ def decline_parameter(term_id: str, reason: str, session: str, dry_run: bool = F
                 "declined": True, "reason": reason,
                 "created_by_session": row.get("created_by_session"),
                 "dry_run": dry_run}
+
+
+def add_term_relation(from_term: str, kind: str, to_term: str, reason: str, session: str, *,
+                      observation_id: int = None, extraction_id: int = None, adjudication_id: int = None,
+                      dry_run: bool = False):
+    """Write one `term_relations` row: '<from term> <kind> <to term>', with the row that says so (T-029).
+
+    The kinds are the column's own CHECK (`dbcore.check_declared`); the migration's DDL comment says what each means
+    and which way it reads. There is no `equivalent` kind: two terms that name one concept are merged (T-129), never
+    pointed at. Refuses, each sentence naming the next act: a kind the CHECK does not hold; a blank reason; an
+    unknown term; the same term twice; no warrant, or more than one; a warrant row that does not exist; and a second
+    live row of the same kind for the same pair in either direction (retire the held one first, with its reason). A
+    `distinct` row is stored with the lower term id first, as the CHECK requires; the result names the order written."""
+    reason = dbcore.require_reason(reason, "add-term-relation",
+                                   why="A relation that cannot say why cannot be contested.")
+    warrants = {col: val for col, val in (("observation_id", observation_id), ("extraction_id", extraction_id),
+                                          ("adjudication_id", adjudication_id)) if val is not None}
+    if len(warrants) != 1:
+        raise Refusal(
+            f"add-term-relation: name exactly one warrant (got {len(warrants)}): --observation-id, "
+            f"--extraction-id or --adjudication-id, the row of the source or the judgment that says the terms "
+            f"are so related. Nothing was written.")
+    ((wcol, wval),) = warrants.items()
+    wtable, wkey = {"observation_id": ("observed_terms", "observation_id"),
+                    "extraction_id": ("source_value_extractions", "extraction_id"),
+                    "adjudication_id": ("term_adjudications", "adjudication_id")}[wcol]
+    with connect(dry_run) as conn:
+        dbcore.check_declared(conn, "term_relations", "kind", kind, "add-term-relation")
+        for flag, tid in (("--from-term", from_term), ("--to-term", to_term)):
+            if conn.execute("SELECT 1 FROM terms WHERE term_id=?", (tid,)).fetchone() is None:
+                raise Refusal(f"add-term-relation: {flag} {tid!r}: no such term. A relation joins two held terms; "
+                              f"mint the missing one first (observe-term, then add-term --from-observation). "
+                              f"Nothing was written.")
+        if from_term == to_term:
+            raise Refusal(f"add-term-relation: {from_term} is both ends. A term is not related to itself. "
+                          f"Nothing was written.")
+        if not conn.execute(f'SELECT 1 FROM "{wtable}" WHERE "{wkey}"=?', (wval,)).fetchone():
+            raise Refusal(f"add-term-relation: --{wcol.replace('_', '-')} {wval}: no such row in {wtable}. The "
+                          f"warrant is the row that says so; record it first. Nothing was written.")
+        lo, hi = sorted((from_term, to_term))
+        held = conn.execute(
+            "SELECT relation_id, from_term_id, to_term_id, created_by_session FROM term_relations "
+            "WHERE kind=? AND min(from_term_id, to_term_id)=? AND max(from_term_id, to_term_id)=? "
+            "AND retired_at IS NULL", (kind, lo, hi)).fetchone()
+        if held is not None:
+            raise Refusal(
+                f"add-term-relation: relation {held['relation_id']} ({held['from_term_id']} {kind} "
+                f"{held['to_term_id']}, session {held['created_by_session']}) already holds this kind for this "
+                f"pair, in one direction or the other. Retire it first with retire-term-relation --relation-id "
+                f"{held['relation_id']} --reason ... if it is wrong. Nothing was written.")
+        if kind == "distinct":
+            from_term, to_term = lo, hi
+        row = {"from_term_id": from_term, "kind": kind, "to_term_id": to_term, "reason": reason, wcol: wval}
+        row.update(dbcore.stamp_for(conn, "term_relations", session))
+        cur = conn.execute(f"INSERT INTO term_relations ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
+                           list(row.values()))
+        return {"relation_id": cur.lastrowid, "from_term_id": from_term, "kind": kind, "to_term_id": to_term,
+                "warrant": {wcol: wval}, "created_by_session": row.get("created_by_session"),
+                "dry_run": dry_run}
+
+
+def retire_term_relation(relation_id: int, reason: str, session: str, dry_run: bool = False):
+    """Retire one `term_relations` row in place (OD-29): the three retired_* columns, never an UPDATE of the rest.
+
+    Refuses: no such relation; one already retired (it is never revived: write a new row); a blank reason."""
+    reason = dbcore.require_reason(reason, "retire-term-relation",
+                                   why="Say why the terms are no longer so related.")
+    with connect(dry_run) as conn:
+        row = conn.execute("SELECT relation_id, retired_at FROM term_relations WHERE relation_id=?",
+                           (relation_id,)).fetchone()
+        if row is None:
+            raise Refusal(f"retire-term-relation: relation {relation_id}: no such relation. Nothing was written.")
+        if row["retired_at"] is not None:
+            raise Refusal(f"retire-term-relation: relation {relation_id} was retired at {row['retired_at']}. A "
+                          f"retired relation is not revived; write a new one with add-term-relation. Nothing "
+                          f"was written.")
+        conn.execute("UPDATE term_relations SET retired_at=?, retired_by_session=?, retirement_reason=? "
+                     "WHERE relation_id=?",
+                     [dbcore.now(), dbcore.session_stem(session), reason, relation_id])
+        return {"relation_id": relation_id, "retired": True, "dry_run": dry_run}
+
+
+def element_parameters(element: str):
+    """Read-only (T-029; read by T-033 and render): an element term's parameters and its provisions.
+
+    The live `element has parameter` and `element has provision` rows from the element, each with the term it
+    points at, that term's parameter if it has one (`base_parameters.term_id`, looked up and never copied), the
+    reason and the warrant pointer. A provision whose term also carries a parameter is printed as it is: the
+    provision is not a parameter (OD-56), and the reader does not hide the contradiction."""
+    with connect(readonly=True) as conn:
+        el = conn.execute("SELECT term_id, canonical_en FROM terms WHERE term_id=?", (element,)).fetchone()
+        if el is None:
+            raise Refusal(f"element-parameters: --element {element!r}: no such term. Name a held term_id "
+                          f"(select term_id, canonical_en from terms).")
+        out = {"element": {"term_id": el["term_id"], "label": el["canonical_en"]}}
+        for key, kind in (("parameters", "element has parameter"), ("provisions", "element has provision")):
+            out[key] = [dict(r) for r in conn.execute(
+                "SELECT r.relation_id, r.to_term_id AS term_id, t.canonical_en AS label, p.parameter_id, "
+                "p.status AS parameter_status, r.reason, r.observation_id, r.extraction_id, r.adjudication_id, "
+                "r.created_by_session, r.created_at "
+                "FROM term_relations r JOIN terms t ON t.term_id = r.to_term_id "
+                "LEFT JOIN base_parameters p ON p.term_id = r.to_term_id "
+                "WHERE r.from_term_id=? AND r.kind=? AND r.retired_at IS NULL ORDER BY r.relation_id",
+                (element, kind))]
+        return out
 
 
 def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str,
