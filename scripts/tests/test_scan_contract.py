@@ -540,8 +540,12 @@ try:
     record("L15", "outside the two history tables, NO row holds the folded id (derived "
            "from the live FK graph)", not left, left)
 
-    # rename-term
-    rename = fn("rename_term")
+    # rename-term. Every route names its judge (OD-38, T-028): the cases below give a fixture judge,
+    # so each still reaches the refusal it is about; T028-07 calls the writer without one.
+    _rename = fn("rename_term")
+
+    def rename(*a, **k):
+        return _rename(*a, **{"judge": "TASK-FIXTURE judge", **k})
     TR = FREE[7]
     adj = fn("adjudicate_term")
     # Page three is in the FULL text registered above (H01, or its by-hand stand-in),
@@ -570,17 +574,23 @@ try:
                    "already the name of",
                    rename, TR, other_name, "fixture", S, from_observation=OTZ)
     old_name = q("SELECT canonical_en FROM terms WHERE term_id=?", TR)[0][0]
+    old_scope = q("SELECT scope_note FROM terms WHERE term_id=?", TR)[0][0]
     n7 = attempt(rename, TR, "turnwise clearance zone", "fixture: the sources' own phrase",
                  S, from_observation=OTZ)
     alias = q("SELECT alias_type, language, notes FROM term_aliases WHERE term_id=? AND "
               "alias=?", TR, old_name)
     trow = q("SELECT canonical_en, scope_note FROM terms WHERE term_id=?", TR)[0]
-    record("N07", "rename-term renames from the observation; the old name is a DEPRECATED "
-           "alias in term_aliases' own letter case, marked 'curated'; scope_note records it",
-           trow[0] == "turnwise clearance zone" and alias
-           and alias[0][0] == "DEPRECATED" and alias[0][1] == "en"
-           and "curated" in alias[0][2] and f"canonical_en was '{old_name}'" in (trow[1] or ""),
-           f"{n7} {alias} {trow}")
+    pick7 = q("SELECT former_label, form_id, observation_id, ruling_quote, judge, reason FROM "
+              "term_label_picks WHERE term_id=?", TR)
+    # T-028: the label is not a form, so the former label is not written into term_aliases, and a
+    # correction appended to a note is a fact in the wrong cell (2026-11-06): one pick row holds it.
+    record("N07", "rename-term renames from the observation; the old label is NOT written as an alias, "
+           "scope_note is unchanged, and one term_label_picks row holds the former label, the "
+           "observation, the judge and the reason",
+           trow[0] == "turnwise clearance zone" and alias == [] and trow[1] == old_scope
+           and pick7 == [(old_name, None, OTZ, None, "TASK-FIXTURE judge",
+                          "fixture: the sources' own phrase")],
+           f"{n7} {alias} {trow} {pick7}")
     ap = subprocess.run([sys.executable, str(REPO / "scripts" / "audit" /
                                              "alias_provenance_audit.py")],
                         env=ENV, capture_output=True, text=True)
@@ -1151,10 +1161,10 @@ try:
             return x(f"INSERT INTO term_aliases ({','.join(cols)}) VALUES "
                      f"({','.join('?' * len(cols))})", *cols.values())
 
-        def near(name):
+        def near(name, language="EN"):
             c = sqlite3.connect(DB)
             try:
-                return {t for t, _ in db._near_terms(c, name)}
+                return {t for t, _ in db._near_terms(c, name, language)}
             finally:
                 c.close()
 
@@ -1175,20 +1185,19 @@ try:
                (near(f"{att_a} {FIXW[5]}"), near(f"{LAB[1]} {FIXW[6]}")))
 
         # T026-03 (AT-24 b): a search that fired the seed is found by the flag join; the junction
-        # stores the form's KEY, not the rowid.
-        rid = q("SELECT rowid FROM term_aliases WHERE term_id=? AND alias=?", T26[0], seed_a)
+        # stores the form's form_id (T-028: the declared key, which the capture path carries).
+        rid = q("SELECT form_id FROM term_aliases WHERE term_id=? AND alias=?", T26[0], seed_a)
         LS = ["log-search", "--results-found", "1", "--prior-expectation", "fixture: nothing", "--slug", SLUG_A,
               "--language", "EN", "--query-text", "TASK-FIXTURE fixture query", "--engine", "web",
               "--depth-method", "scoping", "--session", S]
         r3 = run(*LS, *(["--form-id", str(rid[0][0])] if rid else []))
         e3 = json.loads(r3.stdout)["exec_id"] if r3.returncode == 0 and r3.stdout.strip() else None
         flagged = q("SELECT DISTINCT f.exec_id FROM search_execution_forms f JOIN term_aliases a "
-                    "USING (term_id, alias, language) WHERE a.attestation NOT IN "
-                    "('instrument','other_source')")
-        stored = q("SELECT term_id, alias, language FROM search_execution_forms WHERE exec_id=?", e3)
-        record("T026-03", "log-search --form-id writes a search_execution_forms row by the form's key, "
+                    "USING (form_id) WHERE a.attestation NOT IN ('instrument','other_source')")
+        stored = q("SELECT form_id FROM search_execution_forms WHERE exec_id=?", e3)
+        record("T026-03", "log-search --form-id writes a search_execution_forms row by the form's form_id, "
                "and the flag join (a seed's attestation) finds the search (AT-24 b)",
-               e3 and (e3,) in flagged and stored == [(T26[0], seed_a, ALANG)],
+               e3 and rid and (e3,) in flagged and stored == [(rid[0][0],)],
                (r3.stdout[-200:], r3.stderr[-300:], flagged, stored))
 
         # T026-04: --terms-used is refused naming --form-id; an unknown --form-id is refused;
@@ -1206,7 +1215,8 @@ try:
                (r4a.returncode, r4a.stderr[-200:], r4b.returncode, r4b.stderr[-200:]))
 
         # T026-05: the base route writes the locator and attestation; it promotes a seed in place
-        # (one row, type kept); an observation route cannot re-attest an attested row.
+        # (one row, type kept); an observation of an attested form is a further occurrence, a new
+        # row, and never re-attests the held one (T-028's occurrence grain replaced T-026's refusal).
         aliasfn = fn("add_alias")
         base_kw = dict(language=LJ_EN[0], jurisdiction=LJ_EN[1], source_url="https://example.org/t26",
                        source_clause="2.3", attestation="instrument")
@@ -1221,17 +1231,18 @@ try:
         o5 = attempt(observe, obs("corridor route", "PDF page 2 / T026",
                                   "the clear width of a corridor route is measured here"), S)
         attempt(adj, o5.get("observation_id"), "NAMES-EXISTING", "fixture", S, term_id=T26[2])
-        d5 = refusal(aliasfn, T26[2], o5.get("observation_id"), "SYNONYM", S)
+        d5 = attempt(aliasfn, T26[2], o5.get("observation_id"), "SYNONYM", S)
         record("T026-05", "add-alias base route writes the locator and attestation; it promotes a "
-               "seed in place (one row, type kept); a held instrument row is refused by the "
-               "observation route (no downgrade)",
+               "seed in place (one row, type kept); an observation of a held instrument form is a "
+               "new occurrence row, and the instrument row is not re-attested (no downgrade)",
                r5 == [("instrument", "https://example.org/t26", "2.3", LJ_EN[1], None)]
                and p5.get("promoted") is True
                and r5p == [("instrument", "SYNONYM", "2.3")]
                and q("SELECT COUNT(*) FROM term_aliases WHERE term_id=?", T26[3])[0][0] == n_t3
-               and d5 and "already holds" in d5
-               and q("SELECT attestation FROM term_aliases WHERE term_id=? AND alias='corridor route'",
-                     T26[2]) == [("instrument",)], (b5, r5, p5, r5p, d5))
+               and d5.get("form_id") and not d5.get("promoted")
+               and q("SELECT attestation, observation_id FROM term_aliases WHERE term_id=? AND "
+                     "alias='corridor route' ORDER BY form_id", T26[2])
+               == [("instrument", None), ("other_source", o5.get("observation_id"))], (b5, r5, p5, r5p, d5))
 
         # T026-06: the refusals of the base and seed routes; none writes a row.
         n_all = q("SELECT COUNT(*) FROM term_aliases")[0][0]
@@ -1343,27 +1354,28 @@ try:
                   "'2026-11-13 00:00', ?, '2026-11-13 00:00', ?, ?)",
                   term, text, lang or ALANG, atype, jur, T26S, T26S, att)
 
-            # T026-10 (finding 1): the screen is not switched off. An `unrecorded` EN alias still
-            # screens a near name; the same row typed model_seed does not.
+            # T026-10, as T-028 leaves it: an `unrecorded` alias is a seed, a search aid and never
+            # vocabulary (E4), so it no longer screens a near name; the same row attested by a source
+            # (typed other_source with a locator, by SQL on the copy, then put back) does.
             cands = q("SELECT term_id, alias FROM term_aliases WHERE upper(language)='EN' AND "
                       "attestation='unrecorded' AND created_by_session <> ? ORDER BY term_id, alias", T26S)
             pick = None
             for t_, a_ in cands:
-                if len(db._name_tokens(a_)) < 2:
-                    continue
                 nm = f"{a_} {FIXW[6]}"
-                if t_ in near(nm):
-                    x("UPDATE term_aliases SET attestation='model_seed' WHERE term_id=? AND alias=? "
-                      "AND upper(language)='EN'", t_, a_)
-                    gone = t_ not in near(nm)
-                    x("UPDATE term_aliases SET attestation='unrecorded' WHERE term_id=? AND alias=? "
-                      "AND upper(language)='EN'", t_, a_)
-                    if gone:
-                        pick = (t_, a_, nm)
-                        break
-            record("T026-10", "_near_terms still compares an `unrecorded` EN alias (a live refusal is "
-                   "not weakened on an open question) and stops comparing it only when it is typed "
-                   "model_seed", bool(pick) and pick[0] in near(pick[2]), pick)
+                if len(db._name_tokens(a_)) < 2 or t_ in near(nm):
+                    continue                     # reached by its label or another form: not this probe
+                x("UPDATE term_aliases SET attestation='other_source', source_url='https://example.org/"
+                  "task-fixture', source_clause='TASK-FIXTURE' WHERE term_id=? AND alias=? AND "
+                  "upper(language)='EN' AND attestation='unrecorded'", t_, a_)
+                found = t_ in near(nm)
+                x("UPDATE term_aliases SET attestation='unrecorded', source_url=NULL, source_clause=NULL "
+                  "WHERE term_id=? AND alias=? AND source_clause='TASK-FIXTURE'", t_, a_)
+                if found:
+                    pick = (t_, a_, nm)
+                    break
+            record("T026-10", "_near_terms does not compare an `unrecorded` EN alias (a seed, E4; T-028) "
+                   "and does compare the same row once a source attests it",
+                   bool(pick) and pick[0] not in near(pick[2]), pick)
 
             # T026-11 (finding 2a): `instrument` by the observation route needs a regulatory-stratum
             # source, derived from the tier ladder; other_source needs none, and writes the pointer.
@@ -1432,8 +1444,8 @@ try:
             # per distinct form however often --form-id is repeated.
             fr = db._alias_language(sqlite3.connect(DB), FR_PAIR[0])
             seed_row(T27[3], "t26 forme", lang=fr)
-            rid_fr = q("SELECT rowid FROM term_aliases WHERE term_id=? AND alias='t26 forme'", T27[3])[0][0]
-            rid_en = q("SELECT rowid FROM term_aliases WHERE term_id=? AND alias=?", T26[0], seed_a)[0][0]
+            rid_fr = q("SELECT form_id FROM term_aliases WHERE term_id=? AND alias='t26 forme'", T27[3])[0][0]
+            rid_en = q("SELECT form_id FROM term_aliases WHERE term_id=? AND alias=?", T26[0], seed_a)[0][0]
             r13a = run(*LS, "--form-id", str(rid_fr))
             r13b = run(*LS, "--form-id", str(rid_en), "--form-id", str(rid_en))
             e13 = json.loads(r13b.stdout)["exec_id"] if r13b.returncode == 0 else None
@@ -1451,7 +1463,7 @@ try:
                 return json.loads(r.stdout)["exec_id"] if r.returncode == 0 else None
             e_none = exec_of()
             e_un = exec_of("--form-id", str(rid_en))
-            e_att = exec_of("--form-id", str(q("SELECT rowid FROM term_aliases WHERE term_id=? AND alias=?",
+            e_att = exec_of("--form-id", str(q("SELECT form_id FROM term_aliases WHERE term_id=? AND alias=?",
                                                T26[1], att_a)[0][0]))
             a14 = run_audit("alias_provenance_audit.py")
             ex = lambda n: re.search(rf"exec {n} \(EN\): (\d+) form\(s\) recorded, (\d+) attested", a14.stdout)
@@ -1524,27 +1536,297 @@ try:
                    and "1 alias(es) written by this batch" in g16.stdout,
                    (c16, p16, row16, g16.stdout[-400:]))
 
-            # T026-17 (finding 10): the junction follows a corrected spelling and refuses a vanished form.
+            # T026-17 (finding 10), as T-028 leaves it: the junction points by form_id, so a corrected
+            # spelling is still the form the search fired, and a vanished form is refused.
             fk = sqlite3.connect(DB)
             fk.execute("PRAGMA foreign_keys=ON")
+            fid17 = rid_en
             try:
                 try:
-                    fk.execute("UPDATE term_aliases SET alias='t26 respelt' WHERE term_id=? AND alias=?",
-                               (T26[0], seed_a))
-                    moved = fk.execute("SELECT COUNT(*) FROM search_execution_forms WHERE term_id=? "
-                                       "AND alias='t26 respelt'", (T26[0],)).fetchone()[0]
+                    fk.execute("UPDATE term_aliases SET alias='t26 respelt' WHERE form_id=?", (fid17,))
+                    moved = fk.execute("SELECT COUNT(*) FROM search_execution_forms f JOIN term_aliases a "
+                                       "USING (form_id) WHERE a.form_id=? AND a.alias='t26 respelt'",
+                                       (fid17,)).fetchone()[0]
                 except sqlite3.IntegrityError:
-                    moved = 0                      # the key is frozen by the junction row
+                    moved = 0
                 try:
-                    fk.execute("DELETE FROM term_aliases WHERE term_id=? AND alias='t26 respelt'", (T26[0],))
+                    fk.execute("DELETE FROM term_aliases WHERE form_id=?", (fid17,))
                     deleted = True
                 except sqlite3.IntegrityError:
                     deleted = False
                 fk.rollback()
             finally:
                 fk.close()
-            record("T026-17", "an UPDATE of a searched form's spelling propagates to search_execution_forms; "
-                   "a DELETE of it is refused", moved >= 1 and deleted is False, (moved, deleted))
+            record("T026-17", "a corrected spelling of a searched form is still the form the search fired "
+                   "(the junction points by form_id); a DELETE of it is refused", moved >= 1 and deleted is False,
+                   (moved, deleted))
+
+    # ── T028: a concept that is not an English string (AT-25). The concept is its id; its names are
+    # forms, one row per occurrence; canonical_en is our English label; every label set by judgment
+    # names its judge in term_label_picks (OD-38); a name is screened only within its own language
+    # (OD-68). Probes are derived by query; names are fixture words no live name holds.
+    T28S = "session_2026-11-18-t028-task-fixture"
+    con = sqlite3.connect(DB)
+    try:
+        held28 = set()
+        for (n_,) in con.execute("SELECT canonical_en FROM terms UNION ALL SELECT alias FROM term_aliases"):
+            held28 |= db._name_tokens(n_)
+        W = [w for w in ("taskfixturezel", "taskfixturekap", "taskfixturequil", "taskfixtureumb",
+                         "taskfixturepas", "taskfixturecle", "taskfixturemor", "taskfixturesed",
+                         "taskfixturebri", "taskfixturevan") if w not in held28]
+        NONEN = con.execute("SELECT language, jurisdiction FROM lang_jur_map WHERE upper(language) <> 'EN' "
+                            "ORDER BY language, jurisdiction LIMIT 1").fetchone()
+        TWOJ = con.execute("SELECT language, MIN(jurisdiction), MAX(jurisdiction) FROM lang_jur_map "
+                           "GROUP BY language HAVING COUNT(*) > 1 ORDER BY language LIMIT 1").fetchone()
+        ENSC = con.execute("SELECT r.jurisdiction FROM v_research_scope r JOIN lang_jur_map m ON "
+                           "upper(m.language) = upper(r.language) AND m.jurisdiction = r.jurisdiction "
+                           "WHERE upper(r.language) = 'EN' ORDER BY 1 LIMIT 1").fetchone()
+        LAB28 = next(((t, n) for t, n in con.execute("SELECT term_id, canonical_en FROM terms ORDER BY term_id")
+                      if len(db._name_tokens(n)) >= 2), None)
+        USAGE = sorted(dbcore.check_values(con, "term_aliases", "usage_type") or [])
+        EN28 = db._alias_language(con, "EN")
+    finally:
+        con.close()
+    if len(W) < 10 or not (NONEN and TWOJ and ENSC and LAB28):
+        print("      SKIPPED-NO-FIXTURE: T028 needs 10 unheld words, a non-EN pair, a language with two "
+              "jurisdictions, an EN jurisdiction in research scope and a two-token label")
+    else:
+        LOC = ["--source-url", "https://example.org/task-fixture-t028", "--source-clause", "TASK-FIXTURE 1.1"]
+        LOCK = dict(source_url="https://example.org/task-fixture-t028", source_clause="TASK-FIXTURE 1.1")
+        JUDGE = "TASK-FIXTURE judge"
+        aliasfn28 = fn("add_alias")
+
+        def forms_of(term):
+            return q("SELECT form_id, alias, upper(language), jurisdiction, attestation, observation_id "
+                     "FROM term_aliases WHERE term_id=? ORDER BY form_id", term)
+
+        def picks_of(term):
+            return q("SELECT former_label, form_id, observation_id, ruling_quote, judge, reason "
+                     "FROM term_label_picks WHERE term_id=? ORDER BY pick_id", term)
+
+        def names(term):
+            r = q("SELECT label_is_attested_form, display_basis, display_name FROM v_term_names "
+                  "WHERE term_id=?", term)
+            return r[0] if r else None
+
+        # T028-01 (AT-25): a concept whose first and only attested form is not English, with an English
+        # label marked as ours and not counted as an attested English form.
+        F1, L1 = f"{W[0]} {W[1]}weg", f"{W[2]} {W[3]} label"
+        n_terms = q("SELECT COUNT(*) FROM terms")[0][0]
+        r1 = run("add-term", "--first-form", F1, "--form-language", NONEN[0], "--form-jurisdiction", NONEN[1],
+                 *LOC, "--attestation", "instrument", "--canonical-en", L1, "--judge", JUDGE,
+                 "--rationale", "TASK-FIXTURE: a concept first met in another language", "--session", T28S)
+        TA28 = json.loads(r1.stdout).get("term_id") if r1.returncode == 0 and r1.stdout.strip() else None
+        f1 = forms_of(TA28)
+        record("T028-01", "add-term --first-form mints a concept from a non-English instrument form with an "
+               "English label: one term, one member row in that language, one pick row (former_label NULL), "
+               "label_is_attested_form 0, display_basis origin_instrument_form, no attested EN form",
+               TA28 and q("SELECT COUNT(*) FROM terms")[0][0] == n_terms + 1
+               and len(f1) == 1 and f1[0][1:5] == (F1, NONEN[0].upper(), NONEN[1], "instrument")
+               and picks_of(TA28) == [(None, f1[0][0], None, None, JUDGE,
+                                       "TASK-FIXTURE: a concept first met in another language")]
+               and names(TA28) == (0, "origin_instrument_form", F1)
+               and not [f for f in f1 if f[2] == "EN" and f[4] in dbcore.ATTESTED_FORMS],
+               (r1.returncode, r1.stdout[-300:], r1.stderr[-400:], f1, TA28 and names(TA28)))
+
+        # T028-02 (C-04): add-term --from-observation on a non-English observation, with an English label
+        # that is not inside the phrase: accepted, the phrase is the first member row, no pick row.
+        o28 = attempt(observe, obs("turnwise clearance zone", "PDF page 3 / T028-02",
+                                   "the turnwise clearance zone of a wheelchair", language=NONEN[0]), S)
+        L2 = f"{W[4]} {W[5]} label"
+        t2 = attempt(ins, o28.get("observation_id"), L2, "TASK-FIXTURE: a concept first met in another language",
+                     T28S)
+        TB28 = t2.get("term_id")
+        f2 = forms_of(TB28)
+        record("T028-02", "add-term --from-observation takes an English label not inside a non-English phrase; "
+               "the phrase is the first member row (other_source, the observation), and no pick row is written",
+               TB28 and f2 == [(f2[0][0], "turnwise clearance zone", NONEN[0].upper(), f2[0][3], "other_source",
+                                o28.get("observation_id"))] and picks_of(TB28) == []
+               and q("SELECT outcome FROM term_adjudications WHERE observation_id=? AND term_id=?",
+                     o28.get("observation_id"), TB28) == [("NAMES-NEW",)], (t2, f2))
+
+        # T028-03: one form attested in two jurisdictions for one term is two occurrences, two form_ids.
+        F3 = f"{W[6]} {W[7]}"
+        a3 = [attempt(aliasfn28, TA28, None, "SYNONYM", T28S, alias=F3, language=TWOJ[0], jurisdiction=j,
+                      attestation="other_source", **LOCK) for j in (TWOJ[1], TWOJ[2])]
+        r3 = q("SELECT form_id, jurisdiction FROM term_aliases WHERE term_id=? AND alias=? ORDER BY form_id", TA28, F3)
+        record("T028-03", "the same form attested in two jurisdictions for one term is two rows with two form_ids",
+               len(r3) == 2 and r3[0][0] != r3[1][0] and {r3[0][1], r3[1][1]} == {TWOJ[1], TWOJ[2]}, (a3, r3))
+
+        # T028-04: rename-term --from-form picks an attested English instrument form of an owed English
+        # jurisdiction as the label: display_basis english_instrument_label; no alias row; scope_note unchanged.
+        F4 = f"{W[8]} {W[0]}"
+        w4 = attempt(aliasfn28, TA28, None, "SYNONYM", T28S, alias=F4, language="EN", jurisdiction=ENSC[0],
+                     attestation="instrument", **LOCK)
+        fid4 = w4.get("form_id")
+        n_forms4, scope4 = len(forms_of(TA28)), (q("SELECT scope_note FROM terms WHERE term_id=?", TA28) or [(None,)])[0][0]
+        b4 = names(TA28)
+        p4 = attempt(_rename, TA28, F4, "TASK-FIXTURE: the instrument's own term", T28S, from_form=fid4, judge=JUDGE)
+        record("T028-04", "rename-term --from-form sets the label to an attested English instrument form: "
+               "display_basis english_instrument_label, no alias row written, scope_note unchanged, the pick recorded",
+               b4 == (0, "english_instrument_form", F4) and names(TA28) == (1, "english_instrument_label", F4)
+               and len(forms_of(TA28)) == n_forms4
+               and q("SELECT canonical_en, scope_note FROM terms WHERE term_id=?", TA28) == [(F4, scope4)]
+               and picks_of(TA28)[-1] == (L1, fid4, None, None, JUDGE, "TASK-FIXTURE: the instrument's own term"),
+               (w4, b4, p4, names(TA28), picks_of(TA28)))
+
+        # T028-05 (AT-24 for names): a model_seed row whose text equals a new name does not clash; it is
+        # reported in seed_matches.
+        S5 = f"{W[9]} {W[1]}"
+        x("INSERT INTO term_aliases (term_id, alias, language, alias_type, notes, created_at, created_by_session, "
+          "updated_at, updated_by_session, attestation) VALUES (?, ?, ?, 'SYNONYM', 'model-generated TASK-FIXTURE', "
+          "'t', ?, 't', ?, 'model_seed')", TB28, S5, EN28, T28S, T28S)
+        c5 = sqlite3.connect(DB)
+        try:
+            h5 = attempt(db._name_holder, c5, S5, "EN")
+        finally:
+            c5.close()
+        record("T028-05", "_name_holder: a model_seed row with the same text is no clash, and is reported "
+               "in seed_matches", isinstance(h5, dict) and h5.get("clashes") == []
+               and [m["term_id"] for m in h5.get("seed_matches", [])] == [TB28], h5)
+
+        # T028-06: _near_terms on a non-English name does not return English labels (the control: the
+        # same name in EN does).
+        nm6 = f"{LAB28[1]} {W[9]}"
+        c6 = sqlite3.connect(DB)
+        try:
+            n6 = [attempt(lambda nm, l: {t for t, _ in db._near_terms(c6, nm, l)}, nm6, lang) for lang in (NONEN[0], "EN")]
+            n6 += [attempt(lambda nm, l: {t for t, _ in db._near_terms(c6, nm, l)}, f"{F1} {W[9]}", NONEN[0])]
+        finally:
+            c6.close()
+        record("T028-06", "_near_terms on a non-English name compares no English label (the same name in EN does) "
+               "and finds a term through an attested form of its own language",
+               isinstance(n6[0], set) and LAB28[0] not in n6[0] and LAB28[0] in n6[1]
+               and isinstance(n6[2], set) and TA28 in n6[2], (LAB28, n6))
+
+        # T028-07 (OD-38): every rename-term route without --judge is refused; with it, each writes one pick
+        # row holding the former label and the route's one pointer, and no AMENDED trailer.
+        F7 = f"{W[7]} {W[3]}"
+        fid7 = attempt(aliasfn28, TA28, None, "SYNONYM", T28S, alias=F7, language="EN", jurisdiction=ENSC[0],
+                       attestation="other_source", **LOCK).get("form_id")
+        words7 = [w.lower() for w in (QUOTE or "").split() if w.isalpha() and len(w) > 4]
+        RN7 = next((f"{a} {b}" for a, b in zip(words7, words7[1:])
+                    if f"{a} {b}" in (QUOTE or "").lower() and f"{a} {b}" != RNAME
+                    and not db._VALUE_BEARING.search(f"{a} {b}")
+                    and not q("SELECT 1 FROM terms WHERE lower(canonical_en)=?", f"{a} {b}")
+                    and not q("SELECT 1 FROM term_aliases WHERE lower(alias)=?", f"{a} {b}")), None)
+        routes7 = [(TA28, F7, dict(from_form=fid7), "form_id", fid7),
+                   (TB28, "turnwise clearance", dict(from_observation=o28.get("observation_id")),
+                    "observation_id", o28.get("observation_id")),
+                   (TA28, RN7, dict(ruling_quote=QUOTE), "ruling_quote", (QUOTE or "").strip())]
+        ok7 = bool(RN7 and fid7)
+        for term7, new7, kw7, col7, val7 in routes7:
+            m7 = refusal(_rename, term7, new7, "TASK-FIXTURE: picked", T28S, **kw7)
+            old7, scope7 = (q("SELECT canonical_en, scope_note FROM terms WHERE term_id=?", term7) or [(None, None)])[0]
+            n7p = len(picks_of(term7))
+            w7 = attempt(_rename, term7, new7, "TASK-FIXTURE: picked", T28S, judge=JUDGE, **kw7)
+            last = q(f"SELECT former_label, {col7}, judge, (form_id IS NOT NULL) + (observation_id IS NOT NULL) + "
+                     f"(ruling_quote IS NOT NULL) FROM term_label_picks WHERE term_id=? ORDER BY pick_id DESC LIMIT 1",
+                     term7)
+            ok7 = ok7 and bool(m7 and "--judge" in m7) and len(picks_of(term7)) == n7p + 1 \
+                and last == [(old7, val7, JUDGE, 1)] \
+                and q("SELECT canonical_en, scope_note FROM terms WHERE term_id=?", term7) == [(new7, scope7)]
+            if not ok7:
+                print(f"      T028-07 route {col7}: {m7!r} {w7} {last}")
+        record("T028-07", "rename-term refuses each route (form, observation, ruling) without --judge; with it each "
+               "writes one term_label_picks row (former label, the one pointer, the judge) and no AMENDED trailer",
+               ok7, (RN7, fid7))
+
+        # T028-08: DOMAIN is refused naming --usage-type; a usage outside the column's CHECK is refused; one
+        # inside it is written.
+        F8 = f"{W[5]} {W[8]}"
+        base8 = dict(alias=F8, language="EN", jurisdiction=ENSC[0], attestation="other_source", **LOCK)
+        m8a = refusal(aliasfn28, TB28, None, "DOMAIN", T28S, **base8)
+        m8b = refusal(aliasfn28, TB28, None, "SYNONYM", T28S, usage_type="taskfixture_usage", **base8)
+        U8 = USAGE[0] if USAGE else None          # the column's CHECK; none on a schema without T-028: red below
+        w8 = attempt(aliasfn28, TB28, None, "SYNONYM", T28S, usage_type=U8, **base8)
+        record("T028-08", "add-alias refuses DOMAIN naming --usage-type, refuses a usage outside the column's "
+               "CHECK, and writes one inside it",
+               m8a and "--usage-type" in m8a and m8b and "usage_type" in m8b
+               and U8 and q("SELECT usage_type FROM term_aliases WHERE term_id=? AND alias=?", TB28, F8) == [(U8,)],
+               (m8a, m8b, w8))
+
+        # T028-09 (guard, and OD-68): a name equal to another term's attested form in the SAME language is
+        # refused by rename-term and by add-term --first-form unless --distinct-from names the term; the same
+        # written word in ANOTHER language is another name (owner, 2026-11-17) and is not refused.
+        m9a = refusal(_rename, TB28, F7, "TASK-FIXTURE", T28S, from_observation=o28.get("observation_id"),
+                      judge=JUDGE)
+        kw9 = dict(first_form=F7, form_language="EN", form_jurisdiction=ENSC[0], attestation="other_source",
+                   judge=JUDGE, dry_run=True, **LOCK)
+        m9b = refusal(ins, None, F7, "TASK-FIXTURE: a distinct concept", T28S, **kw9)
+        w9c = attempt(ins, None, F7, "TASK-FIXTURE: a distinct concept", T28S, distinct_from=[TA28], **kw9)
+        w9d = attempt(ins, None, f"{W[6]} {W[2]} label", "TASK-FIXTURE: another language", T28S,
+                      **{**kw9, "form_language": NONEN[0], "form_jurisdiction": NONEN[1]})
+        record("T028-09", "an attested same-language form of another term refuses rename-term and add-term "
+               "--first-form (unless --distinct-from names it); the same word in another language does not",
+               m9a and TA28 in m9a and m9b and TA28 in m9b and w9c.get("term_id") and w9d.get("term_id"),
+               (m9a, m9b, w9c, w9d))
+
+        # T028-10: an observation whose quote is in no file saved for its source and is not VERBATIM-EXEMPT
+        # still mints the term; its member row is unrecorded, with the observation, and the output says so.
+        # Fixture by SQL: observe-term refuses such a quote, and the corpus rows that carry one name live terms.
+        F10 = f"{W[4]} {W[9]}"
+        o10 = x("INSERT INTO observed_terms (ref_id, surface_form, language, locator, context_quote, created_at, "
+                "created_by_session) VALUES (?, ?, 'EN', 'TASK-FIXTURE', ?, 't', ?)", REF_A, F10,
+                f"a TASK-FIXTURE sentence using {F10} once, in no saved file", T28S)
+        t10 = attempt(ins, o10, F10, "TASK-FIXTURE: the quote is not verified", T28S)
+        J10 = q("SELECT jurisdiction FROM evidence_sources WHERE ref_id=?", REF_A)[0][0]
+        f10 = forms_of(t10.get("term_id"))
+        record("T028-10", "add-term --from-observation with an unverified quote mints the term, writes its form "
+               "unrecorded with the observation, and says add-alias promotes it",
+               t10.get("term_id") and [f[1:] for f in f10] == [(F10, "EN", J10, "unrecorded", o10)]
+               and "add-alias" in (t10.get("form_unrecorded") or ""), (t10, f10))
+        # T028-10b: once the quote is verified (here: the observation recorded VERBATIM-EXEMPT, by SQL on the
+        # copy), add-alias promotes that unrecorded member row in place; no second row.
+        x("UPDATE observed_terms SET notes=? WHERE observation_id=?", f"{retrieval_log.EXEMPT_MARK} TASK-FIXTURE]", o10)
+        p10 = attempt(aliasfn28, t10.get("term_id"), o10, "SYNONYM", T28S)
+        record("T028-10b", "add-alias --observation-id promotes add-term's unrecorded first form in place once "
+               "the quote is verified: one row, now other_source",
+               p10.get("promoted") is True
+               and [f[4:] for f in forms_of(t10.get("term_id"))] == [("other_source", o10)], (p10,))
+
+        # T028-11: add-term's own refusals, each in words, none writing a term.
+        n11 = q("SELECT COUNT(*) FROM terms")[0][0]
+        NOPAIR = q("SELECT a.language, b.jurisdiction FROM (SELECT DISTINCT language FROM lang_jur_map) a, "
+                   "(SELECT DISTINCT jurisdiction FROM lang_jur_map) b WHERE NOT EXISTS (SELECT 1 FROM lang_jur_map "
+                   "m WHERE m.language = a.language AND m.jurisdiction = b.jurisdiction) ORDER BY 1, 2 LIMIT 1")
+        L11, F11 = f"{W[1]} {W[2]}", f"{W[1]} {W[2]} {W[3]}"
+        b11 = dict(first_form=F11, form_language="EN", form_jurisdiction=ENSC[0], attestation="other_source",
+                   judge=JUDGE, **LOCK)
+        c11 = [(refusal(ins, None, L11, "r", T28S), "exactly one route"),
+               (refusal(ins, o28.get("observation_id"), L11, "r", T28S, **b11), "exactly one route"),
+               (refusal(ins, o28.get("observation_id"), L11, "r", T28S, judge=JUDGE), "belong to --first-form"),
+               (refusal(ins, None, L11, "r", T28S, **{**b11, "judge": None}), "--judge"),
+               (refusal(ins, None, f"{W[4]} {W[6]}", "r", T28S, **b11), "not inside the English first form"),
+               (refusal(ins, None, L11, "r", T28S, **{**b11, "source_clause": None}), "--source-page or --source-clause"),
+               (refusal(ins, None, L11, "r", T28S, **{**b11, "attestation": "model_seed"}), "other_source"),
+               (refusal(ins, None, L11, "r", T28S, **{**b11, "form_language": NOPAIR[0][0] if NOPAIR else None,
+                                                      "form_jurisdiction": NOPAIR[0][1] if NOPAIR else None}),
+                "lang_jur_map holds no pair"),
+               (refusal(ins, None, L11, "r", T28S, **{**b11, "usage_type": "taskfixture_usage"}), "usage_type")]
+        record("T028-11", "add-term refuses no route, two routes, a base flag on the observation route, a first form "
+               "with no judge, an English first form not holding the label, no page or clause, a seed attestation, "
+               "an unpaired language and a usage outside the CHECK; each in words, no term written",
+               NOPAIR and all(m and w in m for m, w in c11) and q("SELECT COUNT(*) FROM terms")[0][0] == n11,
+               [m for m, w in c11 if not (m and w in m)])
+
+        # T028-12: rename-term --from-form refuses a form of another term, an unattested form of this term, and
+        # an attested form whose text is not the new label.
+        seed12 = q("SELECT form_id, alias FROM term_aliases WHERE term_id=? AND attestation='model_seed'", TB28)
+        other12 = q("SELECT form_id, alias FROM term_aliases WHERE term_id=? AND attestation IN "
+                    "('instrument','other_source') ORDER BY form_id LIMIT 1", TA28)
+        mine12 = q("SELECT form_id, alias FROM term_aliases WHERE term_id=? AND alias=?", TB28, F8)
+        c12 = [refusal(_rename, TB28, other12[0][1], "r", T28S, from_form=other12[0][0], judge=JUDGE)
+               if other12 else None,
+               refusal(_rename, TB28, seed12[0][1], "r", T28S, from_form=seed12[0][0], judge=JUDGE)
+               if seed12 else None,
+               refusal(_rename, TB28, f"{W[8]} {W[9]}", "r", T28S, from_form=mine12[0][0], judge=JUDGE)
+               if mine12 else None]
+        record("T028-12", "rename-term --from-form refuses another term's form and an unattested form (not an "
+               "attested member form) and a form whose text is not the new label",
+               c12[0] and "not an attested member form" in c12[0] and c12[1] and "not an attested member form"
+               in c12[1] and c12[2] and "that form's text" in c12[2], c12)
+
 
     # ── A: the observation-quote backstop can go red ─────────────────────────────────
     a1 = run_audit("observation_verbatim_audit.py")
@@ -1667,7 +1949,7 @@ try:
         ("retire-parameter", ["--parameter-id", str(P["R"]), "--reason", "x"], "already"),
         ("merge-parameter", ["--from", str(P["B"]), "--into", str(P["B"]), "--reason", "x"],
          "same parameter"),
-        ("rename-term", ["--term-id", TR, "--canonical-en", "x y", "--reason", "x"],
+        ("rename-term", ["--term-id", TR, "--canonical-en", "x y", "--reason", "x", "--judge", "x"],
          "warrant"),
         ("revoke-declination", ["--term-id", TD, "--reason", "x", "--decision-ref", "nope"],
          "--decision-ref"),

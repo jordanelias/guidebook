@@ -68,8 +68,12 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   --outcome NAMES-EXISTING --term-id` → `add-alias --alias-type` (from the CHECK; it writes `attestation`, `other_source`
   unless `--attestation instrument`). A form read where no observation exists takes the base route (`add-alias --alias
   --language --jurisdiction --source-url --source-page|--source-clause --attestation`; the pair must be in `lang_jur_map`);
-  a search aid with no locator takes `--seed owner_supplied --approval-ref '<ledger heading naming it>'` and is never vocabulary (`--seed model_seed` is refused, OR-17). A search names the forms it
-  fired with `log-search --form-id`. A comparator ("not steeper than")
+  a search aid with no locator takes `--seed owner_supplied --approval-ref '<ledger heading naming it>'` and is never vocabulary (`--seed model_seed` is refused, OR-17).
+  A row of `term_aliases` is one OCCURRENCE (T-028): the same form in another source, jurisdiction or locator is a new
+  row with its own `form_id`; the usage of a form goes in `--usage-type` (DOMAIN, like TRANSLATION and DEPRECATED, is a
+  legacy value no route writes). A search names the forms of its own language it fired with `log-search --form-id
+  <form_id>`, never the label. `terms.canonical_en` is our English descriptive label, never a form; the name a page shows
+  is derived by `v_term_names` (E1). A comparator ("not steeper than")
   or a value is not a name for the concept: adjudicate it `NOT-OURS`. The name rule is the writer's own: `add-term
   --canonical-en` and `rename-term --canonical-en` refuse a name carrying a digit, a comparison symbol, a `min` or
   `max` word, or a comparator word (`than`, `at least`, `at most`, `no more`, `no less`, `no fewer`, `no greater`,
@@ -78,8 +82,15 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
 - **A new concept arises while a source is in hand** (`observe-term` needs `--ref-id` and a persisted quote), so base
   is re-entered from stages 3–4. **Claude never generates a phrase, name or alias** (OR-17): it is the source's own
   wording, present in its jurisdiction and language. `add-term --from-observation` mints the term and its NAMES-NEW
-  adjudication together; it refuses a near match (shared tokens with a term or an alias that is not a `model_seed`) unless `--distinct-from
-  TERM-ID` names it and the rationale says why. `adjudicate-term` never writes NAMES-NEW. Owner approval is the data
+  adjudication together, and writes the observed phrase as the concept's first form (`unrecorded` until its quote is
+  verified, then promoted by `add-alias`); the English label must sit inside the phrase only when the phrase is English.
+  A concept met in a located form with no observation is minted by `add-term --first-form` with its language,
+  jurisdiction, locator and `--attestation`, an English descriptive `--canonical-en`, and `--judge`. Both refuse a label
+  another term holds, a form another term holds attested in the same language, and a near match (shared tokens with an
+  attested form of the same language, or with a label when the name is English; a seed never counts, E4; a word in
+  another language is another name, OD-68) unless `--distinct-from TERM-ID` names it and the rationale says why.
+  `rename-term` takes one warrant (`--from-form <form_id>`, `--from-observation` or `--ruling-quote`) and `--judge`, and
+  records the former label in `term_label_picks`. `adjudicate-term` never writes NAMES-NEW. Owner approval is the data
   PR the owner reads (OR-17: "bulk, with me reading the PR"); `add-parameter` and `decline-parameter` take no
   approval flag; `--approval-ref` is the flag of the verbs that record an approval (derive them: `grep -n -F -- '"--approval-ref"' scripts/db.py`). `add-parameter` takes instead `--quantity-kind` and `--quantity-kind-observation-id` (T-020): the kind of quantity, from `base_quantity_kinds`, and the observation whose quote states a value of it.
 - `set-parameter-direction --ref-id` records which way is better **from an admitted source** that holds an

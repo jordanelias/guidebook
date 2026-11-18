@@ -3298,21 +3298,29 @@ _digit_names = [_L("CIRCLED DIGIT ONE"), _L("SUPERSCRIPT TWO"), _L("VULGAR FRACT
 _miss = [c for c in _signs + _digit_names if not db._VALUE_BEARING_NAME.search("width " + c)]
 record("T009-10", "a name carrying a non-ASCII comparator, a circled or superscript digit or a fraction is value-bearing; the ASCII "
        "plain name is not", not _miss and not db._VALUE_BEARING_NAME.search("ramp gradient"), _miss)
-# _near_terms compares against an alias of ANY language: take a live, non-seed, non-English alias of two or more tokens whose own term
-# has no English form that would find it anyway, and offer a name that contains it.
-def _en_forms(tid):
-    return [r[0] for r in q("SELECT canonical_en FROM terms WHERE term_id=? UNION ALL SELECT alias FROM term_aliases "
-                            "WHERE term_id=? AND upper(language)='EN' AND attestation<>'model_seed'", tid, tid)]
-_al = [(t, a) for t, a in q("SELECT term_id, alias FROM term_aliases WHERE upper(language)<>'EN' AND attestation<>'model_seed' "
-                            "ORDER BY term_id, alias") if len(db._name_tokens(a)) >= 2]
-# A near match needs a shared token, so an alias none of whose tokens occurs in any English form of its own term can be found only through the alias.
-_al = [(t, a) for t, a in _al if not any(db._name_tokens(a) & db._name_tokens(f) for f in _en_forms(t))]
+# _near_terms compares a name with the ATTESTED forms of its own language (T-028; OD-68, owner 2026-11-17: a name is screened
+# only within its own language; E4: a seed is never vocabulary): take a live attested non-English form of two or more tokens and
+# offer, in that language, a name that contains it. Its term's label is English and is not compared with a non-English name.
+def _attested_non_en():
+    return [(t, a, l, f) for t, a, l, f in q("SELECT term_id, alias, language, form_id FROM term_aliases WHERE "
+                                             "upper(language)<>'EN' AND attestation IN ('instrument','other_source') "
+                                             "ORDER BY term_id, alias") if len(db._name_tokens(a)) >= 2]
+_al = _attested_non_en()
 if not _al:
-    skip("T009-11", "no live non-English, non-seed alias of two or more tokens that no English form of its term would also find")
+    # HAND: no live non-English form is attested yet (T-107 attests them), so one live non-English alias of two or more
+    # tokens is attested on the copy, with a fixture locator, the state an attesting writer leaves.
+    _f = scalar("SELECT form_id FROM term_aliases WHERE upper(language)<>'EN' AND attestation='unrecorded' AND "
+                "alias LIKE '% %' ORDER BY term_id, alias LIMIT 1")
+    if _f is not None:
+        hand("UPDATE term_aliases SET attestation='other_source', source_url='https://example.org/task-fixture', "
+             "source_clause='TASK-FIXTURE' WHERE form_id=?", _f)
+    _al = _attested_non_en()
+if not _al:
+    skip("T009-11", "no live non-English alias of two or more tokens to attest")
 else:
-    _t, _a = _al[0]
-    record("T009-11", "_near_terms finds a term through an alias in a language other than English",
-           any(h[0] == _t for h in db._near_terms(con, _a + " zzprobe")), (_t, _a))
+    _t, _a, _l, _ = _al[0]
+    record("T009-11", "_near_terms finds a term through an attested form in a language other than English, in that language",
+           any(h[0] == _t for h in db._near_terms(con, _a + " zzprobe", _l)), (_t, _a, _l))
 
 # ───────────── T-010: add-parameter refuses a term filed under a lens, method or legal domain ─────────────
 print("Section T010: add-parameter refuses a term whose domain holds lenses, methods or bodies of law, adapts the next action "

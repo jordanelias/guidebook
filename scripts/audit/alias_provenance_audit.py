@@ -131,8 +131,7 @@ def main():
             "COALESCE(SUM(a.attestation IN ('instrument','other_source')), 0) AS attested "
             "FROM search_executions s "
             "LEFT JOIN search_execution_forms f ON f.exec_id = s.exec_id "
-            "LEFT JOIN term_aliases a ON a.term_id = f.term_id AND a.alias = f.alias "
-            "AND a.language = f.language "
+            "LEFT JOIN term_aliases a ON a.form_id = f.form_id "
             "WHERE s.results_found = 0 AND s.deferred_reason IS NULL "
             "GROUP BY s.exec_id ORDER BY s.exec_id").fetchall()
     except sqlite3.OperationalError:

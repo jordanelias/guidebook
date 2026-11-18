@@ -144,6 +144,7 @@ tables:
   supersession_check: synthesis
   term_adjudications: judgment
   term_aliases: base
+  term_label_picks: base
   terms: base
   translations: cross-stage
   weighting_profile: render

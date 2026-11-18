@@ -140,7 +140,7 @@ machines:
     guards:
       - "a canonical name carrying a digit, comparator or min/max word is refused (the container may not state its answer)"
       - "a name that already exists is refused and pointed at NAMES-EXISTING"
-      - "a term can only be minted FROM an observation"
+      - "on this transition a term is minted FROM an observation; the base route (add-term --first-form) mints one from a located form with a named judge, and no route mints from nothing"
     evidence:
       - {file: scripts/db.py, func: insert_term, needle: "states a determination in its own name"}
       - {file: scripts/db.py, func: insert_term, needle: "That makes this NAMES-EXISTING"}

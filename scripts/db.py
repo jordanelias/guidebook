@@ -769,9 +769,9 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
                gap_id: str = None, form_ids=None, dry_run: bool = False) -> int:
     """Append one row to search_executions. Returns its exec_id.
 
-    `form_ids` are rowids of term_aliases rows, read now (T-026): the forms this search
-    fired. One search_execution_forms row per distinct form is written with that form's KEY
-    (term_id, alias, language), never the rowid, which the capture path does not carry.
+    `form_ids` are term_aliases.form_id values (T-026; a declared key since T-028): the forms
+    this search fired. One search_execution_forms row per distinct form is written; a search
+    records the forms it used, never the label.
     `terms_used` is refused for a new row (the JSON held term ids and free words, so no word
     maps mechanically to a form); the column stays for the rows that already carry it.
 
@@ -830,7 +830,7 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         raise Refusal(
             "--terms-used is no longer written: its JSON held term ids and free words, so no "
             "word maps to a form. Name the forms this search fired with --form-id N "
-            "(repeatable; N is the rowid of a term_aliases row), which writes "
+            "(repeatable; N is the form_id of a term_aliases row), which writes "
             "search_execution_forms. The words of the query stay in --query-text. "
             "Nothing was written.")
     if not (slug or parameter_id is not None or mined_ref_id):
@@ -1008,21 +1008,20 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
                     raise Refusal(f"--gap-id {gap_id} is a gap in {col} {sub[col]!r} (subject from "
                                   f"{sub['subject_home']}), but this search is for {col} {row[col]!r}. A search "
                                   f"names the gap it was run to close; fix the flag or the gap. Nothing was written.")
-        # The forms this search fired, resolved BEFORE the execution row is written: a rowid
-        # is input only, and what is stored is the form's key.
+        # The forms this search fired, resolved BEFORE the execution row is written.
         forms = {}
         for fid in form_ids or []:
-            frow = conn.execute("SELECT term_id, alias, language FROM term_aliases "
-                                "WHERE rowid = ?", [fid]).fetchone()
+            frow = conn.execute("SELECT form_id, alias, language FROM term_aliases "
+                                "WHERE form_id = ?", [fid]).fetchone()
             if frow is None:
-                raise Refusal(f"--form-id {fid} names no term_aliases row. Read the rowid now "
-                              f"(select rowid, term_id, alias, language from term_aliases). "
+                raise Refusal(f"--form-id {fid} names no term_aliases row. Read the form_id "
+                              f"(select form_id, term_id, alias, language from term_aliases). "
                               f"Nothing was written.")
             if frow["language"].upper() != language:
                 raise Refusal(f"--form-id {fid} is the {frow['language']!r} form "
                               f"{frow['alias']!r}, but this search is --language {language!r}: a "
                               f"search fires the forms of its own language. Nothing was written.")
-            forms[tuple(frow)] = None
+            forms[frow["form_id"]] = None
         if mined_ref_id and not conn.execute(
                 "SELECT 1 FROM evidence_sources WHERE ref_id=?", [mined_ref_id]).fetchone():
             # Named, not a bare FOREIGN KEY constraint failed -- same discipline as
@@ -1073,11 +1072,11 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
                 "INSERT INTO search_admissions "
                 "(exec_id, ref_id, created_at, created_by_session) "
                 "VALUES (?, ?, ?, ?)", [exec_id, ref_id, ts, session])
-        for term_id, alias, flang in forms:
+        for form_id in forms:
             conn.execute(
                 "INSERT INTO search_execution_forms "
-                "(exec_id, term_id, alias, language, created_at, created_by_session) "
-                "VALUES (?, ?, ?, ?, ?, ?)", [exec_id, term_id, alias, flang, ts, session])
+                "(exec_id, form_id, created_at, created_by_session) "
+                "VALUES (?, ?, ?, ?)", [exec_id, form_id, ts, session])
         _link_result_artefacts(conn, exec_id, result_artefacts,
                                mined_ref_id=mined_ref_id, query_text=query_text,
                                session=session, ts=ts)
@@ -2101,11 +2100,30 @@ def main():
     # add-term — the writer NAMES-NEW needs. See insert_term for why the term and its
     # adjudication land together.
     p_at = sub.add_parser("add-term",
-                          help="Mint a term for a NEW concept and adjudicate it NAMES-NEW")
-    p_at.add_argument("--from-observation", dest="from_observation", type=int, required=True,
-                      help="observed_terms.observation_id the term is minted FROM")
+                          help="Mint a term for a NEW concept with its first form: from an observation "
+                               "(adjudicated NAMES-NEW) or from a located form (--first-form, with a judge)")
+    p_at.add_argument("--from-observation", dest="from_observation", type=int,
+                      help="observation route: observed_terms.observation_id the term is minted FROM")
+    p_at.add_argument("--first-form", dest="first_form",
+                      help="base route: the form a source uses, verbatim (T-028)")
+    p_at.add_argument("--form-language", dest="form_language",
+                      help="base route: the form's language, a language lang_jur_map holds")
+    p_at.add_argument("--form-jurisdiction", dest="form_jurisdiction",
+                      help="base route: the form's jurisdiction, paired with its language in lang_jur_map")
+    p_at.add_argument("--source-url", dest="source_url", help="base route: where the form is used")
+    p_at.add_argument("--source-page", dest="source_page", help="base route: page (or this or --source-clause)")
+    p_at.add_argument("--source-line", dest="source_line", type=int, help="base route: line, optional")
+    p_at.add_argument("--source-clause", dest="source_clause", help="base route: clause (or --source-page)")
+    p_at.add_argument("--attestation", choices=dbcore.schema_choices("term_aliases", "attestation"),
+                      help="instrument or other_source: required on the base route, optional on the "
+                           "observation route (default other_source)")
+    p_at.add_argument("--usage-type", dest="usage_type",
+                      choices=dbcore.schema_choices("term_aliases", "usage_type"),
+                      help="base route, optional: the form's usage, from the column's CHECK")
+    p_at.add_argument("--judge", help="base route (required): who judged that this form names a new concept")
     p_at.add_argument("--canonical-en", dest="canonical_en", required=True,
-                      help="the parameter's name — never a value, never a comparator")
+                      help="our English descriptive label -- never a value, never a comparator; inside "
+                           "the form when the form is English")
     p_at.add_argument("--rationale", required=True,
                       help="why this phrase names a concept we did not hold")
     p_at.add_argument("--definition")
@@ -2254,10 +2272,14 @@ def main():
     p_mp.add_argument("--dry-run", action="store_true")
 
     p_rnt = sub.add_parser("rename-term",
-                           help="Correct a term's canonical name from an observation or an "
-                                "owner ruling; the old name becomes a DEPRECATED alias")
+                           help="Correct a term's label from one of its attested forms, an "
+                                "observation or an owner ruling, naming the judge; the former label "
+                                "is kept in term_label_picks")
     p_rnt.add_argument("--term-id", dest="term_id", required=True)
     p_rnt.add_argument("--canonical-en", dest="canonical_en", required=True)
+    p_rnt.add_argument("--from-form", dest="from_form", type=int,
+                       help="the form_id of an attested member form of this term whose text is the new label")
+    p_rnt.add_argument("--judge", help="who picked this label (required on every route, OD-38)")
     p_rnt.add_argument("--from-observation", dest="from_observation", type=int,
                        help="an observation whose LATEST adjudication names this term and whose phrase "
                             "contains the new name")
@@ -2316,7 +2338,11 @@ def main():
                             "not stored")
     p_aal.add_argument("--alias-type", dest="alias_type", required=True,
                        choices=dbcore.schema_choices("term_aliases", "alias_type"),
-                       help="from the column's CHECK; DEPRECATED is rename-term's")
+                       help="from the column's CHECK; DEPRECATED, TRANSLATION and DOMAIN are legacy "
+                            "values no route writes")
+    p_aal.add_argument("--usage-type", dest="usage_type",
+                       choices=dbcore.schema_choices("term_aliases", "usage_type"),
+                       help="the form's usage, from the column's CHECK (optional)")
     p_aal.add_argument("--session", required=True)
     p_aal.add_argument("--dry-run", action="store_true")
 
@@ -2993,8 +3019,8 @@ def main():
     p_ls.add_argument("--target-scope",
                       choices=dbcore.schema_choices("search_executions", "target_scope"))
     p_ls.add_argument("--form-id", type=int, action="append", dest="form_ids",
-                      help="repeatable; the rowid of a term_aliases row (read now) this "
-                           "search fired. Writes search_execution_forms by the form's key")
+                      help="repeatable; the form_id of a term_aliases row this search "
+                           "fired. Writes one search_execution_forms row per form")
     p_ls.add_argument("--terms-used",
                       help="REFUSED for a new row (names --form-id); kept so the refusal "
                            "can say why")
@@ -3721,6 +3747,11 @@ def main():
             session=args.session,
             dry_run=args.dry_run,
             distinct_from=args.distinct_from,
+            attestation=args.attestation, first_form=args.first_form,
+            form_language=args.form_language, form_jurisdiction=args.form_jurisdiction,
+            source_url=args.source_url, source_page=args.source_page,
+            source_line=args.source_line, source_clause=args.source_clause,
+            usage_type=args.usage_type, judge=args.judge,
         ))
 
     elif args.command == "set-parameter-direction":
@@ -3776,7 +3807,8 @@ def main():
     elif args.command == "rename-term":
         _emit(rename_term(args.term_id, args.canonical_en, args.reason,
                           session=args.session, from_observation=args.from_observation,
-                          ruling_quote=args.ruling_quote, dry_run=args.dry_run))
+                          ruling_quote=args.ruling_quote, dry_run=args.dry_run,
+                          from_form=args.from_form, judge=args.judge))
 
     elif args.command == "revoke-declination":
         _emit(revoke_declination(args.term_id, args.reason, args.decision_ref,
@@ -3793,7 +3825,7 @@ def main():
                         source_url=args.source_url, source_page=args.source_page,
                         source_line=args.source_line, source_clause=args.source_clause,
                         attestation=args.attestation, seed=args.seed,
-                        approval_ref=args.approval_ref))
+                        approval_ref=args.approval_ref, usage_type=args.usage_type))
 
     elif args.command == "mint-term-from-catalogue":
         _emit(mint_term_from_catalogue(
@@ -7148,26 +7180,29 @@ def _name_tokens(name: str) -> frozenset:
     return frozenset(t[:-1] if len(t) > 3 and t.endswith("s") else t for t in toks)
 
 
-def _near_terms(conn, name: str) -> list:
-    """Terms whose canonical name or ATTESTED alias, in any language (T-009), shares a token set with `name` one
-    way or the other (subset or superset): 'ramp runs' beside 'ramp run length',
-    'reverberations' beside 'reverberation time'. The equivalence search the skill tells an
-    operator to do before minting, done by the writer and refused unless each is named
-    --distinct-from. Exact matches are _name_holder's; this is the near miss nothing checked
-    (2026-11-06).
+def _near_terms(conn, name: str, language: str) -> list:
+    """Terms whose label or ATTESTED form shares a token set with `name`, a name in `language`, one way or
+    the other (subset or superset): 'ramp runs' beside 'ramp run length', 'reverberations' beside
+    'reverberation time'. The equivalence search the skill tells an operator to do before minting, done
+    by the writer and refused unless each is named --distinct-from. Exact matches are _name_holder's;
+    this is the near miss nothing checked (2026-11-06). The one home of the near rule (T-130 calls it).
 
-    An alias compares unless its `attestation` is model_seed (T-026): a known unattested
-    seed is a search aid, so it neither names a concept nor blocks a new one. An `unrecorded`
-    or owner_supplied alias is STILL compared, as before 130: E4 (whether a form without a
-    locator is vocabulary) is an open owner question, and a live refusal is not weakened on
-    the strength of an open question. The label comparison is unchanged."""
+    T-028. A form compares only when a source attests it (`instrument` or `other_source`), of any
+    alias_type (a NARROWER or BROADER string is not a name of the concept, but a new name near one is
+    still worth the refusal): a seed (model_seed, owner_supplied, unrecorded) is a search aid, never
+    vocabulary (E4). It compares only forms in `language` (the owner's answer to OD-68, 2026-11-17: a
+    name is screened only within its own language), and our labels only when `language` is EN (the
+    eighth statement of 2026-11-06: English is not matched first, and a non-English name is never
+    screened against English). A name with no tokens is compared with nothing; the writer says so."""
     want = _name_tokens(name)
     if not want:
         return []
     out, seen = [], set()
+    attested = ",".join("?" * len(dbcore.ATTESTED_FORMS))
     for term_id, held in conn.execute(
-            "SELECT term_id, canonical_en FROM terms UNION ALL "
-            "SELECT term_id, alias FROM term_aliases WHERE attestation <> 'model_seed'"):
+            "SELECT term_id, canonical_en FROM terms WHERE upper(?) = 'EN' UNION ALL "
+            f"SELECT term_id, alias FROM term_aliases WHERE attestation IN ({attested}) "
+            "AND upper(language) = upper(?)", (language or "", *dbcore.ATTESTED_FORMS, language or "")):
         have = _name_tokens(held)
         # Near: the new name's tokens sit inside an existing name's ('ramp runs' in 'ramp run
         # length'), or an existing name of TWO OR MORE tokens sits inside the new one. A
@@ -7182,18 +7217,41 @@ def _near_terms(conn, name: str) -> list:
 
 def insert_term(from_observation: int, canonical_en: str, rationale: str, session: str,
                 definition: str = None, domain: str = None, scope_note: str = None,
-                dry_run: bool = False, distinct_from: list = None):
-    """Mint a term for a concept new to the vocabulary, AND adjudicate it in one act.
+                dry_run: bool = False, distinct_from: list = None, *, attestation: str = None,
+                first_form: str = None, form_language: str = None, form_jurisdiction: str = None,
+                source_url: str = None, source_page: str = None, source_line: int = None,
+                source_clause: str = None, usage_type: str = None, judge: str = None):
+    """Mint a term for a concept new to the vocabulary, with its first form. Exactly one route:
+
+      --from-observation N  the observed phrase is the concept's first form; the term and its NAMES-NEW
+                            adjudication land together (that adjudication is the warrant: no pick row);
+      --first-form "<text>" the base route (the seventh statement of 2026-11-06: a base form carries its
+                            own locator): --form-language --form-jurisdiction --source-url (--source-page |
+                            --source-clause) [--source-line] --attestation instrument|other_source
+                            [--usage-type] --judge; the --rationale is the reason of the one
+                            term_label_picks row it writes (T-028; OD-38).
 
     The missing half of D-0173. `adjudicate-term --outcome NAMES-NEW` refuses unless the
     term already exists -- "create the term first, then adjudicate NAMES-NEW to it" --
     and nothing created one, so NAMES-NEW was an outcome the CLI documented and could
     not reach. A checker whose satisfying writer does not exist is a trap (CLAUDE.md §8).
 
-    Term and adjudication land together because they are one judgement: *this observed
-    phrase names a concept we did not hold, and here is the term for it.* Splitting them
-    would permit a term with no provenance, which is the contamination the owner objected
-    to on 2026-09-09 -- prior-version containers that exist before the work does.
+    Term and warrant land together because they are one judgement: *this phrase names a concept we did
+    not hold, and here is the term for it.* Splitting them would permit a term with no provenance, which
+    is the contamination the owner objected to on 2026-09-09 -- prior-version containers that exist
+    before the work does.
+
+    T-028. `canonical_en` is OUR English descriptive label, never written as a form; the source's phrase
+    is the first member row of term_aliases. The label must sit inside the phrase only when the phrase is
+    English (the eighth statement allows an English label on a concept first met in another language).
+    On the observation route the form is written through add-alias's own reading of an observation
+    (_observed_source, _observed_quote), so one value meets one standard; where the quote is not in a
+    file saved for the source and is not VERBATIM-EXEMPT, the term is still minted and its form is written
+    `unrecorded` with its observation, and the output says that add-alias promotes it once verified.
+
+    Screens: the label against other terms' labels and attested English forms; the form against other
+    terms' attested forms in its own language (OD-68); both through _near_terms. A label clash is
+    refused; a form clash and a near match are refused unless the other term is named --distinct-from.
     """
     canonical_en = (canonical_en or "").strip()
     rationale = (rationale or "").strip()
@@ -7213,32 +7271,94 @@ def insert_term(from_observation: int, canonical_en: str, rationale: str, sessio
             f"(DR-2026-08-19 §1.1: 42 of 93 item names embedded a determination).\n"
             f"Name the PARAMETER, not the value: 'corridor width', not "
             f"'corridor width >=1200 mm'. The value belongs in the determination.")
+    base = first_form is not None
+    if (from_observation is None) != base:
+        raise Refusal("add-term: give exactly one route -- --from-observation N (a phrase an admitted source "
+                      "uses) or --first-form '<the form>' with its language, jurisdiction, locator, "
+                      "--attestation and --judge (a form read where no observation exists). Nothing was written.")
+    base_only = (("--form-language", form_language), ("--form-jurisdiction", form_jurisdiction),
+                 ("--source-url", source_url), ("--source-page", source_page), ("--source-line", source_line),
+                 ("--source-clause", source_clause), ("--usage-type", usage_type), ("--judge", judge))
+    if not base:
+        stray = [f for f, v in base_only if v is not None]
+        if stray:
+            raise Refusal(f"add-term: {', '.join(stray)} with --from-observation: the phrase, language, "
+                          f"jurisdiction and warrant are read from the observation and its adjudication; "
+                          f"these belong to --first-form. Nothing was written.")
+    attestation = attestation or ("other_source" if not base else None)
+    if attestation is not None and attestation not in dbcore.ATTESTED_FORMS:
+        raise Refusal(f"add-term: --attestation {attestation!r}: a form read in a source is instrument (a "
+                      f"code, standard or statute uses it) or other_source. Nothing was written.")
+    if base:
+        first_form = first_form.strip()
+        judge = (judge or "").strip()
+        if not first_form:
+            raise Refusal("add-term: --first-form is empty. Nothing was written.")
+        if not judge:
+            raise Refusal("add-term: --first-form needs --judge, who judged that this form names a concept we "
+                          "did not hold (OD-38: a label set by judgment names its judge). Nothing was written.")
+        source_url, source_page, source_clause = _check_base_locator(
+            "add-term", (("--form-language", form_language), ("--form-jurisdiction", form_jurisdiction),
+                         ("--source-url", source_url), ("--attestation", attestation)),
+            source_url, source_page, source_line, source_clause)
     with connect(dry_run) as conn:
-        obs = conn.execute("SELECT observation_id, surface_form, ref_id FROM observed_terms "
-                           "WHERE observation_id=?", [from_observation]).fetchone()
-        if obs is None:
+        if usage_type is not None:
+            dbcore.check_declared(conn, "term_aliases", "usage_type", usage_type, "add-term --usage-type")
+        obs, note, problem = None, None, None
+        if base:
+            lang, jur = _lang_jur_pair(conn, form_language, form_jurisdiction, "add-term", "--form-language")
+            text = first_form
+            if lang.upper() == "EN" and canonical_en.casefold() not in text.casefold():
+                raise Refusal(
+                    f"add-term: --canonical-en {canonical_en!r} is not inside the English first form "
+                    f"{text!r}. A label for a concept first met in English is a phrase the source uses, or a "
+                    f"contiguous part of it (owner OR-17; ruling 2026-11-06, E1). Nothing was written.")
+        else:
+            if conn.execute("SELECT 1 FROM observed_terms WHERE observation_id=?",
+                            [from_observation]).fetchone() is None:
+                raise Refusal(
+                    f"observation {from_observation}: no such observed term. A term is minted "
+                    f"FROM an observed phrase (db.py observe-term) or from a located form (--first-form), "
+                    f"never from nothing -- that is what makes the vocabulary an output of the work rather "
+                    f"than a presupposition.")
+            obs = _observed_source(conn, from_observation, attestation, "add-term")
+            text, jur = obs["surface_form"], obs["jurisdiction"]
+            lang = _alias_language(conn, obs["language"] or "EN")
+            if (obs["language"] or "EN").upper() == "EN" and canonical_en.casefold() not in text.casefold():
+                raise Refusal(
+                    f"--canonical-en {canonical_en!r} is not inside the observed phrase "
+                    f"{obs['surface_form']!r}. A name is a phrase an admitted source uses, in its "
+                    f"own language (owner OR-17: the model may not coin names; ruling 2026-11-06, "
+                    f"E1). Use the phrase as written, or a contiguous part of it. A concept first "
+                    f"met outside English keeps its phrase as its first form and takes an English "
+                    f"descriptive label.")
+            note, problem = _observed_quote(obs, "add-term")
+        named = set(distinct_from or [])
+        held = _name_holder(conn, canonical_en, "EN")["clashes"]
+        label = [c for c in held if c["kind"] == "label"]
+        if label:
+            c = label[0]
             raise Refusal(
-                f"observation {from_observation}: no such observed term. A term is minted "
-                f"FROM an observed phrase (db.py observe-term), never from nothing -- that "
-                f"is what makes the vocabulary an output of the work rather than a "
-                f"presupposition.")
-        if canonical_en.casefold() not in obs["surface_form"].casefold():
+                f"{canonical_en!r} is already TERM {c['term_id']} ({c['detail']!r}). "
+                f"That makes this NAMES-EXISTING, not NAMES-NEW:\n  db.py adjudicate-term --observation-id "
+                f"{from_observation if from_observation is not None else '<the observation>'} "
+                f"--outcome NAMES-EXISTING --term-id {c['term_id']} --rationale ...")
+        forms = [c for c in held + _name_holder(conn, text, lang)["clashes"]
+                 if c["kind"] == "form" and c["term_id"] not in named]
+        if forms:
             raise Refusal(
-                f"--canonical-en {canonical_en!r} is not inside the observed phrase "
-                f"{obs['surface_form']!r}. A name is a phrase an admitted source uses, in its "
-                f"own language (owner OR-17: the model may not coin names; ruling 2026-11-06, "
-                f"E1). Use the phrase as written, or a contiguous part of it. A concept first "
-                f"met outside English is named by that phrase until an English-language "
-                f"instrument is observed naming it.")
-        clash = _name_holder(conn, canonical_en, aliases=False)
-        if clash:
-            raise Refusal(
-                f"{canonical_en!r} is already TERM {clash['term_id']} "
-                f"({clash['detail']!r}). That makes this NAMES-EXISTING, not "
-                f"NAMES-NEW:\n  db.py adjudicate-term --observation-id {from_observation} "
-                f"--outcome NAMES-EXISTING --term-id {clash['term_id']} --rationale ...")
-        near = [(t, h) for t, h in _near_terms(conn, canonical_en)
-                if t not in set(distinct_from or [])]
+                f"add-term: {canonical_en!r} / {text!r} ({lang}) is a form another concept holds, attested: " +
+                "; ".join(f"{c['term_id']} (form {c['form_id']}, {c['detail']})" for c in forms[:5]) +
+                ". If it names that concept, adjudicate NAMES-EXISTING; if it names a distinct concept "
+                "(a conflation of one written form), say so with --distinct-from " +
+                " --distinct-from ".join(dict.fromkeys(c["term_id"] for c in forms[:5])) +
+                " and the --rationale must say why. Nothing was written.")
+        near, not_run = [], []
+        for nm, nl in ((canonical_en, "EN"), (text, lang)):
+            if not _name_tokens(nm):
+                not_run.append(nm)
+            near += [(t, h) for t, h in _near_terms(conn, nm, nl) if t not in named]
+        near = list(dict(near).items())
         if near:
             raise Refusal(
                 f"{canonical_en!r} is a near match of " +
@@ -7254,19 +7374,46 @@ def insert_term(from_observation: int, canonical_en: str, rationale: str, sessio
         row.update(dbcore.stamp_for(conn, "terms", session))
         conn.execute(f"INSERT INTO terms ({','.join(row)}) "
                      f"VALUES ({','.join('?'*len(row))})", list(row.values()))
-        _prior_adj = conn.execute("SELECT outcome, created_by_session FROM term_adjudications WHERE observation_id=? "
-                                  "ORDER BY adjudication_id DESC LIMIT 1", (from_observation,)).fetchone()
-        if _prior_adj is not None:
-            print(f"NOTE: observation {from_observation} was last adjudicated {_prior_adj[0]} by {_prior_adj[1]}. "
-                  f"This NAMES-NEW row is now the standing judgment (T-074) and overrides it.", file=sys.stderr)
-        adj = {"observation_id": from_observation, "outcome": "NAMES-NEW",
-               "term_id": term_id, "rationale": rationale}
-        adj.update(dbcore.stamp_for(conn, "term_adjudications", session))
-        cur = conn.execute(f"INSERT INTO term_adjudications ({','.join(adj)}) "
-                           f"VALUES ({','.join('?'*len(adj))})", list(adj.values()))
-        return {"term_id": term_id, "canonical_en": canonical_en,
-                "adjudication_id": cur.lastrowid, "from_surface_form": obs["surface_form"],
-                "from_ref_id": obs["ref_id"], "dry_run": dry_run}
+        out = {"term_id": term_id, "canonical_en": canonical_en}
+        form = {"term_id": term_id, "alias": text, "language": lang, "alias_type": "SYNONYM",
+                "jurisdiction": jur, "usage_type": usage_type}
+        if base:
+            form.update(attestation=attestation, source_url=source_url, source_page=source_page,
+                        source_line=source_line, source_clause=source_clause)
+        else:
+            _prior_adj = conn.execute("SELECT outcome, created_by_session FROM term_adjudications WHERE observation_id=? "
+                                      "ORDER BY adjudication_id DESC LIMIT 1", (from_observation,)).fetchone()
+            if _prior_adj is not None:
+                print(f"NOTE: observation {from_observation} was last adjudicated {_prior_adj[0]} by {_prior_adj[1]}. "
+                      f"This NAMES-NEW row is now the standing judgment (T-074) and overrides it.", file=sys.stderr)
+            adj = {"observation_id": from_observation, "outcome": "NAMES-NEW",
+                   "term_id": term_id, "rationale": rationale}
+            adj.update(dbcore.stamp_for(conn, "term_adjudications", session))
+            cur = conn.execute(f"INSERT INTO term_adjudications ({','.join(adj)}) "
+                               f"VALUES ({','.join('?'*len(adj))})", list(adj.values()))
+            out.update(adjudication_id=cur.lastrowid, from_surface_form=obs["surface_form"],
+                       from_ref_id=obs["ref_id"])
+            form.update(observation_id=from_observation, notes=note,
+                        attestation="unrecorded" if problem else attestation)
+        form.update(dbcore.stamp_for(conn, "term_aliases", session))
+        form_id = conn.execute(f"INSERT INTO term_aliases ({','.join(form)}) "
+                               f"VALUES ({','.join('?' * len(form))})", list(form.values())).lastrowid
+        out.update(form_id=form_id, form=text, form_language=lang, form_attestation=form["attestation"])
+        if problem:
+            out["form_unrecorded"] = (f"{problem} The term is minted; its first form is written unrecorded "
+                                      f"(a search aid, E4) with observation {from_observation}, and add-alias "
+                                      f"--observation-id {from_observation} promotes it once the quote is verified.")
+        if base:
+            pick = {"term_id": term_id, "former_label": None, "form_id": form_id, "judge": judge,
+                    "reason": rationale}
+            pick.update(dbcore.stamp_for(conn, "term_label_picks", session))
+            out["pick_id"] = conn.execute(f"INSERT INTO term_label_picks ({','.join(pick)}) "
+                                          f"VALUES ({','.join('?' * len(pick))})", list(pick.values())).lastrowid
+        if not_run:
+            out["near_screen_not_run"] = (f"no near screen ran for {not_run!r}: a name with no letter or digit "
+                                          f"tokens is compared with nothing")
+        out["dry_run"] = dry_run
+        return out
 
 
 def _mint_term_id(conn) -> str:
@@ -7279,25 +7426,38 @@ def _mint_term_id(conn) -> str:
     return f"TERM-{top + 1:03d}"
 
 
-def _name_holder(conn, name, *, aliases=True, exclude_term=None):
-    """Who already answers to `name`, case-folded, or None.
+def _name_holder(conn, name, language, *, exclude_term=None):
+    """Every other term that already answers to `name`, a name in `language`, case-folded; none first.
 
-    A dict {kind, term_id, detail}: kind 'term' (detail its canonical_en) or 'alias'
-    (detail its alias_type). `exclude_term` is a term that may keep a name it already
-    holds (the one being renamed). `aliases=False` looks at canonical names only, which
-    is all add-term has ever checked. With no `exclude_term` nothing is filtered, and
-    with one it is `IS NOT`, not `<>`: terms.term_id is a bare TEXT primary key, which
-    SQLite lets be NULL, and `NULL <> 'x'` would hide such a row.
+    {"clashes": [...], "seed_matches": [...]}, each a dict {kind, term_id, detail, form_id}:
+      kind 'label' -- another term's label (detail its canonical_en), compared only when `language` is
+                      EN (the eighth statement of 2026-11-06: our label is not a form, and English is
+                      not matched first);
+      kind 'form'  -- another term's ATTESTED form (instrument or other_source) in `language`, of any
+                      alias_type (detail its alias_type): the same written word in another language is
+                      another name (the owner's answer to OD-68, 2026-11-17).
+    A seed (model_seed, owner_supplied, unrecorded) never clashes (E4: a search aid, never vocabulary);
+    one with the same text in `language` is listed in seed_matches, for information. `exclude_term`
+    is a term that may keep a name it already holds (the one being renamed); the comparison is
+    `IS NOT`, not `<>`: terms.term_id is a bare TEXT primary key, which SQLite lets be NULL, and
+    `NULL <> 'x'` would hide such a row. Case is folded here (str.casefold), not by SQL lower(),
+    which folds ASCII only.
     """
-    held = conn.execute("SELECT term_id, canonical_en FROM terms "
-                        "WHERE lower(canonical_en) = lower(?) AND (? IS NULL OR term_id IS NOT ?)",
-                        (name, exclude_term, exclude_term)).fetchone()
-    if held:
-        return {"kind": "term", "term_id": held[0], "detail": held[1]}
-    held = aliases and conn.execute(
-        "SELECT term_id, alias_type FROM term_aliases WHERE lower(alias) = lower(?) "
-        "AND (? IS NULL OR term_id IS NOT ?)", (name, exclude_term, exclude_term)).fetchone()
-    return {"kind": "alias", "term_id": held[0], "detail": held[1]} if held else None
+    want = (name or "").strip().casefold()
+    out = {"clashes": [], "seed_matches": []}
+    if (language or "").strip().upper() == "EN":
+        for term_id, label in conn.execute("SELECT term_id, canonical_en FROM terms WHERE (? IS NULL OR "
+                                           "term_id IS NOT ?) ORDER BY term_id", (exclude_term, exclude_term)):
+            if (label or "").strip().casefold() == want:
+                out["clashes"].append({"kind": "label", "term_id": term_id, "detail": label, "form_id": None})
+    for form_id, term_id, alias, alias_type, attestation in conn.execute(
+            "SELECT form_id, term_id, alias, alias_type, attestation FROM term_aliases "
+            "WHERE upper(language) = upper(?) AND (? IS NULL OR term_id IS NOT ?) ORDER BY form_id",
+            (language or "", exclude_term, exclude_term)):
+        if (alias or "").strip().casefold() == want:
+            hit = {"kind": "form", "term_id": term_id, "detail": alias_type, "form_id": form_id}
+            out["clashes" if attestation in dbcore.ATTESTED_FORMS else "seed_matches"].append(hit)
+    return out
 
 
 def insert_parameter(term_id: str, session: str, notes: str = None,
@@ -7971,15 +8131,20 @@ def _not_named_msg(conn, verb: str, observation_id: int, term_id: str) -> str:
 
 def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
                 from_observation: int = None, ruling_quote: str = None,
-                dry_run: bool = False):
-    """Correct a term's canonical name, keeping the old one as a DEPRECATED alias.
+                dry_run: bool = False, *, from_form: int = None, judge: str = None):
+    """Correct a term's label, recording who picked it, why, and what it replaced.
 
     `amend-term` refused canonical_en since 2026-09-25 ("a vocabulary decision with
     callers, not a wording fix"), and no other verb could change it, so an answer-shaped
     or mis-chosen name was permanent (critique F5; plan section 1.2 item 6: the held ADA
     text says "turning space" and not "turning circle"). This is that vocabulary
-    decision, with its warrant required:
+    decision, with its warrant required, exactly one of:
 
+      --from-form F         an ATTESTED member form of THIS term (instrument or other_source,
+                            not NARROWER or BROADER) whose text is the new label: the stored
+                            pick of the name shown when several English instruments name the
+                            concept differently (T-028; OD-38, owner 2026-11-12: "First recorded,
+                            until a named judge picks; the pick is recorded with its reason");
       --from-observation N  the new name comes from a phrase a source USES, in the
                             source's own language (owner E1, 2026-11-06: a concept first
                             met outside English is named by that phrase), whose latest adjudication names
@@ -7989,28 +8154,36 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
       --ruling-quote "..."  or from the owner's own words, quoted verbatim and found
                             exactly once in references/project-standards.md, containing
                             the new name.
+    Every route names its --judge (who picked) beside the --reason (OD-38).
 
     Nothing else moves: parameters, adjudications and extractions point at term_id, so the
-    name is reached, never copied (rule 5). The old name lands in term_aliases as
-    DEPRECATED, marked `curated` for alias_provenance_audit, and the change is recorded as
-    an AMENDED line on scope_note -- the trailer amend-term already writes, so its body
-    split keeps working. No other term may hold the new name, as a name or an alias.
+    name is reached, never copied (rule 5). The label is not a form (OD-03), so the former
+    label is NOT written into term_aliases and no AMENDED trailer is appended to scope_note
+    (the owner's schema-shape statement of 2026-11-06: a correction appended to a note is a fact
+    in the wrong cell): one term_label_picks row holds the former label, the route's one pointer,
+    the judge and the reason. No other term may hold the new name, as a label or as an attested
+    English form (_name_holder); a seed never refuses (E4).
 
-    REFUSES: neither or both warrants; a value-bearing name (_VALUE_BEARING, as add-term);
-    a quote not exactly once in the ledger or not containing the name; an observation
-    whose latest adjudication does not name this term, or that does not contain the name; a name
-    another term holds.
+    REFUSES: no judge; neither or several warrants; a value-bearing name (_VALUE_BEARING, as
+    add-term); a quote not exactly once in the ledger or not containing the name; an observation
+    whose latest adjudication does not name this term, or that does not contain the name; a form
+    that is not an attested member form of this term or whose text is not the name; a name another
+    term holds.
     """
     new = (canonical_en or "").strip()
     if not new:
         raise Refusal("rename-term: --canonical-en is required: a term is its name.")
     reason = dbcore.require_reason(reason, term_id)
-    if (from_observation is None) == (not (ruling_quote or "").strip()):
+    judge = (judge or "").strip()
+    if not judge:
+        raise Refusal("rename-term: --judge is required: who picked this label (OD-38, owner 2026-11-12: "
+                      "the pick is recorded with its reason, and a pick names its judge). Nothing was written.")
+    if (from_observation is not None) + bool((ruling_quote or "").strip()) + (from_form is not None) != 1:
         raise Refusal(
-            "rename-term: give exactly one warrant for the new name -- --from-observation N "
-            "(a phrase an admitted source uses) or --ruling-quote '<the owner's words>' "
-            "(found once in references/project-standards.md). A name with no warrant is a "
-            "name typed by hand, which the 2026-09-09 rule forbids.")
+            "rename-term: give exactly one warrant for the new name -- --from-form F (an attested "
+            "form of this term), --from-observation N (a phrase an admitted source uses) or "
+            "--ruling-quote '<the owner's words>' (found once in references/project-standards.md). "
+            "A name with no warrant is a name typed by hand, which the 2026-09-09 rule forbids.")
     vb = _VALUE_BEARING_NAME.search(new)
     if vb:
         raise Refusal(
@@ -8025,23 +8198,33 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
             raise Refusal(f"rename-term: the quoted ruling does not contain {new!r}; the "
                           f"words that authorise a name must say it.")
     with connect(dry_run) as conn:
-        term = conn.execute("SELECT term_id, canonical_en, scope_note FROM terms "
+        term = conn.execute("SELECT term_id, canonical_en FROM terms "
                             "WHERE term_id = ?", (term_id,)).fetchone()
         if term is None:
             raise Refusal(f"rename-term: {term_id!r}: no such term.")
         old = term["canonical_en"]
         if old == new:
             return {"term_id": term_id, "changed": False, "dry_run": dry_run}
-        clash = _name_holder(conn, new, exclude_term=term_id)
-        if clash and clash["kind"] == "term":
-            raise Refusal(f"rename-term: {new!r} is already the name of {clash['term_id']}. "
-                          f"Two terms with one name are one concept twice; that is a merge "
-                          f"(db.py merge-parameter), not a rename. Nothing was written.")
-        if clash:
-            raise Refusal(f"rename-term: {new!r} is an alias ({clash['detail']}) of "
-                          f"{clash['term_id']}. A name another term answers to would make "
+        for clash in _name_holder(conn, new, "EN", exclude_term=term_id)["clashes"]:
+            if clash["kind"] == "label":
+                raise Refusal(f"rename-term: {new!r} is already the name of {clash['term_id']}. "
+                              f"Two terms with one name are one concept twice; that is a merge "
+                              f"(db.py merge-parameter), not a rename. Nothing was written.")
+            raise Refusal(f"rename-term: {new!r} is an alias ({clash['detail']}, form {clash['form_id']}) of "
+                          f"{clash['term_id']}, attested. A name another term answers to would make "
                           f"one phrase point at two concepts. Nothing was written.")
-        if from_observation is not None:
+        if from_form is not None:
+            form = conn.execute("SELECT form_id, alias, alias_type, attestation FROM term_aliases "
+                                "WHERE form_id = ? AND term_id = ?", (from_form, term_id)).fetchone()
+            if (form is None or form["attestation"] not in dbcore.ATTESTED_FORMS
+                    or form["alias_type"] in ("NARROWER", "BROADER")):
+                raise Refusal(f"rename-term: form {from_form} is not an attested member form of {term_id} "
+                              f"(instrument or other_source, not NARROWER or BROADER): a label is picked from "
+                              f"the forms a source uses for this concept. Nothing was written.")
+            if form["alias"] != new:
+                raise Refusal(f"rename-term: form {from_form} reads {form['alias']!r}, not {new!r}: a label "
+                              f"picked from a form is that form's text. Nothing was written.")
+        elif from_observation is not None:
             obs = conn.execute("SELECT observation_id, ref_id, surface_form, language "
                                "FROM observed_terms WHERE observation_id = ?",
                                (from_observation,)).fetchone()
@@ -8060,40 +8243,20 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
                     f"rename-term: {new!r} is not in the observed phrase "
                     f"{obs['surface_form']!r}. A name taken from a source is the source's "
                     f"words. Nothing was written.")
-            warrant = (f"from observation {from_observation} ({obs['surface_form']!r} in "
-                       f"{obs['ref_id']})")
-        else:
-            warrant = f"from the owner's words in the ledger: \"{ruling_quote.strip()}\""
         stamp = dbcore.now()
-        lang = _alias_language(conn, "EN")
-        why = (f"curated: former canonical_en of {term_id}, renamed to {new!r} by "
-               f"rename-term {warrant}. {reason}")
-        held = conn.execute("SELECT alias_type, notes FROM term_aliases WHERE term_id = ? "
-                            "AND alias = ? AND language = ?",
-                            (term_id, old, lang)).fetchone()
-        if held:
-            sets = {"alias_type": "DEPRECATED",
-                    "notes": dbcore.append_dated_note(held["notes"], "DEPRECATED", session,
-                                                      why, stamp)}
-            sets.update(_updated(conn, "term_aliases", session, stamp))
-            conn.execute("UPDATE term_aliases SET " + ", ".join(f"{k} = ?" for k in sets)
-                         + " WHERE term_id = ? AND alias = ? AND language = ?",
-                         list(sets.values()) + [term_id, old, lang])
-        else:
-            arow = {"term_id": term_id, "alias": old, "language": lang,
-                    "alias_type": "DEPRECATED", "notes": why}
-            arow.update(dbcore.stamp_for(conn, "term_aliases", session))
-            conn.execute(f"INSERT INTO term_aliases ({','.join(arow)}) "
-                         f"VALUES ({','.join('?' * len(arow))})", list(arow.values()))
-        scope = dbcore.append_dated_note(
-            term["scope_note"], _TERM_TRAILER, session,
-            f"canonical_en was '{old}' (rename-term, {warrant}). {reason}", stamp)
-        sets = {"canonical_en": new, "scope_note": scope}
+        pick = {"term_id": term_id, "former_label": old, "form_id": from_form,
+                "observation_id": from_observation,
+                "ruling_quote": ruling_quote.strip() if ruling_quote else None,
+                "judge": judge, "reason": reason}
+        pick.update(dbcore.stamp_for(conn, "term_label_picks", session))
+        pick_id = conn.execute(f"INSERT INTO term_label_picks ({','.join(pick)}) "
+                               f"VALUES ({','.join('?' * len(pick))})", list(pick.values())).lastrowid
+        sets = {"canonical_en": new}
         sets.update(_updated(conn, "terms", session, stamp))
         conn.execute("UPDATE terms SET " + ", ".join(f"{k} = ?" for k in sets)
                      + " WHERE term_id = ?", list(sets.values()) + [term_id])
-        return {"term_id": term_id, "was": old, "now": new, "deprecated_alias": old,
-                "alias_language": lang, "changed": True, "dry_run": dry_run}
+        return {"term_id": term_id, "was": old, "now": new, "pick_id": pick_id, "judge": judge,
+                "changed": True, "dry_run": dry_run}
 
 
 #: The one seed value the writer WITHHOLDS (OR-17: "the model may not generate its own phrases,
@@ -8114,12 +8277,107 @@ def _regulatory_pairs():
     return {k for k, tier in TIER_MAP.items() if tier >= _REGULATORY_FROM_TIER}
 
 
+def _check_base_locator(verb, required, source_url, source_page, source_line, source_clause):
+    """The base route's refusals before the database is read, one home for add-alias and add-term
+    --first-form (T-028): the named flags present, a page or a clause, no blank locator part, an
+    http(s) URL with a host and no whitespace, a line of 1 or more. Returns the trimmed URL, page and
+    clause (a blank locator part is no locator: trimmed, then refused by name)."""
+    source_url, source_page, source_clause = ((v.strip() if isinstance(v, str) else v)
+                                              for v in (source_url, source_page, source_clause))
+    missing = [f for f, v in required if not (v.strip() if isinstance(v, str) else v)]
+    if missing:
+        raise Refusal(f"{verb}: the base route needs {', '.join(missing)}. Nothing was written.")
+    if not (source_page or source_clause):
+        raise Refusal(f"{verb}: the base route needs --source-page or --source-clause: the "
+                      "locator is the warrant, and a URL alone does not say where the form "
+                      "is used. Nothing was written.")
+    for flag, v in (("--source-page", source_page), ("--source-clause", source_clause)):
+        if v is not None and not v:
+            raise Refusal(f"{verb}: {flag} is blank. Give the page or clause, or omit it.")
+    if source_url is not None and not re.fullmatch(r"https?://[^/\s]\S*", source_url):
+        raise Refusal(f"{verb}: --source-url {source_url!r} is not an http(s) URL with a host "
+                      f"and no whitespace.")
+    if source_line is not None and source_line < 1:
+        raise Refusal(f"{verb}: --source-line is a line number, 1 or more.")
+    return source_url, source_page, source_clause
+
+
+def _lang_jur_pair(conn, language, jurisdiction, verb, flag="--language"):
+    """(language in term_aliases' own letter case, the map's jurisdiction or None) for a base or seed
+    form, or a Refusal: lang_jur_map is the vocabulary of research languages and their pairs, compared
+    case-insensitively. One home for add-alias and add-term --first-form (T-028)."""
+    _check_language(conn, language, "alias", flag)
+    want_j = jurisdiction.strip().upper() if jurisdiction else None
+    pairs = conn.execute("SELECT jurisdiction FROM lang_jur_map WHERE upper(language) = ? "
+                         "AND (? IS NULL OR upper(jurisdiction) = ?)",
+                         ((language or "").strip().upper(), want_j, want_j)).fetchall()
+    if not pairs:
+        raise Refusal(
+            f"{verb}: lang_jur_map holds no pair for language {language!r}"
+            + (f" and jurisdiction {jurisdiction!r}" if jurisdiction else "")
+            + ". The map is the vocabulary of research languages and the "
+              "jurisdictions each is owed in; a pair is added there, not at the form. "
+              "Nothing was written.")
+    return _alias_language(conn, language.strip()), (pairs[0][0] if jurisdiction else None)
+
+
+def _observed_source(conn, observation_id, attestation, verb):
+    """The observation route's reading of a form, one home for add-alias and add-term
+    --from-observation (T-028): the observation joined to its source, and the refusal of
+    `instrument` for a source outside the regulatory stratum (derived from the tier ladder)."""
+    obs = conn.execute(
+        "SELECT o.observation_id, o.ref_id, o.surface_form, o.language, o.locator, "
+        "o.context_quote, o.notes, e.jurisdiction, e.tier, e.evidence_type, e.scope "
+        "FROM observed_terms o "
+        "JOIN evidence_sources e ON e.ref_id = o.ref_id WHERE o.observation_id = ?",
+        (observation_id,)).fetchone()
+    if obs is None:
+        raise Refusal(f"{verb}: observation {observation_id}: no such observed term.")
+    if attestation == "instrument" and (obs["evidence_type"], obs["scope"]) not in _regulatory_pairs():
+        raise Refusal(
+            f"{verb}: --attestation instrument needs a source in the regulatory "
+            f"stratum (a code, national framework or international standard); "
+            f"{obs['ref_id']} is tier {obs['tier']}, evidence_type "
+            f"{obs['evidence_type']!r}. Use other_source (the default), or the base "
+            f"route with the instrument's own URL and clause. Nothing was written.")
+    return obs
+
+
+def _observed_quote(obs, verb):
+    """(note, None) when the observation's quote contains its phrase and is in a file saved for its
+    source (or carries VERBATIM-EXEMPT), else (None, the refusal's text). One standard for an attested
+    form read from an observation: add-alias refuses on the text; add-term --from-observation writes
+    the form `unrecorded` and says so (T-028)."""
+    oid = obs["observation_id"]
+    quote = obs["context_quote"] or ""
+    kind, where, inside = _retrieval_log().classify_observation(
+        obs["surface_form"], quote, obs["notes"], obs["ref_id"])
+    if not quote.strip() or not inside:
+        return None, (
+            f"{verb}: observation {oid} carries no context quote that "
+            f"contains its phrase, so nothing attests the phrase was seen. Observe the "
+            f"sighting again with --locator and --context-quote (db.py observe-term), "
+            f"adjudicate it, and alias from that observation.")
+    if kind not in ("scoped", "exempt"):
+        return None, (
+            f"{verb}: observation {oid}'s quote is not in a file saved for "
+            f"{obs['ref_id']} ({where}), so 'source-attested' would be untrue. Register "
+            f"the source's text (scripts/research/full_text.py) and observe the sighting "
+            f"from it, or record why no artefact can carry it (observe-term "
+            f"--verbatim-exempt). Nothing was written.")
+    return (f"source-attested: observation {oid}, {obs['ref_id']} at "
+            f"{obs['locator']!r}; " + (f"quote verified in {where.split(',')[0]}"
+                                      if kind == "scoped" else
+                                      "the observation's quote is VERBATIM-EXEMPT")), None
+
+
 def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
               dry_run: bool = False, *, alias: str = None, language: str = None,
               jurisdiction: str = None, source_url: str = None, source_page: str = None,
               source_line: int = None, source_clause: str = None,
-              attestation: str = None, seed: str = None, approval_ref: str = None):
-    """Record a form of a term and HOW IT IS ATTESTED. Exactly one route per call:
+              attestation: str = None, seed: str = None, approval_ref: str = None,
+              usage_type: str = None):
+    """Record an OCCURRENCE of a form of a term and HOW IT IS ATTESTED. Exactly one route per call:
 
       observation   --observation-id N [--attestation instrument|other_source]
                     the phrase an admitted source uses (default other_source: that a
@@ -8134,6 +8392,7 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
                     --approval-ref "<a dated ledger heading naming the alias>"
                     a search aid with no locator, never vocabulary (E4). `--seed model_seed`
                     is REFUSED (OR-17, see _SEED_WITHHELD).
+    `--usage-type` (the column's CHECK) types the form's usage on any route.
 
     `term_aliases` had no writer at all (critique F5), so a new language alias had no
     sanctioned path. Aliases are a reading aid, never evidence (catalogue-plan-v2 section
@@ -8144,24 +8403,26 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
     route has no observation to read, so it names them, and the pair must be one
     lang_jur_map holds.
 
-    PROMOTION AND NO DOWNGRADE. The key is (term_id, alias, language). A held row whose
-    attestation is model_seed, owner_supplied or unrecorded is promoted in place by the
-    observation or the base route (attestation and pointer or locator set, type and history
-    kept, updated_by_session set to this session); no second row. It is REFUSED when its
-    type is TRANSLATION or DEPRECATED (the routes refuse those for a new row; the legacy type
-    must be typed first, T-028/T-107) or when its jurisdiction is not NULL and not the
-    attesting source's or the supplied one (a seed's unrecorded jurisdiction is not laundered
-    into an attested row). A held row already attested is refused by every route: a second
-    occurrence waits for T-028's occurrence grain, and an instrument row is never re-attested
-    as other_source. The seed route refuses any held row.
+    OCCURRENCES, PROMOTION AND NO DOWNGRADE (T-028: one row per occurrence, keyed by form_id).
+    The FIRST attested occurrence of a text this term holds as a seed (model_seed,
+    owner_supplied or unrecorded, with no observation or this one) PROMOTES that row in place
+    (attestation and pointer or locator set, type and history kept, updated_by_session set to
+    this session); no second row. It is REFUSED when its type is TRANSLATION or DEPRECATED
+    (the routes refuse those for a new row; the legacy type must be typed first, T-107) or
+    when its jurisdiction is not NULL and not the attesting source's or the supplied one (a
+    seed's unrecorded jurisdiction is not laundered into an attested row). A further
+    occurrence (another observation, jurisdiction or locator) is a NEW row; no attested row is
+    ever re-attested, and the same occurrence twice is refused. The seed route refuses any
+    held row.
 
     REFUSES: neither or several routes; an alias type outside the CHECK, DEPRECATED
-    (rename-term's record) or TRANSLATION (a source's own phrase is not a rendering of the
-    English one, R11); an unknown term or observation; an observation whose latest adjudication
-    does not name this term, whose phrase is not inside its quote, or whose quote is not in a file
-    saved for its source (unless VERBATIM-EXEMPT); `instrument` for a source outside the
-    regulatory stratum; a base route with no locator, a blank locator part, a URL that is
-    not http(s)://host with no whitespace, a pair lang_jur_map lacks, or an attestation
+    (rename-term's record, now retired: a former label lives in term_label_picks), TRANSLATION (a
+    source's own phrase is not a rendering of the English one, R11) or DOMAIN (a usage, typed with
+    --usage-type); a usage type outside the CHECK; an unknown term or observation; an observation
+    whose latest adjudication does not name this term, whose phrase is not inside its quote, or
+    whose quote is not in a file saved for its source (unless VERBATIM-EXEMPT); `instrument` for a
+    source outside the regulatory stratum; a base route with no locator, a blank locator part, a URL
+    that is not http(s)://host with no whitespace, a pair lang_jur_map lacks, or an attestation
     outside instrument|other_source; a seed route with a locator or an attestation, a seed
     that is an attestation, `model_seed`, or `owner_supplied` with no ledger heading naming
     the alias (a Delegated resolution is refused). The observation route also writes a
@@ -8234,34 +8495,30 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
                       f"instrument (a code, standard or statute uses it) or other_source. A seed "
                       f"takes --seed. Nothing was written.")
     if route == "base":
-        missing = [f for f, v in (("--language", language), ("--jurisdiction", jurisdiction),
-                                  ("--source-url", source_url), ("--attestation", attestation))
-                   if not v]
-        if missing:
-            raise Refusal(f"add-alias: the base route needs {', '.join(missing)}. Nothing was written.")
-        if not (source_page or source_clause):
-            raise Refusal("add-alias: the base route needs --source-page or --source-clause: the "
-                          "locator is the warrant, and a URL alone does not say where the form "
-                          "is used. Nothing was written.")
-    for flag, v in (("--source-page", source_page), ("--source-clause", source_clause)):
-        if v is not None and not v:
-            raise Refusal(f"add-alias: {flag} is blank. Give the page or clause, or omit it.")
-    if source_url is not None and not re.fullmatch(r"https?://[^/\s]\S*", source_url):
-        raise Refusal(f"add-alias: --source-url {source_url!r} is not an http(s) URL with a host "
-                      f"and no whitespace.")
-    if source_line is not None and source_line < 1:
-        raise Refusal("add-alias: --source-line is a line number, 1 or more.")
+        source_url, source_page, source_clause = _check_base_locator(
+            "add-alias", (("--language", language), ("--jurisdiction", jurisdiction),
+                          ("--source-url", source_url), ("--attestation", attestation)),
+            source_url, source_page, source_line, source_clause)
+        locator = {"source_url": source_url, "source_page": source_page,
+                   "source_line": source_line, "source_clause": source_clause}
     with connect(dry_run) as conn:
         dbcore.check_declared(conn, "term_aliases", "alias_type", alias_type,
                               "add-alias --alias-type")
         if alias_type == "DEPRECATED":
-            raise Refusal("add-alias: DEPRECATED marks a former canonical name, which only "
-                          "rename-term records. A phrase a source uses is a live alias.")
+            raise Refusal("add-alias: DEPRECATED marks a former canonical name, which no writer records "
+                          "as a form any more: rename-term keeps the former label in term_label_picks. "
+                          "A phrase a source uses is a live alias.")
         if alias_type == "TRANSLATION":
             raise Refusal("add-alias: TRANSLATION frames a phrase as a rendering of the "
                           "English one. A phrase a source uses is its own jurisdiction's term "
                           "(R11, no back-translation): record it as SYNONYM, NARROWER or "
                           "BROADER.")
+        if alias_type == "DOMAIN":
+            raise Refusal("add-alias: DOMAIN joins a relation with a usage. Record the relation as "
+                          "SYNONYM, NARROWER or BROADER and the usage in its own cell with --usage-type "
+                          "(the column's CHECK). Nothing was written.")
+        if usage_type is not None:
+            dbcore.check_declared(conn, "term_aliases", "usage_type", usage_type, "add-alias --usage-type")
         dbcore.check_declared(conn, "term_aliases", "attestation", attestation or seed,
                               "add-alias --attestation/--seed")
         if not dbcore.exists(conn, "terms", "term_id", term_id):
@@ -8283,85 +8540,55 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
                         f"names no term. Judge it first (db.py adjudicate-term), then alias from the "
                         f"observation (--observation-id {_o[0]}). Nothing was written.")
         if route == "observation":
-            obs = conn.execute(
-                "SELECT o.observation_id, o.ref_id, o.surface_form, o.language, o.locator, "
-                "o.context_quote, o.notes, e.jurisdiction, e.tier, e.evidence_type, e.scope "
-                "FROM observed_terms o "
-                "JOIN evidence_sources e ON e.ref_id = o.ref_id WHERE o.observation_id = ?",
-                (observation_id,)).fetchone()
-            if obs is None:
-                raise Refusal(f"add-alias: observation {observation_id}: no such observed term.")
-            if attestation == "instrument" and (obs["evidence_type"], obs["scope"]) not in _regulatory_pairs():
-                raise Refusal(
-                    f"add-alias: --attestation instrument needs a source in the regulatory "
-                    f"stratum (a code, national framework or international standard); "
-                    f"{obs['ref_id']} is tier {obs['tier']}, evidence_type "
-                    f"{obs['evidence_type']!r}. Use other_source (the default), or the base "
-                    f"route with the instrument's own URL and clause. Nothing was written.")
+            obs = _observed_source(conn, observation_id, attestation, "add-alias")
             if not _names_term(conn, observation_id, term_id):
                 raise Refusal(
                     f"{_not_named_msg(conn, 'add-alias', observation_id, term_id)} "
                     f"An alias says the source's phrase names THIS concept, which is "
                     f"a judgement: db.py adjudicate-term --observation-id {observation_id} "
                     f"--outcome NAMES-EXISTING --term-id {term_id} --rationale ... first.")
-            quote = obs["context_quote"] or ""
-            kind, where, inside = _retrieval_log().classify_observation(
-                obs["surface_form"], quote, obs["notes"], obs["ref_id"])
-            if not quote.strip() or not inside:
-                raise Refusal(
-                    f"add-alias: observation {observation_id} carries no context quote that "
-                    f"contains its phrase, so nothing attests the phrase was seen. Observe the "
-                    f"sighting again with --locator and --context-quote (db.py observe-term), "
-                    f"adjudicate it, and alias from that observation.")
-            if kind not in ("scoped", "exempt"):
-                raise Refusal(
-                    f"add-alias: observation {observation_id}'s quote is not in a file saved for "
-                    f"{obs['ref_id']} ({where}), so 'source-attested' would be untrue. Register "
-                    f"the source's text (scripts/research/full_text.py) and observe the sighting "
-                    f"from it, or record why no artefact can carry it (observe-term "
-                    f"--verbatim-exempt). Nothing was written.")
+            note, problem = _observed_quote(obs, "add-alias")
+            if problem:
+                raise Refusal(problem)
             text, lang, jur = obs["surface_form"], _alias_language(conn, obs["language"] or "EN"), obs["jurisdiction"]
-            note = (f"source-attested: observation {observation_id}, {obs['ref_id']} at "
-                    f"{obs['locator']!r}; " + (f"quote verified in {where.split(',')[0]}"
-                                              if kind == "scoped" else
-                                              "the observation's quote is VERBATIM-EXEMPT"))
         else:
             text = alias.strip()
             if not text:
                 raise Refusal("add-alias: --alias is empty. Nothing was written.")
             # lang_jur_map is the vocabulary of research languages and their pairs; compared
             # case-insensitively, the same refusal add-term --first-form gives (T-028).
-            _check_language(conn, language, "alias")
-            want_j = jurisdiction.strip().upper() if jurisdiction else None
-            pairs = conn.execute("SELECT jurisdiction FROM lang_jur_map WHERE upper(language) = ? "
-                                 "AND (? IS NULL OR upper(jurisdiction) = ?)",
-                                 ((language or "").strip().upper(), want_j, want_j)).fetchall()
-            if not pairs:
-                raise Refusal(
-                    f"add-alias: lang_jur_map holds no pair for language {language!r}"
-                    + (f" and jurisdiction {jurisdiction!r}" if jurisdiction else "")
-                    + ". The map is the vocabulary of research languages and the "
-                      "jurisdictions each is owed in; a pair is added there, not at the form. "
-                      "Nothing was written.")
-            lang, jur = _alias_language(conn, language.strip()), (pairs[0][0] if jurisdiction else None)
-        held = conn.execute("SELECT alias_type, observation_id, attestation, jurisdiction, "
-                            "source_url, notes FROM term_aliases WHERE term_id = ? AND alias = ? "
-                            "AND language = ?", (term_id, text, lang)).fetchone()
-        if held and (route == "seed" or held["observation_id"] is not None
-                     or held["attestation"] in dbcore.ATTESTED_FORMS):
-            how = (f"attested by observation {held['observation_id']}"
-                   if held["observation_id"] is not None else
-                   f"attested as {held['attestation']}" + (f" at {held['source_url']}" if held["source_url"] else "")
-                   if held["attestation"] in dbcore.ATTESTED_FORMS else
-                   f"held as {held['attestation']}")
-            raise Refusal(f"add-alias: {term_id} already holds {text!r} ({lang}) as {held['alias_type']}, "
-                          f"{how}. A second occurrence of an attested form waits for T-028's "
-                          f"occurrence grain; a held row is never re-attested. Nothing was written.")
+            lang, jur = _lang_jur_pair(conn, language, jurisdiction, "add-alias")
+        rows = conn.execute("SELECT form_id, alias_type, observation_id, attestation, jurisdiction, "
+                            "source_url, source_page, source_line, source_clause, notes FROM term_aliases "
+                            "WHERE term_id = ? AND alias = ? AND language = ? ORDER BY form_id",
+                            (term_id, text, lang)).fetchall()
+        this = {"jurisdiction": jur, "observation_id": observation_id if route == "observation" else None,
+                **(locator if route == "base" else {k: None for k in locator})}
+
+        def how(h):
+            return (f"attested by observation {h['observation_id']}"
+                    if h["observation_id"] is not None and h["attestation"] in dbcore.ATTESTED_FORMS else
+                    f"attested as {h['attestation']}" + (f" at {h['source_url']}" if h["source_url"] else "")
+                    if h["attestation"] in dbcore.ATTESTED_FORMS else
+                    f"held as {h['attestation']}")
+        if route == "seed" and rows:
+            raise Refusal(f"add-alias: {term_id} already holds {text!r} ({lang}) as {rows[0]['alias_type']}, "
+                          f"{how(rows[0])}. A seed is never written beside a form the term holds. "
+                          f"Nothing was written.")
+        same = [h for h in rows if h["attestation"] in dbcore.ATTESTED_FORMS
+                and all(h[k] == v for k, v in this.items())]
+        if same:
+            raise Refusal(f"add-alias: {term_id} already holds {text!r} ({lang}) as {same[0]['alias_type']}, "
+                          f"{how(same[0])}: that occurrence is recorded (form {same[0]['form_id']}). The same "
+                          f"occurrence is not written twice, and a held row is never re-attested; another "
+                          f"source, jurisdiction or locator is a new occurrence. Nothing was written.")
+        held = next((h for h in rows if h["attestation"] not in dbcore.ATTESTED_FORMS
+                     and h["observation_id"] in (None, this["observation_id"])), None)
         if held and held["alias_type"] in ("TRANSLATION", "DEPRECATED"):
             raise Refusal(f"add-alias: {term_id} holds {text!r} ({lang}) with the legacy type "
                           f"{held['alias_type']}, which no route writes for a new row. Promoting "
                           f"it would attest a back-translation or a former name as a source's "
-                          f"own phrase; the legacy type is typed first (T-028/T-107). Nothing "
+                          f"own phrase; the legacy type is typed first (T-107). Nothing "
                           f"was written.")
         if held and held["jurisdiction"] is not None and held["jurisdiction"] != jur:
             raise Refusal(f"add-alias: {term_id} holds {text!r} ({lang}) for jurisdiction "
@@ -8374,28 +8601,28 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
         # what this route sets on the row besides the type and the stamp
         sets = {"attestation": attestation or seed,
                 **({"observation_id": observation_id} if route == "observation" else {}),
-                **(locator if route == "base" else {})}
+                **(locator if route == "base" else {}),
+                **({"usage_type": usage_type} if usage_type is not None else {})}
         if held:
-            # A model-seeded, owner-supplied or unrecorded alias whose text a source uses is
-            # PROMOTED in place: the pointer or locator is attached and the held row's type and
-            # history stay. updated_* name the promoting session (created_* stay the seed's).
+            # A seeded or unrecorded form whose text a source uses is PROMOTED in place: the pointer
+            # or locator is attached and the held row's type and history stay. updated_* name the
+            # promoting session (created_* stay the seed's).
             upd = dict(sets, jurisdiction=jur, updated_at=dbcore.now(), updated_by_session=session)
             if note:
                 upd["notes"] = (held["notes"] + "; " if held["notes"] else "") + note
             conn.execute("UPDATE term_aliases SET " + ", ".join(f"{k} = ?" for k in upd)
-                         + " WHERE term_id = ? AND alias = ? AND language = ?",
-                         [*upd.values(), term_id, text, lang])
+                         + " WHERE form_id = ?", [*upd.values(), held["form_id"]])
             return {"term_id": term_id, "alias": text, "language": lang, "route": route,
-                    "promoted": True, "alias_type_kept": held["alias_type"],
+                    "form_id": held["form_id"], "promoted": True, "alias_type_kept": held["alias_type"],
                     "attestation": sets["attestation"], "also_an_alias_of": others,
                     "dry_run": dry_run}
         row = {"term_id": term_id, "alias": text, "language": lang, "alias_type": alias_type,
                "jurisdiction": jur, **sets, "notes": note}
         row.update(dbcore.stamp_for(conn, "term_aliases", session))
-        conn.execute(f"INSERT INTO term_aliases ({','.join(row)}) "
-                     f"VALUES ({','.join('?' * len(row))})", list(row.values()))
+        cur = conn.execute(f"INSERT INTO term_aliases ({','.join(row)}) "
+                           f"VALUES ({','.join('?' * len(row))})", list(row.values()))
         out = {"term_id": term_id, "alias": text, "language": lang, "route": route,
-               "alias_type": alias_type, "jurisdiction": jur,
+               "form_id": cur.lastrowid, "alias_type": alias_type, "jurisdiction": jur,
                "attestation": sets["attestation"], "also_an_alias_of": others,
                "dry_run": dry_run}
         if route == "seed":
@@ -8553,8 +8780,9 @@ def mint_term_from_catalogue(catalogue: str, entry_ref: str, canonical_en: str,
 
       SCREEN: canonical_en with no digit, comparator or min/max word (_VALUE_BEARING, the
       add-term guard) and no [A-Z]-NN item code; a definition with no value either; not a
-      name or alias any term already holds; and an entry_ref that resolves inside the
-      catalogue file (_resolve_catalogue_entry).
+      label or attested English form any term already holds (_name_holder; a seed never
+      refuses, E4); and an entry_ref that resolves inside the catalogue file
+      (_resolve_catalogue_entry).
       APPROVE: a pointer to the ledger entry that records the owner's approval, its dated
       `## ` heading, occurring EXACTLY ONCE in references/project-standards.md. That proves
       the entry exists and is unambiguous. It does NOT prove the entry approves this name,
@@ -8601,14 +8829,15 @@ def mint_term_from_catalogue(catalogue: str, entry_ref: str, canonical_en: str,
                 raise Refusal(f"mint-term-from-catalogue: {canonical_en!r} is not inside the "
                               f"item subject {subject!r}. A name taken from a catalogue is "
                               f"the catalogue's own words, never a model's rewording (OR-17).")
-        clash = _name_holder(conn, canonical_en)
-        if clash and clash["kind"] == "term":
-            raise Refusal(f"mint-term-from-catalogue: {canonical_en!r} is already "
-                          f"{clash['term_id']}. Nothing was written.")
-        if clash:
+        # The same screen as rename-term (T-028): labels, and other terms' attested English forms; a
+        # seed never refuses (E4), and a form in another language is another name (OD-68).
+        for clash in _name_holder(conn, canonical_en, "EN")["clashes"]:
+            if clash["kind"] == "label":
+                raise Refusal(f"mint-term-from-catalogue: {canonical_en!r} is already "
+                              f"{clash['term_id']}. Nothing was written.")
             raise Refusal(f"mint-term-from-catalogue: {canonical_en!r} is an alias "
-                          f"({clash['detail']}) of {clash['term_id']}: the concept is held. "
-                          f"Nothing was written.")
+                          f"({clash['detail']}, form {clash['form_id']}) of {clash['term_id']}, attested: the "
+                          f"concept is held. Nothing was written.")
         term_id = _mint_term_id(conn)
         row = {"term_id": term_id, "canonical_en": canonical_en, "definition": definition,
                "domain": (domain or "").strip() or None,
