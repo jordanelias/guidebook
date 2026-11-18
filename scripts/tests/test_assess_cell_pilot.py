@@ -137,7 +137,7 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
     # T-030: the engine reads units from `base_units` (and each unit's kind from `base_quantity_kinds`). The fixture takes
     # the live schema and rows of both, so it is no laxer than the database it stands for and a unit added by migration
     # reaches every case that states one.
-    _live = sqlite3.connect(f"file:{os.path.join(REPO_ROOT, 'data', 'guidebook.db')}?mode=ro", uri=True)
+    _live = sqlite3.connect(f"file:{os.environ.get('GUIDEBOOK_DB_PATH') or os.path.join(REPO_ROOT, 'data', 'guidebook.db')}?mode=ro", uri=True)
     try:
         for _t in ("base_quantity_kinds", "base_units"):
             for _ddl, in _live.execute("SELECT sql FROM sqlite_master WHERE tbl_name=? AND sql IS NOT NULL "
@@ -1086,22 +1086,23 @@ def main():
     # the converter: OD-22 (safe side) and OD-42 (a prefix change is exact)
     _in = _other[0]
     _thirty = 30 * _fac[_in]
-    for _bound, _txt, _label in (("min", "765", "a minimum of 30 in is shown at 765 mm, never below the 762 it states"),
-                                 ("max", "760", "a maximum of 30 in is shown at 760 mm, never above the 762 it states"),
-                                 (None, "760", "a point (no bound) is shown at the nearest 5 mm")):
+    for _bound, _txt, _mark, _label in (("min", "765", _ac.MARK_UP, "a minimum of 30 in is shown at 765 mm, never below the 762 it states"),
+                                        ("max", "760", _ac.MARK_DOWN, "a maximum of 30 in is shown at 760 mm, never above the 762 it states"),
+                                        (None, "760", _ac.MARK_NEAREST, "a point (no bound) is shown at the nearest 5 mm")):
         _got = _ac.from_canonical(_uc, _thirty, _canon, _bound, {_in})
-        expect(f"T030-04: {_label}", _got == (_txt, False), str(_got))
+        expect(f"T030-04: {_label}, and the figure says how it was reached", _got == (_txt, False, _mark), str(_got))
     _got = _ac.from_canonical(_uc, 127 * _fac[_canon], _in, "min", {_canon})
     expect("T030-05: a bound already on the owner's increment is shown unchanged and exact (127 mm is 5 in)",
-           _got == ("5", True), str(_got))
+           _got[:2] == ("5", True), str(_got))
     _got = (_ac.from_canonical(_uc, 100 * _fac[_canon], _in, "min", {_canon}), _ac.from_canonical(_uc, 100 * _fac[_canon], _in, "max", {_canon}))
     expect("T030-06: toward inch-foot a minimum rounds up to the quarter inch and a maximum down (100 mm: 4 in, 3.75 in)",
-           _got == (("4", False), ("3.75", False)), str(_got))
+           [g[:2] for g in _got] == [("4", False), ("3.75", False)], str(_got))
     _got = _ac.from_canonical(_uc, 80 * _fac[_same[0]], _canon, "min", {_same[0]})
     _big = _same[-1]                                      # 1203 of the canonical unit, off the 5 mm grid, shown in the largest prefix unit
     _got2 = _ac.from_canonical(_uc, 1203 * _fac[_canon], _big, "min", {_canon})
     expect("T030-07: a change of metric prefix keeps the source's digits and is exact, never rounded to 5 mm",
-           _got == (str(80 * int(_fac[_same[0]])), True) and _got2 == (str(Decimal(1203) / int(_fac[_big])), True), f"{_got} {_got2}")
+           _got[:2] == (str(80 * int(_fac[_same[0]])), True) and _got2[:2] == (str(Decimal(1203) / int(_fac[_big])), True)
+           and _got[2] == _got2[2] == _ac.MARK_CONVERTED, f"{_got} {_got2}")
     expect("T030-08: the rounding rule's keys are rows of the live schema (a renamed kind or system cannot disarm it)",
            {k for k, _s in _ac.SHOWN_STEPS} <= {r[0] for r in _uc.execute("SELECT kind_id FROM base_quantity_kinds")}
            and {s_ for _k, s_ in _ac.SHOWN_STEPS} <= _ac.check_values(_uc, "base_units", "system"),
@@ -1110,10 +1111,20 @@ def main():
     d = determine(synth_db([_w("30", _in, ">=", "US"), _w("700", _canon, ">=", "GB"), _w("600", _canon, ">=", "AU")], direction="higher_is_better"),
                   1, {"identity_code": "MOB"}, "syn-slug", "t030-shown")
     _nn = {x["notation"]: x for x in (d["value_notations"] or [])}
-    expect("T030-09: the headline minimum is exact (762.0 mm); shown in mm it is 765 (derived, inexact), in inches 30 (stated, exact)",
+    expect("T030-09: the headline minimum is exact (762.0 mm); shown in mm it is 765 (derived, rounded up, inexact), in inches 30 (stated, exact)",
            d["value_min"] == float(_thirty) and _nn[_canon]["min"] == "765" and _nn[_canon]["stated"] is False
-           and _nn[_canon]["exact"] is False and _nn[_in]["min"] == "30" and _nn[_in]["stated"] is True and _nn[_in]["exact"] is True,
+           and _nn[_canon]["min_mark"] == _ac.MARK_UP and _nn[_canon]["exact"] is False
+           and _nn[_in]["min"] == "30" and _nn[_in]["stated"] is True and _nn[_in]["min_mark"] == _ac.MARK_STATED and _nn[_in]["exact"] is True,
            f"min={d['value_min']} {d['value_notations']}")
+    # BOTH bounds, mixed: a floor stated in inches and a ceiling stated in millimetres. No source stated 765 mm or 35.25 in.
+    d = determine(synth_db([_w("30", _in, ">=", "US"), _w("900", _canon, "<=", "GB"), _w("700", _canon, ">=", "AU")], direction="higher_is_better"),
+                  1, {"identity_code": "MOB"}, "syn-slug", "t030-mixed")
+    _nn = {x["notation"]: x for x in (d["value_notations"] or [])}
+    expect("T030-09b: with a floor stated in inches and a ceiling stated in mm, each notation marks EACH bound: the mm notation has "
+           "765 derived (rounded up) beside 900 stated, the inch notation 30 stated beside 35.25 derived (rounded down); neither is `stated` as a whole",
+           (_nn[_canon]["min"], _nn[_canon]["min_mark"], _nn[_canon]["max"], _nn[_canon]["max_mark"]) == ("765", _ac.MARK_UP, "900", _ac.MARK_STATED)
+           and (_nn[_in]["min"], _nn[_in]["min_mark"], _nn[_in]["max"], _nn[_in]["max_mark"]) == ("30", _ac.MARK_STATED, "35.25", _ac.MARK_DOWN)
+           and _nn[_canon]["stated"] is False and _nn[_in]["stated"] is False, str(d["value_notations"]))
     # a point (the floor and the ceiling are one figure) is shown at the nearest increment, not min up and max down
     d = determine(synth_db([_w("30", _in, "=", "US"), _w("30", _in, "=", "GB"), _w("700", _canon, ">=", "AU")], direction="higher_is_better"),
                   1, {"identity_code": "MOB"}, "syn-slug", "t030-point")
@@ -1129,6 +1140,92 @@ def main():
     expect("T030-12: a unit added as a row composes with the rest of its kind (TASK-FIXTURE: 3 of them are 2743200 canonical units, so 2500 wins)",
            d["value_max"] == 2500.0 and d["value_unit"] == _canon and "different units" not in (d["value_note"] or ""),
            f"max={d['value_max']} note={d['value_note']!r}")
+
+    # T030 repair: every seeded factor is held to its DEFINITION. The definitions are external truths, typed here as exact
+    # Fractions (an inch is 25.4 mm by the 1959 agreement, a foot twelve inches, a centimetre 10 mm, a metre 1000 mm; 1:12 is
+    # 100/12 percent); WHICH units exist is read from the table, and a unit with no pinned definition fails.
+    _PIN = {"mm": Fraction(1), "cm": Fraction(10), "m": Fraction(1000), "in": Fraction(254, 10), "ft": Fraction(3048, 10),
+            "%": Fraction(1), "rise:run ratio": Fraction(100)}
+    _PIN_READ = [("30", "in", Fraction(762)), ("1", "ft", Fraction(3048, 10)), ("1", "cm", Fraction(10)), ("1", "m", Fraction(1000)),
+                 ("1:12", "rise:run ratio", Fraction(100, 12)), ("1:20", "rise:run ratio", Fraction(5)), ("5", "%", Fraction(5))]
+
+    def _pin_defects(c):
+        bad = [u for u, n, dn in c.execute("SELECT unit, factor_numerator, factor_denominator FROM base_units")
+               if u not in _PIN or Fraction(n, dn) != _PIN[u]]
+        return bad + [f"{v} {u}" for v, u, want in _PIN_READ if _ac.to_canonical(c, v, u) != want]
+    expect("T030-13: every unit in base_units has a pinned definition and its factor equals it; the figures read as the definitions say",
+           _pin_defects(_uc) == [], str(_pin_defects(_uc)))
+    _bad = synth_db([])
+    _bad.execute("UPDATE base_units SET factor_numerator = 11 WHERE unit = 'cm'")
+    _bad.execute("UPDATE base_units SET factor_numerator = 100 WHERE unit = 'm'")
+    _bad2 = synth_db([])
+    _bad2.execute("UPDATE base_units SET factor_numerator = 127 , factor_denominator = 5 WHERE unit = 'ft'")
+    _bad3 = synth_db([])
+    _bad3.execute("INSERT INTO base_units VALUES ('task-fixture-unit', ?, 3, 1, 'number', NULL, 'TASK-FIXTURE', 'TASK-FIXTURE', NULL, NULL)", (_kind,))
+    expect("T030-13b: the pin goes red on a cm and m seeded wrong, on a foot equal to an inch, and on a unit nobody pinned",
+           {"cm", "m"} <= set(_pin_defects(_bad)) and "ft" in _pin_defects(_bad2) and "task-fixture-unit" in _pin_defects(_bad3),
+           f"{_pin_defects(_bad)} {_pin_defects(_bad2)} {_pin_defects(_bad3)}")
+    # the headline is a converted figure and says so
+    _bigu = _same[-1]
+    d = determine(synth_db([_w(v, _bigu, "<=", j) for v, j in (("9", "US"), ("10", "GB"), ("11", "AU"))], direction="lower_is_better"),
+                  1, {"identity_code": "MOB"}, "syn-slug", "t030-headline")
+    expect("T030-14: a headline converted to the canonical unit says in value_note that it is, and from which unit",
+           d["value_unit"] == _canon and "converted from the stated" in (d["value_note"] or "") and repr(_bigu) in (d["value_note"] or ""),
+           f"{d['value_max']} {d['value_unit']} {d['value_note']!r}")
+    d = determine(synth_db([_w(v, _canon, "<=", j) for v, j in (("9", "US"), ("10", "GB"), ("11", "AU"))], direction="lower_is_better"),
+                  1, {"identity_code": "MOB"}, "syn-slug", "t030-headline-ctl")
+    expect("T030-14b: control: a set stated in the canonical unit carries no conversion note", "converted from" not in (d["value_note"] or ""), str(d["value_note"]))
+    # a unit string equal to a kind id is a unit with no row, never the kind: it does not compose, in either order
+    expect("T030-15 guard: the kind id is no unit of the table", _ac.unit_kind(_uc, _kind) is None)
+    _rows15 = [("5", _kind, "US"), ("8", _canon, "GB"), ("9", _canon, "AU")]
+    for _order, _rs in (("as written", _rows15), ("reversed", list(reversed(_rows15)))):
+        d = determine(synth_db([_w(v, u, "<=", j) for v, u, j in _rs], direction="lower_is_better"),
+                      1, {"identity_code": "MOB"}, "syn-slug", "t030-kindname")
+        expect(f"T030-15: a unit spelled like its kind ({_order}) does not compose with the kind's units",
+               d["value_max"] is None and "different units" in (d["value_note"] or ""), f"{d['value_max']} {d['value_unit']} {d['value_note']!r}")
+    d = determine(synth_db([_w("1200", _canon, ">=", "US"), _w("5", _alien, ">=", "GB"), _w("6", _alien, ">=", "AU")], direction="higher_is_better"),
+                  1, {"identity_code": "MOB"}, "syn-slug", "t030-kinds-note")
+    _kinds = {r[0] for r in _uc.execute("SELECT kind_id FROM base_quantity_kinds")} - {_canon, _alien}
+    expect("T030-15b: the refusal lists the units stated, never a kind id",
+           repr(_canon) in (d["value_note"] or "") and repr(_alien) in (d["value_note"] or "")
+           and not any(repr(k) in (d["value_note"] or "") for k in _kinds), str(d["value_note"]))
+    _kid = _uc.execute("SELECT kind_id FROM base_units WHERE unit = ?", (_alien,)).fetchone()[0]
+    expect("T030-15c: ...and in particular not the kind id of either unit", repr(_kid) not in (d["value_note"] or "") and repr(_kind) not in (d["value_note"] or ""),
+           str(d["value_note"]))
+    # a floor and a ceiling that coincide are two claims, not a point: the minimum is never shown below its source
+    d = determine(synth_db([_w("30", _in, ">=", "US"), _w("30", _in, "<=", "GB"), _w("700", _canon, ">=", "AU")], direction="higher_is_better"),
+                  1, {"identity_code": "MOB"}, "syn-slug", "t030-coincide")
+    _nn = {x["notation"]: x for x in (d["value_notations"] or [])}
+    expect("T030-16: a floor and a ceiling of the same 30 in show 762 mm on neither wrong side (a minimum never below 762, a maximum never above), "
+           "not 760 for both",
+           d["value_min"] == d["value_max"] == float(_thirty) and Fraction(_nn[_canon]["min"]) >= _thirty and Fraction(_nn[_canon]["max"]) <= _thirty
+           and Fraction(_nn[_canon]["min"]) <= Fraction(_nn[_canon]["max"]) and _nn[_canon]["min_mark"] == _ac.MARK_UNROUNDED,
+           str(d["value_notations"]))
+    # shown text comes from the exact Fraction, never a float
+    _t = _ac.from_canonical(_uc, 900 * _fac[_canon], "ft" if "ft" in _fac else _other[-1], None, {_canon})
+    _p = _ac.from_canonical(synth_db([]), Fraction(100, 12), "%", "min", ())
+    _pm = _ac.from_canonical(synth_db([]), Fraction(100, 12), "%", "max", ())
+    expect("T030-17: a figure that does not terminate shows SHOWN_DIGITS significant digits cut from the exact Fraction on the safe side "
+           "(8.33334 as a minimum, 8.33333 as a maximum), and 900 mm in feet is not a float repr",
+           (_p[0], _pm[0]) == ("8.33334", "8.33333") and not _p[1] and Fraction(_p[0]) >= Fraction(100, 12) >= Fraction(_pm[0])
+           and len(_t[0].replace(".", "")) <= _ac.SHOWN_DIGITS + 1, f"{_t} {_p} {_pm}")
+    # a positive allowance is never shown as zero
+    _s1 = _ac.from_canonical(_uc, Fraction(1, 8) * _fac[_in], _canon, "max", {_in})
+    _s2 = _ac.from_canonical(_uc, 1 * _fac[_canon], _in, "max", {_canon})
+    expect("T030-18: a maximum of 1/8 in shown in mm, and of 1 mm shown in inches, is shown unrounded and marked, never 0",
+           _s1[2] == _s2[2] == _ac.MARK_UNROUNDED and Fraction(_s1[0]) == Fraction(1, 8) * _fac[_in] / _fac[_canon]
+           and 0 < Fraction(_s2[0]) <= Fraction(1) / _fac[_in], f"{_s1} {_s2}")
+    # the canonical index says "the factor is one", not the literal 1/1
+    try:
+        _uc.execute("INSERT INTO base_units VALUES ('task-fixture-twice', ?, 2, 2, 'number', NULL, 'TASK-FIXTURE', 'TASK-FIXTURE', NULL, NULL)", (_kind,))
+        expect("T030-19: a second unit of factor one stored unreduced (2/2) is refused", False, "accepted")
+    except sqlite3.IntegrityError:
+        expect("T030-19: a second unit of factor one stored unreduced (2/2) is refused", True)
+    # a ratio unit is asked of the kind the caller means
+    _ratio_kind = _uc.execute("SELECT kind_id FROM base_units WHERE figure_form = 'ratio' LIMIT 1").fetchone()[0]
+    expect("T030-20: ratio_unit is the a:b unit of THAT kind, and None for a kind that has none",
+           _ac.ratio_unit(_uc, _ratio_kind) == _uc.execute("SELECT unit FROM base_units WHERE kind_id = ? AND figure_form = 'ratio'", (_ratio_kind,)).fetchone()[0]
+           and _ac.ratio_unit(_uc, _kind) is None and _ac.ratio_unit(_uc, _ratio_kind) in _ac.ratio_units(_uc), "")
 
     # A ceiling stored with NO comparator is read as a point and contributes a floor
     # as well, giving min > max. That describes nothing and must not be emitted.

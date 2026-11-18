@@ -617,50 +617,77 @@ def _terminating(v):
         return format(Decimal(v.numerator) / Decimal(v.denominator), "f")
 
 
+#: Significant digits a figure that does not terminate in decimal is shown to (8.33333 for 100/12): held once. The digits
+#: are cut from the exact Fraction, on the safe side of the bound; no float is ever formatted.
+SHOWN_DIGITS = 6
+
+
 def _decimal_text(v, bound=None):
-    """(text, exact) for a Fraction in a unit's own terms. Exact digits when it terminates. When it does not, six
-    significant digits, and for a `min`/`max` bound enough digits that the text is not on the wrong side of `v`."""
+    """(text, exact) for a Fraction in a unit's own terms, produced from the exact Fraction and never from a float.
+    The exact digits when it terminates. When it does not, `SHOWN_DIGITS` significant digits: a `min` is cut upward
+    and a `max` downward (never on the wrong side of `v`), no bound to the nearest."""
     t = _terminating(v)
     if t is not None:
         return t, True
-    for p in range(6, 18):
-        text = "%.*g" % (p, float(v))
-        if (bound == "min" and Fraction(text) < v) or (bound == "max" and Fraction(text) > v):
-            continue
-        break
-    return text, Fraction(text) == v
+    e = 0                                                    # 10**e <= |v| < 10**(e+1), found with integers
+    while abs(v) >= 10 ** (e + 1):
+        e += 1
+    while abs(v) < 10 ** e:
+        e -= 1
+    scale = Fraction(10) ** (SHOWN_DIGITS - 1 - e)
+    k = v * scale
+    n = math.ceil(k) if bound == "min" else math.floor(k) if bound == "max" else math.floor(k + Fraction(1, 2))
+    return _terminating(Fraction(n) / scale), False
+
+
+#: How a shown figure relates to what a source stated, in the notation record's `min_mark` / `max_mark` (T-030, OD-22:
+#: "the shown figure is marked as converted"). A bound a source wrote in this very unit is `stated`; the rest are derived.
+MARK_STATED = "stated"
+MARK_CONVERTED = "converted"
+MARK_NEAREST = "rounded to the nearest increment"
+MARK_UP = "rounded up to the increment"
+MARK_DOWN = "rounded down to the increment"
+MARK_UNROUNDED = "converted, not rounded (the increment would show zero or cross the other bound)"
 
 
 def from_canonical(conn, value, unit, bound=None, from_units=()):
-    """A canonical Fraction -> (text, exact) in `unit`.
+    """A canonical Fraction -> (text, exact, mark) in `unit`.
 
-    `exact` is False when the unit cannot hold the value without rounding -- 8.333...% is the case this project has --
-    and the caller MARKS it, because ACTION (3) of the 2026-09-17 ruling forbids a rounded figure standing where a
-    source's own figure would. `bound` ('min', 'max' or None for a point) and `from_units` (the units in which the
-    source stated this figure) apply `SHOWN_STEPS`: a unit of the system a source stated it in is exact; a unit of the
-    other system is shown at the owner's increment on the safe side of the bound (see the comment on SHOWN_STEPS).
+    `exact` is False when the shown text is not the value -- 8.333...% is the case this project has -- and the caller
+    shows it so, because ACTION (3) of the 2026-09-17 ruling forbids a rounded figure standing where a source's own
+    figure would. `mark` is how it was derived (the MARK_ constants). `bound` ('min', 'max' or None for a figure that
+    is no bound) and `from_units` (the units in which a source stated this figure) apply `SHOWN_STEPS`: a unit of the
+    system a source stated it in is exact; a unit of the other system is shown at the owner's increment on the safe
+    side of the bound (see the comment on SHOWN_STEPS), except that a positive figure is never shown as zero: it is
+    then shown unrounded and marked so.
     """
     if value is None:
-        return None, True
+        return None, True, None
     units = load_units(conn)
     row = units.get((unit or "").strip())
     if row is None:
         raise NotImplementedError("no rendering defined for %r: it is not a row of base_units" % (unit,))
     if row.figure_form == "ratio":
         if value == 0:
-            return "0", True
+            return "0", True, MARK_CONVERTED
         run = row.factor / value                             # canonical -> 1:n, exactly
-        text = "1:%g" % float(run)
-        return text, Fraction(1, 1) / Fraction(text.split(":")[1]) * row.factor == value
+        text, _ = _decimal_text(run)
+        return "1:" + text, Fraction(text) == run, MARK_CONVERTED
     v = value / row.factor
     step = SHOWN_STEPS.get((row.kind, row.system))
+    mark = MARK_CONVERTED
     if (step is not None and from_units
             and not any(units[u].kind == row.kind and units[u].system == row.system for u in from_units if u in units)):
         unit_step = step / row.factor
         k = v / unit_step
-        v = (math.ceil(k) if bound == "min" else math.floor(k) if bound == "max" else math.floor(k + Fraction(1, 2))) * unit_step
+        n = math.ceil(k) if bound == "min" else math.floor(k) if bound == "max" else math.floor(k + Fraction(1, 2))
+        if v > 0 and n == 0:
+            mark = MARK_UNROUNDED                            # a positive allowance is never shown as zero
+        else:
+            v = n * unit_step
+            mark = MARK_UP if bound == "min" else MARK_DOWN if bound == "max" else MARK_NEAREST
     text, _ = _decimal_text(v, bound)
-    return text, Fraction(text) == value / row.factor
+    return text, Fraction(text) == value / row.factor, mark
 
 
 def bound_on_scale(conn, claimed_value, unit, comparator, claim_type):
@@ -760,9 +787,14 @@ def ratio_notation(conn, unit):
     return row is not None and row.figure_form == "ratio"
 
 
-def ratio_unit(conn):
-    """The unit whose figures are written `a:b`: the first row of `base_units` with that figure form."""
-    return next(u for u, r in load_units(conn).items() if r.figure_form == "ratio")
+def ratio_units(conn, kind=None):
+    """The units whose figures are written `a:b` (a row's `figure_form`), of `kind` when one is given."""
+    return [u for u, r in load_units(conn).items() if r.figure_form == "ratio" and (kind is None or r.kind == kind)]
+
+
+def ratio_unit(conn, kind):
+    """The first unit of `kind` whose figures are written `a:b`, or None if the kind has none."""
+    return next(iter(ratio_units(conn, kind)), None)
 
 
 def _gradient_like(conn, unit):
@@ -815,6 +847,7 @@ def figure_refusal(conn, value, unit, comparator, claim_type):
         return None
     v, u = (value or "").strip(), (unit or "").strip()
     family = _gradient_like(conn, u)
+    ratios = " or ".join(repr(x) for x in (ratio_units(conn, unit_kind(conn, u)) or ratio_units(conn)))   # the units, never kind ids
     if any(ch.isdecimal() and not ch.isascii() for ch in v):
         return "write ASCII digits (0-9): a full-width or other-script digit is not read"
     if re.search(r"\d\s*/\s*\d", v) and (family or not u):
@@ -824,11 +857,11 @@ def figure_refusal(conn, value, unit, comparator, claim_type):
         if re.search(r"\d\s*%", v):
             return f"write the number ({v.replace('%', '').strip()}) and put % in --claimed-unit"
         if re.search(r"\d\s+in\s+\d", v):
-            return f"write '1 in 12' as 1:12 with --claimed-unit {ratio_unit(conn)!r}"
+            return f"write '1 in 12' as 1:12 with --claimed-unit {ratios}"
         if re.search(r"\d,\d", v):
             return "write a decimal comma as a point (30,0 -> 30.0); the digits stay the same"
         if ":" in v and not family:
-            return (f"the engine reads an a:b figure only under {ratio_unit(conn)!r} (rise over HORIZONTAL run, a "
+            return (f"the engine reads an a:b figure only under {ratios} (rise over HORIZONTAL run, a "
                     f"gradient). For another ratio, write the single number when the second term is 1 "
                     f"(4.5:1 -> 4.5, the ratio's name in the unit, e.g. 'contrast ratio'); otherwise put "
                     f"each term in its own row")

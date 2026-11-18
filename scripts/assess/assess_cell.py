@@ -568,8 +568,9 @@ def gather_extraction_links(conn, parameter_id, governing_refs, lens):
 
 # The unit arithmetic lives in dbcore and its units in `base_units` (T-030), so the writer that refuses an unreadable
 # figure and the engine that reads it are one definition. Names are imported back so the engine's names stay valid.
+from fractions import Fraction  # noqa: E402
 from dbcore import (unit_kind, kind_members, canonical_unit,  # noqa: E402 -- one home (T-016, T-030)
-                    from_canonical, bound_on_scale)
+                    from_canonical, bound_on_scale, MARK_STATED, MARK_UNROUNDED)
 
 
 def derivation_handshake(conn, parameter_id, lens, sources):
@@ -854,7 +855,9 @@ def _compose_headline(conn, links, direction, scope=""):
             unparsed.append((val, unit))
             continue
         bounds.append((b, (unit or "").strip()))
-        scales.add(fam or (unit or "").strip())
+        # a scale is a kind or a stand-alone unit, keyed apart so a unit string can never equal a kind id (a unit
+        # named like a kind would otherwise merge with the kind's units, in an order-dependent way)
+        scales.add(("kind", fam) if fam else ("unit", (unit or "").strip()))
         if fam:
             stated_notations.add((unit or "").strip())
     if not bounds:
@@ -865,8 +868,7 @@ def _compose_headline(conn, links, direction, scope=""):
         return None, None, None, (
             "%sgoverning claims are stated in different units (%s); composing an interval "
             "would require a conversion no source stated"
-            % (scope, ", ".join(sorted(repr(u) for u in scales)))), None
-    scale = next(iter(scales))
+            % (scope, ", ".join(sorted({repr(u) for _b, u in bounds})))), None
     family = unit_kind(conn, bounds[0][1])             # one scale, so every bound's unit is of this kind or none is
     unit = (canonical_unit(conn, family) if family
             else (next(iter({u for _b, u in bounds})) or None))
@@ -931,26 +933,51 @@ def _compose_headline(conn, links, direction, scope=""):
     if family:
         _lo_from = {u for b, u in bounds if vmin is not None and b[0] == vmin}
         _hi_from = {u for b, u in bounds if vmax is not None and b[1] == vmax}
-        _written = _lo_from | _hi_from
-        # A point (min = max) is no bound: it is shown at the nearest increment; a minimum is never shown below the
-        # source and a maximum never above it (OD-22, OD-42; the rule is dbcore.SHOWN_STEPS).
-        _point = vmin is not None and vmin == vmax
+        # A POINT is ONE claim that states one value (both bounds are its own): shown at the nearest increment on both
+        # ends. A floor and a ceiling that merely coincide are two claims: the minimum is still never shown below its
+        # source and the maximum never above (OD-22: "a minimum never shows below the source, a maximum never above
+        # it"), the rule is dbcore.SHOWN_STEPS.
+        _point = vmin is not None and any(b[0] == vmin and b[1] == vmin for b, _u in bounds)
+        _lo_kind, _hi_kind = (None, None) if _point else ("min", "max")
+
+        def _num(text):
+            try:
+                return Fraction(text)
+            except (TypeError, ValueError):
+                return None                    # an a:b figure is no number to order
+
         notations = []
         for member in kind_members(conn, family):
             if member not in stated_notations:
                 continue                      # the governing set never used it
-            lo_txt, lo_exact = from_canonical(conn, vmin, member, None if _point else "min", _lo_from)
-            hi_txt, hi_exact = from_canonical(conn, vmax, member, None if _point else "max", _hi_from)
+            lo = from_canonical(conn, vmin, member, _lo_kind, _lo_from)
+            hi = from_canonical(conn, vmax, member, _hi_kind, _hi_from)
+            _a, _b = _num(lo[0]), _num(hi[0])
+            _crossed = _a is not None and _b is not None and _a > _b
+            if _crossed:
+                # the increment cannot hold both bounds on their safe sides (a minimum rounded up passes a maximum
+                # rounded down): show the exact conversion of each, which is on no wrong side, and say so
+                lo = from_canonical(conn, vmin, member, _lo_kind, ())
+                hi = from_canonical(conn, vmax, member, _hi_kind, ())
+            lo_mark = None if lo[0] is None else MARK_STATED if member in _lo_from else (MARK_UNROUNDED if _crossed else lo[2])
+            hi_mark = None if hi[0] is None else MARK_STATED if member in _hi_from else (MARK_UNROUNDED if _crossed else hi[2])
             notations.append({
                 "notation": member,
-                "min": lo_txt, "max": hi_txt,
-                "stated": member in _written,
-                "exact": bool(lo_exact and hi_exact),
+                "min": lo[0], "max": hi[0],
+                # each bound says how it was reached: `stated` (a source wrote this bound in this unit) or derived,
+                # with the rounding direction, because no source stated 765 mm for a bound it stated as 30 in
+                "min_mark": lo_mark, "max_mark": hi_mark,
+                "stated": all(m == MARK_STATED for m in (lo_mark, hi_mark) if m is not None),
+                "exact": bool(lo[1] and hi[1]),
             })
         if len(notations) > 1:
             caveat = ((caveat + "; ") if caveat else "") + (
                 "value presented in %d notations of one quantity (owner ruling "
                 "2026-09-17: present both, never choose)" % len(notations))
+        if stated_notations - {unit}:
+            caveat = ((caveat + "; ") if caveat else "") + (
+                "the headline is in %s, the canonical unit of its kind, converted from the stated %s"
+                % (unit, ", ".join(sorted(repr(u) for u in stated_notations))))
 
     return (float(vmin) if vmin is not None else None,
             float(vmax) if vmax is not None else None,

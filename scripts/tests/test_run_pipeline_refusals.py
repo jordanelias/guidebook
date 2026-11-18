@@ -3726,7 +3726,7 @@ with scratch() as c:
            "r4":  "The drive ramp is graded at 1:4 beside the garage.",
            "r3":  "The loading ramp is graded at 1:3 beside the dock.",
            "r2":  "The temporary ramp is graded at 1:2 beside the hall."}
-    FAM = dbcore.ratio_unit(c)
+    FAM = dbcore.ratio_unit(c, c.execute("SELECT kind_id FROM base_units WHERE figure_form = 'ratio' ORDER BY kind_id LIMIT 1").fetchone()[0])
     ref93 = new_source(verified=True)
     held_text(ref93, "\n".join(T93.values()))
     hand_scan(c, ref93, "full")
