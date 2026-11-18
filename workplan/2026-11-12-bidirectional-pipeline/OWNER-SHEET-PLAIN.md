@@ -307,6 +307,8 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 ## 19. One word, two languages, two meanings: a clash? (OD-68)
 
+**Answered 2026-11-17:** two independent names (ledger, "Owner answers 2026-11-17").
+
 **The situation.** Sometimes the same written word is a name for one thing in one language and for something else in another language. The tools could treat that as a clash and refuse it, or treat the two as separate names that happen to be spelled alike.
 
 - **A. Separate names.** *What it means:* each word is read in its own language. A new check still shows a reviewer any pair of topics that a translation or a search aid links, so real duplicates are still caught.
@@ -319,6 +321,8 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 ## 20. What did you mean by "category"? (OD-69)
 
+**Part answered 2026-11-17:** a concept's topic area, the overall class of a parameter (for example circulation). **Still open:** is the list of classes fixed, and which of the domains now in use are the classes? (ledger, "Owner answers 2026-11-17").
+
 **The situation.** You asked how the pipeline handles "determining category". It could mean: **(a)** the topic area of a concept (circulation, acoustics, lighting, wayfinding and so on); **(b)** the kind of source, which sets how strong it is; **(c)** the kind of claim; **(d)** the kind of measurement (a length, a ratio …); **(e)** the scale (a fixture, a room, a building). (b) to (e) are already recorded. The topic area (a) is typed freely today, so a misspelling makes a new area and nobody has approved the list.
 
 - **A. (a), with a fixed list you approve once** and only you change. *What it means:* the list is seeded from the areas in use and shown to you once.
@@ -330,6 +334,8 @@ So today a value for wheelchair users that rests only on codes would be labelled
 **To answer:** "OD-69: A", "B" or "C (and which)". *This holds one task (T-135).*
 
 ## 21. Is a source's strength worked out from what kind of source it is? (OD-70)
+
+**Answered 2026-11-17:** yes; the tier is computed from the judged type and scope (ledger, "Owner answers 2026-11-17").
 
 **The situation.** The August restart plan says a source's tier (how strong it is) is "permanently manual". In practice a person or model decides what kind of source it is and how widely it applies, and the tier then follows from those by the tier ladder. You said on 9 September, "you have to compute it. I can't handle this load manually", but that was written down as being about the published values only.
 
