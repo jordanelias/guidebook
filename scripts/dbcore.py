@@ -37,14 +37,17 @@ That relative hop is the one piece of boilerplate consolidation cannot remove. I
 import argparse
 import functools
 import json
+import math
 import os
 import re
 import sqlite3
 import subprocess
 import sys
 import uuid
+from collections import namedtuple
 from contextlib import contextmanager
 from datetime import datetime, timezone
+from decimal import Decimal, localcontext
 from fractions import Fraction
 from pathlib import Path
 
@@ -510,101 +513,157 @@ ENGINE_EXTRACTION_COLUMNS = ("figure_role", "claim_type", "extraction_method", "
 QUANTITY_CLAIM_TYPES = ("numerical", "range")
 
 
-#: NOTATIONS OF ONE QUANTITY, and the arithmetic that relates them. Owner ruling
-#: 2026-09-17: "Present both -- don't choose between ratio or percentage."
+#: UNITS AND THEIR EXACT FACTORS ARE ROWS (T-030, migration 149): `base_units` names each unit as a source writes it, the
+#: quantity kind it measures (`base_quantity_kinds`, T-020) and its factor to the kind's CANONICAL unit (the unit whose
+#: factor is 1) as two integers, so every conversion is exact in Fraction and never a float. A unit is added by a row, not by
+#: an edit here. This replaces `NOTATION_FAMILIES` (owner ruling 2026-09-17, "Present both -- don't choose between ratio or
+#: percentage", extended to exact length units by OR-10, 2026-10-29): the gradient notations are two rows of the kind
+#: `gradient`, and the lengths are rows of the kind `length`.
 #:
-#: THIS IS A DEFINITION, NOT A CURATED FACT, which is why it is a literal here and
-#: not derived from the corpus (CLAUDE.md rule 8 asks for derivation of facts the
-#: machine can compute; the relation between `1:20` and `5 %` is mathematics and
-#: there is nothing in the database to read it off).
+#: A KIND IS NOT A GUESS ABOUT TWO NOTATIONS. Two units of one kind denote one quantity exactly (a metre is 1000 millimetres;
+#: `1:12` is 100/12 percent); units of different kinds never convert (millimetres and percent, or a unit with no row, stay
+#: apart and the engine refuses to compose them). `degrees` has no row: it is the ARCTANGENT of the gradient, not a
+#: rescaling, so no exact factor relates it to percent.
 #:
-#: A FAMILY IS NOT A UNIT. Members are two ways of WRITING one dimensionless
-#: quantity. Millimetres and degrees are different units, and the ruling says so in
-#: its own ACTION (4): composing across THEM stays refused. Adding a member here is
-#: a claim that two notations denote the same quantity exactly, which is a
-#: mathematical claim and should be made deliberately.
-NOTATION_FAMILIES = {
-    "gradient": ("%", "rise:run ratio"),
-}
-#: Every family member MUST appear here, and the guard below refuses one that does
-#: not. Without it, adding a notation to the tuple above and forgetting the
-#: arithmetic makes `to_canonical` fall through to `Fraction(text)` and read the
-#: number AS IF it were already canonical -- `5` degrees silently becoming `5 %`.
-#: That is the shape a reviewer of the 2026-09-17 ruling flagged: `degrees` is the
-#: ARCTANGENT of the ratio, not a rescaling of it, so it is not a notation of this
-#: quantity at all and belongs to a family of its own or to none. Membership is a
-#: mathematical claim; this makes forgetting to back it up an error rather than a
-#: wrong answer.
-_CONVERTIBLE = {"%", "rise:run ratio"}
+#: THE ROUNDING RULE, declared once, here (the owner's rulings, OD-22 and OD-42 in references/project-standards.md, "Delegated
+#: resolution 2026-11-12 -- OD-22" and "Delegated resolution 2026-11-13 -- OD-42"; both resolved under delegation, the
+#: owner's increment being OR-10): a figure shown in a unit of the SAME system as the unit the source stated (a change of
+#: metric prefix) keeps the source's digits and is exact. A figure shown in a unit of the OTHER system (inch-foot to metric)
+#: is shown at the nearest increment of the shown unit's system that does not fall on the wrong side of the source's
+#: bound: a minimum is never shown below it, a maximum never above it; the stored bound stays exact. The increment is the
+#: owner's, in the kind's canonical unit (5 mm; a quarter inch is 127/20 mm), keyed by (kind, system). A JUDGED RULE, not a
+#: derived one, so it is a typed constant (the NON_QUANTITY_DOMAINS precedent below); a test holds its keys inside the
+#: live rows (a renamed kind or system cannot silently disarm it).
+SHOWN_STEPS = {("length", "metric"): Fraction(5), ("length", "inch-foot"): Fraction(127, 20)}
 _RATIO_RE = re.compile(r"^\s*(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)\s*$")
 
-
-def notation_family(unit):
-    """Which family a stated unit belongs to, or None if it stands alone."""
-    for fam, members in NOTATION_FAMILIES.items():
-        if (unit or "").strip() in members:
-            return fam
-    return None
+UnitRow = namedtuple("UnitRow", "unit kind factor figure_form system")
 
 
-def to_canonical(raw, unit):
-    """One stated value -> an exact Fraction on its family's canonical scale.
+def load_units(conn):
+    """`base_units` as {unit: UnitRow}, ordered by factor then name (the canonical unit first, then up). A kind's
+    members are the rows sharing its `kind` -- there is no second list. Raises sqlite3.OperationalError when the table
+    is missing: a database without it cannot read a unit, and saying nothing would read every unit as standing alone."""
+    return {r[0]: UnitRow(r[0], r[1], Fraction(r[2], r[3]), r[4], r[5]) for r in conn.execute(
+        "SELECT unit, kind_id, factor_numerator, factor_denominator, figure_form, system FROM base_units "
+        "ORDER BY CAST(factor_numerator AS REAL) / factor_denominator, unit")}
 
-    The canonical scale is the family's FIRST member -- percent for gradient -- and
-    the conversion is exact because it is done in Fraction, never float: `1:12` is
-    100/12, which is 8.333... and is never rounded here. Rounding happens once, at
-    render, and is marked inexact when it happens.
+
+def unit_kind(conn, unit):
+    """The quantity kind a stated unit measures, or None if it has no row and so stands alone."""
+    row = load_units(conn).get((unit or "").strip())
+    return row.kind if row else None
+
+
+def kind_members(conn, kind):
+    """The units of a kind, canonical first."""
+    return [u for u, r in load_units(conn).items() if r.kind == kind]
+
+
+def canonical_unit(conn, kind):
+    """The unit whose factor is 1 (the unique index allows one). A kind with none cannot be composed, and falling
+    through would read a number as if it were already on a scale: refused."""
+    for u, r in load_units(conn).items():
+        if r.kind == kind and r.factor == 1:
+            return u
+    raise NotImplementedError(
+        "the quantity kind %r has units in base_units but none with factor 1, so no scale to compose on. A unit is a "
+        "claim that two notations denote ONE quantity exactly; add the kind's canonical unit (factor 1) by migration, "
+        "or remove the kind's units. Falling through would read the number as if it were already canonical." % (kind,))
+
+
+def _ratio_member(conn, kind):
+    """The first unit of `kind` whose figures are written a:b, or None."""
+    return next((r for r in load_units(conn).values() if r.kind == kind and r.figure_form == "ratio"), None)
+
+
+def to_canonical(conn, raw, unit):
+    """One stated value -> an exact Fraction on its kind's canonical scale (the factor-1 unit, percent for gradient).
+
+    Exact because it is done in Fraction, never float: `1:12` is 100/12, 8.333... and never rounded here. Rounding
+    happens once, at render (`from_canonical`), and is marked inexact when it happens. A unit with no row stands
+    alone: the number is read as written, on the scale of the unit itself.
     """
     txt = (raw or "").strip()
     if not txt:
         return None
-    fam = notation_family(unit)
-    if fam and (unit or "").strip() not in _CONVERTIBLE:
-        raise NotImplementedError(
-            "%r is listed in NOTATION_FAMILIES[%r] but no conversion is defined for "
-            "it. A family member is a claim that two notations denote ONE quantity "
-            "exactly; back it with arithmetic in to_canonical/from_canonical, or "
-            "remove it. Falling through here would read the number as if it were "
-            "already canonical." % (unit, fam))
-    m = _RATIO_RE.match(txt)
-    if m and fam:
-        rise, run = Fraction(m.group(1)), Fraction(m.group(2))
-        if run == 0:
-            return None
-        return rise / run * 100                      # rise:run -> percent, exactly
+    row = load_units(conn).get((unit or "").strip())
+    if row is not None:
+        canonical_unit(conn, row.kind)
+        ratio = _ratio_member(conn, row.kind)
+        m = _RATIO_RE.match(txt)
+        if m and ratio:
+            rise, run = Fraction(m.group(1)), Fraction(m.group(2))
+            if run == 0:
+                return None
+            return rise / run * ratio.factor                 # a:b -> the canonical scale, exactly
     try:
-        return Fraction(txt)
+        n = Fraction(txt)
     except (TypeError, ValueError):
         return None
+    return n * row.factor if row is not None and row.figure_form == "number" else n
 
 
-def from_canonical(value, notation):
-    """A canonical Fraction -> (text, exact) in one notation of its family.
+def _terminating(v):
+    """A Fraction as its exact decimal text when it terminates, else None."""
+    d = v.denominator
+    for p in (2, 5):
+        while d % p == 0:
+            d //= p
+    if d != 1:
+        return None
+    with localcontext() as ctx:
+        ctx.prec = 200
+        return format(Decimal(v.numerator) / Decimal(v.denominator), "f")
 
-    `exact` is False when the notation cannot hold the value without rounding --
-    8.333...% is the case this project actually has -- and the caller MARKS it,
-    because ACTION (3) of the ruling forbids a rounded figure standing where a
-    source's own figure would.
+
+def _decimal_text(v, bound=None):
+    """(text, exact) for a Fraction in a unit's own terms. Exact digits when it terminates. When it does not, six
+    significant digits, and for a `min`/`max` bound enough digits that the text is not on the wrong side of `v`."""
+    t = _terminating(v)
+    if t is not None:
+        return t, True
+    for p in range(6, 18):
+        text = "%.*g" % (p, float(v))
+        if (bound == "min" and Fraction(text) < v) or (bound == "max" and Fraction(text) > v):
+            continue
+        break
+    return text, Fraction(text) == v
+
+
+def from_canonical(conn, value, unit, bound=None, from_units=()):
+    """A canonical Fraction -> (text, exact) in `unit`.
+
+    `exact` is False when the unit cannot hold the value without rounding -- 8.333...% is the case this project has --
+    and the caller MARKS it, because ACTION (3) of the 2026-09-17 ruling forbids a rounded figure standing where a
+    source's own figure would. `bound` ('min', 'max' or None for a point) and `from_units` (the units in which the
+    source stated this figure) apply `SHOWN_STEPS`: a unit of the system a source stated it in is exact; a unit of the
+    other system is shown at the owner's increment on the safe side of the bound (see the comment on SHOWN_STEPS).
     """
     if value is None:
         return None, True
-    if notation == "%":
-        as_float = float(value)
-        text = ("%g" % as_float)
-        return text, Fraction(text) == value
-    if notation not in _CONVERTIBLE:
-        raise NotImplementedError(
-            "no rendering defined for notation %r; see _CONVERTIBLE" % (notation,))
-    if notation == "rise:run ratio":
+    units = load_units(conn)
+    row = units.get((unit or "").strip())
+    if row is None:
+        raise NotImplementedError("no rendering defined for %r: it is not a row of base_units" % (unit,))
+    if row.figure_form == "ratio":
         if value == 0:
             return "0", True
-        run = Fraction(100) / value                  # percent -> 1:n, exactly
+        run = row.factor / value                             # canonical -> 1:n, exactly
         text = "1:%g" % float(run)
-        return text, Fraction(1, 1) / Fraction(text.split(":")[1]) * 100 == value
-    return None, True
+        return text, Fraction(1, 1) / Fraction(text.split(":")[1]) * row.factor == value
+    v = value / row.factor
+    step = SHOWN_STEPS.get((row.kind, row.system))
+    if (step is not None and from_units
+            and not any(units[u].kind == row.kind and units[u].system == row.system for u in from_units if u in units)):
+        unit_step = step / row.factor
+        k = v / unit_step
+        v = (math.ceil(k) if bound == "min" else math.floor(k) if bound == "max" else math.floor(k + Fraction(1, 2))) * unit_step
+    text, _ = _decimal_text(v, bound)
+    return text, Fraction(text) == value / row.factor
 
 
-def bound_on_scale(claimed_value, unit, comparator, claim_type):
+def bound_on_scale(conn, claimed_value, unit, comparator, claim_type):
     """One governing claim -> (lo, hi) as exact Fractions on its family's scale.
 
     THE COMPARATOR IS THE BOUND, which is why migration 075 added it: "more than thirty
@@ -621,7 +680,7 @@ def bound_on_scale(claimed_value, unit, comparator, claim_type):
     STRICTNESS IS NOT MODELLED, deliberately: `>` and `>=` both land as (v, None), because the
     columns carry no open/closed flag and no render surface could show one.
 
-    The NUMBER goes through `to_canonical`, so `1:20` and `5 %` land on one scale and can be
+    The NUMBER goes through `to_canonical`, so `1:20` and `5 %` (or `80 cm` and `800 mm`) land on one scale and can be
     compared: this answers "where does this claim sit relative to one written the other way"
     (owner ruling 2026-09-17). Returns None when the figure cannot be placed on a scale.
     """
@@ -632,11 +691,11 @@ def bound_on_scale(claimed_value, unit, comparator, claim_type):
     if cmp_ == "between" or claim_type == "range":
         parts = re.split(r"\s+to\s+", raw)
         if len(parts) == 2:
-            lo, hi = to_canonical(parts[0], unit), to_canonical(parts[1], unit)
+            lo, hi = to_canonical(conn, parts[0], unit), to_canonical(conn, parts[1], unit)
             if lo is not None and hi is not None:
                 return (min(lo, hi), max(lo, hi))
         return None
-    v = to_canonical(raw, unit)
+    v = to_canonical(conn, raw, unit)
     if v is None:
         return None
     if cmp_ in (">=", ">"):
@@ -695,15 +754,22 @@ def comparator_refusal(figure_role, claim_type, comparator):
     return None
 
 
-def ratio_notation(unit):
-    """True when `unit` is a family member whose figures are written `a:b` -- derived from the family's own
-    arithmetic (`from_canonical` renders it with a colon), so no unit is named here."""
-    return notation_family(unit) is not None and ":" in from_canonical(Fraction(1), (unit or "").strip())[0]
+def ratio_notation(conn, unit):
+    """True when `unit` is a row of `base_units` whose figures are written `a:b` (its `figure_form`)."""
+    row = load_units(conn).get((unit or "").strip())
+    return row is not None and row.figure_form == "ratio"
 
 
-def _ratio_unit():
-    """The family member whose figures are written `a:b`."""
-    return next(m for fam in NOTATION_FAMILIES.values() for m in fam if ratio_notation(m))
+def ratio_unit(conn):
+    """The unit whose figures are written `a:b`: the first row of `base_units` with that figure form."""
+    return next(u for u, r in load_units(conn).items() if r.figure_form == "ratio")
+
+
+def _gradient_like(conn, unit):
+    """True when `unit`'s kind has a unit written `a:b`, so a figure `1:12` can be read under any unit of the kind
+    (`1:12` under `%` is 8.33 %, as before). Derived from the rows; no kind is named here."""
+    row = load_units(conn).get((unit or "").strip())
+    return row is not None and _ratio_member(conn, row.kind) is not None
 
 
 def unit_refusal(unit):
@@ -716,9 +782,10 @@ def unit_refusal(unit):
     word among others (`ratio max`; the word alone, or inside `m/min`, is a unit); a parenthesis other than a
     one-capital weighting suffix (`dB(A)`, `dB (A)`).
 
-    THE RESIDUAL, plainly: a sentence-like unit with none of these passes (`ratio where steep`). Telling a unit
-    from a sentence by its words needs a table of units; T-030 makes units data, and this screen then asks that
-    table instead of the shape."""
+    THE RESIDUAL, plainly: a sentence-like unit with none of these passes (`ratio where steep`). `base_units` (T-030)
+    holds the units whose scale the engine knows, not every unit a source may state (`dB(A)`, `lux`, `points`), so
+    asking it here would refuse them; telling a unit from a sentence by its words still needs a list of units no one
+    keeps, and this screen stays structural."""
     u = (unit or "").strip()
     if not u:
         return None
@@ -736,32 +803,32 @@ def unit_refusal(unit):
     return None
 
 
-def figure_refusal(value, unit, comparator, claim_type):
+def figure_refusal(conn, value, unit, comparator, claim_type):
     """The sentence that refuses a quantity figure the engine cannot read, else None.
 
     None when `claim_type` is not in `QUANTITY_CLAIM_TYPES`. Otherwise None only when `bound_on_scale` reads
-    the figure AND it is none of: a non-ASCII digit; a slash fraction under a family unit or no unit
-    (`bound_on_scale` reads `1/12` as 0.083 %, so that is tested first); under a ratio-notation unit, a figure
+    the figure AND it is none of: a non-ASCII digit; a slash fraction under a gradient-like unit (one whose kind has
+    an `a:b` unit) or no unit (`bound_on_scale` reads `1/12` as 0.083 %, so that is tested first); under a ratio-notation unit, a figure
     that is not `a:b` (a bare `12` is read as 12 %); an inverted gradient ratio (`12:1`, in either end of a range).
     """
     if claim_type not in QUANTITY_CLAIM_TYPES:
         return None
     v, u = (value or "").strip(), (unit or "").strip()
-    family = notation_family(u)
+    family = _gradient_like(conn, u)
     if any(ch.isdecimal() and not ch.isascii() for ch in v):
         return "write ASCII digits (0-9): a full-width or other-script digit is not read"
     if re.search(r"\d\s*/\s*\d", v) and (family or not u):
         return ("write a gradient ratio as rise:run (1:12), not 1/12, which the engine reads as a fraction "
                 "of the unit (0.083 %)")
-    if bound_on_scale(v, u, comparator, claim_type) is None:
+    if bound_on_scale(conn, v, u, comparator, claim_type) is None:
         if re.search(r"\d\s*%", v):
             return f"write the number ({v.replace('%', '').strip()}) and put % in --claimed-unit"
         if re.search(r"\d\s+in\s+\d", v):
-            return f"write '1 in 12' as 1:12 with --claimed-unit {_ratio_unit()!r}"
+            return f"write '1 in 12' as 1:12 with --claimed-unit {ratio_unit(conn)!r}"
         if re.search(r"\d,\d", v):
             return "write a decimal comma as a point (30,0 -> 30.0); the digits stay the same"
         if ":" in v and not family:
-            return (f"the engine reads an a:b figure only under {_ratio_unit()!r} (rise over HORIZONTAL run, a "
+            return (f"the engine reads an a:b figure only under {ratio_unit(conn)!r} (rise over HORIZONTAL run, a "
                     f"gradient). For another ratio, write the single number when the second term is 1 "
                     f"(4.5:1 -> 4.5, the ratio's name in the unit, e.g. 'contrast ratio'); otherwise put "
                     f"each term in its own row")
@@ -771,12 +838,13 @@ def figure_refusal(value, unit, comparator, claim_type):
             return ("a number written in words is entered as a numeral and unit, with the source's "
                     "wording in --value-as-written")
         return f"{v!r} with unit {u!r} cannot be placed on any scale"
-    if ratio_notation(u):
+    if ratio_notation(conn, u):
+        canonical = canonical_unit(conn, unit_kind(conn, u))
         for part in re.split(r"\s+to\s+", v):
             if not _RATIO_RE.match(part):
                 return (f"under {u!r} write the figure as a:b (1:12): a bare number is read on the scale of "
-                        f"{NOTATION_FAMILIES[family][0]!r}. For a figure the source states in "
-                        f"{NOTATION_FAMILIES[family][0]!r}, use that unit")
+                        f"{canonical!r}. For a figure the source states in "
+                        f"{canonical!r}, use that unit")
             rise, run = (Fraction(x) for x in part.split(":", 1))
             if rise > run:
                 return ("an inverted ratio (rise larger than run): write 1:12, and record the "

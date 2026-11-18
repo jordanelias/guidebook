@@ -125,7 +125,12 @@ from schemas.evidence_state import (  # noqa: E402
     ConvergenceAssessment, EvidenceStateRecord, ProvisionalConfidenceFlag,
 )
 
-RULE_VERSION = "pilot-7"  # pilot-7 (2026-11-16, the medical lens deleted by the owner): derivation_sha hashes the three lens codes of the
+RULE_VERSION = "pilot-8"  # pilot-8 (T-030, OR-10, OD-22, OD-42): governing claims in units of one quantity kind (`base_units`: mm, cm, m,
+#   in, ft; the gradient notations) compose on the kind's canonical unit, exactly, and the notations are shown with the rounding rule
+#   of dbcore.SHOWN_STEPS; before, only the gradient notations composed. The sha payload is unchanged from pilot-7 (the
+#   label moves because the same evidence now gives a different value, and "same evidence + same rule_version => same
+#   answer" is the engine's contract).
+#   pilot-7 (2026-11-16, the medical lens deleted by the owner): derivation_sha hashes the three lens codes of the
 #   cell, not four; the payload loses one `|`-joined slot, so test_db_integrity K01 keeps pilot-6 on the four-slot form
 #   (FOUR_LENS_SHA_VERSIONS). Nothing else in the engine changed.
 #   pilot-6 (T-019, prior workplan T-3): a figure reaches a cell only through the live lens
@@ -561,9 +566,9 @@ def gather_extraction_links(conn, parameter_id, governing_refs, lens):
     return out
 
 
-# The notation arithmetic lives in dbcore, so the writer that refuses an unreadable figure and the
-# engine that reads it are one definition. Names are imported back so the engine's names stay valid.
-from dbcore import (NOTATION_FAMILIES, notation_family,  # noqa: E402 -- one home (T-016)
+# The unit arithmetic lives in dbcore and its units in `base_units` (T-030), so the writer that refuses an unreadable
+# figure and the engine that reads it are one definition. Names are imported back so the engine's names stay valid.
+from dbcore import (unit_kind, kind_members, canonical_unit,  # noqa: E402 -- one home (T-016, T-030)
                     from_canonical, bound_on_scale)
 
 
@@ -795,8 +800,9 @@ def _compose_headline(conn, links, direction, scope=""):
 
     THE FOUR WAYS IT DECLINES, each reported rather than defaulted:
       * no governing claim states a number (every one is qualitative or a ratio);
-      * the governing claims are in DIFFERENT UNITS, so there is no common interval and
-        converting them here would invent a figure no source stated;
+      * the governing claims are in DIFFERENT UNITS that no row of `base_units` relates (units of one kind
+        compose on the kind's canonical unit, exactly; units of different kinds, or a unit with no row beside
+        another, have no common interval, and converting them here would invent a figure no source stated);
       * `direction` is NULL -- nobody has recorded which way is better for a disabled
         person on this parameter, so "most accommodating" has no meaning yet
         (`db.py set-parameter-direction` is the remedy, and the note says so);
@@ -830,17 +836,16 @@ def _compose_headline(conn, links, direction, scope=""):
         "FROM source_value_extractions WHERE extraction_id IN (%s)"
         % ",".join("?" * len(ids)), ids).fetchall()
 
-    # ── COMPOSE ACROSS NOTATIONS, NEVER WITHIN ONE (owner ruling 2026-09-17) ──
-    # Each governing bound is placed on a COMMON SCALE. For a value written in a
-    # notation family -- `1:12` and `5 %` are two notations of one dimensionless
-    # gradient -- the scale is the family's canonical member and the conversion is
-    # exact, in Fraction. For anything else the scale IS the stated unit, and two
-    # different ones still refuse to compose: millimetres and degrees are units, not
-    # notations, and the ruling's ACTION (4) leaves that refusal alone.
+    # ── COMPOSE ACROSS UNITS OF ONE KIND, NEVER ACROSS KINDS (owner rulings 2026-09-17 and OR-10) ──
+    # Each governing bound is placed on a COMMON SCALE. For a unit that is a row of `base_units` -- `1:12` and `5 %` are
+    # two notations of one dimensionless gradient, `80 cm` and `800 mm` two units of one length -- the scale is the
+    # canonical unit of its quantity kind and the conversion is exact, in Fraction. For a unit with no row the scale
+    # IS the stated unit, and two different ones still refuse to compose: millimetres and degrees are different
+    # kinds of quantity, and the ruling's ACTION (4) leaves that refusal alone.
     bounds, scales, stated_notations, unparsed = [], set(), set(), []
     for _eid, val, unit, cmp_, ctype in rows:
-        fam = notation_family(unit)
-        b = bound_on_scale(val, unit, cmp_, ctype)
+        fam = unit_kind(conn, unit)
+        b = bound_on_scale(conn, val, unit, cmp_, ctype)
         if b is None:
             # Still reported, still not silently dropped (086). What changes since the
             # ruling is that a RATIO is no longer in this bucket -- it is a notation
@@ -862,8 +867,8 @@ def _compose_headline(conn, links, direction, scope=""):
             "would require a conversion no source stated"
             % (scope, ", ".join(sorted(repr(u) for u in scales)))), None
     scale = next(iter(scales))
-    family = scale if scale in NOTATION_FAMILIES else None
-    unit = (NOTATION_FAMILIES[family][0] if family
+    family = unit_kind(conn, bounds[0][1])             # one scale, so every bound's unit is of this kind or none is
+    unit = (canonical_unit(conn, family) if family
             else (next(iter({u for _b, u in bounds})) or None))
 
     if direction is None:
@@ -924,15 +929,18 @@ def _compose_headline(conn, links, direction, scope=""):
     # where a source's own figure would. 1:12 is 8.333...% and this says so.
     notations = None
     if family:
-        _written = {u for b, u in bounds
-                    if (vmax is not None and b[1] == vmax)
-                    or (vmin is not None and b[0] == vmin)}
+        _lo_from = {u for b, u in bounds if vmin is not None and b[0] == vmin}
+        _hi_from = {u for b, u in bounds if vmax is not None and b[1] == vmax}
+        _written = _lo_from | _hi_from
+        # A point (min = max) is no bound: it is shown at the nearest increment; a minimum is never shown below the
+        # source and a maximum never above it (OD-22, OD-42; the rule is dbcore.SHOWN_STEPS).
+        _point = vmin is not None and vmin == vmax
         notations = []
-        for member in NOTATION_FAMILIES[family]:
+        for member in kind_members(conn, family):
             if member not in stated_notations:
                 continue                      # the governing set never used it
-            lo_txt, lo_exact = from_canonical(vmin, member)
-            hi_txt, hi_exact = from_canonical(vmax, member)
+            lo_txt, lo_exact = from_canonical(conn, vmin, member, None if _point else "min", _lo_from)
+            hi_txt, hi_exact = from_canonical(conn, vmax, member, None if _point else "max", _hi_from)
             notations.append({
                 "notation": member,
                 "min": lo_txt, "max": hi_txt,

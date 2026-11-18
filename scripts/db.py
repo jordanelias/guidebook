@@ -2837,7 +2837,7 @@ def main():
     p_amx.add_argument("--field", required=True,
                        help="A column of source_value_extractions that is not excluded (the refusal "
                             "lists them). claimed_value, claimed_unit and setting take a reformat "
-                            "only (same numbers; a unit already in the cell, or its notation family's spelling of it; an empty setting; OR-3). "
+                            "only (same numbers; a unit already in the cell, or a row of base_units that spells it out; an empty setting; OR-3). "
                             "A different figure is a SECOND ROW and a contest (D-0168).")
     p_amx.add_argument("--value", required=True)
     p_amx.add_argument("--reason", required=True,
@@ -11361,7 +11361,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         # (The prefix names add-extraction also when derive-extraction reaches this writer: the writer is
         # shared and its refusals carry one prefix; see derive_extraction's comment.)
         for _why in (dbcore.unit_refusal(row.get("claimed_unit")),
-                     dbcore.figure_refusal(value, row.get("claimed_unit"), row.get("comparator"), claim_type),
+                     dbcore.figure_refusal(conn, value, row.get("claimed_unit"), row.get("comparator"), claim_type),
                      dbcore.comparator_refusal(figure_role, claim_type, row.get("comparator"))):
             if _why:
                 raise Refusal(f"add-extraction: {_why}. Nothing was written.")
@@ -11788,7 +11788,7 @@ def _figure_numbers(text):
     return out
 
 
-def _refuse_unless_reformat(row, field, value):
+def _refuse_unless_reformat(conn, row, field, value):
     """OR-3 (owner 2026-10-29, "Yes, reformat in place"): what a reformat of a stored figure is. Anything else is a
     second row and a contest (D-0168). Called by `amend_extraction` for a changed claimed_value, claimed_unit or
     setting.
@@ -11802,9 +11802,9 @@ def _refuse_unless_reformat(row, field, value):
                      whitespace or the end (a reformat drops the words after the unit, as in `% longitudinal gradient
                      (maximum) where the rise is <= 0.6 m` -> `%`; it never picks another word of the cell, so
                      `m` out of that cell, `MM` out of `mm`, and `dB` out of `dB(A)` are refused); then the row's
-                     value must read under the new unit. Or, under OD-41 (a), a family member of
-                     `dbcore.NOTATION_FAMILIES` that contains the old cell on word boundaries (`ratio` ->
-                     `rise:run ratio`), when the figure reads under it.
+                     value must read under the new unit. Or, under OD-41 (a), a unit that is a row of `base_units`
+                     whose last word is the old cell exactly (`ratio` -> `rise:run ratio`), when the figure reads
+                     under it.
       all three      the row must not become a copy of another row (the measure `insert_extraction` uses).
       claimed_value  a sign is part of the number: a `-` directly before a digit (not the hyphen of `0-4.8`) is
                      counted in the old and the new text and the counts must agree.
@@ -11842,18 +11842,18 @@ def _refuse_unless_reformat(row, field, value):
         if why:
             raise Refusal(f"{ctx}: {why}. Nothing was written.")
         cell = row["claimed_unit"] or ""
-        # OD-41 (a): a notation-family member whose LAST word is the old cell, exactly (case included), is the same
-        # notation spelled out (`ratio` -> `rise:run ratio`). The old cell must hold a word: an empty cell is no unit
-        # and gains none, and no other unit gains words.
+        # OD-41 (a): a unit that is a row of `base_units` and whose LAST word is the old cell, exactly (case included),
+        # is the same notation spelled out (`ratio` -> `rise:run ratio`). The old cell must hold a word: an empty cell
+        # is no unit and gains none, and no other unit gains words.
         tail = (value.split() or [""])[-1]
-        grows = bool(dbcore.notation_family(value)) and bool(cell.strip()) and cell.strip() == tail and cell.strip() != value.strip()
+        grows = bool(dbcore.unit_kind(conn, value)) and bool(cell.strip()) and cell.strip() == tail and cell.strip() != value.strip()
         if not (grows or (cell.startswith(value) and (len(cell) == len(value) or cell[len(value)].isspace()))):
             raise Refusal(f"{ctx}: {value!r} does not lead the row's unit cell {cell!r}. A reformat drops the words "
                           f"AFTER the unit (the cell reads unit first, then its conditions); choosing another word of "
                           f"the cell, or another spelling of it, names a unit the row did not state, a new reading, "
                           f"a second row (D-0168). Nothing was written.")
         figure, unit = row["claimed_value"], value
-    why = dbcore.figure_refusal(figure, unit, row["comparator"], row["claim_type"])
+    why = dbcore.figure_refusal(conn, figure, unit, row["comparator"], row["claim_type"])
     if why:
         raise Refusal(f"{ctx}: the figure would still not be readable: {why}. When both the value and the unit "
                       f"need reformatting, reformat claimed_value first. Nothing was written.")
@@ -12019,7 +12019,7 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                     f"figure(s) {_used}, whose bound is computed from this comparator and would be left stale. Retire "
                     f"the derived row(s) first, amend, and derive again. Nothing was written.")
         if field in ("claimed_value", "claimed_unit", "setting"):
-            _refuse_unless_reformat(row, field, value)
+            _refuse_unless_reformat(conn, row, field, value)
         if field in ("claimed_value", "claimed_unit", "setting", "comparator"):
             _refuse_copy_after_amend(conn, row, field, value)
 

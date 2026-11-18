@@ -2954,7 +2954,7 @@ with scratch() as c:
     r, err = w("qual", "slip-resistant", None, None, claim_type="qualitative")
     record("T016-N7b", "control: a qualitative claim with no unit and no comparator is accepted", r is None and err is None, r or err)
     # dbcore.figure_refusal directly: the cases the verb cannot reach (a range; a value with no digit) and the one the sketch raised on.
-    fr = lambda *a: ok(lambda: dbcore.figure_refusal(*a))
+    fr = lambda *a: ok(lambda: dbcore.figure_refusal(c, *a))
     res, err = fr("1:6 to 14:1", RR, "between", "range")
     record("T016-N3b", "a range with an inverted end (1:6 to 14:1) is refused", err is None and res and "inverted" in res, err or res)
     res, err = fr("1:6 to 1:14", RR, "between", "range")
@@ -2977,9 +2977,11 @@ with scratch() as c:
         r, err = w(sentence, value, unit, "<=")
         record(f"T016-{tid}", name, r is not None and want in r, r or err)
     res, err = fr("1/12", "m", "<=", "numerical")
-    exact = dbcore.bound_on_scale("1/12", "m", "<=", "numerical")
-    record("T016-N12d", "REJECTED part of the finding: 1/12 in metres is accepted, and the engine reads it exactly as stated (1/12 m)",
-           err is None and res is None and exact == (None, Fraction(1, 12)), (res, exact))
+    exact = dbcore.bound_on_scale(c, "1/12", "m", "<=", "numerical")
+    _m = Fraction(*c.execute("SELECT factor_numerator, factor_denominator FROM base_units WHERE unit = 'm'").fetchone())
+    record("T016-N12d", "REJECTED part of the finding: 1/12 in metres is accepted, and the engine reads it exactly as stated "
+           "(1/12 m, on the canonical length unit since T-030)",
+           err is None and res is None and exact == (None, Fraction(1, 12) * _m), (res, exact))
     # An a:b under another unit: a defined outcome that does not loop, and following its advice works.
     r, err = w("contrast", "4.5:1", "contrast ratio", ">=")
     record("T016-N13", "4.5:1 under 'contrast ratio' is refused with a route that is not 'use rise:run ratio'",
@@ -2988,9 +2990,9 @@ with scratch() as c:
     record("T016-N13b", "...and the single number 4.5 under 'contrast ratio' is accepted", r is None and err is None, r or err)
     ratio_rows = q("SELECT extraction_id, claimed_value FROM source_value_extractions WHERE claimed_unit='ratio' "
                    "AND claim_type IN (SELECT value FROM json_each(?))", json.dumps(list(dbcore.QUANTITY_CLAIM_TYPES)))
-    record("T016-N13c", "the stored a:b rows under the unit 'ratio' (not a family member) are refused on re-check, as history; "
-           "the family table says why", dbcore.notation_family("ratio") is None and all(
-               dbcore.figure_refusal(r_["claimed_value"], "ratio", "<=", "numerical") for r_ in ratio_rows),
+    record("T016-N13c", "the stored a:b rows under the unit 'ratio' (not a row of base_units) are refused on re-check, as history; "
+           "no row of base_units names it", dbcore.unit_kind(c, "ratio") is None and all(
+               dbcore.figure_refusal(c, r_["claimed_value"], "ratio", "<=", "numerical") for r_ in ratio_rows),
            [r_[0] for r_ in ratio_rows])
     # Non-ASCII digits: refused whatever the colon.
     for tid, args in [("N14", ("\uff11\uff12\uff10\uff10", "mm", "=", "numerical")), ("N14b", ("\uff11:\uff11\uff12", RR, "<=", "numerical")),
@@ -3006,7 +3008,7 @@ with scratch() as c:
     plain_live = [u for u in live_units if re.fullmatch(r"[A-Za-z%:]+(?: [A-Za-z%:]+)?", u)]
     record("T016-N15b", "every stored unit of one or two plain words is still accepted", plain_live and not [u for u in plain_live if dbcore.unit_refusal(u)],
            [u for u in plain_live if dbcore.unit_refusal(u)])
-    record("T016-N15c", "RESIDUAL, shown plainly: a sentence-like unit with no structural mark passes until units are data (T-030)",
+    record("T016-N15c", "RESIDUAL, shown plainly: a sentence-like unit with no structural mark passes (base_units holds the units whose scale is known, not every unit a source may state)",
            dbcore.unit_refusal("ratio where steep") is None)
     # A derived row has no quote and no locator of its own (OD-40): its words are its inputs' and the warrant is a word of the source's saved text.
     derived = lambda value, **over: extraction(t16, pid, **{"claimed_value": value, "claim_text": None, "claimed_unit": "%", "comparator": "=",
@@ -3659,7 +3661,7 @@ with scratch() as c:
     r, err = ok(amend, A, "claimed_unit", "%")
     record("T061-02", "then the prose unit is cut to the `%` already in its cell, and the figure reads",
            err is None and not dbcore.unit_refusal(row(A)["claimed_unit"])
-           and not dbcore.figure_refusal(row(A)["claimed_value"], row(A)["claimed_unit"], row(A)["comparator"], row(A)["claim_type"])
+           and not dbcore.figure_refusal(c, row(A)["claimed_value"], row(A)["claimed_unit"], row(A)["comparator"], row(A)["claim_type"])
            and row(A)["claim_text"] == stored_A["claim_text"], err)
     refused("T061-03", "a different number (`6` -> `60`) is a second row, not a reformat", A, "claimed_value", "60", "same numbers")
     refused("T061-04", "a moved decimal point (`1:20` -> `1:2.0`) is refused", B, "claimed_value", "1:2.0", "same numbers")
@@ -3710,7 +3712,7 @@ print("Section T093: a bare `ratio` unit reformats to `rise:run ratio` (OD-41 (a
 with scratch() as c:
     # The history shape (a bare `ratio` cell) is written valid through the writer, then put into that shape by HAND; the
     # verb under test then amends it. Nothing below names a stored id, count or unit spelling: the live row is chosen by
-    # query, and the family member is read from dbcore.NOTATION_FAMILIES.
+    # query, and the `a:b` unit is read from the rows of base_units (dbcore.ratio_unit).
     T93 = {"r20": "Every ramp in the survey had a slope of 1:20 over its full length.",
            "r16": "The ramp slope of 1:16 applies to the entrance ramp.",
            "pct": "The gradient is not to exceed 5% on any run of the ramp.",
@@ -3724,7 +3726,7 @@ with scratch() as c:
            "r4":  "The drive ramp is graded at 1:4 beside the garage.",
            "r3":  "The loading ramp is graded at 1:3 beside the dock.",
            "r2":  "The temporary ramp is graded at 1:2 beside the hall."}
-    FAM = next(m for fam in dbcore.NOTATION_FAMILIES.values() for m in fam if dbcore.ratio_notation(m))
+    FAM = dbcore.ratio_unit(c)
     ref93 = new_source(verified=True)
     held_text(ref93, "\n".join(T93.values()))
     hand_scan(c, ref93, "full")
@@ -3750,12 +3752,12 @@ with scratch() as c:
     # The first live bare-`ratio` row, by query, taken before any fixture: amended in place on the copy.
     live93 = c.execute("SELECT extraction_id FROM source_value_extractions WHERE claimed_unit='ratio' "
                        "ORDER BY extraction_id LIMIT 1").fetchone()
-    A93 = put93("r20", "1:20", FAM, "ratio")                  # a bare-`ratio` row: the figure reads under the family member
+    A93 = put93("r20", "1:20", FAM, "ratio")                  # a bare-`ratio` row: the figure reads under the `a:b` unit
     B93 = put93("r16", "1:16", FAM, "ratio")
     C93 = put93("pct", "5", "%", "%")                          # a `%` row
     D93 = put93("r10", "1:10", FAM, "ratio")
     hand("UPDATE source_value_extractions SET claimed_value='10' WHERE extraction_id=?", D93)   # a bare number
-    E93 = put93("r8", "1:8", FAM, "ratio of widths")           # a cell that holds `ratio` but is not the family member's whole
+    E93 = put93("r8", "1:8", FAM, "ratio of widths")           # a cell that holds `ratio` but is not the base_units row's whole
     F93 = put93("r12", "1:12", FAM, "rat")                     # a prefix of a word, not a word
     G93 = put93("r14", "1:14", FAM, "ratio")
     H93 = put93("r6", "1:6", FAM, "")                          # an empty cell
@@ -3763,7 +3765,7 @@ with scratch() as c:
 
     r, err = ok(amend93, A93, "claimed_unit", FAM)
     now = row93(A93)
-    record("T093-01", "a bare-`ratio` row is amended to the notation family's `a:b` member in place: value and quote unchanged, "
+    record("T093-01", "a bare-`ratio` row is amended to the `a:b` unit of base_units in place: value and quote unchanged, "
            "the old unit in notes", err is None and now["claimed_unit"] == FAM and now["claimed_value"] == stored93["claimed_value"]
            and now["claim_text"] == stored93["claim_text"] and f"claimed_unit SET ratio -> {FAM}" in (now["notes"] or ""), err)
     if live93 is None:
@@ -3776,14 +3778,14 @@ with scratch() as c:
     refused93("T093-02b", "a `%` row is not amended to the `a:b` member (the old cell is not in the new unit)", C93, FAM, "does not lead")
     refused93("T093-02c", "a bare number (`10`) under `ratio` is not amended to the `a:b` member: the figure does not read there",
               D93, FAM, "still not be readable")
-    refused93("T093-03", "a family member must hold the old cell: `ratio of widths` is not made `rise:run ratio`", E93, FAM,
+    refused93("T093-03", "a base_units row must hold the old cell: `ratio of widths` is not made `rise:run ratio`", E93, FAM,
               "does not lead")
-    refused93("T093-03b", "a cell that is not a word of the family member (`rat`) is refused: word boundaries, not a substring",
+    refused93("T093-03b", "a cell that is not a word of the base_units row (`rat`) is refused: word boundaries, not a substring",
               F93, FAM, "does not lead")
-    refused93("T093-03c", "a unit that is not a family member (`ratio of widths`) is refused though it holds the old cell",
+    refused93("T093-03c", "a unit that is not a row of base_units (`ratio of widths`) is refused though it holds the old cell",
               G93, "ratio of widths", "does not lead")
-    refused93("T093-03d", "an empty unit cell is not amended to the family member", H93, FAM, "does not lead")
-    # An empty cell states no unit, so no unit may be put there as a reformat: `%` is a family member and an empty pattern
+    refused93("T093-03d", "an empty unit cell is not amended to the `a:b` unit", H93, FAM, "does not lead")
+    # An empty cell states no unit, so no unit may be put there as a reformat: `%` is a row of base_units and an empty pattern
     # matches on a boundary (the first version of this branch accepted every NULL-unit row, 45 on the live copy).
     E1, E2 = put93("e1", "6", "%", ""), put93("e2", "7", "%", None)
     refused93("T093-04", "an empty unit cell is not amended to `%`", E1, "%", "does not lead")
@@ -3793,6 +3795,44 @@ with scratch() as c:
     refused93("T093-05", "a different case (`Ratio`) is not the bare word: refused", R4, FAM, "does not lead")
     refused93("T093-05b", "a cell that is two words of the member (`run ratio`) is not a bare `ratio`: refused", R3, FAM, "does not lead")
     refused93("T093-05c", "a cell that is a first word of the member (`rise`) is refused", R2, FAM, "does not lead")
+
+print("Section T030: units are rows of base_units, read by add-extraction and by the amend-extraction reformat")
+with scratch() as c:
+    # Nothing below names a stored id, count or unit spelling: the kind and its a:b-form unit are chosen by query, and every
+    # unit added is a TASK-FIXTURE row on the scratch copy, so the verbs are shown to read the table and not a list in code.
+    T30 = {"bare": "The ramp is graded at 12 over its length.", "good": "The ramp is graded at 1:12 over its length.",
+           "old": "The landing is graded at 1:14 over its length."}
+    ref30 = new_source(verified=True)
+    held_text(ref30, "\n".join(T30.values()))
+    hand_scan(c, ref30, "full")
+    P30 = P_ACTIVE[0]
+    KIND30 = c.execute("SELECT kind_id FROM base_units WHERE figure_form = 'ratio' ORDER BY kind_id LIMIT 1").fetchone()[0]
+    FIX30 = "task-fixture ratio"
+    hand("INSERT INTO base_units (unit, kind_id, factor_numerator, factor_denominator, figure_form, system, created_at, "
+         "created_by_session) VALUES (?, ?, 100, 1, 'ratio', NULL, 'TASK-FIXTURE', 'TASK-FIXTURE')", FIX30, KIND30)
+    add30 = lambda key, value, unit: refusal(db.insert_extraction, extraction(ref30, P30, claim_text=T30[key], claimed_value=value,
+                                                                              claimed_unit=unit, comparator="<="),
+                                             session=S, dry_run=True, relations=[])
+    r = add30("bare", "12", FIX30)
+    record("T030-21", "add-extraction reads the unit's row: a bare number under a unit whose row is written a:b is refused, naming a:b",
+           r is not None and "a:b" in r, r)
+    r = add30("good", "1:12", FIX30)
+    record("T030-22", "...and the figure written a:b under it is accepted (the row, not the spelling, says how the unit is written)", r is None, r)
+    hand("DELETE FROM base_units WHERE unit = ?", FIX30)
+    r = add30("bare", "12", FIX30)
+    record("T030-23", "with the row removed the same figure under the same spelling is read as under any unit with no row: accepted", r is None, r)
+    hand("INSERT INTO base_units (unit, kind_id, factor_numerator, factor_denominator, figure_form, system, created_at, "
+         "created_by_session) VALUES (?, ?, 100, 1, 'ratio', NULL, 'TASK-FIXTURE', 'TASK-FIXTURE')", FIX30, KIND30)
+    xid = db.insert_extraction(extraction(ref30, P30, claim_text=T30["old"], claimed_value="1:14", claimed_unit=FIX30,
+                                          comparator="<="), session=S, dry_run=False, relations=[])["extraction_id"]
+    hand("UPDATE source_value_extractions SET claimed_unit='ratio' WHERE extraction_id=?", xid)
+    r, err = ok(db.amend_extraction, xid, "claimed_unit", FIX30, "T030 fixture", session=S, dry_run=False)
+    record("T030-24", "the amend-extraction reformat reads the table: `ratio` is made a unit that is a row whose last word it is",
+           err is None and c.execute("SELECT claimed_unit FROM source_value_extractions WHERE extraction_id=?", (xid,)).fetchone()[0] == FIX30, err)
+    hand("UPDATE source_value_extractions SET claimed_unit='ratio' WHERE extraction_id=?", xid)
+    hand("DELETE FROM base_units WHERE unit = ?", FIX30)
+    r = refusal(db.amend_extraction, xid, "claimed_unit", FIX30, "T030 fixture", session=S, dry_run=False)
+    record("T030-25", "...and is refused once that row is gone: the same spelling is no unit of the table", r is not None and "does not lead" in r, r)
 
 print("Section T067: v_coverage_parameter_via_admission is one row per active parameter and owed pair, counted through admissions (OR-8)")
 # Nothing below names a count, id or code: the pair, the parameter and the source are chosen by query, and the oracle for the grain is

@@ -249,7 +249,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   `--comparator`, also by `amend-extraction --field figure_role`; a `derived` figure that disagrees with its own base +
   delta (`add-extraction`, `relate-extraction`, `amend-extraction`). A stored figure whose value or unit the writer would now
   refuse is reformatted in place with `amend-extraction --field claimed_value` (same numbers) and then `--field claimed_unit` (a
-  unit already in the cell, or a notation family's spelling of it: `ratio` to `rise:run ratio`, OD-41 (a)), and an empty setting filled with `--field setting` (OR-3); a different figure is a second row. The
+  unit already in the cell, or a unit of `base_units` that spells it out: `ratio` to `rise:run ratio`, OD-41 (a)), and an empty setting filled with `--field setting` (OR-3); a different figure is a second row. The
   exemption is accepted on a persisted page render, or on a source holding nothing decodable; the marker it writes
   names the renders, so the adversarial pass can check the locator against them; a
   byte-identical second row (a divergent reading is a contest, D-0168, and is written).

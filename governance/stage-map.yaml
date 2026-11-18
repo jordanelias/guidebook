@@ -99,6 +99,7 @@ tables:
   base_parameters: base
   base_quantity_kinds: base
   base_taxonomy_identity: base
+  base_units: base
   case_studies: evidence
   citation_mining: research
   conflicts: synthesis
