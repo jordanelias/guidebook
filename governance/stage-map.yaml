@@ -85,6 +85,10 @@ judged_on: '2026-09-17'
 # 2026-11-17, tooling T-049 (migration 144): `translations` as CROSS-STAGE, the value the gap register takes: a
 # translation points into whichever stage holds the cell it translates and any stage may request one, so it has no
 # single home (it is stage content, not a record of a diff, so not `infrastructure`).
+#
+# 2026-11-18, tooling T-031 (migration 153): `source_clauses` as EVIDENCE -- the clause inventory the open pass of a
+# full reading records, keyed by the reading (`source_scans`, evidence) that recorded it; a figure in judgment points
+# at it, as it points at its source.
 judged_against: 'CLAUDE.md §3 stage table; stage ids from governance/pipeline-contract.yaml'
 
 tables:
@@ -135,6 +139,7 @@ tables:
   search_execution_forms: research
   search_executions: research
   slugs: base
+  source_clauses: evidence
   source_locators: research
   source_scans: evidence
   source_slug_links: evidence

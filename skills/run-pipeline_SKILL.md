@@ -163,7 +163,7 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   never the column. Such a source shows as `BLOCKED` rather than as reading debt, no extraction can be written on it
   until it is VERIFIED, and it is never described as read. Set the reason at admission, or later with `amend-source
   --ref-id … --field processing_blocked_reason --replacement <value> --reason <why>`. **Nothing clears it:** `record-scan`
-  writes `source_scans` only, and the column stays as the retrieval record. The ledger alone says whether a pair is still
+  writes the reading (`source_scans`, and its clause inventory) only, and the column stays as the retrieval record. The ledger alone says whether a pair is still
   blocked. A full reading outranks the block (the pair reads READ-NOTHING-FOUND, or EXTRACTED once a row is written). A
   partial, fragment or abstract reading does not: the pair reads `BLOCKED` with that reading's scan beside it, which is not
   reading debt. "Abstract read, full text paywalled" is recorded as the abstract `record-scan` plus the reason, and the
@@ -206,7 +206,14 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   it lands as the operator's claim: the result says uncounted, the row keeps `pages_read` empty, and `scan_debt` prints
   a count of such readings ("full readings nothing counted") for the adversarial pass to read. Derive the text from the
   PDF with `full_text.py` where the pages can be counted. A second reading of a source is normal
-  (ledger 2026-10-30, ACTION 2). A scan row records that a reading happened at a catalogue version, not what it found;
+  (ledger 2026-10-30, ACTION 2), and kept few (OD-23, "minimize duplicate reads"): before reading a source, list every
+  pair owed for it (`scripts/audit/scan_debt.py --reread`) and read once for all of them (`catalogue`); use `targeted`
+  only when exactly one parameter is owed; never re-read a pair a `full` scan of the same `file_sha256` covers; a
+  re-read is allowed when the earlier scan was not `full`, the file changed, or the pair is flagged (`reread`). The open
+  pass of a `full` reading records the source's clauses (`record-scan --open-pass-done --clauses <json>`, each
+  clause's text copied from the file read); a later parameter is matched against them (`inventory`), then the retained
+  text is swept, and only where neither reaches is the source read again. A figure read from an
+  inventoried clause is written with `add-extraction --clause-id` and no `--loc-*` flag. The clause text is never shown. A scan row records that a reading happened at a catalogue version, not what it found;
   what it found is in `observe-term` (verbatim), extractions (stage 4, including an `absent` extraction with its quoted
   passage for a parameter the source is silent on) and `link-source-slug --rationale` (the relevance note per slug;
   `add-source --slug` leaves it empty, this fills it once and refuses to overwrite grounds). Debt:

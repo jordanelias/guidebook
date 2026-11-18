@@ -2290,6 +2290,230 @@ try:
                      a17["relation_id"], a17b["relation_id"]) == [("TASK-FIXTURE-NOT-A-REF",), (None,)],
                (fk29, a17, a17b))
 
+    # ── T031: the clause inventory, the re-read flag and the clause pointer (OD-23, migration 153). Probes are derived
+    # by query; every fixture is labelled TASK-FIXTURE and lives on the copy and in the temp log.
+    T31S = "session_2026-11-18-t031-task-fixture"
+    norm = retrieval_log.normalise_quote
+
+    def forms31(term_id):
+        return {f for (n,) in q("SELECT canonical_en FROM terms WHERE term_id=? UNION SELECT alias FROM term_aliases "
+                                "WHERE term_id=? AND alias_type NOT IN ('NARROWER','BROADER')", term_id, term_id)
+                for f in [norm(n)] if f}
+
+    FREE31 = [t for t in FREE[30:] if not q("SELECT 1 FROM base_parameters WHERE term_id=?", t)
+              and not q("SELECT 1 FROM parameter_declinations WHERE term_id=? AND revoked_at IS NULL", t)]
+    T_IN = FREE31[0] if FREE31 else None
+    NAME_IN = q("SELECT canonical_en FROM terms WHERE term_id=?", T_IN)[0][0] if T_IN else ""
+    CL31 = [{"locator_scheme": "TASK-FIXTURE clause", "loc_clause": "4.1",
+             "clause_text": f"Clause 4.1 The {NAME_IN} of every primary route shall be not less than 1500 mm."},
+            {"locator_scheme": "TASK-FIXTURE clause", "loc_clause": "4.2",
+             "clause_text": "Clause 4.2 A landing is provided at each change of direction."}]
+    PAGES31 = [c["clause_text"] for c in CL31] + ["Clause 4.3 TASK-FIXTURE text of the T031 inventory."]
+    BODY31 = "\n".join(f"[PDF page {i} of 3]\n{t}\n" for i, t in enumerate(PAGES31, start=1))
+    T_OUT = next((t for t in FREE31[1:] if not any(f in norm(BODY31) for f in forms31(t))), None)
+    record("T031-00", "the T031 fixtures exist: two free terms, the second named nowhere in the fixture text",
+           T_IN and T_OUT, FREE31)
+    SHA31 = put("t031-full-text.txt", BODY31.encode(), REF_A, derived_from="fixture3pages.pdf")
+    PATH31 = pathlib.Path(LOG) / FIX / "t031-full-text.txt"
+
+    def sc31(**k):
+        d = {"ref_id": REF_A, "mode": "catalogue", "text_scope": "full", "file_sha256": SHA31,
+             "method": "full-read", "open_pass_done": True, "clauses": [dict(c) for c in CL31]}
+        d.update(k)
+        return d
+
+    n31 = (q("SELECT COUNT(*) FROM source_scans")[0][0], q("SELECT COUNT(*) FROM source_clauses")[0][0])
+    expect_refusal("T031-02", "clauses without --open-pass-done are refused: the open pass writes the inventory",
+                   "open pass", scan, sc31(open_pass_done=False), T31S)
+    expect_refusal("T031-03", "clauses on a reading that is not full are refused", "--text-scope full",
+                   scan, sc31(text_scope="partial"), T31S)
+    expect_refusal("T031-04", "a clause whose text is not in the file read is refused (backed by retained text)",
+                   "does not occur in", scan,
+                   sc31(clauses=[{"loc_clause": "9.9", "clause_text": "TASK-FIXTURE clause typed from memory"}]), T31S)
+    expect_refusal("T031-05", "a clause that names no level of the hierarchy is refused", "names no place", scan,
+                   sc31(clauses=[{"locator_scheme": "TASK-FIXTURE", "clause_text": CL31[1]["clause_text"]}]), T31S)
+    m6a = refusal(scan, sc31(clauses=[{"loc_clause": "4.2", "clause_text": "  "}]), T31S)
+    m6b = refusal(scan, sc31(clauses=[{"loc_clause": "4.2", "clause_text": CL31[1]["clause_text"],
+                                       "loc_page": "2"}]), T31S)
+    record("T031-06", "a blank clause text and a key that is not a column of source_clauses are each refused",
+           m6a and "no clause_text" in m6a and m6b and "not columns a clause takes" in m6b, (m6a, m6b))
+    m6c = [refusal(scan, sc31(clauses=c), T31S) for c in ([], "TASK-FIXTURE", ["TASK-FIXTURE"])]
+    m6d = refusal(scan, sc31(clauses=[{"loc_clause": "4.2", "clause_text": "?!"}]), T31S)
+    record("T031-06c", "an empty list, a list that is not of objects, and a clause text with no letter or digit "
+           "(it matches anything) are each refused",
+           all(m and "non-empty list of objects" in m for m in m6c) and m6d and "does not occur in" in m6d,
+           (m6c, m6d))
+    SHA31X = put("t031-undecodable-text.txt", b"Clause 7 \x81\x82\x83 TASK-FIXTURE", REF_A,
+                  derived_from="fixture3pages.pdf")
+    expect_refusal("T031-06b", "a file that cannot be decoded is refused: no clause can be checked against it",
+                   "cannot be decoded", scan,
+                   sc31(file_sha256=SHA31X, clauses=[{"loc_clause": "7", "clause_text": "Clause 7"}]), T31S)
+    record("T031-07", "every refused inventory wrote nothing: no reading and no clause (T031-02 to 06c)",
+           (q("SELECT COUNT(*) FROM source_scans")[0][0], q("SELECT COUNT(*) FROM source_clauses")[0][0]) == n31, n31)
+    s31 = attempt(scan, sc31(), T31S)
+    rows31 = q("SELECT clause_id, loc_clause, clause_text FROM source_clauses WHERE scan_id=? ORDER BY clause_id",
+               s31.get("scan_id", -1))
+    record("T031-01", "the open pass of a full reading writes one source_clauses row per clause, keyed by its scan_id",
+           s31.get("clause_ids") == [r[0] for r in rows31] and [r[1] for r in rows31] == ["4.1", "4.2"]
+           and [r[2] for r in rows31] == [c["clause_text"] for c in CL31], (s31, rows31))
+    cl_path = os.path.join(TMP, "t031-clauses.json")
+    with open(cl_path, "w", encoding="utf-8") as fh:
+        json.dump(CL31, fh)
+    r31 = run("record-scan", "--ref-id", REF_A, "--mode", "catalogue", "--text-scope", "full", "--file-sha256",
+              SHA31, "--method", "full-read", "--open-pass-done", "--clauses", cl_path, "--session", T31S,
+              "--dry-run")
+    r31b = run("record-scan", "--ref-id", REF_A, "--mode", "catalogue", "--text-scope", "full", "--file-sha256",
+               SHA31, "--method", "full-read", "--clauses", cl_path, "--session", T31S, "--dry-run")
+    r31c = run("record-scan", "--ref-id", REF_A, "--mode", "catalogue", "--text-scope", "full", "--file-sha256",
+               SHA31, "--method", "full-read", "--open-pass-done", "--clauses", cl_path + ".missing",
+               "--session", T31S, "--dry-run")
+    record("T031-01c", "record-scan refuses a --clauses path that is not a readable JSON file, in a sentence",
+           r31c.returncode == 1 and r31c.stderr.startswith("REFUSING:") and "not a readable JSON" in r31c.stderr,
+           r31c.stderr[-300:])
+    record("T031-01b", "record-scan --clauses reads the JSON file on the CLI (dry run lands two clause ids) and "
+           "refuses in a sentence without --open-pass-done",
+           r31.returncode == 0 and len(json.loads(r31.stdout or "{}").get("clause_ids", [])) == 2
+           and r31b.returncode == 1 and r31b.stderr.startswith("REFUSING:") and "open pass" in r31b.stderr,
+           r31.stdout[-300:] + r31.stderr[-300:] + r31b.stderr[-300:])
+
+    # Item 2: held clause text is not shown. The render contract lists no view yet (T-037 has not landed), so every
+    # view is held to it; the detector is proven on a seeded view that does select the text.
+    def views_showing_clause_text():
+        return [n for n, sql in q("SELECT name, sql FROM sqlite_master WHERE type='view'")
+                if "clause_text" in (sql or "").lower()
+                or ("source_clauses" in (sql or "") and re.search(r"select\s+(\w+\.)?\*", (sql or "").lower()))]
+
+    shown = views_showing_clause_text()
+    x("CREATE VIEW v_t031_task_fixture AS SELECT clause_id, clause_text FROM source_clauses")  # a seeded defect
+    seeded = views_showing_clause_text()
+    x("DROP VIEW v_t031_task_fixture")
+    record("T031-08", "no view selects source_clauses.clause_text (OD-23: clause NOT shown), and the detector "
+           "flags a seeded view that does",
+           shown == [] and seeded == ["v_t031_task_fixture"], (shown, seeded))
+
+    # Items 3 and 4: the route of each owed pair, and the re-read flag.
+    P_IN = promote(T_IN).get("parameter_id") if T_IN else None
+    P_OUT = promote(T_OUT).get("parameter_id") if T_OUT else None
+    sys.path.insert(0, str(REPO / "scripts" / "audit"))
+    scan_debt = importlib.import_module("scan_debt")
+
+    def route(pid):
+        con = sqlite3.connect(DB)
+        try:
+            return next((r for r in scan_debt.reread_routes(con, retrieval_log, pid) if r["ref_id"] == REF_A), None)
+        finally:
+            con.close()
+
+    ri, ro = route(P_IN), route(P_OUT)
+    record("T031-09", "a parameter promoted after the reading is matched against the inventory first (the clause "
+           "naming it), then the retained text (on disk): neither pair is flagged",
+           ri and ri["route"] == "inventory" and ri["clauses"] == [r[0] for r in rows31[:1]]
+           and ro and ro["route"] == "retained-text" and ro["file"].endswith("t031-full-text.txt"), (ri, ro))
+    PATH31.rename(PATH31.with_suffix(".gone"))          # the retained text leaves the disk
+    try:
+        ro2, ri2 = route(P_OUT), route(P_IN)
+        d31 = run_audit("scan_debt.py", "--reread", "--limit", "100000")
+        cs_out = attempt(db.cell_status, P_OUT)
+        cs_in = attempt(db.cell_status, P_IN)
+    finally:
+        PATH31.with_suffix(".gone").rename(PATH31)
+    record("T031-09b", "with no retained text on disk the pair no clause matches is flagged `reread`; the matched "
+           "pair is still reached through the inventory",
+           ro2 and ro2["route"] == "reread" and ri2 and ri2["route"] == "inventory", (ro2, ri2))
+    good31 = PATH31.read_bytes()
+    PATH31.write_bytes(good31 + b"TASK-FIXTURE: the file changed")    # on disk, but no longer the bytes read
+    try:
+        ro3 = route(P_OUT)
+    finally:
+        PATH31.write_bytes(good31)
+    record("T031-09c", "a retained file that no longer hashes to the scan's sha256 is not retained text: flagged",
+           ro3 and ro3["route"] == "reread", ro3)
+    # The forms matched are the term's label and its aliases that name the concept itself: a BROADER form in a
+    # clause does not reach the pair, a SYNONYM does. Alias rows by SQL on the copy, a state for a fixture.
+    a_b = x("INSERT INTO term_aliases (term_id, alias, language, alias_type, created_at, created_by_session, "
+            "updated_at, updated_by_session) VALUES (?, 'landing', 'EN', 'BROADER', 't', ?, 't', ?)", T_OUT, T31S, T31S)
+    rb = route(P_OUT)
+    a_s = x("INSERT INTO term_aliases (term_id, alias, language, alias_type, created_at, created_by_session, "
+            "updated_at, updated_by_session) VALUES (?, 'change of direction', 'EN', 'SYNONYM', 't', ?, 't', ?)",
+            T_OUT, T31S, T31S)
+    rs = route(P_OUT)
+    x("DELETE FROM term_aliases WHERE form_id IN (?, ?)", a_b, a_s)
+    record("T031-09d", "a BROADER alias found in a clause does not reach the pair; a SYNONYM alias does, through "
+           "the clause that holds it",
+           rb and rb["route"] == "retained-text" and rs and rs["route"] == "inventory"
+           and rs["clauses"] == [r[0] for r in rows31[1:2]], (rb, rs))
+    record("T031-10", "scan_debt.py --reread prints the flagged pair under reread, a REREAD line and EXAMINED, "
+           "and exits 1",
+           d31.returncode == 1 and "EXAMINED:" in d31.stdout and "REREAD:" in d31.stdout
+           and f"{REF_A} x parameter {P_OUT} (NOT-READ)" in d31.stdout.split("  reread")[-1],
+           d31.stdout[-600:] + d31.stderr)
+    record("T031-13", "cell-status lists the flagged source under evidence, owed, reread_flagged, and not for the "
+           "parameter the inventory reaches",
+           REF_A in cs_out.get("stages", {}).get("evidence", {}).get("owed", {}).get("reread_flagged", [])
+           and REF_A not in cs_in.get("stages", {}).get("evidence", {}).get("owed", {}).get("reread_flagged", [REF_A]),
+           (cs_out.get("error"), cs_in.get("error")))
+    attempt(scan, sc31(mode="targeted", target_parameter_id=P_OUT, open_pass_done=False, clauses=None), T31S)
+    record("T031-15", "the flag is cleared by recording the reading: a targeted reading leaves the pair owed nowhere",
+           route(P_OUT) is None and ledger(REF_A, P_OUT) == ("READ-NOTHING-FOUND", "full"), ledger(REF_A, P_OUT))
+
+    # Item 1, the pointer: a figure read from a clause points at it and types no locator. REF_A is put in the
+    # regulatory stratum for these cases (tier 4: R3 demands a pinpoint), restored after: a state for a fixture.
+    tier31 = q("SELECT tier FROM evidence_sources WHERE ref_id=?", REF_A)[0][0]
+    x("UPDATE evidence_sources SET tier=4 WHERE ref_id=?", REF_A)
+    PB = PE if q("SELECT 1 FROM base_parameters WHERE parameter_id=? AND status='active'", PE) else P_IN
+    SHA31B = put("t031-b-text.txt", b"Section 2 TASK-FIXTURE the landing length of a ramp, read whole.", REF_B,
+                 derived_from="fixture-b.html")
+    sb = attempt(scan, {"ref_id": REF_B, "mode": "catalogue", "text_scope": "full", "file_sha256": SHA31B,
+                        "method": "full-read", "open_pass_done": True,
+                        "clauses": [{"loc_section": "2", "clause_text": "the landing length of a ramp"}]}, T31S)
+
+    def fig31(**k):
+        d = {"ref_id": REF_A, "parameter_id": PB, "identity_code": POP, "claim_type": "numerical",
+             "lens_basis": "named_in_text", "lens_basis_text": "Clause", "claimed_value": "1500",
+             "claimed_unit": "mm", "comparator": ">=", "figure_role": "claim", "extraction_method": "full-read",
+             "claim_text": CL31[0]["clause_text"], "clause_id": rows31[0][0] if rows31 else -1}
+        d.update(k)
+        return d
+
+    try:
+        expect_refusal("T031-12a", "add-extraction refuses a clause another source's reading recorded",
+                       "is a clause of", db.insert_extraction,
+                       fig31(clause_id=(sb.get("clause_ids") or [-1])[0]), T31S, relations=[])
+        expect_refusal("T031-12b", "add-extraction refuses a locator typed beside --clause-id (rule 5)",
+                       ("second", "--loc-section"), db.insert_extraction, fig31(loc_section="4.1"), T31S,
+                       relations=[])
+        expect_refusal("T031-12c", "add-extraction refuses a clause_id that is no clause", "not a clause",
+                       db.insert_extraction, fig31(clause_id=2 ** 30), T31S, relations=[])
+        f31 = attempt(db.insert_extraction, fig31(), T31S, relations=[])
+        row31 = q("SELECT clause_id, locator_scheme, loc_clause, source_section FROM source_value_extractions "
+                  "WHERE extraction_id=?", f31.get("extraction_id", -1))
+        record("T031-11", "a tier-4 figure with --clause-id and no locator of its own lands (R3 reads the clause's "
+               "place) and stores only the pointer",
+               bool(rows31) and row31 == [(rows31[0][0], None, None, None)], (f31, row31))
+        g31 = run("--session", T31S, script="audit/research_batch_dod.py")
+        record("T031-11b", "the batch gate's R3 counts the clause pointer as a pinpoint for that figure",
+               "R3: PASS" in g31.stdout, [l for l in g31.stdout.splitlines() if "R3" in l])
+        con = sqlite3.connect(DB)
+        con.row_factory = sqlite3.Row
+        try:
+            inp31 = con.execute("SELECT * FROM source_value_extractions WHERE extraction_id=?",
+                                (f31.get("extraction_id", -1),)).fetchone()
+            m16 = refusal(db._refuse_bad_derived_input, con, "TASK-FIXTURE", inp31) if inp31 else "no row"
+        finally:
+            con.close()
+        record("T031-16", "a derived figure's input that points at a clause has a locator (R3 for derived inputs)",
+               inp31 is not None and m16 is None, m16)
+    finally:
+        x("UPDATE evidence_sources SET tier=? WHERE ref_id=?", tier31, REF_A)
+    con = sqlite3.connect(DB)
+    try:
+        record("T031-14", "source_clauses is in the derived capture set, and clause_id is not amendable (the locator "
+               "is where the quote was read)",
+               "source_clauses" in dbcore.writable_tables(con) and "clause_id" in db._NOT_AMENDABLE_SVE
+               and "clause_id" not in db._amendable_sve_fields(con))
+    finally:
+        con.close()
+
     # ── A: the observation-quote backstop can go red ─────────────────────────────────
     a1 = run_audit("observation_verbatim_audit.py")
     x("INSERT INTO observed_terms (ref_id, surface_form, language, locator, context_quote, "

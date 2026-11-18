@@ -1195,6 +1195,17 @@ def _gap_applies(row, lens, jurisdiction, lang, family=frozenset(), roll=lambda 
                 or (lang and row["language"] and row["language"].upper() != lang))
 
 
+def _reread_flagged(conn, parameter_id: int) -> list:
+    """The sources flagged to be read again for this parameter (T-031, OD-23): owed, no clause of the inventory
+    matches, no retained text on disk. Read from scan_debt.reread_routes, the flag's one home."""
+    audit = str(Path(__file__).resolve().parent / "audit")
+    if audit not in sys.path:
+        sys.path.insert(0, audit)
+    import scan_debt                                                  # noqa: E402
+    return [r["ref_id"] for r in scan_debt.reread_routes(conn, _retrieval_log(), parameter_id)
+            if r["route"] == "reread"]
+
+
 def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs: str = None,
                 jurisdiction: str = None, language: str = None) -> dict:
     """Where one cell stands, stage by stage, read from the tables and nothing else (T-034).
@@ -1271,7 +1282,8 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
         scan = lambda *st: ids("SELECT ref_id FROM v_scan_ledger WHERE parameter_id = ? AND status IN (%s) ORDER BY ref_id"  # noqa: E731
                                % ",".join("?" * len(st)), parameter_id, *st)
         evidence = {"held": scan("EXTRACTED", "STATED-ABSENT"), "examined_empty": scan("READ-NOTHING-FOUND"),
-                    "never_examined": scan("NOT-READ"), "owed": {"read_in_part_only": scan("READ-PARTIAL")}}
+                    "never_examined": scan("NOT-READ"), "owed": {"read_in_part_only": scan("READ-PARTIAL"),
+                                                                 "reread_flagged": _reread_flagged(conn, parameter_id)}}
         qs = ",".join("?" * len(extractions)) or "NULL"
         if lens or jurisdiction:
             # `held` is narrowed to the sources of the figures that survived the filter; the other three lists are per
@@ -2249,7 +2261,12 @@ def main():
     p_rsc = sub.add_parser(
         "record-scan",
         help="Record one READING of a source against the parameter list (source_scans); "
-             "the catalogue version and page coverage are computed, never typed")
+             "the catalogue version and page coverage are computed, never typed. READ ONCE "
+             "(OD-23, minimise duplicate reads): before reading a source, list every pair owed "
+             "for it (scan_debt.py --reread) and read once for all of them (catalogue); use "
+             "targeted only when exactly one parameter is owed; never re-read a pair a full "
+             "scan of the same file covers, unless that scan was not full, the file changed, "
+             "or the pair is flagged for re-reading")
     p_rsc.add_argument("--ref-id", required=True)
     p_rsc.add_argument("--mode", required=True,
                        choices=dbcore.schema_choices("source_scans", "mode"),
@@ -2269,6 +2286,10 @@ def main():
                        choices=dbcore.schema_choices("source_scans", "method"))
     p_rsc.add_argument("--open-pass-done", dest="open_pass_done", action="store_true",
                        help="the open pass for quantities the catalogue lacks was done")
+    p_rsc.add_argument("--clauses",
+                       help="with --open-pass-done on a full reading: a JSON file holding a list of "
+                            "the source's clauses, each an object of source_clauses columns (the "
+                            "locator columns and clause_text); each text must be in the file read")
     p_rsc.add_argument("--catalogue-version", dest="catalogue_version",
                        help=argparse.SUPPRESS)   # accepted only to be refused in words
     p_rsc.add_argument("--notes")
@@ -2709,6 +2730,9 @@ def main():
         p_ax.add_argument(f"--loc-{_lvl}-end", dest=f"loc_{_lvl}_end",
                           help=f"end of a span, e.g. ADA 2010 §604-608")
     p_ax.add_argument("--loc-note", dest="loc_note")
+    p_ax.add_argument("--clause-id", dest="clause_id", type=int,
+                      help="the source_clauses row the figure was read from (T-031): its locator is reached "
+                           "through it, so no --locator-scheme or --loc-* flag is taken beside it")
     p_ax.add_argument("--notes")
     # figure_role / comparator (migration 075) and the comparator junction they imply
     # a row into -- extraction_relations. See insert_extraction and _write_relation_edge
@@ -3838,6 +3862,7 @@ def main():
             "text_scope": args.text_scope, "file_sha256": args.file_sha256,
             "method": args.method, "open_pass_done": args.open_pass_done,
             "catalogue_version": args.catalogue_version, "notes": args.notes,
+            "clauses": _clauses_file(args.clauses) if args.clauses else None,
         }, session=args.session, dry_run=args.dry_run))
 
     elif args.command == "defer-reading":
@@ -3975,7 +4000,7 @@ def main():
                "root_classification_basis": args.root_classification_basis,
                "contested": args.contested, "file_anchor": args.file_anchor,
                "locator_scheme": args.locator_scheme, "loc_note": args.loc_note,
-               "notes": args.notes,
+               "clause_id": args.clause_id, "notes": args.notes,
                "figure_role": args.figure_role, "comparator": args.comparator,
                "harm_finding": 1 if args.harm_finding else None}
         for _lvl in ("division", "part", "section", "subsection", "paragraph",
@@ -9189,6 +9214,50 @@ def add_jurisdiction(code: str, kind: str, parent: str, approval_ref: str,
                 "admission_ref": approval_ref, "dry_run": dry_run}
 
 
+def _clauses_file(path: str):
+    """The list `record-scan --clauses` names: a JSON file holding a list of clause objects."""
+    try:
+        clauses = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        raise Refusal(f"record-scan: --clauses {path!r} is not a readable JSON file ({exc}). Nothing was written.")
+    return clauses
+
+
+def _clause_rows(conn, clauses, body: str, artefact: str) -> list:
+    """Each clause `record-scan --clauses` was given, checked, as a source_clauses row (T-031, OD-23).
+
+    The keys a clause may carry are the table's own columns less the ones the writer fills (rule 8: read from the
+    schema). A blank cell is an absence. A clause names where it stands (at least one level of the hierarchy, the
+    levels read as R3 reads them) and its text must be in the file the reading names, by the one matching rule
+    (retrieval_log.normalise_quote): the inventory is backed by retained text, never typed from memory."""
+    rl = _retrieval_log()
+    filled = {"clause_id", "scan_id", "created_at", "created_by_session"}
+    allowed = [c for c in dbcore.columns(conn, "source_clauses") if c not in filled]
+    levels = [c for c in allowed if c.startswith("loc_") and not c.endswith("_end") and c != "loc_note"]
+    if not isinstance(clauses, list) or not clauses or not all(isinstance(c, dict) for c in clauses):
+        raise Refusal("record-scan: --clauses must hold a non-empty list of objects, one per clause. "
+                      "Nothing was written.")
+    rows = []
+    for i, given in enumerate(clauses, start=1):
+        unknown = sorted(set(given) - set(allowed))
+        if unknown:
+            raise Refusal(f"record-scan: clause {i} carries {unknown}, which are not columns a clause takes "
+                          f"({', '.join(allowed)}). Nothing was written.")
+        row = {k: str(v).strip() for k, v in given.items() if v is not None and str(v).strip()}
+        if "clause_text" not in row:
+            raise Refusal(f"record-scan: clause {i} has no clause_text. Nothing was written.")
+        if not any(c in row for c in levels):
+            raise Refusal(f"record-scan: clause {i} names no place: give one of {', '.join(levels)}. "
+                          f"Nothing was written.")
+        quote = rl.normalise_quote(row["clause_text"])
+        if not quote or quote not in body:
+            raise Refusal(f"record-scan: clause {i}'s clause_text does not occur in {artefact}, the file this "
+                          f"reading names. The inventory is backed by the retained text; copy the clause from "
+                          f"it. Nothing was written.")
+        rows.append(row)
+    return rows
+
+
 def record_scan(data: dict, session: str, dry_run: bool = False):
     """Record one READING of one source against the parameter list (migration 103).
 
@@ -9199,7 +9268,7 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
     precedence (migration 124): EXTRACTED, STATED-ABSENT, READ-NOTHING-FOUND, BLOCKED,
     READ-PARTIAL, NOT-READ.
 
-    THIS VERB WRITES source_scans AND NOTHING ELSE. Nothing clears
+    THIS VERB WRITES source_scans (AND, WITH --clauses, ITS source_clauses) AND NOTHING ELSE. Nothing clears
     `evidence_sources.processing_blocked_reason`: it is the retrieval record (why the full
     text could not be had), written at admission or by `amend-source`, and a reading is a
     different fact about a different thing. The ledger decides which still holds: a FULL
@@ -9222,6 +9291,14 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
     with scripts/research/full_text.py and read that) and `full` over a text with fewer pages
     than the document it was derived from. A `full` over a text with no page markers lands as
     the operator's claim and the result says `uncounted`: nothing here counted it.
+
+    THE CLAUSE INVENTORY (T-031, OD-23: "Clause inventory backed by retained text"). The open pass
+    of a full reading writes the source's clauses (`clauses`, `--clauses <json>`) into
+    source_clauses, keyed by this reading's scan_id, in the same transaction. REFUSES clauses
+    without the open pass, on a reading that is not `full`, and each refusal of `_clause_rows`
+    (an unknown key, no text, no place, a text not in the file read). Read once: a later
+    parameter is matched against these rows, then the retained text, and only where neither
+    reaches is the source read again (scan_debt.py --reread).
     """
     if data.get("catalogue_version") is not None:
         raise Refusal(
@@ -9279,7 +9356,8 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
             raise Refusal(f"record-scan: {h['session']}/{h['artefact']} is in the manifest "
                           f"but not on disk. Nothing was written.")
         import hashlib                                            # noqa: E402
-        if hashlib.sha256(h["path"].read_bytes()).hexdigest() != sha:
+        raw = h["path"].read_bytes()
+        if hashlib.sha256(raw).hexdigest() != sha:
             raise Refusal(f"record-scan: {h['session']}/{h['artefact']} no longer hashes "
                           f"to its manifest sha256. Nothing was written.")
         pages_read, pages_total = retrieval_log.page_coverage(h["path"])
@@ -9310,6 +9388,18 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
                     f"{pages_read} of {pages_total} pages. Record it as partial, or derive "
                     f"every page (scripts/research/full_text.py) and read that. Nothing "
                     f"was written.")
+        clauses = None
+        if data.get("clauses") is not None:
+            if not data.get("open_pass_done") or scope != "full":
+                raise Refusal(
+                    "record-scan: a clause inventory is written by the open pass of a full reading: "
+                    "give --clauses with --open-pass-done and --text-scope full. Nothing was written.")
+            text, why = retrieval_log.decode_artefact(raw, h.get("content_type"))
+            if text is None:
+                raise Refusal(f"record-scan: {h['artefact']} cannot be decoded ({why}), so no clause can be "
+                              f"checked against it. Nothing was written.")
+            clauses = _clause_rows(conn, data["clauses"], retrieval_log.normalise_quote(text),
+                                   f"{h['session']}/{h['artefact']}")
         row = {"ref_id": ref, "mode": mode, "catalogue_version": top,
                "target_parameter_id": target, "text_scope": scope,
                "pages_read": pages_read, "pages_total": pages_total,
@@ -9322,6 +9412,12 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
         out = {"scan_id": cur.lastrowid, "ref_id": ref, "catalogue_version": top,
                "file": f"{h['session']}/{h['artefact']}", "pages_read": pages_read,
                "pages_total": pages_total, "text_scope": scope, "dry_run": dry_run}
+        if clauses:
+            stamp = dbcore.stamp_for(conn, "source_clauses", session)
+            out["clause_ids"] = [conn.execute(
+                f"INSERT INTO source_clauses ({','.join(['scan_id', *c, *stamp])}) "
+                f"VALUES ({','.join('?' * (1 + len(c) + len(stamp)))})",
+                [out["scan_id"], *c.values(), *stamp.values()]).lastrowid for c in clauses]
         if scope == "full" and pages_read is None:
             out["uncounted"] = True
         return out
@@ -10580,7 +10676,7 @@ def _refuse_bad_derived_input(conn, context: str, inp):
                       f"Nothing was written.")
     levels = [c for c in dbcore.columns(conn, "source_value_extractions") if c.startswith("loc_") and c != "loc_note"]
     esc = "[UNVERIFIED-QUANT]" in (inp["notes"] or "")
-    pin = any(str(inp[c] or "").strip() for c in levels)
+    pin = any(str(inp[c] or "").strip() for c in levels) or inp["clause_id"] is not None   # a clause row names a place
     tier = conn.execute("SELECT tier FROM evidence_sources WHERE ref_id=?", (inp["ref_id"],)).fetchone()
     regulatory = bool(tier and tier[0] is not None and int(tier[0]) >= 4)
     if not esc and not pin and (regulatory or not str(inp["source_section"] or "").strip()):
@@ -11102,7 +11198,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         "locator_scheme", "loc_division", "loc_part", "loc_section", "loc_subsection",
         "loc_paragraph", "loc_clause", "loc_subclause",
         "loc_division_end", "loc_part_end", "loc_section_end", "loc_subsection_end",
-        "loc_paragraph_end", "loc_clause_end", "loc_subclause_end", "loc_note",
+        "loc_paragraph_end", "loc_clause_end", "loc_subclause_end", "loc_note", "clause_id",
         "extraction_method", "extraction_status", "notes",
         "figure_role", "comparator", "harm_finding", "value_as_written",
     })
@@ -11269,6 +11365,25 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
             conn, lens_basis, lens_basis_text, ref, row.get("claim_text"), row.get("source_section"),
             "add-extraction")
 
+        # THE CLAUSE (T-031, OD-23). A figure read from an inventoried clause points at its source_clauses row, and
+        # its locator is reached through that pointer (rule 5): a locator typed beside it is a second home, refused,
+        # and so is a clause another source's reading recorded. A clause row always names a place (its CHECK), so
+        # the pointer is a pinpoint for R3 below.
+        if row.get("clause_id") is not None:
+            _cl = conn.execute("SELECT s.ref_id FROM source_clauses c JOIN source_scans s ON s.scan_id = c.scan_id "
+                               "WHERE c.clause_id = ?", (row["clause_id"],)).fetchone()
+            if _cl is None:
+                raise Refusal(f"add-extraction: --clause-id {row['clause_id']} is not a clause of the inventory "
+                              f"(source_clauses). Nothing was written.")
+            if _cl[0] != ref:
+                raise Refusal(f"add-extraction: clause {row['clause_id']} is a clause of {_cl[0]}, not of {ref}. "
+                              f"Nothing was written.")
+            _typed = sorted(c for c in row if c == "locator_scheme" or c.startswith("loc_"))
+            if _typed:
+                raise Refusal(f"add-extraction: --clause-id reaches the locator through the clause row, so "
+                              f"{', '.join('--' + c.replace('_', '-') for c in _typed)} would write it a second "
+                              f"time (CLAUDE.md rule 5). Drop them. Nothing was written.")
+
         # THE STRUCTURED LOCATOR, for the regulatory stratum only (added 2026-09-20).
         # R3 says a quantified value needs a locator, and `source_section` free text
         # already satisfied every gate that asked -- so migration 053's seventeen
@@ -11295,7 +11410,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 if c[1].startswith("loc_") and not c[1].endswith("_end")
                 and c[1] != "loc_note"]
             _esc = "[UNVERIFIED-QUANT]" in (row.get("notes") or "")
-            _pinpoint = any(str(row.get(c) or "").strip() for c in _levels)
+            _pinpoint = any(str(row.get(c) or "").strip() for c in _levels) or row.get("clause_id") is not None
             # A DERIVED FIGURE WITH NO LOCATOR OF ITS OWN is found again through its inputs (OD-40): each
             # `derived_from` edge must point at a row that has one, checked where the edge is written
             # (`_refuse_bad_derived_input`), so every writer of such an edge applies the same rule.
@@ -11770,7 +11885,7 @@ _NOT_AMENDABLE_SVE = {
                     "the lens is a set of links (migration 131): db.py add-lens-link / retire-lens-link"),
     **dict.fromkeys(("claim_type", "claim_text", "source_section"),
                     "the claim and the place the source says it: a different one is a SECOND ROW and a contest (D-0168)"),
-    **dict.fromkeys(("file_anchor", "locator_scheme", "loc_note",
+    **dict.fromkeys(("file_anchor", "locator_scheme", "loc_note", "clause_id",
                      *(f"loc_{k}{end}" for k in ("division", "part", "section", "subsection", "paragraph", "clause",
                                                  "subclause") for end in ("", "_end"))),
                     "where in the held file the quote stands: checked against the file when the row was written"),

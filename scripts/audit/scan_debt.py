@@ -26,9 +26,21 @@ EXAMINED is the number of ledger pairs. Zero pairs means no unsuperseded source 
 active parameter -- a corpus clear, which this project has done once (2026-09-13) -- and
 the registry floor (min_items: 1) makes that visible rather than a silent pass.
 
+THE RE-READ FLAG, `--reread` (T-031; OD-23, the owner 2026-11-12: "we can still read a source more than once--we
+just want to minimize duplicate reads ... We can flag a source to be read again for later parameters"). Derived, never
+stored, so it cannot drift from the scans: each owed pair takes the first route that reaches it, in this order --
+`inventory` (a clause of the source's inventory, source_clauses, holds a form of the parameter's term: its label or
+an alias that names the concept itself, NARROWER and BROADER left out as v_term_names leaves them out; matched by
+retrieval_log.normalise_quote, the project's one matching rule), `retained-text` (the file the source's latest full
+scan read is on disk and still hashes to its sha256: sweep it), else `reread` (THE FLAG: owed, no clause matches, and
+no retained text). A flag is cleared by recording the reading (record-scan --mode targeted, or catalogue). A judgment
+that the inventory missed a clause is an open typed gap on the pair, not a second flag. Readers: this mode, and
+`db.py cell-status` (evidence, owed, reread_flagged).
+
 Usage:
-    python3 scripts/audit/scan_debt.py [--limit N]
-Exit 0 no debt; 1 debt; 2 cannot run (no database, or a pre-103 schema).
+    python3 scripts/audit/scan_debt.py [--limit N] [--reread]
+Exit 0 no debt (with --reread: no pair flagged); 1 debt (a pair flagged); 2 cannot run (no database, or a pre-103
+schema).
 """
 import argparse
 import os
@@ -49,10 +61,89 @@ DEBT = ("NOT-READ", "READ-PARTIAL")
 # still blocked. A reason the ledger does not class as an obstacle leaves the pair NOT-READ.
 
 
+def _retained_text(conn, retrieval_log, ref_id):
+    """`session/artefact` of the file the source's latest FULL scan read, when it is on disk and still hashes to the
+    scan's file_sha256; else None."""
+    import hashlib
+    scan = conn.execute("SELECT file_sha256 FROM source_scans WHERE ref_id = ? AND text_scope = 'full' "
+                        "ORDER BY scan_id DESC LIMIT 1", (ref_id,)).fetchone()
+    if scan is None:
+        return None
+    url = conn.execute("SELECT url FROM evidence_sources WHERE ref_id = ?", (ref_id,)).fetchone()
+    for h in retrieval_log.artefacts_for_source(ref_id, url[0] if url else None):
+        if ((h["sha256"] or "").lower() == scan[0] and h["exists"]
+                and hashlib.sha256(h["path"].read_bytes()).hexdigest() == scan[0]):
+            return f"{h['session']}/{h['artefact']}"
+    return None
+
+
+def reread_routes(conn, retrieval_log, parameter_id=None):
+    """Every owed pair (DEBT in v_scan_ledger), optionally of one parameter, with the route that reaches it: a dict of
+    ref_id, parameter_id, status, route (`inventory`, `retained-text` or `reread`) and what the route reads (`clauses`
+    or `file`). The one home of the re-read flag (module docstring); read-only."""
+    norm = retrieval_log.normalise_quote
+    sql, args = (f"SELECT ref_id, parameter_id, status FROM v_scan_ledger WHERE status IN "
+                 f"({','.join('?' * len(DEBT))})", list(DEBT))
+    if parameter_id is not None:
+        sql, args = sql + " AND parameter_id = ?", args + [parameter_id]
+    owed = conn.execute(sql + " ORDER BY parameter_id, ref_id", args).fetchall()
+    forms, clauses, retained, out = {}, {}, {}, []
+    for ref, pid, status in owed:
+        if pid not in forms:
+            forms[pid] = {f for (n,) in conn.execute(
+                "SELECT t.canonical_en FROM base_parameters p JOIN terms t ON t.term_id = p.term_id "
+                "WHERE p.parameter_id = ? UNION SELECT a.alias FROM base_parameters p JOIN term_aliases a "
+                "ON a.term_id = p.term_id WHERE p.parameter_id = ? AND a.alias_type NOT IN ('NARROWER', 'BROADER')",
+                (pid, pid)) for f in [norm(n)] if f}
+        if ref not in clauses:
+            clauses[ref] = [(cid, norm(text)) for cid, text in conn.execute(
+                "SELECT c.clause_id, c.clause_text FROM source_clauses c JOIN source_scans s ON s.scan_id = c.scan_id "
+                "WHERE s.ref_id = ? ORDER BY c.clause_id", (ref,))]
+        pair = {"ref_id": ref, "parameter_id": pid, "status": status}
+        hit = [cid for cid, body in clauses[ref] if any(f in body for f in forms[pid])]
+        if hit:
+            out.append({**pair, "route": "inventory", "clauses": hit})
+            continue
+        if ref not in retained:
+            retained[ref] = _retained_text(conn, retrieval_log, ref)
+        out.append({**pair, "route": "retained-text", "file": retained[ref]} if retained[ref]
+                   else {**pair, "route": "reread"})
+    return out
+
+
+def _reread(conn, limit):
+    sys.path.insert(0, str(REPO / "scripts" / "research"))
+    import retrieval_log                                              # noqa: E402
+    routes = reread_routes(conn, retrieval_log)
+    print("scan_debt --reread — the route each owed (source x parameter) pair takes: inventory, retained text, "
+          "or a re-read")
+    print(f"EXAMINED: {len(routes)}")
+    for route in ("inventory", "retained-text", "reread"):
+        mine = [r for r in routes if r["route"] == route]
+        print(f"  {route:<14} {len(mine)}")
+        for r in mine[:limit]:
+            via = (f" clauses {r['clauses']}" if route == "inventory" else
+                   f" sweep {r['file']}" if route == "retained-text" else "")
+            print(f"    {r['ref_id']} x parameter {r['parameter_id']} ({r['status']}){via}")
+        if len(mine) > limit:
+            print(f"    ... {len(mine) - limit} more")
+    flagged = sum(r["route"] == "reread" for r in routes)
+    if not flagged:
+        print("PASS: no owed pair needs the source read again")
+        return 0
+    print(f"REREAD: {flagged} pair(s) flagged: no clause of the inventory matches and no retained text is on disk. "
+          f"Read once for every pair owed by the source (record-scan --mode catalogue), or --mode targeted when "
+          f"exactly one is owed.")
+    return 1
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--limit", type=int, default=20,
                     help="how many owed pairs to list per parameter (default 20)")
+    ap.add_argument("--reread", action="store_true",
+                    help="list each owed pair's route (inventory, retained text, re-read) and the pairs flagged "
+                         "to be read again")
     args = ap.parse_args()
     if not DB_PATH.exists():
         print(f"scan_debt: no database at {DB_PATH}", file=sys.stderr)
@@ -63,6 +154,8 @@ def main():
                             ).fetchone():
             print("scan_debt: v_scan_ledger is absent (pre-103 schema)", file=sys.stderr)
             return 2
+        if args.reread:
+            return _reread(conn, args.limit)
         status = dict(conn.execute("SELECT status, COUNT(*) FROM v_scan_ledger "
                                    "GROUP BY status").fetchall())
         per_param = conn.execute(

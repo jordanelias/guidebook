@@ -78,6 +78,7 @@ glossary:
   search_execution_forms: "Joins each search to the vocabulary forms it fired, so a search run on a model-made word can be told from one run on a word an instrument uses."
   search_executions: "One logged search: the query as typed, where it ran, how many results came back and how many were admitted. Empty searches are kept."
   slugs: "The research topics that searches are organised under."
+  source_clauses: "The clauses of a source, each with where it stands, recorded once when the source is read in full, so a parameter added later is matched against them before anyone reads the source again. The clause text is held for matching and is not shown on a page."
   source_locators: "Where each known source can be found (DOI, URL, PMID, ISBN, standard number), including leads not yet admitted."
   source_scans: "A record that a source was read in full against the parameter list, and how much of it was read."
   source_slug_links: "Which sources were admitted under which research topics."
