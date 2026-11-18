@@ -489,6 +489,22 @@ def require_ledger_quote_once(quote: str, subject: str, hint: str = "") -> None:
 #: engine, extraction_follow_up_audit and test_db_integrity K02 all read this one tuple.
 NOT_PUBLISHABLE_METHODS = ("skim",)
 
+#: Columns held for matching and never displayed (OD-23, owner 2026-11-12: "clause NOT shown"). The one home: the
+#: owner-browser build passes it to the page, which reads no column named here, and test T031-08 holds every view and
+#: the page to it.
+NOT_SHOWN = {"source_clauses": ("clause_text",)}
+
+
+def clause_pinpoint_sql(conn, fig: str = "x") -> str:
+    """SQL true when the figure aliased `fig` points at a clause (source_clauses) recorded by a reading of the figure's
+    OWN source and naming a place (a non-blank level of the hierarchy, levels read from the table). The one test of
+    "the clause pointer is a pinpoint" for add-extraction's R3, the derived-input rule and the batch gate's R3 (T-031)."""
+    levels = [c for c in columns(conn, "source_clauses")
+              if c.startswith("loc_") and not c.endswith("_end") and c != "loc_note"]
+    place = " OR ".join(f"trim(COALESCE(c.{c}, '')) <> ''" for c in levels) or "0"
+    return (f"EXISTS (SELECT 1 FROM source_clauses c JOIN source_scans s ON s.scan_id = c.scan_id "
+            f"WHERE c.clause_id = {fig}.clause_id AND s.ref_id = {fig}.ref_id AND ({place}))")
+
 #: The `extraction_follow_ups.reason` that means "an absence finding (claim_type = 'absent')
 #: whose tested value is still to be found by backward citation mining and context" (owner
 #: OR-22, 2026-10-29). A NAME for one declared value, not a list: db.py raise-follow-up

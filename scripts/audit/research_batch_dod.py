@@ -386,9 +386,9 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # written by any other path or before the refusal). Scoped by the ROW's session.
     _loc_cols = [c[1] for c in cx.execute('PRAGMA table_info("source_value_extractions")')
                  if c[1].startswith("loc_") and not c[1].endswith("_end") and c[1] != "loc_note"]
-    # A figure that points at an inventoried clause (T-031, migration 153) reaches its locator through that row, which
-    # always names a place (its CHECK), so the pointer is a pinpoint.
-    _clause = [f"x.{c[1]} IS NOT NULL" for c in cx.execute('PRAGMA table_info("source_value_extractions")')
+    # A figure that points at an inventoried clause of its own source naming a place (T-031; dbcore.clause_pinpoint_sql,
+    # the one test) reaches its locator through that row, so the pointer is a pinpoint.
+    _clause = [dbcore.clause_pinpoint_sql(cx, "x") for c in cx.execute('PRAGMA table_info("source_value_extractions")')
                if c[1] == "clause_id"]
     _pinpoint = " OR ".join([f"COALESCE(x.{c},'') <> ''" for c in _loc_cols] + _clause) or "0"
     uncited = _rows(cx, f"SELECT DISTINCT x.ref_id FROM source_value_extractions x "

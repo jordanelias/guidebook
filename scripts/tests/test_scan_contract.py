@@ -2325,8 +2325,11 @@ try:
     n31 = (q("SELECT COUNT(*) FROM source_scans")[0][0], q("SELECT COUNT(*) FROM source_clauses")[0][0])
     expect_refusal("T031-02", "clauses without --open-pass-done are refused: the open pass writes the inventory",
                    "open pass", scan, sc31(open_pass_done=False), T31S)
-    expect_refusal("T031-03", "clauses on a reading that is not full are refused", "--text-scope full",
-                   scan, sc31(text_scope="partial"), T31S)
+    m3 = [refusal(scan, sc31(**k), T31S) for k in ({"text_scope": "partial"}, {"method": "pre-screen"},
+                                                     {"mode": "targeted", "target_parameter_id": PE})]
+    record("T031-03", "clauses on a reading that is not full, on a pre-screen and on a targeted reading are each "
+           "refused (the open pass of a full catalogue full-read writes the inventory)",
+           all(m and "--mode catalogue" in m for m in m3), m3)
     expect_refusal("T031-04", "a clause whose text is not in the file read is refused (backed by retained text)",
                    "does not occur in", scan,
                    sc31(clauses=[{"loc_clause": "9.9", "clause_text": "TASK-FIXTURE clause typed from memory"}]), T31S)
@@ -2343,12 +2346,19 @@ try:
            "(it matches anything) are each refused",
            all(m and "non-empty list of objects" in m for m in m6c) and m6d and "does not occur in" in m6d,
            (m6c, m6d))
+    m6d = [refusal(scan, sc31(clauses=[{"loc_clause": v, "clause_text": CL31[1]["clause_text"]}]), T31S)
+           for v in (["4.1", "4.2"], 4, None, {"a": "4.2"})]
+    record("T031-06d", "a cell given as a list, a number, a null or an object is refused (one string per cell)",
+           all(m and "other than text" in m for m in m6d), m6d)
+    m6e = refusal(scan, sc31(clauses=[dict(CL31[1]), {**CL31[1], "clause_text": "A landing is provided"}]), T31S)
+    record("T031-06e", "two clauses at one place in one reading are refused (one row per clause per reading)",
+           m6e and "same place" in m6e, m6e)
     SHA31X = put("t031-undecodable-text.txt", b"Clause 7 \x81\x82\x83 TASK-FIXTURE", REF_A,
                   derived_from="fixture3pages.pdf")
     expect_refusal("T031-06b", "a file that cannot be decoded is refused: no clause can be checked against it",
                    "cannot be decoded", scan,
                    sc31(file_sha256=SHA31X, clauses=[{"loc_clause": "7", "clause_text": "Clause 7"}]), T31S)
-    record("T031-07", "every refused inventory wrote nothing: no reading and no clause (T031-02 to 06c)",
+    record("T031-07", "every refused inventory wrote nothing: no reading and no clause (T031-02 to 06e)",
            (q("SELECT COUNT(*) FROM source_scans")[0][0], q("SELECT COUNT(*) FROM source_clauses")[0][0]) == n31, n31)
     s31 = attempt(scan, sc31(), T31S)
     rows31 = q("SELECT clause_id, loc_clause, clause_text FROM source_clauses WHERE scan_id=? ORDER BY clause_id",
@@ -2376,20 +2386,43 @@ try:
            and r31b.returncode == 1 and r31b.stderr.startswith("REFUSING:") and "open pass" in r31b.stderr,
            r31.stdout[-300:] + r31.stderr[-300:] + r31b.stderr[-300:])
 
-    # Item 2: held clause text is not shown. The render contract lists no view yet (T-037 has not landed), so every
-    # view is held to it; the detector is proven on a seeded view that does select the text.
-    def views_showing_clause_text():
-        return [n for n, sql in q("SELECT name, sql FROM sqlite_master WHERE type='view'")
-                if "clause_text" in (sql or "").lower()
-                or ("source_clauses" in (sql or "") and re.search(r"select\s+(\w+\.)?\*", (sql or "").lower()))]
+    # Item 2: held clause text is not shown (dbcore.NOT_SHOWN, the one home). The render contract lists no view yet
+    # (T-037 has not landed), so every view is held to it, and so is the owner-browser page, which embeds the whole
+    # database: it must read no hidden column and never read a table by `*`. Each detector is proven on a seed.
+    HIDDEN = {c for cs in dbcore.NOT_SHOWN.values() for c in cs}
 
-    shown = views_showing_clause_text()
-    x("CREATE VIEW v_t031_task_fixture AS SELECT clause_id, clause_text FROM source_clauses")  # a seeded defect
-    seeded = views_showing_clause_text()
-    x("DROP VIEW v_t031_task_fixture")
-    record("T031-08", "no view selects source_clauses.clause_text (OD-23: clause NOT shown), and the detector "
-           "flags a seeded view that does",
-           shown == [] and seeded == ["v_t031_task_fixture"], (shown, seeded))
+    def views_showing(views):
+        return [n for n, sql in views
+                if any(c in (sql or "").lower() for c in HIDDEN)
+                or (any(t in (sql or "") for t in dbcore.NOT_SHOWN)
+                    and re.search(r"(^|[\s,])(\w+\.)?\*(\s|,|$)", (sql or "").lower()))]
+
+    def page_shows(html):
+        return re.findall(r'"select (?:rowid as _rid, )?\*', html) + (
+            [] if "!(META.hidden[r.name] || []).includes(c.name)" in html else ["no META.hidden filter"])
+
+    live_views = q("SELECT name, sql FROM sqlite_master WHERE type='view'")
+    seeded = views_showing([("v_seed_a", "SELECT clause_id, clause_text FROM source_clauses"),
+                            ("v_seed_b", "SELECT s.ref_id, c.* FROM source_scans s JOIN source_clauses c "
+                                         "ON c.scan_id = s.scan_id"),
+                            ("v_seed_c", "SELECT count(*) FROM source_clauses")])
+    PAGE = (REPO / "scripts" / "generate" / "owner_browser.html").read_text(encoding="utf-8")
+    page_seeded = page_shows(PAGE.replace('"select " + sel(name) + " from " + q(name) + " where rowid',
+                                          '"select * from " + q(name) + " where rowid', 1))
+    page_unfiltered = page_shows(PAGE.replace("!(META.hidden[r.name] || []).includes(c.name)", "true", 1))
+    sys.path.insert(0, str(REPO / "scripts" / "generate"))
+    con = sqlite3.connect(DB)
+    try:
+        ob_meta = attempt(importlib.import_module("owner_browser_build").meta, con, DB)
+    finally:
+        con.close()
+    record("T031-08", "no view and not the owner-browser page shows clause_text (OD-23: clause NOT shown); the "
+           "detectors flag a seeded view naming it, a seeded `c.*` view, a seeded `select *` page and a page with no "
+           "hidden-column filter, and pass count(*); the page build carries dbcore.NOT_SHOWN",
+           views_showing(live_views) == [] and seeded == ["v_seed_a", "v_seed_b"] and page_shows(PAGE) == []
+           and page_seeded and page_unfiltered == ["no META.hidden filter"]
+           and ob_meta.get("hidden") == {t: list(cs) for t, cs in dbcore.NOT_SHOWN.items()},
+           (views_showing(live_views), seeded, page_shows(PAGE), page_seeded, page_unfiltered, ob_meta.get("hidden")))
 
     # Items 3 and 4: the route of each owed pair, and the re-read flag.
     P_IN = promote(T_IN).get("parameter_id") if T_IN else None
@@ -2409,6 +2442,21 @@ try:
            "naming it), then the retained text (on disk): neither pair is flagged",
            ri and ri["route"] == "inventory" and ri["clauses"] == [r[0] for r in rows31[:1]]
            and ro and ro["route"] == "retained-text" and ro["file"].endswith("t031-full-text.txt"), (ri, ro))
+    d17 = run_audit("scan_debt.py", "--reread", "--limit", "100000")
+    record("T031-17", "with the inventory and the retained text reaching every owed pair of a source read in full, "
+           "scan_debt.py --reread passes (exit 0)", d17.returncode == 0 and "PASS:" in d17.stdout,
+           d17.stdout[-600:] + d17.stderr)
+    con = sqlite3.connect(DB)
+    try:
+        listed = {r["ref_id"] for r in scan_debt.reread_routes(con, retrieval_log)}
+        unread_full = {r for (r,) in con.execute(
+            "SELECT DISTINCT ref_id FROM v_scan_ledger WHERE status IN ('NOT-READ','READ-PARTIAL') AND ref_id NOT IN "
+            "(SELECT ref_id FROM source_scans WHERE text_scope = 'full' AND method = 'full-read')")}
+    finally:
+        con.close()
+    record("T031-18", "a pair of a source never read in full (REF_B, read in part only; a source never read) is plain "
+           "debt, never routed for a re-read",
+           REF_B in unread_full and len(unread_full) > 1 and not (listed & unread_full), sorted(listed & unread_full)[:5])
     PATH31.rename(PATH31.with_suffix(".gone"))          # the retained text leaves the disk
     try:
         ro2, ri2 = route(P_OUT), route(P_IN)
@@ -2428,20 +2476,28 @@ try:
         PATH31.write_bytes(good31)
     record("T031-09c", "a retained file that no longer hashes to the scan's sha256 is not retained text: flagged",
            ro3 and ro3["route"] == "reread", ro3)
-    # The forms matched are the term's label and its aliases that name the concept itself: a BROADER form in a
-    # clause does not reach the pair, a SYNONYM does. Alias rows by SQL on the copy, a state for a fixture.
-    a_b = x("INSERT INTO term_aliases (term_id, alias, language, alias_type, created_at, created_by_session, "
-            "updated_at, updated_by_session) VALUES (?, 'landing', 'EN', 'BROADER', 't', ?, 't', ?)", T_OUT, T31S, T31S)
-    rb = route(P_OUT)
-    a_s = x("INSERT INTO term_aliases (term_id, alias, language, alias_type, created_at, created_by_session, "
-            "updated_at, updated_by_session) VALUES (?, 'change of direction', 'EN', 'SYNONYM', 't', ?, 't', ?)",
-            T_OUT, T31S, T31S)
-    rs = route(P_OUT)
-    x("DELETE FROM term_aliases WHERE form_id IN (?, ?)", a_b, a_s)
-    record("T031-09d", "a BROADER alias found in a clause does not reach the pair; a SYNONYM alias does, through "
-           "the clause that holds it",
-           rb and rb["route"] == "retained-text" and rs and rs["route"] == "inventory"
-           and rs["clauses"] == [r[0] for r in rows31[1:2]], (rb, rs))
+    # The forms matched are those v_term_names reads (its display name, and the attested forms of
+    # v_attested_term_forms), word by word: a BROADER form, an unrecorded form and a form inside a word do not reach
+    # the pair; an attested SYNONYM does. Alias rows by SQL on the copy, a state for a fixture.
+    def alias31(alias, kind, att):
+        loc = ("https://example.org/task-fixture-t031", "1") if att in ("instrument", "other_source") else (None, None)
+        return x("INSERT INTO term_aliases (term_id, alias, language, alias_type, attestation, source_url, "
+                 "source_page, created_at, created_by_session, updated_at, updated_by_session) VALUES "
+                 "(?, ?, 'EN', ?, ?, ?, ?, 't', ?, 't', ?)", T_OUT, alias, kind, att, *loc, T31S, T31S)
+
+    tried = {}
+    for key, args in (("broader", ("landing", "BROADER", "other_source")),
+                      ("unrecorded", ("change of direction", "SYNONYM", "unrecorded")),
+                      ("inside", ("rect", "SYNONYM", "other_source")),
+                      ("attested", ("change of direction", "SYNONYM", "other_source"))):
+        fid = alias31(*args)
+        tried[key] = route(P_OUT)
+        x("DELETE FROM term_aliases WHERE form_id = ?", fid)
+    record("T031-09d", "a BROADER form, an unrecorded form and a form found only inside a word (`rect` in `direction`) "
+           "do not reach the pair; an attested SYNONYM does, through the clause that holds it",
+           all(tried[k] and tried[k]["route"] == "retained-text" for k in ("broader", "unrecorded", "inside"))
+           and tried["attested"] and tried["attested"]["route"] == "inventory"
+           and tried["attested"]["clauses"] == [r[0] for r in rows31[1:2]], tried)
     record("T031-10", "scan_debt.py --reread prints the flagged pair under reread, a REREAD line and EXAMINED, "
            "and exits 1",
            d31.returncode == 1 and "EXAMINED:" in d31.stdout and "REREAD:" in d31.stdout
@@ -2455,6 +2511,29 @@ try:
     attempt(scan, sc31(mode="targeted", target_parameter_id=P_OUT, open_pass_done=False, clauses=None), T31S)
     record("T031-15", "the flag is cleared by recording the reading: a targeted reading leaves the pair owed nowhere",
            route(P_OUT) is None and ledger(REF_A, P_OUT) == ("READ-NOTHING-FOUND", "full"), ledger(REF_A, P_OUT))
+    # A later full reading of a CHANGED file: the clauses of the old file are not read for it.
+    SHA31N = put("t031-full-text-2.txt", (BODY31 + "\nTASK-FIXTURE: a later edition").encode(), REF_A,
+                 derived_from="fixture3pages.pdf")
+    s31n = attempt(scan, sc31(file_sha256=SHA31N, open_pass_done=False, clauses=None), T31S)
+    T3 = next((t for t in FREE31 if t not in (T_IN, T_OUT)), None)
+    P3 = promote(T3).get("parameter_id") if T3 else None      # promoted after both readings: owed
+    con = sqlite3.connect(DB)
+    try:                                                       # an attested form that clause 4.2 of the OLD file holds
+        f3 = con.execute("INSERT INTO term_aliases (term_id, alias, language, alias_type, attestation, source_url, "
+                         "source_page, created_at, created_by_session, updated_at, updated_by_session) VALUES "
+                         "(?, 'change of direction', 'EN', 'SYNONYM', 'other_source', "
+                         "'https://example.org/task-fixture-t031', '1', 't', ?, 't', ?)", (T3, T31S, T31S)).lastrowid
+        con.commit()
+        rn = next((r for r in scan_debt.reread_routes(con, retrieval_log, P3) if r["ref_id"] == REF_A), None)
+        con.execute("DELETE FROM term_aliases WHERE form_id = ?", (f3,))
+        con.commit()
+    finally:
+        con.close()
+    record("T031-19", "after a full reading of a changed file the old file's clauses no longer reach the pair "
+           "(the inventory of the current file is read)",
+           s31n.get("scan_id") and P3 and rn and rn["route"] == "retained-text"
+           and rn["file"].endswith("t031-full-text-2.txt"),
+           (s31n, rn))
 
     # Item 1, the pointer: a figure read from a clause points at it and types no locator. REF_A is put in the
     # regulatory stratum for these cases (tier 4: R3 demands a pinpoint), restored after: a state for a fixture.
@@ -2484,6 +2563,12 @@ try:
                        relations=[])
         expect_refusal("T031-12c", "add-extraction refuses a clause_id that is no clause", "not a clause",
                        db.insert_extraction, fig31(clause_id=2 ** 30), T31S, relations=[])
+        expect_refusal("T031-12d", "add-extraction refuses --source-section beside --clause-id (a prose locator is a "
+                       "locator)", ("second", "--source-section"), db.insert_extraction,
+                       fig31(source_section="Clause 9.9 somewhere else"), T31S, relations=[])
+        expect_refusal("T031-12e", "add-extraction refuses a quote that is not inside the clause pointed at (clause "
+                       "4.1's words with clause 4.2's id)", "not inside clause", db.insert_extraction,
+                       fig31(clause_id=rows31[1][0] if len(rows31) > 1 else -1), T31S, relations=[])
         f31 = attempt(db.insert_extraction, fig31(), T31S, relations=[])
         row31 = q("SELECT clause_id, locator_scheme, loc_clause, source_section FROM source_value_extractions "
                   "WHERE extraction_id=?", f31.get("extraction_id", -1))
@@ -2503,8 +2588,52 @@ try:
             con.close()
         record("T031-16", "a derived figure's input that points at a clause has a locator (R3 for derived inputs)",
                inp31 is not None and m16 is None, m16)
+        # R3 joins the clause: a figure (written past the writer, by SQL on the copy) pointing at another source's
+        # clause or at no clause has no pinpoint, at the batch gate and as a derived input.
+        T31R = "session_2026-11-18-t031-task-fixture-r3"
+        bad_ids = [x("INSERT INTO source_value_extractions (ref_id, parameter_id, claim_type, claimed_value, claim_text, "
+                     "extraction_method, created_at, created_by_session, updated_at, figure_role, clause_id) VALUES "
+                     "(?, ?, 'numerical', '1500', 'TASK-FIXTURE', 'full-read', 't', ?, 't', 'claim', ?)",
+                     REF_A, PB, T31R, cid) for cid in ((sb.get("clause_ids") or [-1])[0], 987654321)]
+        g20 = run("--session", T31R, script="audit/research_batch_dod.py")
+        con = sqlite3.connect(DB)
+        con.row_factory = sqlite3.Row
+        try:
+            m20 = [refusal(db._refuse_bad_derived_input, con, "TASK-FIXTURE", con.execute(
+                "SELECT * FROM source_value_extractions WHERE extraction_id=?", (i,)).fetchone()) for i in bad_ids]
+        finally:
+            con.close()
+        x("DELETE FROM source_value_extractions WHERE created_by_session = ?", T31R)
+        record("T031-20", "R3 (batch gate and derived input) finds no pinpoint in a pointer to another source's clause "
+               "or to no clause",
+               "R3: PASS" not in g20.stdout and REF_A in "".join(l for l in g20.stdout.splitlines() if "R3" in l)
+               and all(m and "R3" in m for m in m20), ([l for l in g20.stdout.splitlines() if "R3" in l], m20))
     finally:
         x("UPDATE evidence_sources SET tier=? WHERE ref_id=?", tier31, REF_A)
+    # The schema itself (migration 154): blank locator cells and blank text, an `_end` without its start, and a second
+    # row at one place in one reading are refused by SQL that bypasses the writer.
+    def schema_refuses(**cells):
+        row = {"scan_id": s31.get("scan_id", -1), "loc_clause": "8.1", "clause_text": "TASK-FIXTURE",
+               "created_at": "t", "created_by_session": T31S, **cells}
+        con = sqlite3.connect(DB)
+        try:
+            con.execute(f"INSERT INTO source_clauses ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
+                        list(row.values()))
+            return False
+        except sqlite3.IntegrityError:
+            return True
+        finally:
+            con.rollback()
+            con.close()
+
+    held = {"blank loc_clause": schema_refuses(loc_clause=""),
+            "spaces loc_section": schema_refuses(loc_section="   "),
+            "nbsp clause_text": schema_refuses(clause_text="\u00a0"),
+            "end without start": schema_refuses(loc_clause=None, loc_section="8", loc_clause_end="8.2"),
+            "same place twice": schema_refuses(locator_scheme=CL31[0]["locator_scheme"], loc_clause="4.1"),
+            "control lands": not schema_refuses()}
+    record("T031-21", "the schema refuses a blank locator cell, a blank text (no-break space), an `_end` without its "
+           "start and a second row at one place in one reading; a good row lands", all(held.values()), held)
     con = sqlite3.connect(DB)
     try:
         record("T031-14", "source_clauses is in the derived capture set, and clause_id is not amendable (the locator "

@@ -174,7 +174,8 @@ function loadSchema() {
   const tables = {}, views = {};
   for (const r of all("select type, name, sql from sqlite_master where type in ('table','view') and name not like 'sqlite_%' order by name")) {
     if (r.type === "view") { views[r.name] = { name: r.name, sql: r.sql, rows: one("select count(*) from " + q(r.name)) }; continue; }
-    const cols = all("PRAGMA table_info(" + q(r.name) + ")").map((c) => ({ name: c.name, type: c.type, notnull: !!c.notnull, pk: c.pk }));
+    // A column META.hidden names is held for matching and never displayed (OD-23): it is not a column of the page.
+    const cols = all("PRAGMA table_info(" + q(r.name) + ")").filter((c) => !(META.hidden[r.name] || []).includes(c.name)).map((c) => ({ name: c.name, type: c.type, notnull: !!c.notnull, pk: c.pk }));
     const fks = all("PRAGMA foreign_key_list(" + q(r.name) + ")").map((f) => ({ col: f.from, table: f.table, to: f.to }));
     tables[r.name] = { name: r.name, sql: r.sql, cols, fks, rows: one("select count(*) from " + q(r.name)), notes: parseNotes(r.sql, cols), inbound: [], implicit: [] };
   }
@@ -210,12 +211,14 @@ function isRetired(t, r) {
     ("status" in r && /^(retired|merged|superseded)/i.test(String(r.status)));
 }
 const keyOf = (t, r) => { const p = t.cols.filter((c) => c.pk).sort((a, b) => a.pk - b.pk); return p.length ? p.map((c) => r[c.name]).join(" · ") : "row " + r._rid; };
+// Every row read names its columns (the page's own, less META.hidden): never `*`, so a hidden column is never read.
+const sel = (name) => SCHEMA.tables[name] ? SCHEMA.tables[name].cols.map((c) => q(c.name)).join(", ") : "*";
 const rowidOf = (table, col, val) => one("select rowid from " + q(table) + " where " + q(col) + " = ?", [val]);
 const AUDIT = /(^|_)(created|updated|raised|resolved)_(at|by_session)$|_session$/;
 // The fields a card shows by default, chosen from the data: the most text-like column that is mostly filled (the
 // row's label), then the next three filled columns in table order. The owner can change them per table.
 function defaultFields(t) {
-  const rows = all("select * from " + q(t.name) + " limit 100");
+  const rows = all("select " + sel(t.name) + " from " + q(t.name) + " limit 100");
   const use = t.cols.filter((c) => !c.pk && !AUDIT.test(c.name)).map((c) => {
     const vals = rows.map((r) => r[c.name]).filter((v) => !isNil(v));
     return { name: c.name, filled: rows.length ? vals.length / rows.length : 0, len: vals.length ? vals.reduce((a, v) => a + String(v).length, 0) / vals.length : 0 };
@@ -336,7 +339,7 @@ function tablePage(name) {
     const w = where(), so = state.sort[name], lim = state.limit[name] || PAGE;
     const total = one("select count(*) from " + q(name) + w.sql, w.params);
     const order = so && so.col ? " order by " + q(so.col) + (so.desc ? " desc" : "") + ", rowid" : " order by rowid" + (so && so.desc ? " desc" : "");
-    const rows = all("select rowid as _rid, * from " + q(name) + w.sql + order + " limit " + lim, w.params);
+    const rows = all("select rowid as _rid, " + sel(name) + " from " + q(name) + w.sql + order + " limit " + lim, w.params);
     fill(list, rows.map((r) => h("a", { class: "card" + (isRetired(t, r) ? " retired" : ""), href: "#r-" + slug(name) + "-" + r._rid },
       h("span", { class: "top" }, h("span", { class: "ttl" }, keyOf(t, r)), isRetired(t, r) ? h("span", { class: "chip" }, "retired") : null),
       fields.filter((f) => f in r).map((f) => h("span", { class: "kv" }, h("span", { class: "k" }, f), h("span", { class: "v" }, value(r[f])))))));
@@ -382,7 +385,7 @@ function fieldsOf(t, r) {
 function rowPage(name, rid) {
   const t = SCHEMA.tables[name];
   if (!t) return notFound(name);
-  const r = all("select * from " + q(name) + " where rowid = ?", [rid])[0];
+  const r = all("select " + sel(name) + " from " + q(name) + " where rowid = ?", [rid])[0];
   if (!r) return notFound(name + " row " + rid);
   r._rid = rid;
   const fields = fieldsOf(t, r);
@@ -408,7 +411,7 @@ function rowPage(name, rid) {
 function viewPage(name) {
   const v = SCHEMA.views[name];
   if (!v) return notFound(name);
-  const rows = all("select * from " + q(name) + " limit " + PAGE);
+  const rows = all("select " + sel(name) + " from " + q(name) + " limit " + PAGE);
   return [
     h("div", { class: "stack" }, h("h1", { class: "mono" }, name), h("div", { class: "chips" }, h("span", { class: "chip" }, "view"), h("span", { class: "chip" }, fmt(v.rows) + " rows")),
       h("p", { class: "gl" }, "A saved query. It is recomputed every time it is read, so it always matches the tables it reads.")),
@@ -502,7 +505,7 @@ function promptCard(p) {
 function rowContext(e, id) {
   const t = SCHEMA.tables[e.table], rid = rowidOf(e.table, e.key, id);
   if (!rid) return [h("p", { class: "gl" }, "The row is no longer in the table.")];
-  const r = all("select * from " + q(e.table) + " where rowid = ?", [rid])[0];
+  const r = all("select " + sel(e.table) + " from " + q(e.table) + " where rowid = ?", [rid])[0];
   const note = (e.notes || {})[String(id)];
   const out = [note ? h("p", { class: "note" }, note) : null, h("div", { class: "stack" }, fieldsOf(t, r)), h("a", { href: "#r-" + slug(e.table) + "-" + rid }, "Open the row page")];
   const sub = e.subject && SCHEMA.tables[r[e.subject.table_col]];

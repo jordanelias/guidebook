@@ -210,9 +210,10 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   pair owed for it (`scripts/audit/scan_debt.py --reread`) and read once for all of them (`catalogue`); use `targeted`
   only when exactly one parameter is owed; never re-read a pair a `full` scan of the same `file_sha256` covers; a
   re-read is allowed when the earlier scan was not `full`, the file changed, or the pair is flagged (`reread`). The open
-  pass of a `full` reading records the source's clauses (`record-scan --open-pass-done --clauses <json>`, each
-  clause's text copied from the file read); a later parameter is matched against them (`inventory`), then the retained
-  text is swept, and only where neither reaches is the source read again. A figure read from an
+  pass of a `full` reading records the source's clauses (`record-scan --mode catalogue --method full-read --open-pass-done --clauses <json>`,
+  one string per cell; a clause's text is stored as given and its letters and digits must be a passage of the file read); a later parameter is matched against them (`inventory`), then the retained
+  text is swept, and only where neither reaches is a source already read in full read again (a source never read in full owes a first
+  reading, not a re-read). A figure read from an
   inventoried clause is written with `add-extraction --clause-id` and no `--loc-*` flag. The clause text is never shown. A scan row records that a reading happened at a catalogue version, not what it found;
   what it found is in `observe-term` (verbatim), extractions (stage 4, including an `absent` extraction with its quoted
   passage for a parameter the source is silent on) and `link-source-slug --rationale` (the relevance note per slug;
