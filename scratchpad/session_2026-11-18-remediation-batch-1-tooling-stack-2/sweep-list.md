@@ -125,3 +125,7 @@ Not repaired:
 5. `retire-lens-link` leaves an ICF-only code figure with no warning; the writer warns on a heading-only figure the audit excludes; the word-boundary matcher does not find a term inside CJK text (16 code figures).
 6. `graph.json` lacks `context` (regenerated at the end of the stack).
 7. Not examined by the critic: `preflight.sh`, `joined_cells_census`, `add-extraction` and `derive-extraction` against a live source (the verbatim gate refused the probe), list (ii) on seeded data.
+
+**T-126 repair result (commit 336685a2, no migration):** `ALL` no longer counts as an identity in list (i) and is refused under `context` by `add-extraction`, `derive-extraction` and `add-lens-link`; the audit prints a derived queue line (tier 4 and above figures with no judged, non-`ALL` identity link; `code_value_identity_audit.py` itself prints the figure) and the criterion says only what the audit checks; T126-14 to T126-28 kill all 15 surviving defects and three new branches; T126-09 compares every row against the state replayed to just before 157. Test file 300/300.
+8. **OWNER'S, for T-056 (OD-31):** `named_in_text` and `heading` still accept `ALL` as an identity (probe rc 0); only `context` refuses it. The executor changed neither.
+9. The word-boundary matcher missing CJK is existing code (`_as_whole_words`, `locate_quote`, T-018), reused, not written by T-126.
