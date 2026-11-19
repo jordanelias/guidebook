@@ -101,7 +101,8 @@ from dbcore import Refusal  # noqa: E402
 # T-007: add-source refuses a source with no standing or no type. Both values are read from
 # the columns' own CHECKs; UNVERIFIED needs no verification method, so no other refusal fires.
 # T-083: the warrant of a quantity kind is a locator held on the parameter's own row (OD-71); this one is a fixture.
-KIND_WARRANT = dict(quantity_kind_source_url="https://example.org/task-fixture", quantity_kind_source_page="TASK-FIXTURE")
+KIND_WARRANT = dict(quantity_kind_source_url="https://example.org/task-fixture", quantity_kind_source_page="TASK-FIXTURE",
+                    quantity_kind_quote="TASK-FIXTURE: a clear width of at least 900 mm")
 SRC_STANDING = ("--verification-status", "UNVERIFIED",
                 "--source-type", dbcore.schema_choices("evidence_sources", "source_type")[0])
 sys.path.insert(0, str(REPO))
@@ -3190,12 +3191,14 @@ try:
         p1, p2, p3 = free_p[:3]
         cols = [r[1] for r in q("PRAGMA table_info(base_parameters)")]
         kind_cols = {"quantity_kind", "quantity_kind_source_url", "quantity_kind_source_page", "quantity_kind_source_line",
-                     "quantity_kind_source_clause", "quantity_kind_ref_id", "updated_at", "updated_by_session"}
+                     "quantity_kind_source_clause", "quantity_kind_ref_id", "quantity_kind_quote", "updated_at",
+                     "updated_by_session"}
         before = dict(zip(cols, q("SELECT * FROM base_parameters WHERE parameter_id=?", p1)[0]))
         cp = run_cli("set-parameter-kind", "--parameter-id", str(p1), "--quantity-kind", kinds83[0],
                      "--quantity-kind-source-url", W83["quantity_kind_source_url"],
                      "--quantity-kind-source-page", W83["quantity_kind_source_page"],
-                     "--quantity-kind-ref-id", W83["quantity_kind_ref_id"], "--session", S)
+                     "--quantity-kind-ref-id", W83["quantity_kind_ref_id"],
+                     "--quantity-kind-quote", W83["quantity_kind_quote"], "--session", S)
         after = dict(zip(cols, q("SELECT * FROM base_parameters WHERE parameter_id=?", p1)[0]))
         record("T083-01", "set-parameter-kind (through argparse) writes the kind, the locator and the ref_id on an existing "
                "parameter, stamps updated_*, and leaves every other column unchanged",
@@ -3203,6 +3206,7 @@ try:
                and after["quantity_kind_source_url"] == W83["quantity_kind_source_url"]
                and after["quantity_kind_source_page"] == W83["quantity_kind_source_page"]
                and after["quantity_kind_ref_id"] == "TASK-FIXTURE" and after["updated_by_session"] == S
+               and after["quantity_kind_quote"] == W83["quantity_kind_quote"]
                and all(after[c] == before[c] for c in cols if c not in kind_cols),
                f"rc={cp.returncode} {cp.stderr[-300:]!r} {after}")
         spk = db.set_parameter_kind
@@ -3210,13 +3214,20 @@ try:
         r_none = refusal(spk, p2, kinds83[0], S)
         r_nopage = refusal(spk, p2, kinds83[0], S, quantity_kind_source_url=W83["quantity_kind_source_url"])
         r_url = refusal(spk, p2, kinds83[0], S, **dict(W83, quantity_kind_source_url="ftp://example.org/x"))
+        r_noq = refusal(spk, p2, kinds83[0], S, **dict(W83, quantity_kind_quote=None))
+        r_nodig = refusal(spk, p2, kinds83[0], S, **dict(W83, quantity_kind_quote="TASK-FIXTURE: wide enough"))
+        r_zwp = refusal(spk, p2, kinds83[0], S, **dict(W83, quantity_kind_source_page="3\u200b"))
+        r_zwc = refusal(spk, p2, kinds83[0], S, **dict(W83, quantity_kind_source_clause="\u200b4.1"))
         record("T083-02", "the shared refusals fire through the new verb: an unknown kind (naming every kind and add-quantity-kind), "
-               "no warrant, a URL with no page or clause, a non-http URL; nothing written",
+               "no warrant, a URL with no page or clause, a non-http URL, no quote, a quote with no digit, U+200B in the page or "
+               "the clause; nothing written",
                r_unknown and all(k in r_unknown for k in kinds83) and "add-quantity-kind" in r_unknown
                and r_none and "--quantity-kind-source-url" in r_none and r_nopage and "--quantity-kind-source-page" in r_nopage
-               and r_url and "--quantity-kind-source-url" in r_url
+               and r_url and "--quantity-kind-source-url" in r_url and r_noq and "--quantity-kind-quote" in r_noq
+               and r_nodig and "holds no digit" in r_nodig and r_zwp and "zero-width" in r_zwp and "--quantity-kind-source-page" in r_zwp
+               and r_zwc and "zero-width" in r_zwc and "--quantity-kind-source-clause" in r_zwc
                and q("SELECT quantity_kind FROM base_parameters WHERE parameter_id=?", p2)[0][0] is None,
-               (r_unknown, r_none, r_nopage, r_url))
+               (r_unknown, r_none, r_nopage, r_url, r_noq, r_nodig, r_zwp, r_zwc))
         other = kinds83[-1]
         r_again = refusal(spk, p1, other, S, **W83)
         record("T083-03", "a second call on the same parameter is refused (written once), naming the stored kind and its warrant, "
@@ -3245,7 +3256,8 @@ try:
         record("T083-04", "a retired parameter is refused; a merged one names its survivor; a live determination and an open gate "
                "on the parameter are refused (SKIPPED-NO-FIXTURE where the copy holds none)",
                r_ret and "retired" in r_ret and r_mer and "merged" in r_mer and f"parameter {surv}" in r_mer
-               and r_gate and ("OPEN determination gate" in r_gate or r_gate == "SKIPPED-NO-FIXTURE")
+               and r_gate and (("OPEN determination gate" in r_gate and "must be resolved before the parameter is given its kind" in r_gate
+                                and "retired or merged" not in r_gate) or r_gate == "SKIPPED-NO-FIXTURE")
                and r_live and ("LIVE determination" in r_live or r_live == "SKIPPED-NO-FIXTURE"),
                (r_ret, r_mer, r_gate, r_live))
         if gated:
@@ -3268,6 +3280,76 @@ try:
             record("T083-05", "add-parameter and set-parameter-kind give the same kind and warrant refusals, word for word after "
                    "the term label (one home, _kind_refusal)",
                    all(a and b and tail(a) == tail(b) for a, b in pairs), pairs)
+        # ── T083 repair (after the adversarial pass): the surviving branches, the CHECKs of migration 156 ──────────
+        free_p3 = [r[0] for r in q(FREE_P)]
+        if len(free_p3) < 2:
+            record("T083-06", "two more free parameters for the repair cases", False, free_p3)
+        else:
+            pa, pb = free_p3[:2]
+            sha = lambda: __import__("hashlib").sha256(open(DB, "rb").read()).hexdigest()
+            h0 = sha()
+            dr = db.set_parameter_kind(pa, kinds83[0], S, dry_run=True, **W83)
+            record("T083-07", "--dry-run reports the cells and writes nothing (the copy's bytes are unchanged)",
+                   dr["dry_run"] is True and dr["quantity_kind"] == kinds83[0] and sha() == h0
+                   and q("SELECT quantity_kind FROM base_parameters WHERE parameter_id=?", pa)[0][0] is None, dr)
+            r_line = refusal(spk, pa, kinds83[0], S, **dict(W83, quantity_kind_source_line=0))
+            r_blank = refusal(spk, pa, kinds83[0], S, **dict(W83, quantity_kind_source_page="\u00a0",
+                                                               quantity_kind_source_clause="4.1"))
+            r_host = refusal(spk, pa, kinds83[0], S, **dict(W83, quantity_kind_source_url="https:///no-host"))
+            record("T083-08", "set-parameter-kind refuses a line of 0, a page holding only a no-break space beside a clause, and a URL "
+                   "with no host, each naming its own flag",
+                   r_line and "--quantity-kind-source-line" in r_line and r_blank and "--quantity-kind-source-page" in r_blank
+                   and r_host and "--quantity-kind-source-url" in r_host, (r_line, r_blank, r_host))
+            out = db.set_parameter_kind(pa, kinds83[0], S, **dict(W83, quantity_kind_source_page=None,
+                                                                   quantity_kind_source_clause="TASK-FIXTURE 4.1",
+                                                                   quantity_kind_source_line=7))
+            got = q("SELECT quantity_kind_source_clause, quantity_kind_source_line, quantity_kind_source_page "
+                    "FROM base_parameters WHERE parameter_id=?", pa)[0]
+            record("T083-06", "a clause and a line are written as given (no page)",
+                   got == ("TASK-FIXTURE 4.1", 7, None) and out["quantity_kind_source_line"] == 7, got)
+            old = [run_cli(v, *a, "--quantity-kind", kinds83[0], "--quantity-kind-observation-id", "1", "--session", S)
+                   for v, a in (("set-parameter-kind", ("--parameter-id", str(pb))), ("add-parameter", ("--term-id", "TERM-NONE")))]
+            record("T083-09", "the dropped flag --quantity-kind-observation-id is refused by argparse (rc 2) on both verbs",
+                   all(cp.returncode == 2 and "quantity-kind-observation-id" in cp.stderr for cp in old),
+                   [(cp.returncode, cp.stderr[-160:]) for cp in old])
+            # Direct UPDATEs on the copy, each rolled back: the CHECKs hold what the writer holds. A rebuilt table without
+            # migration 156's CHECKs turns this red (shown when the repair was made).
+            good = dict(quantity_kind=kinds83[0], **{k: v for k, v in W83.items()})
+            bad = {"kind with no quote": dict(good, quantity_kind_quote=None),
+                   "kind with a URL and no page or clause": dict(good, quantity_kind_source_page=None),
+                   "a page holding only a no-break space": dict(good, quantity_kind_source_page="\u00a0"),
+                   "U+200B in the page": dict(good, quantity_kind_source_page="3\u200b"),
+                   "a clause of U+200B alone": dict(good, quantity_kind_source_clause="\u200b"),
+                   "a no-break space inside the URL": dict(good, quantity_kind_source_url="https://example.org/a\u00a0b"),
+                   "U+FEFF in the URL": dict(good, quantity_kind_source_url="https://example.org/\ufeff"),
+                   "a BLOB page": dict(good, quantity_kind_source_page=b"3"),
+                   "a line of text": dict(good, quantity_kind_source_line="seven"),
+                   "a quote of spaces and U+200B": dict(good, quantity_kind_quote=" \u200b "),
+                   "a ref_id with no kind": dict(quantity_kind_ref_id="TASK-FIXTURE"),
+                   "a page with no kind": dict(quantity_kind_source_url="https://example.org/a", quantity_kind_source_page="3")}
+            con10 = sqlite3.connect(DB)
+            passed10 = {}
+            try:
+                for name, cells in [("the legitimate shape", good)] + list(bad.items()):
+                    try:
+                        con10.execute("UPDATE base_parameters SET " + ", ".join(f"{k}=?" for k in cells)
+                                      + " WHERE parameter_id=?", list(cells.values()) + [pb])
+                        passed10[name] = True
+                    except sqlite3.IntegrityError:
+                        passed10[name] = False
+                    con10.rollback()
+            finally:
+                con10.close()
+            record("T083-10", "migration 156's CHECKs: the legitimate shape is accepted by a direct UPDATE, and each hole is refused "
+                   "(no quote, no page or clause, blank by no-break space or zero-width, zero-width or no-break space in the URL, "
+                   "BLOB or text in a typed cell, a ref_id or a locator with no kind)",
+                   passed10.get("the legitimate shape") is True and not any(passed10[k] for k in bad), passed10)
+            mig = (REPO / "scripts" / "migrations" / "156_quantity_kind_quote_and_holes.sql").read_text()
+            ws154 = re.search(r"char\((32,9,[0-9,]+)\)", (REPO / "scripts" / "migrations" / "154_source_clauses_identity.sql").read_text()).group(1)
+            zw = ",".join(str(ord(c)) for c in dbcore.ZERO_WIDTH)
+            record("T083-12", "migration 156 spells 154's whitespace set and dbcore.ZERO_WIDTH, not a third list of its own",
+                   f"char({zw})" in mig and f"char({ws154})" in mig
+                   and set(re.findall(r"char\(([0-9,]+)\)", mig)) == {zw, ws154}, (zw, ws154))
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

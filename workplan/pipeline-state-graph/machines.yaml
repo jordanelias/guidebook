@@ -152,11 +152,12 @@ machines:
       - "refused for a DECLINED term; refused for a value-bearing name; one parameter per term"
       - "refused (T-010) for a term filed under a domain in dbcore.NON_QUANTITY_DOMAINS, before the declination test; the way out is decline-parameter (a lens or a method) or amend-term --field domain (a quantity filed wrongly)"
       - "DELIBERATELY NOT refused: a term with no adjudication (the base vocabulary predates observe/adjudicate)"
-      - "refused (T-020), after the refusals above, without a --quantity-kind that is a row of base_quantity_kinds, or without its warrant held on the row (T-083, OD-71): --quantity-kind-source-url with --quantity-kind-source-page or --quantity-kind-source-clause, where a source states a value of the quantity; --quantity-kind-ref-id is provenance only. The same refusals guard set-parameter-kind, which sets the kind once on an existing parameter"
+      - "refused (T-020), after the refusals above, without a --quantity-kind that is a row of base_quantity_kinds, or without its warrant held on the row (T-083, OD-71): --quantity-kind-quote (the source's words, which must hold a digit) and --quantity-kind-source-url with --quantity-kind-source-page or --quantity-kind-source-clause, where a source states a value of the quantity; --quantity-kind-ref-id is provenance only. The same refusals guard set-parameter-kind, which sets the kind once on an existing parameter"
       - "created active; there is no --status and no --merged-into"
     evidence:
       - {file: scripts/db.py, func: _kind_refusal, needle: "A parameter is a quantity: say which kind"}
       - {file: scripts/db.py, func: _kind_refusal, needle: "needs its warrant, held on the parameter's own"}
+      - {file: scripts/db.py, func: _kind_refusal, needle: "holds no digit; a passage stating no value"}
       - {file: scripts/db.py, func: insert_parameter, needle: "was DECLINED as a parameter by"}
       - {file: scripts/db.py, func: insert_parameter, needle: "One parameter per term"}
       - {file: scripts/db.py, func: insert_parameter, needle: "DELIBERATELY NOT REFUSED: a term with no adjudication"}

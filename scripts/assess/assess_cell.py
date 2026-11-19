@@ -2023,7 +2023,7 @@ def validate_parameter(conn, parameter_id):
     if not row:
         raise Refusal(
             f"parameter_id {parameter_id}: no such parameter. Mint one from a term:\n"
-            f"  db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-source-url U --quantity-kind-source-page P --session ...")
+            f"  db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-quote Q --quantity-kind-source-url U --quantity-kind-source-page P --session ...")
     status, merged_into = row[0], row[1]
     if status != "active":
         target = f" (merged into {merged_into})" if merged_into else ""

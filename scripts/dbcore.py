@@ -1055,6 +1055,11 @@ SESSION_STEM = re.compile(r"session_\d{4}-\d\d-\d\d[\w.-]*", re.ASCII)
 
 # A flag whose NAME carries one of these WORDS (split on `-` and `_`, any case) has a secret for its value. Whole words, not
 # substrings: `--tokens 5`, `--author` and `--pass-id` (real flags) are not secrets. `p` is `-p`.
+#: The zero-width characters a base cell may not carry (T-083 repair, migration 156): U+200B, U+200C, U+200D, U+2060,
+#: U+FEFF. Python's str.strip() does not remove them, so a cell holding only one reads as filled. Migration 156's CHECKs
+#: spell the same five as char(...); scripts/tests/test_db_amend_writers.py T083-12 compares the two.
+ZERO_WIDTH = "\u200b\u200c\u200d\u2060\ufeff"
+
 _SECRET_WORDS = frozenset("token secret passwd password passphrase pwd credential credentials auth authorization key "
                           "apikey pat bearer cookie p".split())
 

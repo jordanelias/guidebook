@@ -1045,7 +1045,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
         fail("R16",
              "%d of %d term(s) named by adjudications of %s observations hold "
              "neither a parameter nor a declination: %s. A concept a source states a figure "
-             "for is filed against a parameter (db.py add-parameter --term-id T --quantity-kind K --quantity-kind-source-url U --quantity-kind-source-page P) or, if it is "
+             "for is filed against a parameter (db.py add-parameter --term-id T --quantity-kind K --quantity-kind-quote Q --quantity-kind-source-url U --quantity-kind-source-page P) or, if it is "
              "not a quantity under determination (an element, a lens term, a method), "
              "declined with its reason (db.py decline-parameter --term-id T --reason ...)" % (
                  len(undisposed), n_named, whose,

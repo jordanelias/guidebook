@@ -3341,7 +3341,8 @@ def _one(sql, *p):
 # T-020, T-083: a promotion names a quantity kind (derived, never typed) and where a source states a value of it, held
 # on the parameter's own row (OD-71; the locator is a fixture).
 _KIND = _one("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id LIMIT 1")
-_WARRANT = dict(quantity_kind_source_url="https://example.org/task-fixture", quantity_kind_source_page="TASK-FIXTURE")
+_WARRANT = dict(quantity_kind_source_url="https://example.org/task-fixture", quantity_kind_source_page="TASK-FIXTURE",
+                quantity_kind_quote="TASK-FIXTURE: a clear width of at least 900 mm")
 _FULL = dict(quantity_kind=_KIND, **_WARRANT)
 # The six the T-010 task names are a floor the rule may grow from, not shrink from (a pin of a judged rule, not a second home).
 _TASK_SIX = {"functional_axis", "population", "medical", "methodology", "legal", "economics"}
@@ -3471,17 +3472,22 @@ if feature("T020-01", "base_quantity_kinds exists and db.insert_quantity_kind ex
         record("T020-03", "the same term with a kind that is not in the table is refused", _r and "zz_" + _kinds[0] in _r and all(k in _r for k in _kinds), _r)
         _url = _WARRANT["quantity_kind_source_url"]
         _r1 = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, dry_run=True)
-        _r2 = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, quantity_kind_source_url=_url, dry_run=True)
-        _r3 = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, quantity_kind_source_page="TASK-FIXTURE", dry_run=True)
-        record("T020-04", "a kind with no warrant, a URL with no page or clause, or a page with no URL is refused, naming the warrant "
-               "flags (OD-71: the warrant is held on the row)",
-               all(r and "--quantity-kind-source-url" in r and "--quantity-kind-source-page" in r and "--quantity-kind-source-clause" in r
-                   and "Nothing was written" in r for r in (_r1, _r2, _r3)), (_r1, _r2, _r3))
+        _r2 = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, dry_run=True, **dict(_WARRANT, quantity_kind_source_page=None))
+        _r3 = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, dry_run=True, **dict(_WARRANT, quantity_kind_source_url=None))
+        _r4 = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, dry_run=True, **dict(_WARRANT, quantity_kind_quote=None))
+        record("T020-04", "a kind with no warrant, a URL with no page or clause, a page with no URL, or a locator with no quoted words is "
+               "refused, naming the warrant flags (OD-71: the warrant is held on the row)",
+               all(r and "--quantity-kind-quote" in r and "--quantity-kind-source-url" in r and "--quantity-kind-source-page" in r
+                   and "--quantity-kind-source-clause" in r and "Nothing was written" in r for r in (_r1, _r2, _r3, _r4)), (_r1, _r2, _r3, _r4))
+        _r = refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, dry_run=True,
+                     **dict(_WARRANT, quantity_kind_quote="TASK-FIXTURE: a clear width of at least nine hundred millimetres"))
+        record("T020-05", "a kind with a quote that holds no digit is refused (T-020's refusal, now on the absorbed words)",
+               _r and "holds no digit" in _r and "Nothing was written" in _r, _r)
         _bad = {"not http": dict(_WARRANT, quantity_kind_source_url="ftp://example.org/x"),
                 "blank page beside a clause": dict(_WARRANT, quantity_kind_source_page="  ", quantity_kind_source_clause="TASK-FIXTURE"),
                 "line 0": dict(_WARRANT, quantity_kind_source_line=0)}
         _rb = {k: refusal(db.insert_parameter, _t, S, quantity_kind=_KIND, dry_run=True, **v) for k, v in _bad.items()}
-        record("T020-05", "a malformed warrant is refused, each fault alone, naming its own flag (a non-http URL, a blank page, a line of 0)",
+        record("T020-10", "a malformed warrant is refused, each fault alone, naming its own flag (a non-http URL, a blank page, a line of 0)",
                "--quantity-kind-source-url" in (_rb["not http"] or "") and "--quantity-kind-source-page" in (_rb["blank page beside a clause"] or "")
                and "--quantity-kind-source-line" in (_rb["line 0"] or ""), _rb)
         with scratch() as c:           # a real write on the scratch copy

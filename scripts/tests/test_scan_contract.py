@@ -246,7 +246,8 @@ try:
     def promote(term_id):
         return attempt(db.insert_parameter, term_id, S, quantity_kind=KIND,
                        quantity_kind_source_url="https://example.org/task-fixture",
-                       quantity_kind_source_page="TASK-FIXTURE")
+                       quantity_kind_source_page="TASK-FIXTURE",
+                       quantity_kind_quote="TASK-FIXTURE: a clear width of at least 900 mm")
 
     PAGES = ["Fixture page one: the clear width of a door leaf is measured here.",
              "Fixture page two: the clear width of a corridor route is measured here.",
