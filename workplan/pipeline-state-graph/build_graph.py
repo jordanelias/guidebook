@@ -16,12 +16,14 @@ probe verdicts, capability verdicts. What is HAND-AUTHORED: the atoms (each with
 conflict adjudications, the transition guards (each with a needle re-read here), and the capability predicates.
 Every `EXAMINED:` line below is a count of subjects a check actually looked at; a zero is reported, not passed over.
 """
-import argparse, ast, collections, copy, datetime, glob, hashlib, json, os, re, shutil, sqlite3, subprocess, sys, tempfile
+import argparse, ast, bisect, collections, copy, datetime, glob, hashlib, json, os, re, shutil, sqlite3, subprocess, sys, tempfile
 from pathlib import Path
 import yaml
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
+sys.path.insert(0, str(REPO / "scripts" / "audit" / "graph"))
+from extract_contract import returns as contract_returns     # the one reader of the contract's `re_entry` lists
 
 MOD = {"MUST", "MUST_NOT", "MAY", "DEFINES", "CARDINALITY", "ORDER", "EQUATES", "RESERVES", "OPEN"}
 SPK = {"OWNER_QUOTED", "OWNER_RELAYED", "RATIFIED_DOC", "AGENT_PROPOSAL", "PROCESS_RULE"}
@@ -84,8 +86,16 @@ def load_atoms():
     return atoms, problems
 
 
-def verify_atoms(atoms, repo=REPO, only=None, stats=None):
+LINE_TOLERANCE = 3                               # a hit starting within this many lines of the cited line is "near" it
+
+
+def verify_atoms(atoms, repo=REPO, only=None, stats=None, moved=None):
     """Every quote must occur verbatim (whitespace collapsed, leading '> ' ignored) in its source file.
+
+    Quote first, line second: a quote found exactly once passes, and the cited line is informational (a hit
+    away from it appends `MOVED <id>: cited line A, found at line B` to `moved`, when given, and does not fail);
+    a quote found more than once fails unless one hit starts within LINE_TOLERANCE lines of the cited line;
+    a quote not found fails. A line number typed into an atom goes stale with nothing wrong (CLAUDE.md rule 7a).
 
     `only`, when given, limits the QUOTE and line checks to those atom ids (the atoms something still
     cites); the structural checks (keys, modality, speaker, status) run on every atom. `stats`, when
@@ -94,10 +104,22 @@ def verify_atoms(atoms, repo=REPO, only=None, stats=None):
     """
     bad, cache = [], {}
     def doc(path):
+        """(normalised text, [(offset, line number)] of each non-blank line's start in that text)."""
         if path not in cache:
-            raw = read(repo, path)
-            cache[path] = norm("\n".join(re.sub(r"^\s*>\s?", "", l) for l in raw.split("\n")))
+            parts, starts, pos = [], [], 0
+            for ln, l in enumerate(read(repo, path).split("\n"), 1):
+                s = norm(re.sub(r"^\s*>\s?", "", l))
+                if not s: continue
+                if parts: pos += 1                   # the single space that joins it to the line before
+                starts.append((pos, ln)); parts.append(s); pos += len(s)
+            cache[path] = (" ".join(parts), starts)
         return cache[path]
+    def hit_lines(path, q):
+        text, starts = doc(path); offs = [o for o, _ in starts]; out = []
+        p = text.find(q)
+        while p >= 0:
+            out.append(starts[bisect.bisect_right(offs, p) - 1][1]); p = text.find(q, p + 1)
+        return out
     for a in atoms.values():
         miss = REQ - set(a)
         if miss:
@@ -109,18 +131,18 @@ def verify_atoms(atoms, repo=REPO, only=None, stats=None):
         if stats is not None: stats["verified"] = stats.get("verified", 0) + 1
         path = a["source"].split(":")[0]
         try:
-            ok = norm(re.sub(r"^\s*>\s?", "", a["quote"])) in doc(path)
+            hits = hit_lines(path, norm(re.sub(r"^\s*>\s?", "", a["quote"])))
         except FileNotFoundError:
             bad.append(f"{a['id']}: source not found {path}"); continue
-        if not ok:
+        if not hits:
             bad.append(f"{a['id']}: QUOTE NOT FOUND in {path}: {a['quote'][:80]!r}"); continue
         lm = re.search(r":(\d+)$", a["source"])
-        if lm:                                   # the cited line must be where the quote starts (+-3 lines)
-            ln = int(lm.group(1)); lines = read(repo, path).split("\n")
-            window = norm("\n".join(re.sub(r"^\s*>\s?", "", x) for x in lines[max(0, ln - 4): ln + 3]))
-            head = norm(re.sub(r"^\s*>\s?", "", a["quote"]))[:50]
-            if head not in window:
-                bad.append(f"{a['id']}: quote found in {path} but not near cited line {ln}")
+        ln = int(lm.group(1)) if lm else None
+        near = ln is not None and any(abs(h - ln) <= LINE_TOLERANCE for h in hits)
+        if len(hits) > 1 and not near:           # the cited line is what tells two hits apart
+            bad.append(f"{a['id']}: quote found {len(hits)} times in {path} (lines {', '.join(map(str, hits))}), none near cited line {ln}")
+        elif len(hits) == 1 and ln is not None and not near and moved is not None:
+            moved.append(f"MOVED {a['id']}: cited line {ln}, found at line {hits[0]}")
     return bad
 
 
@@ -141,6 +163,7 @@ class Tree:
         self.stagemap = yaml.safe_load(read(self.root, "governance/stage-map.yaml"))
         self.contract = yaml.safe_load(read(self.root, "governance/pipeline-contract.yaml"))
         self.stages = [s["id"] for s in self.contract["stages"]]
+        self.returns = list(contract_returns(self.contract))
         self.t2s = self.stagemap["tables"]
         self.registry = yaml.safe_load(read(self.root, "governance/check-registry.yaml"))
         self._derive_fks(); self._derive_vocab(); self._derive_verbs()
@@ -571,14 +594,14 @@ def cited_atom_ids(probes, conflicts, machines, caps):
     return cited
 
 
-def check_all(T, atoms, probes, conflicts, machines, caps):
+def check_all(T, atoms, probes, conflicts, machines, caps, moved=None):
     fails, warns, examined = [], [], {}
     # 1 atoms
     # A quote is verified only for an atom a conflict, status correction, machine, predicate or probe
     # still cites (W9): an atom nothing cites is a record, and a resolved entry stops needing its source.
     cited = cited_atom_ids(probes, conflicts, machines, caps)
     stats = {}
-    bad = verify_atoms(atoms, only=cited, stats=stats); fails += bad
+    bad = verify_atoms(atoms, only=cited, stats=stats, moved=moved); fails += bad
     examined["atoms in all (structure checked)"] = len(atoms)
     examined["atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)"] = stats.get("verified", 0)
     examined["distinct quotes among all atoms"] = len({norm(a["quote"]) for a in atoms.values()})
@@ -761,10 +784,12 @@ def selftest(T, atoms, probes, conflicts, machines, caps):
     c4 = copy.deepcopy(conflicts); c4["status_corrections"][0]["current"] = "HISTORICAL"
     f, _, _ = check_all(T, atoms, probes, c4, machines, caps)
     results.append(("a stale status correction is caught", any("status_corrections" in x for x in f)))
-    # l) a quote cited at the wrong line is caught
-    a6 = copy.deepcopy(atoms[sorted(atoms)[0]]); path_, _, ln_ = a6["source"].rpartition(":")
-    a6["source"] = f"{path_}:{int(ln_) + 40}" if ln_.isdigit() else a6["source"]
-    results.append(("a quote cited 40 lines away from where it occurs is caught", bool(verify_atoms({a6['id']: a6})) if ln_.isdigit() else True))
+    # l) quote first, line second: a quote found once and cited 40 lines away does not fail and is reported MOVED
+    def placed(i):                               # a cited line, and the quote found once, at that line
+        mv = []; return re.search(r":\d+$", atoms[i]["source"]) and not verify_atoms({i: atoms[i]}, moved=mv) and not mv
+    a6 = copy.deepcopy(atoms[next(i for i in sorted(atoms) if placed(i))]); path_, _, ln_ = a6["source"].rpartition(":")
+    a6["source"] = f"{path_}:{int(ln_) + 40}"; mv = []
+    results.append(("a quote found once but cited 40 lines away passes and prints MOVED", not verify_atoms({a6['id']: a6}, moved=mv) and len(mv) == 1 and mv[0].startswith(f"MOVED {a6['id']}:")))
     # m) a status correction decided by an EARLIER atom is caught
     c5 = copy.deepcopy(conflicts); sc0 = max(c5["status_corrections"], key=lambda x: atoms[x["atom"]].get("date") or "")
     early = next(i for i, a in atoms.items() if a.get("date") and a["date"] < (atoms[sc0["atom"]].get("date") or "9999") and a["status"] not in ("SUPERSEDED", "HISTORICAL"))
@@ -811,7 +836,8 @@ def render_state_graph(T, atoms, probes, machines, cmp_info, stamp):
     L += ["## 2. Stage graph (arrow = child table's foreign key points at the parent stage)", "", "```mermaid", "flowchart LR"]
     for s in T.stages: L.append(f"  {mer_id(s)}[\"{s}\\n{len(by_stage.get(s, []))} tables\"]")
     for (a, b), n in sorted(cross.items()): L.append(f"  {mer_id(a)} -->|{n} fk| {mer_id(b)}")
-    L += ["```", ""]
+    for r in T.returns: L.append(f"  {mer_id(r['from_stage'])} -.->|return {r['id']}| {mer_id(r['to_stage'])}")
+    L += ["```", "", "A dotted arrow is a ruled return (section 2b).", ""]
     L += ["Cross-stage FKs are the pointers (CLAUDE.md rule 5). Count by direction:", "",
           mdtable(["child stage", "points at", "FKs"], [(a, b, n) for (a, b), n in sorted(cross.items())]), ""]
     order = {s: i for i, s in enumerate(T.stages)}
@@ -820,6 +846,11 @@ def render_state_graph(T, atoms, probes, machines, cmp_info, stamp):
     L += ["### 2a. Forward-pointing foreign keys (earlier stage's table -> later stage's table)", "",
           "Pointers are meant to run from a later stage back to an earlier one (CLAUDE.md rule 5; re-entrancy, CLAUDE.md section 3, allows a walk to come back). These run the other way. A row count of 0 on the child means the dependency is structural only.", "",
           mdtable(["foreign key", "child stage", "parent stage", "child rows"], fwd) if fwd else "_None._", ""]
+    L += ["### 2b. Ruled returns (each stage's `re_entry` in `governance/pipeline-contract.yaml`)", "",
+          "A later stage re-enters an earlier one; the carrier is the row that records the return.", "",
+          mdtable(["return", "from stage", "re-enters", "carrier", "carrier value"],
+                  [(r["id"], r["from_stage"], r["to_stage"], f"{r['carrier_table']}.{r['carrier_column']}", r["carrier_value"] or "--")
+                   for r in T.returns]) if T.returns else "_None._", ""]
     # machines
     L += ["## 3. State machines (hand-verified transitions; vocabularies derived from each column's own CHECK)", ""]
     for m in machines["machines"]:
@@ -945,7 +976,8 @@ def main():
     machines = yaml.safe_load(open(HERE / "machines.yaml", encoding="utf-8"))
     caps = yaml.safe_load(open(HERE / "capabilities.yaml", encoding="utf-8"))
     T = Tree(args.repo); P = make_probes(); probes = run_probes(T, P)
-    fails, warns, examined = check_all(T, atoms, probes, conflicts, machines, caps)
+    moved = []
+    fails, warns, examined = check_all(T, atoms, probes, conflicts, machines, caps, moved=moved)
     fails += dups
 
     if args.selftest:
@@ -956,8 +988,9 @@ def main():
 
     for k, v in examined.items(): print(f"EXAMINED: {v:>5}  {k}")
     for w in warns: print("WARN  ", w)
+    for m in moved: print(m)
     for f in fails: print("FAIL  ", f)
-    print(f"{len(fails)} failure(s), {len(warns)} warning(s)")
+    print(f"{len(fails)} failure(s), {len(warns)} warning(s), {len(moved)} moved")
     if args.check:
         sys.exit(1 if fails else 0)
 
@@ -982,7 +1015,7 @@ def main():
         ["id", "status", "modality", "speaker", "date", "source", "stages", "subject", "claim", "enforcement", "quote_checked"])
     tsv("OPEN-QUESTIONS.tsv", [(a["id"], a["source"], a["subject"], a["claim"]) for a in A if a["status"] in ("OPEN", "PROPOSED")], ["id", "source", "subject", "claim"])
     tsv("AMBIGUITIES.tsv", [(a["id"], a["status"], a["source"], a["subject"], a["ambiguity"]) for a in A if a.get("ambiguity")], ["id", "status", "source", "subject", "ambiguity"])
-    graph = dict(generated=stamp, tree=str(T.root), user_version=T.user_version, stages=T.stages,
+    graph = dict(generated=stamp, tree=str(T.root), user_version=T.user_version, stages=T.stages, returns=T.returns,
                  tables={t: dict(stage=T.stage(t), rows=T.rows[t], writers=T.writers.get(t, []), cols=T.cols(t)) for t in T.tables},
                  fks=T.fks, unwritable=T.unwritable_set(), views=T.view_info(), vocab=T.vocab, verbs=T.verbs,
                  probes={k: dict(verdict=v["verdict"], tests=v["tests"], atoms=v["atoms"], evidence=v["evidence"]) for k, v in probes.items()},

@@ -24,7 +24,8 @@ CREATE TABLE edges (
     src       TEXT NOT NULL,      -- node_id (source of the relationship)
     dst       TEXT NOT NULL,      -- node_id (may reference a non-existent node = dangling)
     etype     TEXT NOT NULL,      -- fk|junction|citation|ref|import|table_ref|prose_schema|
-                                  -- membership|stage|migration_seq|model_table|self_ref
+                                  -- membership|stage|migration_seq|model_table|self_ref|
+                                  -- stage_check|ruled_return
     src_path  TEXT,               -- where the edge was observed (file path)
     src_line  INTEGER,
     resolved  INTEGER NOT NULL DEFAULT 1,  -- 1 if dst node exists; 0 if dangling (set by resolve pass)

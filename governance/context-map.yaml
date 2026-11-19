@@ -1627,6 +1627,13 @@ checks:
     - tooling
     min_items: null
     cmd: python3 scripts/tests/test_search_log_completeness.py
+  - id: test_state_graph_instrument
+    level: advisory
+    battery: tests
+    kinds:
+    - tooling
+    min_items: null
+    cmd: python3 scripts/tests/test_state_graph_instrument.py
   - id: test_translations
     level: advisory
     battery: tests

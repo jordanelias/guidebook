@@ -54,7 +54,7 @@ def build(audit_db=None, guidebook_db=None) -> GraphStore:
         extract_db.extract(gdb, store)          # data layer
         extract_code.extract(store, REPO_ROOT)  # code layer (AST table refs)
         extract_content.extract(store, REPO_ROOT)  # content layer (identifier refs)
-        extract_contract.extract(store, REPO_ROOT)  # governance contract (stages + checks)
+        extract_contract.extract(store, REPO_ROOT)  # governance contract (stages, checks, ruled returns)
         store.resolve_edges()
         topology.check_all(store, gdb)
         store.set_meta("guidebook_db", guidebook_db)

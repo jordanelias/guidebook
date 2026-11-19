@@ -1103,6 +1103,17 @@ checks:
   cost: slow
   no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
   note: ~27s — carries graph_audit's mutation harness. The slowest test by far.
+- id: test_state_graph_instrument
+  cmd:
+  - python3
+  - scripts/tests/test_state_graph_instrument.py
+  battery: tests
+  kinds:
+  - tooling
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
 - id: test_pipeline_contract
   cmd:
   - python3

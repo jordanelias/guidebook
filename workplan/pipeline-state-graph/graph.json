@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-11-17 03:00 UTC from git HEAD 7ef011d1 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-11-19 06:30 UTC from git HEAD 57ebb789 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
- "user_version": 145,
+ "user_version": 159,
  "stages": [
   "base",
   "research",
@@ -10,6 +10,56 @@
   "synthesis",
   "specification",
   "render"
+ ],
+ "returns": [
+  {
+   "id": "base-from-research-attested-form",
+   "from_stage": "research",
+   "to_stage": "base",
+   "carrier_table": "term_aliases",
+   "carrier_column": "source_url",
+   "carrier_value": null
+  },
+  {
+   "id": "research-from-evidence-mining",
+   "from_stage": "evidence",
+   "to_stage": "research",
+   "carrier_table": "search_executions",
+   "carrier_column": "mined_ref_id",
+   "carrier_value": null
+  },
+  {
+   "id": "research-from-judgment-absence",
+   "from_stage": "judgment",
+   "to_stage": "research",
+   "carrier_table": "extraction_follow_ups",
+   "carrier_column": "reason",
+   "carrier_value": "absence-needs-tested-value"
+  },
+  {
+   "id": "research-from-specification-gap",
+   "from_stage": "specification",
+   "to_stage": "research",
+   "carrier_table": "gaps",
+   "carrier_column": "parameter_id",
+   "carrier_value": null
+  },
+  {
+   "id": "evidence-from-specification-skim",
+   "from_stage": "specification",
+   "to_stage": "evidence",
+   "carrier_table": "source_value_extractions",
+   "carrier_column": "extraction_method",
+   "carrier_value": "skim"
+  },
+  {
+   "id": "judgment-from-specification-skim",
+   "from_stage": "specification",
+   "to_stage": "judgment",
+   "carrier_table": "source_value_extractions",
+   "carrier_column": "extraction_method",
+   "carrier_value": "skim"
+  }
  ],
  "tables": {
   "access_duration": {
@@ -149,6 +199,7 @@
    "writers": [
     "set-parameter-direction",
     "add-parameter",
+    "set-parameter-kind",
     "retire-parameter",
     "merge-parameter",
     "annotate-parameter"
@@ -167,7 +218,12 @@
     "accessibility_direction",
     "direction_ref_id",
     "quantity_kind",
-    "quantity_kind_observation_id"
+    "quantity_kind_source_url",
+    "quantity_kind_source_page",
+    "quantity_kind_source_line",
+    "quantity_kind_source_clause",
+    "quantity_kind_ref_id",
+    "quantity_kind_quote"
    ]
   },
   "base_quantity_kinds": {
@@ -206,6 +262,23 @@
     "updated_at",
     "superseded_by_need",
     "superseded_by_identity"
+   ]
+  },
+  "base_units": {
+   "stage": "base",
+   "rows": 7,
+   "writers": [],
+   "cols": [
+    "unit",
+    "kind_id",
+    "factor_numerator",
+    "factor_denominator",
+    "figure_form",
+    "system",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
    ]
   },
   "case_studies": {
@@ -682,6 +755,7 @@
     "needs_code",
     "basis",
     "basis_text",
+    "basis_reason",
     "retired_at",
     "retired_by_session",
     "retirement_reason",
@@ -1021,9 +1095,7 @@
    ],
    "cols": [
     "exec_id",
-    "term_id",
-    "alias",
-    "language",
+    "form_id",
     "created_at",
     "created_by_session"
    ]
@@ -1090,6 +1162,36 @@
     "created_by_session",
     "updated_at",
     "updated_by_session"
+   ]
+  },
+  "source_clauses": {
+   "stage": "evidence",
+   "rows": 0,
+   "writers": [
+    "record-scan"
+   ],
+   "cols": [
+    "clause_id",
+    "scan_id",
+    "locator_scheme",
+    "loc_division",
+    "loc_part",
+    "loc_section",
+    "loc_subsection",
+    "loc_paragraph",
+    "loc_clause",
+    "loc_subclause",
+    "loc_division_end",
+    "loc_part_end",
+    "loc_section_end",
+    "loc_subsection_end",
+    "loc_paragraph_end",
+    "loc_clause_end",
+    "loc_subclause_end",
+    "loc_note",
+    "clause_text",
+    "created_at",
+    "created_by_session"
    ]
   },
   "source_locators": {
@@ -1174,6 +1276,7 @@
    "writers": [
     "add-extraction",
     "amend-extraction",
+    "retire-extraction",
     "derive-extraction"
    ],
    "cols": [
@@ -1228,7 +1331,11 @@
     "figure_role",
     "comparator",
     "harm_finding",
-    "value_as_written"
+    "value_as_written",
+    "clause_id",
+    "retired_at",
+    "retired_by_session",
+    "retirement_reason"
    ]
   },
   "specification_extraction_links": {
@@ -1356,10 +1463,11 @@
    "stage": "base",
    "rows": 2382,
    "writers": [
-    "rename-term",
+    "add-term",
     "add-alias"
    ],
    "cols": [
+    "form_id",
     "term_id",
     "alias",
     "language",
@@ -1375,7 +1483,53 @@
     "source_url",
     "source_page",
     "source_line",
-    "source_clause"
+    "source_clause",
+    "usage_type"
+   ]
+  },
+  "term_label_picks": {
+   "stage": "base",
+   "rows": 0,
+   "writers": [
+    "add-term",
+    "rename-term"
+   ],
+   "cols": [
+    "pick_id",
+    "term_id",
+    "former_label",
+    "form_id",
+    "ruling_quote",
+    "ref_id",
+    "judge",
+    "reason",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "term_relations": {
+   "stage": "base",
+   "rows": 0,
+   "writers": [
+    "add-term-relation",
+    "retire-term-relation"
+   ],
+   "cols": [
+    "relation_id",
+    "from_term_id",
+    "kind",
+    "to_term_id",
+    "reason",
+    "source_url",
+    "source_page",
+    "source_line",
+    "source_clause",
+    "ref_id",
+    "created_at",
+    "created_by_session",
+    "retired_at",
+    "retired_by_session",
+    "retirement_reason"
    ]
   },
   "terms": {
@@ -1473,12 +1627,6 @@
   },
   {
    "child": "base_parameters",
-   "col": "quantity_kind_observation_id",
-   "parent": "observed_terms",
-   "notnull": false
-  },
-  {
-   "child": "base_parameters",
    "col": "quantity_kind",
    "parent": "base_quantity_kinds",
    "notnull": false
@@ -1518,6 +1666,12 @@
    "col": "parent_code",
    "parent": "base_taxonomy_identity",
    "notnull": false
+  },
+  {
+   "child": "base_units",
+   "col": "kind_id",
+   "parent": "base_quantity_kinds",
+   "notnull": true
   },
   {
    "child": "case_studies",
@@ -1821,19 +1975,7 @@
   },
   {
    "child": "search_execution_forms",
-   "col": "term_id",
-   "parent": "term_aliases",
-   "notnull": true
-  },
-  {
-   "child": "search_execution_forms",
-   "col": "alias",
-   "parent": "term_aliases",
-   "notnull": true
-  },
-  {
-   "child": "search_execution_forms",
-   "col": "language",
+   "col": "form_id",
    "parent": "term_aliases",
    "notnull": true
   },
@@ -1898,6 +2040,12 @@
    "notnull": false
   },
   {
+   "child": "source_clauses",
+   "col": "scan_id",
+   "parent": "source_scans",
+   "notnull": true
+  },
+  {
    "child": "source_scans",
    "col": "target_parameter_id",
    "parent": "base_parameters",
@@ -1920,6 +2068,12 @@
    "col": "ref_id",
    "parent": "evidence_sources",
    "notnull": true
+  },
+  {
+   "child": "source_value_extractions",
+   "col": "clause_id",
+   "parent": "source_clauses",
+   "notnull": false
   },
   {
    "child": "source_value_extractions",
@@ -2078,6 +2232,30 @@
    "notnull": true
   },
   {
+   "child": "term_label_picks",
+   "col": "form_id",
+   "parent": "term_aliases",
+   "notnull": false
+  },
+  {
+   "child": "term_label_picks",
+   "col": "term_id",
+   "parent": "terms",
+   "notnull": true
+  },
+  {
+   "child": "term_relations",
+   "col": "to_term_id",
+   "parent": "terms",
+   "notnull": true
+  },
+  {
+   "child": "term_relations",
+   "col": "from_term_id",
+   "parent": "terms",
+   "notnull": true
+  },
+  {
    "child": "translations",
    "col": "superseded_by_translation_id",
    "parent": "translations",
@@ -2099,6 +2277,16 @@
   }
  ],
  "views": {
+  "v_attested_term_forms": {
+   "reads": [
+    "term_aliases"
+   ],
+   "stages": [
+    "base"
+   ],
+   "crosses": false,
+   "rows": 0
+  },
   "v_best_practice": {
    "reads": [
     "specifications"
@@ -2314,7 +2502,8 @@
   },
   "v_live_lens_links": {
    "reads": [
-    "extraction_lens_links"
+    "extraction_lens_links",
+    "source_value_extractions"
    ],
    "stages": [
     "judgment"
@@ -2424,6 +2613,17 @@
    ],
    "crosses": true,
    "rows": 88
+  },
+  "v_term_names": {
+   "reads": [
+    "term_aliases",
+    "terms"
+   ],
+   "stages": [
+    "base"
+   ],
+   "crosses": false,
+   "rows": 94
   },
   "v_translations_current": {
    "reads": [
@@ -2582,6 +2782,16 @@
    "status": [
     "active",
     "deprecated"
+   ]
+  },
+  "base_units": {
+   "figure_form": [
+    "number",
+    "ratio"
+   ],
+   "system": [
+    "metric",
+    "inch-foot"
    ]
   },
   "case_studies": {
@@ -2801,6 +3011,7 @@
     "named_in_text",
     "heading",
     "study_participants",
+    "context",
     "carried"
    ]
   },
@@ -3184,6 +3395,23 @@
    "NOT": [
     "instrument",
     "other_source"
+   ],
+   "usage_type": [
+    "code_term",
+    "colloquial",
+    "regional_variant",
+    "outdated_or_disfavoured",
+    "product_name"
+   ]
+  },
+  "term_relations": {
+   "kind": [
+    "broader",
+    "part of",
+    "element has parameter",
+    "element has provision",
+    "adjacent",
+    "distinct"
    ]
   },
   "terms": {
@@ -3578,11 +3806,17 @@
     "term_adjudications": [
      "INSERT"
     ],
+    "term_aliases": [
+     "INSERT"
+    ],
+    "term_label_picks": [
+     "INSERT"
+    ],
     "terms": [
      "INSERT"
     ]
    },
-   "refusals": 7
+   "refusals": 14
   },
   "set-parameter-direction": {
    "functions": [
@@ -3599,14 +3833,28 @@
   "add-parameter": {
    "functions": [
     "_emit",
-    "insert_parameter"
+    "insert_parameter",
+    "_kind_warrant_args"
    ],
    "writes": {
     "base_parameters": [
      "INSERT"
     ]
    },
-   "refusals": 9
+   "refusals": 6
+  },
+  "set-parameter-kind": {
+   "functions": [
+    "_emit",
+    "set_parameter_kind",
+    "_kind_warrant_args"
+   ],
+   "writes": {
+    "base_parameters": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 2
   },
   "add-quantity-kind": {
    "functions": [
@@ -3632,17 +3880,53 @@
    },
    "refusals": 5
   },
+  "add-term-relation": {
+   "functions": [
+    "_emit",
+    "add_term_relation"
+   ],
+   "writes": {
+    "term_relations": [
+     "INSERT"
+    ]
+   },
+   "refusals": 8
+  },
+  "retire-term-relation": {
+   "functions": [
+    "_emit",
+    "retire_term_relation"
+   ],
+   "writes": {
+    "term_relations": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 2
+  },
+  "element-parameters": {
+   "functions": [
+    "_emit",
+    "element_parameters"
+   ],
+   "writes": {},
+   "refusals": 1
+  },
   "record-scan": {
    "functions": [
     "_emit",
-    "record_scan"
+    "record_scan",
+    "_clauses_file"
    ],
    "writes": {
+    "source_clauses": [
+     "INSERT"
+    ],
     "source_scans": [
      "INSERT"
     ]
    },
-   "refusals": 12
+   "refusals": 15
   },
   "defer-reading": {
    "functions": [
@@ -3686,15 +3970,14 @@
     "rename_term"
    ],
    "writes": {
-    "term_aliases": [
-     "INSERT",
-     "UPDATE"
+    "term_label_picks": [
+     "INSERT"
     ],
     "terms": [
      "UPDATE"
     ]
    },
-   "refusals": 10
+   "refusals": 15
   },
   "revoke-declination": {
    "functions": [
@@ -3731,7 +4014,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 31
+   "refusals": 23
   },
   "mint-term-from-catalogue": {
    "functions": [
@@ -3942,7 +4225,7 @@
      "INSERT"
     ]
    },
-   "refusals": 30
+   "refusals": 34
   },
   "relate-extraction": {
    "functions": [
@@ -3994,6 +4277,18 @@
     ]
    },
    "refusals": 4
+  },
+  "retire-extraction": {
+   "functions": [
+    "_emit",
+    "retire_extraction"
+   ],
+   "writes": {
+    "source_value_extractions": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 5
   },
   "derive-extraction": {
    "functions": [
@@ -4534,6 +4829,7 @@
      "access_need_icf",
      "access_needs",
      "access_stakes",
+     "base_units",
      "life_stage_modifiers",
      "rooms",
      "slugs"
@@ -4777,9 +5073,8 @@
     "CLM-029"
    ],
    "evidence": {
-    "count": 7,
+    "count": 6,
     "with_live_rows": [
-     "base_parameters.quantity_kind_observation_id -> observed_terms",
      "base_parameters.direction_ref_id -> evidence_sources",
      "search_admissions.ref_id -> evidence_sources",
      "search_candidates.resolved_ref_id -> evidence_sources",
@@ -4788,12 +5083,6 @@
      "term_aliases.observation_id -> observed_terms"
     ],
     "all": [
-     {
-      "fk": "base_parameters.quantity_kind_observation_id -> observed_terms",
-      "from_stage": "base",
-      "to_stage": "evidence",
-      "child_rows": 10
-     },
      {
       "fk": "base_parameters.direction_ref_id -> evidence_sources",
       "from_stage": "base",
@@ -5215,13 +5504,13 @@
   "status corrections owed (each atom's status re-read)": 12,
   "conflicts (atoms, class, probe exist)": 31,
   "machine transitions": 43,
-  "transition evidence needles re-read": 78,
+  "transition evidence needles re-read": 82,
   "state vocabularies compared with a column's own CHECK": 11,
   "abstract machines (no single column holder)": 5,
   "capability predicates": 27,
   "probes run": 32,
   "probes linted for a reachable PASS": 32,
-  "tables placed in a stage": 59
+  "tables placed in a stage": 63
  },
  "atoms_by_status": {
   "ACTIVE": 2211,

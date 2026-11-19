@@ -3,7 +3,8 @@ scripts/audit/graph/extract_contract.py — ingest the pipeline contract into th
 
 Reads governance/pipeline-contract.yaml and materialises its stages and the
 enforcer each stage criterion names, as `stage` nodes and `stage_check` edges to
-the enforcer `file` nodes. This closes the loop the contract was designed for: the
+the enforcer `file` nodes, and each ruled return (a stage's `re_entry` entry) as a
+`ruled_return` edge from the later stage it comes from to the stage it re-enters. This closes the loop the contract was designed for: the
 governance contract's own structure becomes edges the vectorized audit traverses,
 and an enforcer path that does not exist on disk surfaces as a dangling edge just
 like any other phantom reference.
@@ -40,6 +41,16 @@ def _check_edge(store, repo_root, src_node, check, attrs):
     store.add_edge(src_node, node_id("file", check), "stage_check", attrs=attrs)
 
 
+def returns(doc):
+    """The ruled returns: one dict per `re_entry` entry of a stage, in contract order. Both graphs read the
+    returns here (this one and workplan/pipeline-state-graph/build_graph.py)."""
+    for st in doc.get("stages", []) or []:
+        for r in st.get("re_entry", []) or []:
+            yield dict(id=r.get("id"), from_stage=r.get("from_stage"), to_stage=st.get("id"),
+                       carrier_table=r.get("carrier_table"), carrier_column=r.get("carrier_column"),
+                       carrier_value=r.get("carrier_value"))
+
+
 def _ingest(store, repo_root, doc):
     for st in doc.get("stages", []) or []:
         sid = st.get("id")
@@ -58,3 +69,6 @@ def _ingest(store, repo_root, doc):
         g_node = store.add_node("stage", f"cross_stage:{gid}", subtype="cross_stage",
                                 attrs={"gate": gid})
         _check_edge(store, repo_root, g_node, g.get("check"), {"gate": gid})
+    for r in returns(doc):
+        store.add_edge(node_id("stage", r["from_stage"]), node_id("stage", r["to_stage"]), "ruled_return",
+                       attrs={k: v for k, v in r.items() if k not in ("from_stage", "to_stage")})
