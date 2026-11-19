@@ -139,3 +139,17 @@ Open, owner or design (`tasks/T-027-source-identity-edition.md` section 4):
 2. The task file's premise (the three columns empty and without a writer) is only partly stale: `code_currency_status` and its notes are writable (`amend-source`); `original_title` is writable for a DOI source only; `edition` is writable by neither.
 3. `BATCH-1-EXECUTION-NOTES.md` lines about T-027 stay true after the revert.
 4. The `v_evidence_authors` full-given-name change still needs a column the file does not name.
+
+## T-078 (commit 1187ac12; critic repairs sent to the executor)
+
+Held under attack: the rebuild reproduces and every live row is unchanged; the six rebuilt views differ only by the filter; the retire refusals (blank, unknown, already retired, live determination named) fire; `amend-extraction` and both ends of `relate-extraction` refuse a retired figure; the engine drops a retired figure's links (66 to 65); a retired figure's copy can be re-added and coexists with it; `emit_batch_sql` captures and replays the retire; only `source_value_extractions` changed (OD-71).
+
+The owner's execution condition (no figure retired until every reader filters) did NOT hold at the commit. Sent for repair: a live derived figure computed from a retired one (and a figure retired while a live one derives from it); `add-extraction` writing an edge to a retired figure; `retire-lens-link`'s last-link refusal disabled by the view rebuild; follow-ups on a retired figure and `owner-browser.yaml`'s `open_follow_ups` reading them; blank and zero-width holes in the retire CHECK and the verb; sixteen filters with no test; the false "KEEPS HISTORY" statement for `v_determination_provenance`; trigger holes (rewritable reason, born-retired insert).
+
+Not repaired:
+1. **OWNER'S: a pair whose only figure is withdrawn as misread reads `READ-NOTHING-FOUND` and `scan_debt` owes nothing.** The task file specifies the return to the reading status; whether a withdrawn figure should surface as owed is the owner's. Files that would change: `tasks/T-078-figure-retires-in-place.md`, `v_scan_ledger`, `scripts/audit/scan_debt.py`.
+2. **OI-55 (7) is still unanswered** (whether `add-lens-link` and `retire-lens-link` refuse while a live determination uses the figure).
+3. `machines.yaml` M04 has no retire transition and M04.t2 still says `from: "any"` (T-134's area).
+4. `INSERT OR REPLACE` of the same figure id un-retires it; a trigger cannot close that without recursive triggers (contained to scratch, since `emit_batch_sql` renders the REPLACE as an UPDATE the trigger refuses on replay).
+5. Unproven on live data: `v_unregistered_roots` and `v_root_id_conflicts` return 0 rows on the canonical database, and no `source_clauses`, `connection_targets` or row-to-row `confirms` and `derived_from` rows exist.
+6. Not examined by the critic: `research_batch_dod` rules other than R3, the owner-browser generator's generic table rendering, translation readers, the `harm_finding` readers (R7).
