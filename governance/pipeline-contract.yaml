@@ -378,3 +378,12 @@ cross_stage:
 # at the end: hand-written atoms cite the lines above by number.
 translation:
   default_stage: synthesis
+# Amended 2026-11-19 (ledger: Owner ratification 2026-11-19; adjudication item 68). A prose note, not a rule
+# change: no entry above is edited by it. What now governs where the determination machine sits is the owner's
+# spine, "you research slugs, evidence research, judge evidence, synthesize judgments, specify syntheses, and
+# render specifications" (2026-08-27): directness belongs to `judgment`, convergence to `synthesis`, and the
+# determination machine to `specification`; convergence stays computed inside the engine (OD-07), so the
+# engine writes its synthesis output in the same run as the determination. The `judgment` entry's `anchor:`
+# ("the 4-state determination machine + convergence + directness") and the `specification` entry's order are
+# read through this note until the governance text edit the adjudication names (its item 68, follow-on) is made
+# as its own tooling change. Appended at the end: hand-written atoms cite the lines above by number.
