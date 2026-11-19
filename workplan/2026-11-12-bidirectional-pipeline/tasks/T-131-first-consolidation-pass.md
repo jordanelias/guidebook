@@ -122,3 +122,5 @@ Before the migration is applied: delete the scratch copy. After it is committed:
 ## 11. Adversarial pass and pull request
 
 Real execution only. `/adversarial` once, recorded with `db.py record-adversarial-pass` and closed with `close-adversarial-pass`; `/batch-done`; push; open the pull request last, once, listing every candidate with its verdict, reason code and evidence rows, the pairs left unjudged with what would decide each, and the pairs marked `owner` as questions for the owner in plain words; call `unsubscribe_pr_activity` at once; push nothing afterwards except a deliberate change. Its ratchet to blocking is T-132's (a tooling pull request, rule 10).
+
+**Amended 2026-11-19 (ledger: Owner ratification 2026-11-19; adjudication item 11; T-142).** In "What reads what this task writes", `v_term_names` is retired by T-142 (`tasks/T-142-displayed-name-rule.md` section 4 item 7); the concept reader in its place is `term_names` in `scripts/db.py` (`db.py term-names` prints it), and a merge direction taken from `label_is_attested_form` reads that function's field.

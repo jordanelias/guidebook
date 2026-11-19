@@ -387,3 +387,9 @@ translation:
 # ("the 4-state determination machine + convergence + directness") and the `specification` entry's order are
 # read through this note until the governance text edit the adjudication names (its item 68, follow-on) is made
 # as its own tooling change. Appended at the end: hand-written atoms cite the lines above by number.
+# Correction 2026-11-19 to the note above (adjudication items 68 and 13 of section 4; repair after an adversarial
+# review). "the governance text edit the adjudication names … as its own tooling change" has NO task: none of
+# T-136 to T-143 makes it (grep -l "item 68" workplan/2026-11-12-bidirectional-pipeline/tasks/T-13*.md
+# workplan/2026-11-12-bidirectional-pipeline/tasks/T-14*.md), no loader reads this comment, and the `judgment`
+# entry's `anchor:` above is unchanged. The rule change itself is an OPEN POINT for the owner: OD-17 ratified the
+# contract before it was made.

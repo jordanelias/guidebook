@@ -8033,3 +8033,45 @@ SUPERSEDES: decisions/DR-2026-07-21-tier-doctrine-source-class-consistency.md ::
 CONDITION: any session executing a task the adjudication names, writing a base warrant, a lens link, a unit, a direction, a domain or a displayed name, or meeting an item of its section 2.
 ACTION: (1) Read each decision's gate by the convention of 2026-11-12: the status line above opens it, a RESOLVED UNDER DELEGATION line opens it with its CHECK as recorded here; a task that requires the owner's own words is open only on ANSWERED BY THE OWNER. (2) Author the tooling tasks of the adjudication's section 4 in its order, each its own pull request; ship research separately (rule 10). (3) Treat every [ASSUMPTION] above as unratified except where the owner's words state it; the breadth of "all" is the first to confirm. (4) The recommended defaults the owner ratified are the owner's rulings from this date; a later owner statement supersedes them on contact (rule 0).
 DATE: 2026-11-19 — the owner's typed instruction and ratification (quoted above); the resolutions themselves are the adjudicator's, ratified by the owner.
+
+## Owner statement 2026-11-19 (second) — "grab bar" and "grabbar" are one parameter: the displayed-name key merges whitespace variants
+
+Given in the session `session_2026-11-18-remediation-batch-1-tooling-stack-2` (https://claude.ai/code/session_01Ub36iMfdrQNV9XzGP4dyZm), typed while the coordinator reported a critic's finding that the displayed-name grouping key of T-142 merges "grab bar" with "grabbar". Derive the time from the preserved transcript (`git grep -n -F "are obviously the same parameter" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "grab bar and grab bar are obviously the same parameter"
+
+**Readings.**
+
+- [ASSUMPTION: the second "grab bar" is "grabbar" — basis: the coordinator's message the owner answered named the pair "grab bar" and "grabbar", and a pair of identical strings states nothing].
+- [ASSUMPTION: the statement confirms the ratified grouping key of the third adjudication's item 11 (an appearance grouped by language and by the form after the one quote normaliser, case-folded), which merges whitespace variants of one form; it says nothing of accents, which stay as the ratified words leave them — basis: the words; "obviously the same parameter" speaks of whitespace variants of one term].
+- The critic's finding that the key "strips spaces" was a false alarm, and the coordinator's repair instruction to keep whitespace was wrong; both are withdrawn here (CLAUDE.md rule 0: the live statement supersedes the instruction).
+
+CONDITION: any session writing or reading a displayed name, a form grouping key or a test of one (T-142).
+ACTION: (1) Group the forms of a concept by the ratified key; a form that differs from another only in whitespace or case is the same form. (2) Do not narrow the key to keep whitespace. (3) Accents are not decided here.
+DATE: 2026-11-19 — owner statement (typed words, quoted above).
+
+## Owner statements 2026-11-19 (third) — "ramp slopes" and "ramp gradient" are one concept; the door-width forms are one concept
+
+Given in the session `session_2026-11-18-remediation-batch-1-tooling-stack-2` (https://claude.ai/code/session_01Ub36iMfdrQNV9XzGP4dyZm), in three typed messages sent while the coordinator was reporting the critics' findings on the displayed-name and alias tasks. Derive the times from the preserved transcript (`git grep -n -F "ramp slopes and ramp gradient are the same" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "ramp slopes and ramp gradient are the same"
+>
+> "doorway width and door opening width and door clear space are the same"
+>
+> "*clear width"
+
+**Readings.**
+
+- [ASSUMPTION: "are the same" says the forms are names of ONE concept (one term, one parameter), so no second term or parameter is minted for any of them — basis: the words; the live base already holds one term for each set: `select term_id, alias from term_aliases where lower(alias) = 'ramp slope'` (an alias of the term "ramp gradient") and `select term_id, canonical_en from terms where canonical_en = 'door width'`].
+- [ASSUMPTION: "ramp slopes" is the plural of the recorded alias "ramp slope" — basis: the form "ramp slope" is already an alias of the term "ramp gradient"].
+- [ASSUMPTION: "*clear width" adds "clear width", said of a door, to the door set; the "clear width" of a corridor, a route or any other element is not covered — basis: the message followed the door statement directly; "clear width" alone names the width of any element, and the ledger treats a corridor's clear width as its own matter].
+- [ASSUMPTION: "door clear space" is the clear opening of the door, not the clear floor space or manoeuvring clearance beside it — basis: it is listed beside "doorway width" and "door opening width"; if the floor space at a door was meant, a later line withdraws this one].
+- The statements are the owner's own words, not a source's: under E4 (owner statement 2026-11-06 (second)) they make the forms recorded vocabulary of the owner's supply (`attestation` `owner_supplied`, a value of the column's CHECK: `select sql from sqlite_master where name = 'term_aliases'`), which counts for nothing toward a displayed name until a source attests the form. Writing the alias rows is research data (rule 10) and is not done in the tooling pull request this entry rides in.
+
+CONDITION: any session adding a term, an alias or a parameter for a door's width or opening, or a ramp's slope or gradient; any session reading a source that names one of these forms.
+ACTION: (1) Do not mint a second term or parameter for any form above; file the form as an alias of the one concept. (2) A form a source states is recorded with its locator through the alias writer; a form only the owner stated is recorded as an owner-supplied alias. (3) A source's figure for any of these forms is extracted against the one parameter whatever slug the source came in under. (4) The alias rows themselves are written in a research pull request, after the tooling it needs (T-136, T-142).
+DATE: 2026-11-19 — owner statements (typed words, quoted above).

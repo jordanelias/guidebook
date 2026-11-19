@@ -373,7 +373,7 @@
   {
     "started": "2026-11-19T06:19:49",
     "role": "other",
-    "bytes": 1381501,
+    "bytes": 1552406,
     "agent_id_prefix": "afb380c3",
     "file": "2026-11-19T06-19-49_other_afb380c3.jsonl"
   },
@@ -394,22 +394,71 @@
   {
     "started": "2026-11-19T22:22:16",
     "role": "other",
-    "bytes": 1868467,
+    "bytes": 2511680,
     "agent_id_prefix": "a1377161",
     "file": "2026-11-19T22-22-16_other_a1377161.jsonl"
   },
   {
     "started": "2026-11-19T22:22:16",
     "role": "other",
-    "bytes": 2295168,
+    "bytes": 2596536,
     "agent_id_prefix": "aad3cfac",
     "file": "2026-11-19T22-22-16_other_aad3cfac.jsonl"
   },
   {
     "started": "2026-11-19T22:22:16",
     "role": "other",
-    "bytes": 1981989,
+    "bytes": 2633574,
     "agent_id_prefix": "ae422fe9",
     "file": "2026-11-19T22-22-16_other_ae422fe9.jsonl"
+  },
+  {
+    "started": "2026-11-19T23:31:46",
+    "role": "adversarial",
+    "bytes": 672257,
+    "agent_id_prefix": "a2853abe",
+    "file": "2026-11-19T23-31-46_adversarial_a2853abe.jsonl"
+  },
+  {
+    "started": "2026-11-19T23:31:46",
+    "role": "adversarial",
+    "bytes": 730804,
+    "agent_id_prefix": "a42ab055",
+    "file": "2026-11-19T23-31-46_adversarial_a42ab055.jsonl"
+  },
+  {
+    "started": "2026-11-19T23:31:46",
+    "role": "adversarial",
+    "bytes": 706022,
+    "agent_id_prefix": "a43875ff",
+    "file": "2026-11-19T23-31-46_adversarial_a43875ff.jsonl"
+  },
+  {
+    "started": "2026-11-19T23:31:46",
+    "role": "adversarial",
+    "bytes": 812045,
+    "agent_id_prefix": "a4e235a3",
+    "file": "2026-11-19T23-31-46_adversarial_a4e235a3.jsonl"
+  },
+  {
+    "started": "2026-11-19T23:32:25",
+    "role": "adversarial",
+    "bytes": 793921,
+    "agent_id_prefix": "a5c5b6ef",
+    "file": "2026-11-19T23-32-25_adversarial_a5c5b6ef.jsonl"
+  },
+  {
+    "started": "2026-11-19T23:32:25",
+    "role": "adversarial",
+    "bytes": 984586,
+    "agent_id_prefix": "a8df4496",
+    "file": "2026-11-19T23-32-25_adversarial_a8df4496.jsonl"
+  },
+  {
+    "started": "2026-11-19T23:32:25",
+    "role": "adversarial",
+    "bytes": 790589,
+    "agent_id_prefix": "ae372438",
+    "file": "2026-11-19T23-32-25_adversarial_ae372438.jsonl"
   }
 ]
