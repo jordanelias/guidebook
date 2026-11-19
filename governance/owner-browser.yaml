@@ -1138,8 +1138,10 @@ queue:
     table: extraction_follow_ups
     key: follow_up_id
     sql: |
-      SELECT follow_up_id AS id, 'extraction ' || extraction_id || ': ' || substr(reason, 1, 120) AS label
-        FROM extraction_follow_ups WHERE resolved_at IS NULL ORDER BY follow_up_id
+      SELECT f.follow_up_id AS id, 'extraction ' || f.extraction_id || ': ' || substr(f.reason, 1, 120) AS label
+        FROM extraction_follow_ups f
+        JOIN source_value_extractions x ON x.extraction_id = f.extraction_id AND x.retired_at IS NULL
+       WHERE f.resolved_at IS NULL ORDER BY f.follow_up_id
     question: "Do the follow-up pass, or close this follow-up?"
     why_yours: "Closing a follow-up without the pass accepts the figure as it stands."
     options:

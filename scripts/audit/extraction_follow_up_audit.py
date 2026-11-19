@@ -11,7 +11,8 @@ published value while tagged (`db.py raise-follow-up`, extraction_follow_ups), a
 skimmed figure may NOT (dbcore.NOT_PUBLISHABLE_METHODS). This is the reader of both
 answers.
 
-WHAT IT DOES:
+WHAT IT DOES (open follow-ups of LIVE figures only: a follow-up on a figure retired by db.py retire-extraction is not
+listed, as db.py cell-status and the owner browser's queue do not list it; raise-follow-up refuses a retired figure):
   * LISTS every open follow-up (extraction, source, parameter, reason, warrant).
   * LISTS every open follow-up of reason dbcore.ABSENCE_FOLLOW_UP_REASON (an absence finding
     owing a tested value, owner OR-22) with its claim_type and every live determination that
@@ -61,12 +62,10 @@ def main():
                   "(pre-105 schema)", file=sys.stderr)
             return 2
         n_all = conn.execute("SELECT COUNT(*) FROM extraction_follow_ups").fetchone()[0]
-        # KEEPS HISTORY (T-078): an open follow-up on a retired figure is still listed until it is resolved; the
-        # live-value rules below read live determinations, which never link a retired figure (retire-extraction).
         open_rows = conn.execute(
             "SELECT f.follow_up_id, f.extraction_id, x.ref_id, x.parameter_id, f.reason, "
             "f.warrant, f.raised_by_session FROM extraction_follow_ups f "
-            "JOIN source_value_extractions x ON x.extraction_id = f.extraction_id "
+            "JOIN source_value_extractions x ON x.extraction_id = f.extraction_id AND x.retired_at IS NULL "
             "WHERE f.resolved_at IS NULL ORDER BY f.follow_up_id").fetchall()
         if dbcore.ABSENCE_FOLLOW_UP_REASON not in dbcore.check_values(
                 conn, "extraction_follow_ups", "reason"):
@@ -81,7 +80,7 @@ def main():
             "ON s.specification_id = l.specification_id "
             "WHERE l.extraction_id = f.extraction_id AND s.retired_at IS NULL) "
             "FROM extraction_follow_ups f "
-            "JOIN source_value_extractions x ON x.extraction_id = f.extraction_id "
+            "JOIN source_value_extractions x ON x.extraction_id = f.extraction_id AND x.retired_at IS NULL "
             "WHERE f.resolved_at IS NULL AND f.reason = ? ORDER BY f.follow_up_id",
             (dbcore.ABSENCE_FOLLOW_UP_REASON,)).fetchall()
         n_live = conn.execute("SELECT COUNT(*) FROM specifications "

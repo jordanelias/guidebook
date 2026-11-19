@@ -9963,6 +9963,7 @@ def raise_follow_up(extraction_id: int, reason: str, warrant: str, session: str,
         if found is None:
             raise Refusal(f"raise-follow-up: extraction {extraction_id}: no such "
                           f"extraction.")
+        _refuse_retired_figure(conn, extraction_id, "raise-follow-up")
         if reason == dbcore.ABSENCE_FOLLOW_UP_REASON and found[0] != "absent":
             raise Refusal(f"raise-follow-up: --reason {reason} is for an absence finding "
                           f"(claim_type 'absent'); extraction {extraction_id} has claim_type "
@@ -10449,7 +10450,17 @@ _SVE_VOCAB_COLUMNS = (
 # CHECK (`relation NOT IN ('condition_on','derived_from') OR to_extraction_id IS NOT
 # NULL`), mirrored here so the CLI can name the reason instead of letting SQLite say
 # "CHECK constraint failed".
-_ROW_ONLY_RELATIONS = ("condition_on", "derived_from")
+def _row_only_relations(conn):
+    """The relations whose referent must be a row, read from extraction_relations' own CHECK
+    (`relation NOT IN (...) OR to_extraction_id IS NOT NULL`): the edges by which a figure LEANS on another (it holds
+    only given it, or is computed from it). Was a typed tuple beside that CHECK (rule 8). A parse failure refuses,
+    never permits."""
+    sql = conn.execute("SELECT sql FROM sqlite_master WHERE type='table' AND name='extraction_relations'").fetchone()
+    m = re.search(r"relation\s+NOT\s+IN\s*\(([^)]*)\)\s*OR\s+to_extraction_id\s+IS\s+NOT\s+NULL", sql[0] if sql else "")
+    if not m:
+        raise Refusal("extraction_relations' CHECK naming the relations that need a row referent cannot be read; "
+                      "nothing was written.")
+    return tuple(re.findall(r"'([^']+)'", m.group(1)))
 
 
 def _covering_scan(conn, ref_id: str, parameter_id: int):
@@ -10811,6 +10822,7 @@ def _refuse_bad_derived_input(conn, context: str, inp):
     ONE home of those rules for every writer of a `derived_from` edge (derive-extraction, add-extraction,
     relate-extraction): a derived row stores neither quote nor locator (OD-40), so what it rests on is checked here."""
     xid = inp["extraction_id"]
+    _refuse_retired_figure(conn, xid, context)
     if inp["figure_role"] not in ("claim", "finding"):
         raise Refusal(f"{context}: input {xid} is a {inp['figure_role']!r} row. A derived figure is computed from "
                       f"figures a source states (a claim or a finding); a condition qualifies a figure and a derived "
@@ -10890,6 +10902,9 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
     """
     if not relation:
         raise Refusal(f"{context}: --relation is required.")
+    for end in (from_id, to_extraction):          # every route that writes an edge (T-078)
+        if end is not None:
+            _refuse_retired_figure(conn, end, context)
     dbcore.check_declared(conn, "extraction_relations", "relation", relation, context)
 
     has_row = to_extraction is not None
@@ -10927,7 +10942,7 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                 f"referent that is not yet its own row.")
         if relation == "derived_from":
             _refuse_bad_derived_input(conn, context, target)
-        if relation in _ROW_ONLY_RELATIONS and target["ref_id"] != from_ref_id \
+        if relation in _row_only_relations(conn) and target["ref_id"] != from_ref_id \
                 and not (cross_source_reason or "").strip():
             raise Refusal(
                 f"{context}: --to-extraction {to_extraction} was extracted from "
@@ -10968,7 +10983,7 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                 f"referent already carries its own kind in its own data. Omit "
                 f"--to-kind, or use --to-label if the referent is not a row.")
     else:
-        if relation in _ROW_ONLY_RELATIONS:
+        if relation in _row_only_relations(conn):
             raise Refusal(
                 f"{context}: relation={relation!r} requires --to-extraction (a row "
                 f"this project actually holds), not --to-label -- you cannot be "
@@ -11931,6 +11946,7 @@ def add_lens_link(extraction_id: int, session: str, *, identity: str = None, icf
             "FROM source_value_extractions WHERE extraction_id=?", (extraction_id,)).fetchone()
         if fig is None:
             raise Refusal(f"add-lens-link: extraction {extraction_id}: no such figure. Nothing was written.")
+        _refuse_retired_figure(conn, extraction_id, "add-lens-link")
         _require_lens_code(conn, col, code)
         text, reason = _require_lens_warrant(conn, basis, basis_text, fig["ref_id"], fig["claim_text"],
                                              fig["source_section"], "add-lens-link", basis_reason=basis_reason)
@@ -11983,7 +11999,8 @@ def retire_lens_link(link_id: int, reason: str, session: str, dry_run: bool = Fa
         if not (reason or "").strip():
             raise Refusal("retire-lens-link: --reason is blank. Say why the figure is no longer stated "
                           "in this group. Nothing was written.")
-        if conn.execute("SELECT COUNT(*) FROM v_live_lens_links WHERE extraction_id=?",
+        # The link table's own live links, not v_live_lens_links: the view lists no link of a retired figure (T-078).
+        if conn.execute("SELECT COUNT(*) FROM extraction_lens_links WHERE extraction_id=? AND retired_at IS NULL",
                         (link["extraction_id"],)).fetchone()[0] == 1:
             raise Refusal(
                 f"retire-lens-link: link {link_id} is extraction {link['extraction_id']}'s last live link. "
@@ -12010,8 +12027,12 @@ def retire_extraction(extraction_id: int, reason: str, session: str, dry_run: bo
     REFUSES: a blank reason; an unknown id; a figure already retired (its first reason stands); and a figure a LIVE
     determination links (dbcore.live_determinations_linked), naming each, because the determination would then cite
     a withdrawn figure until someone re-ran it: retire-specification first, then re-run this."""
-    reason = dbcore.require_reason(reason, f"retire-extraction {extraction_id}",
-                                   "A figure withdrawn without saying why erases a claim without a trace.")
+    why = "A figure withdrawn without saying why erases a claim without a trace."
+    reason = dbcore.require_reason(reason, f"retire-extraction {extraction_id}", why)
+    if not "".join(ch for ch in reason if not ch.isspace() and ch not in dbcore.ZERO_WIDTH):
+        # Blank as migration 159's triggers read it (whitespace and dbcore.ZERO_WIDTH). Not in require_reason: there
+        # it would change defer-reading's refusal ground for the same input (T079-30).
+        raise Refusal(f"retire-extraction {extraction_id}: --reason is required. {why}")
     with dbcore.connect(dry_run) as conn:
         row = conn.execute("SELECT retired_at, retirement_reason FROM source_value_extractions WHERE extraction_id=?",
                            (extraction_id,)).fetchone()
@@ -12026,6 +12047,16 @@ def retire_extraction(extraction_id: int, reason: str, session: str, dry_run: bo
                 f"retire-extraction: extraction {extraction_id} is in the provenance of live determination(s) "
                 f"{', '.join(map(str, live))}. Retire each first (db.py retire-specification --specification-id N "
                 f"--reason ...), then re-run this, and re-determine the cell. Nothing was written.")
+        leaning = _row_only_relations(conn)
+        leans = [r[0] for r in conn.execute(
+            "SELECT DISTINCT r.from_extraction_id FROM extraction_relations r JOIN source_value_extractions f "
+            "ON f.extraction_id = r.from_extraction_id WHERE r.to_extraction_id = ? AND f.retired_at IS NULL "
+            f"AND r.relation IN ({','.join('?' * len(leaning))}) ORDER BY 1", (extraction_id, *leaning))]
+        if leans:
+            raise Refusal(
+                f"retire-extraction: live figure(s) {', '.join(map(str, leans))} lean on extraction {extraction_id} "
+                f"({' or '.join(leaning)}). Retire each first (db.py retire-extraction), then re-run this. "
+                f"Nothing was written.")
         stamp, stem = dbcore.now(), dbcore.session_stem(session)
         conn.execute("UPDATE source_value_extractions SET retired_at=?, retired_by_session=?, retirement_reason=?, "
                      "updated_at=?, updated_by_session=? WHERE extraction_id=?",
@@ -12034,7 +12065,9 @@ def retire_extraction(extraction_id: int, reason: str, session: str, dry_run: bo
 
 
 def _refuse_retired_figure(conn, extraction_id, verb):
-    """A retired figure is history (retire-extraction): it is not amended, and no new edge starts or ends at it."""
+    """Refuse when `extraction_id` is a retired figure (retire-extraction). Called by amend-extraction, add-lens-link,
+    raise-follow-up, the shared edge writer `_write_relation_edge` (add-extraction, relate-extraction,
+    derive-extraction) and `_refuse_bad_derived_input`; repoint-extraction-relation does not call it."""
     got = conn.execute("SELECT retired_at, retirement_reason FROM source_value_extractions WHERE extraction_id=?",
                        (extraction_id,)).fetchone()
     if got is not None and got[0] is not None:
@@ -12064,9 +12097,6 @@ def relate_extraction(from_extraction: int, relation: str, session: str,
         if row is None:
             raise Refusal(
                 f"relate-extraction: --from {from_extraction}: no such extraction.")
-        for end in (from_extraction, to_extraction):
-            if end is not None:
-                _refuse_retired_figure(conn, end, "relate-extraction")
         rid = _write_relation_edge(
             conn, from_id=from_extraction, from_ref_id=row["ref_id"],
             from_figure_role=row["figure_role"], from_comparator=row["comparator"],
