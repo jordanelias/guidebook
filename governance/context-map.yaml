@@ -1632,6 +1632,7 @@ checks:
     battery: tests
     kinds:
     - tooling
+    - governance
     min_items: null
     cmd: python3 scripts/tests/test_state_graph_instrument.py
   - id: test_translations

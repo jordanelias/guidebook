@@ -197,6 +197,7 @@ Stop, change nothing further, and report (what you ran, what you saw, what you e
 - You find yourself choosing a target language or a reviewer class: that is OD-02 and OD-30.
 - The stage map's `gaps` value is not `cross-stage` on your base (T-051 not merged, or its value reversed by the owner): do not choose a stage for `translations` yourself.
 - `build_graph.py --check` prints a failure line after your change that it did not print before (above all a `not near cited line` for `governance/pipeline-contract.yaml`), or `skill_vocabulary_audit --paths skills/run-pipeline_SKILL.md` lists a token it did not list before: correct your edit (append the key at the end; write the key in plain text); if you cannot, stop.
+  _Amended 2026-11-19 (T-134): `build_graph.py --check` no longer prints `not near cited line`. A quote found once and away from its cited line prints `MOVED <id>: cited line A, found at line B` and does not fail; a quote found more than once fails with `none near cited line` (`build_graph.NEAR_FAIL`) unless one hit is within `LINE_TOLERANCE` of the cited line. Read the stop above with those lines in place of the removed one._
 - The evidence query of item 9 shows a stored title translation (`pub_title_en` or `translation_method` not NULL on some row): moving it is research rows, not this pull request.
 - A text cell you need to point at is in a table whose primary key has more than one column: never point by `rowid` instead; report the table.
 

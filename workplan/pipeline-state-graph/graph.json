@@ -1,5 +1,5 @@
 {
- "generated": "Generated 2026-11-19 06:30 UTC from git HEAD 57ebb789 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-11-19 06:59 UTC from git HEAD 2dbf852f (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
  "user_version": 159,
  "stages": [
@@ -18,7 +18,8 @@
    "to_stage": "base",
    "carrier_table": "term_aliases",
    "carrier_column": "source_url",
-   "carrier_value": null
+   "carrier_value": null,
+   "carrier_rows": 0
   },
   {
    "id": "research-from-evidence-mining",
@@ -26,7 +27,8 @@
    "to_stage": "research",
    "carrier_table": "search_executions",
    "carrier_column": "mined_ref_id",
-   "carrier_value": null
+   "carrier_value": null,
+   "carrier_rows": 11
   },
   {
    "id": "research-from-judgment-absence",
@@ -34,7 +36,8 @@
    "to_stage": "research",
    "carrier_table": "extraction_follow_ups",
    "carrier_column": "reason",
-   "carrier_value": "absence-needs-tested-value"
+   "carrier_value": "absence-needs-tested-value",
+   "carrier_rows": 0
   },
   {
    "id": "research-from-specification-gap",
@@ -42,7 +45,8 @@
    "to_stage": "research",
    "carrier_table": "gaps",
    "carrier_column": "parameter_id",
-   "carrier_value": null
+   "carrier_value": null,
+   "carrier_rows": 0
   },
   {
    "id": "evidence-from-specification-skim",
@@ -50,7 +54,8 @@
    "to_stage": "evidence",
    "carrier_table": "source_value_extractions",
    "carrier_column": "extraction_method",
-   "carrier_value": "skim"
+   "carrier_value": "skim",
+   "carrier_rows": 84
   },
   {
    "id": "judgment-from-specification-skim",
@@ -58,7 +63,8 @@
    "to_stage": "judgment",
    "carrier_table": "source_value_extractions",
    "carrier_column": "extraction_method",
-   "carrier_value": "skim"
+   "carrier_value": "skim",
+   "carrier_rows": 84
   }
  ],
  "tables": {

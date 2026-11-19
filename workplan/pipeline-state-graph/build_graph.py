@@ -23,7 +23,7 @@ import yaml
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 sys.path.insert(0, str(REPO / "scripts" / "audit" / "graph"))
-from extract_contract import returns as contract_returns     # the one reader of the contract's `re_entry` lists
+from extract_contract import returns as contract_returns     # the ruled returns, read for both graphs by one function
 
 MOD = {"MUST", "MUST_NOT", "MAY", "DEFINES", "CARDINALITY", "ORDER", "EQUATES", "RESERVES", "OPEN"}
 SPK = {"OWNER_QUOTED", "OWNER_RELAYED", "RATIFIED_DOC", "AGENT_PROPOSAL", "PROCESS_RULE"}
@@ -87,6 +87,7 @@ def load_atoms():
 
 
 LINE_TOLERANCE = 3                               # a hit starting within this many lines of the cited line is "near" it
+NEAR_FAIL = "none near cited line"               # the failure wording of a quote found more than once, away from its cited line
 
 
 def verify_atoms(atoms, repo=REPO, only=None, stats=None, moved=None):
@@ -140,9 +141,11 @@ def verify_atoms(atoms, repo=REPO, only=None, stats=None, moved=None):
         ln = int(lm.group(1)) if lm else None
         near = ln is not None and any(abs(h - ln) <= LINE_TOLERANCE for h in hits)
         if len(hits) > 1 and not near:           # the cited line is what tells two hits apart
-            bad.append(f"{a['id']}: quote found {len(hits)} times in {path} (lines {', '.join(map(str, hits))}), none near cited line {ln}")
+            bad.append(f"{a['id']}: quote found {len(hits)} times in {path} (lines {', '.join(map(str, hits))}), {NEAR_FAIL} {ln}")
         elif len(hits) == 1 and ln is not None and not near and moved is not None:
             moved.append(f"MOVED {a['id']}: cited line {ln}, found at line {hits[0]}")
+        if stats is not None and len(hits) == 1: stats.setdefault("found", {})[a["id"]] = f"{path}:{hits[0]}"
+    if stats is not None: stats.setdefault("failed", set()).update(b.split(":")[0] for b in bad)
     return bad
 
 
@@ -594,13 +597,13 @@ def cited_atom_ids(probes, conflicts, machines, caps):
     return cited
 
 
-def check_all(T, atoms, probes, conflicts, machines, caps, moved=None):
+def check_all(T, atoms, probes, conflicts, machines, caps, moved=None, stats=None):
     fails, warns, examined = [], [], {}
     # 1 atoms
     # A quote is verified only for an atom a conflict, status correction, machine, predicate or probe
     # still cites (W9): an atom nothing cites is a record, and a resolved entry stops needing its source.
     cited = cited_atom_ids(probes, conflicts, machines, caps)
-    stats = {}
+    stats = {} if stats is None else stats       # `found` (path:line of each quote found once) and `failed` feed ATOMS.tsv
     bad = verify_atoms(atoms, only=cited, stats=stats, moved=moved); fails += bad
     examined["atoms in all (structure checked)"] = len(atoms)
     examined["atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)"] = stats.get("verified", 0)
@@ -811,6 +814,14 @@ def mdtable(headers, rows):
     return "\n".join(out)
 
 
+def carrier_rows(T, r):
+    """Rows of the carrier table whose carrier column is set (and holds the carrier value, when one is ruled)."""
+    if r["carrier_table"] not in T.tables or r["carrier_column"] not in T.cols(r["carrier_table"]): return "no such column"
+    sql = f'select count(*) from "{r["carrier_table"]}" where "{r["carrier_column"]}" is not null'
+    if r["carrier_value"] is None: return T.con.execute(sql).fetchone()[0]
+    return T.con.execute(sql + f' and "{r["carrier_column"]}" = ?', (r["carrier_value"],)).fetchone()[0]
+
+
 def mer_id(s):
     return re.sub(r"[^A-Za-z0-9]", "_", s)
 
@@ -848,9 +859,9 @@ def render_state_graph(T, atoms, probes, machines, cmp_info, stamp):
           mdtable(["foreign key", "child stage", "parent stage", "child rows"], fwd) if fwd else "_None._", ""]
     L += ["### 2b. Ruled returns (each stage's `re_entry` in `governance/pipeline-contract.yaml`)", "",
           "A later stage re-enters an earlier one; the carrier is the row that records the return.", "",
-          mdtable(["return", "from stage", "re-enters", "carrier", "carrier value"],
-                  [(r["id"], r["from_stage"], r["to_stage"], f"{r['carrier_table']}.{r['carrier_column']}", r["carrier_value"] or "--")
-                   for r in T.returns]) if T.returns else "_None._", ""]
+          mdtable(["return", "from stage", "re-enters", "carrier", "carrier value", "carrier rows"],
+                  [(r["id"], r["from_stage"], r["to_stage"], f"{r['carrier_table']}.{r['carrier_column']}", r["carrier_value"] or "--",
+                    carrier_rows(T, r)) for r in T.returns]) if T.returns else "_None._", ""]
     # machines
     L += ["## 3. State machines (hand-verified transitions; vocabularies derived from each column's own CHECK)", ""]
     for m in machines["machines"]:
@@ -948,6 +959,26 @@ def render_caps(caps, cv, caps_t1, probes):
     return "\n".join(L)
 
 
+def atom_rows(A, cited, qstats):
+    """ATOMS.tsv rows. `source` is the line the check FOUND a quote on when it was found once (the cited line goes stale
+    with nothing wrong); `quote_checked` is `yes` only for a cited atom whose check passed, `failed` for one that failed."""
+    found, failed = qstats.get("found", {}), qstats.get("failed", set())
+    return [(a["id"], a["status"], a["modality"], a["speaker"], a.get("date") or "", found.get(a["id"], a["source"]),
+             ",".join(a["scope"].get("stages", [])) if isinstance(a.get("scope"), dict) else "", a["subject"], a["claim"],
+             a.get("enforcement") or "", ("failed" if a["id"] in failed else "yes") if a["id"] in cited else "no") for a in A]
+
+
+def graph_doc(T, stamp, probes, probes2, cv, cv2, examined, A, conflicts):
+    return dict(generated=stamp, tree=str(T.root), user_version=T.user_version, stages=T.stages,
+                returns=[dict(r, carrier_rows=carrier_rows(T, r)) for r in T.returns],
+                tables={t: dict(stage=T.stage(t), rows=T.rows[t], writers=T.writers.get(t, []), cols=T.cols(t)) for t in T.tables},
+                fks=T.fks, unwritable=T.unwritable_set(), views=T.view_info(), vocab=T.vocab, verbs=T.verbs,
+                probes={k: dict(verdict=v["verdict"], tests=v["tests"], atoms=v["atoms"], evidence=v["evidence"]) for k, v in probes.items()},
+                probes_comparison=({k: v["verdict"] for k, v in probes2.items()} if probes2 else None),
+                capabilities=cv, capabilities_comparison=cv2, examined=examined,
+                atoms_by_status=dict(collections.Counter(a["status"] for a in A)), atoms_total=len(A), conflicts_total=len(conflicts["conflicts"]))
+
+
 # ----------------------------------------------------------------------------------------------- tree comparison
 def tree_delta(A, B):
     L = [f"Comparison tree `{B.root}` at schema version `{B.user_version}` against `{A.root}` at `{A.user_version}`.", ""]
@@ -976,8 +1007,8 @@ def main():
     machines = yaml.safe_load(open(HERE / "machines.yaml", encoding="utf-8"))
     caps = yaml.safe_load(open(HERE / "capabilities.yaml", encoding="utf-8"))
     T = Tree(args.repo); P = make_probes(); probes = run_probes(T, P)
-    moved = []
-    fails, warns, examined = check_all(T, atoms, probes, conflicts, machines, caps, moved=moved)
+    moved, qstats = [], {}
+    fails, warns, examined = check_all(T, atoms, probes, conflicts, machines, caps, moved=moved, stats=qstats)
     fails += dups
 
     if args.selftest:
@@ -1011,17 +1042,11 @@ def main():
             fh.write("\t".join(hdr) + "\n")
             for r in rows: fh.write("\t".join(str(x).replace("\t", " ").replace("\n", " ") for x in r) + "\n")
     A = list(atoms.values()); cited = cited_atom_ids(probes, conflicts, machines, caps)
-    tsv("ATOMS.tsv", [(a["id"], a["status"], a["modality"], a["speaker"], a.get("date") or "", a["source"], ",".join(a["scope"].get("stages", [])) if isinstance(a.get("scope"), dict) else "", a["subject"], a["claim"], a.get("enforcement") or "", "yes" if a["id"] in cited else "no") for a in A],
+    tsv("ATOMS.tsv", atom_rows(A, cited, qstats),
         ["id", "status", "modality", "speaker", "date", "source", "stages", "subject", "claim", "enforcement", "quote_checked"])
     tsv("OPEN-QUESTIONS.tsv", [(a["id"], a["source"], a["subject"], a["claim"]) for a in A if a["status"] in ("OPEN", "PROPOSED")], ["id", "source", "subject", "claim"])
     tsv("AMBIGUITIES.tsv", [(a["id"], a["status"], a["source"], a["subject"], a["ambiguity"]) for a in A if a.get("ambiguity")], ["id", "status", "source", "subject", "ambiguity"])
-    graph = dict(generated=stamp, tree=str(T.root), user_version=T.user_version, stages=T.stages, returns=T.returns,
-                 tables={t: dict(stage=T.stage(t), rows=T.rows[t], writers=T.writers.get(t, []), cols=T.cols(t)) for t in T.tables},
-                 fks=T.fks, unwritable=T.unwritable_set(), views=T.view_info(), vocab=T.vocab, verbs=T.verbs,
-                 probes={k: dict(verdict=v["verdict"], tests=v["tests"], atoms=v["atoms"], evidence=v["evidence"]) for k, v in probes.items()},
-                 probes_comparison=({k: v["verdict"] for k, v in probes2.items()} if probes2 else None),
-                 capabilities=cv, capabilities_comparison=cv2, examined=examined,
-                 atoms_by_status=dict(collections.Counter(a["status"] for a in A)), atoms_total=len(A), conflicts_total=len(conflicts["conflicts"]))
+    graph = graph_doc(T, stamp, probes, probes2, cv, cv2, examined, A, conflicts)
     (HERE / "graph.json").write_text(json.dumps(graph, indent=1, ensure_ascii=False, default=str) + "\n", encoding="utf-8")
     print("wrote STATE-GRAPH.md CONFLICTS.md CAPABILITIES.md graph.json ATOMS.tsv OPEN-QUESTIONS.tsv AMBIGUITIES.tsv")
     sys.exit(1 if fails else 0)

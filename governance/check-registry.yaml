@@ -40,6 +40,7 @@ kinds:
     - .github/**
     - .claude/**
     - requirements.txt
+    - workplan/pipeline-state-graph/**
 # THE ONE HOME OF THE no_floor VOCABULARY. Every `no_floor:` reason must OPEN with one of
 # these tokens followed by an em dash. The token is not decoration: `run_checks.py` reads it
 # to decide whether the reason makes a claim it can falsify.
@@ -1110,6 +1111,7 @@ checks:
   battery: tests
   kinds:
   - tooling
+  - governance
   level: advisory
   basis: hygiene
   cost: fast
