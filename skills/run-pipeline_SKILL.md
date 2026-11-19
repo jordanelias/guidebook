@@ -252,7 +252,7 @@ warrant, then `retire-lens-link` with a reason); it never copies a lens elsewher
   their JSON result lists the groups proposed beside the groups written. Read them as the owner's "populations still get
   coded as a result": confirm each group the clause serves and write it, by `context` with your reason; leave out a
   group the clause does not serve, however high the map's confidence (one activity code can propose several groups:
-  `select group_concat(distinct identity_code) from identity_icf_map where icf_code='d450' and retired_at is null`); and
+  `select icf_code, group_concat(distinct identity_code) from identity_icf_map where retired_at is null group by icf_code having count(distinct identity_code) > 1`); and
   add a group no map proposes when the clause serves it. A proposal is never written because it was proposed. A code
   value left with ICF or need links and no identity while the maps propose one prints `WARNING: maps propose`, and
   `scripts/audit/code_value_identity_audit.py` lists it.
@@ -262,10 +262,11 @@ warrant, then `retire-lens-link` with a reason); it never copies a lens elsewher
   identity, one link each, with `--lens-basis context`, `--lens-basis-text` the clause's own words for the quantity (for
   example `mounting height`, `knee clearance`) and `--lens-basis-reason` `typically concerns wheelchair users` (the
   owner's warrant, "mounting height; typically concerns wheelchair users", in its two cells). Derive the codes from the
-  live registries when you record, never from this page. The ICF code: `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select icf_code, title from base_icf where lower(coalesce(title,'')) like '%reaching%' or lower(coalesce(title,'')) like '%hand and arm%' or lower(coalesce(title,'')) like '%sitting position%' or lower(coalesce(title,'')) like '%standing position%' or lower(coalesce(title,'')) like '%moving around%' or icf_code = 'd415'\").fetchall())"`
+  live registries when you record, never from this page. The ICF code: `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select icf_code, title from base_icf where lower(coalesce(title,'')) like '%reaching%' or lower(coalesce(title,'')) like '%hand and arm%' or lower(coalesce(title,'')) like '%sitting position%' or lower(coalesce(title,'')) like '%standing position%' or lower(coalesce(title,'')) like '%moving around%'\").fetchall())"`
   (for a mounting height, the most specific reach code it prints, Reaching once it is minted, else hand and arm use,
-  its parent, with the seated or standing posture code where the clause concerns use from a seated position; for a
-  clearance, moving around using equipment). The access need: `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select need_code, substr(design_obligation,1,90) from access_needs where lower(coalesce(design_obligation,'')) like '%reach%' or lower(coalesce(design_obligation,'')) like '%seated%' or lower(coalesce(design_obligation,'')) like '%turning%'\").fetchall())"`
+  its parent, with the seated or standing posture code where the clause concerns use from a seated position, a code
+  from your query once its title is minted, else the posture code the WHO classification names, never one typed on this
+  page; for a clearance, moving around using equipment). The access need: `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select need_code, substr(design_obligation,1,90) from access_needs where lower(coalesce(design_obligation,'')) like '%reach%' or lower(coalesce(design_obligation,'')) like '%seated%' or lower(coalesce(design_obligation,'')) like '%turning%'\").fetchall())"`
   (the need whose obligation names seated-height controls and turning clearance; the range-of-bodies need where the
   clause concerns the range of body sizes). The identity, the most specific live wheelchair-user code: `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select identity_code, display_name, parent_code from base_taxonomy_identity where status='active' and lower(display_name||' '||coalesce(description,'')) like '%wheelchair%'\").fetchall())"`
   (the mobility family until the wheelchair-user child is minted). The default writes the identity whether or not a

@@ -11207,7 +11207,7 @@ def _require_lens_warrant(conn, basis, basis_text, ref_id, claim_text, source_se
             f"would be a cell with no meaning. Nothing was written.")
     if basis == "context":
         tier = conn.execute("SELECT tier FROM evidence_sources WHERE ref_id=?", (ref_id,)).fetchone()
-        if not (tier and tier[0] is not None and int(tier[0]) >= 4):
+        if not (tier and tier[0] is not None and int(tier[0]) >= _REGULATORY_FROM_TIER):
             raise Refusal(
                 f"{context}: basis `context` is for a code value (a source of tier 4 to 6); {ref_id} is tier "
                 f"{tier[0] if tier else None}. The owner moved the contextual assignment of a lens to the recording "
@@ -11249,6 +11249,15 @@ def _require_lens_warrant(conn, basis, basis_text, ref_id, claim_text, source_se
             f"study_participants the graded study_population, context the claim text, the source_section or the "
             f"source's saved file (its scope, application or purpose clause). Nothing was written.")
     return text, reason
+
+
+def _refuse_all_by_context(basis, identity_codes, context):
+    """`ALL` is not an identity (OD-31: "ALL leaves the identity lens"), so a judged context link never names it."""
+    if basis == "context" and "ALL" in (identity_codes or ()):
+        raise Refusal(
+            f"{context}: --identity ALL by basis context: ALL is a scope marker, not a group (OD-31: grep -n -F "
+            f"\"OD-31: a provision that names no one\" references/project-standards.md). Write the groups the clause "
+            f"serves, or no identity. Nothing was written.")
 
 
 def _write_lens_link(conn, extraction_id: int, col: str, code: str, basis: str, basis_text, session: str,
@@ -11339,7 +11348,7 @@ def _warn_identity_omitted(conn, extraction_id, ref_id):
     the owner's). scripts/audit/code_value_identity_audit.py lists the same figures for later readers."""
     tier = conn.execute("SELECT tier FROM evidence_sources WHERE ref_id=?", (ref_id,)).fetchone()
     live = _live_lens_codes(conn, extraction_id)
-    if not (tier and tier[0] is not None and int(tier[0]) >= 4) or live["identity_code"] \
+    if not (tier and tier[0] is not None and int(tier[0]) >= _REGULATORY_FROM_TIER) or live["identity_code"] \
             or not (live["icf_code"] or live["needs_code"]):
         return
     props = identity_proposals(conn, live["icf_code"], live["needs_code"])
@@ -11629,6 +11638,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         lens_basis_text, lens_basis_reason = _require_lens_warrant(
             conn, lens_basis, lens_basis_text, ref, row.get("claim_text"), row.get("source_section"),
             "add-extraction", basis_reason=lens_basis_reason)
+        _refuse_all_by_context(lens_basis, lens["identity_code"], "add-extraction")
 
         # THE CLAUSE (T-031, OD-23). A figure read from an inventoried clause points at its source_clauses row, and
         # its locator is reached through that pointer (rule 5): any locator field beside it (_sve_locator_fields) is
@@ -11911,6 +11921,7 @@ def add_lens_link(extraction_id: int, session: str, *, identity: str = None, icf
         _require_lens_code(conn, col, code)
         text, reason = _require_lens_warrant(conn, basis, basis_text, fig["ref_id"], fig["claim_text"],
                                              fig["source_section"], "add-lens-link", basis_reason=basis_reason)
+        _refuse_all_by_context(basis, [code] if col == "identity_code" else [], "add-lens-link")
         held = conn.execute(
             f"SELECT link_id, basis FROM extraction_lens_links WHERE extraction_id=? AND {col}=? "
             f"AND retired_at IS NULL", (extraction_id, code)).fetchone()

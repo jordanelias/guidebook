@@ -253,8 +253,11 @@ stages:
     check: scripts/audit/verified_scan_integrity.py
   - id: judgment-code-value-identity-judged
     kind: integrity
-    criterion: Every live figure of a tier 4 to 6 source whose ICF or access-need codes the maps tie to a group
-      carries a judged identity link, or is listed by the audit as having none.
+    criterion: The audit lists every live figure of a tier 4 to 6 source that has a live ICF or access-need link, no
+      live identity link other than ALL, and at least one group the maps propose for those codes (a figure whose every
+      live link has basis heading is left out, OD-31). It does not judge whether a written identity is right, and it
+      counts, without failing, the figures that carry no judged identity link that is not ALL (the carried links
+      T-127 replaces).
     references: 'references/project-standards.md: "Owner instruction 2026-11-14 (sixteenth set)", "(sixteenth set,
       later", "(sixteenth set, last)" and "Correction and registration 2026-11-15" (the recording session judges and
       writes the identity link; the maps propose); OD-65'

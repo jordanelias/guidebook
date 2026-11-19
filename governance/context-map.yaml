@@ -484,12 +484,12 @@ database:
   - translations
   tables_written_by_migration_only:
   - access_duration
-  - access_need_icf
   - access_stakes
   - decisions
   - life_stage_modifiers
   - rooms
   tables_written_directly_by_code:
+  - access_need_icf
   - access_needs
   - adversarial_findings
   - adversarial_passes
@@ -665,6 +665,7 @@ writers:
     - source_value_extractions
     - specifications
     scripts/tests/test_db_amend_writers.py:
+    - access_need_icf
     - adversarial_findings
     - adversarial_passes
     - base_icf

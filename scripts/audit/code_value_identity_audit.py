@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-scripts/audit/code_value_identity_audit.py -- a code value whose codes the maps tie to a group carries a judged identity.
+scripts/audit/code_value_identity_audit.py -- a code value whose codes the maps tie to a group, with no identity written, is listed.
 
 WHAT WRONG THING REACHES THE GUIDEBOOK WITHOUT IT (T-126): a code value silently absent from every cell of a group it
 serves. The writer's warning (`db.py add-extraction` / `add-lens-link`: "WARNING: maps propose ...") is seen once, by
@@ -10,9 +10,10 @@ and findings are derived from the live tables on each run; the proposals are the
 (`db.identity_proposals`).
 
 Prints `EXAMINED: <n>`, the live figures of sources of tier 4 or above (the regulatory stratum) with any live lens
-link, then
+link; a derived line, never a failure, counting those that carry no identity link that is judged (not `carried`) and
+not `ALL` (the queue the one-time pass over stored code values, T-127, works); then
   (i)   by extraction id, every such figure with live ICF or access-need links, no live identity link and at least
-        one proposal, with its proposals; a figure whose every live link has basis `heading` is left out (OD-31: a
+        one proposal, with its proposals (`ALL` is not an identity, OD-31); a figure whose every live link has basis `heading` is left out (OD-31: a
         heading that names no group gives no identity). A figure whose recorder judged that no proposed group is served
         stays here (OD-47, still the owner's, decides whether such a judgment needs a row of its own);
   (ii)  for information, every live identity no live map row proposes;
@@ -46,12 +47,13 @@ def main():
         figs = conn.execute(
             "SELECT DISTINCT k.extraction_id, MAX(datetime(k.created_at)) OVER (PARTITION BY k.extraction_id) "
             "FROM v_live_lens_links k JOIN source_value_extractions x ON x.extraction_id = k.extraction_id "
-            "JOIN evidence_sources e ON e.ref_id = x.ref_id WHERE e.tier >= 4 ORDER BY k.extraction_id").fetchall()
-        omitted, late = [], []
+            "JOIN evidence_sources e ON e.ref_id = x.ref_id WHERE e.tier >= ? ORDER BY k.extraction_id", (db._REGULATORY_FROM_TIER,)).fetchall()
+        omitted, late, queue = [], [], 0
         for eid, newest in figs:
             links = conn.execute("SELECT identity_code, icf_code, needs_code, basis FROM v_live_lens_links "
                                  "WHERE extraction_id=?", (eid,)).fetchall()
-            ids = {r[0] for r in links if r[0]}
+            ids = {r[0] for r in links if r[0] and r[0] != "ALL"}      # OD-31: ALL is not an identity
+            queue += not any(r[0] and r[0] != "ALL" and r[3] != "carried" for r in links)
             icf, needs = [r[1] for r in links if r[1]], [r[2] for r in links if r[2]]
             props = db.identity_proposals(conn, icf, needs)
             if not ids and (icf or needs) and props and any(r[3] != "heading" for r in links):
@@ -66,8 +68,10 @@ def main():
             "(SELECT identity_code FROM identity_icf_map WHERE retired_at IS NULL) ORDER BY identity_code")]
     finally:
         conn.close()
-    print("code_value_identity_audit -- a code value whose codes the maps tie to a group carries a judged identity")
+    print("code_value_identity_audit -- a code value whose codes the maps tie to a group, with no identity written, is listed")
     print(f"EXAMINED: {len(figs)}")
+    print(f"queue (derived, not a failure): {queue} of these figures carry no identity link that is judged (basis other "
+          f"than carried) and not ALL; the one-time lens pass over stored code values (T-127) works this queue")
     print(f"(i) figures with ICF or need links, no identity link, and a proposal: {len(omitted)}")
     for eid, props in omitted:
         print(f"  extraction {eid}: maps propose " + ", ".join(
