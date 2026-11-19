@@ -95,3 +95,16 @@ Not repaired:
 6. Not re-run by the critic: `migration_reproducibility --deep`.
 
 **T-083 repair result (commit 3caac402, migration 156 compensating, 155 untouched):** `base_parameters.quantity_kind_quote` (a base cell; `_kind_refusal` again refuses a quote with no digit, T-020's wording); the row's CHECK holds kind, quote, URL and a page or clause all present or all absent; blank, zero-width and BLOB holes closed; the gate message says to resolve the gate; T-109, T-072, T-047 carry dated amendment lines. Items added beyond the repair list: `dbcore.ZERO_WIDTH`, a `gate_why` parameter on `_refuse_live_work`, four more zero-width characters, the URL and ref_id zero-width refusal, case T083-12 (pins 156's whitespace list to 154's). Tests: `test_db_amend_writers` 266 to 272, `test_run_pipeline_refusals` 601 to 602, both green. The committed T083-10 cannot itself go red (it copies the canonical database); a CHECK-less rebuild accepted all four probed holes. Items 3 to 6 above stay not repaired.
+
+## T-119 (commit 5829c4f6; critic repairs sent to the executor)
+
+Held under attack: every U-quote verbatim in an owner blockquote line of a 2026-11-14 entry; all 18 targets unique after normalisation; none of the plan's passages missed; the posture record's passage is not superseded; OD-62 stays open and OD-69 to OD-72 are not mentioned; the diff is 158 added lines and none deleted; the audit passes with EXAMINED 13 to 31.
+
+Sent for repair: the OPERATIVE band-table record `decisions/DR-2026-07-20-weighted-strength-anchor-model.md` carried no marker; a marker on DR-2026-05-24 superseded a currency rule the owner's 2026-11-14 words do not touch; the entry and a marker disagreed on D-0005's "solely from code consensus" clause, and one listed passage still holds under U2; "the circle table is applied" was false today; unlabelled recorder readings; the four line-wrapped quotes the locate command cannot find; inconsistent status words; spliced quotes.
+
+Not repaired:
+1. **The attestation is an orphan:** the schema accepts only a `decisions/` or `sessions/` record as the artifact, so it names the session record the consolidator writes at close; it is the only one of the attestations whose artifact is missing. `attestation_presence` passed on the ten older files, so its pass proves nothing about this change.
+2. The two cell-state markers share one paragraph, so deleting either leaves the audit unchanged.
+3. One BY sentence serves all pairs, including the circle-table ones it does not describe (the plan fixes one).
+4. Prose callers in the old sense, left to T-120: `governance/tier-system.md`, `evidence-architecture.md`, `mission-and-epistemics.md`, `evidence-methodology.md`, `jurisdiction-philosophy.md`, `adversarial-use-framework.md`, `owner-browser.yaml`, `pipeline-contract.yaml` and CLAUDE.md §6.
+5. **Owner's, to confirm:** any pair added for `DR-2026-07-20-weighted-strength-anchor-model.md` is not named by the plan.
