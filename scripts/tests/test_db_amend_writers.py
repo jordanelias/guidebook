@@ -3860,6 +3860,149 @@ try:
             record("T083-12", "migration 156 spells 154's whitespace set and dbcore.ZERO_WIDTH, not a third list of its own",
                    f"char({zw})" in mig and f"char({ws154})" in mig
                    and set(re.findall(r"char\(([0-9,]+)\)", mig)) == {zw, ws154}, (zw, ws154))
+
+    # ── T-078: a figure retires in place (AT-18; owner 2026-09-16, "retire in place then") ──────────────────────────
+    # The figure is a fixture this section builds (a fresh source, made readable on the copy, one `absent` finding in
+    # one identity code), so its pair in the scan ledger holds no other figure. Every expected value is read from the
+    # copy: the ledger status the pair would have with no figure is read inside a transaction that deletes the figure
+    # and is rolled back.
+    try:
+        import assess_cell as _t078_engine                                 # noqa: E402
+        con78 = sqlite3.connect(DB)
+        try:
+            PID78 = con78.execute("SELECT parameter_id FROM base_parameters WHERE status='active' ORDER BY 1 LIMIT 1").fetchone()[0]
+        finally:
+            con78.close()
+        REF78 = next_ref()
+        add_source(REF78, title=f"TASK-FIXTURE T078 source {REF78}")
+        readable(REF78)
+        P78 = {"ref_id": REF78, "parameter_id": PID78, "identity_code": POP, "claim_type": "absent", "figure_role": "finding",
+               "claim_text": "TASK-FIXTURE T078: the source states nothing for this parameter",
+               "lens_basis": "named_in_text", "lens_basis_text": "states nothing", "extraction_method": "skim"}
+        EX78 = "TASK-FIXTURE T078: a test payload, no retrieved artefact exists"
+        LENS78 = {"identity_code": POP}
+
+        def t078_state(fig):
+            """(count_extractions, the figure's live links, its pair's ledger status, the figure among the graded links)."""
+            c = sqlite3.connect(DB)
+            try:
+                return (_t078_engine.count_extractions(c, PID78, LENS78),
+                        c.execute("SELECT COUNT(*) FROM v_live_lens_links WHERE extraction_id=?", (fig,)).fetchone()[0],
+                        c.execute("SELECT status FROM v_scan_ledger WHERE ref_id=? AND parameter_id=?", (REF78, PID78)).fetchone()[0],
+                        fig in {l["extraction_id"] for l in _t078_engine.gather_extraction_links(c, PID78, [], LENS78)})
+            finally:
+                c.close()
+
+        try:
+            db.link_source_slug(REF78, plain, "TASK-FIXTURE T078: speaks to this slug", S)
+            F78 = db.insert_extraction(dict(P78), S, relations=[], verbatim_exempt=EX78)["extraction_id"]
+        except Exception as exc:  # noqa: BLE001 -- recorded red below
+            F78 = None
+            print(f"      T078 fixture failed: {exc.__class__.__name__}: {exc}")
+        if F78 is not None:
+            c = sqlite3.connect(DB)
+            try:
+                c.execute("DELETE FROM extraction_lens_links WHERE extraction_id=?", (F78,))
+                c.execute("DELETE FROM source_value_extractions WHERE extraction_id=?", (F78,))
+                want_status = c.execute("SELECT status FROM v_scan_ledger WHERE ref_id=? AND parameter_id=?",
+                                        (REF78, PID78)).fetchone()[0]
+                c.rollback()
+            finally:
+                c.close()
+            before78 = t078_state(F78)
+            dup_before = refusal(db.insert_extraction, dict(P78), S, relations=[], verbatim_exempt=EX78)
+            # T078-03: a LIVE determination linking the figure blocks the retirement. A TASK-FIXTURE determination is
+            # written by hand on the copy, in an identity code no live determination of the parameter holds, linking the
+            # figure; it is deleted again after the refusal.
+            code78 = q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code NOT IN (SELECT identity_code "
+                       "FROM specifications WHERE retired_at IS NULL AND parameter_id=? AND identity_code IS NOT NULL) "
+                       "ORDER BY 1 LIMIT 1", PID78)[0][0]
+            c = sqlite3.connect(DB)
+            try:
+                sid78 = c.execute("INSERT INTO specifications (parameter_id, identity_code, state, created_at, "
+                                  "created_by_session, updated_at, updated_by_session) VALUES (?, ?, 'pending', 't', ?, 't', ?)",
+                                  (PID78, code78, S, S)).lastrowid
+                c.execute("INSERT INTO specification_extraction_links (specification_id, extraction_id, role, exclusion_reason, "
+                          "created_at, created_by_session) VALUES (?, ?, 'excluded', 'TASK-FIXTURE T078', 't', ?)", (sid78, F78, S))
+                c.commit()
+            finally:
+                c.close()
+            try:
+                r_live = refusal(db.retire_extraction, F78, "TASK-FIXTURE T078", S)
+                still = q("SELECT retired_at FROM source_value_extractions WHERE extraction_id=?", F78)
+            finally:
+                w("DELETE FROM specification_extraction_links WHERE specification_id=?", sid78)
+                w("DELETE FROM specifications WHERE specification_id=?", sid78)
+            record("T078-03", "retire-extraction refuses a figure a live determination links, naming the determination and "
+                   "retire-specification",
+                   r_live and f"live determination(s) {sid78}" in r_live and "retire-specification" in r_live
+                   and still == [(None,)], (r_live, still))
+            n78 = counts("source_value_extractions", "extraction_lens_links")
+            cp78 = run_cli("retire-extraction", "--extraction-id", str(F78), "--reason", "TASK-FIXTURE T078: misread", "--session", S)
+            row78 = q("SELECT retired_at IS NOT NULL, retired_by_session, retirement_reason FROM source_value_extractions "
+                      "WHERE extraction_id=?", F78)
+            record("T078-01", "retire-extraction RETIRES the figure in place: the row and its links stay, the three retired columns "
+                   "are set (the verb is reached through argparse, so an absent verb is red)",
+                   cp78.returncode == 0 and row78 == [(1, S, "TASK-FIXTURE T078: misread")]
+                   and counts("source_value_extractions", "extraction_lens_links") == n78,
+                   f"rc={cp78.returncode} err={cp78.stderr[-300:]!r} row={row78}")
+            after78 = t078_state(F78)
+            record("T078-04", "the readers drop the retired figure: count_extractions falls by one, v_live_lens_links lists no link "
+                   "of it, gather_extraction_links grades it no more, and v_scan_ledger gives its pair the status it has with "
+                   "no figure",
+                   before78[0] - after78[0] == 1 and before78[1] > 0 and after78[1] == 0 and before78[3] and not after78[3]
+                   and before78[2] != want_status and after78[2] == want_status,
+                   f"before={before78} after={after78} want_status={want_status!r}")
+            n78 = counts("source_value_extractions")
+            r_blank = refusal(db.retire_extraction, F78, "  ", S)
+            r_unknown = refusal(db.retire_extraction, q("SELECT COALESCE(MAX(extraction_id), 0) + 1 FROM source_value_extractions")[0][0],
+                                "TASK-FIXTURE T078", S)
+            r_again = refusal(db.retire_extraction, F78, "TASK-FIXTURE T078: a second, different reason", S)
+            raw = {}
+            for name, sql in (("un-retire", "UPDATE source_value_extractions SET retired_at=NULL, retired_by_session=NULL, "
+                                            "retirement_reason=NULL WHERE extraction_id=?"),
+                              ("one column alone", "UPDATE source_value_extractions SET retired_at='2026-01-01T00:00:00Z' "
+                                                   "WHERE extraction_id=(SELECT MIN(extraction_id) FROM source_value_extractions "
+                                                   "WHERE retired_at IS NULL AND extraction_id <> ?)"),
+                              ("a blank reason", "UPDATE source_value_extractions SET retired_at='2026-01-01T00:00:00Z', "
+                                                 "retired_by_session='s', retirement_reason=' ' WHERE extraction_id=(SELECT "
+                                                 "MIN(extraction_id) FROM source_value_extractions WHERE retired_at IS NULL "
+                                                 "AND extraction_id <> ?)")):
+                try:
+                    w(sql, F78)
+                    raw[name] = None
+                except sqlite3.DatabaseError as exc:
+                    raw[name] = str(exc)
+            record("T078-02", "retire-extraction refuses a blank reason, an unknown id and a figure already retired (the first reason "
+                   "stands); the trigger refuses an un-retire by raw UPDATE and the CHECK refuses one column alone and a blank reason",
+                   r_blank and "--reason is required" in r_blank and r_unknown and "no such figure" in r_unknown
+                   and r_again and "already retired" in r_again
+                   and q("SELECT retirement_reason FROM source_value_extractions WHERE extraction_id=?", F78) == [("TASK-FIXTURE T078: misread",)]
+                   and raw["un-retire"] and "stays retired" in raw["un-retire"]
+                   and raw["one column alone"] and "CHECK" in raw["one column alone"]
+                   and raw["a blank reason"] and "CHECK" in raw["a blank reason"]
+                   and counts("source_value_extractions") == n78,
+                   (r_blank, r_unknown, r_again, raw))
+            other78 = q("SELECT MIN(extraction_id) FROM source_value_extractions WHERE retired_at IS NULL AND extraction_id <> ?", F78)[0][0]
+            r_amend = refusal(db.amend_extraction, F78, "extraction_status", "reviewed", "TASK-FIXTURE T078", S)
+            r_from = refusal(db.relate_extraction, F78, "condition_on", S, to_extraction=other78)
+            r_to = refusal(db.relate_extraction, other78, "condition_on", S, to_extraction=F78)
+            record("T078-05", "amend-extraction and relate-extraction (from or to the figure) refuse a retired figure, naming "
+                   "retire-extraction",
+                   all(m and "retire-extraction" in m and "was retired" in m for m in (r_amend, r_from, r_to)),
+                   (r_amend, r_from, r_to))
+            try:
+                again78 = db.insert_extraction(dict(P78), S, relations=[], verbatim_exempt=EX78)
+            except Exception as exc:  # noqa: BLE001 -- recorded red below
+                again78 = {"error": f"{exc.__class__.__name__}: {exc}"}
+            record("T078-06", "the same reading is written again once its figure is retired (a wrong retirement is answered by a "
+                   "new figure); before the retirement add-extraction refused it as a copy",
+                   dup_before and "already carries this exact row" in dup_before and "extraction_id" in again78,
+                   (dup_before, again78))
+        else:
+            record("T078-01", "retire-extraction fixture", False, "the fixture figure could not be written")
+    except Exception as exc:  # noqa: BLE001 -- a crash (no verb, no column) is red, never a pass
+        record("T078", "the T-078 section ran to its end", False, f"{exc.__class__.__name__}: {exc}")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

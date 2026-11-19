@@ -161,7 +161,7 @@ findings, including when you find nothing.
    LEFT JOIN base_parameters p ON p.term_id = a.term_id
    WHERE o.ref_id = :ref;
    SELECT extraction_id, parameter_id, figure_role, claimed_value, claimed_unit, claim_text
-   FROM source_value_extractions WHERE ref_id = :ref;
+   FROM source_value_extractions WHERE ref_id = :ref AND retired_at IS NULL;  -- a retired figure is history
    ```
 
    A stated figure with no extraction, and a concept the payload states a figure for with no

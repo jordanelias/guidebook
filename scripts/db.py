@@ -1245,7 +1245,8 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
         pj = "COALESCE(b.parent_code, se.jurisdiction)"
         # Searches are keyed on a SLUG (most rows have no parameter_id): a parameter's searches are those logged against
         # it directly and those logged against any slug its figures carry.
-        slugs = ids("SELECT DISTINCT slug FROM source_value_extractions WHERE parameter_id = ? AND slug IS NOT NULL", parameter_id)
+        slugs = ids("SELECT DISTINCT slug FROM source_value_extractions WHERE parameter_id = ? AND slug IS NOT NULL "
+                    "AND retired_at IS NULL", parameter_id)
         sfilter = (f"(se.parameter_id = ?{' OR se.slug IN (' + ','.join('?' * len(slugs)) + ')' if slugs else ''})"
                    + (f" AND {pj} = ?" if jurisdiction else "")
                    + (" AND UPPER(se.language) = ?" if lang else ""))
@@ -1270,7 +1271,8 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
                      "scope_unrecorded": [f"{p['language']}/{p['jurisdiction']}" for p in unsearched
                                           if p["scope_status"] is None]}}
         # ---- evidence and judgment: the extractions of this parameter, and the scan ledger ----------------
-        ex_sql, ex_args = "SELECT e.extraction_id FROM source_value_extractions e WHERE e.parameter_id = ?", [parameter_id]
+        ex_sql, ex_args = ("SELECT e.extraction_id FROM source_value_extractions e WHERE e.parameter_id = ? "
+                           "AND e.retired_at IS NULL"), [parameter_id]
         if jurisdiction:
             ex_sql += (" AND COALESCE((SELECT parent_code FROM base_jurisdictions WHERE jurisdiction_code = e.jurisdiction), "
                        "e.jurisdiction) = ?"); ex_args.append(jurisdiction)
@@ -2912,6 +2914,14 @@ def main():
     p_rll.add_argument("--session", required=True)
     p_rll.add_argument("--dry-run", action="store_true")
 
+    p_rx = sub.add_parser("retire-extraction",
+                          help="Retire a figure in place (T-078; owner 2026-09-16, retire in place, never "
+                               "hard-delete). Refused while a live determination links it.")
+    p_rx.add_argument("--extraction-id", dest="extraction_id", type=int, required=True)
+    p_rx.add_argument("--reason", required=True, help="Why the figure is withdrawn (misread, corrected, filed wrong)")
+    p_rx.add_argument("--session", required=True)
+    p_rx.add_argument("--dry-run", action="store_true")
+
     # derive-extraction -- a figure_role='derived' row, computed base+delta, plus
     # the two derived_from edges v_derived_figure_check re-verifies it against.
     p_dx = sub.add_parser("derive-extraction",
@@ -4084,6 +4094,9 @@ def main():
 
     elif args.command == "retire-lens-link":
         _emit(retire_lens_link(args.link_id, args.reason, args.session, dry_run=args.dry_run))
+
+    elif args.command == "retire-extraction":
+        _emit(retire_extraction(args.extraction_id, args.reason, args.session, dry_run=args.dry_run))
 
     elif args.command == "derive-extraction":
         _emit(derive_extraction(
@@ -8214,7 +8227,7 @@ def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str
             raise Refusal(f"--ref-id {ref_id} is not an admitted source. The direction is "
                           f"read from a document this project holds; admit it first.")
         if not conn.execute("SELECT 1 FROM source_value_extractions WHERE ref_id=? AND "
-                            "parameter_id=?", (ref_id, parameter_id)).fetchone():
+                            "parameter_id=? AND retired_at IS NULL", (ref_id, parameter_id)).fetchone():
             raise Refusal(
                 f"--ref-id {ref_id} holds no extraction for parameter {parameter_id}, so "
                 f"nothing it states about this quantity is on record. Extract the finding "
@@ -11819,7 +11832,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         # each group by a link, so the same reading in another group is `add-lens-link`, never a second figure
         # (a second copy would count the one reading twice).
         _dups = conn.execute(
-            "SELECT extraction_id FROM source_value_extractions WHERE " + " AND ".join(_preds),
+            "SELECT extraction_id FROM source_value_extractions WHERE retired_at IS NULL AND " + " AND ".join(_preds),
             [row[c] for c in _same_cols]).fetchall()
         if figure_role == "derived":
             # A derived row has no words of its own to tell two derivations apart, so what makes it a copy is the
@@ -11841,7 +11854,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         # visible in the session log rather than silent.
         prior = conn.execute(
             "SELECT extraction_id, created_by_session FROM source_value_extractions "
-            "WHERE ref_id=? AND parameter_id=?", (ref, pid)).fetchall()
+            "WHERE ref_id=? AND parameter_id=? AND retired_at IS NULL", (ref, pid)).fetchall()
         if prior:
             print(f"NOTE: {ref} already carries {len(prior)} extraction(s) for parameter "
                   f"{pid} ({[r[0] for r in prior]}). Writing another — evidence to "
@@ -11985,6 +11998,51 @@ def retire_lens_link(link_id: int, reason: str, session: str, dry_run: bool = Fa
                 "dry_run": dry_run}
 
 
+def retire_extraction(extraction_id: int, reason: str, session: str, dry_run: bool = False):
+    """Retire a figure IN PLACE (T-078, AT-18; owner ruling 2026-09-16, "retire in place then").
+
+    The row stays, with `retired_at`, `retired_by_session` and `retirement_reason` set in one UPDATE (migration 158,
+    the shape and reason refusal of T-050's delete-connection, through dbcore.require_reason). Nothing else is
+    written: its lens links and relations stay as history, and every reader drops the figure by pointer
+    (v_live_lens_links, v_scan_ledger and the other views migration 158 rebuilt; the engine's gathers). A figure is
+    never un-retired (a trigger refuses it): a wrong retirement is answered by a new figure.
+
+    REFUSES: a blank reason; an unknown id; a figure already retired (its first reason stands); and a figure a LIVE
+    determination links (dbcore.live_determinations_linked), naming each, because the determination would then cite
+    a withdrawn figure until someone re-ran it: retire-specification first, then re-run this."""
+    reason = dbcore.require_reason(reason, f"retire-extraction {extraction_id}",
+                                   "A figure withdrawn without saying why erases a claim without a trace.")
+    with dbcore.connect(dry_run) as conn:
+        row = conn.execute("SELECT retired_at, retirement_reason FROM source_value_extractions WHERE extraction_id=?",
+                           (extraction_id,)).fetchone()
+        if row is None:
+            raise Refusal(f"retire-extraction: extraction {extraction_id}: no such figure. Nothing was written.")
+        if row["retired_at"] is not None:
+            raise Refusal(f"retire-extraction: extraction {extraction_id} is already retired (since {row['retired_at']}: "
+                          f"{row['retirement_reason']}); its first reason stands. Nothing was written.")
+        live = dbcore.live_determinations_linked(conn, extraction_id)
+        if live:
+            raise Refusal(
+                f"retire-extraction: extraction {extraction_id} is in the provenance of live determination(s) "
+                f"{', '.join(map(str, live))}. Retire each first (db.py retire-specification --specification-id N "
+                f"--reason ...), then re-run this, and re-determine the cell. Nothing was written.")
+        stamp, stem = dbcore.now(), dbcore.session_stem(session)
+        conn.execute("UPDATE source_value_extractions SET retired_at=?, retired_by_session=?, retirement_reason=?, "
+                     "updated_at=?, updated_by_session=? WHERE extraction_id=?",
+                     [stamp, stem, reason, stamp, stem, extraction_id])
+        return {"extraction_id": extraction_id, "retired": True, "retired_at": stamp, "dry_run": dry_run}
+
+
+def _refuse_retired_figure(conn, extraction_id, verb):
+    """A retired figure is history (retire-extraction): it is not amended, and no new edge starts or ends at it."""
+    got = conn.execute("SELECT retired_at, retirement_reason FROM source_value_extractions WHERE extraction_id=?",
+                       (extraction_id,)).fetchone()
+    if got is not None and got[0] is not None:
+        raise Refusal(f"{verb}: extraction {extraction_id} was retired at {got[0]} ({got[1]}; retire-extraction). A "
+                      f"retired figure is history and is not changed; write the correct figure with add-extraction. "
+                      f"Nothing was written.")
+
+
 def relate_extraction(from_extraction: int, relation: str, session: str,
                       dry_run: bool = False, to_extraction: int = None,
                       to_label: str = None, to_kind: str = None, stated: str = None,
@@ -12006,6 +12064,9 @@ def relate_extraction(from_extraction: int, relation: str, session: str,
         if row is None:
             raise Refusal(
                 f"relate-extraction: --from {from_extraction}: no such extraction.")
+        for end in (from_extraction, to_extraction):
+            if end is not None:
+                _refuse_retired_figure(conn, end, "relate-extraction")
         rid = _write_relation_edge(
             conn, from_id=from_extraction, from_ref_id=row["ref_id"],
             from_figure_role=row["figure_role"], from_comparator=row["comparator"],
@@ -12193,6 +12254,8 @@ _NOT_AMENDABLE_SVE = {
                     "set with the row (or its promotion) by the writer that grades it; no ruling opens it to amendment"),
     **dict.fromkeys(("notes", "created_at", "created_by_session", "updated_at", "updated_by_session"),
                     "the ledger the writer keeps: amend_extraction appends to it and stamps it"),
+    **dict.fromkeys(("retired_at", "retired_by_session", "retirement_reason"),
+                    "set once by db.py retire-extraction (migration 158) and never cleared"),
 }
 
 
@@ -12355,6 +12418,7 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
         if row is None:
             raise Refusal(f"amend-extraction: extraction_id {extraction_id}: no "
                           f"such row.")
+        _refuse_retired_figure(conn, extraction_id, "amend-extraction")
         # BOTH GATES, DERIVED, ON EVERY AMENDABLE FIELD. The first version of this gated
         # one column by name -- `if field == "root_ref_id"` -- twenty lines below a
         # generic check_declared in amend_source, which is the field-by-field shape rule 8

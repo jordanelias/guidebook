@@ -61,6 +61,8 @@ def main():
                   "(pre-105 schema)", file=sys.stderr)
             return 2
         n_all = conn.execute("SELECT COUNT(*) FROM extraction_follow_ups").fetchone()[0]
+        # KEEPS HISTORY (T-078): an open follow-up on a retired figure is still listed until it is resolved; the
+        # live-value rules below read live determinations, which never link a retired figure (retire-extraction).
         open_rows = conn.execute(
             "SELECT f.follow_up_id, f.extraction_id, x.ref_id, x.parameter_id, f.reason, "
             "f.warrant, f.raised_by_session FROM extraction_follow_ups f "

@@ -377,6 +377,13 @@ def _has_column(conn, table, column):
     return any(r[1] == column for r in conn.execute(f'PRAGMA table_info("{table}")'))
 
 
+def _live_figure(conn, alias):
+    """`AND <alias>.retired_at IS NULL`: a retired figure (db.py retire-extraction, migration 158) is history and feeds no
+    cell. Every reader `_lens_clause` serves already drops it, because `v_live_lens_links` lists no link of a retired
+    figure; this is for the reads that select figures by parameter alone. Nothing on a pre-158 fixture."""
+    return f"AND {alias}.retired_at IS NULL" if _has_column(conn, "source_value_extractions", "retired_at") else ""
+
+
 #: The ruling lives in dbcore (stdlib only) so the stdlib-only checks can read it too.
 NOT_PUBLISHABLE_METHODS = dbcore.NOT_PUBLISHABLE_METHODS
 
@@ -459,7 +466,7 @@ def gather_confirmers(conn, parameter_id, lens):
         conn,
         "JOIN extraction_relations r ON r.from_extraction_id = x.extraction_id "
         "AND r.relation = 'confirms' JOIN source_value_extractions t "
-        "ON t.extraction_id = r.to_extraction_id AND t.parameter_id = x.parameter_id",
+        f"ON t.extraction_id = r.to_extraction_id AND t.parameter_id = x.parameter_id {_live_figure(conn, 't')}",
         f"x.figure_role IN ({','.join('?' * len(DIRECTION_SUPPLYING_ROLES))}) {skim} {lens_sql}",
         (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params, *lens_vals))
 
@@ -509,7 +516,7 @@ def gather_extraction_links(conn, parameter_id, governing_refs, lens):
         f"SELECT x.extraction_id, x.ref_id, x.figure_role, x.claim_type, {method_col}, "
         "e.superseded_by_ref_id IS NOT NULL FROM source_value_extractions x "
         "LEFT JOIN evidence_sources e ON e.ref_id = x.ref_id "
-        "WHERE x.parameter_id = ? ORDER BY x.extraction_id", (parameter_id,)).fetchall()
+        f"WHERE x.parameter_id = ? {_live_figure(conn, 'x')} ORDER BY x.extraction_id", (parameter_id,)).fetchall()
     gov = set(governing_refs or ())
     lens_sql, lens_vals = _lens_clause(lens, "x")
     in_lens = {r[0] for r in conn.execute(
@@ -743,6 +750,8 @@ def conditioned_governing(conn, links):
     gov = {l["extraction_id"] for l in links if l["role"] == "governing"}
     if not gov or not _table_exists(conn, "extraction_relations"):
         return []
+    # An edge to a RETIRED condition figure is kept (T-078): the source still states the claim under a condition; a
+    # withdrawn condition figure does not make the claim unconditioned, so it stays a branch (K01 reads the same set).
     return sorted({r[0] for r in conn.execute(
         "SELECT from_extraction_id FROM extraction_relations WHERE relation = 'condition_on'")} & gov)
 
@@ -1338,8 +1347,8 @@ def determine(conn, parameter_id, lens, slug, note):
     # `main`, so every caller sees it. The engine cannot judge whether the lens is relevant to the
     # parameter, so the gap is the judgment session's to raise.
     n_extractions = count_extractions(conn, parameter_id, lens)
-    n_outside_lens = conn.execute("SELECT COUNT(*) FROM source_value_extractions WHERE parameter_id = ?",
-                                  (parameter_id,)).fetchone()[0] - n_extractions
+    n_outside_lens = conn.execute(f"SELECT COUNT(*) FROM source_value_extractions x WHERE x.parameter_id = ? "
+                                  f"{_live_figure(conn, 'x')}", (parameter_id,)).fetchone()[0] - n_extractions
     if n_extractions == 0:
         raise Refusal(
             f"no figure of parameter {parameter_id} is stated in this lens "

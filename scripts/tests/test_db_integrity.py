@@ -925,15 +925,16 @@ def run_checks(db_path):
     # that hides every later case.
     try:
         no_lens = conn.execute(
-            "SELECT COUNT(*) FROM source_value_extractions x WHERE NOT EXISTS "
+            "SELECT COUNT(*) FROM source_value_extractions x WHERE x.retired_at IS NULL AND NOT EXISTS "
             "(SELECT 1 FROM v_live_lens_links k WHERE k.extraction_id = x.extraction_id)").fetchone()[0]
         t018_err = ""
     except sqlite3.Error as exc:
         no_lens, t018_err = -1, f"v_live_lens_links cannot be read: {exc}"
-    record("T018-05", "every figure has at least one live lens link (D-0182, held by v_live_lens_links)",
+    record("T018-05", "every live figure has at least one live lens link (D-0182, held by v_live_lens_links; a retired "
+           "figure's links are history, migration 158)",
            no_lens == 0,
            t018_err or f"{no_lens} figure(s) with no live lens link: add-lens-link, then retire-lens-link",
-           subject=subj("SELECT COUNT(*) FROM source_value_extractions"))
+           subject=subj("SELECT COUNT(*) FROM source_value_extractions WHERE retired_at IS NULL"))
 
     # ── H: JSON-array ↔ junction parity ───────────────────────────────────────
     # Two edges on the walk are being migrated out of JSON TEXT columns and into
@@ -1196,7 +1197,7 @@ def run_checks(db_path):
             "WHERE specification_id = ?", (cid,))}
         want = {r[0] for r in conn.execute(
             "SELECT extraction_id FROM source_value_extractions "
-            "WHERE parameter_id = ?", (pid,))}
+            "WHERE parameter_id = ? AND retired_at IS NULL", (pid,))}
         if have != want:
             missing, extra = sorted(want - have), sorted(have - want)
             unaccounted.append(
