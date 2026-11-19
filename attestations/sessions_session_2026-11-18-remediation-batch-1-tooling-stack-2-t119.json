@@ -35,6 +35,10 @@
     {
       "rule": "adherence-logging-and-attestation",
       "reason": "Repair after the adversarial pass: three pairs on decisions/DR-2026-07-20-weighted-strength-anchor-model.md (its directive's bands, its band table, its 'convergence of floors' gloss) are not named by the term plan and are added for the owner to confirm. Option-A §6's two passages, listed as superseded by the plan, are marked AMENDED, because the quoted sentence still holds under U2 and the owner's ruling 'no, it's just weak' stands; D-0005's 'in error' clause is not superseded, departing from the plan's section 3 (c); the ledger RULE on universal design and code compliance is not superseded, as no owner word of 2026-11-14 contradicts it. The currency clause was removed from the DR-2026-05-24 marker."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Appended 2026-11-19 on the owner's instruction (\"Sure, append. Ratify all.\"): one AMENDED marker on decisions/DR-2026-07-21-tier-doctrine-source-class-consistency.md, for its gloss \"weak-band convergence floor\" only (the tier ruling stands), with its SUPERSEDES pair in the ledger entry \"Owner ratification 2026-11-19\". The passage was borderline in the third adjudication and left unpaired until the owner ratified its resolution."
     }
   ],
   "bias_direction": "The executor chose every anchor quote and wrote every marker's wording, and the owner has not read them; a quote chosen too narrowly leaves the conflicting clause beside it unmarked, and a marker worded too broadly retires text the owner's rulings did not reach. The executor also leaned on the term plan's adjudications for what each passage gets wrong, so an adjudicator's misreading passes through unchallenged.",

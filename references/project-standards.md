@@ -7962,3 +7962,74 @@ SUPERSEDES: decisions/RATIFICATION-PACKAGE-2026-07-12.md :: "The adjudication en
 CONDITION: any session reading, writing, rendering or checking best practice (ideal, most accommodating), most common practice, the minimum or a marker, or meeting one of the decision-record passages, corpora, RULE lines or `decisions` rows named above.
 ACTION: (1) Read the three terms, the four figures and the markers by the quotes above and the home each names; where a home does not yet hold the text, read the entries quoted. (2) Read each passage named in (a) by its marker; leave the old text in place. (3) Read the corpora in (b) and the rules and rows in (c) as superseded in their sense of best practice, though unmarked, within the limits (c) states. (4) Treat every [ASSUMPTION] above as unratified. (5) Leave OD-62 to the owner.
 DATE: 2026-11-19 — record by the executor of T-119 of rulings the owner gave on 2026-11-14; not a new owner statement.
+
+
+## Owner ratification 2026-11-19 — the third adjudication's resolutions are appended and ratified (OD-17, OD-46 to OD-48, OD-51, OD-52, OD-54, OD-62, OD-67, OD-69, OD-71's residue, OD-72, and the stack's design questions)
+
+Given in the session `session_2026-11-18-remediation-batch-1-tooling-stack-2` (https://claude.ai/code/session_01Ub36iMfdrQNV9XzGP4dyZm), in two typed messages; the second answered the coordinator's report of the adjudication (`workplan/2026-11-12-bidirectional-pipeline/OPEN-DECISIONS-ADJUDICATION-3.md`, which lists nine items reserved to the owner under CLAUDE.md section 8 as recommended defaults). Server-clock times were not captured; derive them from the preserved transcript (`git grep -n -F "have Opus adjudicate all open decisions" -- transcripts`; `git grep -n -F "Sure, append. Ratify all." -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "have Opus adjudicate all open decisions based upon long-term integrity re provenance and walkability as well as context from my prior rulings"
+>
+> "Sure, append. Ratify all."
+
+**Readings.**
+
+- [ASSUMPTION: "all open decisions" covers every register entry not answered or resolved with its check satisfied, every item the three sweep lists left open, and the eleven questions of pull request #240 — basis: the words; the list is section 2 of the adjudication].
+- [ASSUMPTION: the first instruction supersedes, for those items and on contact (CLAUDE.md rule 0), the sentences that said they were not to be resolved under delegation: ACTION (3) of "Owner statements 2026-11-18 — OD-71 …", ACTION (3) of "Owner statement 2026-11-18 (third) — OD-69", ACTION (4) of "Owner answers 2026-11-17 — OD-68 …", ACTION (4) of "Correction and registration 2026-11-15", and the "Registration 2026-11-14" sentence on OD-62 — basis: a live owner instruction naming "all open decisions"].
+- [ASSUMPTION: "provenance" and "walkability" are read as defined in section 0 of the adjudication — basis: the owner's rulings it quotes].
+- [ASSUMPTION: "Ratify all" covers every resolution of the adjudication: the nine items it reserved to the owner become the owner's answers (status ANSWERED BY THE OWNER), and each resolution it made under delegation is confirmed (CHECK: confirmed); the design questions numbered 12 to 91 that carry no OD number are ratified by reference to the adjudication and are given no status line — basis: the owner replied to a report that named both kinds; if only the nine were meant, the CHECK lines below are the ones to withdraw by a later line].
+- [ASSUMPTION: "all" includes OD-17, ratification of the corrected contract, an act that is the owner's by its nature — basis: the report named it among the nine; the owner has not been shown the contract diff in this session].
+- [ASSUMPTION: "append" means the draft entry of section 4 of the adjudication, as corrected here (the statuses above replace its REFERRED BACK lines, and the borderline passage it left unpaired is paired below) — basis: the words].
+
+OD-17: the corrected contract is ratified (the owner's act; its condition, T-022 merged, is met)
+OD-17 STATUS: ANSWERED BY THE OWNER
+
+OD-46: admit as declared, scoped-out codes (the adjudication's recommended default, ratified)
+OD-46 STATUS: ANSWERED BY THE OWNER
+
+OD-47: the document's stated audience judged per item by context, the audience words quoted (the adjudication's recommended default, ratified)
+OD-47 STATUS: ANSWERED BY THE OWNER
+
+OD-48: whom it is for (the adjudication's recommended default, ratified)
+OD-48 STATUS: ANSWERED BY THE OWNER
+
+OD-51: yes, on retrieved proof of authorship (the adjudication's recommended default, ratified)
+OD-51 STATUS: ANSWERED BY THE OWNER
+
+OD-52: names the term; the contrast provision is separate (the adjudication's recommended default, ratified)
+OD-52 STATUS: ANSWERED BY THE OWNER
+
+OD-54: into the register, replayed through the writer
+OD-54 STATUS: RESOLVED UNDER DELEGATION
+OD-54 CHECK: confirmed
+
+OD-62: no rename (the registered default)
+OD-62 STATUS: RESOLVED UNDER DELEGATION
+OD-62 CHECK: confirmed
+
+OD-67: yes, one answer on the full list, VES withheld (the adjudication's recommended default, ratified)
+OD-67 STATUS: ANSWERED BY THE OWNER
+
+OD-69: a concept's topic area; the list is not fixed; held as rows extended by data with a warrant
+OD-69 STATUS: RESOLVED UNDER DELEGATION
+OD-69 CHECK: confirmed
+
+OD-71: the absorbed grounding holds the locator and the words the base cell asserts were found, as far as a base refusal reads them; `direction_ref_id` and `term_aliases.observation_id` become provenance only or are dropped; an absorbed phrase with a URL and a page or clause is attested
+OD-71 STATUS: ANSWERED BY THE OWNER
+
+OD-72: an appearance is one attested occurrence; CSA or ISO wins, then the count; an exact tie shows the label and a judge is owed; a named judge's pick overrides; no form shows the label; a concept with no attested English instrument form of an in-scope jurisdiction is counted across its attested forms in every language
+OD-72 STATUS: RESOLVED UNDER DELEGATION
+OD-72 CHECK: confirmed
+
+Retained clause text in git history (the adjudication's item 15, a licensing default reserved under section 8): the text may enter git history; showing it stays forbidden. Ratified with the rest; no status line, because no register number carries it.
+
+Correction to the delegated resolution of OD-11: a cross-stage table is walkable as an intermediate and counted in no stage; "count it as a member of each stage it carries" is withdrawn; ACTION (3), "lose no path", is met.
+
+SUPERSEDES: decisions/DR-2026-07-21-tier-doctrine-source-class-consistency.md :: "weak-band convergence floor"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+
+CONDITION: any session executing a task the adjudication names, writing a base warrant, a lens link, a unit, a direction, a domain or a displayed name, or meeting an item of its section 2.
+ACTION: (1) Read each decision's gate by the convention of 2026-11-12: the status line above opens it, a RESOLVED UNDER DELEGATION line opens it with its CHECK as recorded here; a task that requires the owner's own words is open only on ANSWERED BY THE OWNER. (2) Author the tooling tasks of the adjudication's section 4 in its order, each its own pull request; ship research separately (rule 10). (3) Treat every [ASSUMPTION] above as unratified except where the owner's words state it; the breadth of "all" is the first to confirm. (4) The recommended defaults the owner ratified are the owner's rulings from this date; a later owner statement supersedes them on contact (rule 0).
+DATE: 2026-11-19 — the owner's typed instruction and ratification (quoted above); the resolutions themselves are the adjudicator's, ratified by the owner.
