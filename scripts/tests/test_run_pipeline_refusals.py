@@ -1166,7 +1166,7 @@ else:
         record("T025-10", "lang_jur_map and base_taxonomy_identity are in the captured set (a change to either reaches a migration)",
                {"lang_jur_map", "base_taxonomy_identity"} <= _wt, sorted(_wt))
 
-print("Section T027: a source's code currency is written by amend-source, stamped, and its edition by correct-source (a DOI) or amend-source with the document's own words (none)")
+print("Section T027: a source's code currency is written by amend-source, stamped, and its edition by correct-source")
 _cv = dbcore.code_currency_vocabulary()
 _ref27 = scalar("SELECT ref_id FROM evidence_sources WHERE code_currency_status IS NULL AND tier >= 4 AND superseded_by_ref_id IS NULL ORDER BY ref_id LIMIT 1")
 _ref27_t1 = scalar("SELECT ref_id FROM evidence_sources WHERE tier < 4 ORDER BY ref_id LIMIT 1")
@@ -1190,10 +1190,10 @@ else:
         _rs = {"outside the enum": refusal(db.amend_source, _ref27, "code_currency_status", "CURRENT-ISH", "r", session=S, dry_run=True),
                "stamp typed": refusal(db.amend_source, _ref27, "code_currency_verified_at", "2026-01-01", "r", session=S, dry_run=True),
                "edition by hand": refusal(db.amend_source, _ref27, "edition", "2nd", "r", session=S, dry_run=True)}
-        record("T027-03", "a value outside the enum is refused naming the enum; the stamp columns are not amendable; an edition typed with no "
-               "quote is refused saying the verb needs --edition-quote",
+        record("T027-03", "a value outside the enum is refused naming the enum; the stamp columns are not amendable; edition is a bibliographic "
+               "field and is sent to correct-source",
                all(_rs.values()) and all(v in _rs["outside the enum"] for v in _cv) and "not an amendable" in _rs["stamp typed"]
-               and "needs --edition-quote" in _rs["edition by hand"], _rs)
+               and "correct-source" in _rs["edition by hand"], _rs)
         _st = {"tier below 4": refusal(db.amend_source, _ref27_t1, "code_currency_status", _cv[0], "r", session=S, dry_run=True) if _ref27_t1 else "n/a",
                "tombstone": refusal(db.amend_source, _ref27_tomb, "code_currency_status", _cv[0], "r", session=S, dry_run=True) if _ref27_tomb else "n/a"}
         record("T027-06", "code currency is refused for a source below tier 4 and for a tombstone, and writing it does not flip metadata_integrity_status",
@@ -1205,40 +1205,6 @@ else:
         _n = c.execute("SELECT code_currency_notes, code_currency_verified_at FROM evidence_sources WHERE ref_id=?", (_ref27,)).fetchone()
         record("T027-04", "code_currency_notes is amendable on its own and does not move the verification stamp",
                err is None and _n[0] == "checked against the issuing body's page" and _n[1] == _stamp0, (err, tuple(_n)))
-    # T027-08..10: an edition for a source with NO DOI is written only with the document's own words, found in a file saved FOR it.
-    _q_ok, _q_other = "Fixture edition token alpha: second edition, 2010", "Fixture edition token beta: third edition, 2015"
-    _ref27_doi = scalar("SELECT ref_id FROM evidence_sources WHERE doi IS NOT NULL AND ref_id<>? ORDER BY ref_id LIMIT 1", _ref27)
-    _ref27_other = scalar("SELECT ref_id FROM evidence_sources WHERE doi IS NULL AND ref_id<>? ORDER BY ref_id LIMIT 1", _ref27)
-    if not (_ref27_doi and _ref27_other):
-        skip("T027-08", "no source with a DOI, or no second source without one, to build the edition fixtures on")
-    else:
-        with scratch() as c:
-            held_text(_ref27, _q_ok)
-            held_text(_ref27_other, _q_other)
-            _e = {"no quote": refusal(db.amend_source, _ref27, "edition", "second edition", "r", session=S, dry_run=True),
-                  "not in any saved file": refusal(db.amend_source, _ref27, "edition", "fourth edition", "r", session=S, dry_run=True,
-                                                   edition_quote="Fixture edition token gamma: fourth edition"),
-                  "only in another source's file": refusal(db.amend_source, _ref27, "edition", "third edition", "r", session=S, dry_run=True,
-                                                           edition_quote=_q_other),
-                  "value outside its quote": refusal(db.amend_source, _ref27, "edition", "fifth edition", "r", session=S, dry_run=True,
-                                                     edition_quote=_q_ok),
-                  "source has a DOI": refusal(db.amend_source, _ref27_doi, "edition", "second edition", "r", session=S, dry_run=True,
-                                              edition_quote=_q_ok),
-                  "quote beside another field": refusal(db.amend_source, _ref27, "notes", "n", "r", session=S, dry_run=True,
-                                                        edition_quote=_q_ok)}
-            _want = {"no quote": "needs --edition-quote", "not in any saved file": "does not occur in any persisted",
-                     "only in another source's file": "not in any file saved for", "value outside its quote": "does not occur inside",
-                     "source has a DOI": "correct-source", "quote beside another field": "only admissible beside"}
-            record("T027-08", "an edition is refused with no quote, with a quote in no saved file, with one found only in another source's file, "
-                   "with a value its quote does not hold, for a source with a DOI (sent to correct-source), and a quote beside another field",
-                   all(_e[k] and _want[k] in _e[k] for k in _want), _e)
-            _was = c.execute("SELECT edition FROM evidence_sources WHERE ref_id=?", (_ref27,)).fetchone()[0]
-            res, err = ok(db.amend_source, _ref27, "edition", "second edition", "T027 fixture: edition stated", session=S, dry_run=False,
-                          edition_quote=_q_ok)
-            _r = c.execute("SELECT edition, metadata_integrity_detail FROM evidence_sources WHERE ref_id=?", (_ref27,)).fetchone()
-            record("T027-09", "an edition whose quote is in a file saved for the source is written, and the ledger keeps the quote and the reason",
-                   err is None and _was is None and _r[0] == "second edition" and _q_ok in _r[1] and "T027 fixture: edition stated" in _r[1],
-                   (err, tuple(_r)))
     record("T027-05", "edition is a field correct-source takes from the logged payload", "edition" in db._CORRECTABLE, sorted(db._CORRECTABLE))
     record("T027-07", "original_title is a field correct-source takes from the logged payload (Crossref original-title), and amend-source sends it there",
            "original_title" in db._CORRECTABLE and "correct-source" in (refusal(db.amend_source, _ref27, "original_title", "x", "r", session=S, dry_run=True) or ""),

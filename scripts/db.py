@@ -2001,8 +2001,7 @@ def main():
     p_ams.add_argument("--ref-id", required=True)
     p_ams.add_argument("--field", required=True,
                        help="A judgement field, not a bibliographic one. Bibliographic "
-                            "fields belong to correct-source and are refused here, except "
-                            "`edition` of a source with no DOI (needs --edition-quote).")
+                            "fields belong to correct-source and are refused here.")
     p_ams.add_argument("--replacement", required=True)
     p_ams.add_argument("--reason", required=True,
                        help="Why the previous text was wrong. Recorded in "
@@ -2025,11 +2024,6 @@ def main():
                        help="Only with --field evidence_type --replacement co1, and "
                             "required there: a member of schemas.enums.Co1SourceType. "
                             "grain_for grades a Co-1 source's grain from it.")
-    p_ams.add_argument("--edition-quote", default=None,
-                       help="Only with --field edition, and required there: the source's own words "
-                            "stating the edition, verbatim, found in a file saved for this source; "
-                            "--replacement must occur inside it. For a source with no DOI (one with a "
-                            "DOI is `correct-source --field edition`, from the logged payload).")
     p_ams.add_argument("--session", required=True)
     p_ams.add_argument("--dry-run", action="store_true")
 
@@ -3793,8 +3787,7 @@ def main():
                            session=args.session, dry_run=args.dry_run,
                            tier=args.tier, scope=args.scope,
                            co1_provenance=args.co1_provenance,
-                           co1_source_type=args.co1_source_type,
-                           edition_quote=args.edition_quote))
+                           co1_source_type=args.co1_source_type))
 
     elif args.command == "retire-specification":
         _emit(retire_specification(args.specification_id, reason=args.reason,
@@ -5007,8 +5000,7 @@ def correct_source(ref_id: str, fields: list, session: str, log_session: str,
         if not row["doi"]:
             raise Refusal(
                 f"{ref_id}: no DOI, so no payload can be keyed to it. Corrections to a "
-                f"DOI-less source have no byte-level authority and are refused here "
-                f"(its edition alone: `amend-source --field edition --edition-quote`).")
+                f"DOI-less source have no byte-level authority and are refused here.")
         msg = _payload_for(ref_id, row["doi"], log_session)
         stamp = audit(session)
         changed = []
@@ -6604,7 +6596,7 @@ def _retype_source(conn, ref_id: str, new_type: str, scope, tier, co1_provenance
 
 def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                  session: str, dry_run: bool = False, tier=None, scope=None,
-                 co1_provenance=None, co1_source_type=None, edition_quote=None):
+                 co1_provenance=None, co1_source_type=None):
     """Replace a JUDGEMENT field on an evidence row, recording what was replaced.
 
     Replaces rather than appends, and that is the opposite of what resolve-candidate
@@ -6627,15 +6619,11 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
     CRPD Art 4.3 warrant.
     """
     replacement, reason = (replacement or "").strip(), (reason or "").strip()
-    # `edition` is the one correctable field this verb also takes, and only for a source with NO DOI
-    # (checked below): correct-source reads a DOI's logged payload, and a standard has none to read.
-    # Its warrant is then the document's own words, in a file saved for this source (--edition-quote).
-    # It is not in _AMENDABLE, which stays disjoint from _CORRECTABLE (test_db_integrity M03).
-    if (field in _CORRECTABLE and field != "edition") or field == "authors":
+    if field in _CORRECTABLE or field == "authors":
         raise Refusal(
             f"{ref_id}: {field!r} is a bibliographic field. It is not amendable by hand "
             f"-- use `db.py correct-source`, which takes it from the logged payload.")
-    if field not in _AMENDABLE and field != "edition":
+    if field not in _AMENDABLE:
         raise Refusal(
             f"{ref_id}: {field!r} is not an amendable judgement field. "
             f"Amendable: {', '.join(_AMENDABLE)}. Give one of them as --field; a "
@@ -6646,15 +6634,6 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         raise Refusal(
             f"{ref_id}: --reason is required. An unexplained overwrite of a warrant is "
             f"indistinguishable from the error it replaces.")
-    if field == "edition":
-        if not (edition_quote or "").strip():
-            raise Refusal(
-                f"{ref_id}: --field edition needs --edition-quote: the words of this source's own saved "
-                f"text that state the edition, verbatim. An edition is a fact about the document; "
-                f"with no DOI there is no payload for correct-source to read, so the document's own "
-                f"words are the only warrant, and a value from memory has none. Nothing was written.")
-    elif edition_quote is not None:
-        raise Refusal(f"{ref_id}: --edition-quote is only admissible beside --field edition. Nothing was written.")
     if field == "evidence_type":
         # Stored lower-case, as add-source stores it: assess_cell.classify() compares
         # against lower-case literals, so 'CO1' would stop anchoring anything.
@@ -6754,20 +6733,6 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
             if replacement not in _cv:
                 raise Refusal(f"{ref_id}: code_currency_status {replacement!r} is not in the enum "
                               f"governance/tier-system.md ratifies: {_cv}. Pass one of them. Nothing was written.")
-        if field == "edition":
-            _doi = conn.execute("SELECT doi FROM evidence_sources WHERE ref_id=?", (ref_id,)).fetchone()[0]
-            if _doi:
-                raise Refusal(
-                    f"{ref_id}: carries DOI {_doi!r}, so its edition is read from the logged payload: use "
-                    f"`db.py correct-source --field edition`. A typed edition is for a source with no DOI. "
-                    f"Nothing was written.")
-            if not _retrieval_log().phrase_in_quote(replacement, edition_quote):
-                raise Refusal(
-                    f"{ref_id}: --replacement {replacement!r} does not occur inside --edition-quote. The "
-                    f"quote is the evidence for the edition; a value it does not hold was not read there. "
-                    f"Nothing was written.")
-            _require_scoped_verbatim(edition_quote, ref_id, "--edition-quote",
-                                     f"{ref_id}: amend-source --field edition")
         if field in ("code_currency_status", "code_currency_notes"):
             # Currency is a T4-T6 fact (governance/tier-system.md section 4: the cited edition must be the one in force) and
             # a tombstone is never read again.
@@ -6890,8 +6855,6 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         _verb = "RECORDED" if field in ("code_currency_status", "code_currency_notes") else "CORRECTED"
         segment = (f"{stamp['created_at'][:10]} {field} {_verb} ({reason}). "
                    f"Replaced text was: {was!r}")
-        if field == "edition":
-            segment += f" Stated by the source: {edition_quote.strip()!r}"
         if retype is not None:
             # ONE segment: the type, its scope and tier, and any Co-1 text it carries out
             # of the columns, so the move cannot be read in halves.
