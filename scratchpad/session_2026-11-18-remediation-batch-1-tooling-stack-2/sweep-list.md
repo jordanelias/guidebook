@@ -79,3 +79,17 @@ Not repaired:
 5. **OWNER'S, plain form: the alias matching rule of the inventory route.** The task file states none. The narrowest defensible rule was applied: the concept's displayed name plus its attested forms, matched word by word. Is a clause that names a concept's form (a word of its attested forms) the right test for "this clause is about this parameter"? Files that would change: `tasks/T-031-clause-unit-and-open-pass.md` section 4, `scripts/audit/scan_debt.py`.
 6. **An addition the repair list did not name:** the view `v_attested_term_forms` (the CTE `v_term_names` carried, moved unchanged so the rule has one home); `db._non_member_types` now reads it.
 7. **`reread_flagged` in `cell-status`** is still a subset of `never_examined` and `read_in_part_only` for sources read in full: documented as a subset, not removed.
+
+## T-083 (commit 217d7af8; critic repairs sent to the executor)
+
+Held under attack: migration 155 mechanics (rebuild rc 0, 223 schema objects identical, no row moved, no reader of the dropped column outside db.py); write-once, status and live-work refusals; dry-run leaves the copy unchanged; `direction_ref_id` untouched.
+
+Sent for repair: the locator-only warrant let corridor width become a colour temperature with `https://example.org` and page `n/a`, permanently (the quote refusal of T-020 was dropped; restored as a base cell `quantity_kind_quote`, migration 156); the CHECK holes (no-break space, BLOB, locator without kind); the lost T020-04/05 cases and five surviving seeded defects; the false "once it is retired or merged" message; stale T-109 and T-072 text naming the dropped flag.
+
+Not repaired:
+1. **OWNER'S (OD-71 "what it does not decide"): does the base repeat the quoted words, or only the locator?** The executor had resolved it as locator-only; the repair keeps the quote so no refusal is weakened pending the answer.
+2. **Parameter 3 has an open determination gate**, so `set-parameter-kind` refuses it; the task file's "changes no present act" was wrong (it checked `specifications` only). Whether the gate should block a kind is a design question for `tasks/T-083-set-kind-on-existing-parameter.md` section 4 and T-109.
+3. **`merge-parameter` changes the kind under stored figures** (set a kind on 6, merge 6 into a kindless 7 succeeds; 7 carries none). The write-once rationale is not held by merge. Files that would change: `scripts/db.py` merge, `tasks/T-083`.
+4. The locator CHECK body is hand-copied in three tables (`term_aliases`, `term_relations`, `base_parameters`).
+5. `STATE-GRAPH.md` and `graph.json` still name the dropped foreign key; regenerated at the end of the stack (`build_graph.py --check` cannot see it).
+6. Not re-run by the critic: `migration_reproducibility --deep`.
