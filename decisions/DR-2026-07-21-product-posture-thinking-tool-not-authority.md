@@ -67,6 +67,8 @@ declines-authority*. "Best practice" reads throughout as **"the practice the evi
 adjudicated and shown at a stated strength — offered as a figure for thought, not imposed as a
 requirement."**
 
+> **SUPERSEDED IN PART — appended 2026-11-19, not edited.** As to the definition in bold above, as to what selects the value: best practice is the most accommodating identified value for a cell and its context, and the support of the evidence sets its marker, not its selection. "Offered as a figure for thought, not imposed as a requirement" stands. The owner's words of 2026-07-21 that the machinery must adjudicate (Decision, item 1) are not superseded: the owner's definition of determination answers them. Ledger: `references/project-standards.md`, "Unification 2026-11-14 — best, most common, minimum; showing and grading": best, most common and minimum are read as the owner defined them on 2026-11-14.
+
 ## Consequences if ratified
 
 1. **The adjudication backlog is the priority, and is protected.** The value-genealogy engine (ratified

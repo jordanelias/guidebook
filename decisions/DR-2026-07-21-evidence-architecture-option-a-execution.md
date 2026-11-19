@@ -16,6 +16,8 @@ cells"). I3 survives in amended form: no *unflagged* and no *above-weak-band* be
 on regulatory-stratum-only cells, in any register, under any weighting profile; I5 applies with the
 register map's ○ row as ceiling.
 
+> **AMENDED — appended 2026-11-19, not edited.** The ceiling above reads as the code marker by tier now that the circle table is applied (OD-57): a basis of T4 alone takes ◐, T5 or T6 ○, and a grey, unverified or thin basis ⚠ in place of a circle; the ○ row is no longer the ceiling for every regulatory-stratum cell. Ledger: `references/project-standards.md`, "Unification 2026-11-14 — best, most common, minimum; showing and grading": best, most common and minimum are read as the owner defined them on 2026-11-14.
+
 ---
 
 ## 1. The decision
@@ -27,6 +29,7 @@ register map's ○ row as ceiling.
    caveat, in every register, for every audience — never unflagged, never at anchoring strength.
    Convergence-not-evidence is retained as the honesty rule within the weak band
    (`tier-system.md` §3 banner + §8), not as a suppression rule.
+   **AMENDED — appended 2026-11-19, not edited.** Decision 1's weak band reads as the code marker by tier now that the circle table is applied (OD-57): ◐ for a basis of T4 alone, ○ for T5 or T6; the showcased value carries its own source's grade (OD-59). Never ● for a code basis stands. Ledger: `references/project-standards.md`, "Unification 2026-11-14 — best, most common, minimum; showing and grading": best, most common and minimum are read as the owner defined them on 2026-11-14.
 2. **Direction-aware most-accommodating floor selection.** Where jurisdictions' code floors differ
    on a parameter, the regulatory-stratum determination anchors on the most accommodating available
    value, read per the parameter's accessibility direction — best-for-the-user, not largest-number:
@@ -78,6 +81,8 @@ examples. `decisions/DR-2026-07-20-evidence-architecture-weighted-strength-recon
 status → SUPERSEDED-BY. Every doc statement that outruns the engine carries an inline
 `[ENGINE-LAG → DR-2026-07-21 §5]` marker; markers are removed only by the follow-up that lands
 the behavior.
+
+> **AMENDED — appended 2026-11-19, not edited.** Register row 3's ○ reads as the code marker by tier now that the circle table is applied (OD-57): ◐ for a basis of T4 alone, ○ for T5 or T6, ⚠ in place of a circle for a grey, unverified or thin basis. Ledger: `references/project-standards.md`, "Unification 2026-11-14 — best, most common, minimum; showing and grading": best, most common and minimum are read as the owner defined them on 2026-11-14.
 
 **Governing-source reconciliation (added 2026-07-21 after adversarial review).** The precedence clause
 (`evidence-architecture.md:4`) makes divergent *cited sources* govern, so Option A does not fully hold
@@ -138,6 +143,8 @@ other active sources that carried the repealed "in error" rule: `references/proj
 mission draft and prior DRs are left as historical/append-only records). Option A now holds across the
 evidence architecture, its governing sources, and the mission; no mission-level reconciliation remains
 outstanding.
+
+> **SUPERSEDED IN PART — appended 2026-11-19, not edited.** As to the two claims above that a code-consensus best-practice claim is valid when flagged and in error only when unflagged or above the weak band: a code-only best is the most accommodating code value, never one derived from code consensus, flagged or not; agreement among codes is most common practice. The flag, the caveat and the code marker stand. Ledger: `references/project-standards.md`, "Unification 2026-11-14 — best, most common, minimum; showing and grading": best, most common and minimum are read as the owner defined them on 2026-11-14.
 
 **Adversarial-remediation provenance.** This DR's §3 governing-source reconciliation, the §2.5 safeguard, and
 the attestation fixes were produced by a three-reviewer adversarial pass (Fable-5, max effort) over the

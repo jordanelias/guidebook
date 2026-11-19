@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-11-18-remediation-batch-1-tooling-stack-2",
+  "artifact": "sessions/session_2026-11-18-remediation-batch-1-tooling-stack-2.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": ["adherence-logging-and-attestation", "best-practice-synthesis-routing"],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-11-18-remediation-batch-1-tooling-stack-2-t119.json",
+      "reason": "T-119 touches ten records in decisions/ (one appended marker line per superseded or amended passage, seventeen in all, no existing line edited) and appends one ledger entry, 'Unification 2026-11-14 — best, most common, minimum; showing and grading', carrying eighteen SUPERSEDES/BY pairs. Each of the ten records already has its own attestation; this one covers the change of this task. The session record named as the artifact is written at the session's close and does not exist yet."
+    },
+    "best-practice-synthesis-routing": {
+      "status": "FIRED",
+      "evidence_path": "references/project-standards.md",
+      "reason": "The markers and the entry route every decision-record passage that read best practice as convergence, as Tier 1 and 2 only, or as the code floor to the owner's definitions of 2026-11-14 (best is the most accommodating identified value; agreement is most common practice; the minimum is the code stratum's least accommodating value), quoted in the owner's words. No doctrine file is edited; T-120 amends the governance homes."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "The BY sentence is not the term plan's example ('the figures of a cell are read under evidence-architecture §0 from 2026-11-14'), because that section does not exist until T-120; the sentence chosen, 'best, most common and minimum are read as the owner defined them on 2026-11-14', is true today and occurs once in the ledger's prose."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Passages located by the plan's line number and then by text; every quote was chosen by the executor among the passage's clauses. Moved or re-anchored: option-A execution :15 is quoted from lines 16 and 17 ('I5 applies with the register map's ○ row as ceiling'), :24 spans lines 24 and 25, :75 spans lines 75 and 76, :130 spans lines 129 and 130; the ledger's OR-4 sits at a different line than the plan's 4689 and its ACTION (3) at a different line than 4706, both found by text; plan line 3944's sentence starts on the line before, so its grep names only the part on that line. Cell-state :22 quotes the gloss without its inner quotation marks; :29 quotes the item's operative clause (the exclusion), not the Tier-6 sentence after it. Option-A :130 and :132 share one marker because they sit in one paragraph."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Ledger lines 14, 23 and 142 of the plan's section 3 (c) have no adjudication record; the sense in which each is superseded (median as default, the floor, the dead BPC table) is the executor's reading of the plan's U keys. The attestation names an artifact that does not yet exist because the schema admits only a decisions/ or sessions/ record and this change has no single one."
+    }
+  ],
+  "bias_direction": "The executor chose every anchor quote and wrote every marker's wording, and the owner has not read them; a quote chosen too narrowly leaves the conflicting clause beside it unmarked, and a marker worded too broadly retires text the owner's rulings did not reach. The executor also leaned on the term plan's adjudications for what each passage gets wrong, so an adjudicator's misreading passes through unchallenged.",
+  "independent_reviewer_counterclaim": "A critic would say that a marker beside a frozen record is itself a restatement of doctrine with no gate on its meaning: the audit checks only that the BY sentence and a status word sit nearby, so seventeen paraphrases of the owner's rulings now live in decisions/ and can drift from the ledger and from T-120's section 0, and two of them (the shared option-A marker and the cell-state paragraph holding two markers) cannot be told apart by the check.",
+  "verdict": "DEVIATION-LOGGED"
+}

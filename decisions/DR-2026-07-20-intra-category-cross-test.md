@@ -92,6 +92,8 @@ The engine computes at **Universal** and **Population** scale; **Person Mode is 
 
 So, on readiness: the *method* for cross-mode best-practice adjudication is ratified (DR-2026-07-13) and demonstrated on the hardest cell (E-08); the *substrate* is live (genealogy fields + `v_value_independence`; the determination engine has produced its first 13 cells across Universal and Population scale). We can begin — and have. The ICCT is the **missing required step** that makes "begin" safe to scale: without it, corpus-wide determination would ship title-siloed cells at exactly the moment the engine turns 13 hand-checked cells into ~1,800 machine-checked ones.
 
+> **AMENDED — appended 2026-11-19, not edited.** The cross-mode method cited above rests on the roots-count discriminator of DR-2026-07-13 H1, superseded there as a selector of best practice; best practice is the most accommodating identified value for a lens and context. The ICCT itself stands. Ledger: `references/project-standards.md`, "Unification 2026-11-14 — best, most common, minimum; showing and grading": best, most common and minimum are read as the owner defined them on 2026-11-14.
+
 ---
 
 ## What this extends (and deliberately does not do)
