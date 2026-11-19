@@ -10,8 +10,8 @@
   "per_rule_status": {
     "adherence-logging-and-attestation": {
       "status": "FIRED",
-      "evidence_path": "attestations/sessions_session_2026-11-18-remediation-batch-1-tooling-stack-2-t119.json",
-      "reason": "T-119 and its repair touch eleven records in decisions/ (one appended marker line per superseded or amended passage, twenty in all, no existing line edited) and append one ledger entry, 'Unification 2026-11-14 — best, most common, minimum; showing and grading', carrying twenty-one SUPERSEDES/BY pairs. Each of the eleven records already has its own attestation; this one covers the change of this task. The session record named as the artifact does not exist yet: the session consolidator writes it at the session's close, and this is the only attestation whose artifact is missing until then."
+      "evidence_path": "attestations/sessions_session_2026-11-18-remediation-batch-1-tooling-stack-2.json",
+      "reason": "T-119 and its repair touch eleven records in decisions/ (one appended marker line per superseded or amended passage, twenty in all, no existing line edited) and append one ledger entry, 'Unification 2026-11-14 — best, most common, minimum; showing and grading', carrying twenty-one SUPERSEDES/BY pairs. Each of the eleven records already has its own attestation; this one covers the change of this task. The session record named as the artifact, sessions/session_2026-11-18-remediation-batch-1-tooling-stack-2.md, was written at the session's close."
     },
     "best-practice-synthesis-routing": {
       "status": "FIRED",
@@ -39,6 +39,10 @@
     {
       "rule": "adherence-logging-and-attestation",
       "reason": "Appended 2026-11-19 on the owner's instruction (\"Sure, append. Ratify all.\"): one AMENDED marker on decisions/DR-2026-07-21-tier-doctrine-source-class-consistency.md, for its gloss \"weak-band convergence floor\" only (the tier ruling stands), with its SUPERSEDES pair in the ledger entry \"Owner ratification 2026-11-19\". The passage was borderline in the third adjudication and left unpaired until the owner ratified its resolution."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Renamed from the -t119 suffix to the session's own name at the session close, when sessions/session_2026-11-18-remediation-batch-1-tooling-stack-2.md was written; the artifact it names now exists. It records this session's synthesis paths (the T-119 ledger entry and markers, the owner-ratification entry and its one AMENDED marker, the session record); the nine executor commits touch no synthesis path."
     }
   ],
   "bias_direction": "The executor chose every anchor quote and wrote every marker's wording, and the owner has not read them; a quote chosen too narrowly leaves the conflicting clause beside it unmarked, and a marker worded too broadly retires text the owner's rulings did not reach. The executor also leaned on the term plan's adjudications for what each passage gets wrong, so an adjudicator's misreading passes through unchallenged.",
