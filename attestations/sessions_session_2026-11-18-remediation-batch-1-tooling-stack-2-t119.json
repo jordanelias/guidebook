@@ -3,12 +3,15 @@
   "session": "session_2026-11-18-remediation-batch-1-tooling-stack-2",
   "artifact": "sessions/session_2026-11-18-remediation-batch-1-tooling-stack-2.md",
   "doctrine_sha": "0f2f525",
-  "rules_in_scope": ["adherence-logging-and-attestation", "best-practice-synthesis-routing"],
+  "rules_in_scope": [
+    "adherence-logging-and-attestation",
+    "best-practice-synthesis-routing"
+  ],
   "per_rule_status": {
     "adherence-logging-and-attestation": {
       "status": "FIRED",
       "evidence_path": "attestations/sessions_session_2026-11-18-remediation-batch-1-tooling-stack-2-t119.json",
-      "reason": "T-119 touches ten records in decisions/ (one appended marker line per superseded or amended passage, seventeen in all, no existing line edited) and appends one ledger entry, 'Unification 2026-11-14 — best, most common, minimum; showing and grading', carrying eighteen SUPERSEDES/BY pairs. Each of the ten records already has its own attestation; this one covers the change of this task. The session record named as the artifact is written at the session's close and does not exist yet."
+      "reason": "T-119 and its repair touch eleven records in decisions/ (one appended marker line per superseded or amended passage, twenty in all, no existing line edited) and append one ledger entry, 'Unification 2026-11-14 — best, most common, minimum; showing and grading', carrying twenty-one SUPERSEDES/BY pairs. Each of the eleven records already has its own attestation; this one covers the change of this task. The session record named as the artifact does not exist yet: the session consolidator writes it at the session's close, and this is the only attestation whose artifact is missing until then."
     },
     "best-practice-synthesis-routing": {
       "status": "FIRED",
@@ -28,6 +31,10 @@
     {
       "rule": "adherence-logging-and-attestation",
       "reason": "Ledger lines 14, 23 and 142 of the plan's section 3 (c) have no adjudication record; the sense in which each is superseded (median as default, the floor, the dead BPC table) is the executor's reading of the plan's U keys. The attestation names an artifact that does not yet exist because the schema admits only a decisions/ or sessions/ record and this change has no single one."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Repair after the adversarial pass: three pairs on decisions/DR-2026-07-20-weighted-strength-anchor-model.md (its directive's bands, its band table, its 'convergence of floors' gloss) are not named by the term plan and are added for the owner to confirm. Option-A §6's two passages, listed as superseded by the plan, are marked AMENDED, because the quoted sentence still holds under U2 and the owner's ruling 'no, it's just weak' stands; D-0005's 'in error' clause is not superseded, departing from the plan's section 3 (c); the ledger RULE on universal design and code compliance is not superseded, as no owner word of 2026-11-14 contradicts it. The currency clause was removed from the DR-2026-05-24 marker."
     }
   ],
   "bias_direction": "The executor chose every anchor quote and wrote every marker's wording, and the owner has not read them; a quote chosen too narrowly leaves the conflicting clause beside it unmarked, and a marker worded too broadly retires text the owner's rulings did not reach. The executor also leaned on the term plan's adjudications for what each passage gets wrong, so an adjudicator's misreading passes through unchallenged.",
