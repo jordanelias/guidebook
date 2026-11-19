@@ -110,3 +110,18 @@ Not repaired:
 5. **Owner's, to confirm:** any pair added for `DR-2026-07-20-weighted-strength-anchor-model.md` is not named by the plan.
 
 **T-119 repair result (commit 2228252c):** three pairs added for `DR-2026-07-20-weighted-strength-anchor-model.md` (not named by the plan; the owner to confirm); the currency clause removed from the DR-2026-05-24 marker; the option-A §6 marker and D-0005 now AMENDED, not superseded (a departure from the plan's section 3, recorded in the entry and the attestation); the "circle table is applied" wording replaced by the owner's answer to OD-57 with T-117 and T-120 as builders; recorder readings labelled; U1, U6, U8 quoted in full; audit EXAMINED 31 to 34, PASS; each of the 11 new or changed markers red when deleted. Left unpaired: `decisions/DR-2026-07-21-tier-doctrine-source-class-consistency.md` line ~42 ("weak-band convergence floor"), a borderline passage the executor did not mark (the owner's to decide).
+
+## T-126 (commit 017d1778; critic repairs sent to the executor)
+
+Held under attack: migration 157 rebuilds with all 216 rows, every index and every view unchanged and `foreign_key_check` empty; no base table gains a key (OD-71); no second home for the lens; a NULL tier and an unknown identity are refused; `--dry-run` leaves the copy unchanged; `emit_batch_sql` captures `basis_reason`; flag-not-refuse is the file's own choice and matches the ledger's "refused or flagged".
+
+Sent for repair: the audit passed with EXAMINED 144 having judged nothing (all 216 links are `carried`, `ALL` counted as an identity, the contract criterion false for every figure); 15 of 24 seeded defects survived, so "each new branch red when broken" was false; `ALL` writable by context; T-126's row-by-row test read only the canonical database.
+
+Not repaired:
+1. **OWNER'S: the tier floor.** Context is accepted only for tier 4 and above; the owner said "code values", and the threshold is the task file's. T5 holds non-code design guides and T2 `standard_eb` is refused. Withheld for the owner.
+2. **The `context` warrant gates nothing mechanical:** 10 of 10 junk reasons were accepted (`because`, `x`, `n/a`, `idk`), each writing a different group onto one ramp-slope clause. The task file's rule is a letter in the reason; no mechanical test can judge a judgment, so the later adjudication is the check. Whether a stricter rule is wanted is the owner's.
+3. **A stated link can be recorded as judged:** a context link was accepted on a figure whose clause names "wheelchair" and on a superseded source. Design question for `tasks/T-126-code-value-lens-at-recording.md` section 4.
+4. **The maps leave the owner's own default outside the warning:** `d415` with `A-REACH` proposes nothing, `d445` proposes only `LMB`; 14 of 17 needs and 48 of 72 ICF codes have no live map row (OI-73, T-128).
+5. `retire-lens-link` leaves an ICF-only code figure with no warning; the writer warns on a heading-only figure the audit excludes; the word-boundary matcher does not find a term inside CJK text (16 code figures).
+6. `graph.json` lacks `context` (regenerated at the end of the stack).
+7. Not examined by the critic: `preflight.sh`, `joined_cells_census`, `add-extraction` and `derive-extraction` against a live source (the verbatim gate refused the probe), list (ii) on seeded data.
