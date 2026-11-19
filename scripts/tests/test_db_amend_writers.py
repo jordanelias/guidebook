@@ -2183,6 +2183,287 @@ try:
     record("T018-20", "a lens code that is not text is refused in words by both writers",
            r20a and "is text" in r20a and r20b and "as text" in r20b, f"{r20a!r} | {r20b!r}")
 
+    # ── T126: a code value's lens is judged from its context when its row is recorded; the maps propose ────────────
+    # Every code is derived from the copy's registries; where one is not live yet (the Reaching code before T-128) the
+    # fixture mints it on the COPY only, with one identity_icf_map row joining the wheelchair-user identity to it, and
+    # says so, so the case keeps asserting the path once the live row exists. The clause and the source's scope clause
+    # are saved as a real file for the fixture source (and another for a second source) in the fixture retrieval-log root.
+    sys.path.insert(0, str(REPO / "scripts" / "assess"))
+    import assess_cell as _t126_engine                                 # noqa: E402
+
+    def t126_first(sql, *params):
+        rows = q(sql, *params)
+        return rows[0][0] if rows else None
+
+    T126_CTX = ("--claim-type", "absent", "--figure-role", "finding", "--relation", "none",
+                "--extraction-method", "skim", "--session", S)
+    T126_REASON = "typically concerns wheelchair users"
+    reach126 = t126_first("SELECT icf_code FROM base_icf WHERE lower(coalesce(title,'')) LIKE '%reaching%' ORDER BY icf_code")
+    wheel126 = t126_first(
+        "SELECT i.identity_code FROM base_taxonomy_identity i WHERE i.status='active' AND lower(i.display_name||' '||"
+        "coalesce(i.description,'')) LIKE '%wheelchair%' ORDER BY (SELECT COUNT(*) FROM base_taxonomy_identity c "
+        "WHERE c.parent_code = i.identity_code AND c.status='active'), i.parent_code IS NULL, i.identity_code")
+    need126 = t126_first("SELECT need_code FROM access_needs WHERE lower(coalesce(design_obligation,'')) LIKE '%reachable%' "
+                         "AND lower(design_obligation) LIKE '%seated%' ORDER BY need_code")
+    clear126 = t126_first("SELECT icf_code FROM base_icf WHERE lower(coalesce(title,'')) LIKE '%moving around using equipment%'")
+    blind126 = t126_first("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND "
+                          "lower(display_name) LIKE '%blind%' AND lower(display_name) LIKE '%low%vision%'")
+    reach_fixture = reach126 is None
+    if reach_fixture:
+        reach126 = "d4452"
+        w("INSERT INTO base_icf (icf_code, component, title, title_source, created_at, created_by_session) "
+          "VALUES (?, 'd', 'Reaching', 'TASK-FIXTURE T126', 't', ?)", reach126, S)
+    if wheel126 and not q("SELECT 1 FROM identity_icf_map WHERE identity_code=? AND icf_code=? AND retired_at IS NULL",
+                          wheel126, reach126):
+        w("INSERT INTO identity_icf_map (identity_code, icf_code, mechanism, mapping_confidence, provenance, created_at, "
+          "created_by_session) VALUES (?, ?, 'TASK-FIXTURE seated reach', 'moderate_contextual', 'TASK-FIXTURE T126', "
+          "'2026-01-01 00:00', ?)", wheel126, reach126, S)
+    print(f"      T126 codes: reach {reach126} ({'fixture row' if reach_fixture else 'live'}), need {need126}, "
+          f"identity {wheel126}, clearance {clear126}, override {blind126}")
+
+    T126_CLAUSE = "TASK-FIXTURE T126 Controls shall be mounted at a height of not more than 1200 mm"
+    T126_KNEE = "TASK-FIXTURE T126 Knee clearance under the counter shall be not less than 685 mm"
+    T126_PROTRUDE = ("TASK-FIXTURE T126 Objects protruding more than 100 mm into the path shall be detectable by "
+                     "people who are blind or have low vision")
+    T126_SCOPE = "TASK-FIXTURE T126 This section applies to sanitary rooms in assembly occupancies"
+    T126_OTHER = "TASK-FIXTURE T126 phrase saved only for another source"
+    log_root = pathlib.Path(os.environ["GUIDEBOOK_RETRIEVAL_LOG"]) / "task-fixture-t126"
+    log_root.mkdir(parents=True, exist_ok=True)
+
+    def t126_save(ref, name, body):
+        (log_root / name).write_text(body, encoding="utf-8")
+        with open(log_root / "manifest.jsonl", "a", encoding="utf-8") as fh:
+            fh.write(json.dumps({"ref_id": ref, "artefact": name, "content_type": "text/plain",
+                                 "url": f"https://example.org/task-fixture/{name}"}) + "\n")
+
+    code126, _ = add_o("T126 code", "--evidence-type", "code")
+    readable(code126)
+    other126, _ = add_o("T126 other code", "--evidence-type", "code")
+    readable(other126)
+    grey126, _ = add_o("T126 research", "--evidence-type", "grey")
+    readable(grey126)
+    t126_save(code126, "t126-code.txt", "\n".join([T126_SCOPE, T126_CLAUSE, T126_KNEE, T126_PROTRUDE]))
+    t126_save(other126, "t126-other.txt", T126_OTHER)
+    t126_save(grey126, "t126-grey.txt", T126_CLAUSE)
+
+    def t126_add(ref, clause, *lens, section="TASK-FIXTURE T126 Section 3.8"):
+        r = run_cli("add-extraction", "--ref-id", ref, "--parameter-id", str(PARAM), *lens, "--claim-text", clause,
+                    "--source-section", section, *T126_CTX)
+        got = q("SELECT extraction_id FROM source_value_extractions WHERE ref_id=? AND claim_text=? "
+                "ORDER BY extraction_id DESC", ref, clause)
+        try:
+            res = json.loads(r.stdout) if r.returncode == 0 else {}
+        except ValueError:
+            res = {}
+        return r, (got[0][0] if got else None), res
+
+    def t126_links(fig):
+        return t018_read("SELECT identity_code, icf_code, needs_code, basis, basis_text, basis_reason FROM "
+                         "v_live_lens_links WHERE extraction_id=? ORDER BY link_id", fig)
+
+    CTX = lambda words: ("--lens-basis", "context", "--lens-basis-text", words, "--lens-basis-reason", T126_REASON)  # noqa: E731
+
+    # T126-01: the owner's mounting-height default: three links by context, the proposal shown, the cell gathers it.
+    r01_, fig126, res01 = t126_add(code126, T126_CLAUSE, "--icf", reach126, "--needs", need126, "--identity", wheel126,
+                                   *CTX("mounted at a height"))
+    links01, e01 = t126_links(fig126) if fig126 else (None, "no figure")
+    gathered = None
+    if fig126:
+        _gc = sqlite3.connect(DB)
+        try:
+            gathered = [g for g in _t126_engine.gather_extraction_links(_gc, PARAM, [], {"identity_code": wheel126})
+                        if g["extraction_id"] == fig126]
+        except Exception as exc:  # noqa: BLE001 -- recorded red below
+            gathered = f"{exc.__class__.__name__}: {exc}"
+        finally:
+            _gc.close()
+    record("T126-01", "a mounting-height code row is recorded with the reach ICF code, the reach need and the wheelchair-user "
+           "identity by context, the words and the reason in two cells; the map's proposal is printed and returned, "
+           "and the identity cell gathers the figure",
+           r01_.returncode == 0 and links01 is not None and len(links01) == 3
+           and all(l[3:] == ("context", "mounted at a height", T126_REASON) for l in links01)
+           and res01.get("identities_proposed") and wheel126 in res01["identities_proposed"]
+           and res01.get("identities_written") == [wheel126]
+           and f"{wheel126}: via ICF {reach126}" in r01_.stderr and "moderate_contextual" in r01_.stderr
+           and "provenance" in r01_.stderr
+           and isinstance(gathered, list) and len(gathered) == 1 and gathered[0]["in_lens"],
+           f"rc={r01_.returncode} {out_of(r01_)[-300:]!r} links={links01} {e01} res={res01} gathered={gathered}")
+
+    # T126-02: knee clearance, the second default; the live map proposes the wheelchair-user family for the clearance code.
+    r02_, fig02_, res02 = t126_add(code126, T126_KNEE, "--icf", clear126, "--needs", need126, "--identity", wheel126,
+                                   *CTX("knee clearance"))
+    live_prop02 = [c for (c,) in q("SELECT DISTINCT identity_code FROM identity_icf_map WHERE icf_code=? AND retired_at "
+                                   "IS NULL ORDER BY 1", clear126)]
+    record("T126-02", "a knee-clearance code row is recorded with the clearance ICF code, the reach need and the wheelchair-user "
+           "identity by context; the proposals are the live map's rows for the clearance code",
+           r02_.returncode == 0 and fig02_ and live_prop02 and wheel126 in live_prop02
+           and set(live_prop02) <= set(res02.get("identities_proposed") or ())
+           and res02.get("identities_written") == [wheel126],
+           f"rc={r02_.returncode} {out_of(r02_)[-300:]!r} res={res02} live map={live_prop02}")
+
+    # T126-03: the override: a protruding-object clause that names its group is written for that group, by named_in_text,
+    # with none of the default's links; the skill names the override. No code chooses the lens.
+    skill126 = (REPO / "skills" / "run-pipeline_SKILL.md").read_text(encoding="utf-8")
+    r03_, fig03_, res03 = t126_add(code126, T126_PROTRUDE, "--identity", blind126, "--lens-basis", "named_in_text",
+                                   "--lens-basis-text", "blind or have low vision")
+    links03, _ = t126_links(fig03_) if fig03_ else (None, "")
+    record("T126-03", "a protruding-object clause naming people who are blind or have low vision is written for that group by "
+           "named_in_text with no default link, and the skill's guidance names the override",
+           r03_.returncode == 0 and links03 == [(blind126, None, None, "named_in_text", "blind or have low vision", None)]
+           and "protruding" in skill126 and "Overridden where the clause names another group" in skill126,
+           f"rc={r03_.returncode} {out_of(r03_)[-250:]!r} links={links03}")
+
+    # T126-04: context below tier 4 is refused, naming the sixteenth set; nothing is written.
+    nf4, nl4 = n_figures(), n_links_now()
+    r04_, fig04_, _ = t126_add(grey126, T126_CLAUSE, "--icf", reach126, *CTX("mounted at a height"))
+    record("T126-04", "basis context on a source below tier 4 is refused naming the sixteenth set, and writes nothing",
+           r04_.returncode != 0 and "sixteenth set" in out_of(r04_) and n_figures() == nf4 and n_links_now() == nl4,
+           f"rc={r04_.returncode} {out_of(r04_)[-250:]!r}")
+
+    # T126-05: context with a blank or missing reason is refused; a reason beside another basis is refused.
+    def ll126(*extra):
+        return run_cli("add-lens-link", "--extraction-id", str(fig126 or 0), "--icf", clear126, *extra, "--session", S)
+    nl5 = n_links_now()
+    refused5 = {
+        "context, no reason": ll126("--basis", "context", "--basis-text", "mounted at a height"),
+        "context, blank reason": ll126("--basis", "context", "--basis-text", "mounted at a height", "--basis-reason", "  "),
+        "context, reason with no letter": ll126("--basis", "context", "--basis-text", "mounted at a height",
+                                                "--basis-reason", "1200"),
+        "named_in_text with a reason": ll126("--basis", "named_in_text", "--basis-text", "mounted at a height",
+                                             "--basis-reason", T126_REASON),
+        "heading with a reason": ll126("--basis", "heading", "--basis-text", "Section 3.8", "--basis-reason", T126_REASON),
+        "study_participants with a reason": ll126("--basis", "study_participants", "--basis-text", "participants",
+                                                  "--basis-reason", T126_REASON),
+    }
+    missed5 = [k for k, v in refused5.items() if v.returncode == 0]
+    record("T126-05", "context with a missing, blank or letterless reason is refused, and a reason beside any other basis is "
+           "refused; nothing is written",
+           not missed5 and n_links_now() == nl5
+           and "--basis-reason" in out_of(refused5["context, no reason"])
+           and "belongs to basis `context` only" in out_of(refused5["named_in_text with a reason"]),
+           f"not refused: {missed5}; {[out_of(v)[-120:] for v in refused5.values()]}")
+
+    # T126-06: the context's words must be in the clause, its heading or a file saved for ITS source.
+    r06a = ll126("--basis", "context", "--basis-text", "zq not anywhere xq", "--basis-reason", T126_REASON)
+    r06b = ll126("--basis", "context", "--basis-text", "saved only for another source", "--basis-reason", T126_REASON)
+    r06c = ll126("--basis", "context", "--basis-text", "applies to sanitary rooms", "--basis-reason", T126_REASON)
+    r06d = run_cli("add-lens-link", "--extraction-id", str(fig126 or 0), "--needs",
+                   t126_first("SELECT need_code FROM access_needs WHERE need_code<>? ORDER BY need_code", need126),
+                   "--basis", "context", "--basis-text", "Section 3.8", "--basis-reason", T126_REASON, "--session", S)
+    record("T126-06", "context words found nowhere, or only in a file saved for another source, are refused naming where it "
+           "looked; words in the source's own saved scope clause and in its heading are accepted",
+           r06a.returncode != 0 and r06b.returncode != 0 and "source_section" in out_of(r06b)
+           and r06c.returncode == 0 and r06d.returncode == 0,
+           f"{out_of(r06a)[-120:]!r} | {out_of(r06b)[-160:]!r} | {out_of(r06c)[-160:]!r} | {out_of(r06d)[-160:]!r}")
+
+    # T126-07: a code row with no lens flag at all is refused (D-0182), as before.
+    nf7, nl7 = n_figures(), n_links_now()
+    r07_, _, _ = t126_add(code126, T126_CLAUSE + " (no lens)", *CTX("mounted at a height"))
+    record("T126-07", "a code row with no lens flag is refused in the D-0182 words and writes nothing",
+           r07_.returncode != 0 and "at least one lens" in out_of(r07_) and n_figures() == nf7 and n_links_now() == nl7,
+           f"rc={r07_.returncode} {out_of(r07_)[-200:]!r}")
+
+    # T126-08: a stored code figure holding only carried links takes a context link, then its carried link is retired
+    # (the T-127 sequence). The probe is derived: the first such figure on the copy with a claim text to quote.
+    probe8 = q("SELECT x.extraction_id, x.claim_text, MIN(k.link_id) FROM source_value_extractions x JOIN evidence_sources e "
+               "ON e.ref_id = x.ref_id JOIN v_live_lens_links k ON k.extraction_id = x.extraction_id WHERE e.tier >= 4 "
+               "AND TRIM(COALESCE(x.claim_text,'')) <> '' GROUP BY x.extraction_id HAVING SUM(k.basis <> 'carried') = 0 "
+               "AND SUM(COALESCE(k.icf_code = ?, 0)) = 0 ORDER BY x.extraction_id LIMIT 1", clear126)
+    if probe8:
+        fig8, ct8, carried8 = probe8[0]
+        word8 = max(re.findall(r"[^\W\d_]+", ct8), key=len)
+        r08a = run_cli("add-lens-link", "--extraction-id", str(fig8), "--icf", clear126, "--basis", "context",
+                       "--basis-text", word8, "--basis-reason", T126_REASON, "--session", S)
+        r08b = run_cli("retire-lens-link", "--link-id", str(carried8), "--reason",
+                       "TASK-FIXTURE T126: replaced by a judged context link", "--session", S)
+        ok8 = (r08a.returncode == 0 and r08b.returncode == 0
+               and q("SELECT basis, basis_reason FROM v_live_lens_links WHERE extraction_id=? AND icf_code=?", fig8,
+                     clear126) == [("context", T126_REASON)]
+               and q("SELECT retired_at IS NOT NULL FROM extraction_lens_links WHERE link_id=?", carried8) == [(1,)])
+        detail8 = f"{out_of(r08a)[-200:]!r} | {out_of(r08b)[-200:]!r}"
+    else:
+        ok8, detail8 = False, "no stored code figure holding only carried links to probe"
+    record("T126-08", "add-lens-link --basis context on a stored code figure holding only carried links is accepted, and "
+           "retire-lens-link then retires the carried link", ok8, detail8)
+
+    # T126-09: the rebuilt table holds its links unchanged with basis_reason NULL, and the view carries the new column
+    # after basis_text. (The row-for-row comparison with the base and the rebuild are run by the task's own commands.)
+    canon9 = sqlite3.connect(f"file:{REPO / 'data' / 'guidebook.db'}?mode=ro", uri=True)
+    try:
+        view_cols9 = [r[1] for r in canon9.execute("PRAGMA table_info(v_live_lens_links)")]
+        stray9 = canon9.execute("SELECT COUNT(*) FROM extraction_lens_links WHERE (basis = 'context') <> "
+                                "(basis_reason IS NOT NULL)").fetchone()[0] if "basis_reason" in view_cols9 else None
+        live9 = canon9.execute("SELECT (SELECT COUNT(*) FROM v_live_lens_links), (SELECT COUNT(*) FROM "
+                               "extraction_lens_links WHERE retired_at IS NULL)").fetchone()
+    finally:
+        canon9.close()
+    record("T126-09", "the canonical table carries basis_reason only beside a context basis, and v_live_lens_links returns its "
+           "live rows with basis_reason after basis_text",
+           "basis_reason" in view_cols9 and view_cols9.index("basis_reason") == view_cols9.index("basis_text") + 1
+           and stray9 == 0 and live9[0] == live9[1], f"cols={view_cols9} stray={stray9} live={live9}")
+
+    # T126-10: the skill carries the owner's guidance and no longer asks for a ruling the owner has given.
+    record("T126-10", "the skill holds the owner's warrant, the proposals and no sentence keeping the identity off the links",
+           skill126.count("typically concerns wheelchair users") >= 1
+           and skill126.count("Moving it earlier needs a ruling") == 0
+           and skill126.count("identity_icf_map") >= 1
+           and "A proposal is never written because it was proposed" in skill126
+           and not re.search(r"not written beside|never written beside", skill126), "")
+
+    # T126-11: a silent omission is flagged: an ICF-only code row whose map proposes a group prints the warning, writes
+    # no identity, and the audit lists it.
+    r11_, fig11, res11 = t126_add(code126, T126_KNEE, "--icf", clear126, *CTX("knee clearance"),
+                                  section="TASK-FIXTURE T126 Section 3.9")
+
+    def audit126():
+        return subprocess.run([sys.executable, str(REPO / "scripts" / "audit" / "code_value_identity_audit.py")],
+                              env=dict(os.environ, GUIDEBOOK_DB_PATH=DB), capture_output=True, text=True)
+    a11 = audit126()
+    list_i = a11.stdout.split("(ii)")[0]
+    record("T126-11", "an ICF-only code row whose map proposes a group is accepted with 'WARNING: maps propose', writes no "
+           "identity, and the audit lists it in (i)",
+           r11_.returncode == 0 and "WARNING: maps propose" in r11_.stderr and res11.get("identities_written") == []
+           and fig11 and f"extraction {fig11}:" in list_i and a11.returncode == 1,
+           f"rc={r11_.returncode} {r11_.stderr[-250:]!r} res={res11} audit rc={a11.returncode} {a11.stdout[-400:]!r}")
+
+    # T126-12: the audit is not vacuous: it examines the figures, lists T126-11's, and leaves out T126-01's (it carries an
+    # identity) and a figure whose every link is a heading (OD-31).
+    r12_, fig12, _ = t126_add(code126, T126_KNEE, "--icf", clear126, "--lens-basis", "heading",
+                              "--lens-basis-text", "Heading Gamma", section="TASK-FIXTURE T126 Heading Gamma")
+    a12 = audit126()
+    m12 = re.search(r"EXAMINED: (\d+)", a12.stdout)
+    list_i = a12.stdout.split("(ii)")[0]
+    record("T126-12", "the audit prints EXAMINED above 0, lists the omission, and not a figure with an identity link nor one "
+           "whose every link is a heading",
+           m12 and int(m12.group(1)) > 0 and fig11 and f"extraction {fig11}:" in list_i and fig126
+           and f"extraction {fig126}:" not in list_i and r12_.returncode == 0 and fig12
+           and f"extraction {fig12}:" not in list_i,
+           f"{a12.stdout[-500:]!r} heading fig={fig12} {out_of(r12_)[-150:]!r}")
+
+    # T126-13: a map row created after a figure's newest live link that proposes a group the figure lacks puts it in
+    # list (iii), for information: the exit code does not move.
+    new13 = t126_first("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code NOT IN "
+                       "(SELECT identity_code FROM v_live_lens_links WHERE extraction_id=? AND identity_code IS NOT NULL) "
+                       "AND identity_code <> 'ALL' AND identity_code NOT IN (SELECT identity_code FROM identity_icf_map "
+                       "WHERE icf_code=?) ORDER BY identity_code", fig126 or 0, reach126)
+    before13 = audit126()
+    w("INSERT INTO identity_icf_map (identity_code, icf_code, mechanism, mapping_confidence, provenance, created_at, "
+      "created_by_session) VALUES (?, ?, 'TASK-FIXTURE later map row', 'low_indicative', 'TASK-FIXTURE T126-13', "
+      "'2099-01-01 00:00', ?)", new13, reach126, S)
+    after13 = audit126()
+    list_iii = after13.stdout.split("(iii)")[-1]
+    w("UPDATE identity_icf_map SET retired_at='2099-01-02 00:00', retired_by_session=?, retired_reason='TASK-FIXTURE' "
+      "WHERE provenance='TASK-FIXTURE T126-13'", S)
+    retired13 = audit126()
+    record("T126-13", "a later map row proposing a group a stored figure lacks lists the figure in (iii), and the exit code "
+           "does not change; once that map row is retired it proposes nothing and the figure leaves (iii)",
+           fig126 and new13 and f"extraction {fig126}: " in list_iii and new13 in list_iii
+           and f"extraction {fig126}: " not in before13.stdout.split("(iii)")[-1]
+           and before13.returncode == after13.returncode
+           and f"extraction {fig126}: " not in retired13.stdout.split("(iii)")[-1],
+           f"before rc={before13.returncode} after rc={after13.returncode} {after13.stdout[-300:]!r} "
+           f"retired {retired13.stdout[-200:]!r}")
+
     # G. THE MARKER IS A CACHE OVER `confirms` EDGES, so an edge aimed at a row a LIVE PROXY
     # determination is governed by is refused (dbcore.live_determinations_linked), through both
     # writers, and so is regrading a row in a live determination's provenance; neither is refused

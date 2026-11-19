@@ -1580,11 +1580,16 @@ def _add_lens_flags(p):
     p.add_argument("--lens-basis", dest="lens_basis", choices=_lens_basis_choices(),
                    help="REQUIRED with any lens flag. Why the figure is stated in these groups (live "
                         "vocabulary, read from extraction_lens_links.basis's own CHECK): the figure's own "
-                        "words name them, its heading does, or its study's participants are them. A code "
+                        "words name them, its heading does, its study's participants are them, or (a code "
+                        "value, tier 4 to 6) the clause's context warrants them by your judgment. A code "
                         "with a different warrant is added afterwards with add-lens-link.")
     p.add_argument("--lens-basis-text", dest="lens_basis_text",
                    help="REQUIRED with any lens flag. The exact words that warrant the links; found in the "
                         "figure's own words or its source's saved file, or refused.")
+    p.add_argument("--lens-basis-reason", dest="lens_basis_reason",
+                   help="With --lens-basis context only (a source of tier 4 or above): your judgment, in words, of "
+                        "why the clause's context warrants the links ('typically concerns wheelchair users'); "
+                        "--lens-basis-text then holds the source's words that state the context.")
 
 
 def _vocab_help(column: str) -> str:
@@ -2894,6 +2899,9 @@ def main():
     p_all.add_argument("--basis-text", dest="basis_text", required=True,
                        help="The exact words that warrant the link: found in the figure's own words, in a "
                             "file saved for its source, or (study_participants) in a graded study_population")
+    p_all.add_argument("--basis-reason", dest="basis_reason",
+                       help="With --basis context only (a source of tier 4 or above): your judgment, in words, of "
+                            "why the clause's context warrants the link")
     p_all.add_argument("--session", required=True)
     p_all.add_argument("--dry-run", action="store_true")
 
@@ -4000,6 +4008,7 @@ def main():
                "identity_code": args.identity, "icf_code": args.icf,
                "needs_code": args.needs,
                "lens_basis": args.lens_basis, "lens_basis_text": args.lens_basis_text,
+               "lens_basis_reason": args.lens_basis_reason,
                "claim_type": args.claim_type, "claimed_value": args.claimed_value,
                "claimed_unit": args.claimed_unit, "claim_text": args.claim_text,
                "value_as_written": args.value_as_written,
@@ -4070,8 +4079,8 @@ def main():
 
     elif args.command == "add-lens-link":
         _emit(add_lens_link(args.extraction_id, args.session, identity=args.identity, icf=args.icf,
-                            needs=args.needs, basis=args.basis,
-                            basis_text=args.basis_text, dry_run=args.dry_run))
+                            needs=args.needs, basis=args.basis, basis_text=args.basis_text,
+                            basis_reason=args.basis_reason, dry_run=args.dry_run))
 
     elif args.command == "retire-lens-link":
         _emit(retire_lens_link(args.link_id, args.reason, args.session, dry_run=args.dry_run))
@@ -4080,8 +4089,8 @@ def main():
         _emit(derive_extraction(
             ref_id=args.ref_id, parameter_id=args.parameter_id,
             identity=args.identity, icf=args.icf, needs=args.needs,
-            lens_basis=args.lens_basis,
-            lens_basis_text=args.lens_basis_text, base=args.base, delta=args.delta,
+            lens_basis=args.lens_basis, lens_basis_text=args.lens_basis_text,
+            lens_basis_reason=args.lens_basis_reason, base=args.base, delta=args.delta,
             claimed_value=args.claimed_value, session=args.session, dry_run=args.dry_run))
 
     elif args.command == "adjudicate-term":
@@ -11165,15 +11174,24 @@ def _saved_text_has(text: str, ref_id: str) -> bool:
     return _retrieval_log().locate_quote(text, ref_id=ref_id)[0] == "scoped"
 
 
-def _require_lens_warrant(conn, basis, basis_text, ref_id, claim_text, source_section, context):
+def _require_lens_warrant(conn, basis, basis_text, ref_id, claim_text, source_section, context,
+                          basis_reason=None):
     """A link's warrant: a basis from the column's own CHECK (not `carried`) and the exact words that warrant it,
     which must be found on word boundaries, in the place the basis names:
 
       named_in_text       the figure's claim_text, or a file saved for its source (D-2: its own words name the users);
       heading             the figure's source_section, its own heading (OD-31);
-      study_participants  the study_population of an evidence_population_match row for the source (2026-08-25).
+      study_participants  the study_population of an evidence_population_match row for the source (2026-08-25);
+      context             the figure's claim_text, its source_section, or a file saved for its source (the scope,
+                          application or purpose clause): the words that state the clause's context, with
+                          `basis_reason`, the recording session's judgment (OD-65; the sixteenth set of 2026-11-14,
+                          as corrected 2026-11-15). Only on a source of tier 4 or above, the regulatory stratum: the
+                          owner moved the assignment for code values only, so a research figure's group still comes
+                          from its own words or its study's participants.
 
-    Returns the stripped text. WHAT THIS DOES NOT CHECK: that the words name the lens code itself. The registries
+    `basis_reason` is given with `context` and with no other basis (a reason beside a stated warrant is a cell with no
+    meaning). Returns (the stripped text, the stripped reason or None). WHAT THIS DOES NOT CHECK: that the words name
+    the lens code itself. The registries
     do not hold a name for every code (about half the ICF d-codes have no title, access_needs has no name column), so a name test cannot be derived for them; whether the words name the group
     is the judge's (D-2) and the recorded warrant is what a later reader audits."""
     allowed = set(_lens_basis_choices() or ())
@@ -11181,6 +11199,26 @@ def _require_lens_warrant(conn, basis, basis_text, ref_id, claim_text, source_se
         raise Refusal(
             f"{context}: a lens link needs --lens-basis / --basis, one of {sorted(allowed)} (the warrant for "
             f"stating the figure in this group). Nothing was written.")
+    reason = None if basis_reason is None else str(basis_reason).strip()
+    if basis != "context" and reason is not None:
+        raise Refusal(
+            f"{context}: a reason (--lens-basis-reason / --basis-reason) is the recording session's judgment and "
+            f"belongs to basis `context` only; basis {basis} rests on the source's own words, so a reason beside it "
+            f"would be a cell with no meaning. Nothing was written.")
+    if basis == "context":
+        tier = conn.execute("SELECT tier FROM evidence_sources WHERE ref_id=?", (ref_id,)).fetchone()
+        if not (tier and tier[0] is not None and int(tier[0]) >= 4):
+            raise Refusal(
+                f"{context}: basis `context` is for a code value (a source of tier 4 to 6); {ref_id} is tier "
+                f"{tier[0] if tier else None}. The owner moved the contextual assignment of a lens to the recording "
+                f"call for code values only (the sixteenth set, 2026-11-14: grep -n -F \"Owner instruction 2026-11-14 "
+                f"(sixteenth set)\" references/project-standards.md); a research figure's group comes from its own "
+                f"words (named_in_text, heading) or its study's participants. Nothing was written.")
+        if not reason or not re.search(r"[^\W\d_]", reason):
+            raise Refusal(
+                f"{context}: basis `context` needs --lens-basis-reason / --basis-reason: your judgment, in words, "
+                f"of why the clause's context warrants the link (for a mounting height: 'typically concerns "
+                f"wheelchair users'). Nothing was written.")
     text = (basis_text or "").strip()
     if not text:
         raise Refusal(
@@ -11192,6 +11230,10 @@ def _require_lens_warrant(conn, basis, basis_text, ref_id, claim_text, source_se
     if basis == "named_in_text":
         where = f"the figure's claim_text, or a file saved for {ref_id}"
         found = _as_whole_words(text, claim_text) or _saved_text_has(text, ref_id)
+    elif basis == "context":
+        where = f"the figure's claim_text, its source_section, or a file saved for {ref_id}"
+        found = (_as_whole_words(text, claim_text) or _as_whole_words(text, source_section)
+                 or _saved_text_has(text, ref_id))
     elif basis == "heading":
         where = "the figure's source_section (its heading)"
         found = _as_whole_words(text, source_section)
@@ -11204,17 +11246,107 @@ def _require_lens_warrant(conn, basis, basis_text, ref_id, claim_text, source_se
             f"{context}: the warrant {text!r} (basis {basis}) is not, on word boundaries, in {where}. A link "
             f"rests on words the source holds, never on memory (CLAUDE.md 5(c)); a basis names where to look: "
             f"named_in_text the claim text or the source's saved file, heading the source_section, "
-            f"study_participants the graded study_population. Nothing was written.")
-    return text
+            f"study_participants the graded study_population, context the claim text, the source_section or the "
+            f"source's saved file (its scope, application or purpose clause). Nothing was written.")
+    return text, reason
 
 
-def _write_lens_link(conn, extraction_id: int, col: str, code: str, basis: str, basis_text, session: str) -> int:
+def _write_lens_link(conn, extraction_id: int, col: str, code: str, basis: str, basis_text, session: str,
+                     basis_reason=None) -> int:
     """INSERT one live link and return its link_id. The caller has checked the code and the warrant."""
     row = {"extraction_id": extraction_id, col: code, "basis": basis, "basis_text": basis_text,
-           **dbcore.stamp_for(conn, "extraction_lens_links", session)}
+           "basis_reason": basis_reason, **dbcore.stamp_for(conn, "extraction_lens_links", session)}
     return conn.execute(
         f"INSERT INTO extraction_lens_links ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
         list(row.values())).lastrowid
+
+
+# THE MAPS PROPOSE; THE RECORDING SESSION JUDGES (the correction of 2026-11-15: grep -n -F "Correction and registration
+# 2026-11-15" references/project-standards.md). The identities `identity_icf_map` ties to a figure's ICF codes, and to
+# the b/d codes `access_need_icf` gives its needs, are shown to the session before it writes, each with the map row's
+# mechanism, confidence and provenance. Nothing is written because it was proposed, and nothing is refused because it
+# was not: the proposals are reading for a judgment, never a lookup that decides (rule 8). One query, read by
+# add-extraction, add-lens-link and scripts/audit/code_value_identity_audit.py.
+
+def identity_proposals(conn, icf_codes, need_codes):
+    """[dict] one per live map row proposing an identity for these ICF codes or needs: identity_code, icf_code,
+    mechanism, mapping_confidence, provenance, via_needs (the given needs whose b/d row names that ICF code, or None),
+    map_created_at and need_row_created_at (the newest such access_need_icf row, or None). A retired map row proposes
+    nothing."""
+    icf, needs = sorted(set(icf_codes or ())), sorted(set(need_codes or ()))
+    if not icf and not needs:
+        return []
+    nm, im = ",".join("?" * len(needs)), ",".join("?" * len(icf))
+    rows = conn.execute(
+        f"SELECT m.identity_code, m.icf_code, m.mechanism, m.mapping_confidence, m.provenance, "
+        f"  (SELECT group_concat(a.need_code) FROM access_need_icf a WHERE a.icf_code = m.icf_code "
+        f"     AND a.icf_type <> 'e' AND a.need_code IN ({nm})), m.created_at, "
+        f"  (SELECT MAX(a.created_at) FROM access_need_icf a WHERE a.icf_code = m.icf_code "
+        f"     AND a.icf_type <> 'e' AND a.need_code IN ({nm})) "
+        f"FROM identity_icf_map m "
+        f"WHERE m.retired_at IS NULL "
+        f"  AND (m.icf_code IN ({im}) OR m.icf_code IN (SELECT icf_code FROM access_need_icf "
+        f"       WHERE need_code IN ({nm}) AND icf_type <> 'e')) "
+        f"ORDER BY m.identity_code, m.icf_code, m.link_id", [*needs, *needs, *icf, *needs]).fetchall()
+    keys = ("identity_code", "icf_code", "mechanism", "mapping_confidence", "provenance", "via_needs",
+            "map_created_at", "need_row_created_at")
+    return [dict(zip(keys, r)) for r in rows]
+
+
+def _print_identity_proposals(conn, icf_codes, need_codes, context):
+    """Print the proposals for these codes to stderr, before the verb writes, and return the proposed codes. Beside
+    each ICF code its parent in the classification where the registry holds one (an ICF code's parent is the code
+    less its last digit: d4452 under d445; `base_icf` holds no hierarchy, so a d4452 figure never reaches a d445
+    cell), and beside each need its own registry text, printed as reading for the judge and never parsed."""
+    props = identity_proposals(conn, icf_codes, need_codes)
+    icf, needs = sorted(set(icf_codes or ())), sorted(set(need_codes or ()))
+    out = [f"PROPOSALS ({context}): the groups identity_icf_map ties to ICF {icf or '[]'} and needs "
+           f"{needs or '[]'}. Aids for your judgment, never a list: write a group the clause serves, leave out one it "
+           f"does not, add one no map proposes; a proposal is never written because it was proposed."]
+    titles = dict(conn.execute("SELECT icf_code, title FROM base_icf"))
+    for p in props:
+        code = p["icf_code"]
+        parent = code[:-1] if len(code) > 4 and code[:-1] in titles else None
+        out.append(f"  {p['identity_code']}: via ICF {code}" + (f" ({titles[code]})" if titles.get(code) else "")
+                   + (f", parent {parent}" + (f" ({titles[parent]})" if titles.get(parent) else "") if parent else "")
+                   + (f", through need {p['via_needs']}" if p["via_needs"] else "")
+                   + f"; mechanism {p['mechanism']}; confidence {p['mapping_confidence']}; "
+                     f"provenance {p['provenance']}")
+    if not props:
+        out.append("  (none: no live map row ties a group to these codes; judge the groups the clause serves)")
+    for n, obligation, absorbs in conn.execute(
+            f"SELECT need_code, design_obligation, absorbs FROM access_needs WHERE need_code IN "
+            f"({','.join('?' * len(needs))}) ORDER BY need_code", needs):
+        out.append(f"  need {n}: design_obligation: {obligation}; absorbs: {absorbs}")
+    print("\n".join(out), file=sys.stderr)
+    return sorted({p["identity_code"] for p in props})
+
+
+def _live_lens_codes(conn, extraction_id):
+    """{column: [codes]} of a figure's live links."""
+    got = {c: [] for c in _LENS_COLUMNS}
+    for row in conn.execute("SELECT identity_code, icf_code, needs_code FROM v_live_lens_links "
+                            "WHERE extraction_id=? ORDER BY link_id", (extraction_id,)):
+        for col, code in zip(("identity_code", "icf_code", "needs_code"), row):
+            if code is not None:
+                got[col].append(code)
+    return got
+
+
+def _warn_identity_omitted(conn, extraction_id, ref_id):
+    """FLAG, NOT REFUSE: a figure of a tier-4-or-above source left with live ICF or need links, no live identity link
+    and at least one proposal is printed a WARNING; the session may judge that no proposed group is served (OD-47, still
+    the owner's). scripts/audit/code_value_identity_audit.py lists the same figures for later readers."""
+    tier = conn.execute("SELECT tier FROM evidence_sources WHERE ref_id=?", (ref_id,)).fetchone()
+    live = _live_lens_codes(conn, extraction_id)
+    if not (tier and tier[0] is not None and int(tier[0]) >= 4) or live["identity_code"] \
+            or not (live["icf_code"] or live["needs_code"]):
+        return
+    props = identity_proposals(conn, live["icf_code"], live["needs_code"])
+    if props:
+        print("WARNING: maps propose " + ", ".join(
+            f"{p['identity_code']} ({p['mapping_confidence']}, {p['provenance']})" for p in props)
+            + f"; no identity written on extraction {extraction_id}", file=sys.stderr)
 
 
 def insert_extraction(data: dict, session: str, dry_run: bool = False,
@@ -11339,6 +11471,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
     # anything reads it.
     data = dict(data)
     lens_basis, lens_basis_text = data.pop("lens_basis", None), data.pop("lens_basis_text", None)
+    lens_basis_reason = data.pop("lens_basis_reason", None)
     lens = {}
     for col in _LENS_COLUMNS:
         given = data.pop(col, None)
@@ -11493,9 +11626,9 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 row["notes"] = ((row.get("notes") or "") + " " + _exempt_note).strip()
 
         # THE LENS WARRANT: the words that name the group are the figure's own (or its source's).
-        lens_basis_text = _require_lens_warrant(
+        lens_basis_text, lens_basis_reason = _require_lens_warrant(
             conn, lens_basis, lens_basis_text, ref, row.get("claim_text"), row.get("source_section"),
-            "add-extraction")
+            "add-extraction", basis_reason=lens_basis_reason)
 
         # THE CLAUSE (T-031, OD-23). A figure read from an inventoried clause points at its source_clauses row, and
         # its locator is reached through that pointer (rule 5): any locator field beside it (_sve_locator_fields) is
@@ -11705,13 +11838,15 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                   f"judgment is 1:N (D-0168), and a divergent reading is a contest "
                   f"(DR-2026-08-19 §7), not an error.", file=sys.stderr)
 
+        # THE PROPOSALS, shown before the write (T-126): the groups the maps tie to the codes being written.
+        proposed = _print_identity_proposals(conn, lens["icf_code"], lens["needs_code"], "add-extraction")
         row.update(dbcore.stamp_for(conn, "source_value_extractions", session))
         cur = conn.execute(
             f"INSERT INTO source_value_extractions ({','.join(row)}) "
             f"VALUES ({','.join('?' * len(row))})", list(row.values()))
         extraction_id = cur.lastrowid
         links = [{"link_id": _write_lens_link(conn, extraction_id, col, code, lens_basis, lens_basis_text,
-                                              session), "lens": col, "code": code}
+                                              session, basis_reason=lens_basis_reason), "lens": col, "code": code}
                  for col, codes in lens.items() for code in codes]
 
         # THE EDGES, IN THIS SAME TRANSACTION -- the `add-term` precedent (a term
@@ -11734,9 +11869,12 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 session=session, context="add-extraction"))
         if figure_role == "derived":
             _refuse_derived_mismatch(conn, extraction_id, "add-extraction")
+        _warn_identity_omitted(conn, extraction_id, ref)
 
         return {"extraction_id": extraction_id, "ref_id": ref, "parameter_id": pid,
                 "lens": links,
+                "identities_proposed": proposed,
+                "identities_written": _live_lens_codes(conn, extraction_id)["identity_code"],
                 "claim_type": claim_type, "claimed_value": value,
                 "figure_role": figure_role, "comparator": row.get("comparator"),
                 "relation_ids": relation_ids,
@@ -11746,7 +11884,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
 
 def add_lens_link(extraction_id: int, session: str, *, identity: str = None, icf: str = None,
                   needs: str = None, basis: str = None, basis_text: str = None,
-                  dry_run: bool = False):
+                  basis_reason: str = None, dry_run: bool = False):
     """State an existing figure in ONE more lens code (OR-1c), with the words that warrant it.
 
     Refuses: a figure that does not exist; none or more than one code; a code the registry lacks or a
@@ -11771,8 +11909,8 @@ def add_lens_link(extraction_id: int, session: str, *, identity: str = None, icf
         if fig is None:
             raise Refusal(f"add-lens-link: extraction {extraction_id}: no such figure. Nothing was written.")
         _require_lens_code(conn, col, code)
-        text = _require_lens_warrant(conn, basis, basis_text, fig["ref_id"], fig["claim_text"],
-                                     fig["source_section"], "add-lens-link")
+        text, reason = _require_lens_warrant(conn, basis, basis_text, fig["ref_id"], fig["claim_text"],
+                                             fig["source_section"], "add-lens-link", basis_reason=basis_reason)
         held = conn.execute(
             f"SELECT link_id, basis FROM extraction_lens_links WHERE extraction_id=? AND {col}=? "
             f"AND retired_at IS NULL", (extraction_id, code)).fetchone()
@@ -11781,18 +11919,27 @@ def add_lens_link(extraction_id: int, session: str, *, identity: str = None, icf
                 f"add-lens-link: extraction {extraction_id} already holds a live {held['basis']} link "
                 f"({held['link_id']}) for {col} {code!r}. A figure holds one live link per code; retire it "
                 f"first (retire-lens-link) if its warrant is wrong. Nothing was written.")
+        # THE PROPOSALS (T-126), shown before the write: for the ICF codes and needs live on the figure and the one
+        # being written.
+        live = _live_lens_codes(conn, extraction_id)
+        proposed = _print_identity_proposals(
+            conn, live["icf_code"] + ([code] if col == "icf_code" else []),
+            live["needs_code"] + ([code] if col == "needs_code" else []), "add-lens-link")
         if held is not None:
             conn.execute(
                 "UPDATE extraction_lens_links SET retired_at=?, retired_by_session=?, retirement_reason=?, "
                 "updated_at=?, updated_by_session=? WHERE link_id=?",
                 [dbcore.now(), dbcore.session_stem(session), "superseded by judged link", dbcore.now(),
                  dbcore.session_stem(session), held["link_id"]])
-        link_id = _write_lens_link(conn, extraction_id, col, code, basis, text, session)
+        link_id = _write_lens_link(conn, extraction_id, col, code, basis, text, session, basis_reason=reason)
         if held is not None:
             conn.execute("UPDATE extraction_lens_links SET retirement_reason=? WHERE link_id=?",
                          (f"superseded by judged link {link_id}", held["link_id"]))
+        _warn_identity_omitted(conn, extraction_id, fig["ref_id"])
         return {"link_id": link_id, "extraction_id": extraction_id, "lens": col, "code": code,
                 "basis": basis, "retired_carried_link_id": held["link_id"] if held else None,
+                "identities_proposed": proposed,
+                "identities_written": _live_lens_codes(conn, extraction_id)["identity_code"],
                 "dry_run": dry_run}
 
 
@@ -12352,7 +12499,7 @@ def derive_extraction(*, ref_id: str = None, parameter_id: int, base: int,
                       dry_run: bool = False, identity: str = None, icf: str = None,
                       needs: str = None,
                       lens_basis: str = None, lens_basis_text: str = None,
-                      claimed_value: str = None):
+                      lens_basis_reason: str = None, claimed_value: str = None):
     """Write a figure_role='derived' row computed as base + delta, plus the two
     derived_from edges `v_derived_figure_check` (migration 075) re-verifies it
     against -- a derived figure is never a number trusted on faith.
@@ -12434,7 +12581,8 @@ def derive_extraction(*, ref_id: str = None, parameter_id: int, base: int,
         data = {"ref_id": ref_id, "parameter_id": parameter_id,
                 "identity_code": identity, "icf_code": icf, "needs_code": needs,
                 "lens_basis": lens_basis,
-                "lens_basis_text": lens_basis_text, "claim_type": "numerical",
+                "lens_basis_text": lens_basis_text, "lens_basis_reason": lens_basis_reason,
+                "claim_type": "numerical",
                 "claimed_value": claimed_value, "claimed_unit": base_unit,
                 "figure_role": "derived",
                 "comparator": comparator, "extraction_method": "auto-mined",

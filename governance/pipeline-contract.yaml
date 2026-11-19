@@ -251,6 +251,14 @@ stages:
     references: 'references/project-standards.md, "Owner rulings 2026-10-29 (second)" OR-11a
       ("Yes, require a full-scope scan"); the scan contract (migration 103, v_scan_ledger)'
     check: scripts/audit/verified_scan_integrity.py
+  - id: judgment-code-value-identity-judged
+    kind: integrity
+    criterion: Every live figure of a tier 4 to 6 source whose ICF or access-need codes the maps tie to a group
+      carries a judged identity link, or is listed by the audit as having none.
+    references: 'references/project-standards.md: "Owner instruction 2026-11-14 (sixteenth set)", "(sixteenth set,
+      later", "(sixteenth set, last)" and "Correction and registration 2026-11-15" (the recording session judges and
+      writes the identity link; the maps propose); OD-65'
+    check: scripts/audit/code_value_identity_audit.py
   re_entry:
   - id: judgment-from-specification-skim
     from_stage: specification

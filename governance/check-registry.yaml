@@ -1371,6 +1371,17 @@ checks:
   basis: specification/derivation-handshake
   cost: fast
   min_items: 1
+- id: code_value_identity_audit
+  cmd:
+  - python3
+  - scripts/audit/code_value_identity_audit.py
+  battery: data
+  kinds:
+  - data
+  level: advisory
+  basis: judgment/judgment-code-value-identity-judged
+  cost: fast
+  min_items: 1
 - id: adjudication_integrity
   cmd:
   - python3

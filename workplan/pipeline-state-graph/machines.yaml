@@ -208,6 +208,7 @@ machines:
     guards:
       - "the source is admitted and not a tombstone"
       - "parameter_id required, parameter exists and is ACTIVE; at least one lens code (each lens flag repeats; one live link per code is written to extraction_lens_links, the figure's own lens columns stay NULL), every code must exist in its registry table and an identity code must not be deprecated; --lens-basis and --lens-basis-text name the warrant, found on word boundaries where the basis says"
+      - "basis 'context' (a code value's lens judged from its clause's context, T-126) only on a source of tier >= 4, with a --lens-basis-reason holding a letter; a reason beside any other basis is refused; the maps' identity proposals are printed before the write and a tier >= 4 figure left with no identity while they propose one is warned, never refused"
       - "a figure is never copied: the same row in another lens code is refused, naming add-lens-link"
       - "a claim_text is required; claim_type 'absent' carries no value and must be figure_role 'finding'"
       - "a value from a tier >= 4 source needs a structured locator or [UNVERIFIED-QUANT]"
@@ -220,6 +221,8 @@ machines:
       - {file: scripts/db.py, func: insert_extraction, needle: "--figure-role is required"}
       - {file: scripts/db.py, func: insert_extraction, needle: "--relation is required"}
       - {file: scripts/db.py, func: insert_extraction, needle: "R3: \\{ref\\} is tier"}
+      - {file: scripts/db.py, func: _require_lens_warrant, needle: "basis `context` is for a code value"}
+      - {file: scripts/db.py, func: insert_extraction, needle: "_print_identity_proposals"}
   - id: M04.t2
     from: "any"
     to: "any (the columns db._amendable_sve_fields derives: every column of source_value_extractions except db._NOT_AMENDABLE_SVE, GAP-013; claimed_value, claimed_unit and setting take a reformat only)"
@@ -241,11 +244,12 @@ machines:
     via: "db.py add-lens-link"
     guards:
       - "exactly one code; the figure exists; the code is in its registry and not a deprecated identity"
-      - "a basis from extraction_lens_links.basis's own CHECK (never 'carried') and warrant words found on word boundaries in the place the basis names"
+      - "a basis from extraction_lens_links.basis's own CHECK (never 'carried') and warrant words found on word boundaries in the place the basis names; 'context' only on a source of tier >= 4 with --basis-reason, and a reason beside any other basis is refused (T-126)"
       - "a live judged link for the same code is refused; only a carried one is replaced"
     evidence:
       - {file: scripts/db.py, func: add_lens_link, needle: "name exactly one code"}
       - {file: scripts/db.py, func: add_lens_link, needle: "already holds a live"}
+      - {file: scripts/db.py, func: _require_lens_warrant, needle: "belongs to basis `context` only"}
   - id: M04.t5
     from: "a live lens link"
     to: "the link retired in place (retired_at, retired_by_session, retirement_reason)"

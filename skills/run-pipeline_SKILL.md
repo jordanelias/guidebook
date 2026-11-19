@@ -231,12 +231,60 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
 
 ## 4. judgment — populations, access needs, ICF codes; figures stored so later stages can use them
 *(Your "evidence stage" adjudication lives here: CLAUDE.md §6 records the owner's 2026-08-27 ruling that the lens
-crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map.yaml` change.)*
+crossing is judgment's output, and the owner's "yes lens in judgment" (2026-11-14) keeps it here, fixing only its
+timing for a code value: its lens is judged in the call that records it (`grep -n -F "(sixteenth set, last)"
+references/project-standards.md`; `grep -n -F "Correction and registration 2026-11-15" references/project-standards.md`).
+The judgment stage may later confirm a context link (nothing to write) or replace it (`add-lens-link` with its own
+warrant, then `retire-lens-link` with a reason); it never copies a lens elsewhere.)*
+- **A code value's lens, at recording** (guidance for your judgment, not a lookup any code consults: the owner's
+  "typically"; OD-65, "use contextual judgment"). *When you record a value from a code (a tier 4 to 6 source), give it
+  its lens in the same call, from the clause and its context, with its warrant: the ICF link, the access-need link, and
+  an identity link for each group you judge the value serves.* If the clause names the users, the function or the need,
+  use `named_in_text`; if its heading names the group, `heading` (OD-31); otherwise `--lens-basis context`, with
+  `--lens-basis-text` the source's words that state the context and `--lens-basis-reason` your judgment
+  (`add-lens-link --basis context --basis-text ... --basis-reason ...` for a stored figure). `context` is refused below
+  tier 4. Read the context from what you already hold: the clause and its heading (`--claim-text`, `--source-section`),
+  the source's scope, application or purpose clause (its saved file), the building type or use and interior or exterior
+  (`--setting`), and the jurisdiction (`evidence_sources.jurisdiction`: it locates the code and gives no lens).
+  **The proposals are where you start, never where you stop.** Before writing, `add-extraction` and `add-lens-link`
+  print the groups the maps (`identity_icf_map`, and the b/d rows of `access_need_icf` for a need) tie to the ICF codes
+  and needs on the figure, each with its confidence, mechanism and provenance, and each need's own registry text, and
+  their JSON result lists the groups proposed beside the groups written. Read them as the owner's "populations still get
+  coded as a result": confirm each group the clause serves and write it, by `context` with your reason; leave out a
+  group the clause does not serve, however high the map's confidence (one activity code can propose several groups:
+  `select group_concat(distinct identity_code) from identity_icf_map where icf_code='d450' and retired_at is null`); and
+  add a group no map proposes when the clause serves it. A proposal is never written because it was proposed. A code
+  value left with ICF or need links and no identity while the maps propose one prints `WARNING: maps propose`, and
+  `scripts/audit/code_value_identity_audit.py` lists it.
+  **Worked defaults (the owner's, 2026-11-14).** A value that concerns a **mounting height** (a control, a counter, a
+  fixture, a mirror) or **any clearance** (height, width, depth, clear floor space, turning space; knee and toe
+  clearance) takes, by default, the ICF code and the access need of reach and seated use, and the wheelchair-user
+  identity, one link each, with `--lens-basis context`, `--lens-basis-text` the clause's own words for the quantity (for
+  example `mounting height`, `knee clearance`) and `--lens-basis-reason` `typically concerns wheelchair users` (the
+  owner's warrant, "mounting height; typically concerns wheelchair users", in its two cells). Derive the codes from the
+  live registries when you record, never from this page. The ICF code: `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select icf_code, title from base_icf where lower(coalesce(title,'')) like '%reaching%' or lower(coalesce(title,'')) like '%hand and arm%' or lower(coalesce(title,'')) like '%sitting position%' or lower(coalesce(title,'')) like '%standing position%' or lower(coalesce(title,'')) like '%moving around%' or icf_code = 'd415'\").fetchall())"`
+  (for a mounting height, the most specific reach code it prints, Reaching once it is minted, else hand and arm use,
+  its parent, with the seated or standing posture code where the clause concerns use from a seated position; for a
+  clearance, moving around using equipment). The access need: `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select need_code, substr(design_obligation,1,90) from access_needs where lower(coalesce(design_obligation,'')) like '%reach%' or lower(coalesce(design_obligation,'')) like '%seated%' or lower(coalesce(design_obligation,'')) like '%turning%'\").fetchall())"`
+  (the need whose obligation names seated-height controls and turning clearance; the range-of-bodies need where the
+  clause concerns the range of body sizes). The identity, the most specific live wheelchair-user code: `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select identity_code, display_name, parent_code from base_taxonomy_identity where status='active' and lower(display_name||' '||coalesce(description,'')) like '%wheelchair%'\").fetchall())"`
+  (the mobility family until the wheelchair-user child is minted). The default writes the identity whether or not a
+  map proposes it yet. **Overridden where the clause names another group:** an overhead or protruding-object clearance
+  (headroom, a protruding object's projection) whose clause concerns people who are blind or have low vision takes
+  that group, by `named_in_text` or `heading`, and not the default's links.
+  **A clause whose context names no group and no worked default applies** (OD-47, still the owner's): the ICF and
+  access-need links of the function the clause serves, by `context` with the reason stated, and an identity link for
+  each group you judge the clause serves, from the proposals or beyond them, by `context` with its reason. Never `ALL`.
+  If you judge that it serves no proposed group, write none; the warning and the audit record the omission. This is a
+  default pending OD-47; an answer replaces the links through `add-lens-link` and `retire-lens-link`, never by edit. A
+  provision whose only warrant is a heading that names no group keeps OD-31's answer: no identity, only its ICF and
+  access-need lenses.
 - `adjudicate-term` for every observed phrase (`NOT-OURS` and `DEFERRED` are answers). `add-extraction` per stated
   figure: parameter, at least one lens (`--identity`, `--icf` code and name, `--needs`; an extraction
   is stated in at least one lens, D-0182). Each flag repeats, one link per code in `extraction_lens_links` (the
   figure's own lens columns are held NULL), and `--lens-basis` with `--lens-basis-text` (the figure's own words that
-  name the group) are required; a code with a different warrant, or a judged one that replaces a carried link, is
+  name the group, or, for a code value's `context` basis, the words that state its context, with `--lens-basis-reason`)
+  are required; a code with a different warrant, or a judged one that replaces a carried link, is
   `add-lens-link`, and `retire-lens-link` retires one (never the last). Value and unit (a number the source writes in words, or with an ambiguous
   mark, is entered as a numeral in `--claimed-value` with the source's own wording in `--value-as-written`;
   `--comparator` for a numerical figure, `=` for a point; the comparator is read from what the wording says about direction, owner 2026-11-14: "at most" and "maximum" are a ceiling, `<=`; "minimum" and "at least" a floor, `>=`; "within" followed by two figures is both ends, `between`, and followed by one figure is a ceiling on that figure's own quantity, `<=` (a deviation: "within 5 mm"); this is a starting list, not a vocabulary, so map any other wording by the same test (a ceiling, a floor, both ends, a point, a deviation), and where the wording does not make the direction clear, keep it in `--value-as-written` and `--claim-text`, guess no comparator, and let the writer's refusal of a value-supplying numerical row without one stop it (raise the question as a gap); ledger: `grep -n -F "Owner statement 2026-11-14 — convergence means values coming together" references/project-standards.md`), `--claim-text`
