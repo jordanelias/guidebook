@@ -32,6 +32,7 @@ CLI usage:
     python3 scripts/db.py --help
 """
 
+import functools
 import hashlib
 import json
 import os
@@ -7667,8 +7668,8 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
       after every refusal above, so each keeps its own message. A determined operator can still point `grab bar`
       at a page stating a length; the promotion is then recorded with its warrant and contestable, not prevented.
       The warrant's words (`--quantity-kind-quote`, migration 156) must hold a digit: a passage stating no value
-      cannot show what the quantity is measured in. Whether the base repeats a source's words is still the owner's
-      question (OD-71 leaves it open); they are kept so T-020's refusal is not lost.
+      cannot show what the quantity is measured in. The base keeps the words: the owner ratified on 2026-11-19 that
+      the absorbed grounding holds the locator and the words a base refusal reads (OD-71).
 
     DELIBERATELY ABSENT, and must stay absent: no --status and no --merged-into. A
     parameter is created active. Merging one into another is a different act on an
@@ -7789,15 +7790,24 @@ def _kind_warrant_args(args):
     return {dest: getattr(args, dest) for dest, _t, _h in _KIND_WARRANT}
 
 
+@functools.lru_cache(maxsize=None)
+def _kind_hidden_chars() -> frozenset:
+    """dbcore.blank_chars() less the space separators (category Zs): what a page, a clause or a ref_id may not carry
+    anywhere (a space inside "Annex A" is legitimate; a format or control character is not). Migration 161 spells it;
+    test T083-12 pins the spelling."""
+    return frozenset(c for c in dbcore.blank_chars() if unicodedata.category(c) != "Zs")
+
+
 def _kind_refusal(conn, label, verb, quantity_kind, source_url, source_page, source_line, source_clause, ref_id,
                   quote=None):
     """The refusals on a parameter's quantity kind and its warrant, one home for add-parameter and set-parameter-kind
     (T-020, T-083): the kind is a row of `base_quantity_kinds` (the refusal names every kind and the verb that adds
     one); the warrant says where a source states a value of the quantity and quotes it, in the row's own cells (OD-71:
     a URL and a page or a clause, checked as add-alias checks a locator, and the words, which must hold a digit, as
-    T-020 required of the observation it pointed at). No cell may carry a zero-width character (dbcore.ZERO_WIDTH),
-    as migration 156's CHECKs hold. `ref_id` is provenance only: kept, its shape checked, never looked up.
-    Returns the cells to write."""
+    T-020 required of the observation it pointed at; the owner ratified keeping the words on 2026-11-19, OD-71). Blank
+    is dbcore.blank_chars(), the one definition: the URL holds none of it, the page, clause and ref_id none but a space
+    separator (`_kind_hidden_chars`), as migration 161's CHECKs hold. `ref_id` is provenance only: kept, its shape
+    checked, never looked up. Returns the cells to write."""
     kinds = [r[0] for r in conn.execute("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id")]
     quantity_kind = str(quantity_kind or "").strip()
     if quantity_kind not in kinds:
@@ -7808,23 +7818,25 @@ def _kind_refusal(conn, label, verb, quantity_kind, source_url, source_page, sou
             f"--definition ... --approval-ref '<dated ledger heading>' --session ... Nothing was written.\n"
             f"Two cases are two parameters only when they cannot be placed on one scale or their "
             f"accessibility directions differ.")
-    blank = " \t\n\r" + dbcore.ZERO_WIDTH
-    stripped = [v.strip().strip(blank) if isinstance(v, str) else v for v in (source_url, source_page, source_clause, quote)]
-    if not stripped[0] or not (stripped[1] or stripped[2]) or not stripped[3]:
+    url_, page_, clause_, quote_ = (dbcore.is_blank(v) if isinstance(v, str) else v is None
+                                    for v in (source_url, source_page, source_clause, quote))
+    if url_ or (page_ and clause_) or quote_:
         raise Refusal(
             f"{label}: the kind {quantity_kind!r} is a judgment and needs its warrant, held on the parameter's own "
             f"row (OD-71): where a source states a value of this quantity, and its words. Give --quantity-kind-quote "
             f"(the words, verbatim), --quantity-kind-source-url and --quantity-kind-source-page or "
             f"--quantity-kind-source-clause (--quantity-kind-source-line is optional; --quantity-kind-ref-id, the "
             f"source's ref_id, is provenance only). Nothing was written.")
-    for flag, v in (("--quantity-kind-source-url", source_url), ("--quantity-kind-source-page", source_page),
-                    ("--quantity-kind-source-clause", source_clause), ("--quantity-kind-ref-id", ref_id)):
-        if isinstance(v, str) and any(ch in dbcore.ZERO_WIDTH for ch in v):
-            raise Refusal(f"{verb}: {flag} {v!r} carries a zero-width character; retype it without one. "
-                          f"Nothing was written.")
+    for flag, v, bad in (("--quantity-kind-source-url", source_url, dbcore.blank_chars()),
+                         ("--quantity-kind-source-page", source_page, _kind_hidden_chars()),
+                         ("--quantity-kind-source-clause", source_clause, _kind_hidden_chars()),
+                         ("--quantity-kind-ref-id", ref_id, _kind_hidden_chars())):
+        if isinstance(v, str) and any(ch in bad for ch in v):
+            raise Refusal(f"{verb}: {flag} {v!r} carries an invisible or control character (dbcore.blank_chars); "
+                          f"retype it without one. Nothing was written.")
     url, page, clause = _check_base_locator(verb, [], source_url, source_page, source_line, source_clause,
                                             prefix="quantity-kind-")
-    quote = quote.strip()
+    quote = quote.strip("".join(dbcore.blank_chars()))
     if not any(ch.isdigit() for ch in quote):
         raise Refusal(
             f"{label}: --quantity-kind-quote {quote!r} holds no digit; a passage stating no value cannot show what "

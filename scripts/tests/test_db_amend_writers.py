@@ -3734,8 +3734,8 @@ try:
                r_unknown and all(k in r_unknown for k in kinds83) and "add-quantity-kind" in r_unknown
                and r_none and "--quantity-kind-source-url" in r_none and r_nopage and "--quantity-kind-source-page" in r_nopage
                and r_url and "--quantity-kind-source-url" in r_url and r_noq and "--quantity-kind-quote" in r_noq
-               and r_nodig and "holds no digit" in r_nodig and r_zwp and "zero-width" in r_zwp and "--quantity-kind-source-page" in r_zwp
-               and r_zwc and "zero-width" in r_zwc and "--quantity-kind-source-clause" in r_zwc
+               and r_nodig and "holds no digit" in r_nodig and r_zwp and "invisible" in r_zwp and "--quantity-kind-source-page" in r_zwp
+               and r_zwc and "invisible" in r_zwc and "--quantity-kind-source-clause" in r_zwc
                and q("SELECT quantity_kind FROM base_parameters WHERE parameter_id=?", p2)[0][0] is None,
                (r_unknown, r_none, r_nopage, r_url, r_noq, r_nodig, r_zwp, r_zwc))
         other = kinds83[-1]
@@ -3790,7 +3790,7 @@ try:
             record("T083-05", "add-parameter and set-parameter-kind give the same kind and warrant refusals, word for word after "
                    "the term label (one home, _kind_refusal)",
                    all(a and b and tail(a) == tail(b) for a, b in pairs), pairs)
-        # ── T083 repair (after the adversarial pass): the surviving branches, the CHECKs of migration 156 ──────────
+        # ── T083 repair (after the adversarial passes): the surviving branches, the CHECKs of the quantity-kind migrations ──
         free_p3 = [r[0] for r in q(FREE_P)]
         if len(free_p3) < 2:
             record("T083-06", "two more free parameters for the repair cases", False, free_p3)
@@ -3822,8 +3822,10 @@ try:
             record("T083-09", "the dropped flag --quantity-kind-observation-id is refused by argparse (rc 2) on both verbs",
                    all(cp.returncode == 2 and "quantity-kind-observation-id" in cp.stderr for cp in old),
                    [(cp.returncode, cp.stderr[-160:]) for cp in old])
-            # Direct UPDATEs on the copy, each rolled back: the CHECKs hold what the writer holds. A rebuilt table without
-            # migration 156's CHECKs turns this red (shown when the repair was made).
+            # Direct UPDATEs, each rolled back, on the committed copy AND on a fresh schema replay of the parent with the
+            # newest quantity-kind migration applied to it: the second reads the migration file itself, so a CHECK
+            # missing from the file turns this red even when the committed database still holds it.
+            mig_qk = sorted((REPO / "scripts" / "migrations").glob("[0-9][0-9][0-9]_quantity_kind_*.sql"))[-1]
             good = dict(quantity_kind=kinds83[0], **{k: v for k, v in W83.items()})
             bad = {"kind with no quote": dict(good, quantity_kind_quote=None),
                    "kind with a URL and no page or clause": dict(good, quantity_kind_source_page=None),
@@ -3836,30 +3838,109 @@ try:
                    "a line of text": dict(good, quantity_kind_source_line="seven"),
                    "a quote of spaces and U+200B": dict(good, quantity_kind_quote=" \u200b "),
                    "a ref_id with no kind": dict(quantity_kind_ref_id="TASK-FIXTURE"),
-                   "a page with no kind": dict(quantity_kind_source_url="https://example.org/a", quantity_kind_source_page="3")}
-            con10 = sqlite3.connect(DB)
-            passed10 = {}
-            try:
-                for name, cells in [("the legitimate shape", good)] + list(bad.items()):
-                    try:
-                        con10.execute("UPDATE base_parameters SET " + ", ".join(f"{k}=?" for k in cells)
-                                      + " WHERE parameter_id=?", list(cells.values()) + [pb])
-                        passed10[name] = True
-                    except sqlite3.IntegrityError:
-                        passed10[name] = False
-                    con10.rollback()
-            finally:
-                con10.close()
-            record("T083-10", "migration 156's CHECKs: the legitimate shape is accepted by a direct UPDATE, and each hole is refused "
-                   "(no quote, no page or clause, blank by no-break space or zero-width, zero-width or no-break space in the URL, "
-                   "BLOB or text in a typed cell, a ref_id or a locator with no kind)",
-                   passed10.get("the legitimate shape") is True and not any(passed10[k] for k in bad), passed10)
-            mig = (REPO / "scripts" / "migrations" / "156_quantity_kind_quote_and_holes.sql").read_text()
-            ws154 = re.search(r"char\((32,9,[0-9,]+)\)", (REPO / "scripts" / "migrations" / "154_source_clauses_identity.sql").read_text()).group(1)
-            zw = ",".join(str(ord(c)) for c in dbcore.ZERO_WIDTH)
-            record("T083-12", "migration 156 spells 154's whitespace set and dbcore.ZERO_WIDTH, not a third list of its own",
-                   f"char({zw})" in mig and f"char({ws154})" in mig
-                   and set(re.findall(r"char\(([0-9,]+)\)", mig)) == {zw, ws154}, (zw, ws154))
+                   "a page with no kind": dict(quantity_kind_source_url="https://example.org/a", quantity_kind_source_page="3"),
+                   "a page of U+00AD alone": dict(good, quantity_kind_source_page="\u00ad"),
+                   "a page of U+180E alone": dict(good, quantity_kind_source_page="\u180e"),
+                   "a page of U+2063 alone": dict(good, quantity_kind_source_page="\u2063"),
+                   "a quote of U+3164 alone": dict(good, quantity_kind_quote="\u3164"),
+                   "a BLOB kind": dict(good, quantity_kind=kinds83[0].encode()),
+                   "a BLOB quote": dict(good, quantity_kind_quote=b"9 mm"),
+                   "U+200B in the ref_id": dict(good, quantity_kind_ref_id="TASK\u200bFIXTURE")}
+
+            def holes(path, pid):
+                con10 = sqlite3.connect(path)
+                con10.execute("PRAGMA foreign_keys=OFF")        # the BLOB kind must meet the CHECK, not the foreign key
+                out = {}
+                try:
+                    for name, cells in [("the legitimate shape", good)] + list(bad.items()):
+                        try:
+                            con10.execute("UPDATE base_parameters SET " + ", ".join(f"{k}=?" for k in cells)
+                                          + " WHERE parameter_id=?", list(cells.values()) + [pid])
+                            out[name] = True
+                        except sqlite3.IntegrityError:
+                            out[name] = False
+                        con10.rollback()
+                finally:
+                    con10.close()
+                return out
+
+            import contextlib, io
+            import migrate_db
+            fresh = os.path.join(TMP, "parent-replay.db")
+            mine = int(mig_qk.name[:3])
+            cr = sqlite3.connect(fresh, isolation_level=None)
+            with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                for step in migrate_db.build_plan():
+                    if step[0] == "schema" and step[1] <= mine:
+                        stmts, uv = migrate_db._prepare_body(step[2].read_text(encoding="utf-8"))
+                        migrate_db._apply_atomically(cr, stmts, label=step[2].name, fk_blocking=False,
+                                                     user_version=(uv if "baseline" in step[2].name else step[1]))
+            cr.execute("PRAGMA foreign_keys=OFF")
+            fresh_pid = cr.execute("INSERT INTO base_parameters (term_id, status, created_at, created_by_session) "
+                                   "VALUES ('TASK-FIXTURE', 'active', '2026-01-01 00:00', ?)", (S,)).lastrowid
+            fresh_uv = cr.execute("PRAGMA user_version").fetchone()[0]
+            cr.close()
+            passed10, fresh10 = holes(DB, pb), holes(fresh, fresh_pid)
+            record("T083-10", f"the quantity-kind CHECKs, on the committed copy and on a fresh replay of the parent with {mig_qk.name} "
+                   "applied: the legitimate shape is accepted and each hole refused (no quote, no page or clause, wholly blank by "
+                   "dbcore.blank_chars, an invisible character in the URL, page, clause or ref_id, a BLOB or text in a typed "
+                   "cell, a BLOB kind, a ref_id or a locator with no kind)",
+                   fresh_uv == mine and all(r.get("the legitimate shape") is True and not any(r[k] for k in bad)
+                                            for r in (passed10, fresh10)),
+                   {"committed": {k: v for k, v in passed10.items() if v != (k == "the legitimate shape")},
+                    "fresh": {k: v for k, v in fresh10.items() if v != (k == "the legitimate shape")}, "uv": fresh_uv})
+            # Pin the migration's spellings to the one definition, as T078-40 pins migration 160.
+            mtext = mig_qk.read_text()
+            sets = lambda frag: {chr(int(n)) for grp in re.findall(r"char\(([0-9,]+)\)", frag) for n in grp.split(",")}
+            blank = set(dbcore.blank_chars()) - {"\x00"}
+            hidden = set(db._kind_hidden_chars()) - {"\x00"}
+            grab = lambda pat, text: (lambda m: m.group(1) if m else "")(re.search(pat, text, re.S))
+            url_glob = grab(r"quantity_kind_source_url NOT GLOB '\*\[' \|\| (.*?) \|\| '\]\*'", mtext)
+            cell = lambda c: grab(rf"(ADD COLUMN {c} TEXT.*?;)", mtext)
+            spell = {}
+            for c in ("quantity_kind_source_page", "quantity_kind_source_clause", "quantity_kind_ref_id"):
+                body = cell(c)
+                spell[c] = (sets(grab(rf"trim\({c}, (.*?)\) <> ''", body)),
+                            sets(grab(rf"{c} NOT GLOB '\*\[' \|\| (.*?) \|\| '\]\*'", body)))
+            q_trim = sets(grab(r"trim\(quantity_kind_quote, (.*?)\) <> ''", cell("quantity_kind_quote")))
+            record("T083-12", f"{mig_qk.name} spells dbcore.blank_chars() (less U+0000) for the URL and every blank test, and "
+                   "db._kind_hidden_chars() for what a page, clause or ref_id may not carry anywhere",
+                   sets(url_glob) == blank and q_trim == blank
+                   and all(t == blank and g == hidden for t, g in spell.values()), (len(blank), len(hidden)))
+            # The surviving branches of the second adversarial pass: each case below is red on its own seeded defect.
+            free_p4 = [r[0] for r in q(FREE_P)]
+            r_zwu = refusal(spk, pb, kinds83[0], S, **dict(W83, quantity_kind_source_url="https://example.org/\u200bx"))
+            r_zwr = refusal(spk, pb, kinds83[0], S, **dict(W83, quantity_kind_ref_id="TASK\u200bFIXTURE"))
+            record("T083-13", "set-parameter-kind refuses an invisible character in the URL and in the ref_id, naming each flag",
+                   r_zwu and "--quantity-kind-source-url" in r_zwu and "invisible" in r_zwu
+                   and r_zwr and "--quantity-kind-ref-id" in r_zwr and "invisible" in r_zwr, (r_zwu, r_zwr))
+            r_bq = refusal(spk, pb, kinds83[0], S, **dict(W83, quantity_kind_quote="\u3164 \u00a0"))
+            record("T083-14", "a quote that is only blank characters is refused as a missing warrant (naming the flags), not as "
+                   "a quote with no digit", r_bq and "needs its warrant" in r_bq and "--quantity-kind-quote" in r_bq
+                   and "holds no digit" not in r_bq, r_bq)
+            if len(free_p4) < 2:
+                record("T083-15", "two more free parameters for the argparse cases", False, free_p4)
+            else:
+                pc, pd = free_p4[:2]
+                cp15 = run_cli("set-parameter-kind", "--parameter-id", str(pc), "--quantity-kind", kinds83[0],
+                               "--quantity-kind-quote", "\u3000TASK-FIXTURE: at least 900 mm\u00a0",
+                               "--quantity-kind-source-url", W83["quantity_kind_source_url"],
+                               "--quantity-kind-source-clause", "TASK-FIXTURE 4.2", "--quantity-kind-source-line", "12",
+                               "--quantity-kind-ref-id", "  TASK-FIXTURE  ", "--session", S)
+                got15 = q("SELECT quantity_kind_source_clause, quantity_kind_source_line, typeof(quantity_kind_source_line), "
+                          "quantity_kind_ref_id, quantity_kind_quote FROM base_parameters WHERE parameter_id=?", pc)[0]
+                cp15b = run_cli("set-parameter-kind", "--parameter-id", str(pd), "--quantity-kind", kinds83[0],
+                                "--quantity-kind-quote", W83["quantity_kind_quote"],
+                                "--quantity-kind-source-url", W83["quantity_kind_source_url"],
+                                "--quantity-kind-source-page", "TASK-FIXTURE", "--quantity-kind-source-line", "twelve",
+                                "--session", S)
+                record("T083-15", "through argparse: the clause and the line reach the row (the line as an integer), the ref_id and "
+                       "the quote are stored without their surrounding blanks; a line that is not a number is refused by "
+                       "argparse (rc 2)",
+                       cp15.returncode == 0 and got15 == ("TASK-FIXTURE 4.2", 12, "integer", "TASK-FIXTURE",
+                                                         "TASK-FIXTURE: at least 900 mm")
+                       and cp15b.returncode == 2 and "quantity-kind-source-line" in cp15b.stderr,
+                       (cp15.returncode, cp15.stderr[-200:], got15, cp15b.returncode, cp15b.stderr[-120:]))
 
     # ── T-078: a figure retires in place (AT-18; owner 2026-09-16, "retire in place then") ──────────────────────────
     # The figure is a fixture this section builds (a fresh source, made readable on the copy, one `absent` finding in
