@@ -190,7 +190,7 @@ else:
     joined = q("SELECT v.translation_id, v.translated_text FROM v_translations_current v "
                "JOIN source_value_extractions x ON v.source_table='source_value_extractions' "
                "AND v.source_column='claim_text' AND v.source_row_key=CAST(x.extraction_id AS TEXT) "
-               "WHERE x.extraction_id=? AND x.claim_text=?", plain["id"], before_cell)
+               "WHERE x.extraction_id=? AND x.claim_text=? AND v.target_language=?", plain["id"], before_cell, L1)
     record("T049-12", "AT-107 the current view joins back to that cell by its pointer",
            [tuple(r) for r in joined] == [(tid, text)], joined)
     record("T049-13", "AT-107 requested_at_stage is judgment",
