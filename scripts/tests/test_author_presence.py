@@ -225,6 +225,64 @@ try:
                r.returncode == want_rc and "PRESENCE MODE" not in r.stdout
                and (("CLEAN FOR" in r.stdout) == (want_rc == 0)),
                f"rc={r.returncode} {r.stdout[-500:]!r}")
+
+    # ── K: the corpus-wide pass (--all-sessions) and the VERIFIED-needs-a-retrieval refusals ──────────────────────
+    # Every source in the copy is in its scope, and the real ones have no line in this fixture log, so these cases
+    # read the line naming each fixture source, never the exit code alone.
+    def corpus():
+        return subprocess.run([sys.executable, str(REPO / "scripts" / "research" / "retrieval_log.py"),
+                               "--verify-authors", "--all-sessions"], env=ENV, capture_output=True, text=True)
+
+    def hand(sql, *p):
+        c = sqlite3.connect(DB)
+        c.execute(sql, p)
+        c.commit()
+        c.close()
+
+    SK = "session_2099-01-01-author-presence-k"
+    doi_k = "10.99999/fixture-author-presence-k"
+    RK1 = admit(SK, "Corpus fixture with a byline", ["Okonkwo|Adaeze", "Tanaka|Jun"], "--doi", doi_k)
+    artefact(SK, json.dumps({"message": {"DOI": doi_k, "title": ["Corpus fixture with a byline"],
+                                         "issued": {"date-parts": [[2020]]},
+                                         "author": [{"family": "Okonkwo", "given": "Adaeze"},
+                                                    {"family": "Mbeki", "given": "Thandi"},
+                                                    {"family": "Tanaka", "given": "Jun"}]}}),
+             f"https://api.crossref.org/works/{doi_k}", content_type="application/json")
+    RK2 = admit(SK, "Corpus fixture read by presence", ["Lindqvist|M."], "--url", "https://example.org/k2")
+    artefact(SK, "<h1>Corpus fixture read by presence</h1><p>M. Lindqvist</p>", "https://example.org/k2")
+    RK3 = admit(SK, "Corpus fixture never retrieved", ["Haddad|R."], "--verification-method", "tool",
+                "--verified-by-tool", "fixture")
+    hand("UPDATE evidence_sources SET verification_status='VERIFIED' WHERE ref_id=?", RK3)
+    r = corpus()
+    record("P14", "corpus: a stored byline that OMITS an author of the JSON payload is a cross naming the source",
+           f"✗ {RK1} AUTHORS DISAGREE" in r.stdout and r.returncode == 1, r.stdout[-800:])
+    record("P15", "corpus: a presence-only source is printed NOT-DETECTABLE, and the EXAMINED line counts it so",
+           RK2 in r.stdout.split("NOT-DETECTABLE --", 1)[-1].split("\n\n")[0]
+           and "NOT-DETECTABLE (presence only" in (examined(r.stdout) or ""), r.stdout[-800:])
+    record("P16", "corpus: a VERIFIED source with no logged retrieval is a cross naming it",
+           f"✗ {RK3} is VERIFIED and no usable retrieval" in r.stdout, r.stdout[-800:])
+    db_py = [sys.executable, str(REPO / "scripts" / "db.py")]
+    hand("UPDATE evidence_sources SET verification_status='UNVERIFIED' WHERE ref_id=?", RK3)
+    r_amend = subprocess.run(db_py + ["amend-source", "--ref-id", RK3, "--field", "verification_status",
+                                      "--replacement", "VERIFIED", "--reason", "fixture", "--session", SK],
+                             env=ENV, capture_output=True, text=True)
+    record("P17", "amend-source refuses verification_status VERIFIED with no logged retrieval",
+           r_amend.returncode != 0 and "needs a logged retrieval" in r_amend.stderr, r_amend.stderr[-400:])
+    try:
+        admit(SK, "Corpus fixture admitted VERIFIED unlogged", ["Haddad|R."], "--verification-status", "VERIFIED",
+              "--verification-method", "tool", "--verified-by-tool", "fixture", "--url", "https://example.org/k4")
+        refused = ""
+    except SystemExit as exc:
+        refused = str(exc)
+    artefact(SK, "<h1>Corpus fixture admitted VERIFIED logged</h1>", "https://example.org/k5")
+    try:
+        admit(SK, "Corpus fixture admitted VERIFIED logged", ["Haddad|R."], "--verification-status", "VERIFIED",
+              "--verification-method", "tool", "--verified-by-tool", "fixture", "--url", "https://example.org/k5")
+        accepted = True
+    except SystemExit as exc:
+        accepted = str(exc)
+    record("P18", "add-source refuses VERIFIED with no logged retrieval of its url, and accepts it once one is logged",
+           "needs a logged retrieval" in refused and accepted is True, f"{refused[-300:]} / {accepted}")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

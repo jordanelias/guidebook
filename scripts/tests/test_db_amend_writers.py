@@ -3136,12 +3136,13 @@ try:
         H_NONAME = "Owner ruling 2026-11-13 — TASK-FIXTURE T024 says nothing of any code"
         H_DELEG = "Delegated resolution 2026-11-13 — TASK-FIXTURE T024 names a code"
         H_DUP = "Owner ruling 2026-11-13 — TASK-FIXTURE T024 heading found twice"
+        H_SESS = "Session note 2026-11-13 — TASK-FIXTURE T024 names a code"
         named = " ".join([ADM, OTHER, SUB24, DASHED, META + "-T024", ADM + "-T024", COUNTRY24])
         FIXL = pathlib.Path(TMP) / "ledger-t024.md"
         FIXL.write_text(
             f"## {H_OK}\nThe owner admits {ADM}, {SUB24} and {HELD24}, and the fixture codes "
             f"{DASHED} {META}-T024 {ADM}-T024.\n\n## {H_NONAME}\nNothing about jurisdictions.\n\n"
-            f"## {H_DELEG}\n{named}\n\n## {H_DUP}\n{named}\n\n## {H_DUP}\n{named}\n",
+            f"## {H_DELEG}\n{named}\n\n## {H_DUP}\n{named}\n\n## {H_DUP}\n{named}\n\n## {H_SESS}\n{named}\n",
             encoding="utf-8")
         REAL_LEDGER, dbcore.LEDGER_PATH = dbcore.LEDGER_PATH, FIXL
         n_jur = lambda: q("SELECT COUNT(*) FROM base_jurisdictions")[0][0]      # noqa: E731
@@ -3168,6 +3169,8 @@ try:
             record("T024-06", "...and a delegated resolution, which is a model's and not the "
                    "owner's words, even when it names the code",
                    refused(verb(ADM, "country", ref=H_DELEG), "delegated"))
+            record("T024-06b", "...and an entry that is not the owner's (a session note), even when it names "
+                   "the code (_owner_approval)", refused(verb(ADM, "country", ref=H_SESS), "not an entry"))
             record("T024-07", "refuses a code already held",
                    refused(verb(HELD24, "country", ref=H_OK), "already held"))
             record("T024-08", "refuses a GB-prefixed code",
@@ -4551,7 +4554,7 @@ try:
         t_rev = db.request_translation("source_value_extractions", "claim_text", str(g3), LANG, STAGE, session=S)["translation_id"]
         db.record_translation(f"{WHY} 52", TK, "TASK-FIXTURE translator", translation_id=t_rev, session=S)
         DUE = db._translation_contract(None).translation.default_stage
-        due_b = {r["translation_id"] for r in db.translations_due(DUE)}
+        due_b = {r["translation_id"] for r in db.translations_due(DUE)} - {None}   # owed cells carry no id
         # a label edge from a live figure, to repoint onto a retired one
         lab = seed(RA, claimed_value="53")
         w("INSERT INTO extraction_relations (from_extraction_id, relation, to_label, to_kind, stated, quote, created_at, "
@@ -4582,7 +4585,7 @@ try:
         record("T078-36", "db.py connections lists a live connection without its retired figure target",
                listed_b and f"extraction {g2}" in (listed_b[0]["targets"] or "") and listed_a
                and f"extraction {g2}" not in (listed_a[0]["targets"] or ""), (listed_b, listed_a))
-        due_a = {r["translation_id"] for r in db.translations_due(DUE)}
+        due_a = {r["translation_id"] for r in db.translations_due(DUE)} - {None}
         record("T078-37", "translations --due-at does not owe a request on a retired figure",
                t_rec in due_b and t_rec not in due_a, (t_rec, sorted(due_b)[-3:], sorted(due_a)[-3:]))
         # amend-extraction --field comparator on a base: refused while a LIVE derived figure uses it, accepted once retired

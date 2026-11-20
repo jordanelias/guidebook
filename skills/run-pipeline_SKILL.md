@@ -190,9 +190,13 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   still compares the stored rows against the payload's family-named (human) authors, so a damaged byline is a cross
   there too; `correct-source --field authors` refuses to write from it. Never type one of them from memory. A field
   the source does not carry stays empty and prints "not recorded". Every author is kept; Co-1 co-authors are the warrant.
-- **`--verify-authors` checks only against a JSON payload.** Bytes it cannot parse (a `.doc`, say) are listed under
+- **`--verify-authors` diffs a byline only against a JSON payload.** Bytes it cannot parse (a `.doc`, say) are listed under
   NOT INGESTED, and a source with no DOI under UNEXAMINABLE; compare the bytes by hand and record that limit in the
-  source's notes. It is not verification there.
+  source's notes. It is not verification there. `--verify-authors --all-sessions` (the `author_fidelity` check) reads
+  every source against every session's retrievals: a page or a PDF's text gets the presence check and is printed
+  NOT-DETECTABLE, because an omitted author (a Co-1 co-producer deleted) cannot be seen without a JSON byline.
+- **VERIFIED needs a logged retrieval.** `add-source` and `amend-source` refuse VERIFIED unless a usable manifest line
+  names the source's ref_id, URL or DOI; without one, admit it UNVERIFIED (shown ○).
 - **The slug guides the search, not the reading.** Derive full text: `python3 scripts/research/full_text.py --ref-id R
   --session <STEM>` (PDF and HTML only; `--artefact <file>` when it reports AMBIGUOUS). It writes the derivation under
   `retrieval-log/<STEM>/`, which is tracked and committed — an R10 artefact, not scratch. Point `GUIDEBOOK_RETRIEVAL_LOG`

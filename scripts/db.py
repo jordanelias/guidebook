@@ -4919,6 +4919,7 @@ def insert_evidence_source(data: dict, session: str,
             raise Refusal(
                 "verification_method='tool' requires --verified-by-tool naming "
                 "which tool established it (invariant I4b).")
+        _refuse_unlogged_verified(data.get("ref_id"), data.get("url"), data.get("doi"), "add-source")
         data.setdefault("verification_attempt_count", 1)
         # D-0157 invariant I1: "verification is finished or it did not happen."
         # insert_source set OPEN unconditionally, so EVERY verified source it wrote
@@ -6721,6 +6722,18 @@ def _retype_source(conn, ref_id: str, new_type: str, scope, tier, co1_provenance
     return {"sets": sets, "ledger": text, "out": out}
 
 
+def _refuse_unlogged_verified(ref_id, url, doi, verb):
+    """VERIFIED needs a retrieval in the log: a usable manifest line naming the source's ref_id, url or DOI
+    (`retrieval_log.manifest_lines_for`, the subject of the corpus-wide author_fidelity check). CLAUDE.md section
+    5(c): verification leaves an artefact. Without one the source is UNVERIFIED and shown ○."""
+    if not _retrieval_log().manifest_lines_for(ref_id, url, doi):
+        raise Refusal(
+            f"{verb}: VERIFIED needs a logged retrieval, and no usable retrieval-log manifest line names "
+            f"{ref_id or 'this source'}'s ref_id, url ({url or 'none'}) or DOI ({doi or 'none'}). Retrieve it with "
+            f"retrieval_log.fetch (R10: the publisher, then the Wayback `if_` form), or record it UNVERIFIED. "
+            f"Nothing was written.")
+
+
 def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                  session: str, dry_run: bool = False, tier=None, scope=None,
                  co1_provenance=None, co1_source_type=None):
@@ -6895,6 +6908,9 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                 f"without its method is not a standing). `add-source` refuses this row; "
                 f"amending must not be the way around it. Set the method first, then "
                 f"the standing.")
+        if field == "verification_status" and replacement == "VERIFIED":
+            _src = conn.execute("SELECT url, doi FROM evidence_sources WHERE ref_id=?", (ref_id,)).fetchone()
+            _refuse_unlogged_verified(ref_id, _src["url"], _src["doi"], "amend-source")
         if field == "verification_status" and replacement != "VERIFIED" \
                 and (row["verification_disposition"] or "") == "CLOSED":
             # THE OTHER DIRECTION, UNGUARDED UNTIL 2026-09-18. The D-0157 refusal above
@@ -9408,9 +9424,9 @@ def add_jurisdiction(code: str, kind: str, parent: str, approval_ref: str,
     decision on research scope and the owner's. The pointer is the dated `## ` heading of
     the ledger entry that records it, found exactly once in references/project-standards.md,
     and THAT ENTRY MUST NAME THE CODE as a whole token (dbcore.ledger_entry_names): a dated
-    entry about something else, or about another code, does not admit this one. An entry
-    under the ledger's "Delegated resolution" heading prefix is a model's resolution under
-    delegation, not the owner's words, and admits nothing. What stays unproved is that the
+    entry about something else, or about another code, does not admit this one. The heading
+    must be an owner entry (`_owner_approval`): a delegated resolution, a session heading or a
+    correction admits nothing. What stays unproved is that the
     entry APPROVES the code rather than mentions it; the operator answers for that.
     `scripts/audit/jurisdiction_db_vocabulary.py` re-checks every pointer at rest.
 
@@ -9429,12 +9445,7 @@ def add_jurisdiction(code: str, kind: str, parent: str, approval_ref: str,
         raise Refusal(f"add-jurisdiction: --code {code!r} must be upper-case letters and digits, "
                       f"a letter first, with at most one dash that is followed by a "
                       f"subdivision.")
-    approval_ref = dbcore.require_approval_heading(approval_ref, "add-jurisdiction")
-    if approval_ref.startswith(dbcore.LEDGER_DELEGATED_PREFIX):
-        raise Refusal(
-            f"add-jurisdiction: --approval-ref {approval_ref!r} is a delegated resolution "
-            f"(a model's, under the owner's delegation), not the owner's words. Admitting a "
-            f"jurisdiction is a decision on research scope and the owner's.")
+    approval_ref = _owner_approval(approval_ref, "add-jurisdiction")
     if not dbcore.ledger_entry_names(approval_ref, code):
         raise Refusal(
             f"add-jurisdiction: the ledger entry {approval_ref!r} does not name {code!r}. "
