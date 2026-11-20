@@ -1,0 +1,266 @@
+issue_id	priority	severity_source	matching_finding_verbatim	reasoning	cell_note
+ISS-001a	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-001b	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-002	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-003a	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-003b	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-003c	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-003d	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-003e	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-004a	P2	none		the finding a6ce1af7 on SCI is WITHHELD-FOR-OWNER and carries no severity	
+ISS-004b	P2	none		the finding a6ce1af7 on SCI is WITHHELD-FOR-OWNER and carries no severity	cell left blank: identity SCI alone is held by ISS-004a; no other truthful cell
+ISS-006	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-007	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-008	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-009	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-010	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-011	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-012	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-013	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-014	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-015	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-016a	P2	none		the finding a2314e08 on the latest adjudication is WITHHELD-FOR-OWNER and carries no severity	
+ISS-016b	P3	transcripts/harness_82388ac1/subagents/2026-11-19T23-32-25_adversarial_ae372438.jsonl	SUSTAINED/LOW [11] claim_attacked: deleting the re-judged branch is a subject withdrawn by a ruling	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-017	P2	transcripts/harness_82388ac1/subagents/2026-11-19T23-32-25_adversarial_ae372438.jsonl	SUSTAINED/MEDIUM [6] claim_attacked: not hand-set survives as the quote-and-locator refusal	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-018	P1	transcripts/harness_82388ac1/subagents/2026-11-19T23-32-25_adversarial_ae372438.jsonl	SUSTAINED/HIGH [0] claim_attacked: the shared figure reader lets a kind be warranted by a quote stating a value in a unit of the kind	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-019	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-020	P1	transcripts/harness_82388ac1/subagents/2026-11-19T23-32-25_adversarial_ae372438.jsonl	SUSTAINED/HIGH [3] claim_attacked: refusing context when the words are in claim_text stores the stronger, checkable warrant	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-021	P2	transcripts/harness_82388ac1/subagents/2026-11-19T23-32-25_adversarial_ae372438.jsonl	SUSTAINED/MEDIUM [9] claim_attacked: refusing ALL under every basis leaves every figure a lens route	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	cell left blank: identity ALL alone is held by ISS-129; no other truthful cell
+ISS-022	P2	none		the finding ae372438 [15] is WITHHELD-FOR-OWNER and carries no severity; a question is P2	
+ISS-023	P2	transcripts/harness_82388ac1/subagents/2026-11-19T23-32-25_adversarial_a5c5b6ef.jsonl	SUSTAINED/MEDIUM [4] claim_attacked: the coordinator may confirm running before T-107	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-024	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-025	P1	transcripts/harness_82388ac1/subagents/2026-11-19T23-32-25_adversarial_a8df4496.jsonl	SUSTAINED/HIGH [2] claim_attacked: edition/original_title of a non-English DOI-less source can be recorded under the whole-token rule	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	language left blank: the issue is every script written without spaces (Japanese, Chinese, Thai, Lao, Khmer, Myanmar), not one language; ja and zh alone are held by the matcher rows
+ISS-026	P2	transcripts/harness_82388ac1/subagents/2026-11-19T23-32-25_adversarial_a8df4496.jsonl	SUSTAINED/MEDIUM [4] claim_attacked: merge-parameter keeps re-pointing until T-059 and one home holds the merge	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-027a	P2	transcripts/harness_82388ac1/subagents/2026-11-19T23-32-25_adversarial_a5c5b6ef.jsonl	SUSTAINED/MEDIUM [2] claim_attacked: T-137 stores exact fractions on the canonical scale under one value_unit; the storage reading is a coordinator's confirmation	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-027b	P1	transcripts/harness_82388ac1/subagents/2026-11-19T23-32-25_adversarial_a5c5b6ef.jsonl	SUSTAINED/HIGH [1] claim_attacked: the degrees row lands by add-unit with a warrant and the live figures then compose	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-028	P2	transcripts/harness_82388ac1/subagents/2026-11-19T23-32-25_adversarial_a8df4496.jsonl	SUSTAINED/MEDIUM [13] claim_attacked: a domain is extended by data with a warrant, in any language	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-029	P1	transcripts/harness_82388ac1/subagents/2026-11-19T23-32-25_adversarial_a8df4496.jsonl	SUSTAINED/HIGH [0] claim_attacked: the whole-token and non-empty tests close the first critic's counterexamples	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-030a	P1	transcripts/harness_82388ac1/subagents/2026-11-19T23-32-25_adversarial_a5c5b6ef.jsonl	SUSTAINED/HIGH [0] claim_attacked: CSA or ISO wins outright, identified by a typed issuing-body cell	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-030b	P2	transcripts/harness_82388ac1/subagents/2026-11-19T23-32-25_adversarial_a5c5b6ef.jsonl	SUSTAINED/MEDIUM [5] claim_attacked: an exact tie at the top is the only tie; CSA wins outright	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-031	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-032	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-033	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-034	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-035	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	cell left blank: identity ALL alone is held by ISS-129; no other truthful cell
+ISS-036	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-037	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-038	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-039	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-040a	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-040b	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-040c	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-041	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-042a	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-042b	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-043	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-044	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-045	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-046	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-047	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-048	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-049	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-050	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-051	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-052	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-053a	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-053b	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-053c	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-053d	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-053e	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-053f	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-053g	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-053h	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-053i	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-055a	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-055b	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-055c	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-055d	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-055e	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-056	P3	transcripts/harness_82388ac1/subagents/2026-11-19T23-31-46_adversarial_a4e235a3.jsonl	SUSTAINED/LOW [9] claim_attacked: the zero-width check local to retire-extraction is consistent with rules 5 and 8	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-057	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-058	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-059	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-060a	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-060b	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-060c	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-060d	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-060e	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-060f	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-060g	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-060h	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-060i	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-061	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-064	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-065a	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-065b	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-065c	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-066	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-067	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-068	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-069	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-070	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-071	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-072	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-073	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-074	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-075	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-076	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-077	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-078a	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-078b	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-078c	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-079	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-080	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-081	P1	transcripts/harness_82388ac1/subagents/2026-11-19T00-16-44_other_ac4adac3.jsonl ; transcripts/harness_82388ac1/subagents/2026-11-19T23-31-46_adversarial_a2853abe.jsonl	SUSTAINED/CRITICAL [0] claim_attacked: a kind carries where a source states a value of the quantity ; SUSTAINED/HIGH [0] claim_attacked: _kind_refusal again holds T-020's refusal of a warrant that states no value	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-082	P3	transcripts/harness_82388ac1/subagents/2026-11-16T23-29-23_other_aadcde62.jsonl	SUSTAINED/LOW [3] claim_attacked: who judged the kind is recorded	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-083a	P2	transcripts/harness_82388ac1/subagents/2026-11-17T00-00-03_other_a05f3777.jsonl	SUSTAINED/MEDIUM [3] claim_attacked: each carrier is a working carrier	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-083b	P2	transcripts/harness_82388ac1/subagents/2026-11-17T00-00-03_other_a05f3777.jsonl	SUSTAINED/MEDIUM [3] claim_attacked: each carrier is a working carrier	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-084	P2	none		no finding located for gaps.status's missing CHECK; a defect is P2	
+ISS-085	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-086	P1	transcripts/harness_82388ac1/subagents/2026-11-17T00-25-58_other_ab6fcba9.jsonl	SUSTAINED/HIGH [0] claim_attacked: registry entries check that no translation is shown unreviewed	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-087	P1	transcripts/harness_82388ac1/subagents/2026-11-17T00-25-58_other_ab6fcba9.jsonl	SUSTAINED/HIGH [1] claim_attacked: a reviewed translation was reviewed by an instance other than its translator	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-088	P1	transcripts/harness_82388ac1/subagents/2026-11-17T00-25-58_other_ab6fcba9.jsonl	SUSTAINED/HIGH [2] claim_attacked: a translation never copies the original and keeps its numbers	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-089a	P1	transcripts/harness_82388ac1/subagents/2026-11-17T00-25-58_other_ab6fcba9.jsonl	SUSTAINED/HIGH [2] claim_attacked: a translation never copies the original and keeps its numbers	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-089b	P1	transcripts/harness_82388ac1/subagents/2026-11-17T00-25-58_other_ab6fcba9.jsonl	SUSTAINED/HIGH [2] claim_attacked: a translation never copies the original and keeps its numbers	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-089c	P1	transcripts/harness_82388ac1/subagents/2026-11-17T00-25-58_other_ab6fcba9.jsonl	SUSTAINED/HIGH [2] claim_attacked: a translation never copies the original and keeps its numbers	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-089d	P1	transcripts/harness_82388ac1/subagents/2026-11-17T00-25-58_other_ab6fcba9.jsonl	SUSTAINED/HIGH [2] claim_attacked: a translation never copies the original and keeps its numbers	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-090	P2	none		the nearest finding (ab6fcba9, a stale view row) is not this issue (no verb closes a stale request); a hole is P2	
+ISS-091	P2	transcripts/harness_82388ac1/subagents/2026-11-17T00-56-01_other_affbe318.jsonl	SUSTAINED/MEDIUM [4] claim_attacked: the retired row is a usable record of why a claim was withdrawn	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-092	P2	none		no finding located that names the empty-string CHECK; a defect is P2	
+ISS-093a	P2	transcripts/harness_82388ac1/subagents/2026-11-17T00-56-01_other_affbe318.jsonl	SUSTAINED/MEDIUM [2] claim_attacked: the tests hold the filters this commit added	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-093b	P2	transcripts/harness_82388ac1/subagents/2026-11-17T00-56-01_other_affbe318.jsonl	SUSTAINED/MEDIUM [2] claim_attacked: the tests hold the filters this commit added	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-093c	P2	transcripts/harness_82388ac1/subagents/2026-11-17T00-56-01_other_affbe318.jsonl	SUSTAINED/MEDIUM [2] claim_attacked: the tests hold the filters this commit added	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-094	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-095	P1	transcripts/harness_82388ac1/subagents/2026-11-17T01-55-05_other_aaa0c04b.jsonl	SUSTAINED/HIGH [0] claim_attacked: a signature class groups the same refusal across batches	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-096	P1	transcripts/harness_82388ac1/subagents/2026-11-17T01-55-05_other_aaa0c04b.jsonl	SUSTAINED/HIGH [1] claim_attacked: a class shows the triage type its instances were filed under	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-097	P1	transcripts/harness_82388ac1/subagents/2026-11-17T01-55-05_other_aaa0c04b.jsonl	SUSTAINED/HIGH [2] claim_attacked: each stage a class touches gets a cue	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-098	P2	transcripts/harness_82388ac1/subagents/2026-11-17T01-55-05_other_aaa0c04b.jsonl	SUSTAINED/MEDIUM [3] claim_attacked: the cue names every check whose basis begins with the stage	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-099a	P2	transcripts/harness_82388ac1/subagents/2026-11-17T01-55-05_other_aaa0c04b.jsonl	SUSTAINED/MEDIUM [4] claim_attacked: nothing is curated: verb to tables to stage is read from the state graph	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-099b	P2	transcripts/harness_82388ac1/subagents/2026-11-17T01-55-05_other_aaa0c04b.jsonl	SUSTAINED/MEDIUM [4] claim_attacked: nothing is curated: verb to tables to stage is read from the state graph	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-100a	P2	transcripts/harness_82388ac1/subagents/2026-11-17T01-55-05_other_aaa0c04b.jsonl	SUSTAINED/MEDIUM [7] claim_attacked: the tests hold the behaviour the commit claims	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-100b	P2	transcripts/harness_82388ac1/subagents/2026-11-17T01-55-05_other_aaa0c04b.jsonl	SUSTAINED/MEDIUM [7] claim_attacked: the tests hold the behaviour the commit claims	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-100c	P2	transcripts/harness_82388ac1/subagents/2026-11-17T01-55-05_other_aaa0c04b.jsonl	SUSTAINED/MEDIUM [7] claim_attacked: the tests hold the behaviour the commit claims	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-100d	P2	transcripts/harness_82388ac1/subagents/2026-11-17T01-55-05_other_aaa0c04b.jsonl	SUSTAINED/MEDIUM [7] claim_attacked: the tests hold the behaviour the commit claims	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-100e	P2	transcripts/harness_82388ac1/subagents/2026-11-17T01-55-05_other_aaa0c04b.jsonl	SUSTAINED/MEDIUM [7] claim_attacked: the tests hold the behaviour the commit claims	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-100f	P2	transcripts/harness_82388ac1/subagents/2026-11-17T01-55-05_other_aaa0c04b.jsonl	SUSTAINED/MEDIUM [7] claim_attacked: the tests hold the behaviour the commit claims	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-100g	P2	transcripts/harness_82388ac1/subagents/2026-11-17T01-55-05_other_aaa0c04b.jsonl	SUSTAINED/MEDIUM [7] claim_attacked: the tests hold the behaviour the commit claims	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-102	P2	none		the LOW of aaa0c04b concerns the real record, not the ordering; a defect is P2	
+ISS-103	P2	transcripts/harness_82388ac1/subagents/2026-11-17T02-43-02_other_a2ed7d9a.jsonl	SUSTAINED/MEDIUM [2] claim_attacked: each branch is shown red under a seeded defect	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-104	P2	transcripts/harness_82388ac1/subagents/2026-11-17T02-43-02_other_a2ed7d9a.jsonl	SUSTAINED/MEDIUM [4] claim_attacked: the bare-ratio gradients are left out of every ramp-gradient cell because of their unit	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	cell left blank: its subject, parameter 3 with MOB (the cell the critic tried), is held by ISS-122 (the open gate's own lens); no other truthful cell
+ISS-105	P2	transcripts/harness_82388ac1/subagents/2026-11-16T18-34-24_other_accc4fed.jsonl	SUSTAINED/MEDIUM [4] claim_attacked: amend_extraction's generic notes trail is not extended to the three new fields (task section 4 item 0; code comment in db.py)	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-106	P3	transcripts/harness_82388ac1/subagents/2026-11-18T19-38-09_other_af5360a9.jsonl	SUSTAINED/LOW [5] claim_attacked: every label pick names who judged it	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-107	P3	transcripts/harness_82388ac1/subagents/2026-11-18T19-38-09_other_af5360a9.jsonl	SUSTAINED/LOW [6] claim_attacked: the audit reads the junction by form_id	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-108	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-109	P1	transcripts/harness_82388ac1/subagents/2026-11-18T19-38-09_other_af5360a9.jsonl	SUSTAINED/HIGH [1] claim_attacked: v_term_names shows the first recorded English instrument form until a named judge picks (OD-38) and names by E1	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-110	P1	transcripts/harness_82388ac1/subagents/2026-11-18T20-45-45_other_a5e322b7.jsonl	SUSTAINED/HIGH [1] claim_attacked: each row names the row that says the two terms are so related	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-111a	P2	transcripts/harness_82388ac1/subagents/2026-11-18T20-45-45_other_a5e322b7.jsonl	SUSTAINED/MEDIUM [5] claim_attacked: a provision is not a parameter and the reader's output is coherent	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-111b	P2	transcripts/harness_82388ac1/subagents/2026-11-18T20-45-45_other_a5e322b7.jsonl	SUSTAINED/MEDIUM [5] claim_attacked: a provision is not a parameter and the reader's output is coherent	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-113	P2	transcripts/harness_82388ac1/subagents/2026-11-19T23-31-46_adversarial_a2853abe.jsonl	SUSTAINED/MEDIUM [5] claim_attacked: no base table holds a key into evidence or judgment	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-114	P2	transcripts/harness_82388ac1/subagents/2026-11-18T21-49-01_other_a9ccd809.jsonl	SUSTAINED/MEDIUM [6] claim_attacked: units extend by data with a warrant (OD-24)	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-115	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-116	P2	transcripts/harness_82388ac1/subagents/2026-11-18T21-49-01_other_a9ccd809.jsonl	SUSTAINED/MEDIUM [3] claim_attacked: the stale check reports a determination the new rule changes	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-117	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-118	P2	transcripts/harness_82388ac1/subagents/2026-11-18T21-49-01_other_a9ccd809.jsonl	SUSTAINED/MEDIUM [4] claim_attacked: a unit with no row never composes with a kind	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-119	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-120	P2	transcripts/harness_82388ac1/subagents/2026-11-18T23-03-16_other_ad377f82.jsonl	SUSTAINED/MEDIUM [5] claim_attacked: one row per clause, one home	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-121	P2	transcripts/harness_82388ac1/subagents/2026-11-18T23-03-16_other_ad377f82.jsonl	SUSTAINED/MEDIUM [6] claim_attacked: an inventory hit means a clause names the parameter, by v_term_names' rule	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-122	P1	transcripts/harness_82388ac1/subagents/2026-11-19T23-31-46_adversarial_a2853abe.jsonl	SUSTAINED/HIGH [1] claim_attacked: the base is never ordered after a later stage (OD-71; ratified adjudication item 23)	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-123	P1	transcripts/harness_82388ac1/subagents/2026-11-19T23-31-46_adversarial_a2853abe.jsonl	SUSTAINED/HIGH [2] claim_attacked: the first critic's merge finding (a merge changes the kind under stored figures) reached the writer	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-124	P3	transcripts/harness_82388ac1/subagents/2026-11-19T00-16-44_other_ac4adac3.jsonl	SUSTAINED/LOW [7] claim_attacked: one home for the locator shape	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-125	P3	transcripts/harness_82388ac1/subagents/2026-11-19T23-31-46_adversarial_a2853abe.jsonl	SUSTAINED/LOW [6] claim_attacked: blank, zero-width and BLOB holes are closed	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-126	P2	transcripts/harness_82388ac1/subagents/2026-11-19T02-04-35_adversarial_a95a470c.jsonl	SUSTAINED/MEDIUM [5] claim_attacked: deleting a marker turns the audit red naming that target	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-127	P3	transcripts/harness_82388ac1/subagents/2026-11-19T02-04-35_adversarial_a95a470c.jsonl	SUSTAINED/LOW [7] claim_attacked: one BY sentence truthfully describes what supersedes each of the 18 targets	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-128a	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-128b	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-128c	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-128d	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-128e	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-128f	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-128g	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-128h	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-128i	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-129	P2	transcripts/harness_82388ac1/subagents/2026-11-19T02-56-13_adversarial_a36e0be0.jsonl	SUSTAINED/MEDIUM [3] claim_attacked: the writer keeps ALL out of the identity lens (OD-31; skill 'Never ALL')	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-130	P3	transcripts/harness_82388ac1/subagents/2026-11-19T02-56-13_adversarial_a36e0be0.jsonl	SUSTAINED/LOW [13] claim_attacked: a code figure left without an identity is warned at the write that leaves it so	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-131	P2	transcripts/harness_82388ac1/subagents/2026-11-19T23-31-46_adversarial_a42ab055.jsonl	SUSTAINED/MEDIUM [3] claim_attacked: the audit lists the same figures the writer warns on	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-132a	P3	transcripts/harness_82388ac1/subagents/2026-11-19T02-56-13_adversarial_a36e0be0.jsonl	SUSTAINED/LOW [11] claim_attacked: the context words are found on word boundaries in the clause	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-132b	P3	transcripts/harness_82388ac1/subagents/2026-11-19T02-56-13_adversarial_a36e0be0.jsonl	SUSTAINED/LOW [11] claim_attacked: the context words are found on word boundaries in the clause	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-133a	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-133b	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-133c	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-133d	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-133e	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-134	P2	transcripts/harness_82388ac1/subagents/2026-11-19T05-35-42_adversarial_aa78dfbf.jsonl	SUSTAINED/MEDIUM [6] claim_attacked: a pair whose only figure is retired goes back to its reading status, honestly	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-135	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-136	P3	transcripts/harness_82388ac1/subagents/2026-11-19T05-35-42_adversarial_aa78dfbf.jsonl	SUSTAINED/LOW [8] claim_attacked: one trigger refuses any change to retired_at once set; the first reason stands	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-137a	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-137b	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-137c	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-137d	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-137e	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-138a	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-138b	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-138c	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-138d	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-139	P2	transcripts/harness_82388ac1/subagents/2026-11-19T06-39-37_adversarial_a2016a8d.jsonl	SUSTAINED/MEDIUM [2] claim_attacked: a quote found once passes, so the instrument no longer goes red with nothing wrong	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-140	P2	transcripts/harness_82388ac1/subagents/2026-11-19T06-39-37_adversarial_a2016a8d.jsonl	SUSTAINED/MEDIUM [4] claim_attacked: the check is not weakened into blindness	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-141	P3	transcripts/harness_82388ac1/subagents/2026-11-19T06-39-37_adversarial_a2016a8d.jsonl	SUSTAINED/LOW [5] claim_attacked: a short or generic quote cannot pass	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-142	P2	none		no finding located for verify_atoms passing atoms build_graph fails; a defect is P2	
+ISS-143	P2	none		no finding located for 'cited line None'; a defect is P2	
+ISS-144	P2	none		no critic severity: PIP-01's loss is recorded in S18 T-134 item 4 with none; a defect is P2	
+ISS-145	P3	transcripts/harness_82388ac1/subagents/2026-11-19T23-31-46_adversarial_a43875ff.jsonl	SUSTAINED/LOW [8] claim_attacked: ATOMS.tsv publishes the line found; only PIP-01 reads failed	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-146a	P2	none		no critic severity for the open question: the CRITICAL of a2b4d735 concerned the writer of c9c84466, reverted by d6c19cbd; a hole is P2	
+ISS-146b	P1	transcripts/harness_82388ac1/subagents/2026-11-19T04-46-26_adversarial_a2b4d735.jsonl	SUSTAINED/HIGH [4] claim_attacked: original_title was already writable; the only gap was edition for a DOI-less source	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-147	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-148	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-149a	P3	transcripts/harness_82388ac1/subagents/2026-11-17T00-25-58_other_ab6fcba9.jsonl	SUSTAINED/LOW [5] claim_attacked: joined-cells census shows the new columns add no candidate	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-149b	P3	transcripts/harness_82388ac1/subagents/2026-11-17T00-56-01_other_affbe318.jsonl	SUSTAINED/LOW [5] claim_attacked: the new columns add no joined-cell candidate	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-149c	P2	transcripts/harness_82388ac1/subagents/2026-11-18T20-45-45_other_a5e322b7.jsonl	SUSTAINED/MEDIUM [7] claim_attacked: joined_cells_census unchanged proves the new columns add no candidate	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-149d	P2	transcripts/harness_82388ac1/subagents/2026-11-18T23-03-16_other_ad377f82.jsonl	SUSTAINED/MEDIUM [7] claim_attacked: census unchanged and the CHECKs guarantee a place and a text	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-151	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-152	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-153	P3	transcripts/harness_82388ac1/subagents/2026-11-16T18-34-24_other_accc4fed.jsonl	SUSTAINED/LOW [8] claim_attacked: the order message always tells the executor a workable order	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-154	P3	transcripts/harness_82388ac1/subagents/2026-11-16T19-04-25_other_ae5ceb5b.jsonl	SUSTAINED/LOW [5] claim_attacked: a derived row is not counted as independent evidence for the same root	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-155	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-156	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-157a	P3	transcripts/harness_82388ac1/subagents/2026-11-16T19-34-14_other_a854d244.jsonl	SUSTAINED/LOW [7] claim_attacked: a search in an owed pair is counted whatever its spelling	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-157b	P3	transcripts/harness_82388ac1/subagents/2026-11-16T19-34-14_other_a854d244.jsonl	SUSTAINED/LOW [7] claim_attacked: a search in an owed pair is counted whatever its spelling	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-157c	P3	transcripts/harness_82388ac1/subagents/2026-11-16T19-34-14_other_a854d244.jsonl	SUSTAINED/LOW [7] claim_attacked: a search in an owed pair is counted whatever its spelling	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-157d	P3	transcripts/harness_82388ac1/subagents/2026-11-16T19-34-14_other_a854d244.jsonl	SUSTAINED/LOW [7] claim_attacked: a search in an owed pair is counted whatever its spelling	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-158	P3	none		no critic severity: listed under adb98816 'Not repaired' with none; the finding a854d244 [1] it resembles was repaired; a documented limit is P3	
+ISS-159	P3	transcripts/harness_82388ac1/subagents/2026-11-16T19-34-14_other_a854d244.jsonl	SUSTAINED/LOW [8] claim_attacked: the view's pairs are the in-scope pairs	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-160	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-161	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-162	P2	transcripts/harness_82388ac1/subagents/2026-11-16T20-12-10_other_aca829af.jsonl	SUSTAINED/MEDIUM [4] claim_attacked: the gate diffs the base it was given	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-163	P2	transcripts/harness_82388ac1/subagents/2026-11-16T20-12-10_other_aca829af.jsonl	SUSTAINED/MEDIUM [3] claim_attacked: registering the nine selftests means CI runs them when the code they prove changes	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-164	P3	transcripts/harness_82388ac1/subagents/2026-11-16T20-12-10_other_aca829af.jsonl	SUSTAINED/LOW [8] claim_attacked: the cache cannot mask the thing the check exists to detect	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-165	P3	transcripts/harness_82388ac1/subagents/2026-11-16T20-12-10_other_aca829af.jsonl	SUSTAINED/LOW [7] claim_attacked: after this task the NO-EXAMINED line is empty on the base and anything it names is reported	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-166	P2	none		no finding located; a hand-typed stale count is a defect, P2	
+ISS-167	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-168	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-169	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-170	P1	transcripts/harness_82388ac1/subagents/2026-11-16T21-22-25_other_a3ca6ddf.jsonl	SUSTAINED/HIGH [2] claim_attacked: argv, sentence and db are scrubbed of anything private, and the kept argv is the replay command	owner question raised by the repair of this finding (the whole-word secret-flag rule was the repair's choice); the finding's severity	
+ISS-171	P2	transcripts/harness_82388ac1/subagents/2026-11-16T21-22-25_other_a3ca6ddf.jsonl	SUSTAINED/MEDIUM [8] claim_attacked: every spelling argparse accepts for --session is recognised as the running session	owner question raised by the repair of this finding (the namespace plumbing was added for session recognition); the finding's severity	
+ISS-172	P1	transcripts/harness_82388ac1/subagents/2026-11-16T21-22-25_other_a3ca6ddf.jsonl	SUSTAINED/HIGH [7] claim_attacked: the capture answers the owner's statement 1, 'when our scripting/pipeline cannot execute something'	owner question on the capture scope this finding attacked (crashes, a script with no --session, full_text exits); the finding's severity	
+ISS-173	P1	transcripts/harness_82388ac1/subagents/2026-11-16T21-22-25_other_a3ca6ddf.jsonl	SUSTAINED/HIGH [7] claim_attacked: the capture answers the owner's statement 1, 'when our scripting/pipeline cannot execute something'	owner question on the capture scope this finding attacked (crashes, a script with no --session, full_text exits); the finding's severity	
+ISS-174	P1	transcripts/harness_82388ac1/subagents/2026-11-16T21-22-25_other_a3ca6ddf.jsonl	SUSTAINED/HIGH [7] claim_attacked: the capture answers the owner's statement 1, 'when our scripting/pipeline cannot execute something'	owner question on the capture scope this finding attacked (crashes, a script with no --session, full_text exits); the finding's severity	
+ISS-175	P3	transcripts/harness_82388ac1/subagents/2026-11-20T02-56-22_adversarial_a249e704.jsonl	SUSTAINED/LOW [8] claim_attacked: no table links a gap to what closed it	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-176a	P3	transcripts/harness_82388ac1/subagents/2026-11-20T02-56-22_adversarial_a249e704.jsonl	SUSTAINED/LOW [6] claim_attacked: a blank pointer is refused in every script; a pointer in any language is stored intact	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-176b	P3	transcripts/harness_82388ac1/subagents/2026-11-20T02-56-22_adversarial_a249e704.jsonl	SUSTAINED/LOW [6] claim_attacked: a blank pointer is refused in every script; a pointer in any language is stored intact	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-176c	P3	transcripts/harness_82388ac1/subagents/2026-11-20T02-56-22_adversarial_a249e704.jsonl	SUSTAINED/LOW [6] claim_attacked: a blank pointer is refused in every script; a pointer in any language is stored intact	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-177	P3	transcripts/harness_82388ac1/subagents/2026-11-20T02-56-22_adversarial_a249e704.jsonl	SUSTAINED/LOW [6] claim_attacked: a blank pointer is refused in every script; a pointer in any language is stored intact	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-178	P3	transcripts/harness_82388ac1/subagents/2026-11-20T02-56-22_adversarial_a249e704.jsonl	SUSTAINED/LOW [7] claim_attacked: resolved_at is a real calendar minute not before created_at	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-179	P3	transcripts/harness_82388ac1/subagents/2026-11-20T02-56-22_adversarial_a249e704.jsonl	SUSTAINED/LOW [7] claim_attacked: resolved_at is a real calendar minute not before created_at	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-180	P3	none		no critic severity for this issue: register rule, a limit or data gap is P3	
+ISS-181	P2	transcripts/harness_82388ac1/subagents/2026-11-20T04-11-30_adversarial_aa8e29b3.jsonl	SUSTAINED/MEDIUM [3] claim_attacked: the adversarial-findings route is closed, so critic findings are filed as gaps	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-182	P2	transcripts/harness_82388ac1/subagents/2026-11-20T04-11-30_adversarial_aa8e29b3.jsonl	SUSTAINED/MEDIUM [3] claim_attacked: the adversarial-findings route is closed, so critic findings are filed as gaps	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-183	P3	transcripts/harness_82388ac1/subagents/2026-11-20T04-11-30_adversarial_aa8e29b3.jsonl	SUSTAINED/LOW [7] claim_attacked: the migration row carries the writer's stamps	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-184	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-185	P1	transcripts/harness_82388ac1/subagents/2026-11-19T23-32-25_adversarial_a8df4496.jsonl	SUSTAINED/HIGH [1] claim_attacked: a capture from a stale base is refused	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-186	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-187	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-188	P2	transcripts/harness_82388ac1/subagents/2026-11-16T19-34-14_other_a854d244.jsonl	SUSTAINED/MEDIUM [3] claim_attacked: admissions outside the owed pairs are already reported by db.py coverage as searches_outside_scope	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-189	P3	transcripts/harness_82388ac1/subagents/2026-11-19T02-56-13_adversarial_a36e0be0.jsonl	SUSTAINED/LOW [11] claim_attacked: the context words are found on word boundaries in the clause	the critic's own severity of the finding this row records (CRITICAL/HIGH P1, MEDIUM P2, LOW P3)	
+ISS-190	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-191	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-192	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
+ISS-193	P2	none		no critic severity for this issue: register rule, a question, defect or hole is P2	
