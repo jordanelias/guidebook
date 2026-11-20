@@ -8099,3 +8099,18 @@ Given in the session `session_2026-11-18-remediation-batch-1-tooling-stack-2` (h
 CONDITION: any session closing a gap, adding a gap column, or filing an unresolved issue.
 ACTION: (1) Close a gap with `db.py close-gap` and its resolution pointer; a closing with no recorded resolution is a legacy row. (2) File an unresolved issue as a gap through `db.py add-gap` in a data pull request that follows the tooling change; do not hand-keep a register file. (3) Record a critic's findings as an adversarial pass, not as gaps.
 DATE: 2026-11-20 — owner instruction (typed words, quoted above).
+
+## Correction 2026-11-20 — critic findings that stand are filed as gaps, because the adversarial-pass writers cannot hold them
+
+Recorded by the coordinator of `session_2026-11-18-remediation-batch-1-tooling-stack-2` while filing the gap batch of `session_2026-11-20-file-open-issues-as-gaps`, after an adversarial pass over that batch. It corrects ACTION (3) of the entry "Owner instruction 2026-11-20 — issues are filed in the `gaps` table …", which read "Record a critic's findings as an adversarial pass, not as gaps". That sentence was the coordinator's reading, not the owner's: the owner's typed words are "file all in gap table" and, earlier, "Create a register with all issues logged that have yet to be resolved".
+
+**Why the sentence could not be followed.** `db.py record-adversarial-pass` refuses a second pass for the same `subject_session` (the 2026-08-19 RULE, ACTION 5: at most one adversarial pass per batch; derive: `grep -n "a pass already exists" scripts/db.py`), and `dispose-adversarial-finding --disposition REPAIRED` requires an existing data migration path under `scripts/migrations/`, which a tooling repair never has (`grep -n "disposition=REPAIRED requires" scripts/db.py`). The critics of the 2026-11 tooling stacks ran many passes over one subject session each. Neither rule is changed by this entry.
+
+**Readings.**
+
+- [ASSUMPTION: "all issues logged that have yet to be resolved" covers a critic's finding that still stands, an item an authored task will repair but has not yet repaired, a limit, and an owner reading not yet confirmed; an item a later commit repaired, a past event that cannot be resolved, and a decision registered as an OD (its ledger status line is its home) are not filed — basis: the words; the register's own exclusions].
+- [ASSUMPTION: a critic's finding that was repaired is not filed anywhere new: its record is the repair commit and the sweep list — basis: "yet to be resolved"].
+
+CONDITION: any session filing an unresolved issue, or recording a critic's findings.
+ACTION: (1) File an unresolved issue as a gap row, through `db.py add-gap`, in a data pull request; a gap's priority follows the critic's own severity where there is one (CRITICAL and HIGH to P1, MEDIUM to P2, LOW to P3). (2) Use `record-adversarial-pass` only where the one-pass rule allows it. (3) Close a gap with `db.py close-gap` and its resolution pointer.
+DATE: 2026-11-20 — correction by the coordinator; the owner's words are quoted above.
