@@ -8114,3 +8114,37 @@ Recorded by the coordinator of `session_2026-11-18-remediation-batch-1-tooling-s
 CONDITION: any session filing an unresolved issue, or recording a critic's findings.
 ACTION: (1) File an unresolved issue as a gap row, through `db.py add-gap`, in a data pull request; a gap's priority follows the critic's own severity where there is one (CRITICAL and HIGH to P1, MEDIUM to P2, LOW to P3). (2) Use `record-adversarial-pass` only where the one-pass rule allows it. (3) Close a gap with `db.py close-gap` and its resolution pointer.
 DATE: 2026-11-20 — correction by the coordinator; the owner's words are quoted above.
+
+## Owner statements 2026-11-20 — translation runs before judgment; disability identities are the lens most readers will navigate by; the base holds the translation, the unit conversions and the identity–need–ICF crosswalk
+
+Given in the session `session_2026-11-20-unregistered-map-codes` (https://claude.ai/code/session_01Ub36iQWmsqeLLsdnXfD7Pu), in typed messages while the coordinator reported an Opus adjudication of the core against the machinery and an antagonist audit of it. Derive the times from the preserved transcript (`git grep -n -F "yes, translation runs before judgment" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "we research, we record, we verify we recorded things accurately, we evaluate things in context with other related things, we synthesize then show"
+>
+> "base is the substitute for me asking for a research topic directly"
+>
+> "i only know english, so the base has to record all the translation work for me"
+>
+> "i don't want to have to constantly map and cross-reference disability identities vs access needs vs ICF codes, so the base needs to get that ready for me too"
+>
+> "we need to actually also translate the stuff from other languages so that i can actually see it and so that it can be properly evaluated in context"
+>
+> "this is also why we need to be able to convert units etc"
+>
+> "this project will die upon itself if it doesn't treat disability identities properly. they are going to be by far the most common lens upon which people will navigate the repository"
+>
+> "yes, translation runs before judgment"
+
+**Readings.**
+
+- [ASSUMPTION: "yes, translation runs before judgment" answers the coordinator's question whether translation of every non-English source and figure is to be recorded before the judgment stage evaluates it, replacing the default of `translation: default_stage: synthesis` in `governance/pipeline-contract.yaml` (set on the owner's words of 2026-11-12, "we can set a rule for synthesis to translate") — basis: the question put to the owner, and rule 0].
+- [ASSUMPTION: "the base has to record all the translation work" means the translation, with the original beside it, who or what translated it and when, and its review state, is recorded in the database and is what the render stage shows — basis: the owner reads only English].
+- [ASSUMPTION: "get that ready for me" means the identity, access-need and ICF mappings are recorded as data a session judges and proposes, so the owner is not asked to map by hand — basis: the words; the form of the identity–need link (stored or derived) is not decided here].
+- [ASSUMPTION: "convert units etc" means a figure stated in one unit or notation is comparable with the same quantity stated in another, as data in `base_units` — basis: the words and T-030].
+- The statements say what the owner wants; they decide no schema, no table name and no task order.
+
+CONDITION: any session that records, judges or renders a figure from a source not in English; that writes or reads `translations`, `base_units`, `identity_icf_map`, `access_need_icf` or `extraction_lens_links`; or that plans T-049, T-112, T-086 or T-126 to T-128.
+ACTION: (1) Translation of a non-English source's title and of each figure's wording is recorded, with the original, before judgment reads it; where `governance/pipeline-contract.yaml` says synthesis, this entry supersedes that default (rule 0), and the contract is corrected in a tooling pull request, not by hand here. (2) An English rendering is not written into `claimed_value` or `claimed_unit`. (3) Treat a disability identity as the first lens of the repository: an identity with no ICF code, and an identity with no recorded need, is a gap to close and not a state to leave. (4) Treat every [ASSUMPTION] above as unratified except where the owner's words state it.
+DATE: 2026-11-20 — owner statements (typed words, quoted above).
