@@ -30,8 +30,15 @@
   {
     "started": "2026-11-20T05:50:46",
     "role": "other",
-    "bytes": 720288,
+    "bytes": 850554,
     "agent_id_prefix": "a442486d",
     "file": "2026-11-20T05-50-46_other_a442486d.jsonl"
+  },
+  {
+    "started": "2026-11-20T05:55:38",
+    "role": "adversarial",
+    "bytes": 196220,
+    "agent_id_prefix": "a29c2e3a",
+    "file": "2026-11-20T05-55-38_adversarial_a29c2e3a.jsonl"
   }
 ]
