@@ -1828,8 +1828,9 @@ def _locator_evidence(row, manifest):
 # sets differently (a line break, a different dash), so only the head is asserted. " -- "
 # is the ASCII spelling of the dash in typed titles, and " (" opens the English gloss this
 # project adds after a native title -- both measured on batch 22's rows, where without
-# them a Finnish decree's genuine title read as absent.
-_TITLE_SEPARATORS = (" — ", " – ", " -- ", ": ", " - ", " (")
+# them a Finnish decree's genuine title read as absent. "（" opens a Japanese law's number
+# after its title (REF-00990), which e-Gov's law data holds in a separate element.
+_TITLE_SEPARATORS = (" — ", " – ", " -- ", ": ", " - ", " (", "（")
 
 
 def _title_head(title):
@@ -2351,7 +2352,9 @@ def verify_corpus():
                             "evidence_source_authors WHERE ref_id=? ORDER BY position", (ref,)).fetchall()
         missing = _presence_missing(row, people, hays) if hays else None
         if not hays or missing is None:
-            unread.append((ref, "; ".join(why) or "no person author and no title to look for"))
+            unread.append((ref, "; ".join(why) if not hays and why else
+                           "no text of the source is logged (only renders or bibliographies)" if not hays
+                           else "no person author and no title to look for"))
         elif missing:
             absent.append((ref, missing, row["verification_status"] == "VERIFIED"))
         else:
