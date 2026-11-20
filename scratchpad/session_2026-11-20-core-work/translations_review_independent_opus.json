@@ -1,0 +1,522 @@
+[
+ {
+  "id": "evidence_sources:pub_title:REF-00988",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-00989",
+  "verdict": "rejected",
+  "reason": "Mistranslated term: スロープ here is a wheelchair ramp, so the second sentence should read 'Do you think that just having a ramp is enough?' (both translations wrongly give 'slope')."
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-00990",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-00991",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-00993",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-00995",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-00996",
+  "verdict": "rejected",
+  "reason": "Mistranslated term: in this Flemish accessibility handbook 'Helling' under 'Niveauverschillen' is the ramp section, so the title should read 'Level differences: Ramp' (the second translation is right)."
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01011",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01012",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01017",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01019",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01020",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01021",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01022",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01023",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01024",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01025",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01026",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01027",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01028",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01029",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01030",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01031",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "evidence_sources:pub_title:REF-01032",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:100",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:101",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:102",
+  "verdict": "rejected",
+  "reason": "original cell is truncated: the cell starts mid-sentence and drops that it is about streets; the full passage reads 'Calles en pendiente, hemos de tener en cuenta que pendientes superiores al 6% (límite que marca la ley) empiezan a tener problemas importantes para ser recorridas por muchas personas y a partir del 10% es impracticable' ('Sloping streets: we must bear in mind that slopes above 6% (the legal limit) ... and from 10% it is impracticable')."
+ },
+ {
+  "id": "source_value_extractions:claim_text:103",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:104",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:105",
+  "verdict": "rejected",
+  "reason": "original cell is truncated: the cell starts mid-sentence after a semicolon and drops what the ramp is preferred to; the full passage reads 'L'aménagement de ressauts successifs est déconseillé car la répétitivité de l'obstacle que constitue le ressaut est très pénible pour les personnes en fauteuil roulant ; on préférera un plan incliné dont la pente est inférieure ou égale à 5 %' ('A series of successive small steps is discouraged ...; an inclined plane of 5% or less is preferred')."
+ },
+ {
+  "id": "source_value_extractions:claim_text:106",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:107",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:108",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:109",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:110",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:111",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:112",
+  "verdict": "rejected",
+  "reason": "original cell is truncated: the cell stops mid-sentence; the full passage ends 'Ieder(in) ondersteunt de implementatie van deze NEN-norm en hoopt dat als het normtraject is afgerond ook andere onderdelen in de regelgeving een plaats zullen krijgen' ('... and hopes that, once the standard is finished, other parts will also find a place in the regulations')."
+ },
+ {
+  "id": "source_value_extractions:claim_text:113",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:114",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:115",
+  "verdict": "rejected",
+  "reason": "original cell is truncated: the cell stops before the condition that ends the sentence; the full passage reads 'De bepaling is slechts van toepassing op toegangspaden met een helling groter dan 4 % in de richting van de normale looprichting' ('... with a slope greater than 4% in the normal direction of walking')."
+ },
+ {
+  "id": "source_value_extractions:claim_text:116",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:118",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:128",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:129",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:141",
+  "verdict": "rejected",
+  "reason": "original cell is truncated: the cell stops mid-sentence and drops an exception; the full DB SUA 4.3.2 passage reads '... en cuyo caso la longitud del tramo será de 9 m, como máximo, así como en las de aparcamientos previstas para circulación de vehículos y de personas, en las cuales no se limita la longitud de los tramos' ('... and except car-park ramps for vehicles and pedestrians, where the length of flights is not limited')."
+ },
+ {
+  "id": "source_value_extractions:claim_text:142",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:143",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:144",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:145",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:146",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:19",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:198",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:199",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:20",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:200",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:201",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:202",
+  "verdict": "rejected",
+  "reason": "original cell is truncated: the cell begins mid-sentence with a gerund clause ('siendo'); the full passage reads 'Junto a la puerta habrá un espacio libre de obstáculos que permita inscribir en toda su altura un círculo de 1,50 m de diámetro mínimo, siendo la altura mínima en el interior de la cabina de 2,20 m' (already held complete as claim 201)."
+ },
+ {
+  "id": "source_value_extractions:claim_text:203",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:204",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:205",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:206",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:207",
+  "verdict": "rejected",
+  "reason": "original cell is truncated: the cell ends mid-sentence on '하고,' ('and'); the full passage reads '(1) 출입구(문)은 아래의 그림과 같이 그 통과유효폭을 0.9미터 이상으로 하고, 출입구(문)의 전면 유효거리는 1.2미터 이상으로 하며, 연속된 출입문의 경우 문의 개폐에 소요되는 공간은 유효거리에 포함하지 아니한다' ('the clear passage width of the entrance shall be 0.9 m or more, the clear distance in front of it 1.2 m or more, and for successive doors the door-swing space is not counted in that distance')."
+ },
+ {
+  "id": "source_value_extractions:claim_text:208",
+  "verdict": "rejected",
+  "reason": "original cell is truncated: the cell ends mid-sentence on '하되,' ('but') and drops the condition; the full passage reads '복도의 유효폭은 1.2미터 이상으로 하되, 복도의 양옆에 거실이 있는 경우에는 1.5미터 이상으로 할 수 있다' ('The clear width of a corridor shall be 1.2 m or more, but where there are rooms on both sides of the corridor it may be 1.5 m or more')."
+ },
+ {
+  "id": "source_value_extractions:claim_text:209",
+  "verdict": "rejected",
+  "reason": "original cell is truncated: the cell begins with the particle '에는' and drops its condition, so the translation states 1.5 m with no condition; the full passage reads '복도의 유효폭은 1.2미터 이상으로 하되, 복도의 양옆에 거실이 있는 경우에는 1.5미터 이상으로 할 수 있다' ('... but where there are rooms on both sides of the corridor it may be 1.5 m or more')."
+ },
+ {
+  "id": "source_value_extractions:claim_text:21",
+  "verdict": "rejected",
+  "reason": "Mistranslated: いくらスロープがあっても means 'even if a ramp is provided', so the sentence should read 'Where the gradient is steeper than 1/8, even with a ramp, climbing it in a self-propelled wheelchair is close to impossible'; 'however much of a slope there is' garbles it (the second translation repeats the error)."
+ },
+ {
+  "id": "source_value_extractions:claim_text:210",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:211",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:212",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:213",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:214",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:215",
+  "verdict": "rejected",
+  "reason": "original cell is truncated: the cell ends mid-word ('이상으'), and the translation supplies a 'shall' that the cell does not contain; the full passage reads '(1) 휠체어사용자가 통행할 수 있도록 접근로의 유효폭은 1.2미터 이상으로 하여야 한다' ('(1) So that wheelchair users can pass, the clear width of the access route shall be 1.2 m or more')."
+ },
+ {
+  "id": "source_value_extractions:claim_text:22",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:221",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:222",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:223",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:224",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:225",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:226",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:227",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:23",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:24",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:27",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:30",
+  "verdict": "rejected",
+  "reason": "original cell is truncated: the cell is item 4° of Flemish Art. 19 §1 and drops its stem, which carries the inequality; the full passage reads 'Het hellingspercentage bedraagt hoogstens : ... 4° vijf procent bij niveauverschillen van 50 cm of groter' ('The gradient is at most: ... 4° five per cent for level differences of 50 cm or greater')."
+ },
+ {
+  "id": "source_value_extractions:claim_text:31",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:32",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:72",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:73",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:74",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:80",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:82",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:83",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:84",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:85",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:86",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:87",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:88",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:90",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:93",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:94",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:95",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:96",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:97",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:98",
+  "verdict": "reviewed",
+  "reason": ""
+ },
+ {
+  "id": "source_value_extractions:claim_text:99",
+  "verdict": "reviewed",
+  "reason": ""
+ }
+]
