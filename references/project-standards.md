@@ -8213,3 +8213,24 @@ The goal sentence of the same session is quoted in the entry "Owner statements 2
 CONDITION: any session editing `CLAUDE.md`, adding a table, verb, check, script or exception, or planning the remediation work.
 ACTION: (1) Do not rewrite `CLAUDE.md` until the owner approves the content above; then write it from this entry and the audit, with the size command. (2) Before adding apparatus, state what it replaces and what reads it. (3) Treat the proposal's sections and moves as unratified until the owner's words approve them.
 DATE: 2026-11-20 — owner statements (typed words, quoted above); the rewrite content is the coordinator's record of the audits, not an owner statement.
+
+## Owner statements 2026-11-20 (fourth) — one large pull request for the remediation work; the identity, need and ICF matrix ships on its own
+
+Given in the session `session_2026-11-20-unregistered-map-codes` (https://claude.ai/code/session_01Ub36iQWmsqeLLsdnXfD7Pu), in two typed messages sent while the coordinator was carrying out the plan of the open work (translation, units, verification, the CLAUDE.md rewrite, housekeeping) as an ordered sequence of small pull requests with stop points. Derive the times from the preserved transcript (`git grep -n -F "just do a big pull request" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "no, just do a big pull request so i don't have to waste time"
+>
+> "the matrix can be on its own"
+
+**Readings.**
+
+- [ASSUMPTION: "a big pull request" covers the whole remaining plan of the open work except the matrix: translation before judgment, units, verification, the CLAUDE.md rewrite and the housekeeping, with their tooling and the research rows they need in the same pull request — basis: the words, and "so i don't have to waste time" (fewer review points)].
+- [ASSUMPTION: "the matrix" is the judged identity, access-need and ICF table of T-145 and the rows that fill it, and "on its own" is a separate pull request, tooling first as T-145 says — basis: the entry "Owner statement 2026-11-20 (second)"].
+- [ASSUMPTION: the owner's words supersede, for this one pull request and on contact (rule 0), the separation of research from tooling in CLAUDE.md rule 10; the rule stands for every other pull request — basis: a live owner statement naming one big pull request].
+- Nothing here approves the CLAUDE.md rewrite's content; the pull request carries it for the owner's review, with its rule 0 and rule 9 text moved and not changed, and the pull request description names it as the part the owner approves by merging.
+
+CONDITION: any session shaping the pull request or pull requests for the work of the entry "Owner statements 2026-11-20 — translation runs before judgment …" or the remediation plan of 2026-11-20.
+ACTION: (1) Ship that work as one pull request, with the matrix excluded; ship the matrix as its own. (2) Order the commits inside the pull request tooling first, then the rows they enable, so each commit stands on the one before. (3) Keep the checks of each part in the same pull request and report any that cannot go red on the defect. (4) Treat the assumptions above as unratified except where the owner's words state them.
+DATE: 2026-11-20 — owner statements (typed words, quoted above).
