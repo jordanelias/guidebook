@@ -1393,9 +1393,15 @@ checks:
   kinds:
   - data
   level: advisory
-  basis: judgment/judgment-code-value-identity-judged
+  basis: judgment/judgment-code-value-identity-not-omitted
   cost: fast
   min_items: 1
+  floor_basis: The subject is every live figure of a tier 4 to 6 source with a live lens link; the count is what
+    EXAMINED prints (run the check). Floor is 1, never the count.
+  note: 'T-126. Fails only on list (i), a code figure whose ICF or need codes the maps tie to a group and which carries
+    no identity but the scope marker. A PASS does not mean the stored code values are judged: their identity links
+    are carried, not judged, until T-127, and the figures that reach no group cell are listed in (iv). Read the
+    queue and list (iv) with: python3 scripts/audit/code_value_identity_audit.py | grep -E "^(queue|\(iv\))"'
 - id: adjudication_integrity
   cmd:
   - python3

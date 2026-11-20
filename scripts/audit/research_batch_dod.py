@@ -392,7 +392,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                if c[1] == "clause_id"]
     _pinpoint = " OR ".join([f"COALESCE(x.{c},'') <> ''" for c in _loc_cols] + _clause) or "0"
     uncited = _rows(cx, f"SELECT DISTINCT x.ref_id FROM source_value_extractions x "
-                        f"JOIN evidence_sources e ON e.ref_id = x.ref_id WHERE e.tier >= 4 AND "
+                        f"JOIN evidence_sources e ON e.ref_id = x.ref_id WHERE e.tier >= {dbcore.REGULATORY_FROM_TIER} AND "
                         f"x.claim_type IN ('numerical','range') AND NOT ({_pinpoint}) AND "
                         f"COALESCE(x.notes,'') NOT LIKE '%UNVERIFIED-QUANT%' AND x.retired_at IS NULL"
                         f"{scope.replace('created_by_session', 'x.created_by_session')}", sargs)

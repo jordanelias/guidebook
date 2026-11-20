@@ -2405,6 +2405,19 @@ try:
         with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
             _mdb9.rebuild_from_migrations(par9)
         _mdb9.build_plan = _orig_plan9
+        # The replayed parent's rows hold NULL in basis_text and the three retired_* cells (every link is carried and
+        # live), so a migration swapping them would pass a plain comparison: give them distinct values first, within the
+        # parent's own CHECKs (a stated basis carries words; a retired link carries all three retired_* cells).
+        _f9 = sqlite3.connect(par9)
+        try:
+            _f9.execute("UPDATE extraction_lens_links SET basis='named_in_text', basis_text='TASK-FIXTURE words '||link_id "
+                        "WHERE link_id % 2 = 0")
+            _f9.execute("UPDATE extraction_lens_links SET retired_at='2026-01-01 00:'||printf('%02d', link_id % 60), "
+                        "retired_by_session='TASK-FIXTURE session '||link_id, retirement_reason='TASK-FIXTURE reason '||link_id "
+                        "WHERE link_id % 3 = 0")
+            _f9.commit()
+        finally:
+            _f9.close()
         shutil.copy(par9, mig9)
         _c9 = sqlite3.connect(mig9, isolation_level=None)
         _p9 = sqlite3.connect(par9)
@@ -2421,6 +2434,15 @@ try:
             vcols9 = [r[1] for r in _c9.execute("PRAGMA table_info(v_live_lens_links)")]
             live9 = [x.execute("SELECT COUNT(*) FROM extraction_lens_links WHERE retired_at IS NULL").fetchone()[0]
                      for x in (_p9, _c9)] + [_c9.execute("SELECT COUNT(*) FROM v_live_lens_links").fetchone()[0]]
+            vwant9 = _p9.execute("SELECT link_id, extraction_id, identity_code, icf_code, needs_code, basis, basis_text, "
+                                 "NULL, created_at, created_by_session FROM extraction_lens_links WHERE retired_at IS NULL "
+                                 "ORDER BY link_id").fetchall()
+            vgot9 = _c9.execute("SELECT * FROM v_live_lens_links ORDER BY link_id").fetchall()
+            idx_sql = ("SELECT name, sql FROM sqlite_master WHERE type='index' AND tbl_name='extraction_lens_links' "
+                       "ORDER BY name")
+            idx9 = [x.execute(idx_sql).fetchall() for x in (_p9, _c9)]
+            spread9 = _p9.execute("SELECT COUNT(DISTINCT basis_text), COUNT(retired_at), COUNT(*) - COUNT(retired_at) "
+                                  "FROM extraction_lens_links").fetchone()
         finally:
             _c9.close()
             _p9.close()
@@ -2430,14 +2452,21 @@ try:
         finally:
             canon9.close()
         ok9 = (len(want9) > 0 and want9 == got9 and nonnull9 == 0 and seq9[0] == seq9[1]
+               and all(n > 0 for n in spread9) and vwant9 == vgot9 and idx9[0] == idx9[1] and len(idx9[0]) > 0
                and "basis_reason" in vcols9 and vcols9.index("basis_reason") == vcols9.index("basis_text") + 1
                and len(set(live9)) == 1 and ccols9 == vcols9)
-        detail9 = (f"parent rows {len(want9)}, migrated rows {len(got9)}, equal={want9 == got9}, basis_reason set "
+        detail9 = (f"view rows equal={vwant9 == vgot9}, indexes equal={idx9[0] == idx9[1]}, spread {spread9}; "
+                   f"parent rows {len(want9)}, migrated rows {len(got9)}, equal={want9 == got9}, basis_reason set "
                    f"{nonnull9}, seq {seq9}, view {vcols9}, live {live9}, canonical view {ccols9}")
     except Exception as exc:  # noqa: BLE001 -- recorded red below
         detail9 = f"{exc.__class__.__name__}: {exc}"
     finally:
         _mdb9.build_plan = _orig_plan9
+        for _tmp9 in ("t126-parent.db", "t126-migrated.db"):
+            try:
+                os.remove(os.path.join(TMP, _tmp9))
+            except OSError:
+                pass
     record("T126-09", "replayed to its parent and migrated, extraction_lens_links keeps every row column for column with "
            "basis_reason NULL and its sequence floor, and v_live_lens_links returns the same live rows with basis_reason "
            "after basis_text (as the canonical view does)", ok9, detail9)
@@ -2617,8 +2646,9 @@ try:
            f"{out_of(rb22)[-150:]!r} | {out_of(rd22)[-150:]!r} | {out_of(r22)[-250:]!r} links {l22}")
 
     # T126-23: list (ii) names each live identity no live map row proposes, a retired map row included.
-    lone23 = [c for (c,) in q("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code NOT "
-                              "IN (SELECT identity_code FROM identity_icf_map WHERE retired_at IS NULL) ORDER BY 1")]
+    lone23 = [c for (c,) in q("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code <> ? "
+                              "AND identity_code NOT IN (SELECT identity_code FROM identity_icf_map WHERE retired_at IS NULL) "
+                              "ORDER BY 1", dbcore.SCOPE_MARKER_IDENTITY)]
     if lone23:
         w("INSERT INTO identity_icf_map (identity_code, icf_code, mechanism, mapping_confidence, provenance, created_at, "
           "created_by_session, retired_at, retired_by_session, retired_reason) VALUES (?, ?, 'TASK-FIXTURE retired', "
@@ -2687,11 +2717,123 @@ try:
     want28 = q("SELECT COUNT(*) FROM (SELECT k.extraction_id FROM v_live_lens_links k JOIN source_value_extractions x ON "
                "x.extraction_id = k.extraction_id JOIN evidence_sources e ON e.ref_id = x.ref_id WHERE e.tier >= ? "
                "GROUP BY k.extraction_id HAVING SUM(COALESCE(k.identity_code <> 'ALL' AND k.basis <> 'carried', 0)) = 0)",
-               db._REGULATORY_FROM_TIER)[0][0]
+               dbcore.REGULATORY_FROM_TIER)[0][0]
     m28 = re.search(r"queue \(derived, not a failure\): (\d+)", q27)
     record("T126-28", "the audit's queue line equals the count of tier-4-and-above figures with no judged identity link other "
            "than ALL, and is above 0 (the stored carried links)",
            m28 and int(m28.group(1)) == want28 and want28 > 0, f"line {q27!r} want {want28}")
+
+    # ── T126, second repair ──────────────────────────────────────────────────────────────────────────────────────────
+    # T126-29: the scope marker is no group to the writer either: adding an ICF code the maps reach to a stored code figure
+    # whose only live link is a carried ALL warns (the critic's walk; the figure is derived by query), and so does
+    # adding ALL to T126-27's ICF-only figure.
+    probe29 = q("SELECT x.extraction_id, x.claim_text FROM source_value_extractions x JOIN evidence_sources e ON e.ref_id = "
+                "x.ref_id JOIN v_live_lens_links k ON k.extraction_id = x.extraction_id WHERE e.tier >= ? AND "
+                "TRIM(COALESCE(x.claim_text,'')) <> '' GROUP BY x.extraction_id HAVING COUNT(*) = 1 AND "
+                "MAX(k.identity_code) = ? AND MAX(k.basis) = 'carried' ORDER BY x.extraction_id LIMIT 1",
+                dbcore.REGULATORY_FROM_TIER, dbcore.SCOPE_MARKER_IDENTITY)
+    if probe29:
+        fig29, ct29 = probe29[0]
+        word29 = max(re.findall(r"[^\W\d_]+", ct29), key=len)
+        r29 = run_cli("add-lens-link", "--extraction-id", str(fig29), "--icf", clear126, "--basis", "context",
+                      "--basis-text", word29, "--basis-reason", T126_REASON, "--session", S)
+        ok29, d29 = (r29.returncode == 0 and "WARNING: maps propose" in r29.stderr), out_of(r29)[-250:]
+    else:
+        ok29, d29 = False, "no stored code figure whose only live link is a carried scope marker"
+    record("T126-29", "a code figure carrying only the scope marker, given an ICF code the maps reach, is warned (the scope "
+           "marker is no group), as is adding the marker to an ICF-only figure",
+           ok29 and "WARNING: maps propose" in r27b.stderr, f"{d29!r} | {r27b.stderr[-200:]!r}")
+
+    # T126-30: tier 4 is the regulatory stratum's first tier: a source the ladder places exactly there (its type and
+    # scope read from the ladder) takes a context link, is warned, and is listed by the audit.
+    from schemas.tier_derivation import TIER_MAP as _TM30  # noqa: E402
+    # The stratum's first tier is read from CLAUDE.md §6's evidence model ("T4–T6 the regulatory stratum"), not from the
+    # constant under test.
+    _ts30 = re.search(r"\bT(\d)[–-]T6\*\* the regulatory stratum", (REPO / "CLAUDE.md").read_text(encoding="utf-8"))
+    ruled30 = int(_ts30.group(1)) if _ts30 else None
+    t4 = next(((et, sc) for (et, sc), tier in sorted(_TM30.items()) if tier == ruled30), None)
+    ref30, _ = add_o("T126 tier 4", "--evidence-type", t4[0], "--scope", t4[1]) if t4 else (None, None)
+    if ref30:
+        readable(ref30)
+        t126_save(ref30, "t126-tier4.txt", T126_KNEE)
+    r30, fig30, _ = t126_add(ref30 or code126, T126_KNEE, "--icf", clear126, *CTX("knee clearance"),
+                             section="TASK-FIXTURE T126 tier 4")
+    i30, _, _, _ = t126_parts(audit126().stdout)
+    record("T126-30", "an ICF-only context link on a tier-4 source is accepted, warned and listed in (i)",
+           t4 and dbcore.REGULATORY_FROM_TIER == ruled30 and q("SELECT tier FROM evidence_sources WHERE ref_id=?", ref30) == [(ruled30,)]
+           and r30.returncode == 0 and "WARNING: maps propose" in r30.stderr and fig30 and f"extraction {fig30}:" in i30,
+           f"{t4} {out_of(r30)[-250:]!r}")
+
+    # T126-31: a map row naming the scope marker proposes nothing: not to the writer, and not in list (iii).
+    w("INSERT INTO identity_icf_map (identity_code, icf_code, mechanism, mapping_confidence, provenance, created_at, "
+      "created_by_session) VALUES (?, ?, 'TASK-FIXTURE scope marker row', 'low_indicative', 'TASK-FIXTURE T126-31', "
+      "'2099-01-01 00:00', ?)", dbcore.SCOPE_MARKER_IDENTITY, clear126, S)
+    _ro31 = sqlite3.connect(DB)
+    try:
+        got31 = {p["identity_code"] for p in db.identity_proposals(_ro31, [clear126], [])}
+    finally:
+        _ro31.close()
+    _, _, iii31, _ = t126_parts(audit126().stdout)
+    record("T126-31", "a later map row naming the scope marker proposes it to no writer and lists no figure in (iii)",
+           got31 and dbcore.SCOPE_MARKER_IDENTITY not in got31 and fig27 and f"extraction {fig27}:" not in iii31,
+           f"{got31} {iii31[-200:]!r}")
+
+    # T126-32: list (ii) leaves out a deprecated identity (state set by SQL on the copy and undone, as T018-12 does).
+    dep32 = next((c for c in lone23 if c != dbcore.SCOPE_MARKER_IDENTITY), None)
+    if dep32:
+        w("UPDATE base_taxonomy_identity SET status='deprecated', superseded_by_need=(SELECT need_code FROM access_needs "
+          "ORDER BY need_code LIMIT 1) WHERE identity_code=?", dep32)
+        try:
+            _, ii32, _, _ = t126_parts(audit126().stdout)
+        finally:
+            w("UPDATE base_taxonomy_identity SET status='active', superseded_by_need=NULL WHERE identity_code=?", dep32)
+    record("T126-32", "list (ii) names no deprecated identity",
+           dep32 and not re.search(rf"(?<![\w-]){re.escape(dep32)}(?![\w-])", ii32), f"{dep32} {ii32[:200]!r}")
+
+    # T126-33: the confirm-or-replace walk. A figure whose only link is a context link takes its replacement on another
+    # basis in one add-lens-link call, which retires the context link; a context link is not replaced by another context
+    # link, and a stated link is not replaced by a context one.
+    r33a, fig33, _ = t126_add(code126, T126_KNEE, "--icf", clear126, *CTX("knee clearance"), section="TASK-FIXTURE T126 9.1")
+    old33 = q("SELECT link_id FROM v_live_lens_links WHERE extraction_id=?", fig33 or 0)
+    r33b = run_cli("add-lens-link", "--extraction-id", str(fig33 or 0), "--icf", clear126, "--basis", "context",
+                   "--basis-text", "knee clearance", "--basis-reason", T126_REASON + " again", "--session", S)
+    r33c = run_cli("add-lens-link", "--extraction-id", str(fig33 or 0), "--icf", clear126, "--basis", "named_in_text",
+                   "--basis-text", "Knee clearance", "--session", S)
+    live33 = q("SELECT link_id, basis FROM v_live_lens_links WHERE extraction_id=?", fig33 or 0)
+    gone33 = q("SELECT retirement_reason FROM extraction_lens_links WHERE link_id=?", old33[0][0]) if old33 else []
+    r33d = run_cli("add-lens-link", "--extraction-id", str(fig33 or 0), "--icf", clear126, "--basis", "context",
+                   "--basis-text", "knee clearance", "--basis-reason", T126_REASON, "--session", S)
+    try:
+        res33c = json.loads(r33c.stdout)
+    except ValueError:
+        res33c = {}
+    record("T126-33", "add-lens-link on another basis replaces a figure's only context link in one call (retired 'superseded "
+           "by judged link <id>'); a second context link on the code and a context link over a stated one are refused",
+           r33a.returncode == 0 and len(old33) == 1 and r33b.returncode != 0 and "already holds a live context" in out_of(r33b)
+           and r33c.returncode == 0 and len(live33) == 1 and live33[0][1] == "named_in_text"
+           and gone33 == [(f"superseded by judged link {live33[0][0]}",)]
+           and res33c.get("retired_context_link_id") == old33[0][0]
+           and r33d.returncode != 0 and "already holds a live named_in_text" in out_of(r33d),
+           f"{out_of(r33b)[-150:]!r} | {out_of(r33c)[-200:]!r} | live {live33} gone {gone33} | {out_of(r33d)[-150:]!r}")
+
+    # T126-34: list (iv) names, by their own query, the figures with no ICF or need link that carry no identity but the
+    # scope marker (they reach no group cell) and those reached only through carried identity links.
+    rows34 = q("SELECT k.extraction_id, SUM(k.icf_code IS NOT NULL OR k.needs_code IS NOT NULL), "
+               "SUM(COALESCE(k.identity_code <> ?, 0)), SUM(k.basis <> 'carried') FROM v_live_lens_links k JOIN "
+               "source_value_extractions x ON x.extraction_id = k.extraction_id JOIN evidence_sources e ON e.ref_id = "
+               "x.ref_id WHERE e.tier >= ? GROUP BY k.extraction_id ORDER BY k.extraction_id",
+               dbcore.SCOPE_MARKER_IDENTITY, dbcore.REGULATORY_FROM_TIER)
+    marker34 = [r[0] for r in rows34 if not r[1] and not r[2]]
+    carried34 = [r[0] for r in rows34 if not r[1] and r[2] and not r[3]]
+    line34 = next((ln for ln in audit126().stdout.splitlines() if ln.startswith("(iv)")), "")
+    m34 = re.search(r": (\d+) carry no identity but \S+, so reach no group cell: (.*?); (\d+) are reached only through "
+                    r"carried \(unjudged\) identity links: (.*)$", line34)
+    ids34 = lambda txt: [] if txt.strip() == "none" else [int(x) for x in txt.split(", ")]  # noqa: E731
+    record("T126-34", "list (iv) names the figures that reach no group cell and those reached only through carried links, "
+           "as their own query finds them",
+           m34 and marker34 and ids34(m34.group(2)) == marker34 and int(m34.group(1)) == len(marker34)
+           and ids34(m34.group(4)) == carried34 and int(m34.group(3)) == len(carried34),
+           f"want {len(marker34)}/{len(carried34)} line {line34[:300]!r}")
 
     # G. THE MARKER IS A CACHE OVER `confirms` EDGES, so an edge aimed at a row a LIVE PROXY
     # determination is governed by is refused (dbcore.live_determinations_linked), through both

@@ -234,8 +234,8 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
 crossing is judgment's output, and the owner's "yes lens in judgment" (2026-11-14) keeps it here, fixing only its
 timing for a code value: its lens is judged in the call that records it (`grep -n -F "(sixteenth set, last)"
 references/project-standards.md`; `grep -n -F "Correction and registration 2026-11-15" references/project-standards.md`).
-The judgment stage may later confirm a context link (nothing to write) or replace it (`add-lens-link` with its own
-warrant, then `retire-lens-link` with a reason); it never copies a lens elsewhere.)*
+The judgment stage may later confirm a context link (nothing to write) or replace it: `add-lens-link` on the same code
+with its own warrant on another basis retires the context link in the same call; it never copies a lens elsewhere.)*
 - **A code value's lens, at recording** (guidance for your judgment, not a lookup any code consults: the owner's
   "typically"; OD-65, "use contextual judgment"). *When you record a value from a code (a tier 4 to 6 source), give it
   its lens in the same call, from the clause and its context, with its warrant: the ICF link, the access-need link, and
@@ -262,11 +262,13 @@ warrant, then `retire-lens-link` with a reason); it never copies a lens elsewher
   identity, one link each, with `--lens-basis context`, `--lens-basis-text` the clause's own words for the quantity (for
   example `mounting height`, `knee clearance`) and `--lens-basis-reason` `typically concerns wheelchair users` (the
   owner's warrant, "mounting height; typically concerns wheelchair users", in its two cells). Derive the codes from the
-  live registries when you record, never from this page. The ICF code: `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select icf_code, title from base_icf where lower(coalesce(title,'')) like '%reaching%' or lower(coalesce(title,'')) like '%hand and arm%' or lower(coalesce(title,'')) like '%sitting position%' or lower(coalesce(title,'')) like '%standing position%' or lower(coalesce(title,'')) like '%moving around%'\").fetchall())"`
-  (for a mounting height, the most specific reach code it prints, Reaching once it is minted, else hand and arm use,
-  its parent, with the seated or standing posture code where the clause concerns use from a seated position, a code
-  from your query once its title is minted, else the posture code the WHO classification names, never one typed on this
-  page; for a clearance, moving around using equipment). The access need: `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select need_code, substr(design_obligation,1,90) from access_needs where lower(coalesce(design_obligation,'')) like '%reach%' or lower(coalesce(design_obligation,'')) like '%seated%' or lower(coalesce(design_obligation,'')) like '%turning%'\").fetchall())"`
+  live registries when you record, never from this page. The ICF codes, from the maps and the registry (`base_icf.title`
+  says what a code is; where it is NULL, as for most codes, the map row's `mechanism` is the only recorded account of
+  it): `python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select m.icf_code, b.title, m.mechanism, m.identity_code from identity_icf_map m join base_icf b using(icf_code) where m.retired_at is null and m.identity_code in (select identity_code from base_taxonomy_identity where status='active' and lower(display_name||' '||coalesce(description,'')) like '%wheelchair%') union all select a.icf_code, b.title, 'via need '||a.need_code, null from access_need_icf a join base_icf b using(icf_code) where a.icf_type<>'e' and a.need_code in (select need_code from access_needs where lower(coalesce(design_obligation,'')) like '%reach%' or lower(coalesce(design_obligation,'')) like '%seated%') order by 1\").fetchall())"`
+  (for a mounting height, the most specific reach code it prints, with a posture code where the clause concerns use
+  from a seated position; for a clearance, the code for moving around using equipment; write no code the query does
+  not print: where it prints none for what the clause concerns, that is the map gap T-128 fills, and the session
+  records the ICF code it can derive here or none, never one from memory). The access need: `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select need_code, substr(design_obligation,1,90) from access_needs where lower(coalesce(design_obligation,'')) like '%reach%' or lower(coalesce(design_obligation,'')) like '%seated%' or lower(coalesce(design_obligation,'')) like '%turning%'\").fetchall())"`
   (the need whose obligation names seated-height controls and turning clearance; the range-of-bodies need where the
   clause concerns the range of body sizes). The identity, the most specific live wheelchair-user code: `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select identity_code, display_name, parent_code from base_taxonomy_identity where status='active' and lower(display_name||' '||coalesce(description,'')) like '%wheelchair%'\").fetchall())"`
   (the mobility family until the wheelchair-user child is minted). The default writes the identity whether or not a

@@ -6759,7 +6759,7 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
             if _cur["superseded_by_ref_id"]:
                 raise Refusal(f"{ref_id}: is superseded by {_cur['superseded_by_ref_id']}; a tombstone carries no currency. "
                               f"State it on the replacement. Nothing was written.")
-            if _cur["tier"] is None or int(_cur["tier"]) < 4:
+            if _cur["tier"] is None or int(_cur["tier"]) < dbcore.REGULATORY_FROM_TIER:
                 raise Refusal(f"{ref_id}: is tier {_cur['tier']}; code currency is stated for T4-T6 sources (a code, a standard, "
                               f"a regulation: is the cited edition the one in force). Nothing was written.")
         if field == "verification_status":
@@ -8716,16 +8716,14 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
 #: written at all. To reverse: set this to None.
 _SEED_WITHHELD = "model_seed"
 
-#: The tier from which an evidence source belongs to the regulatory stratum (T4-T6: code,
-#: national framework, international standard); the bound db.py's R3 locator refusal already uses.
-_REGULATORY_FROM_TIER = 4
+#: The regulatory stratum's bound is dbcore.REGULATORY_FROM_TIER (governance/tier-system.md, T4 to T6).
 
 
 def _regulatory_pairs():
     """The (evidence_type, scope) pairs the tier ladder derives to the regulatory stratum --
     read from schemas.tier_derivation.TIER_MAP, never listed here."""
     from schemas.tier_derivation import TIER_MAP  # noqa: E402
-    return {k for k, tier in TIER_MAP.items() if tier >= _REGULATORY_FROM_TIER}
+    return {k for k, tier in TIER_MAP.items() if tier >= dbcore.REGULATORY_FROM_TIER}
 
 
 def _check_base_locator(verb, required, source_url, source_page, source_line, source_clause,
@@ -10861,7 +10859,7 @@ def _refuse_bad_derived_input(conn, context: str, inp):
         f"SELECT {dbcore.clause_pinpoint_sql(conn)} FROM (SELECT ? AS clause_id, ? AS ref_id) x",
         (inp["clause_id"], inp["ref_id"])).fetchone()[0]))
     tier = conn.execute("SELECT tier FROM evidence_sources WHERE ref_id=?", (inp["ref_id"],)).fetchone()
-    regulatory = bool(tier and tier[0] is not None and int(tier[0]) >= 4)
+    regulatory = bool(tier and tier[0] is not None and int(tier[0]) >= dbcore.REGULATORY_FROM_TIER)
     if not esc and not pin and (regulatory or not str(inp["source_section"] or "").strip()):
         raise Refusal(f"R3: derived figure's input {xid} has no locator" +
                       (" a code, standard or statute numbers its clauses, so the pinpoint hierarchy is owed, not only a "
@@ -11252,7 +11250,7 @@ def _require_lens_warrant(conn, basis, basis_text, ref_id, claim_text, source_se
             f"would be a cell with no meaning. Nothing was written.")
     if basis == "context":
         tier = conn.execute("SELECT tier FROM evidence_sources WHERE ref_id=?", (ref_id,)).fetchone()
-        if not (tier and tier[0] is not None and int(tier[0]) >= _REGULATORY_FROM_TIER):
+        if not (tier and tier[0] is not None and int(tier[0]) >= dbcore.REGULATORY_FROM_TIER):
             raise Refusal(
                 f"{context}: basis `context` is for a code value (a source of tier 4 to 6); {ref_id} is tier "
                 f"{tier[0] if tier else None}. The owner moved the contextual assignment of a lens to the recording "
@@ -11298,9 +11296,9 @@ def _require_lens_warrant(conn, basis, basis_text, ref_id, claim_text, source_se
 
 def _refuse_all_by_context(basis, identity_codes, context):
     """`ALL` is not an identity (OD-31: "ALL leaves the identity lens"), so a judged context link never names it."""
-    if basis == "context" and "ALL" in (identity_codes or ()):
+    if basis == "context" and dbcore.SCOPE_MARKER_IDENTITY in (identity_codes or ()):
         raise Refusal(
-            f"{context}: --identity ALL by basis context: ALL is a scope marker, not a group (OD-31: grep -n -F "
+            f"{context}: --identity {dbcore.SCOPE_MARKER_IDENTITY} by basis context: it is a scope marker, not a group (OD-31: grep -n -F "
             f"\"OD-31: a provision that names no one\" references/project-standards.md). Write the groups the clause "
             f"serves, or no identity. Nothing was written.")
 
@@ -11326,7 +11324,7 @@ def identity_proposals(conn, icf_codes, need_codes):
     """[dict] one per live map row proposing an identity for these ICF codes or needs: identity_code, icf_code,
     mechanism, mapping_confidence, provenance, via_needs (the given needs whose b/d row names that ICF code, or None),
     map_created_at and need_row_created_at (the newest such access_need_icf row, or None). A retired map row proposes
-    nothing."""
+    nothing, and neither does a row naming the scope marker (dbcore.SCOPE_MARKER_IDENTITY: not a group, OD-31)."""
     icf, needs = sorted(set(icf_codes or ())), sorted(set(need_codes or ()))
     if not icf and not needs:
         return []
@@ -11338,10 +11336,11 @@ def identity_proposals(conn, icf_codes, need_codes):
         f"  (SELECT MAX(a.created_at) FROM access_need_icf a WHERE a.icf_code = m.icf_code "
         f"     AND a.icf_type <> 'e' AND a.need_code IN ({nm})) "
         f"FROM identity_icf_map m "
-        f"WHERE m.retired_at IS NULL "
+        f"WHERE m.retired_at IS NULL AND m.identity_code <> ? "
         f"  AND (m.icf_code IN ({im}) OR m.icf_code IN (SELECT icf_code FROM access_need_icf "
         f"       WHERE need_code IN ({nm}) AND icf_type <> 'e')) "
-        f"ORDER BY m.identity_code, m.icf_code, m.link_id", [*needs, *needs, *icf, *needs]).fetchall()
+        f"ORDER BY m.identity_code, m.icf_code, m.link_id",
+        [*needs, *needs, dbcore.SCOPE_MARKER_IDENTITY, *icf, *needs]).fetchall()
     keys = ("identity_code", "icf_code", "mechanism", "mapping_confidence", "provenance", "via_needs",
             "map_created_at", "need_row_created_at")
     return [dict(zip(keys, r)) for r in rows]
@@ -11393,7 +11392,8 @@ def _warn_identity_omitted(conn, extraction_id, ref_id):
     the owner's). scripts/audit/code_value_identity_audit.py lists the same figures for later readers."""
     tier = conn.execute("SELECT tier FROM evidence_sources WHERE ref_id=?", (ref_id,)).fetchone()
     live = _live_lens_codes(conn, extraction_id)
-    if not (tier and tier[0] is not None and int(tier[0]) >= _REGULATORY_FROM_TIER) or live["identity_code"] \
+    groups = [c for c in live["identity_code"] if c != dbcore.SCOPE_MARKER_IDENTITY]     # the scope marker is no group
+    if not (tier and tier[0] is not None and int(tier[0]) >= dbcore.REGULATORY_FROM_TIER) or groups \
             or not (live["icf_code"] or live["needs_code"]):
         return
     props = identity_proposals(conn, live["icf_code"], live["needs_code"])
@@ -11755,7 +11755,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                     f"none of {', '.join('--' + c.replace('_', '-') for c in _levels)}. A "
                     f"quantified claim names where it was read, or carries "
                     f"[UNVERIFIED-QUANT] in --notes to say it cannot. Nothing written.")
-            if _tier and _tier[0] is not None and int(_tier[0]) >= 4 and not _via_inputs:
+            if _tier and _tier[0] is not None and int(_tier[0]) >= dbcore.REGULATORY_FROM_TIER and not _via_inputs:
                 if not _esc and not _pinpoint:
                     raise Refusal(
                         f"R3: {ref} is tier {int(_tier[0])} -- the regulatory stratum -- and this row "
@@ -11944,10 +11944,12 @@ def add_lens_link(extraction_id: int, session: str, *, identity: str = None, icf
 
     Refuses: a figure that does not exist; none or more than one code; a code the registry lacks or a
     retired identity (`_require_lens_code`); a missing basis, a blank or unfound warrant
-    (`_require_lens_warrant`); a live link already holding the code, EXCEPT a `carried` one, which is
-    retired in this same transaction ("superseded by judged link <id>") because a judged warrant
-    replaces a carried one in one act. The retirement is written first and its reason completed once
-    the new link has an id: the partial unique index admits one live link per (figure, code)."""
+    (`_require_lens_warrant`); a live link already holding the code, EXCEPT a `carried` one, or a `context` one
+    replaced on another basis, which is retired in this same transaction ("superseded by judged link <id>") because
+    a stated or judged warrant replaces a carried or a contextual one in one act (the judgment stage's confirm-or-
+    replace walk, T-126: a figure whose only link is the context link could otherwise never take its replacement,
+    since retire-lens-link refuses its last live link). The retirement is written first and its reason completed
+    once the new link has an id: the partial unique index admits one live link per (figure, code)."""
     given = {col: code for col, code in (("identity_code", identity), ("icf_code", icf),
                                          ("needs_code", needs))
              if code is not None}
@@ -11971,11 +11973,12 @@ def add_lens_link(extraction_id: int, session: str, *, identity: str = None, icf
         held = conn.execute(
             f"SELECT link_id, basis FROM extraction_lens_links WHERE extraction_id=? AND {col}=? "
             f"AND retired_at IS NULL", (extraction_id, code)).fetchone()
-        if held is not None and held["basis"] != "carried":
+        if held is not None and not (held["basis"] == "carried" or (held["basis"] == "context" and basis != "context")):
             raise Refusal(
                 f"add-lens-link: extraction {extraction_id} already holds a live {held['basis']} link "
                 f"({held['link_id']}) for {col} {code!r}. A figure holds one live link per code; retire it "
-                f"first (retire-lens-link) if its warrant is wrong. Nothing was written.")
+                f"first (retire-lens-link) if its warrant is wrong (a carried link, or a context link replaced on "
+                f"another basis, is replaced by this verb in one act). Nothing was written.")
         # THE PROPOSALS (T-126), shown before the write: for the ICF codes and needs live on the figure and the one
         # being written.
         live = _live_lens_codes(conn, extraction_id)
@@ -11994,7 +11997,8 @@ def add_lens_link(extraction_id: int, session: str, *, identity: str = None, icf
                          (f"superseded by judged link {link_id}", held["link_id"]))
         _warn_identity_omitted(conn, extraction_id, fig["ref_id"])
         return {"link_id": link_id, "extraction_id": extraction_id, "lens": col, "code": code,
-                "basis": basis, "retired_carried_link_id": held["link_id"] if held else None,
+                "basis": basis, "retired_carried_link_id": held["link_id"] if held and held["basis"] == "carried" else None,
+                "retired_context_link_id": held["link_id"] if held and held["basis"] == "context" else None,
                 "identities_proposed": proposed,
                 "identities_written": _live_lens_codes(conn, extraction_id)["identity_code"],
                 "dry_run": dry_run}

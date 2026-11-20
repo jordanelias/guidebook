@@ -245,7 +245,7 @@ machines:
     guards:
       - "exactly one code; the figure exists; the code is in its registry and not a deprecated identity"
       - "a basis from extraction_lens_links.basis's own CHECK (never 'carried') and warrant words found on word boundaries in the place the basis names; 'context' only on a source of tier >= 4 with --basis-reason, and a reason beside any other basis is refused (T-126)"
-      - "a live judged link for the same code is refused; only a carried one is replaced"
+      - "a live judged link for the same code is refused; a carried one is replaced, and so is a context one by a link on another basis (T-126 repair 2026-11-20: the confirm-or-replace walk)"
     evidence:
       - {file: scripts/db.py, func: add_lens_link, needle: "name exactly one code"}
       - {file: scripts/db.py, func: add_lens_link, needle: "already holds a live"}

@@ -1060,6 +1060,18 @@ SESSION_STEM = re.compile(r"session_\d{4}-\d\d-\d\d[\w.-]*", re.ASCII)
 #: T078-30 still pins committed migration 159's spelling to it.
 ZERO_WIDTH = "\u200b\u200c\u200d\u2060\ufeff"
 
+#: The tier from which an evidence source belongs to the regulatory stratum: governance/tier-system.md rows T4 to T6
+#: (an international standard, a national framework, a code). It applies the ratified tier definition; it sets none.
+#: Read by db.py (R3's locator refusals, code currency, the `context` lens basis and its warning) and by
+#: scripts/audit/research_batch_dod.py and scripts/audit/code_value_identity_audit.py.
+REGULATORY_FROM_TIER = 4
+
+#: The identity row that is a scope marker, not a group (its own display_name says "scope marker"; OD-31: "ALL leaves
+#: the identity lens"). No column of base_taxonomy_identity marks it (its category, 'general', holds groups too), so
+#: this is its one home until T-056 retires it; read by the context-basis refusal, the writer's warning, the maps'
+#: proposals and scripts/audit/code_value_identity_audit.py.
+SCOPE_MARKER_IDENTITY = "ALL"
+
 @functools.lru_cache(maxsize=None)
 def blank_chars() -> frozenset:
     """THE ONE DEFINITION OF A BLANK CHARACTER (T-078 repair): every code point of Unicode category Cc (controls), Cf
