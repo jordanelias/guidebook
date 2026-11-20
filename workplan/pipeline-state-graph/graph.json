@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-11-19 06:59 UTC from git HEAD 2dbf852f (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-11-20 00:20 UTC from git HEAD 558c5cad (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
- "user_version": 159,
+ "user_version": 160,
  "stages": [
   "base",
   "research",
@@ -4294,7 +4294,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 5
+   "refusals": 6
   },
   "derive-extraction": {
    "functions": [
@@ -5516,7 +5516,8 @@
   "capability predicates": 27,
   "probes run": 32,
   "probes linted for a reachable PASS": 32,
-  "tables placed in a stage": 63
+  "tables placed in a stage": 63,
+  "ruled returns (carrier in the schema; same as graph.json)": 6
  },
  "atoms_by_status": {
   "ACTIVE": 2211,

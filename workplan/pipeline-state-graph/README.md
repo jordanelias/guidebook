@@ -34,7 +34,7 @@ python3 workplan/pipeline-state-graph/build_graph.py              # regenerate e
 python3 workplan/pipeline-state-graph/build_graph.py --compare /path/to/other/checkout   # add a tree-vs-tree column
 ```
 
-Needs `pyyaml` only. Reads `data/guidebook.db` read-only. Every figure in the generated files is a result; re-run
+Needs `pyyaml`, and `pydantic` for the ruled-return check (it reuses `pipeline_contract_audit.re_entry_problems`). Reads `data/guidebook.db` read-only. Every figure in the generated files is a result; re-run
 rather than trust one (rule 7a). `--check` prints `EXAMINED: n` for each class of subject.
 
 ## How to use it to audit yourself
@@ -59,7 +59,7 @@ rather than trust one (rule 7a). `--check` prints `EXAMINED: n` for each class o
 
 ## What the checks prove, and what they do not
 
-- **Proved mechanically:** each CITED atom's quote occurs verbatim in its source, found by the quote and not the line: a quote found once passes, and if it is away from the cited line `--check` prints `MOVED <id>: cited line A, found at line B`, which does not fail; a quote found more than once fails unless one hit starts within `LINE_TOLERANCE` lines of the cited line (an atom no conflict, machine, probe or predicate cites is not re-read, so resolving a conflict stops it needing its sources); each contract `re_entry` entry is drawn as a ruled return (`STATE-GRAPH.md` section 2b, `graph.json` `returns`); each conflict cites atoms that exist and
+- **Proved mechanically:** each CITED atom's quote occurs verbatim in its source, found by the quote and not the line: a quote found once passes, and if it is away from the cited line `--check` prints `MOVED <id>: cited line A, found at line B`, which does not fail; a quote found more than once fails unless one hit starts within `LINE_TOLERANCE` lines of the cited line (an atom no conflict, machine, probe or predicate cites is not re-read, so resolving a conflict stops it needing its sources); each contract `re_entry` entry is drawn as a ruled return (`STATE-GRAPH.md` section 2b, `graph.json` `returns`), and `--check` fails when a return's carrier is not in the schema or the published `graph.json` draws other returns than the contract rules (regenerate to accept a change); each conflict cites atoms that exist and
   probes that exist; each machine's state set (or `vocabs:` entry) equals the column's own CHECK, and the count of
   abstract machines with no single column is printed; each transition's guard still appears in the cited function (or,
   for `absent: true`, still does not); every stage assignment is complete and agrees with the contract; every probe ran

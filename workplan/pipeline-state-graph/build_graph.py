@@ -706,8 +706,34 @@ def check_all(T, atoms, probes, conflicts, machines, caps, moved=None, stats=Non
     spine = "SPINE: " + " -> ".join(T.stages)
     if spine not in read(T.root, "CLAUDE.md"): fails.append(f"CLAUDE.md spine line differs from the contract: {spine}")
     examined["tables placed in a stage"] = len(T.tables)
+    # 8 ruled returns: each carrier exists, and the published graph.json draws the returns the contract rules now
+    fails += returns_problems(T)
+    examined["ruled returns (carrier in the schema; same as graph.json)"] = len(T.returns)
     # 7 unwritable x verbs: a verb that writes a table the derivation lists as unwritable
     return fails, warns, examined
+
+
+RETURN_KEYS = ("id", "from_stage", "to_stage", "carrier_table", "carrier_column", "carrier_value")
+
+
+def returns_problems(T, graph_path=None):
+    """The ruled returns that cannot be walked or are not drawn: (a) a carrier the schema does not hold, by
+    pipeline_contract_audit.re_entry_problems (one home for that test); (b) `returns` in the published graph.json
+    (default this folder's) differing from the contract's `re_entry` lists now, so an added or deleted return is red
+    until the instrument is regenerated. Read by check_all."""
+    for d in (REPO, REPO / "scripts", REPO / "scripts" / "audit"):
+        if str(d) not in sys.path: sys.path.insert(0, str(d))
+    from pipeline_contract_audit import re_entry_problems
+    from schemas.pipeline_contract import PipelineContract
+    out = [f"re_entry {loc}: {why}" for loc, why in re_entry_problems(PipelineContract.model_validate(T.contract), T.con)]
+    try:
+        published = json.loads(Path(graph_path or HERE / "graph.json").read_text(encoding="utf-8")).get("returns")
+    except FileNotFoundError:
+        published = None
+    key = lambda r: tuple(r.get(k) for k in RETURN_KEYS)
+    if published is None or sorted(map(key, published)) != sorted(map(key, T.returns)):
+        out.append("graph.json `returns` differ from the contract's re_entry lists: regenerate (build_graph.py) and read the diff")
+    return out
 
 
 def selftest(T, atoms, probes, conflicts, machines, caps):
