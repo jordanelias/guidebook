@@ -372,9 +372,11 @@ machines:
     from: "OPEN"
     to: "CLOSED"
     via: "db.py close-gap"
-    guards: []
+    guards:
+      - "the gap is OPEN (a closed gap's first closing stands) and --resolution-ref is not blank; resolved_at, resolved_by_session and resolution_ref are written with the status in one UPDATE (migration 162, T-144)"
     evidence:
       - {file: scripts/db.py, func: close_gap, needle: "def close_gap"}
+      - {file: scripts/db.py, func: close_gap, needle: "--resolution-ref is required"}
   unreachable_note: "status is constrained only by LIKE 'OPEN%' / LIKE 'CLOSED%'; the sub-vocabulary after the prefix is free text."
 
 - id: M08

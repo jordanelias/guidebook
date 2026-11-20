@@ -267,7 +267,9 @@ The `gap_mining` row alone does NOT close the gap. The closure workflow:
 5. (Discoveries that supersede existing anchors only) Write a `supersession_check` row per `supersession-audit` skill §4. The gap_mining row and the supersession_check row both reference the same discovery; they describe orthogonal relationships (gap-closure vs anchor-replacement).
 7. Close the gap:
    ```bash
-   python3 scripts/db.py close-gap --gap-id GAP-NNN --status CLOSED-FIXED --session {SESSION}
+   python3 scripts/db.py close-gap --gap-id GAP-NNN --status CLOSED-FIXED \
+       --resolution-ref "{what closed it: the data migration path, a quote-anchored ledger pointer, or the reason}" \
+       --session {SESSION}
    ```
 
 ---

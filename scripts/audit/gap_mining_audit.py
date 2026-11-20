@@ -21,6 +21,9 @@ Flags:
    gap_mining row was not updated to move the DOI to discoveries_logged.
    (Mirrors supersession_check.superseding_dois → superseding_ref_ids promotion
    pattern.)
+8. closed gaps with no resolution recorded (resolved_at IS NULL): closings made before
+   migration 162, which none can honestly backfill (T-144). Informational; listed by id.
+   `close-gap` writes the three resolution cells on every closing since.
 
 Per DR-2026-05-26 §Status (adoption gate). Run before each session close that
 involved gap-driven mining.
@@ -204,6 +207,15 @@ def audit():
                     f"ref_id={existing['ref_id']} for this DOI. Promote candidate "
                     f"to discoveries_logged or write a new gap_mining attempt."
                 )
+
+    # ─── CHECK 8: closed gaps with no resolution recorded (informational) ──
+    unresolved = [r[0] for r in db.execute(
+        "SELECT gap_id FROM gaps WHERE status LIKE 'CLOSED%' AND resolved_at IS NULL ORDER BY gap_id")]
+    if unresolved:
+        issues_info.append(
+            f"CHECK 8: {len(unresolved)} CLOSED gap(s) with no resolution recorded (closed before "
+            f"migration 162; not backfilled): {', '.join(unresolved)}"
+        )
 
     # ─── Report ──────────────────────────────────────────────────────────
     print("=" * 68)

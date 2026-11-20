@@ -6,7 +6,7 @@ _Written at the end of the batch (owner instruction 2026-11-15, "sweep … forwa
 
 T-001, T-002, T-003, T-004, T-006, T-007, T-009, T-010, T-011, T-015, T-021, T-023, T-025, T-027 (in part), T-034, T-041, T-042, T-043, T-048, T-051, T-054, T-055, T-061, T-063, T-067, T-073, T-074, T-075, T-076, T-079, T-080, T-088, T-090, T-121. Not a task of this plan, ordered by the owner in the same session: the deletion of the medical lens (migration 138; ledger entry "Owner instruction 2026-11-16 — the medical taxonomy, the medical maps and the medical codes are deleted" and its correction); it made T-077 and T-103 moot, and their files are deleted. `git log --oneline --grep='T-0\|T-1'` lists the commits.
 
-Second stack (the last section of this file), one commit per task and then one repair commit after an adversarial pass: T-020, T-022, T-049, T-050, T-089, T-093. Third stack (the last section of this file), the same shape: T-028, T-029, T-030, T-031, T-078, T-083, T-119, T-126, T-134. The generator reads this section only (`build_batches.py`, `_executed`), so a task is listed here, and not elsewhere in this section, when it was executed.
+Second stack (the last section of this file), one commit per task and then one repair commit after an adversarial pass: T-020, T-022, T-049, T-050, T-089, T-093. Third stack (the last section of this file), the same shape: T-028, T-029, T-030, T-031, T-078, T-083, T-119, T-126, T-134; after it, as its own pull request, T-144. The generator reads this section only (`build_batches.py`, `_executed`), so a task is listed here, and not elsewhere in this section, when it was executed.
 
 ## Stopped, and why (not repaired: a design or owner question)
 

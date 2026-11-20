@@ -4704,6 +4704,126 @@ try:
         import traceback
         traceback.print_exc()
         record("T078R", "the T-078 repair section ran to its end", False, f"{exc.__class__.__name__}: {exc}")
+    # ── T-144: a closed gap says when, in which session and by what it was resolved (migration 162) ────────────────────
+    # What reaches the guidebook without it: a gap register whose closings cannot be checked, so a gap closed by mistake
+    # or for a reason since withdrawn reads as answered. Fixtures are TASK-FIXTURE gaps made with add-gap on the copy;
+    # where the CHECK itself is under test the row is written by hand SQL on the copy (HAND). Every probe is derived.
+    try:
+        mig162 = (REPO / "scripts" / "migrations" / "162_gap_resolution.sql").read_text()
+        g162 = re.search(r"resolved_by_session NOT GLOB '\*\[' \|\| (.*?) \|\| '\]\*'", mig162, re.S).group(1)
+        t162 = re.search(r"trim\(resolution_ref, (.*?)\) <> ''", mig162, re.S).group(1)
+        sp162 = {chr(int(n)) for grp in re.findall(r"char\(([0-9,]+)\)", g162) for n in grp.split(",")}
+        record("T144-01", "migration 162 spells dbcore.blank_chars() (less U+0000) in both its session and its pointer test",
+               sp162 == set(dbcore.blank_chars()) - {"\x00"} and t162 == g162, len(sp162))
+        cat144, pri144 = dbcore.schema_choices("gaps", "category")[0], dbcore.schema_choices("gaps", "priority")[-1]
+        closed144 = next(iter(sorted(v for (v,) in q("SELECT DISTINCT status FROM gaps WHERE status LIKE 'CLOSED%'"))),
+                         "CLOSED-FIXED")
+
+        def gap144(label):
+            r_ = run_cli("add-gap", "--category", cat144, "--priority", pri144, "--description",
+                         f"TASK-FIXTURE T-144 {label}", "--session", S)
+            return json.loads(r_.stdout)["gap_id"]
+
+        def row144(g):
+            return q("SELECT status, resolved_at, resolved_by_session, resolution_ref, updated_at FROM gaps "
+                     "WHERE gap_id=?", g)[0]
+
+        WHY144 = "TASK-FIXTURE: closed by the T-144 test"
+        ga, gb, gc = gap144("a"), gap144("b"), gap144("c")
+        r02 = run_cli("close-gap", "--gap-id", ga, "--status", closed144, "--session", S)
+        record("T144-02", "close-gap with no --resolution-ref is refused naming the flag and what to give, and writes nothing",
+               r02.returncode != 0 and "--resolution-ref is required" in r02.stderr and "disposition_ref" in r02.stderr
+               and row144(ga)[0].startswith("OPEN"), r02.stderr[-200:])
+        r03 = [refusal(db.close_gap, ga, closed144, ch, S) for ch in ("\u00ad", "\u3164", " \u200b ", "\u2800")]
+        record("T144-03", "close-gap refuses a pointer of blank characters only (dbcore.is_blank), and writes nothing",
+               all(m and "--resolution-ref is required" in m for m in r03) and row144(ga)[0].startswith("OPEN"), r03)
+        r04 = refusal(db.close_gap, ga, closed144,
+                      'references/project-standards.md :: "TASK-FIXTURE: a quote the ledger does not hold"', S)
+        record("T144-04", "close-gap refuses a ledger pointer whose quote is not found exactly once",
+               r04 and "occurs 0 time(s)" in r04 and row144(ga)[0].startswith("OPEN"), r04)
+        r05 = refusal(db.close_gap, ga, closed144, WHY144, "not-a-session")
+        record("T144-05", "close-gap refuses a session that is not a stem", r05 and "not a session stem" in r05, r05)
+        absent144 = db.next_gap_id()
+        r06 = refusal(db.close_gap, absent144, closed144, WHY144, S)
+        record("T144-06", "close-gap refuses an unknown gap id (it used to UPDATE nothing and report it closed)",
+               r06 and "no such gap" in r06 and not q("SELECT 1 FROM gaps WHERE gap_id=?", absent144), r06)
+        r07 = run_cli("close-gap", "--gap-id", ga, "--status", closed144, "--resolution-ref", WHY144, "--session", S)
+        st7, at7, by7, ref7, upd7 = row144(ga)
+        record("T144-07", "close-gap stamps status, resolved_at (dbcore.now()'s shape), resolved_by_session and "
+               "resolution_ref in one UPDATE", r07.returncode == 0 and st7 == closed144 and by7 == S and ref7 == WHY144
+               and at7 == upd7 and re.fullmatch(r"\d{4}-\d\d-\d\d \d\d:\d\d", at7 or ""), (r07.stderr[-200:], row144(ga)))
+        r08 = refusal(db.close_gap, ga, closed144, "TASK-FIXTURE: a second closing", S)
+        record("T144-08", "close-gap refuses a gap already closed, naming its first resolution, which stands",
+               r08 and "already" in r08 and WHY144 in r08 and row144(ga)[3] == WHY144, r08)
+        w("UPDATE gaps SET status=? WHERE gap_id=?", closed144, gb)    # HAND: a closing made before migration 162
+        r09 = refusal(db.close_gap, gb, closed144, WHY144, S)
+        record("T144-09", "close-gap refuses a gap closed before migration 162, saying it has no resolution recorded",
+               r09 and "no resolution recorded" in r09 and row144(gb)[1] is None, r09)
+        lq144 = next((ln[3:63] for ln in (REPO / "references" / "project-standards.md").read_text().splitlines()
+                      if ln.startswith("## ") and len(ln) > 70 and dbcore.ledger_quote_count(ln[3:63]) == 1), None)
+        r10 = refusal(db.close_gap, gc, closed144, f'references/project-standards.md :: "{lq144}"', S)
+        record("T144-10", "close-gap accepts a ledger pointer whose quote is found once (derived from the ledger)",
+               lq144 and r10 is None and row144(gc)[3] == f'references/project-standards.md :: "{lq144}"', (lq144, r10))
+        # migration 162's CHECK, by hand SQL on fixture gaps (HAND: the CHECK is under test, not the writer)
+        gd, ge = gap144("d"), gap144("e")
+        U144 = "UPDATE gaps SET status=?, resolved_at=?, resolved_by_session=?, resolution_ref=? WHERE gap_id=?"
+        now144 = dbcore.now()
+        bad144 = {"an OPEN gap carrying all three": ("OPEN", now144, S, WHY144),
+                  "two of the three": (closed144, now144, S, None),
+                  "the stamp alone": (closed144, now144, None, None),
+                  "resolved_at 2026-02-30 00:00": (closed144, "2026-02-30 00:00", S, WHY144),
+                  "resolved_at 9999-99-99 99:99": (closed144, "9999-99-99 99:99", S, WHY144),
+                  "resolved_at with seconds": (closed144, now144 + ":00", S, WHY144),
+                  "resolved_at before the gap was created": (closed144, "1900-01-01 00:00", S, WHY144),
+                  "resolved_at a BLOB": (closed144, now144.encode(), S, WHY144),
+                  "session not-a-session": (closed144, now144, "not-a-session", WHY144),
+                  "session with .md": (closed144, now144, S + ".md", WHY144),
+                  "session with a space": (closed144, now144, "session_a b", WHY144)}
+        for ch in "\u180e\u00ad\u2800\u3164\u200e\u2063\x1f ":
+            bad144[f"pointer U+{ord(ch):04X}"] = (closed144, now144, S, ch * 2)
+        got144 = {}
+        for name, vals in bad144.items():
+            try:
+                w(U144, *vals, gd)
+                got144[name] = None
+            except sqlite3.DatabaseError as exc:
+                got144[name] = str(exc)
+        try:
+            w(U144, closed144, now144, S, WHY144, ge)
+            ok144 = row144(ge)[3] == WHY144
+        except sqlite3.DatabaseError as exc:
+            ok144 = str(exc)
+        record("T144-11", "migration 162's CHECK refuses provenance on an OPEN gap, a partial set, an impossible, early, "
+               "seconds-bearing or BLOB stamp, a session that is not a stem and a blank pointer; it accepts a well formed "
+               "closing", all(got144.values()) and ok144 is True, ({k: v for k, v in got144.items() if not v}, ok144))
+        a12 = subprocess.run([sys.executable, str(REPO / "scripts" / "audit" / "gap_mining_audit.py")],
+                             env=dict(os.environ, GUIDEBOOK_DB_PATH=DB), capture_output=True, text=True).stdout
+        l12 = next((ln for ln in a12.splitlines() if "CHECK 8:" in ln), "")
+        record("T144-12", "gap_mining_audit lists, as informational, a closed gap with no resolution and not one with it",
+               re.search(rf"\b{gb}\b", l12) and not re.search(rf"\b{ga}\b", l12) and "FAIL." not in a12.split("CHECK 8")[-1],
+               l12[:200])
+        # the capture path: a closing on a scratch copy reaches emit_batch_sql as one UPDATE carrying the three cells
+        c0, c1 = os.path.join(TMP, "t144-c0.db"), os.path.join(TMP, "t144-c1.db")
+        shutil.copy(REPO / "data" / "guidebook.db", c0)
+        shutil.copy(c0, c1)
+        g13 = sqlite3.connect(c0).execute("SELECT gap_id FROM gaps WHERE status LIKE 'OPEN%' ORDER BY gap_id").fetchone()[0]
+        subprocess.run([sys.executable, str(REPO / "scripts" / "db.py"), "close-gap", "--gap-id", g13, "--status",
+                        closed144, "--resolution-ref", WHY144, "--session", S],
+                       env=dict(os.environ, GUIDEBOOK_DB_PATH=c1), capture_output=True, text=True)
+        out13 = os.path.join(TMP, "t144.sql")
+        e13 = subprocess.run([sys.executable, str(REPO / "scripts" / "research" / "emit_batch_sql.py"), "--scratch", c1,
+                              "--out", out13], env=dict(os.environ, GUIDEBOOK_DB_PATH=c0), capture_output=True, text=True)
+        sql13 = [ln for ln in (pathlib.Path(out13).read_text() if os.path.exists(out13) else "").splitlines()
+                 if ln.startswith("UPDATE")]
+        record("T144-13", "emit_batch_sql captures a closing as one UPDATE carrying status and the three resolution cells",
+               e13.returncode == 0 and len(sql13) == 1 and all(f'"{c_}"' in sql13[0] for c_ in
+                                                                ("status", "resolved_at", "resolved_by_session",
+                                                                 "resolution_ref")) and g13 in sql13[0],
+               (e13.stderr[-200:], sql13))
+    except Exception as exc:  # noqa: BLE001 -- a crash is red, never a pass
+        import traceback
+        traceback.print_exc()
+        record("T144R", "the T-144 section ran to its end", False, f"{exc.__class__.__name__}: {exc}")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

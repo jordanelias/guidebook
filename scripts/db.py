@@ -16,7 +16,7 @@ CLI usage:
     python3 scripts/db.py next-id connections|gaps|terms|conflicts|ref
     python3 scripts/db.py coverage --slug SLUG
     python3 scripts/db.py add-gap --category RES --priority P2 --description "..." --session SESSION
-    python3 scripts/db.py close-gap --gap-id GAP-001 --status CLOSED-FIXED --session SESSION
+    python3 scripts/db.py close-gap --gap-id GAP-001 --status CLOSED-FIXED --resolution-ref "..." --session SESSION
     python3 scripts/db.py add-connection --confidence HIGH --connection-type CROSS-POPULATION --filed-in sensory-environment --description "..." --source-skill connection-discovery --target-slug sensory-environment --session SESSION
     python3 scripts/db.py update-connection --con-id CON-0001 --status CONSUMED --session SESSION
     python3 scripts/db.py unmined [--slug SLUG] [--tier-max 3]
@@ -374,18 +374,51 @@ def insert_gap(data: dict, session: str, dry_run: bool = False) -> str:
     return data["gap_id"]
 
 
-def close_gap(gap_id: str, status: str,
+def close_gap(gap_id: str, status: str, resolution_ref: str,
               session: str, dry_run: bool = False):
+    """Close an OPEN gap and say what closed it (T-144, migration 162): `status`, `resolved_at`,
+    `resolved_by_session` and `resolution_ref` in one UPDATE. The pointer is read as
+    `adversarial_findings.disposition_ref` is read: a data migration path, a quote-anchored ledger pointer
+    (`references/project-standards.md :: "<verbatim quote>"`, the quote found once, as
+    dispose-adversarial-finding requires), or the reason; a commit sha or a task id is such a reason.
+
+    REFUSES: a status that is not CLOSED; a blank pointer (dbcore.is_blank); a ledger pointer whose quote is not
+    found exactly once; a session that is not a stem; an unknown gap; a gap already closed (its first closing
+    stands, as a disposition does). No verb reopens a gap: a reopening NULLs the three cells with the status,
+    or migration 162's CHECK refuses it."""
     if not status.startswith("CLOSED"):
         raise Refusal(f"status must start with CLOSED, got '{status}'. The closing statuses in use: "
                       f"SELECT DISTINCT status FROM gaps WHERE status LIKE 'CLOSED%'.")
-    u = _upd(session)
+    ref = (resolution_ref or "").strip()
+    if dbcore.is_blank(ref):
+        raise Refusal(f"close-gap {gap_id}: --resolution-ref is required: what resolved the gap, as "
+                      f"adversarial_findings.disposition_ref holds it (a scripts/migrations/data_*.sql path; "
+                      f"references/project-standards.md :: \"<verbatim quote>\"; or the reason, such as a commit "
+                      f"sha or a task id). A gap closed without saying by what cannot be checked. Nothing was written.")
+    m = dbcore.LEDGER_REF_RE.match(ref)
+    if m:
+        dbcore.require_ledger_quote_once(m.group(1), f"close-gap {gap_id}: the quote of --resolution-ref")
+    stamp, stem = dbcore.now(), dbcore.session_stem(session)
+    if not dbcore.is_session_stem(stem):
+        raise Refusal(f"close-gap: --session {session!r} is not a session stem (session_<name>, "
+                      f"dbcore.is_session_stem). Nothing was written.")
     with connect(dry_run) as conn:
+        row = conn.execute(f"SELECT status, resolved_at, resolution_ref, {_OPEN_GAP} AS open FROM gaps "
+                           f"WHERE gap_id=?", (gap_id,)).fetchone()
+        if row is None:
+            raise Refusal(f"close-gap: {gap_id}: no such gap (db.py gaps lists the open ones). Nothing was written.")
+        if not row["open"]:
+            raise Refusal(f"close-gap: {gap_id} is already {row['status']} ("
+                          + (f"since {row['resolved_at']}: {row['resolution_ref']}" if row["resolved_at"]
+                             else "closed before migration 162, with no resolution recorded")
+                          + "); its first closing stands. Nothing was written.")
         conn.execute(
-            "UPDATE gaps SET status=?, updated_at=?, updated_by_session=? "
-            "WHERE gap_id=?",
-            [status, u["updated_at"], u["updated_by_session"], gap_id]
+            "UPDATE gaps SET status=?, resolved_at=?, resolved_by_session=?, resolution_ref=?, "
+            "updated_at=?, updated_by_session=? WHERE gap_id=?",
+            [status, stamp, stem, ref, stamp, stem, gap_id]
         )
+    return {"closed": gap_id, "status": status, "resolved_at": stamp, "resolved_by_session": stem,
+            "resolution_ref": ref, "dry_run": dry_run}
 
 
 _VALID_DIRECTIONS = frozenset({"backward", "forward"})
@@ -1868,8 +1901,8 @@ def main():
     p_ag2.add_argument("--gap-id", required=True)
     p_ag2.add_argument("--append-note", required=True, dest="append_note",
                        help="Appended after a '|| CORRECTED <date>:' marker. close-gap "
-                            "moves status only, and gaps has no closure-note column, so "
-                            "this is the only way to correct a filed description.")
+                            "records what resolved a gap (resolution_ref), not a correction of "
+                            "its text, so this is the only way to correct a filed description.")
     p_ag2.add_argument("--session", required=True)
     p_ag2.add_argument("--dry-run", action="store_true")
 
@@ -3029,6 +3062,11 @@ def main():
     p_cg.add_argument("--gap-id", required=True)
     p_cg.add_argument("--status", required=True,
                       help="Must start with CLOSED (e.g. CLOSED-FIXED)")
+    p_cg.add_argument("--resolution-ref", dest="resolution_ref",
+                      help="Required: what resolved the gap, as adversarial_findings.disposition_ref "
+                           "holds it: a scripts/migrations/data_*.sql path; references/project-standards.md "
+                           ":: \"<verbatim quote>\" (found once); or the reason (a commit sha, a task id). "
+                           "Stored in gaps.resolution_ref with resolved_at and resolved_by_session.")
     p_cg.add_argument("--session", required=True)
     p_cg.add_argument("--dry-run", action="store_true")
 
@@ -3613,9 +3651,8 @@ def main():
         _emit({"gap_id": gap_id, "dry_run": args.dry_run})
 
     elif args.command == "close-gap":
-        close_gap(args.gap_id, args.status,
-                  session=args.session, dry_run=args.dry_run)
-        _emit({"closed": args.gap_id, "status": args.status})
+        _emit(close_gap(args.gap_id, args.status, args.resolution_ref,
+                        session=args.session, dry_run=args.dry_run))
 
     elif args.command == "add-connection":
         targets = ([("parameter_id", v) for v in args.t_parameters]
@@ -5354,9 +5391,9 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
 def amend_gap(gap_id: str, note: str, session: str, dry_run: bool = False):
     """APPEND a dated correction to a gap's description. Never rewrite it.
 
-    `close-gap` moves `status` and nothing else, and the `gaps` table has no
-    closure-note column -- so a gap whose DESCRIPTION states something since
-    falsified had no repair path at all. Measured on batch 17: GAP-027's text still
+    `close-gap` moves `status` and records what resolved the gap (migration 162's
+    resolution_ref), never a correction of its text -- so a gap whose DESCRIPTION
+    states something since falsified has no other repair path. Measured on batch 17: GAP-027's text still
     opened "GAP-018 PREDICTOR PASSED ITS FIRST PROSPECTIVE TEST" after GAP-029
     retracted that result as a screen artefact, and GAP-026 still asserted a
     "SafetyLit 503" its own persisted artefact does not hold. A register whose

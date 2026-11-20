@@ -910,7 +910,7 @@ _t043 = [
                                                            dry_run=True), "Pass one of them"),
     ("update-conflict, absent id", refusal(db.update_conflict, _NOID, session=S, status="RESOLVED", dry_run=True),
      "db.py conflicts"),
-    ("close-gap, status not CLOSED", refusal(db.close_gap, _NOID, "NOT-CLOSED", session=S, dry_run=True), "SELECT DISTINCT status"),
+    ("close-gap, status not CLOSED", refusal(db.close_gap, _NOID, "NOT-CLOSED", None, session=S, dry_run=True), "SELECT DISTINCT status"),
     ("resolve-follow-up, absent id", refusal(db.resolve_follow_up, 2 ** 31, "x", session=S, dry_run=True), "db.py raise-follow-up"),
     ("amend-population-match, absent id", refusal(db.amend_population_match, _NOID, "x", "reason", session=S, dry_run=True),
      "db.py add-population-match"),
@@ -2571,7 +2571,8 @@ else:
             record("T013-20", "add-gap of a subject an OPEN gap already names exactly is refused, naming that gap, and writes no row",
                    ga is not None and rd.returncode != 0 and ga in rd.stderr + rd.stdout
                    and c.execute("SELECT COUNT(*) FROM gaps").fetchone()[0] == g0, (rd.stderr + rd.stdout)[-300:])
-            cg = cli("close-gap", "--gap-id", ga or "NO-GAP", "--status", CLOSED_STATUS, "--session", S)
+            cg = cli("close-gap", "--gap-id", ga or "NO-GAP", "--status", CLOSED_STATUS, "--resolution-ref",
+                     "TASK-FIXTURE: the twin test closes its own gap", "--session", S)
             re_ = cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE twin", "--session", S, *typed)
             record("T013-21", "...and once the first is closed the same subject may be filed again",
                    cg.returncode == 0 and re_.returncode == 0, (cg.stderr + re_.stderr)[-250:])

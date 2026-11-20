@@ -658,6 +658,8 @@ def insert_gap(data: dict, session: str, dry_run: bool = False) -> str:
         conn.execute(f"INSERT INTO gaps ({cols}) VALUES ({ph})", list(row.values()))
     return data["gap_id"]
 
+# The live close_gap (scripts/db.py) also takes resolution_ref, refuses a gap that is not OPEN, and writes
+# resolved_at, resolved_by_session and resolution_ref with the status in one UPDATE (migration 162, T-144).
 def close_gap(gap_id: str, status: str,
               session: str, dry_run: bool = False):
     if not status.startswith("CLOSED"):
