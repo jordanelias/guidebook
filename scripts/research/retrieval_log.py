@@ -1592,9 +1592,49 @@ def _author_conflict(real, stored):
     REF-00976 stored HASEGAWA Toshiyuki over a payload that said HASEGAWA Naoji
     and printed CLEAN, because five surnames matched and nothing looked further.
     """
+    real = [_split_whole_name(r, st) for r, st in zip(real, stored)] + list(real[len(stored):])
     if [_norm(f) for f, _ in real] != [_norm(f) for f, _ in stored]:
         return True
     return any(_given_conflict(gr, gs) for (_, gr), (_, gs) in zip(real, stored))
+
+
+def _payload_byline(msg):
+    """(byline, repeated): the payload's authors as (family, given) pairs, and the name it repeats, or None.
+
+    A repeat is a malformed deposit (see repeated_author_name), reported under its own word. It is not a licence to
+    stop comparing: the human authors (Crossref files a person under `family`/`given` and an affiliation under `name`
+    alone) are still a byline, de-duplicated in order, so a correct stored byline does not cross over the repeat."""
+    authors = msg.get("author", [])
+    repeated = repeated_author_name(authors)
+    if not repeated:
+        return [((a.get("family") or a.get("name") or ""), (a.get("given") or "")) for a in authors], None
+    seen, real = set(), []
+    for a in authors:
+        key = _norm(a.get("family")) + "|" + _norm(a.get("given"))
+        if a.get("family") and key not in seen:
+            seen.add(key)
+            real.append((a["family"], (a.get("given") or "")))
+    return real, repeated
+
+
+def _stored_byline(cx, ref_id):
+    return [tuple(r) for r in cx.execute(
+        "SELECT last_name, COALESCE(first_name,'') FROM evidence_source_authors "
+        "WHERE ref_id=? ORDER BY position", (ref_id,))]
+
+
+def _split_whole_name(pair, stored):
+    """A deposit that files a whole name under `family` with no `given` (REF-01033's Crossref record: 'Hashizume
+    Tsutomu') is read as family and given, in whichever order puts the stored family name first; else unchanged. Every
+    word is still compared, so a substituted or omitted author still crosses."""
+    family, given = pair
+    words = (family or "").split()
+    if given or len(words) < 2:
+        return pair
+    for i in (0, len(words) - 1):
+        if _norm(words[i]) == _norm(stored[0]):
+            return words[i], " ".join(w for j, w in enumerate(words) if j != i)
+    return pair
 
 
 def _disp(family, given):
@@ -1788,8 +1828,9 @@ def _locator_evidence(row, manifest):
 # sets differently (a line break, a different dash), so only the head is asserted. " -- "
 # is the ASCII spelling of the dash in typed titles, and " (" opens the English gloss this
 # project adds after a native title -- both measured on batch 22's rows, where without
-# them a Finnish decree's genuine title read as absent.
-_TITLE_SEPARATORS = (" — ", " – ", " -- ", ": ", " - ", " (")
+# them a Finnish decree's genuine title read as absent. "（" opens a Japanese law's number
+# after its title (REF-00990), which e-Gov's law data holds in a separate element.
+_TITLE_SEPARATORS = (" — ", " – ", " -- ", ": ", " - ", " (", "（")
 
 
 def _title_head(title):
@@ -1851,16 +1892,17 @@ def _presence_artefacts(row, manifest):
     the row's url. A DERIVED line belongs when it is a text extraction of one of those
     (derivation_kind 'text-extraction', 'page-text-extraction'): that is how a PDF's text
     is reached, since PDF bytes are not read here. Other derivations are left out on
-    purpose -- a 'pdf-bibliography' is the source's reference LIST, other works' authors,
-    and would let an invented name match a cited one; a 'page-render' is an image.
+    purpose, including when they are tagged with the ref_id themselves -- a 'pdf-bibliography'
+    is the source's reference LIST, other works' authors, and would let an invented name match
+    a cited one; a 'page-render' is an image.
     """
     ref, url = row["ref_id"], (row["url"] or "").strip()
-    own = [m for m in manifest if m.get("artefact") and (
+    text_kind = lambda m: str(m.get("derivation_kind") or "").endswith("text-extraction")  # noqa: E731
+    own = [m for m in manifest if m.get("artefact") and (not m.get("derived") or text_kind(m)) and (
         (m.get("ref_id") or "").strip() == ref or (url and m.get("url") == url))]
     names = list(dict.fromkeys(m["artefact"] for m in own))
     children = [m for m in manifest if m.get("derived") and m.get("artefact")
-                and m.get("derived_from") in names
-                and str(m.get("derivation_kind") or "").endswith("text-extraction")]
+                and m.get("derived_from") in names and text_kind(m)]
     lines = {}
     for m in own + children:
         # One line per artefact; where the same bytes carry two lines, a usable
@@ -1869,6 +1911,53 @@ def _presence_artefacts(row, manifest):
         if held is None or (_failure_reason(held) and not _failure_reason(m)):
             lines[m["artefact"]] = m
     return list(lines.values())
+
+
+def _row_haystacks(row, manifest, session=None):
+    """(lines, haystacks, unread) for one source: its manifest lines (`_presence_artefacts`), the decoded text of
+    each readable one, and why each other one was not read. A line's bytes are under its own `_session` when it
+    carries one (the corpus-wide pass), else under `session`."""
+    lines = _presence_artefacts(row, manifest)
+    hays, unread = [], []
+    for m in lines:
+        p = LOG_ROOT / (m.get("_session") or session) / m["artefact"]
+        failed = _failure_reason(m)
+        if failed:
+            # A 403 challenge page is evidence of an attempt, not the source's text
+            # ("Just a moment..." would make every title read as absent).
+            unread.append(f"{m['artefact']} (failed retrieval: {failed})")
+            continue
+        if not p.exists():
+            unread.append(f"{m['artefact']} (missing from disk)")
+            continue
+        raw = p.read_bytes()
+        if raw.lstrip()[:5] == b"%PDF-":
+            # PDF syntax can be ASCII and so "decode"; its text is still compressed
+            # streams. Only a text extraction child reads what the page says.
+            unread.append(f"{m['artefact']} (PDF bytes; no text extraction logged)")
+            continue
+        text, why = decode_artefact(raw, m.get("content_type"))
+        if text is None:
+            unread.append(f"{m['artefact']} ({why})")
+            continue
+        hays.append((m["artefact"], _presence_haystack(text)))
+    return lines, hays, unread
+
+
+def _presence_missing(row, people, hays):
+    """What of one source's stored person surnames and title occurs in none of `hays`: a list (empty when all are
+    present), or None when the row has no person author and no title to look for."""
+    persons = [a for a in people if not a["is_corporate"] and normalise_quote(a["last_name"])]
+    titles = list(dict.fromkeys(
+        _title_head(row[c]) for c in _TITLE_COLS
+        if c in row.keys() and normalise_quote(_title_head(row[c] or ""))))
+    if not persons and not titles:
+        return None
+    missing = [f"{a['role'] or 'author'} {a['position']} last_name {a['last_name']!r}"
+               for a in persons if not any(_name_in(a["last_name"], h) for _, h in hays)]
+    if titles and not any(normalise_quote(t) in h["flat"] for t in titles for _, h in hays):
+        missing.append("title " + " / ".join(repr(t) for t in titles))
+    return missing
 
 
 def _verify_presence(session, unparsed):
@@ -1917,48 +2006,16 @@ def _verify_presence(session, unparsed):
     examined, present, unexaminable, absent, corporate_absent = 0, 0, [], [], []
     for row in rows:
         ref = row["ref_id"]
-        lines = _presence_artefacts(row, manifest)
-        hays, unread = [], []
-        for m in lines:
-            p = LOG_ROOT / session / m["artefact"]
-            failed = _failure_reason(m)
-            if failed:
-                # A 403 challenge page is evidence of an attempt, not the source's text
-                # ("Just a moment..." would make every title read as absent).
-                unread.append(f"{m['artefact']} (failed retrieval: {failed})")
-                continue
-            if not p.exists():
-                unread.append(f"{m['artefact']} (missing from disk)")
-                continue
-            raw = p.read_bytes()
-            if raw.lstrip()[:5] == b"%PDF-":
-                # PDF syntax can be ASCII and so "decode"; its text is still compressed
-                # streams. Only a text extraction child reads what the page says.
-                unread.append(f"{m['artefact']} (PDF bytes; no text extraction logged)")
-                continue
-            text, why = decode_artefact(raw, m.get("content_type"))
-            if text is None:
-                unread.append(f"{m['artefact']} ({why})")
-                continue
-            hays.append((m["artefact"], _presence_haystack(text)))
-        persons = [a for a in people[ref] if not a["is_corporate"]
-                   and normalise_quote(a["last_name"])]
-        titles = list(dict.fromkeys(
-            _title_head(row[c]) for c in _TITLE_COLS
-            if c in row.keys() and normalise_quote(_title_head(row[c] or ""))))
+        lines, hays, unread = _row_haystacks(row, manifest, session)
+        missing = _presence_missing(row, people[ref], hays)
         if not hays:
             unexaminable.append((ref, "no manifest line is tagged with this ref_id or url"
                                  if not lines else "no readable artefact: " + "; ".join(unread)))
             continue
-        if not persons and not titles:
+        if missing is None:
             unexaminable.append((ref, "no person author and no title to look for"))
             continue
         examined += 1
-        missing = [f"{a['role'] or 'author'} {a['position']} last_name {a['last_name']!r}"
-                   for a in persons if not any(_name_in(a["last_name"], h) for _, h in hays)]
-        if titles and not any(normalise_quote(t) in h["flat"] for t in titles
-                              for _, h in hays):
-            missing.append("title " + " / ".join(repr(t) for t in titles))
         for a in people[ref]:
             if a["is_corporate"] and normalise_quote(a["corporate_name"]) and not any(
                     normalise_quote(a["corporate_name"]) in h["flat"] for _, h in hays):
@@ -2095,27 +2152,10 @@ def verify_authors(session):
             unlogged.append((ref_id, doi))
             continue
         examined += 1
-        authors = msg.get("author", [])
-        real = [((a.get("family") or a.get("name") or ""), (a.get("given") or ""))
-                for a in authors]
-        stored = [tuple(r) for r in cx.execute(
-            "SELECT last_name, COALESCE(first_name,'') FROM evidence_source_authors "
-            "WHERE ref_id=? ORDER BY position", (ref_id,))]
-        repeated = repeated_author_name(authors)
+        real, repeated = _payload_byline(msg)
+        stored = _stored_byline(cx, ref_id)
         if repeated:
-            # The payload is malformed (see repeated_author_name), reported under its own
-            # word. It is not a licence to stop comparing: the human authors (Crossref files
-            # a person under `family`/`given` and an affiliation under `name` alone) are
-            # still a byline, and a stored row that disagrees with them is a cross.
             malformed.append((ref_id, repeated))
-            # De-duplicated in order: an author the deposit filed twice is one author of the
-            # byline, so a correct stored byline does not cross over the deposit's repeat.
-            seen, real = set(), []
-            for a in authors:
-                key = _norm(a.get("family")) + "|" + _norm(a.get("given"))
-                if a.get("family") and key not in seen:
-                    seen.add(key)
-                    real.append((a["family"], (a.get("given") or "")))
         if (real or not repeated) and _author_conflict(real, stored):
             bad.append((ref_id, [_disp(*a) for a in real], [_disp(*a) for a in stored]))
         mm, gp = _biblio_divergences(msg, row)
@@ -2252,6 +2292,104 @@ def verify_authors(session):
     return 0
 
 
+def all_manifest_records():
+    """Every manifest line of every session, each carrying its session as `_session`."""
+    return [dict(rec, _session=man.parent.name)
+            for man in sorted(LOG_ROOT.glob("*/manifest.jsonl"))
+            for rec in _manifest_records(man.parent.name)]
+
+
+def manifest_lines_for(ref_id=None, url=None, doi=None, records=None):
+    """The usable retrievals logged for one source in any session: a fetched (not derived) manifest line tagged with
+    its ref_id (a derivation of the retrieved bytes counts when tagged), fetched from its url, or fetched from a URL
+    that carries its DOI, whose retrieval did not fail
+    (`_failure_reason`). The test a VERIFIED standing needs (db.py add-source and amend-source) and the subject of
+    the corpus-wide --verify-authors: one home."""
+    records = all_manifest_records() if records is None else records
+    ref_id, url, doi = (ref_id or "").strip(), (url or "").strip(), (doi or "").strip().lower()
+    return [m for m in records if not _failure_reason(m) and (
+        (ref_id and (m.get("ref_id") or "").strip() == ref_id)
+        or not m.get("derived") and ((url and m.get("url") == url) or (doi and doi in (m.get("url") or "").lower())))]
+
+
+def verify_corpus():
+    """--verify-authors --all-sessions: every source against every session's logged retrievals. Offline.
+
+    A source whose DOI has a JSON payload is author-diffed against it, which detects an invented, substituted or
+    OMITTED author. A source with only non-JSON bytes (a page, a PDF's text extraction) gets the presence check:
+    each stored surname and the title must occur in them. Presence CANNOT see an omitted author -- a deleted Co-1
+    co-producer leaves every remaining name present (the 2026-08-19 failure) -- so each such source is printed
+    NOT-DETECTABLE and counted apart in the EXAMINED line, never as a pass on authorship.
+
+    Exit 1 on an author cross, a VERIFIED source's stored name or title absent from its bytes, or a VERIFIED source
+    with no usable retrieval logged; else 0. An UNVERIFIED source's absent name is reported (its standing already
+    says it was not verified, shown ○).
+    """
+    records = all_manifest_records()
+    payloads = {}
+    for sess in sorted({m["_session"] for m in records}):
+        payloads.update(_logged_payloads(sess))
+    by_doi = _index_by_doi(payloads)
+    cx = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
+    cx.row_factory = sqlite3.Row
+    rows = cx.execute("SELECT * FROM evidence_sources ORDER BY ref_id").fetchall()
+    diffed, crossed, notdet, absent, unread, nolog, unverified_nolog = [], [], [], [], [], [], []
+    for row in rows:
+        ref, doi = row["ref_id"], (row["doi"] or "").strip().lower()
+        msg = by_doi.get(doi) if doi else None
+        if msg is not None:
+            real, repeated = _payload_byline(msg)
+            diffed.append(ref)
+            if (real or not repeated) and _author_conflict(real, _stored_byline(cx, ref)):
+                crossed.append((ref, [_disp(*a) for a in real],
+                                [_disp(*a) for a in _stored_byline(cx, ref)]))
+            continue
+        if not manifest_lines_for(ref, row["url"], doi, records):
+            (nolog if row["verification_status"] == "VERIFIED" else unverified_nolog).append(ref)
+            continue
+        _lines, hays, why = _row_haystacks(row, records)
+        people = cx.execute("SELECT position, is_corporate, last_name, corporate_name, role FROM "
+                            "evidence_source_authors WHERE ref_id=? ORDER BY position", (ref,)).fetchall()
+        missing = _presence_missing(row, people, hays) if hays else None
+        if not hays or missing is None:
+            unread.append((ref, "; ".join(why) if not hays and why else
+                           "no text of the source is logged (only renders or bibliographies)" if not hays
+                           else "no person author and no title to look for"))
+        elif missing:
+            absent.append((ref, missing, row["verification_status"] == "VERIFIED"))
+        else:
+            notdet.append(ref)
+    cx.close()
+    n_logged = len(diffed) + len(notdet) + len(absent) + len(unread)
+    print("=" * 74)
+    print("retrieval_log --verify-authors --all-sessions  (every source, every session's retrievals)")
+    print("=" * 74)
+    for ref, real, stored in crossed:
+        print(f"  ✗ {ref} AUTHORS DISAGREE WITH THE PAYLOAD\n      logged: {'; '.join(real)}\n"
+              f"      stored: {'; '.join(stored)}")
+    for ref, missing, verified in absent:
+        print(f"  {'✗' if verified else '(reported, UNVERIFIED)'} {ref} NOT FOUND in the bytes retrieved for it: "
+              f"{'; '.join(missing)}")
+    for ref in nolog:
+        print(f"  ✗ {ref} is VERIFIED and no usable retrieval names its ref_id, url or DOI (re-retrieve, or amend "
+              f"it UNVERIFIED with the reason)")
+    if notdet:
+        print(f"\n  NOT-DETECTABLE -- {len(notdet)} source(s) checked by presence only: every stored surname and the "
+              f"title occur in the bytes, but an OMITTED author cannot be seen without a JSON byline:")
+        print("      " + " ".join(notdet))
+    if unread:
+        print(f"\n  UNREADABLE -- {len(unread)} source(s) with a logged retrieval whose bytes this module cannot read:")
+        for ref, why in unread:
+            print(f"      {ref}  {why[:150]}")
+    if unverified_nolog:
+        print(f"\n  NO RETRIEVAL LOGGED -- {len(unverified_nolog)} UNVERIFIED source(s): " + " ".join(unverified_nolog))
+    print(f"\nEXAMINED: {n_logged} of {len(rows)} source(s) with a logged retrieval -- {len(diffed)} author-diffed "
+          f"against a JSON byline, {len(notdet)} NOT-DETECTABLE (presence only: an omitted author cannot be seen), "
+          f"{len(absent)} with a name or title absent, {len(unread)} unreadable; {len(nolog)} VERIFIED and "
+          f"{len(unverified_nolog)} UNVERIFIED with none")
+    return 1 if crossed or any(v for *_, v in absent) or nolog or not n_logged else 0
+
+
 def backfill(session, sleep=1.0):
     """Log payloads for a session's existing DOI-bearing sources.
 
@@ -2356,8 +2494,10 @@ def reconstruct_manifest(session):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    p.add_argument("--session", required=True)
+    p.add_argument("--session")
     p.add_argument("--verify-authors", action="store_true")
+    p.add_argument("--all-sessions", action="store_true",
+                   help="with --verify-authors: every source against every session's retrievals (no --session)")
     p.add_argument("--backfill", action="store_true")
     p.add_argument("--reconstruct-manifest", action="store_true",
                    help="rebuild manifest lines for payloads already on disk; "
@@ -2376,6 +2516,10 @@ def main():
     p.add_argument("--ref-id", help="evidence_sources.ref_id this derivation is about")
     p.add_argument("--purpose", default="", help="why this derivation was made")
     a = p.parse_args()
+    if a.verify_authors and a.all_sessions:
+        sys.exit(verify_corpus())
+    if not a.session:
+        p.error("--session is required (or --verify-authors --all-sessions)")
     if a.derive:
         if not a.source_artefact:
             p.error("--derive requires --source-artefact: a derivation with no stated "

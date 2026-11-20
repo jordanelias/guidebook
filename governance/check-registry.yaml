@@ -628,16 +628,13 @@ checks:
   cmd:
   - python3
   - scripts/research/retrieval_log.py
-  - --session
-  - '@SESSION@'
   - --verify-authors
+  - --all-sessions
   battery: research
   kinds:
   - data
   - synthesis
   compares: record-artefact
-  session_pointer: LATEST-RESEARCH
-  requires_session: true
   level: advisory
   basis: DR-2026-08-19 §7 adversarial pass, lens L1 (2026-08-19)
   cost: fast
@@ -1450,10 +1447,7 @@ checks:
   level: advisory
   basis: unattributed
   cost: fast
-  no_floor: 'vocabulary-owed — no translation has been recorded, so the subject is empty; translations are OWED
-    by the pipeline (owner, 2026-11-12: everything non-English is translated, by default at the stage the contract''s
-    translation rule names), not removed. The first run that examines a row contradicts this reason, which is the
-    signal to ratchet to min_items 1.'
+  min_items: 1
 - id: test_translations
   cmd:
   - python3

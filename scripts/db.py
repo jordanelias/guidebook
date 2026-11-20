@@ -3612,10 +3612,14 @@ def main():
     p_rvt.add_argument("--session", required=True)
     p_rvt.add_argument("--dry-run", action="store_true")
 
-    p_trl = sub.add_parser("translations", help="List the open translation requests due at a stage (read-only)")
-    p_trl.add_argument("--due-at", required=True,
+    p_trl = sub.add_parser("translations", help="List the open translation requests due at a stage, or show the "
+                                                "reviewed translations beside their originals (read-only)")
+    p_trl.add_argument("--due-at",
                        help="A stage id: lists open requests whose due stage is this one, by the row's override "
                             "or else by the translation rule of governance/pipeline-contract.yaml")
+    p_trl.add_argument("--show", action="store_true",
+                       help="Print every reviewed, current translation beside its original, with who translated "
+                            "and who reviewed it: what a reader is shown (OD-30)")
 
     args = _ARGS = parser.parse_args()
 
@@ -4594,7 +4598,9 @@ def main():
                                  args.reason, session=args.session, dry_run=args.dry_run))
 
     elif args.command == "translations":
-        _emit(translations_due(args.due_at))
+        if bool(args.due_at) == bool(args.show):
+            raise Refusal("translations: pass exactly one of --due-at STAGE or --show. Nothing was read.")
+        _emit(translations_shown() if args.show else translations_due(args.due_at))
 
 
 
@@ -4919,6 +4925,7 @@ def insert_evidence_source(data: dict, session: str,
             raise Refusal(
                 "verification_method='tool' requires --verified-by-tool naming "
                 "which tool established it (invariant I4b).")
+        _refuse_unlogged_verified(data.get("ref_id"), data.get("url"), data.get("doi"), "add-source")
         data.setdefault("verification_attempt_count", 1)
         # D-0157 invariant I1: "verification is finished or it did not happen."
         # insert_source set OPEN unconditionally, so EVERY verified source it wrote
@@ -6721,6 +6728,18 @@ def _retype_source(conn, ref_id: str, new_type: str, scope, tier, co1_provenance
     return {"sets": sets, "ledger": text, "out": out}
 
 
+def _refuse_unlogged_verified(ref_id, url, doi, verb):
+    """VERIFIED needs a retrieval in the log: a usable manifest line naming the source's ref_id, url or DOI
+    (`retrieval_log.manifest_lines_for`, the subject of the corpus-wide author_fidelity check). CLAUDE.md section
+    5(c): verification leaves an artefact. Without one the source is UNVERIFIED and shown ○."""
+    if not _retrieval_log().manifest_lines_for(ref_id, url, doi):
+        raise Refusal(
+            f"{verb}: VERIFIED needs a logged retrieval, and no usable retrieval-log manifest line names "
+            f"{ref_id or 'this source'}'s ref_id, url ({url or 'none'}) or DOI ({doi or 'none'}). Retrieve it with "
+            f"retrieval_log.fetch (R10: the publisher, then the Wayback `if_` form), or record it UNVERIFIED. "
+            f"Nothing was written.")
+
+
 def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                  session: str, dry_run: bool = False, tier=None, scope=None,
                  co1_provenance=None, co1_source_type=None):
@@ -6895,6 +6914,9 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                 f"without its method is not a standing). `add-source` refuses this row; "
                 f"amending must not be the way around it. Set the method first, then "
                 f"the standing.")
+        if field == "verification_status" and replacement == "VERIFIED":
+            _src = conn.execute("SELECT url, doi FROM evidence_sources WHERE ref_id=?", (ref_id,)).fetchone()
+            _refuse_unlogged_verified(ref_id, _src["url"], _src["doi"], "amend-source")
         if field == "verification_status" and replacement != "VERIFIED" \
                 and (row["verification_disposition"] or "") == "CLOSED":
             # THE OTHER DIRECTION, UNGUARDED UNTIL 2026-09-18. The D-0157 refusal above
@@ -9408,9 +9430,9 @@ def add_jurisdiction(code: str, kind: str, parent: str, approval_ref: str,
     decision on research scope and the owner's. The pointer is the dated `## ` heading of
     the ledger entry that records it, found exactly once in references/project-standards.md,
     and THAT ENTRY MUST NAME THE CODE as a whole token (dbcore.ledger_entry_names): a dated
-    entry about something else, or about another code, does not admit this one. An entry
-    under the ledger's "Delegated resolution" heading prefix is a model's resolution under
-    delegation, not the owner's words, and admits nothing. What stays unproved is that the
+    entry about something else, or about another code, does not admit this one. The heading
+    must be an owner entry (`_owner_approval`): a delegated resolution, a session heading or a
+    correction admits nothing. What stays unproved is that the
     entry APPROVES the code rather than mentions it; the operator answers for that.
     `scripts/audit/jurisdiction_db_vocabulary.py` re-checks every pointer at rest.
 
@@ -9429,12 +9451,7 @@ def add_jurisdiction(code: str, kind: str, parent: str, approval_ref: str,
         raise Refusal(f"add-jurisdiction: --code {code!r} must be upper-case letters and digits, "
                       f"a letter first, with at most one dash that is followed by a "
                       f"subdivision.")
-    approval_ref = dbcore.require_approval_heading(approval_ref, "add-jurisdiction")
-    if approval_ref.startswith(dbcore.LEDGER_DELEGATED_PREFIX):
-        raise Refusal(
-            f"add-jurisdiction: --approval-ref {approval_ref!r} is a delegated resolution "
-            f"(a model's, under the owner's delegation), not the owner's words. Admitting a "
-            f"jurisdiction is a decision on research scope and the owner's.")
+    approval_ref = _owner_approval(approval_ref, "add-jurisdiction")
     if not dbcore.ledger_entry_names(approval_ref, code):
         raise Refusal(
             f"add-jurisdiction: the ledger entry {approval_ref!r} does not name {code!r}. "
@@ -14232,10 +14249,56 @@ def review_translation(translation_id, verdict, reviewer_kind, reviewer_name, re
     return {"translation_id": translation_id, "status": verdict, "dry_run": dry_run}
 
 
+def _translations_owed(conn):
+    """The cells owed an English translation that nobody has asked for: the title of each source recorded in another
+    language, and the claim_text of each live figure from one, with no current translation and no open request
+    (owner 2026-11-20: "the base has to record all the translation work for me"). The language is the one
+    `_cell_language` reads (lang_detected, else language); a source recording none is not listed."""
+    en = _check_language(conn, "EN", "translation", "--target-language")
+    held = {tuple(r) for r in conn.execute(
+        "SELECT source_table, source_column, source_row_key FROM translations WHERE target_language=? "
+        "AND superseded_by_translation_id IS NULL AND status IN ('requested', 'translated', 'reviewed')", (en,))}
+    cells = conn.execute(
+        "SELECT 'evidence_sources', 'pub_title', ref_id FROM evidence_sources s "
+        "WHERE UPPER(COALESCE(s.lang_detected, s.language, ?)) <> UPPER(?) AND pub_title IS NOT NULL "
+        "UNION ALL SELECT 'source_value_extractions', 'claim_text', CAST(x.extraction_id AS TEXT) "
+        "FROM source_value_extractions x JOIN evidence_sources s USING (ref_id) WHERE x.retired_at IS NULL "
+        "AND x.claim_text IS NOT NULL AND UPPER(COALESCE(s.lang_detected, s.language, ?)) <> UPPER(?) "
+        "ORDER BY 1, 3", (en,) * 4).fetchall()
+    return [{"translation_id": None, "source_table": t, "source_column": c, "source_row_key": k,
+             "target_language": en, "requested_at_stage": None} for t, c, k in cells if (t, c, k) not in held]
+
+
+def translations_shown():
+    """What a reader is shown (OD-30): each current `reviewed` translation beside the original it was made from,
+    with who translated it and who reviewed it. The original is read through the one pointer rule
+    (`dbcore.read_cell`), so any pointed cell works and no table or column is listed here; a pointer that no
+    longer resolves, or whose cell changed since it was translated, shows `original: null` and the reason, never
+    a translation beside the wrong text."""
+    with connect(readonly=True) as conn:
+        rows = conn.execute(
+            "SELECT * FROM translations WHERE status='reviewed' AND superseded_by_translation_id IS NULL "
+            "ORDER BY source_table, source_column, CAST(source_row_key AS INTEGER), source_row_key").fetchall()
+        out = []
+        for r in rows:
+            original, _, why = dbcore.read_cell(conn, r["source_table"], r["source_column"], r["source_row_key"])
+            if not why and translation_sha256(original) != r["source_sha256"]:
+                original, why = None, "the original cell changed after it was translated"
+            out.append({"source": f"{r['source_table']}.{r['source_column']}[{r['source_row_key']}]",
+                        "original": original, "problem": why, "translation": r["translated_text"],
+                        "target_language": r["target_language"],
+                        "translated_by": f"{r['translator_kind']}: {r['translator_name']}",
+                        "reviewed_by": f"{r['reviewed_by_kind']}: {r['reviewed_by_name']}",
+                        "reviewed_at": r["reviewed_at"], "review_note": r["review_reason"]})
+    return out
+
+
 def translations_due(stage, contract_path=None):
     """The open requests (`requested`, not retired) that fall due at `stage`: the row's own `due_stage` where it has
-    one, else the translation rule's default stage, read from the contract when asked and never stored. Refused when
-    the contract holds no translation rule."""
+    one, else the translation rule's default stage, read from the contract when asked and never stored. At the
+    default stage it also lists each cell owed a translation and not yet requested (`_translations_owed`,
+    `due_by` "owed"), so the stage that reads them sees what it is owed. Refused when the contract holds no
+    translation rule."""
     contract = _translation_contract(contract_path)
     _translation_stage(contract, stage, "--due-at")
     if contract.translation is None:
@@ -14251,8 +14314,10 @@ def translations_due(stage, contract_path=None):
             "AND NOT (source_table = 'source_value_extractions' AND source_row_key IN "
             "(SELECT CAST(extraction_id AS TEXT) FROM source_value_extractions WHERE retired_at IS NOT NULL)) "
             "ORDER BY translation_id").fetchall()
+        owed = _translations_owed(conn) if stage == default else []
     return [dict(r, due_stage=r["due_stage"] or default, due_by="row" if r["due_stage"] else "rule")
-            for r in rows if (r["due_stage"] or default) == stage]
+            for r in rows if (r["due_stage"] or default) == stage] + \
+        [dict(o, due_stage=default, due_by="owed") for o in owed]
 
 
 if __name__ == "__main__":

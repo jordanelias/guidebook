@@ -8114,3 +8114,123 @@ Recorded by the coordinator of `session_2026-11-18-remediation-batch-1-tooling-s
 CONDITION: any session filing an unresolved issue, or recording a critic's findings.
 ACTION: (1) File an unresolved issue as a gap row, through `db.py add-gap`, in a data pull request; a gap's priority follows the critic's own severity where there is one (CRITICAL and HIGH to P1, MEDIUM to P2, LOW to P3). (2) Use `record-adversarial-pass` only where the one-pass rule allows it. (3) Close a gap with `db.py close-gap` and its resolution pointer.
 DATE: 2026-11-20 — correction by the coordinator; the owner's words are quoted above.
+
+## Owner statements 2026-11-20 — translation runs before judgment; disability identities are the lens most readers will navigate by; the base holds the translation, the unit conversions and the identity–need–ICF crosswalk
+
+Given in the session `session_2026-11-20-unregistered-map-codes` (https://claude.ai/code/session_01Ub36iQWmsqeLLsdnXfD7Pu), in typed messages while the coordinator reported an Opus adjudication of the core against the machinery and an antagonist audit of it. Derive the times from the preserved transcript (`git grep -n -F "yes, translation runs before judgment" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "we research, we record, we verify we recorded things accurately, we evaluate things in context with other related things, we synthesize then show"
+>
+> "base is the substitute for me asking for a research topic directly"
+>
+> "i only know english, so the base has to record all the translation work for me"
+>
+> "i don't want to have to constantly map and cross-reference disability identities vs access needs vs ICF codes, so the base needs to get that ready for me too"
+>
+> "we need to actually also translate the stuff from other languages so that i can actually see it and so that it can be properly evaluated in context"
+>
+> "this is also why we need to be able to convert units etc"
+>
+> "this project will die upon itself if it doesn't treat disability identities properly. they are going to be by far the most common lens upon which people will navigate the repository"
+>
+> "yes, translation runs before judgment"
+
+**Readings.**
+
+- [ASSUMPTION: "yes, translation runs before judgment" answers the coordinator's question whether translation of every non-English source and figure is to be recorded before the judgment stage evaluates it, replacing the default of `translation: default_stage: synthesis` in `governance/pipeline-contract.yaml` (set on the owner's words of 2026-11-12, "we can set a rule for synthesis to translate") — basis: the question put to the owner, and rule 0].
+- [ASSUMPTION: "the base has to record all the translation work" means the translation, with the original beside it, who or what translated it and when, and its review state, is recorded in the database and is what the render stage shows — basis: the owner reads only English].
+- [ASSUMPTION: "get that ready for me" means the identity, access-need and ICF mappings are recorded as data a session judges and proposes, so the owner is not asked to map by hand — basis: the words; the form of the identity–need link (stored or derived) is not decided here].
+- [ASSUMPTION: "convert units etc" means a figure stated in one unit or notation is comparable with the same quantity stated in another, as data in `base_units` — basis: the words and T-030].
+- The statements say what the owner wants; they decide no schema, no table name and no task order.
+
+CONDITION: any session that records, judges or renders a figure from a source not in English; that writes or reads `translations`, `base_units`, `identity_icf_map`, `access_need_icf` or `extraction_lens_links`; or that plans T-049, T-112, T-086 or T-126 to T-128.
+ACTION: (1) Translation of a non-English source's title and of each figure's wording is recorded, with the original, before judgment reads it; where `governance/pipeline-contract.yaml` says synthesis, this entry supersedes that default (rule 0), and the contract is corrected in a tooling pull request, not by hand here. (2) An English rendering is not written into `claimed_value` or `claimed_unit`. (3) Treat a disability identity as the first lens of the repository: an identity with no ICF code, and an identity with no recorded need, is a gap to close and not a state to leave. (4) Treat every [ASSUMPTION] above as unratified except where the owner's words state it.
+DATE: 2026-11-20 — owner statements (typed words, quoted above).
+
+## Owner statement 2026-11-20 (second) — the identity, access-need and ICF crosswalk is a table of judged triples, proposed by a session and reviewed by the owner in batches
+
+Given in the session `session_2026-11-20-unregistered-map-codes` (https://claude.ai/code/session_01Ub36iQWmsqeLLsdnXfD7Pu), in two typed messages. Derive the times from the preserved transcript (`git grep -n -F "big 3D matrix of ICF codes" -- transcripts`; `git grep -n -F "yes, correct" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "you basically need to have a big 3D matrix of ICF codes * access needs * disability identities"
+>
+> "yes, correct"
+
+The second answered the coordinator's description, which the owner confirmed. The description, for the record (it is the coordinator's wording, not the owner's): the cube is stored sparsely, as a table of the triples someone judged, each with a warrant, who or what judged it and when, and a state from the project's cell states (stated, provisional, pending, not_applicable); a cell with no row reads as not yet judged and a not_applicable row as judged and not applying; the cube is a view over the table, readable from an identity, a code or a need; a session proposes the triples and the owner reviews each batch before it counts as stated.
+
+**Readings.**
+
+- [ASSUMPTION: "yes, correct" confirms the whole description above, including that the owner reviews each batch before a triple counts as stated — basis: it answered the description's closing question, "does a session propose the triples and you review each batch before it counts as stated?"].
+- [ASSUMPTION: this supersedes, on contact (rule 0), the row of `workplan/2026-11-12-bidirectional-pipeline/MAPPING-DESIGN.md` section 2(a) that rejected a new `identity_need_map` ("a second home beside `access_needs.absorbs`"): the home beside it is `access_needs.absorbs`, a delimited cell that names identities in free text (16 of 17 rows delimited per that file; derive: `python3 scripts/audit/joined_cells_census.py`), which the schema-shape ruling of 2026-11-06 (one value per cell) does not allow to stay the only home — basis: the owner's words; the design file is a plan, and the ledger outranks it].
+- The name, columns and grain of the table are not decided here; the second reading names no schema.
+
+CONDITION: any session designing, writing or reading the link between an identity, an access need and an ICF code; T-126 to T-128; any task that reads `access_needs.absorbs` or `identity_icf_map`.
+ACTION: (1) Design the table as a tooling task and ship it before any triple is written (rule 10); name what reads it (CLAUDE.md section 8). (2) Do not take `MAPPING-DESIGN.md` section 2(a)'s rejection as a reason not to build it. (3) The batch that fills it is research data and goes in its own pull request; the owner reviews it before its rows count as stated. (4) Treat the two assumptions above as unratified except where the owner's words state them.
+DATE: 2026-11-20 — owner statements (typed words, quoted above).
+
+## Owner statements 2026-11-20 (third) — the project is a database and a pipeline, kept as simple as possible; the content of the CLAUDE.md rewrite
+
+Given in the session `session_2026-11-20-unregistered-map-codes` (https://claude.ai/code/session_01Ub36iQWmsqeLLsdnXfD7Pu), in typed messages while the coordinator reported an Opus adjudication of the core against the machinery and an antagonist audit of it. Derive the times from the preserved transcript (`git grep -n -F "as simple as possible in infrastructure" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "this entire infrastructure is just trying to formalize asking a Claude session to do research on a topic"
+>
+> "i have just spent a huge amount of time trying to harness an LLM through gates/scripts/github/etc instead of just using it to translate things i can't read"
+>
+> "all i want is for the information to be properly recorded in a database"
+>
+> "that's it"
+>
+> "and then we squeeze it through a pipeline"
+>
+> "i am just saying that the heart of this project really isnt that complicated"
+>
+> "overall we need to make this project as simple as possible in infrastructure because the more exceptions we have the more complexity we guard against which is the more we spiral"
+
+The goal sentence of the same session is quoted in the entry "Owner statements 2026-11-20 — translation runs before judgment …" (`grep -n -F "we research, we record, we verify we recorded things accurately" references/project-standards.md`) and is not repeated as a second home.
+
+**The content of the CLAUDE.md rewrite, recorded so a later session can write it.** Source: the Opus adjudication of 2026-11-20 and the antagonist's audit of it, read by the coordinator. **This is a proposal. The owner has not approved it, and `CLAUDE.md` is unchanged by this entry.** Its sections, in order:
+
+1. **Goal.** The owner's goal sentence verbatim, then one line: a thinking tool, not an authority; the database records research properly and a pipeline processes it; `base` is the owner's request layer, standing where the owner would otherwise ask for a topic directly.
+2. **The things never to get wrong.** (a) Fetch before you write any author, title or figure; a bibliographic field is never written from memory when a payload is in hand. (b) Keep the original text, unit and clause beside every translated figure, and show the owner an English rendering that records who or what translated it and when; an English rendering is never written into `claimed_value` or `claimed_unit`. (c) The disabled people who co-produced a work are evidence and stay credited (Co-1).
+3. **The six verbs and the command for each** (research, record, verify, evaluate in context, synthesize, show), one line each.
+4. **The write path,** in one sentence (rule 3).
+5. **Derive, do not type, a number** (rules 7a and 8, condensed).
+6. **Pointers** to doctrine, the tier system, the rulings ledger and the working-rules file.
+
+**Moved to a referenced working-rules file:** rules 0, 1, 4, 5, 6, 9 and 10; section 3 (the layers and the spine); section 7 (traps); section 8. **Deleted:** the Layer-0 preamble, rule 7 (merged into 7a), the sentence that the stage display form is derived by `stage_label()` (no such function exists: `git grep -n stage_label -- scripts governance .claude skills` finds none), and the embedded "Proof" narratives (`git log -p CLAUDE.md` holds them).
+
+**Two constraints the audit found.** `scripts/audit/claude_md_spine.py` pins the SPINE line, so that line stays in `CLAUDE.md` or the blocking check moves with it. Comments in scripts cite `CLAUDE.md` rules by number (for example "rule 4", "section 5(c)"), so renumbering breaks them silently; sweep them first (rule 4 names prose callers as unswept). **Size,** measured and never typed: `[ $(wc -w < CLAUDE.md) -le $(( $(git show origin/main:CLAUDE.md | wc -w) / 4 )) ]`.
+
+**What the owner approves, and what a session may do.** The owner approves the goal sentence, rule 0, rule 9, the tier and Co-1 definitions, and the fate of the layer model. A session may reorder and reword process rules, traps and command lists.
+
+**The simplicity rule these words state, for any session that adds anything:** each addition names the existing thing it replaces or deletes and what reads it; a new exception is a reason to change the rule, not to add a guard (CLAUDE.md section 8 already says the first half).
+
+CONDITION: any session editing `CLAUDE.md`, adding a table, verb, check, script or exception, or planning the remediation work.
+ACTION: (1) Do not rewrite `CLAUDE.md` until the owner approves the content above; then write it from this entry and the audit, with the size command. (2) Before adding apparatus, state what it replaces and what reads it. (3) Treat the proposal's sections and moves as unratified until the owner's words approve them.
+DATE: 2026-11-20 — owner statements (typed words, quoted above); the rewrite content is the coordinator's record of the audits, not an owner statement.
+
+## Owner statements 2026-11-20 (fourth) — one large pull request for the remediation work; the identity, need and ICF matrix ships on its own
+
+Given in the session `session_2026-11-20-unregistered-map-codes` (https://claude.ai/code/session_01Ub36iQWmsqeLLsdnXfD7Pu), in two typed messages sent while the coordinator was carrying out the plan of the open work (translation, units, verification, the CLAUDE.md rewrite, housekeeping) as an ordered sequence of small pull requests with stop points. Derive the times from the preserved transcript (`git grep -n -F "just do a big pull request" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "no, just do a big pull request so i don't have to waste time"
+>
+> "the matrix can be on its own"
+
+**Readings.**
+
+- [ASSUMPTION: "a big pull request" covers the whole remaining plan of the open work except the matrix: translation before judgment, units, verification, the CLAUDE.md rewrite and the housekeeping, with their tooling and the research rows they need in the same pull request — basis: the words, and "so i don't have to waste time" (fewer review points)].
+- [ASSUMPTION: "the matrix" is the judged identity, access-need and ICF table of T-145 and the rows that fill it, and "on its own" is a separate pull request, tooling first as T-145 says — basis: the entry "Owner statement 2026-11-20 (second)"].
+- [ASSUMPTION: the owner's words supersede, for this one pull request and on contact (rule 0), the separation of research from tooling in CLAUDE.md rule 10; the rule stands for every other pull request — basis: a live owner statement naming one big pull request].
+- Nothing here approves the CLAUDE.md rewrite's content; the pull request carries it for the owner's review, with its rule 0 and rule 9 text moved and not changed, and the pull request description names it as the part the owner approves by merging.
+
+CONDITION: any session shaping the pull request or pull requests for the work of the entry "Owner statements 2026-11-20 — translation runs before judgment …" or the remediation plan of 2026-11-20.
+ACTION: (1) Ship that work as one pull request, with the matrix excluded; ship the matrix as its own. (2) Order the commits inside the pull request tooling first, then the rows they enable, so each commit stands on the one before. (3) Keep the checks of each part in the same pull request and report any that cannot go red on the defect. (4) Treat the assumptions above as unratified except where the owner's words state them.
+DATE: 2026-11-20 — owner statements (typed words, quoted above).
