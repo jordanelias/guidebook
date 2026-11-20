@@ -1,14 +1,18 @@
 # CLAUDE.md — working guide for the Accessible Built Environments Guidebook
 
-**Layer 0.** This file and the checks are what ensure Layer 1's architecture, shape and schema are
-working (owner, 2026-09-09). It holds **process, workflow and rules only**. Every volatile fact —
-counts, versions, CI state — is derived here, never stated. Where it disagrees with
-`decisions/DR-2026-08-19-research-restart-operative-instrument.md`, that instrument wins and this
-file is what to correct — **unless a live owner ruling has superseded the instrument itself, per
-rule 0, in which case the ruling wins over both.** Worked example: the owner's 2026-09-09 (evening)
-ruling (`references/project-standards.md`, "the determination is COMPUTED, not hand-assigned")
-overrode DR-2026-08-19 §12.5's "Permanently manual… anything touching `specifications`" clause on
-contact — no edit to the DR or to this file made that happen; the ruling did.
+## Goal
+
+The owner's goal, verbatim (2026-11-20): *"we research, we record, we verify we recorded things accurately, we
+evaluate things in context with other related things, we synthesize then show"*.
+
+The project is a database that records research properly, and a pipeline that processes it; `base` is the owner's
+request layer, standing where the owner would otherwise ask for a topic directly. Three things are never got wrong:
+
+1. **Fetch before you write any author, title or figure.** A bibliographic field is never written from memory.
+2. **Keep the original beside every translated figure,** and show an English rendering that records who translated
+   it and when (`translations`, read through `v_translations_current`); never English into `claimed_value` or
+   `claimed_unit`.
+3. **Co-1 co-producers are evidence and stay credited.**
 
 **Correction histories do not live here.** When a sentence in this file is found wrong, fix the
 sentence and put the account of the error in the commit message; `git log -p CLAUDE.md` is the record.
@@ -235,8 +239,7 @@ retired `pipeline-map.yaml`'s old table bucketing, not this.
 `governance/pipeline-contract.yaml`'s `stages:` is the single home of the stage ids; the line above
 is a rendering of it. Owner's own formulation, 2026-08-27: *"you research slugs, evidence research,
 judge evidence, synthesize judgments, specify syntheses, and render specifications."* `base` is the
-vocabulary layer the machine gates as a stage; the id is `evidence`, and its display form is
-**derived** by `stage_label()`, never stored beside it.
+vocabulary layer the machine gates as a stage.
 → Enforced by `claude_md_spine` (blocking). Never spell the stages out a second time in this file.
 
 | Stage | Holds |
