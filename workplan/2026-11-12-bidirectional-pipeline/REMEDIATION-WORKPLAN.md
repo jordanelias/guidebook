@@ -195,6 +195,7 @@ The seven further suite documents first planned are not written; the owner dropp
 | [T-141](tasks/T-141-small-repairs.md) | Small repairs the third adjudication resolved: twenty-three items, each its own test group | 4 | 1 and 2 | TOOLING | NOT FOR SONNET | see the file's section 2 | see the file's section 2 | no |
 | [T-142](tasks/T-142-displayed-name-rule.md) | A concept's displayed name is counted from its attested forms, CSA and ISO first, and each instrument occurrence names its issuing body | 4 | 1 (a base table, a column, a view retired) and 2 (the writers, one reader verb) | TOOLING | NOT FOR SONNET | see the file's section 2 | see the file's section 2 | no |
 | [T-143](tasks/T-143-degrees-rule.md) | An angle in degrees converts to the gradient by its tangent, ordered exactly and shown on the safe side | 1 | 1 (a cell on `base_units`) and 2 (the converter, the engine's ordering, `add-unit`) | TOOLING | NOT FOR SONNET | see the file's section 2 | see the file's section 2 | no |
+| [T-144](tasks/T-144-gap-resolution-columns.md) | A closed gap says when, in which session and by what it was resolved | standalone | 1 (four cells on `gaps`) and 2 (`close-gap`, `gaps --closed`, one audit listing) | TOOLING | NOT FOR SONNET | none | none (the owner's instruction of 2026-11-20) | no |
 
 ## 4. Wave 0: what can start now
 

@@ -267,8 +267,12 @@ The `gap_mining` row alone does NOT close the gap. The closure workflow:
 5. (Discoveries that supersede existing anchors only) Write a `supersession_check` row per `supersession-audit` skill §4. The gap_mining row and the supersession_check row both reference the same discovery; they describe orthogonal relationships (gap-closure vs anchor-replacement).
 7. Close the gap:
    ```bash
-   python3 scripts/db.py close-gap --gap-id GAP-NNN --status CLOSED-FIXED --session {SESSION}
+   python3 scripts/db.py close-gap --gap-id GAP-NNN --status CLOSED-FIXED \
+       --resolution-kind {KIND} --resolution-ref "{the pointer of that kind}" --session {SESSION}
    ```
+   The kinds and what each pointer must be are in `python3 scripts/db.py close-gap --help` (read there, not here).
+   Not a data migration path: the migration that carries this batch, closing included, is emitted afterwards.
+   For a gap closed by this batch's findings, give the reason in words (`--resolution-kind reason`).
 
 ---
 

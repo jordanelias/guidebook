@@ -235,7 +235,8 @@ If the operation resolves an existing gap:
 
 ```bash
 python3 scripts/db.py close-gap --gap-id GAP-NNN \
-    --status CLOSED-FIXED --session {session}
+    --status CLOSED-FIXED --resolution-kind reason \
+    --resolution-ref "{the Change Order that resolved it, in words}" --session {session}
 ```
 
 If it creates a new structural gap (content removed, replacement not yet written):

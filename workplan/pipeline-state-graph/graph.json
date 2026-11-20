@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-11-20 01:59 UTC from git HEAD 3806b054 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-11-20 03:25 UTC from git HEAD 993c12fe (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
- "user_version": 161,
+ "user_version": 163,
  "stages": [
   "base",
   "research",
@@ -846,7 +846,11 @@
     "icf_code",
     "needs_code",
     "jurisdiction",
-    "language"
+    "language",
+    "resolved_at",
+    "resolved_by_session",
+    "resolution_ref",
+    "resolution_kind"
    ]
   },
   "identity_icf_map": {
@@ -3087,6 +3091,13 @@
     "ADDRESSABLE",
     "NOT-ADDRESSABLE",
     "TRIAGE-NEEDED"
+   ],
+   "resolution_kind": [
+    "commit",
+    "ledger",
+    "task",
+    "duplicate",
+    "reason"
    ]
   },
   "identity_icf_map": {
@@ -4376,15 +4387,15 @@
   },
   "close-gap": {
    "functions": [
-    "close_gap",
-    "_emit"
+    "_emit",
+    "close_gap"
    ],
    "writes": {
     "gaps": [
      "UPDATE"
     ]
    },
-   "refusals": 1
+   "refusals": 9
   },
   "add-connection": {
    "functions": [
@@ -5510,7 +5521,7 @@
   "status corrections owed (each atom's status re-read)": 12,
   "conflicts (atoms, class, probe exist)": 31,
   "machine transitions": 43,
-  "transition evidence needles re-read": 82,
+  "transition evidence needles re-read": 83,
   "state vocabularies compared with a column's own CHECK": 11,
   "abstract machines (no single column holder)": 5,
   "capability predicates": 27,

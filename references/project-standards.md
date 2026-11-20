@@ -8075,3 +8075,27 @@ Given in the session `session_2026-11-18-remediation-batch-1-tooling-stack-2` (h
 CONDITION: any session adding a term, an alias or a parameter for a door's width or opening, or a ramp's slope or gradient; any session reading a source that names one of these forms.
 ACTION: (1) Do not mint a second term or parameter for any form above; file the form as an alias of the one concept. (2) A form a source states is recorded with its locator through the alias writer; a form only the owner stated is recorded as an owner-supplied alias. (3) A source's figure for any of these forms is extracted against the one parameter whatever slug the source came in under. (4) The alias rows themselves are written in a research pull request, after the tooling it needs (T-136, T-142).
 DATE: 2026-11-19 — owner statements (typed words, quoted above).
+
+## Owner instruction 2026-11-20 — issues are filed in the `gaps` table, and a gap carries its resolution and where the solution came from
+
+Given in the session `session_2026-11-18-remediation-batch-1-tooling-stack-2` (https://claude.ai/code/session_01Ub36iMfdrQNV9XzGP4dyZm), in typed messages after the third tooling stack merged. Derive the times from the preserved transcript (`git grep -n -F "file all in gap table" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "shouldn't we just write all of this to gaps table because we already have tools pointed there"
+>
+> "file all in gap table"
+>
+> "add a resolved column and a solution provenance column or something"
+>
+> "unless we already have a table that links accordingly for the"
+
+**Readings.**
+
+- [ASSUMPTION: the last message is cut off; it asks that a new column be added only if no existing table already links a gap-like record to its resolution — basis: the sentence's own "unless we already have a table that links accordingly"].
+- [ASSUMPTION: the findings a critic pass records are already linked to their resolution by `adversarial_findings` (disposition, disposition_ref, disposed_by_session, disposed_at) and its writers, so they are recorded there, not duplicated in `gaps` (CLAUDE.md rule 5); every other unresolved issue (a limit, a design question not registered as an OD, a defect an executor reported, an open point of an authored task) is a row of `gaps`; a decision registered as an OD stays with its ledger status lines — basis: "because we already have tools pointed there"; one home per fact].
+- [ASSUMPTION: "a resolved column and a solution provenance column" are the three cells `resolved_at`, `resolved_by_session` and the pointer to what resolved the gap, as `determination_gates`, `extraction_follow_ups` and `adversarial_findings` carry theirs — basis: the sibling tables' shape; the schema is a tooling change and merges before the rows (rule 10)].
+
+CONDITION: any session closing a gap, adding a gap column, or filing an unresolved issue.
+ACTION: (1) Close a gap with `db.py close-gap` and its resolution pointer; a closing with no recorded resolution is a legacy row. (2) File an unresolved issue as a gap through `db.py add-gap` in a data pull request that follows the tooling change; do not hand-keep a register file. (3) Record a critic's findings as an adversarial pass, not as gaps.
+DATE: 2026-11-20 — owner instruction (typed words, quoted above).

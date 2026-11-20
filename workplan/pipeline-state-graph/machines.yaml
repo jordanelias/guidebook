@@ -372,9 +372,11 @@ machines:
     from: "OPEN"
     to: "CLOSED"
     via: "db.py close-gap"
-    guards: []
+    guards:
+      - "the gap is OPEN (a closed gap's first closing stands); the status has the closing shape; --resolution-kind is one of gaps.resolution_kind's CHECK and --resolution-ref is a pointer of that kind (a commit that exists, a ledger quote found once, a task with its file, another gap, or a reason in words); the four resolution cells are written with the status in one guarded UPDATE inside one IMMEDIATE transaction (migrations 162 and 163, T-144)"
     evidence:
       - {file: scripts/db.py, func: close_gap, needle: "def close_gap"}
+      - {file: scripts/db.py, func: close_gap, needle: "--resolution-ref is required"}
   unreachable_note: "status is constrained only by LIKE 'OPEN%' / LIKE 'CLOSED%'; the sub-vocabulary after the prefix is free text."
 
 - id: M08

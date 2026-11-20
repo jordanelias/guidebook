@@ -16,7 +16,8 @@ CLI usage:
     python3 scripts/db.py next-id connections|gaps|terms|conflicts|ref
     python3 scripts/db.py coverage --slug SLUG
     python3 scripts/db.py add-gap --category RES --priority P2 --description "..." --session SESSION
-    python3 scripts/db.py close-gap --gap-id GAP-001 --status CLOSED-FIXED --session SESSION
+    python3 scripts/db.py close-gap --gap-id GAP-001 --status CLOSED-FIXED --resolution-kind KIND --resolution-ref "..." --session SESSION
+    python3 scripts/db.py gaps --closed       (closed gaps, with when, by which session and by what each was resolved)
     python3 scripts/db.py add-connection --confidence HIGH --connection-type CROSS-POPULATION --filed-in sensory-environment --description "..." --source-skill connection-discovery --target-slug sensory-environment --session SESSION
     python3 scripts/db.py update-connection --con-id CON-0001 --status CONSUMED --session SESSION
     python3 scripts/db.py unmined [--slug SLUG] [--tier-max 3]
@@ -37,6 +38,7 @@ import hashlib
 import json
 import os
 import re
+import subprocess
 import unicodedata
 import zipfile
 import sqlite3
@@ -374,18 +376,112 @@ def insert_gap(data: dict, session: str, dry_run: bool = False) -> str:
     return data["gap_id"]
 
 
-def close_gap(gap_id: str, status: str,
-              session: str, dry_run: bool = False):
-    if not status.startswith("CLOSED"):
-        raise Refusal(f"status must start with CLOSED, got '{status}'. The closing statuses in use: "
-                      f"SELECT DISTINCT status FROM gaps WHERE status LIKE 'CLOSED%'.")
-    u = _upd(session)
+# The shape every closing status has (`select distinct status from gaps where status like 'CLOSED%'`): CLOSED and one or
+# more hyphenated words of capital ASCII letters. A shape, not a list: the values in use are read from the rows when a
+# status is refused. The column's own CHECK (LIKE 'CLOSED%', case-blind) admits any tail; this is the writer's stricter half.
+_CLOSED_STATUS_SHAPE = re.compile(r"CLOSED(?:-[A-Z]+)+")
+_SHA_SHAPE = re.compile(r"[0-9a-f]{7,40}")
+_TASK_ID_SHAPE = re.compile(r"T-[0-9]{3}")
+_TASKS_DIR = dbcore.REPO_ROOT / "workplan" / "2026-11-12-bidirectional-pipeline" / "tasks"
+
+
+def _resolution_ref_refusal(conn, gap_id: str, kind: str, ref: str):
+    """None when `ref` is a pointer of `kind` (migration 163's resolution_kind), else the refusal's text. Each kind is
+    checked by what it is, as dispose-adversarial-finding checks each disposition's ref."""
+    if kind == "commit":
+        if not _SHA_SHAPE.fullmatch(ref):
+            return f"--resolution-ref {ref!r} is not a commit sha (7 to 40 lower-case hex characters)"
+        try:
+            ok = subprocess.run(["git", "-C", str(dbcore.REPO_ROOT), "cat-file", "-e", f"{ref}^{{commit}}"],
+                                capture_output=True).returncode == 0
+        except FileNotFoundError:
+            return ("git is not available here, so the commit cannot be proved to exist: close the gap from a checkout "
+                    "with git, or give the task (--resolution-kind task) or the reason in words (--resolution-kind reason)")
+        return None if ok else f"--resolution-ref {ref} is not a commit in this repository (git cat-file -e {ref}^{{commit}})"
+    if kind == "ledger":
+        m = dbcore.LEDGER_REF_RE.match(ref)
+        if not m:
+            return (f"--resolution-ref {ref!r} is not a ledger pointer of the form "
+                    f"'references/project-standards.md :: \"<verbatim quote>\"'")
+        dbcore.require_ledger_quote_once(m.group(1), f"close-gap {gap_id}: the quote of --resolution-ref")
+        return None
+    if kind == "task":
+        if not _TASK_ID_SHAPE.fullmatch(ref):
+            return f"--resolution-ref {ref!r} is not a task id (T-nnn)"
+        return None if list(_TASKS_DIR.glob(f"{ref}-*.md")) else \
+            f"--resolution-ref {ref} has no task file ({_TASKS_DIR.relative_to(dbcore.REPO_ROOT)}/{ref}-*.md)"
+    if kind == "duplicate":
+        if ref == gap_id:
+            return f"a gap is not its own duplicate: --resolution-ref names {gap_id} itself"
+        return None if conn.execute("SELECT 1 FROM gaps WHERE gap_id=?", (ref,)).fetchone() else \
+            f"--resolution-ref {ref!r} is not a gap (a duplicate names the other gap that holds the question)"
+    # reason: words, never a pointer of another kind stored as prose
+    if _SHA_SHAPE.fullmatch(ref) or _TASK_ID_SHAPE.fullmatch(ref) or \
+            conn.execute("SELECT 1 FROM gaps WHERE gap_id=?", (ref,)).fetchone():
+        return (f"--resolution-ref {ref!r} is shaped as a commit, a task or a gap: give it with that "
+                f"--resolution-kind, where it is checked")
+    if ref.startswith(("references/", "scripts/migrations/")):
+        return (f"--resolution-ref {ref!r} is a path, not a reason: a ledger pointer goes under --resolution-kind ledger, "
+                f"and a data migration does not exist yet when the gap is closed (give the commit, the task or the reason)")
+    return None
+
+
+def close_gap(gap_id: str, status: str, resolution_ref: str, session: str, dry_run: bool = False,
+              resolution_kind: str = None):
+    """Close an OPEN gap and say what closed it (T-144, migrations 162 and 163): `status`, `resolved_at`,
+    `resolved_by_session`, `resolution_kind` and `resolution_ref` in one guarded UPDATE inside one IMMEDIATE transaction,
+    so two closers cannot both succeed. The kinds are migration 163's CHECK (dbcore.check_values), each checked by
+    `_resolution_ref_refusal`.
+
+    REFUSES: a status not of the closing shape; a blank pointer (dbcore.is_blank); a kind outside the CHECK; a pointer
+    not of its kind; a session that is not a stem; an unknown gap; a gap already closed (its first closing stands; the
+    refusal names the next act). No verb reopens a gap: a reopening NULLs the four cells with the status, or the CHECK
+    refuses it."""
+    if not _CLOSED_STATUS_SHAPE.fullmatch(status or ""):
+        raise Refusal(f"close-gap {gap_id}: --status {status!r} is not a closing status: CLOSED and one or more words of "
+                      f"capital letters joined by hyphens, with nothing invisible in it. The closing statuses in use: "
+                      f"SELECT DISTINCT status FROM gaps WHERE status LIKE 'CLOSED%'. Nothing was written.")
+    ref = (resolution_ref or "").strip()
+    if dbcore.is_blank(ref):
+        raise Refusal(f"close-gap {gap_id}: --resolution-ref is required: what resolved the gap, of the kind "
+                      f"--resolution-kind names (a commit sha in this repository; references/project-standards.md :: "
+                      f"\"<verbatim quote>\"; a task id with its file; the other gap it duplicates; or the reason in "
+                      f"words). A gap closed without saying by what cannot be checked. Nothing was written.")
+    stamp, stem = dbcore.now(), dbcore.session_stem(session)
+    if not dbcore.is_session_stem(stem):
+        raise Refusal(f"close-gap: --session {session!r} is not a session stem (session_<name>, "
+                      f"dbcore.is_session_stem). Nothing was written.")
     with connect(dry_run) as conn:
-        conn.execute(
-            "UPDATE gaps SET status=?, updated_at=?, updated_by_session=? "
-            "WHERE gap_id=?",
-            [status, u["updated_at"], u["updated_by_session"], gap_id]
-        )
+        kinds = sorted(dbcore.check_values(conn, "gaps", "resolution_kind"))
+        if not kinds:
+            raise Refusal("close-gap: gaps.resolution_kind declares no kinds (migration 163 not applied?). Nothing was written.")
+        if resolution_kind not in kinds:
+            raise Refusal(f"close-gap {gap_id}: --resolution-kind {resolution_kind!r} is not one the schema declares "
+                          f"({', '.join(kinds)}). Nothing was written.")
+        conn.execute("BEGIN IMMEDIATE")
+        row = conn.execute(f"SELECT status, resolved_at, resolution_kind, resolution_ref, {_OPEN_GAP} AS open "
+                           f"FROM gaps WHERE gap_id=?", (gap_id,)).fetchone()
+        if row is None:
+            raise Refusal(f"close-gap: {gap_id}: no such gap (db.py gaps lists the open ones). Nothing was written.")
+        if not row["open"]:
+            raise Refusal(f"close-gap: {gap_id} is already {row['status']} ("
+                          + (f"since {row['resolved_at']}: {row['resolution_kind']} {row['resolution_ref']}"
+                             if row["resolved_at"] else "closed with no resolution recorded")
+                          + "); its first closing stands. To correct its text, db.py amend-gap --gap-id "
+                          f"{gap_id} --append-note ...; a corrected resolution is a new gap (db.py add-gap) whose "
+                          f"description names {gap_id}. Nothing was written.")
+        why = _resolution_ref_refusal(conn, gap_id, resolution_kind, ref)
+        if why:
+            raise Refusal(f"close-gap {gap_id}: {why}. Nothing was written.")
+        cur = conn.execute(
+            "UPDATE gaps SET status=?, resolved_at=?, resolved_by_session=?, resolution_kind=?, resolution_ref=?, "
+            f"updated_at=?, updated_by_session=? WHERE gap_id=? AND {_OPEN_GAP}",
+            [status, stamp, stem, resolution_kind, ref, stamp, stem, gap_id])
+        if cur.rowcount != 1:
+            raise Refusal(f"close-gap: {gap_id} was closed by another writer while this one ran; its closing stands. "
+                          f"Nothing was written.")
+    return {"closed": gap_id, "status": status, "resolved_at": stamp, "resolved_by_session": stem,
+            "resolution_kind": resolution_kind, "resolution_ref": ref, "dry_run": dry_run}
 
 
 _VALID_DIRECTIONS = frozenset({"backward", "forward"})
@@ -1099,8 +1195,9 @@ def next_term_id() -> str:
 # --- Domain queries ---
 
 
-def get_open_gaps(priority: str = None) -> list[dict]:
-    q = f"SELECT * FROM gaps WHERE {_OPEN_GAP}"
+def get_open_gaps(priority: str = None, closed: bool = False) -> list[dict]:
+    """The open gaps, or with `closed` the closed ones (each row carries its resolution cells, migrations 162-163)."""
+    q = f"SELECT * FROM gaps WHERE {'NOT ' if closed else ''}{_OPEN_GAP}"
     params = []
     if priority:
         q += " AND priority=?"
@@ -1629,6 +1726,9 @@ def main():
     p_gaps = sub.add_parser("gaps", help="Query gaps")
     p_gaps.add_argument("--priority", choices=dbcore.schema_choices("gaps", "priority"))
     p_gaps.add_argument("--status")
+    p_gaps.add_argument("--closed", action="store_true",
+                        help="List the CLOSED gaps instead, with resolved_at, resolved_by_session, resolution_kind "
+                             "and resolution_ref (NULL on a gap closed with no resolution recorded)")
 
     # connections
     p_conn = sub.add_parser("connections", help="Query connections")
@@ -1868,8 +1968,8 @@ def main():
     p_ag2.add_argument("--gap-id", required=True)
     p_ag2.add_argument("--append-note", required=True, dest="append_note",
                        help="Appended after a '|| CORRECTED <date>:' marker. close-gap "
-                            "moves status only, and gaps has no closure-note column, so "
-                            "this is the only way to correct a filed description.")
+                            "records what resolved a gap (resolution_ref), not a correction of "
+                            "its text, so this is the only way to correct a filed description.")
     p_ag2.add_argument("--session", required=True)
     p_ag2.add_argument("--dry-run", action="store_true")
 
@@ -3029,6 +3129,15 @@ def main():
     p_cg.add_argument("--gap-id", required=True)
     p_cg.add_argument("--status", required=True,
                       help="Must start with CLOSED (e.g. CLOSED-FIXED)")
+    p_cg.add_argument("--resolution-kind", dest="resolution_kind",
+                      choices=dbcore.schema_choices("gaps", "resolution_kind"),
+                      help="Required: what kind of thing resolved the gap (gaps.resolution_kind's own CHECK).")
+    p_cg.add_argument("--resolution-ref", dest="resolution_ref",
+                      help="Required: the pointer, checked by its kind: commit = a sha that exists in this "
+                           "repository; ledger = references/project-standards.md :: \"<verbatim quote>\" (found "
+                           "once); task = T-nnn with its task file; duplicate = the other gap's id; reason = the "
+                           "reason in words. Not a data migration path: the migration that carries the closing is "
+                           "emitted after it. Stored with resolved_at and resolved_by_session.")
     p_cg.add_argument("--session", required=True)
     p_cg.add_argument("--dry-run", action="store_true")
 
@@ -3526,7 +3635,7 @@ def main():
         ))
 
     if args.command == "gaps":
-        rows = get_open_gaps(priority=args.priority)
+        rows = get_open_gaps(priority=args.priority, closed=args.closed)
         if args.status:
             rows = [r for r in rows if args.status in r["status"]]
         _emit(rows)
@@ -3613,9 +3722,8 @@ def main():
         _emit({"gap_id": gap_id, "dry_run": args.dry_run})
 
     elif args.command == "close-gap":
-        close_gap(args.gap_id, args.status,
-                  session=args.session, dry_run=args.dry_run)
-        _emit({"closed": args.gap_id, "status": args.status})
+        _emit(close_gap(args.gap_id, args.status, args.resolution_ref,
+                        session=args.session, dry_run=args.dry_run, resolution_kind=args.resolution_kind))
 
     elif args.command == "add-connection":
         targets = ([("parameter_id", v) for v in args.t_parameters]
@@ -5354,9 +5462,9 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
 def amend_gap(gap_id: str, note: str, session: str, dry_run: bool = False):
     """APPEND a dated correction to a gap's description. Never rewrite it.
 
-    `close-gap` moves `status` and nothing else, and the `gaps` table has no
-    closure-note column -- so a gap whose DESCRIPTION states something since
-    falsified had no repair path at all. Measured on batch 17: GAP-027's text still
+    `close-gap` moves `status` and records what resolved the gap (migration 162's
+    resolution_ref), never a correction of its text -- so a gap whose DESCRIPTION
+    states something since falsified has no other repair path. Measured on batch 17: GAP-027's text still
     opened "GAP-018 PREDICTOR PASSED ITS FIRST PROSPECTIVE TEST" after GAP-029
     retracted that result as a screen artefact, and GAP-026 still asserted a
     "SafetyLit 503" its own persisted artefact does not hold. A register whose
