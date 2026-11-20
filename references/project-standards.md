@@ -8170,3 +8170,46 @@ The second answered the coordinator's description, which the owner confirmed. Th
 CONDITION: any session designing, writing or reading the link between an identity, an access need and an ICF code; T-126 to T-128; any task that reads `access_needs.absorbs` or `identity_icf_map`.
 ACTION: (1) Design the table as a tooling task and ship it before any triple is written (rule 10); name what reads it (CLAUDE.md section 8). (2) Do not take `MAPPING-DESIGN.md` section 2(a)'s rejection as a reason not to build it. (3) The batch that fills it is research data and goes in its own pull request; the owner reviews it before its rows count as stated. (4) Treat the two assumptions above as unratified except where the owner's words state them.
 DATE: 2026-11-20 — owner statements (typed words, quoted above).
+
+## Owner statements 2026-11-20 (third) — the project is a database and a pipeline, kept as simple as possible; the content of the CLAUDE.md rewrite
+
+Given in the session `session_2026-11-20-unregistered-map-codes` (https://claude.ai/code/session_01Ub36iQWmsqeLLsdnXfD7Pu), in typed messages while the coordinator reported an Opus adjudication of the core against the machinery and an antagonist audit of it. Derive the times from the preserved transcript (`git grep -n -F "as simple as possible in infrastructure" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "this entire infrastructure is just trying to formalize asking a Claude session to do research on a topic"
+>
+> "i have just spent a huge amount of time trying to harness an LLM through gates/scripts/github/etc instead of just using it to translate things i can't read"
+>
+> "all i want is for the information to be properly recorded in a database"
+>
+> "that's it"
+>
+> "and then we squeeze it through a pipeline"
+>
+> "i am just saying that the heart of this project really isnt that complicated"
+>
+> "overall we need to make this project as simple as possible in infrastructure because the more exceptions we have the more complexity we guard against which is the more we spiral"
+
+The goal sentence of the same session is quoted in the entry "Owner statements 2026-11-20 — translation runs before judgment …" (`grep -n -F "we research, we record, we verify we recorded things accurately" references/project-standards.md`) and is not repeated as a second home.
+
+**The content of the CLAUDE.md rewrite, recorded so a later session can write it.** Source: the Opus adjudication of 2026-11-20 and the antagonist's audit of it, read by the coordinator. **This is a proposal. The owner has not approved it, and `CLAUDE.md` is unchanged by this entry.** Its sections, in order:
+
+1. **Goal.** The owner's goal sentence verbatim, then one line: a thinking tool, not an authority; the database records research properly and a pipeline processes it; `base` is the owner's request layer, standing where the owner would otherwise ask for a topic directly.
+2. **The things never to get wrong.** (a) Fetch before you write any author, title or figure; a bibliographic field is never written from memory when a payload is in hand. (b) Keep the original text, unit and clause beside every translated figure, and show the owner an English rendering that records who or what translated it and when; an English rendering is never written into `claimed_value` or `claimed_unit`. (c) The disabled people who co-produced a work are evidence and stay credited (Co-1).
+3. **The six verbs and the command for each** (research, record, verify, evaluate in context, synthesize, show), one line each.
+4. **The write path,** in one sentence (rule 3).
+5. **Derive, do not type, a number** (rules 7a and 8, condensed).
+6. **Pointers** to doctrine, the tier system, the rulings ledger and the working-rules file.
+
+**Moved to a referenced working-rules file:** rules 0, 1, 4, 5, 6, 9 and 10; section 3 (the layers and the spine); section 7 (traps); section 8. **Deleted:** the Layer-0 preamble, rule 7 (merged into 7a), the sentence that the stage display form is derived by `stage_label()` (no such function exists: `git grep -n stage_label -- scripts governance .claude skills` finds none), and the embedded "Proof" narratives (`git log -p CLAUDE.md` holds them).
+
+**Two constraints the audit found.** `scripts/audit/claude_md_spine.py` pins the SPINE line, so that line stays in `CLAUDE.md` or the blocking check moves with it. Comments in scripts cite `CLAUDE.md` rules by number (for example "rule 4", "section 5(c)"), so renumbering breaks them silently; sweep them first (rule 4 names prose callers as unswept). **Size,** measured and never typed: `[ $(wc -w < CLAUDE.md) -le $(( $(git show origin/main:CLAUDE.md | wc -w) / 4 )) ]`.
+
+**What the owner approves, and what a session may do.** The owner approves the goal sentence, rule 0, rule 9, the tier and Co-1 definitions, and the fate of the layer model. A session may reorder and reword process rules, traps and command lists.
+
+**The simplicity rule these words state, for any session that adds anything:** each addition names the existing thing it replaces or deletes and what reads it; a new exception is a reason to change the rule, not to add a guard (CLAUDE.md section 8 already says the first half).
+
+CONDITION: any session editing `CLAUDE.md`, adding a table, verb, check, script or exception, or planning the remediation work.
+ACTION: (1) Do not rewrite `CLAUDE.md` until the owner approves the content above; then write it from this entry and the audit, with the size command. (2) Before adding apparatus, state what it replaces and what reads it. (3) Treat the proposal's sections and moves as unratified until the owner's words approve them.
+DATE: 2026-11-20 — owner statements (typed words, quoted above); the rewrite content is the coordinator's record of the audits, not an owner statement.
