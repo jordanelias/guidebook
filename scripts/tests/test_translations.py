@@ -139,9 +139,16 @@ cjk = next((r for r in FIGS if db._cjk_to_arabic(r["text"]) != r["text"] and NUM
 LANGS = [r[0] for r in q("SELECT DISTINCT language FROM lang_jur_map ORDER BY language")]
 
 
+# the languages each cell was already translated into before this test wrote anything (the live batches translate into
+# English), snapshotted once so that langs_for stays a stable order however many rows the cases below add
+HELD = {(r[0], r[1]) for r in q("SELECT source_row_key, target_language FROM v_translations_current "
+                                "WHERE source_table='source_value_extractions' AND source_column='claim_text'")}
+
+
 def langs_for(fig, n):
-    """n languages lang_jur_map holds other than the figure's own, in a stable order, none used before for it."""
-    return [lg for lg in LANGS if lg != fig["lang"]][:n]
+    """n languages lang_jur_map holds other than the figure's own and any it was translated into before this test,
+    in a stable order, none used before for it."""
+    return [lg for lg in LANGS if lg != fig["lang"] and (str(fig["id"]), lg) not in HELD][:n]
 
 
 def ptr(fig, lang, column="claim_text"):
@@ -481,4 +488,25 @@ n_current = q("SELECT count(*) FROM v_translations_current")[0][0]
 record("T049-86", "translation_pointer_audit passes with EXAMINED equal to the current translations the test left",
        audit.returncode == 0 and f"EXAMINED: {n_current}\n" in audit.stdout and n_current > 0,
        audit.stdout + audit.stderr)
+
+# === owed (owner 2026-11-20, "the base has to record all the translation work for me") ==============================
+# A non-English figure nobody asked to translate is listed at the default stage as owed, at no other stage, and stops
+# being listed once its English translation is recorded. The fixture is made by hand when the live data already holds
+# the English translation (HAND: its rows are deleted on this scratch copy only).
+EN = db._check_language(con, "EN", "translation")
+if not plain or plain["lang"] == EN:
+    skip("T049-91..T049-93", "no non-English figure with plain integers")
+else:
+    con.execute("DELETE FROM translations WHERE source_table='source_value_extractions' AND source_column='claim_text' "
+                "AND source_row_key=? AND target_language=?", (str(plain["id"]), EN))
+    con.commit()
+    owed = lambda stage: [r["source_row_key"] for r in db.translations_due(stage) if r["due_by"] == "owed"]  # noqa: E731
+    record("T049-91", "a non-English figure with no English translation and no request is listed as owed at the "
+                      "default stage", str(plain["id"]) in owed(DEFAULT), owed(DEFAULT)[:10])
+    record("T049-92", "nothing is listed as owed at a stage other than the default", not owed(OTHER), owed(OTHER)[:10])
+    db.record_translation("TASK-FIXTURE " + " ".join(NUM.findall(plain["text"])), source_table="source_value_extractions",
+                          source_column="claim_text", source_row_key=str(plain["id"]), target_language=EN,
+                          stage=JUDGMENT, **KW)
+    record("T049-93", "once its English translation is recorded the figure is no longer owed",
+           str(plain["id"]) not in owed(DEFAULT), owed(DEFAULT)[:10])
 finish()

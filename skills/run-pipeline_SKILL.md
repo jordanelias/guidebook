@@ -236,6 +236,12 @@ timing for a code value: its lens is judged in the call that records it (`grep -
 references/project-standards.md`; `grep -n -F "Correction and registration 2026-11-15" references/project-standards.md`).
 The judgment stage may later confirm a context link (nothing to write) or replace it: `add-lens-link` on the same code
 with its own warrant on another basis retires the context link in the same call; it never copies a lens elsewhere.)*
+- **Translate before you judge** (owner 2026-11-20, "yes, translation runs before judgment"). `db.py translations
+  --due-at judgment` lists every open request and every cell owed one (a non-English source's `pub_title`, a live
+  figure's `claim_text`); the default stage is the translation rule's in `governance/pipeline-contract.yaml`, and a
+  request may carry its own `--due-stage`. Record each with `record-translation`; a different model reviews it with
+  `review-translation`. The English never goes into `claimed_value` or `claimed_unit`; read it through
+  `v_translations_current`, beside the original.
 - **A code value's lens, at recording** (guidance for your judgment, not a lookup any code consults: the owner's
   "typically"; OD-65, "use contextual judgment"). *When you record a value from a code (a tier 4 to 6 source), give it
   its lens in the same call, from the clause and its context, with its warrant: the ICF link, the access-need link, and
@@ -335,9 +341,6 @@ with its own warrant on another basis retires the context link in the same call;
   NO-COVERING-READING.
 
 ## 5. synthesis — read rows against each other
-- Translations due here are listed by `db.py translations --due-at synthesis`: the default stage is the translation
-  rule's default stage in `governance/pipeline-contract.yaml`, and a request may carry its own `--due-stage`. Read
-  them through `v_translations_current`, never as a source column.
 - For each parameter cluster ask which **other** parameters, populations or equipment change it (swept-path figures for
   different wheelchairs set different turning spaces, corridor widths, door approaches). File each dependency as a
   **typed edge between extractions** where one figure is computed from or conditioned on another, which may cross

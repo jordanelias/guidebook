@@ -14232,10 +14232,32 @@ def review_translation(translation_id, verdict, reviewer_kind, reviewer_name, re
     return {"translation_id": translation_id, "status": verdict, "dry_run": dry_run}
 
 
+def _translations_owed(conn):
+    """The cells owed an English translation that nobody has asked for: the title of each source recorded in another
+    language, and the claim_text of each live figure from one, with no current translation and no open request
+    (owner 2026-11-20: "the base has to record all the translation work for me"). The language is the one
+    `_cell_language` reads (lang_detected, else language); a source recording none is not listed."""
+    en = _check_language(conn, "EN", "translation", "--target-language")
+    held = {tuple(r) for r in conn.execute(
+        "SELECT source_table, source_column, source_row_key FROM translations WHERE target_language=? "
+        "AND superseded_by_translation_id IS NULL AND status IN ('requested', 'translated', 'reviewed')", (en,))}
+    cells = conn.execute(
+        "SELECT 'evidence_sources', 'pub_title', ref_id FROM evidence_sources s "
+        "WHERE UPPER(COALESCE(s.lang_detected, s.language, ?)) <> UPPER(?) AND pub_title IS NOT NULL "
+        "UNION ALL SELECT 'source_value_extractions', 'claim_text', CAST(x.extraction_id AS TEXT) "
+        "FROM source_value_extractions x JOIN evidence_sources s USING (ref_id) WHERE x.retired_at IS NULL "
+        "AND x.claim_text IS NOT NULL AND UPPER(COALESCE(s.lang_detected, s.language, ?)) <> UPPER(?) "
+        "ORDER BY 1, 3", (en,) * 4).fetchall()
+    return [{"translation_id": None, "source_table": t, "source_column": c, "source_row_key": k,
+             "target_language": en, "requested_at_stage": None} for t, c, k in cells if (t, c, k) not in held]
+
+
 def translations_due(stage, contract_path=None):
     """The open requests (`requested`, not retired) that fall due at `stage`: the row's own `due_stage` where it has
-    one, else the translation rule's default stage, read from the contract when asked and never stored. Refused when
-    the contract holds no translation rule."""
+    one, else the translation rule's default stage, read from the contract when asked and never stored. At the
+    default stage it also lists each cell owed a translation and not yet requested (`_translations_owed`,
+    `due_by` "owed"), so the stage that reads them sees what it is owed. Refused when the contract holds no
+    translation rule."""
     contract = _translation_contract(contract_path)
     _translation_stage(contract, stage, "--due-at")
     if contract.translation is None:
@@ -14251,8 +14273,10 @@ def translations_due(stage, contract_path=None):
             "AND NOT (source_table = 'source_value_extractions' AND source_row_key IN "
             "(SELECT CAST(extraction_id AS TEXT) FROM source_value_extractions WHERE retired_at IS NOT NULL)) "
             "ORDER BY translation_id").fetchall()
+        owed = _translations_owed(conn) if stage == default else []
     return [dict(r, due_stage=r["due_stage"] or default, due_by="row" if r["due_stage"] else "rule")
-            for r in rows if (r["due_stage"] or default) == stage]
+            for r in rows if (r["due_stage"] or default) == stage] + \
+        [dict(o, due_stage=default, due_by="owed") for o in owed]
 
 
 if __name__ == "__main__":
