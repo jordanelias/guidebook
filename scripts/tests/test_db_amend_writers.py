@@ -4704,10 +4704,11 @@ try:
         import traceback
         traceback.print_exc()
         record("T078R", "the T-078 repair section ran to its end", False, f"{exc.__class__.__name__}: {exc}")
-    # ── T-144: a closed gap says when, in which session and by what it was resolved (migration 162) ────────────────────
-    # What reaches the guidebook without it: a gap register whose closings cannot be checked, so a gap closed by mistake
-    # or for a reason since withdrawn reads as answered. Fixtures are TASK-FIXTURE gaps made with add-gap on the copy;
-    # where the CHECK itself is under test the row is written by hand SQL on the copy (HAND). Every probe is derived.
+    # ── T-144: a closed gap says when, in which session, by what kind of thing and by what it was resolved ────────────
+    # (migrations 162 and 163). What reaches the guidebook without it: a gap register whose closings cannot be checked, so
+    # a gap closed by mistake or for a reason since withdrawn reads as answered. Fixtures are TASK-FIXTURE gaps made with
+    # add-gap on the copy; where a CHECK is under test the rows are written by hand SQL on a fresh replay of the schema
+    # migrations FROM THEIR FILES (HAND), so a change to 162 or 163 reaches the case. Every probe is derived.
     try:
         mig162 = (REPO / "scripts" / "migrations" / "162_gap_resolution.sql").read_text()
         g162 = re.search(r"resolved_by_session NOT GLOB '\*\[' \|\| (.*?) \|\| '\]\*'", mig162, re.S).group(1)
@@ -4716,8 +4717,9 @@ try:
         record("T144-01", "migration 162 spells dbcore.blank_chars() (less U+0000) in both its session and its pointer test",
                sp162 == set(dbcore.blank_chars()) - {"\x00"} and t162 == g162, len(sp162))
         cat144, pri144 = dbcore.schema_choices("gaps", "category")[0], dbcore.schema_choices("gaps", "priority")[-1]
-        closed144 = next(iter(sorted(v for (v,) in q("SELECT DISTINCT status FROM gaps WHERE status LIKE 'CLOSED%'"))),
-                         "CLOSED-FIXED")
+        live_closed = sorted(v for (v,) in q("SELECT DISTINCT status FROM gaps WHERE status LIKE 'CLOSED%'"))
+        closed144 = next(v for v in live_closed if db._CLOSED_STATUS_SHAPE.fullmatch(v))
+        kinds144 = dbcore.check_values(sqlite3.connect(DB), "gaps", "resolution_kind")
 
         def gap144(label):
             r_ = run_cli("add-gap", "--category", cat144, "--priority", pri144, "--description",
@@ -4725,101 +4727,271 @@ try:
             return json.loads(r_.stdout)["gap_id"]
 
         def row144(g):
-            return q("SELECT status, resolved_at, resolved_by_session, resolution_ref, updated_at FROM gaps "
-                     "WHERE gap_id=?", g)[0]
+            return q("SELECT status, resolved_at, resolved_by_session, resolution_ref, updated_at, resolution_kind, "
+                     "updated_by_session FROM gaps WHERE gap_id=?", g)[0]
+
+        def close144(g, ref, kind="reason", sess=S, status=None):
+            return refusal(db.close_gap, g, status or closed144, ref, sess, resolution_kind=kind)
 
         WHY144 = "TASK-FIXTURE: closed by the T-144 test"
         ga, gb, gc = gap144("a"), gap144("b"), gap144("c")
-        r02 = run_cli("close-gap", "--gap-id", ga, "--status", closed144, "--session", S)
+        r02 = run_cli("close-gap", "--gap-id", ga, "--status", closed144, "--resolution-kind", "reason", "--session", S)
         record("T144-02", "close-gap with no --resolution-ref is refused naming the flag and what to give, and writes nothing",
-               r02.returncode != 0 and "--resolution-ref is required" in r02.stderr and "disposition_ref" in r02.stderr
+               r02.returncode != 0 and "--resolution-ref is required" in r02.stderr and "--resolution-kind" in r02.stderr
                and row144(ga)[0].startswith("OPEN"), r02.stderr[-200:])
-        r03 = [refusal(db.close_gap, ga, closed144, ch, S) for ch in ("\u00ad", "\u3164", " \u200b ", "\u2800")]
+        r03 = [close144(ga, ch) for ch in ("\u00ad", "\u3164", " \u200b ", "\u2800")]
         record("T144-03", "close-gap refuses a pointer of blank characters only (dbcore.is_blank), and writes nothing",
                all(m and "--resolution-ref is required" in m for m in r03) and row144(ga)[0].startswith("OPEN"), r03)
-        r04 = refusal(db.close_gap, ga, closed144,
-                      'references/project-standards.md :: "TASK-FIXTURE: a quote the ledger does not hold"', S)
-        record("T144-04", "close-gap refuses a ledger pointer whose quote is not found exactly once",
-               r04 and "occurs 0 time(s)" in r04 and row144(ga)[0].startswith("OPEN"), r04)
-        r05 = refusal(db.close_gap, ga, closed144, WHY144, "not-a-session")
+        r04a = close144(ga, 'references/project-standards.md :: "TASK-FIXTURE: a quote the ledger does not hold"', "ledger")
+        r04b = [close144(ga, x, "ledger") for x in ("references/project-standards.md :: a quote that is nowhere",
+                                                     'references/project-standards.md::"nowhere at all zzz"')]
+        record("T144-04", "close-gap refuses a ledger pointer whose quote is not found once, and a malformed ledger pointer",
+               r04a and "occurs 0 time(s)" in r04a and all(m and "is not a ledger pointer" in m for m in r04b)
+               and row144(ga)[0].startswith("OPEN"), (r04a, r04b))
+        r05 = close144(ga, WHY144, sess="not-a-session")
         record("T144-05", "close-gap refuses a session that is not a stem", r05 and "not a session stem" in r05, r05)
         absent144 = db.next_gap_id()
-        r06 = refusal(db.close_gap, absent144, closed144, WHY144, S)
+        r06 = close144(absent144, WHY144)
         record("T144-06", "close-gap refuses an unknown gap id (it used to UPDATE nothing and report it closed)",
                r06 and "no such gap" in r06 and not q("SELECT 1 FROM gaps WHERE gap_id=?", absent144), r06)
-        r07 = run_cli("close-gap", "--gap-id", ga, "--status", closed144, "--resolution-ref", WHY144, "--session", S)
-        st7, at7, by7, ref7, upd7 = row144(ga)
-        record("T144-07", "close-gap stamps status, resolved_at (dbcore.now()'s shape), resolved_by_session and "
-               "resolution_ref in one UPDATE", r07.returncode == 0 and st7 == closed144 and by7 == S and ref7 == WHY144
-               and at7 == upd7 and re.fullmatch(r"\d{4}-\d\d-\d\d \d\d:\d\d", at7 or ""), (r07.stderr[-200:], row144(ga)))
-        r08 = refusal(db.close_gap, ga, closed144, "TASK-FIXTURE: a second closing", S)
-        record("T144-08", "close-gap refuses a gap already closed, naming its first resolution, which stands",
-               r08 and "already" in r08 and WHY144 in r08 and row144(ga)[3] == WHY144, r08)
-        w("UPDATE gaps SET status=? WHERE gap_id=?", closed144, gb)    # HAND: a closing made before migration 162
-        r09 = refusal(db.close_gap, gb, closed144, WHY144, S)
-        record("T144-09", "close-gap refuses a gap closed before migration 162, saying it has no resolution recorded",
+        r07 = run_cli("close-gap", "--gap-id", ga, "--status", closed144, "--resolution-kind", "reason",
+                      "--resolution-ref", f"  {WHY144}  ", "--session", S)
+        st7, at7, by7, ref7, upd7, kind7, ubs7 = row144(ga)
+        out7 = json.loads(r07.stdout or "{}")
+        record("T144-07", "close-gap stamps status, resolved_at (dbcore.now()'s shape), the session, the kind and the "
+               "stripped pointer in one UPDATE, stamps updated_by_session, and prints what it stored",
+               r07.returncode == 0 and st7 == closed144 and by7 == S and ref7 == WHY144 and kind7 == "reason"
+               and ubs7 == S and at7 == upd7 and re.fullmatch(r"\d{4}-\d\d-\d\d \d\d:\d\d", at7 or "")
+               and out7 == {"closed": ga, "status": st7, "resolved_at": at7, "resolved_by_session": by7,
+                            "resolution_kind": kind7, "resolution_ref": ref7, "dry_run": False},
+               (r07.stderr[-200:], row144(ga), out7))
+        r08 = close144(ga, "TASK-FIXTURE: a second closing")
+        record("T144-08", "close-gap refuses a gap already closed, naming its first resolution, which stands, and the next "
+               "act (amend-gap, or a new gap)", r08 and "already" in r08 and WHY144 in r08 and "amend-gap" in r08
+               and "add-gap" in r08 and row144(ga)[3] == WHY144, r08)
+        w("UPDATE gaps SET status=? WHERE gap_id=?", closed144, gb)    # HAND: a closing with no resolution recorded
+        r09 = close144(gb, WHY144)
+        record("T144-09", "close-gap refuses a gap closed with no resolution recorded, saying so",
                r09 and "no resolution recorded" in r09 and row144(gb)[1] is None, r09)
         lq144 = next((ln[3:63] for ln in (REPO / "references" / "project-standards.md").read_text().splitlines()
-                      if ln.startswith("## ") and len(ln) > 70 and dbcore.ledger_quote_count(ln[3:63]) == 1), None)
-        r10 = refusal(db.close_gap, gc, closed144, f'references/project-standards.md :: "{lq144}"', S)
-        record("T144-10", "close-gap accepts a ledger pointer whose quote is found once (derived from the ledger)",
-               lq144 and r10 is None and row144(gc)[3] == f'references/project-standards.md :: "{lq144}"', (lq144, r10))
-        # migration 162's CHECK, by hand SQL on fixture gaps (HAND: the CHECK is under test, not the writer)
-        gd, ge = gap144("d"), gap144("e")
-        U144 = "UPDATE gaps SET status=?, resolved_at=?, resolved_by_session=?, resolution_ref=? WHERE gap_id=?"
+                      if ln.startswith("## Owner") and len(ln) > 70 and dbcore.ledger_quote_count(ln[3:63]) == 1), None)
+        r10 = close144(gc, f'references/project-standards.md :: "{lq144}"', "ledger")
+        record("T144-10", "an owner ruling closes a gap: a ledger pointer whose quote is found once is accepted",
+               lq144 and r10 is None and row144(gc)[3] == f'references/project-standards.md :: "{lq144}"'
+               and row144(gc)[5] == "ledger", (lq144, r10))
+        # migrations 162 and 163, replayed from their files onto a fresh database (HAND: the CHECKs are under test)
+        import contextlib, io
+        import migrate_db
+        r162, r163 = os.path.join(TMP, "t144-162.db"), os.path.join(TMP, "t144-163.db")
+        crp = sqlite3.connect(r162, isolation_level=None)
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            steps = [st_ for st_ in migrate_db.build_plan() if st_[0] == "schema" and st_[1] <= 163]
+            for step in steps:
+                if step[1] == 163:
+                    crp.close()
+                    shutil.copy(r162, r163)
+                    crp = sqlite3.connect(r163, isolation_level=None)
+                stmts, uv = migrate_db._prepare_body(step[2].read_text(encoding="utf-8"))
+                migrate_db._apply_atomically(crp, stmts, label=step[2].name, fk_blocking=False,
+                                             user_version=(uv if "baseline" in step[2].name else step[1]))
+        crp.close()
         now144 = dbcore.now()
-        bad144 = {"an OPEN gap carrying all three": ("OPEN", now144, S, WHY144),
-                  "two of the three": (closed144, now144, S, None),
-                  "the stamp alone": (closed144, now144, None, None),
-                  "resolved_at 2026-02-30 00:00": (closed144, "2026-02-30 00:00", S, WHY144),
-                  "resolved_at 9999-99-99 99:99": (closed144, "9999-99-99 99:99", S, WHY144),
-                  "resolved_at with seconds": (closed144, now144 + ":00", S, WHY144),
-                  "resolved_at before the gap was created": (closed144, "1900-01-01 00:00", S, WHY144),
-                  "resolved_at a BLOB": (closed144, now144.encode(), S, WHY144),
-                  "session not-a-session": (closed144, now144, "not-a-session", WHY144),
-                  "session with .md": (closed144, now144, S + ".md", WHY144),
-                  "session with a space": (closed144, now144, "session_a b", WHY144)}
+
+        def check_holes(path, cases, good):
+            con_ = sqlite3.connect(path)
+            con_.execute("PRAGMA foreign_keys=OFF")
+            con_.execute("INSERT INTO gaps (gap_id, category, priority, status, description, created_at, created_by_session, "
+                         "updated_at, updated_by_session) VALUES ('TASK-FIXTURE-G', ?, ?, 'OPEN', 'TASK-FIXTURE', ?, ?, ?, ?)",
+                         (cat144, pri144, now144, S, now144, S))
+            con_.commit()
+            out = {}
+            for name, cells in [("the legitimate shape", good)] + list(cases.items()):
+                try:
+                    con_.execute("UPDATE gaps SET " + ", ".join(f"{k}=?" for k in cells) + " WHERE gap_id='TASK-FIXTURE-G'",
+                                 list(cells.values()))
+                    out[name] = True
+                except sqlite3.IntegrityError:
+                    out[name] = False
+                con_.rollback()
+            con_.close()
+            return out
+
+        def cl(at=now144, by=S, ref=WHY144, status=closed144, **k):
+            return dict(status=status, resolved_at=at, resolved_by_session=by, resolution_ref=ref, **k)
+
+        bad162 = {"an OPEN gap carrying all three": cl(status="OPEN"),
+                  "stamp and session, no pointer": cl(ref=None), "the stamp alone": cl(by=None, ref=None),
+                  "the session alone": cl(at=None, ref=None), "the pointer alone": cl(at=None, by=None),
+                  "session and pointer, no stamp": cl(at=None), "stamp and pointer, no session": cl(by=None),
+                  "resolved_at 2026-02-30 00:00": cl(at="2026-02-30 00:00"),
+                  "resolved_at 9999-99-99 99:99": cl(at="9999-99-99 99:99"),
+                  "resolved_at with seconds": cl(at=now144 + ":00"),
+                  "resolved_at before the gap was created": cl(at="1900-01-01 00:00"),
+                  "resolved_at a BLOB": cl(at=now144.encode()),
+                  "session not-a-session": cl(by="not-a-session"), "session with .md": cl(by=S + ".md"),
+                  "session with a space": cl(by="session_a b"), "session_ and no name": cl(by="session_"),
+                  "session a BLOB": cl(by=S.encode()), "pointer a BLOB": cl(ref=WHY144.encode())}
         for ch in "\u180e\u00ad\u2800\u3164\u200e\u2063\x1f ":
-            bad144[f"pointer U+{ord(ch):04X}"] = (closed144, now144, S, ch * 2)
-        got144 = {}
-        for name, vals in bad144.items():
-            try:
-                w(U144, *vals, gd)
-                got144[name] = None
-            except sqlite3.DatabaseError as exc:
-                got144[name] = str(exc)
-        try:
-            w(U144, closed144, now144, S, WHY144, ge)
-            ok144 = row144(ge)[3] == WHY144
-        except sqlite3.DatabaseError as exc:
-            ok144 = str(exc)
-        record("T144-11", "migration 162's CHECK refuses provenance on an OPEN gap, a partial set, an impossible, early, "
-               "seconds-bearing or BLOB stamp, a session that is not a stem and a blank pointer; it accepts a well formed "
-               "closing", all(got144.values()) and ok144 is True, ({k: v for k, v in got144.items() if not v}, ok144))
+            bad162[f"pointer U+{ord(ch):04X}"] = cl(ref=ch * 2)
+        h162 = check_holes(r162, bad162, cl())
+        bad163 = {k: dict(v, resolution_kind="reason") for k, v in bad162.items()}
+        bad163.update({"a kind outside the CHECK": cl(resolution_kind="TASK-FIXTURE-KIND"),
+                       "the kind alone": dict(resolution_kind="reason"), "all three, no kind": cl(),
+                       "resolved_at 24:00": cl(at=now144[:11] + "24:00", resolution_kind="reason"),
+                       "resolved_at minute 60": cl(at=now144[:14] + "60", resolution_kind="reason")})
+        h163 = check_holes(r163, bad163, cl(resolution_kind="reason"))
+        record("T144-11", "on a fresh replay of the migration files, 162's CHECK and then 163's refuse provenance on an "
+               "OPEN gap, every partial set, an impossible, early, seconds-bearing, hour-24 or BLOB stamp, a session that "
+               "is not a stem or is a BLOB, a blank or BLOB pointer and a kind outside the CHECK; each accepts a well formed "
+               "closing", all(h["the legitimate shape"] is True and not any(v for k, v in h.items()
+                                                                           if k != "the legitimate shape")
+                              for h in (h162, h163)),
+               {"162": [k for k, v in h162.items() if v != (k == "the legitimate shape")],
+                "163": [k for k, v in h163.items() if v != (k == "the legitimate shape")]})
         a12 = subprocess.run([sys.executable, str(REPO / "scripts" / "audit" / "gap_mining_audit.py")],
                              env=dict(os.environ, GUIDEBOOK_DB_PATH=DB), capture_output=True, text=True).stdout
         l12 = next((ln for ln in a12.splitlines() if "CHECK 8:" in ln), "")
-        record("T144-12", "gap_mining_audit lists, as informational, a closed gap with no resolution and not one with it",
-               re.search(rf"\b{gb}\b", l12) and not re.search(rf"\b{ga}\b", l12) and "FAIL." not in a12.split("CHECK 8")[-1],
-               l12[:200])
-        # the capture path: a closing on a scratch copy reaches emit_batch_sql as one UPDATE carrying the three cells
+        go12 = gap144("open, for the audit")
+        want12 = q("SELECT COUNT(*) FROM gaps WHERE status LIKE 'CLOSED%' AND resolved_at IS NULL")[0][0]
+        n12 = re.search(r"CHECK 8: (\d+) ", l12)
+        record("T144-12", "gap_mining_audit lists, as informational, a closed gap with no resolution, not one with it nor an "
+               "open gap, and its count is the query's and the number of ids it lists",
+               re.search(rf"\b{gb}\b", l12) and not re.search(rf"\b{ga}\b", l12) and not re.search(rf"\b{go12}\b", l12)
+               and n12 and int(n12.group(1)) == want12 == len(l12.split(":", 2)[-1].split(","))
+               and "no resolution recorded" in l12, l12[:200])
+        # the capture path: a closing on a scratch copy reaches emit_batch_sql as one UPDATE carrying the four cells
         c0, c1 = os.path.join(TMP, "t144-c0.db"), os.path.join(TMP, "t144-c1.db")
         shutil.copy(REPO / "data" / "guidebook.db", c0)
         shutil.copy(c0, c1)
         g13 = sqlite3.connect(c0).execute("SELECT gap_id FROM gaps WHERE status LIKE 'OPEN%' ORDER BY gap_id").fetchone()[0]
         subprocess.run([sys.executable, str(REPO / "scripts" / "db.py"), "close-gap", "--gap-id", g13, "--status",
-                        closed144, "--resolution-ref", WHY144, "--session", S],
+                        closed144, "--resolution-kind", "reason", "--resolution-ref", WHY144, "--session", S],
                        env=dict(os.environ, GUIDEBOOK_DB_PATH=c1), capture_output=True, text=True)
         out13 = os.path.join(TMP, "t144.sql")
         e13 = subprocess.run([sys.executable, str(REPO / "scripts" / "research" / "emit_batch_sql.py"), "--scratch", c1,
                               "--out", out13], env=dict(os.environ, GUIDEBOOK_DB_PATH=c0), capture_output=True, text=True)
         sql13 = [ln for ln in (pathlib.Path(out13).read_text() if os.path.exists(out13) else "").splitlines()
                  if ln.startswith("UPDATE")]
-        record("T144-13", "emit_batch_sql captures a closing as one UPDATE carrying status and the three resolution cells",
+        record("T144-13", "emit_batch_sql captures a closing as one UPDATE carrying status and the four resolution cells",
                e13.returncode == 0 and len(sql13) == 1 and all(f'"{c_}"' in sql13[0] for c_ in
                                                                 ("status", "resolved_at", "resolved_by_session",
-                                                                 "resolution_ref")) and g13 in sql13[0],
+                                                                 "resolution_kind", "resolution_ref")) and g13 in sql13[0],
                (e13.stderr[-200:], sql13))
+        # each kind, checked by what it is
+        head144 = subprocess.run(["git", "-C", str(REPO), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+        absent_sha = next(x for x in (head144[::-1], head144[1:] + head144[0], "0" * 40)
+                          if subprocess.run(["git", "-C", str(REPO), "cat-file", "-e", f"{x}^{{commit}}"],
+                                            capture_output=True).returncode != 0)
+        gd, ge, gf, gg = gap144("d"), gap144("e"), gap144("f"), gap144("g")
+        r14 = [close144(gd, absent_sha, "commit"), close144(gd, "not-a-sha", "commit")]
+        r14ok = close144(gd, head144, "commit")
+        record("T144-14", "a commit closes a gap only when it exists in this repository and is shaped as a sha",
+               r14[0] and "is not a commit in this repository" in r14[0] and r14[1] and "is not a commit sha" in r14[1]
+               and r14ok is None and row144(gd)[3] == head144 and row144(gd)[5] == "commit", (r14, r14ok))
+        nogit = tempfile.mkdtemp(prefix="t144-nogit-", dir=TMP)
+        r15 = subprocess.run([sys.executable, str(REPO / "scripts" / "db.py"), "close-gap", "--gap-id", ge, "--status",
+                              closed144, "--resolution-kind", "commit", "--resolution-ref", head144, "--session", S],
+                             env=dict(os.environ, GUIDEBOOK_DB_PATH=DB, PATH=nogit), capture_output=True, text=True)
+        record("T144-15", "with no git on the PATH a commit cannot be proved: refused, naming the next act, nothing written",
+               r15.returncode != 0 and "git is not available" in r15.stderr and "--resolution-kind task" in r15.stderr
+               and row144(ge)[0].startswith("OPEN"), r15.stderr[-250:])
+        tdir = REPO / "workplan" / "2026-11-12-bidirectional-pipeline" / "tasks"
+        held_t = sorted({m_.group(0) for f_ in tdir.glob("T-[0-9][0-9][0-9]-*.md") if (m_ := re.match(r"T-\d{3}", f_.name))})
+        absent_t = next(f"T-{n:03d}" for n in range(1, 1000) if f"T-{n:03d}" not in held_t)
+        r16 = [close144(ge, absent_t, "task"), close144(ge, "T-1", "task")]
+        r16ok = close144(ge, held_t[0], "task")
+        record("T144-16", "a closing from a session with no commit names its task: a task id with no file and a malformed "
+               "one are refused, one with its file is accepted",
+               r16[0] and "has no task file" in r16[0] and r16[1] and "is not a task id" in r16[1] and r16ok is None
+               and row144(ge)[3] == held_t[0], (absent_t, r16, r16ok))
+        r17 = [close144(gf, gf, "duplicate"), close144(gf, db.next_gap_id(), "duplicate")]
+        r17ok = close144(gf, gg, "duplicate")
+        record("T144-17", "a duplicate names another gap that exists: itself and an absent gap are refused, another is "
+               "accepted", r17[0] and "not its own duplicate" in r17[0] and r17[1] and "is not a gap" in r17[1]
+               and r17ok is None and row144(gf)[3] == gg, (r17, r17ok))
+        r18 = [close144(gg, x) for x in (head144[:12], held_t[0], gb, "scripts/migrations/data_9999_none.sql",
+                                         f'references/project-standards.md :: "{lq144}"')]
+        record("T144-18", "a reason is words: a sha, a task id, a gap id, a data migration path or a ledger pointer given as "
+               "a reason is refused, naming the kind to use", all(r18) and all("--resolution-kind" in m for m in r18)
+               and row144(gg)[0].startswith("OPEN"), r18)
+        r19 = [close144(gg, WHY144, status=s_) for s_ in ("CLOSED", "CLOSED-", "CLOSED-fixed", closed144 + "\u200b",
+                                                         "CLOSED and then some junk", "CLOSED-\u00c9T\u00c9", "OPEN")]
+        record("T144-19", "the status tail is refused when blank, invisible, not capital ASCII letters or not of the shape; "
+               "every closing status in use has the shape", all(m and "is not a closing status" in m for m in r19)
+               and all(db._CLOSED_STATUS_SHAPE.fullmatch(v) for v in live_closed), (r19, live_closed))
+        r20 = close144(gg, WHY144, kind="TASK-FIXTURE-KIND")
+        h20 = run_cli("close-gap", "--help").stdout
+        record("T144-20", "a kind outside the CHECK is refused naming the kinds, and --help offers exactly the CHECK's kinds",
+               r20 and all(k_ in r20 for k_ in kinds144) and kinds144
+               and set(dbcore.schema_choices("gaps", "resolution_kind") or ()) == kinds144
+               and all(k_ in h20 for k_ in kinds144), (r20, kinds144))
+        # two closers interleaved: the second cannot write while the first holds its transaction, and a stale read
+        # cannot overwrite a closing (the guarded UPDATE)
+        real_connect = db.connect
+
+        class _Px:
+            def __init__(self, c, hook):
+                self.c, self.hook = c, hook
+
+            def execute(self, sql, *a):
+                if sql.startswith("SELECT status, resolved_at"):
+                    r_ = self.hook(self.c, a)
+                    if r_ is not None:
+                        return r_
+                return self.c.execute(sql, *a)
+
+            def __getattr__(self, n):
+                return getattr(self.c, n)
+
+        def proxied(hook):
+            @contextlib.contextmanager
+            def _c(*a, **k):
+                with real_connect(*a, **k) as c_:
+                    yield _Px(c_, hook)
+            return _c
+
+        other = {}
+        U21 = ("UPDATE gaps SET status=?, resolved_at=?, resolved_by_session=?, resolution_kind='reason', "
+               "resolution_ref=? WHERE gap_id=?")
+
+        def interfere(c_, a):
+            try:
+                o_ = sqlite3.connect(DB, timeout=0)
+                o_.execute(U21, (closed144, dbcore.now(), S, "TASK-FIXTURE: the other closer", a[0][0]))
+                o_.commit()
+                o_.close()
+                other["r"] = "written"
+            except sqlite3.OperationalError as exc:
+                other["r"] = str(exc)
+
+        class _Stale:
+            def fetchone(self):
+                return {"status": "OPEN", "resolved_at": None, "resolution_kind": None, "resolution_ref": None, "open": 1}
+
+        def stale(c_, a):
+            c_.execute(U21, (closed144, dbcore.now(), S, "TASK-FIXTURE: the other closer", a[0][0]))
+            return _Stale()
+
+        gh, gi = gap144("h"), gap144("i")
+        try:
+            db.connect = proxied(interfere)
+            r21 = close144(gh, WHY144)
+            db.connect = proxied(stale)
+            r22 = close144(gi, WHY144)
+        finally:
+            db.connect = real_connect
+        record("T144-21", "a second closer cannot write while the first holds its transaction; the first closing stands",
+               r21 is None and "locked" in other.get("r", "") and row144(gh)[3] == WHY144, (r21, other, row144(gh)))
+        record("T144-22", "a closing read as open but closed before its UPDATE is refused by the guarded UPDATE, and nothing "
+               "is written", r22 and "closed by another writer" in r22 and row144(gi)[0].startswith("OPEN"), (r22, row144(gi)))
+        g23 = run_cli("gaps", "--closed").stdout
+        o23 = run_cli("gaps").stdout
+        rows23 = {r_["gap_id"]: r_ for r_ in json.loads(g23 or "[]")}
+        record("T144-23", "db.py gaps --closed lists closed gaps with the four resolution cells and no open gap; db.py gaps "
+               "still lists only the open ones", ga in rows23 and rows23[ga]["resolution_ref"] == WHY144
+               and rows23[ga]["resolved_by_session"] == S and rows23[ga]["resolution_kind"] == "reason"
+               and gb in rows23 and go12 not in rows23 and ga not in {r_["gap_id"] for r_ in json.loads(o23 or "[]")},
+               (sorted(rows23)[:5], len(rows23)))
     except Exception as exc:  # noqa: BLE001 -- a crash is red, never a pass
         import traceback
         traceback.print_exc()

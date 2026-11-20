@@ -67,3 +67,15 @@ Before merge: drop the commit. After merge: `git revert`, and a compensating mig
 ## 11. Adversarial pass and pull request
 
 The coordinator runs the adversarial pass on the commit and opens the pull request.
+
+## 12. Repair after the adversarial pass (2026-11-20)
+
+Compensating migration `scripts/migrations/163_gap_resolution_kind.sql` (162 is not edited): a fourth cell `resolution_kind` (CHECK IN its kinds, present exactly when the other three are; `close-gap --resolution-kind` reads the kinds with `dbcore.check_values`), and the stamp's hour and minute by shape (`datetime()` round-trips hour 24). `close-gap` checks each pointer by its kind: a commit must exist in this repository (`git cat-file -e`; with no git it refuses and names the next act), a ledger pointer must be well formed with its quote found once, a task id must have its file, a duplicate must name another gap that exists, and a reason is words (a pointer of another kind given as a reason is refused). The data migration path is no longer offered: the migration that carries a closing is emitted after it. The status must have the closing shape every live status has (`select distinct status from gaps where status like 'CLOSED%'`). The UPDATE is guarded (`AND status LIKE 'OPEN%'`, rowcount checked) inside one IMMEDIATE transaction. `db.py gaps --closed` lists closed gaps with the four cells. The audit's CHECK 8 names what a row lacks, not why. Tests T144-11 (now on a fresh replay of the migration files) and T144-14 to T144-23 added; each new case shown red on a seeded defect.
+
+Recorded, not repaired (2026-11-20):
+- `emit_batch_sql`'s captured `UPDATE "gaps" ... WHERE "gap_id" = ...` is unguarded, so two sessions' migrations that close the same gap replay with the later one winning (outside this task).
+- `gap_mining` (outcome `closure_evidence_found`; `select count(*) from gap_mining where outcome = 'closure_evidence_found'`) already ties a gap to a closing attempt, and `close-gap` does not point at it. It should, once such a row exists: a gap closed by a mining attempt would then name the attempt (a sixth kind, or a typed column) rather than a reason in words. Follow-up.
+- A pointer of only U+FFA0, of U+115F with U+1160, or of U+FE0F passes `dbcore.is_blank` and the CHECK: the same class as the open U+034F hole of `dbcore.blank_chars()`. Closing it changes the one blank definition and the spellings pinned in migrations 160, 161 and 162 (tests T078-40, T083-12, T144-01). Follow-up, not done here.
+- A NUL inside the session or the pointer is not refused (migrations 160 and 161 leave it open the same way; the CLI cannot pass one); a stamp in the future is not refused by the schema; the not-before-created_at test is skipped on rows whose `created_at` is a date alone (`select count(*) from gaps where length(created_at) = 10`).
+- A reason of one character (`x`) is accepted: a reason is free text of non-blank content, as `dbcore.require_reason` reads it.
+- The mutant `status LIKE 'CLOSED%'` weakened to `'C%'` cannot be killed: the status column's own CHECK admits only `OPEN%` or `CLOSED%`, so the two are equivalent.

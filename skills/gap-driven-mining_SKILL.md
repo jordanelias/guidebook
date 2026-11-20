@@ -268,9 +268,11 @@ The `gap_mining` row alone does NOT close the gap. The closure workflow:
 7. Close the gap:
    ```bash
    python3 scripts/db.py close-gap --gap-id GAP-NNN --status CLOSED-FIXED \
-       --resolution-ref "{what closed it: the data migration path, a quote-anchored ledger pointer, or the reason}" \
-       --session {SESSION}
+       --resolution-kind {KIND} --resolution-ref "{the pointer of that kind}" --session {SESSION}
    ```
+   The kinds and what each pointer must be are in `python3 scripts/db.py close-gap --help` (read there, not here).
+   Not a data migration path: the migration that carries this batch, closing included, is emitted afterwards.
+   For a gap closed by this batch's findings, give the reason in words (`--resolution-kind reason`).
 
 ---
 

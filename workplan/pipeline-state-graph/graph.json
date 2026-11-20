@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-11-20 02:48 UTC from git HEAD e06bf0f7 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-11-20 03:25 UTC from git HEAD 993c12fe (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
- "user_version": 162,
+ "user_version": 163,
  "stages": [
   "base",
   "research",
@@ -849,7 +849,8 @@
     "language",
     "resolved_at",
     "resolved_by_session",
-    "resolution_ref"
+    "resolution_ref",
+    "resolution_kind"
    ]
   },
   "identity_icf_map": {
@@ -3090,6 +3091,13 @@
     "ADDRESSABLE",
     "NOT-ADDRESSABLE",
     "TRIAGE-NEEDED"
+   ],
+   "resolution_kind": [
+    "commit",
+    "ledger",
+    "task",
+    "duplicate",
+    "reason"
    ]
   },
   "identity_icf_map": {
@@ -4387,7 +4395,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 5
+   "refusals": 9
   },
   "add-connection": {
    "functions": [
