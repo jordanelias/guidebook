@@ -4063,7 +4063,10 @@ try:
         x1 = seed(RC, figure_role="finding", claim_type="qualitative", claimed_value="agrees", claimed_unit=None, comparator=None)
         edge(x1, "confirms", t1)
         c = ro(); b1 = RC in {r["ref_id"] for r in _t78r_engine.gather_confirmers(c, PR, LENS)}; c.close()
-        retire(t1)
+        # Set by SQL on the copy: retire-extraction refuses a figure a live figure's edge names (T078-26), so this
+        # state is reached only by a row written before that refusal; the engine's filter is its floor.
+        w("UPDATE source_value_extractions SET retired_at=?, retired_by_session=?, retirement_reason=? WHERE extraction_id=?",
+          dbcore.now(), S, WHY, t1)
         c = ro(); a1 = RC in {r["ref_id"] for r in _t78r_engine.gather_confirmers(c, PR, LENS)}; c.close()
         record("T078-07", "gather_confirmers drops a confirmer whose confirmed figure is retired", b1 and not a1, (b1, a1))
 
@@ -4229,18 +4232,29 @@ try:
                                              "extraction_method": "full-read"}, S,
                       relations=[{"relation": "condition_on", "to_extraction": d24, "stated": "named", "quote": WHY}],
                       verbatim_exempt=WHY)
-        record("T078-24", "derive-extraction refuses a retired input, naming retire-extraction",
+        record("T078-24", "derive-extraction refuses a retired input, naming retire-extraction (red with the derived-input "
+               "refusal alone removed: this fixture's warrant then fails first; T078-24b holds the edge writer's part)",
                r24 and "was retired" in r24 and "retire-extraction" in r24, r24)
         record("T078-25", "add-extraction refuses an edge to a retired figure (the shared edge writer)",
                r25 and "was retired" in r25, r25)
-        lean_kinds = db._row_only_relations(ro())
-        lean = {}
+        # Every relation kind the column's CHECK declares can name a row (no CHECK of the table forbids a row for any
+        # kind), so each is probed; the kinds are read, never typed.
+        lean_kinds = sorted(dbcore.check_values(ro(), "extraction_relations", "relation"))
+        lean, last = {}, None
         for kind in lean_kinds:
             to, frm = seed(RA, claimed_value="30"), seed(RA, claimed_value="31")
             edge(frm, kind, to, "base" if kind == "derived_from" else None)
             lean[kind] = refusal(db.retire_extraction, to, WHY, S)
-        record("T078-26", "retire-extraction refuses a figure a live figure leans on (each relation the CHECK says needs a row), "
-               "naming the live figure", lean_kinds and all(m and "lean on" in m for m in lean.values()), (lean_kinds, lean))
+            last = (to, frm)
+        record("T078-26", "retire-extraction refuses a figure while any live figure holds a row edge to it, of every relation "
+               "kind, naming the edge and the next act",
+               len(lean_kinds) > 0 and all(m and "hold edges to" in m and f"edge " in m and "Retire each" in m
+                                           for m in lean.values()), (lean_kinds, lean))
+        retire(last[1])
+        r39 = refusal(db.retire_extraction, last[0], WHY, S)
+        record("T078-39", "once the leaning figure is retired, the figure it leaned on can be retired",
+               r39 is None and q("SELECT retired_at IS NOT NULL FROM source_value_extractions WHERE extraction_id=?",
+                                 last[0]) == [(1,)], r39)
         r27a = refusal(db.add_lens_link, d24, S, identity=OUT_CODE, basis="named_in_text", basis_text=WHY)
         n_live = q("SELECT COUNT(*) FROM extraction_lens_links WHERE extraction_id=? AND retired_at IS NULL", d24)[0][0]
         link_d = q("SELECT link_id FROM extraction_lens_links WHERE extraction_id=? AND retired_at IS NULL", d24)[0][0]
@@ -4299,6 +4313,170 @@ try:
         record("T078-30", "migration 159 spells 154's whitespace set and dbcore.ZERO_WIDTH, and its stamp shape matches "
                "dbcore.now()", set(re.findall(r"char\(([0-9,]+)\)", mig)) == {zw, ws154} and glob_ok == (1, 0),
                (glob_ok,))
+        # ── Second repair (T-078): every writer that takes a figure id refuses a retired one; the readers of connections
+        # and of the translation queue drop it; amend sees live derived figures only; migration 160's shape.
+        g1, g2 = seed(RA, claimed_value="50", claim_text=f"{WHY} 50 mm"), seed(RA, claimed_value="51")
+        # translations: a request made while the figure was live, then the figure retired
+        LANG = q("SELECT language FROM lang_jur_map ORDER BY language LIMIT 1")[0][0]
+        STAGE = next(st["id"] for st in yaml.safe_load((REPO / "governance" / "pipeline-contract.yaml").read_text())["stages"]
+                     if st["id"] == "judgment")
+        TK = sorted(dbcore.check_values(ro(), "translations", "translator_kind"))[0]
+        RK = sorted(dbcore.check_values(ro(), "translations", "reviewed_by_kind"))[0]
+        t_rec = db.request_translation("source_value_extractions", "claim_text", str(g1), LANG, STAGE, session=S)["translation_id"]
+        t_rev = None
+        g3 = seed(RA, claimed_value="52", claim_text=f"{WHY} 52 mm")
+        t_rev = db.request_translation("source_value_extractions", "claim_text", str(g3), LANG, STAGE, session=S)["translation_id"]
+        db.record_translation(f"{WHY} 52", TK, "TASK-FIXTURE translator", translation_id=t_rev, session=S)
+        DUE = db._translation_contract(None).translation.default_stage
+        due_b = {r["translation_id"] for r in db.translations_due(DUE)}
+        # a label edge from a live figure, to repoint onto a retired one
+        lab = seed(RA, claimed_value="53")
+        w("INSERT INTO extraction_relations (from_extraction_id, relation, to_label, to_kind, stated, quote, created_at, "
+          "created_by_session) VALUES (?, 'tested_at', 'TASK-FIXTURE label', 'standard', 'named', ?, 't', ?)", lab, WHY, S)
+        conf = sorted(dbcore.check_values(ro(), "connections", "confidence"))[0]
+        cstat = "PENDING" if "PENDING" in dbcore.check_values(ro(), "connections", "status") else \
+            sorted(dbcore.check_values(ro(), "connections", "status"))[0]
+        cdata = lambda: {"status": cstat, "confidence": conf, "connection_type": "METHODOLOGY", "filed_in": plain,  # noqa: E731
+                         "description": WHY, "source_skill": WHY, "opus_reviewed": 0}
+        con_live = db.insert_connection(cdata(), [("methodology", WHY), ("extraction_id", g2)], S)
+        listed_b = [c_ for c_ in db.get_connections(status=cstat) if c_["con_id"] == con_live]
+        for x in (g1, g2, g3):
+            retire(x)
+        r31a = refusal(db.repoint_extraction_relation, lab, "tested_at", g1, S)
+        r31b = refusal(db.repoint_extraction_relation, g2, "tested_at", lab, S)
+        record("T078-31", "relate-extraction --repoint refuses a retired figure at either end",
+               all(m and "was retired" in m for m in (r31a, r31b)), (r31a, r31b))
+        r32 = refusal(db.insert_connection, cdata(), [("methodology", WHY), ("extraction_id", g1)], S)
+        record("T078-32", "add-connection refuses a retired figure as a target", r32 and "was retired" in r32, r32)
+        r33 = refusal(db.request_translation, "source_value_extractions", "claim_text", str(g1), LANG, STAGE, session=S)
+        r34 = refusal(db.record_translation, f"{WHY} 50", TK, "TASK-FIXTURE translator", translation_id=t_rec, session=S)
+        r35 = refusal(db.review_translation, t_rev, "reviewed", RK, "TASK-FIXTURE reviewer", session=S)
+        record("T078-33", "request-translation refuses a retired figure", r33 and "was retired" in r33, r33)
+        record("T078-34", "record-translation refuses a request whose figure was retired after the request",
+               r34 and "was retired" in r34, r34)
+        record("T078-35", "review-translation refuses a translation whose figure was retired", r35 and "was retired" in r35, r35)
+        listed_a = [c_ for c_ in db.get_connections(status=cstat) if c_["con_id"] == con_live]
+        record("T078-36", "db.py connections lists a live connection without its retired figure target",
+               listed_b and f"extraction {g2}" in (listed_b[0]["targets"] or "") and listed_a
+               and f"extraction {g2}" not in (listed_a[0]["targets"] or ""), (listed_b, listed_a))
+        due_a = {r["translation_id"] for r in db.translations_due(DUE)}
+        record("T078-37", "translations --due-at does not owe a request on a retired figure",
+               t_rec in due_b and t_rec not in due_a, (t_rec, sorted(due_b)[-3:], sorted(due_a)[-3:]))
+        # amend-extraction --field comparator on a base: refused while a LIVE derived figure uses it, accepted once retired
+        b38, d38 = seed(RA, claimed_value="60"), seed(RA, claimed_value="61")
+        k38 = seed(RA, claimed_value="121", figure_role="derived", claim_text=None)
+        edge(k38, "derived_from", b38, "base")
+        edge(k38, "derived_from", d38, "delta")
+        newcmp = next(v for v in sorted(dbcore.check_values(ro(), "source_value_extractions", "comparator")) if v != ">=")
+        r38a = refusal(db.amend_extraction, b38, "comparator", newcmp, WHY, S)
+        retire(k38)
+        r38b = refusal(db.amend_extraction, b38, "comparator", newcmp, WHY, S)
+        record("T078-38", "amend-extraction --field comparator on a base is refused while a live derived figure uses it and "
+               "accepted once that derived figure is retired",
+               r38a and "is an input of derived" in r38a and f"[{k38}]" in r38a and r38b is None, (r38a, r38b))
+        # migration 160: one blank set, pinned; the frozen columns derived; the holes
+        mig160 = (REPO / "scripts" / "migrations" / "160_figure_retirement_shape.sql").read_text()
+        trig = re.search(r"CREATE TRIGGER trg_sve_retirement_shape_insert.*?END;", mig160, re.S).group(0)
+        in_glob = re.search(r"GLOB '\*\[' \|\| (.*?) \|\| '\]\*'", trig).group(1)
+        spelled = {chr(int(n)) for grp in re.findall(r"char\(([0-9,]+)\)", in_glob) for n in grp.split(",")}
+        in_trim = re.search(r"trim\(NEW\.retirement_reason, (.*?)\) = ''", trig).group(1)
+        record("T078-40", "migration 160 spells dbcore.blank_chars() (less U+0000) in both its session and its reason test",
+               spelled == set(dbcore.blank_chars()) - {"\x00"} and in_trim == in_glob, len(spelled))
+        frozen = re.search(r"trg_sve_retired_row_frozen\s+BEFORE UPDATE OF (.*?) ON source_value_extractions", mig160,
+                           re.S).group(1)
+        want = [r[1] for r in q("PRAGMA table_info(source_value_extractions)")
+                if r[1] not in ("retired_at", "retired_by_session", "retirement_reason", "updated_at", "updated_by_session")]
+        record("T078-41", "the frozen-row trigger names every column of the table but the three retirement columns and the "
+               "updated_* stamps (a later column fails this case until a migration adds it)",
+               [x.strip() for x in frozen.split(",")] == want, (frozen[:80], len(want)))
+        live3 = seed(RA, claimed_value="70")
+        ret3 = seed(RA, claimed_value="71")
+        retire(ret3)
+        U3 = ("UPDATE source_value_extractions SET retired_at=?, retired_by_session=?, retirement_reason=? "
+              "WHERE extraction_id=?")
+        cases = {"retired_at 9999-99-99 99:99": (U3, ("9999-99-99 99:99", S, WHY, live3)),
+                 "retired_at 2026-02-30 00:00": (U3, ("2026-02-30 00:00", S, WHY, live3)),
+                 "retired_at in the future": (U3, ("2999-01-01 00:00", S, WHY, live3)),
+                 "retired_at a BLOB": (U3, (b"2026-11-19 00:00", S, WHY, live3)),
+                 "session not-a-session": (U3, (dbcore.now(), "not-a-session", WHY, live3)),
+                 "claimed_value of a retired row": ("UPDATE source_value_extractions SET claimed_value='72' "
+                                                    "WHERE extraction_id=?", (ret3,)),
+                 "parameter_id of a retired row": ("UPDATE source_value_extractions SET parameter_id=parameter_id "
+                                                   "WHERE extraction_id=?", (ret3,)),
+                 "a retired row re-stamped": ("UPDATE source_value_extractions SET retired_at=? WHERE extraction_id=?",
+                                              ("2026-01-01 00:00", ret3))}
+        for ch in "᠎­⠀ㅤ‎⁣\x1f":
+            cases[f"reason U+{ord(ch):04X}"] = (U3, (dbcore.now(), S, ch, live3))
+        got42 = {}
+        for name, (sql_, args) in cases.items():
+            try:
+                w(sql_, *args)
+                got42[name] = None
+            except sqlite3.DatabaseError as exc:
+                got42[name] = str(exc)
+        try:
+            w("UPDATE source_value_extractions SET created_at=created_at WHERE extraction_id=?", live3)
+            ok42 = True
+        except sqlite3.DatabaseError:
+            ok42 = False
+        record("T078-42", "migration 160's triggers refuse an impossible, future or BLOB retired_at, a session that is not a "
+               "stem, a reason of any blank character, a re-stamp and any change to a retired row's value columns",
+               all(got42.values()) and ok42, {k: v for k, v in got42.items() if not v})
+        vb = [refusal(db.retire_extraction, live3, ch, S) for ch in "᠎­⠀ㅤ‎⁣\x1f"]
+        vs = refusal(db.retire_extraction, live3, WHY, "not-a-session")
+        record("T078-43", "retire-extraction refuses the same blank reasons and a session that is not a stem",
+               all(m and "--reason is required" in m for m in vb) and vs and "not a session stem" in vs, (vb, vs))
+        cols44 = dict(ref_id=RA, parameter_id=PR, claim_type="numerical", claimed_value="73", claimed_unit="mm",
+                      claim_text=WHY, figure_role="claim", comparator=">=", extraction_method="full-read", created_at="t",
+                      created_by_session=S, updated_at="t", updated_by_session=S, retired_by_session=S, retirement_reason=WHY)
+        born = {}
+        for name, at in (("bad", "not a date"), ("good", dbcore.now())):
+            c44 = dict(cols44, retired_at=at)
+            try:
+                w(f"INSERT INTO source_value_extractions ({','.join(c44)}) VALUES ({','.join('?' * len(c44))})", *c44.values())
+                born[name] = None
+            except sqlite3.DatabaseError as exc:
+                born[name] = str(exc)
+        record("T078-44", "a born-retired INSERT is refused when malformed and accepted when well formed (emit_batch_sql's "
+               "capture of a figure added and retired in one batch)", born["bad"] and born["good"] is None, born)
+        # the second filter sites of two views
+        u45 = seed(RA, root_type="measurement_primary", claimed_value="74")
+        k46a = seed(RA, root_ref_id=RA, root_id=f"{WHY}-SPAN", claimed_value="75")
+        k46b = seed(RV, root_ref_id=RV, root_id=f"{WHY}-SPAN", claimed_value="76")
+        b45 = q("SELECT COUNT(*) FROM v_unregistered_roots WHERE extraction_id=? AND defect='rootless'", u45)[0][0]
+        b46 = q("SELECT COUNT(*) FROM v_root_id_conflicts WHERE conflict_key=?", f"{WHY}-SPAN")[0][0]
+        retire(u45); retire(k46a)
+        record("T078-45", "v_unregistered_roots' rootless arm drops a retired figure", b45 == 1 and
+               q("SELECT COUNT(*) FROM v_unregistered_roots WHERE extraction_id=?", u45)[0][0] == 0, b45)
+        record("T078-46", "v_root_id_conflicts' root-spans-sources arm drops a conflict once one figure is retired", b46 == 1
+               and q("SELECT COUNT(*) FROM v_root_id_conflicts WHERE conflict_key=?", f"{WHY}-SPAN")[0][0] == 0, b46)
+        mem = sqlite3.connect(":memory:")
+        mem.execute("CREATE TABLE extraction_relations (relation TEXT CHECK (relation IN ('a','b')), to_extraction_id INT)")
+        r47 = refusal(db._row_only_relations, mem)
+        mem.close()
+        record("T078-47", "_row_only_relations refuses when the CHECK it reads is absent, never returns nothing",
+               r47 and "cannot be read" in r47, r47)
+        # T078-24b: derive-extraction with a warrant that holds (a study_population), so a retired input reaches the
+        # writers' refusals and not the warrant's; the live control derives.
+        grade = sorted(dbcore.check_values(ro(), "evidence_population_match", "match_grade"))[0]
+        w("INSERT INTO evidence_population_match (match_id, source_ref, target_population, study_population, match_grade, "
+          "created_at, created_by_session) VALUES (?, ?, ?, ?, ?, 't', ?)", f"{WHY}-M", RA, POP, f"{WHY} participants", grade, S)
+        # The inputs' words are figures the writer already accepted (their quotes stand in a persisted artefact, as
+        # add-extraction requires of an edge's quote); read from the copy, three plain numerals in mm.
+        src24 = q("SELECT claim_text, claimed_value FROM source_value_extractions WHERE retired_at IS NULL AND "
+                  "figure_role='claim' AND claimed_unit='mm' AND claimed_value GLOB '[0-9]*' AND claimed_value NOT GLOB "
+                  "'*[^0-9]*' AND extraction_method='full-read' AND claim_text IS NOT NULL ORDER BY extraction_id LIMIT 3")
+        b24b, d24b, e24b = (seed(RA, claimed_value=v, claim_text=t_, source_section=f"{WHY} 1") for t_, v in src24)
+        kw24 = dict(parameter_id=PR, session=S, identity=POP, lens_basis="study_participants", lens_basis_text=WHY)
+        try:
+            ok24 = db.derive_extraction(base=b24b, delta=d24b, **kw24)
+        except Exception as exc:  # noqa: BLE001 -- recorded red below
+            ok24 = {"error": f"{exc.__class__.__name__}: {exc}"}
+        retire(e24b)
+        r24b = refusal(db.derive_extraction, base=b24b, delta=e24b, **kw24)
+        record("T078-24b", "derive-extraction with a holding warrant derives from live inputs and refuses a retired input "
+               "(the edge writer refuses it when the derived-input refusal is removed)",
+               "extraction_id" in ok24 and r24b and "was retired" in r24b, (ok24, r24b))
     except Exception as exc:  # noqa: BLE001 -- a crash is red, never a pass
         import traceback
         traceback.print_exc()

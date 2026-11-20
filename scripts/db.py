@@ -224,6 +224,8 @@ def insert_connection(data: dict, targets: list[tuple[str, object]],
             dbcore.fk_declared(conn, "connection_targets", kind, value, f"add-connection {kind}",
                                remedy=("SELECT parameter_id FROM base_parameters WHERE status = 'active'"
                                        if kind == "parameter_id" else ""))
+            if kind == "extraction_id":
+                _refuse_retired_figure(conn, value, "add-connection --extraction")
             if kind == "parameter_id":
                 st = conn.execute("SELECT status FROM base_parameters WHERE parameter_id=?",
                                   (value,)).fetchone()[0]
@@ -1136,7 +1138,10 @@ def get_connections(status: str = None, confidence: str = None,
                                           'extraction ' || ct.extraction_id,
                                           'methodology ' || ct.methodology), ', ') AS targets
         FROM connections c
-        LEFT JOIN connection_targets ct USING (con_id)
+        LEFT JOIN connection_targets ct ON ct.con_id = c.con_id
+             -- a target that is a retired figure (retire-extraction) is not listed; the target row stays as history
+             AND (ct.extraction_id IS NULL OR ct.extraction_id NOT IN
+                  (SELECT extraction_id FROM source_value_extractions WHERE retired_at IS NOT NULL))
         WHERE c.retired_at IS NULL
     """
     params = []
@@ -12029,9 +12034,9 @@ def retire_extraction(extraction_id: int, reason: str, session: str, dry_run: bo
     a withdrawn figure until someone re-ran it: retire-specification first, then re-run this."""
     why = "A figure withdrawn without saying why erases a claim without a trace."
     reason = dbcore.require_reason(reason, f"retire-extraction {extraction_id}", why)
-    if not "".join(ch for ch in reason if not ch.isspace() and ch not in dbcore.ZERO_WIDTH):
-        # Blank as migration 159's triggers read it (whitespace and dbcore.ZERO_WIDTH). Not in require_reason: there
-        # it would change defer-reading's refusal ground for the same input (T079-30).
+    if dbcore.is_blank(reason):
+        # Blank as migration 160's triggers read it (dbcore.blank_chars(), pinned by T078-40). Not in require_reason:
+        # there it would change defer-reading's refusal ground for the same input (T079-30).
         raise Refusal(f"retire-extraction {extraction_id}: --reason is required. {why}")
     with dbcore.connect(dry_run) as conn:
         row = conn.execute("SELECT retired_at, retirement_reason FROM source_value_extractions WHERE extraction_id=?",
@@ -12047,27 +12052,41 @@ def retire_extraction(extraction_id: int, reason: str, session: str, dry_run: bo
                 f"retire-extraction: extraction {extraction_id} is in the provenance of live determination(s) "
                 f"{', '.join(map(str, live))}. Retire each first (db.py retire-specification --specification-id N "
                 f"--reason ...), then re-run this, and re-determine the cell. Nothing was written.")
-        leaning = _row_only_relations(conn)
-        leans = [r[0] for r in conn.execute(
-            "SELECT DISTINCT r.from_extraction_id FROM extraction_relations r JOIN source_value_extractions f "
-            "ON f.extraction_id = r.from_extraction_id WHERE r.to_extraction_id = ? AND f.retired_at IS NULL "
-            f"AND r.relation IN ({','.join('?' * len(leaning))}) ORDER BY 1", (extraction_id, *leaning))]
+        # EVERY ROW EDGE, OF ANY KIND: extraction_relations' CHECKs let every relation name a row referent (none
+        # forbids to_extraction_id), so a live figure holding an edge to this one leans on it whatever the kind,
+        # corroboration (confirms, exceeds, insufficient) included: its edge would name a withdrawn row.
+        leans = conn.execute(
+            "SELECT r.relation_id, r.relation, r.from_extraction_id FROM extraction_relations r "
+            "JOIN source_value_extractions f ON f.extraction_id = r.from_extraction_id "
+            "WHERE r.to_extraction_id = ? AND f.retired_at IS NULL ORDER BY 1", (extraction_id,)).fetchall()
         if leans:
             raise Refusal(
-                f"retire-extraction: live figure(s) {', '.join(map(str, leans))} lean on extraction {extraction_id} "
-                f"({' or '.join(leaning)}). Retire each first (db.py retire-extraction), then re-run this. "
-                f"Nothing was written.")
+                f"retire-extraction: live figure(s) hold edges to extraction {extraction_id}: "
+                + "; ".join(f"edge {e[0]} {e[1]} from {e[2]}" for e in leans)
+                + ". Retire each of those figures first (db.py retire-extraction; a row edge is not repointed), then "
+                  "re-run this. Nothing was written.")
         stamp, stem = dbcore.now(), dbcore.session_stem(session)
+        if not dbcore.is_session_stem(stem):
+            raise Refusal(f"retire-extraction: --session {session!r} is not a session stem (session_<name>, "
+                          f"dbcore.is_session_stem). Nothing was written.")
         conn.execute("UPDATE source_value_extractions SET retired_at=?, retired_by_session=?, retirement_reason=?, "
                      "updated_at=?, updated_by_session=? WHERE extraction_id=?",
                      [stamp, stem, reason, stamp, stem, extraction_id])
         return {"extraction_id": extraction_id, "retired": True, "retired_at": stamp, "dry_run": dry_run}
 
 
+def _refuse_retired_cell(conn, table, row_key, verb):
+    """A translation pointer at a retired figure is refused as the figure itself is (`_refuse_retired_figure`)."""
+    if table == "source_value_extractions":
+        _refuse_retired_figure(conn, row_key, verb)
+
+
 def _refuse_retired_figure(conn, extraction_id, verb):
-    """Refuse when `extraction_id` is a retired figure (retire-extraction). Called by amend-extraction, add-lens-link,
-    raise-follow-up, the shared edge writer `_write_relation_edge` (add-extraction, relate-extraction,
-    derive-extraction) and `_refuse_bad_derived_input`; repoint-extraction-relation does not call it."""
+    """Refuse when `extraction_id` is a retired figure (retire-extraction): the ONE refusal of every writer that takes a
+    figure id. Called by amend-extraction, add-lens-link, raise-follow-up, the shared edge writer `_write_relation_edge`
+    (add-extraction, relate-extraction, derive-extraction), `_refuse_bad_derived_input` (derive-extraction's inputs),
+    relate-extraction --repoint, add-connection --extraction, and the translation writers through
+    `_refuse_retired_cell` (request-, record- and review-translation)."""
     got = conn.execute("SELECT retired_at, retirement_reason FROM source_value_extractions WHERE extraction_id=?",
                        (extraction_id,)).fetchone()
     if got is not None and got[0] is not None:
@@ -12131,6 +12150,8 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
             raise Refusal(
                 f"--repoint: --to-extraction {to_extraction}: no such extraction. "
                 f"Admit and extract the standard before repointing onto it.")
+        for end in (from_extraction, to_extraction):
+            _refuse_retired_figure(conn, end, "relate-extraction --repoint")
         if relation == "confirms":
             _refuse_live_confirmation(conn, "--repoint", to_extraction)
         q = ("SELECT relation_id, to_label FROM extraction_relations "
@@ -12543,8 +12564,9 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                     f"comparator is its inputs' (_derived_comparator); amend an input and derive again. "
                     f"Nothing was written.")
             _used = [r[0] for r in conn.execute(
-                "SELECT from_extraction_id FROM extraction_relations WHERE to_extraction_id=? AND relation='derived_from'",
-                (extraction_id,))]
+                "SELECT r.from_extraction_id FROM extraction_relations r JOIN source_value_extractions d "
+                "ON d.extraction_id = r.from_extraction_id AND d.retired_at IS NULL "
+                "WHERE r.to_extraction_id=? AND r.relation='derived_from'", (extraction_id,))]
             if _used:
                 raise Refusal(
                     f"amend-extraction --field comparator: extraction {extraction_id} is an input of derived "
@@ -13923,6 +13945,7 @@ def _open_translation_request(conn, table, column, row_key, language, stage, due
     text, key, why = dbcore.read_cell(conn, table, column, row_key)
     if why:
         raise Refusal(f"{context}: the pointer does not resolve: {why}. Nothing was written.")
+    _refuse_retired_cell(conn, table, key, context)
     lang = _check_language(conn, language, "translation", "--target-language")
     src = _cell_language(conn, table, key)
     if src and src.strip().upper() == lang.upper():
@@ -14009,6 +14032,7 @@ def record_translation(text, translator_kind, translator_name, *, translation_id
                           f"is a new row: record it against the pointer with --supersedes {tid}. "
                           f"Nothing was written.")
         where = (req["source_table"], req["source_column"], req["source_row_key"], req["target_language"])
+        _refuse_retired_cell(conn, where[0], where[2], ctx)
         if old and (old["source_table"], old["source_column"], old["source_row_key"],
                     old["target_language"]) != where:
             raise Refusal(f"{ctx}: --supersedes {supersedes} translates a different cell or language. "
@@ -14064,6 +14088,7 @@ def review_translation(translation_id, verdict, reviewer_kind, reviewer_name, re
             raise Refusal(f"{ctx}: translation {translation_id} is {row['status']}"
                           f"{' and retired' if row['superseded_by_translation_id'] else ''}; only a translated, "
                           f"current translation is reviewed. Nothing was written.")
+        _refuse_retired_cell(conn, row["source_table"], row["source_row_key"], ctx)
         if name.casefold() == row["translator_name"].casefold():
             raise Refusal(f"{ctx}: the reviewer ({name}) is the translator. A translation shown to a reader is "
                           f"reviewed by an Opus-class instance other than its translator (OD-30). "
@@ -14097,7 +14122,11 @@ def translations_due(stage, contract_path=None):
         rows = conn.execute(
             "SELECT translation_id, source_table, source_column, source_row_key, target_language, "
             "requested_at_stage, due_stage FROM translations "
-            "WHERE status='requested' AND superseded_by_translation_id IS NULL ORDER BY translation_id").fetchall()
+            "WHERE status='requested' AND superseded_by_translation_id IS NULL "
+            # a request on a retired figure is not owed (retire-extraction); the row stays as history
+            "AND NOT (source_table = 'source_value_extractions' AND source_row_key IN "
+            "(SELECT CAST(extraction_id AS TEXT) FROM source_value_extractions WHERE retired_at IS NOT NULL)) "
+            "ORDER BY translation_id").fetchall()
     return [dict(r, due_stage=r["due_stage"] or default, due_by="row" if r["due_stage"] else "rule")
             for r in rows if (r["due_stage"] or default) == stage]
 

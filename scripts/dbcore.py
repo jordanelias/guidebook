@@ -1060,6 +1060,28 @@ SESSION_STEM = re.compile(r"session_\d{4}-\d\d-\d\d[\w.-]*", re.ASCII)
 #: spell the same five as char(...); scripts/tests/test_db_amend_writers.py T083-12 compares the two.
 ZERO_WIDTH = "\u200b\u200c\u200d\u2060\ufeff"
 
+@functools.lru_cache(maxsize=None)
+def blank_chars() -> frozenset:
+    """THE ONE DEFINITION OF A BLANK CHARACTER (T-078 repair): every code point of Unicode category Cc (controls), Cf
+    (format: soft hyphen, zero-width and bidi marks, invisible operators), Zs, Zl, Zp (separators), plus the two
+    letters that render as nothing, U+2800 BRAILLE PATTERN BLANK and U+3164 HANGUL FILLER. A text made only of these
+    says nothing. Migration 160's triggers spell the same set (test T078-40 pins it). Computed once, on first use."""
+    import unicodedata
+    return frozenset(c for c in map(chr, range(0x110000))
+                     if unicodedata.category(c) in ("Cc", "Cf", "Zs", "Zl", "Zp")) | frozenset("\u2800\u3164")
+
+
+def is_blank(text) -> bool:
+    """True when `text` is None or holds only `blank_chars()`."""
+    return not text or all(c in blank_chars() for c in text)
+
+
+def is_session_stem(text) -> bool:
+    """The shape of a stored session: `session_` and a name, no `.md` (session_stem) and nothing blank in it. No
+    sibling table's CHECK states a shape; this is read from the live stems, every one of which starts `session_`."""
+    return isinstance(text, str) and text.startswith("session_") and len(text) > len("session_") \
+        and not text.endswith(".md") and not any(c in blank_chars() or c.isspace() for c in text)
+
 _SECRET_WORDS = frozenset("token secret passwd password passphrase pwd credential credentials auth authorization key "
                           "apikey pat bearer cookie p".split())
 
