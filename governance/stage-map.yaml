@@ -81,10 +81,15 @@ judged_on: '2026-09-17'
 # executor of T-018 under T-018-design.md. A figure's lens codes are the crossing, which is judgment's
 # output (CLAUDE.md §6); its parent row, `source_value_extractions`, is already judgment; and its other
 # foreign keys point into `base`, which is not a stage, so the table crosses no stage.
+# 2026-11-19, tooling T-126 (migration 157): unchanged under the sixteenth set ("yes lens in judgment"): a code value's lens is judged in the recording call, basis `context`; no mapping changes.
 #
 # 2026-11-17, tooling T-049 (migration 144): `translations` as CROSS-STAGE, the value the gap register takes: a
 # translation points into whichever stage holds the cell it translates and any stage may request one, so it has no
 # single home (it is stage content, not a record of a diff, so not `infrastructure`).
+#
+# 2026-11-18, tooling T-031 (migration 153): `source_clauses` as EVIDENCE -- the clause inventory the open pass of a
+# full reading records, keyed by the reading (`source_scans`, evidence) that recorded it; a figure in judgment points
+# at it, as it points at its source.
 judged_against: 'CLAUDE.md §3 stage table; stage ids from governance/pipeline-contract.yaml'
 
 tables:
@@ -99,6 +104,7 @@ tables:
   base_parameters: base
   base_quantity_kinds: base
   base_taxonomy_identity: base
+  base_units: base
   case_studies: evidence
   citation_mining: research
   conflicts: synthesis
@@ -134,6 +140,7 @@ tables:
   search_execution_forms: research
   search_executions: research
   slugs: base
+  source_clauses: evidence
   source_locators: research
   source_scans: evidence
   source_slug_links: evidence
@@ -144,6 +151,8 @@ tables:
   supersession_check: synthesis
   term_adjudications: judgment
   term_aliases: base
+  term_label_picks: base
+  term_relations: base
   terms: base
   translations: cross-stage
   weighting_profile: render

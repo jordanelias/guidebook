@@ -94,8 +94,8 @@ def _readiness(cur):
                               "WHERE code_floor_only=1").fetchone()[0]
             lines.append(f"    excluded from best-practice: regulatory_stratum_only={rso}, "
                          f"code_floor_only={cfo}")
-    sve = cur.execute("SELECT COUNT(*) FROM source_value_extractions").fetchone()[0]
-    lines.append(f"source_value_extractions: {sve} row(s) — "
+    sve = cur.execute("SELECT COUNT(*) FROM source_value_extractions WHERE retired_at IS NULL").fetchone()[0]
+    lines.append(f"source_value_extractions: {sve} live row(s) — "
                  f"{'value-directness assessable' if sve else 'EMPTY: value-level convergence not yet assessable (pre-C1)'}")
     conv = {str(s): n for s, n in cur.execute(
         "SELECT status, COUNT(*) FROM convergence_assessment GROUP BY status ORDER BY status")}

@@ -100,6 +100,9 @@ from dbcore import Refusal  # noqa: E402
 
 # T-007: add-source refuses a source with no standing or no type. Both values are read from
 # the columns' own CHECKs; UNVERIFIED needs no verification method, so no other refusal fires.
+# T-083: the warrant of a quantity kind is a locator held on the parameter's own row (OD-71); this one is a fixture.
+KIND_WARRANT = dict(quantity_kind_source_url="https://example.org/task-fixture", quantity_kind_source_page="TASK-FIXTURE",
+                    quantity_kind_quote="TASK-FIXTURE: a clear width of at least 900 mm")
 SRC_STANDING = ("--verification-status", "UNVERIFIED",
                 "--source-type", dbcore.schema_choices("evidence_sources", "source_type")[0])
 sys.path.insert(0, str(REPO))
@@ -431,14 +434,10 @@ try:
                f"got {msg!r}")
         record("D03", "refuses a blank reason, and writes nothing",
                refusal(decline, TD, "   ", S) is not None and not declinations(TD))
-        # T-020: a promotion names a kind (the first row of base_quantity_kinds, derived) and an observation whose
-        # quote holds a digit (a fixture sighting, made through the writer like the terms above).
+        # T-020, T-083: a promotion names a kind (the first row of base_quantity_kinds, derived) and where a source
+        # states a value of it, in the row's own cells (OD-71; a fixture locator).
         KIND = q("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id LIMIT 1")[0][0]
-        WARRANT = db.observe_term(dict(sighting(BODYLESS, "fixture phrase: warrant"),
-                                       context_quote="a fixture sentence using fixture phrase: warrant, 9 once"),
-                                  S)["observation_id"]
-        pid = db.insert_parameter(TP, S, quantity_kind=KIND,
-                                  quantity_kind_observation_id=WARRANT)["parameter_id"]
+        pid = db.insert_parameter(TP, S, quantity_kind=KIND, **KIND_WARRANT)["parameter_id"]
         msg = refusal(decline, TP, WHY, S)
         record("D04", "refuses a term that is already a parameter, naming the parameter_id",
                msg and f"parameter {pid}" in msg and not declinations(TP), f"got {msg!r}")
@@ -2184,6 +2183,658 @@ try:
     record("T018-20", "a lens code that is not text is refused in words by both writers",
            r20a and "is text" in r20a and r20b and "as text" in r20b, f"{r20a!r} | {r20b!r}")
 
+    # ── T126: a code value's lens is judged from its context when its row is recorded; the maps propose ────────────
+    # Every code is derived from the copy's registries; where one is not live yet (the Reaching code before T-128) the
+    # fixture mints it on the COPY only, with one identity_icf_map row joining the wheelchair-user identity to it, and
+    # says so, so the case keeps asserting the path once the live row exists. The clause and the source's scope clause
+    # are saved as a real file for the fixture source (and another for a second source) in the fixture retrieval-log root.
+    sys.path.insert(0, str(REPO / "scripts" / "assess"))
+    import assess_cell as _t126_engine                                 # noqa: E402
+
+    def t126_first(sql, *params):
+        rows = q(sql, *params)
+        return rows[0][0] if rows else None
+
+    T126_CTX = ("--claim-type", "absent", "--figure-role", "finding", "--relation", "none",
+                "--extraction-method", "skim", "--session", S)
+    T126_REASON = "typically concerns wheelchair users"
+    reach126 = t126_first("SELECT icf_code FROM base_icf WHERE lower(coalesce(title,'')) LIKE '%reaching%' ORDER BY icf_code")
+    wheel126 = t126_first(
+        "SELECT i.identity_code FROM base_taxonomy_identity i WHERE i.status='active' AND lower(i.display_name||' '||"
+        "coalesce(i.description,'')) LIKE '%wheelchair%' ORDER BY (SELECT COUNT(*) FROM base_taxonomy_identity c "
+        "WHERE c.parent_code = i.identity_code AND c.status='active'), i.parent_code IS NULL, i.identity_code")
+    need126 = t126_first("SELECT need_code FROM access_needs WHERE lower(coalesce(design_obligation,'')) LIKE '%reachable%' "
+                         "AND lower(design_obligation) LIKE '%seated%' ORDER BY need_code")
+    clear126 = t126_first("SELECT icf_code FROM base_icf WHERE lower(coalesce(title,'')) LIKE '%moving around using equipment%'")
+    blind126 = t126_first("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND "
+                          "lower(display_name) LIKE '%blind%' AND lower(display_name) LIKE '%low%vision%'")
+    reach_fixture = reach126 is None
+    if reach_fixture:
+        reach126 = "d4452"
+        w("INSERT INTO base_icf (icf_code, component, title, title_source, created_at, created_by_session) "
+          "VALUES (?, 'd', 'Reaching', 'TASK-FIXTURE T126', 't', ?)", reach126, S)
+    if wheel126 and not q("SELECT 1 FROM identity_icf_map WHERE identity_code=? AND icf_code=? AND retired_at IS NULL",
+                          wheel126, reach126):
+        w("INSERT INTO identity_icf_map (identity_code, icf_code, mechanism, mapping_confidence, provenance, created_at, "
+          "created_by_session) VALUES (?, ?, 'TASK-FIXTURE seated reach', 'moderate_contextual', 'TASK-FIXTURE T126', "
+          "'2026-01-01 00:00', ?)", wheel126, reach126, S)
+    print(f"      T126 codes: reach {reach126} ({'fixture row' if reach_fixture else 'live'}), need {need126}, "
+          f"identity {wheel126}, clearance {clear126}, override {blind126}")
+
+    T126_CLAUSE = "TASK-FIXTURE T126 Controls shall be mounted at a height of not more than 1200 mm"
+    T126_KNEE = "TASK-FIXTURE T126 Knee clearance under the counter shall be not less than 685 mm"
+    T126_PROTRUDE = ("TASK-FIXTURE T126 Objects protruding more than 100 mm into the path shall be detectable by "
+                     "people who are blind or have low vision")
+    T126_SCOPE = "TASK-FIXTURE T126 This section applies to sanitary rooms in assembly occupancies"
+    T126_OTHER = "TASK-FIXTURE T126 phrase saved only for another source"
+    log_root = pathlib.Path(os.environ["GUIDEBOOK_RETRIEVAL_LOG"]) / "task-fixture-t126"
+    log_root.mkdir(parents=True, exist_ok=True)
+
+    def t126_save(ref, name, body):
+        (log_root / name).write_text(body, encoding="utf-8")
+        with open(log_root / "manifest.jsonl", "a", encoding="utf-8") as fh:
+            fh.write(json.dumps({"ref_id": ref, "artefact": name, "content_type": "text/plain",
+                                 "url": f"https://example.org/task-fixture/{name}"}) + "\n")
+
+    code126, _ = add_o("T126 code", "--evidence-type", "code")
+    readable(code126)
+    other126, _ = add_o("T126 other code", "--evidence-type", "code")
+    readable(other126)
+    grey126, _ = add_o("T126 research", "--evidence-type", "grey")
+    readable(grey126)
+    t126_save(code126, "t126-code.txt", "\n".join([T126_SCOPE, T126_CLAUSE, T126_KNEE, T126_PROTRUDE]))
+    t126_save(other126, "t126-other.txt", T126_OTHER)
+    t126_save(grey126, "t126-grey.txt", T126_CLAUSE)
+
+    def t126_add(ref, clause, *lens, section="TASK-FIXTURE T126 Section 3.8"):
+        r = run_cli("add-extraction", "--ref-id", ref, "--parameter-id", str(PARAM), *lens, "--claim-text", clause,
+                    "--source-section", section, *T126_CTX)
+        got = q("SELECT extraction_id FROM source_value_extractions WHERE ref_id=? AND claim_text=? "
+                "ORDER BY extraction_id DESC", ref, clause)
+        try:
+            res = json.loads(r.stdout) if r.returncode == 0 else {}
+        except ValueError:
+            res = {}
+        return r, (got[0][0] if got else None), res
+
+    def t126_links(fig):
+        return t018_read("SELECT identity_code, icf_code, needs_code, basis, basis_text, basis_reason FROM "
+                         "v_live_lens_links WHERE extraction_id=? ORDER BY link_id", fig)
+
+    CTX = lambda words: ("--lens-basis", "context", "--lens-basis-text", words, "--lens-basis-reason", T126_REASON)  # noqa: E731
+
+    # T126-01: the owner's mounting-height default: three links by context, the proposal shown, the cell gathers it.
+    r01_, fig126, res01 = t126_add(code126, T126_CLAUSE, "--icf", reach126, "--needs", need126, "--identity", wheel126,
+                                   *CTX("mounted at a height"))
+    links01, e01 = t126_links(fig126) if fig126 else (None, "no figure")
+    gathered = None
+    if fig126:
+        _gc = sqlite3.connect(DB)
+        try:
+            gathered = [g for g in _t126_engine.gather_extraction_links(_gc, PARAM, [], {"identity_code": wheel126})
+                        if g["extraction_id"] == fig126]
+        except Exception as exc:  # noqa: BLE001 -- recorded red below
+            gathered = f"{exc.__class__.__name__}: {exc}"
+        finally:
+            _gc.close()
+    record("T126-01", "a mounting-height code row is recorded with the reach ICF code, the reach need and the wheelchair-user "
+           "identity by context, the words and the reason in two cells; the map's proposal is printed and returned, "
+           "and the identity cell gathers the figure",
+           r01_.returncode == 0 and links01 is not None and len(links01) == 3
+           and all(l[3:] == ("context", "mounted at a height", T126_REASON) for l in links01)
+           and res01.get("identities_proposed") and wheel126 in res01["identities_proposed"]
+           and res01.get("identities_written") == [wheel126]
+           and f"{wheel126}: via ICF {reach126}" in r01_.stderr and "moderate_contextual" in r01_.stderr
+           and "provenance" in r01_.stderr
+           and isinstance(gathered, list) and len(gathered) == 1 and gathered[0]["in_lens"],
+           f"rc={r01_.returncode} {out_of(r01_)[-300:]!r} links={links01} {e01} res={res01} gathered={gathered}")
+
+    # T126-02: knee clearance, the second default; the live map proposes the wheelchair-user family for the clearance code.
+    r02_, fig02_, res02 = t126_add(code126, T126_KNEE, "--icf", clear126, "--needs", need126, "--identity", wheel126,
+                                   *CTX("knee clearance"))
+    live_prop02 = [c for (c,) in q("SELECT DISTINCT identity_code FROM identity_icf_map WHERE icf_code=? AND retired_at "
+                                   "IS NULL ORDER BY 1", clear126)]
+    record("T126-02", "a knee-clearance code row is recorded with the clearance ICF code, the reach need and the wheelchair-user "
+           "identity by context; the proposals are the live map's rows for the clearance code",
+           r02_.returncode == 0 and fig02_ and live_prop02 and wheel126 in live_prop02
+           and set(live_prop02) <= set(res02.get("identities_proposed") or ())
+           and res02.get("identities_written") == [wheel126],
+           f"rc={r02_.returncode} {out_of(r02_)[-300:]!r} res={res02} live map={live_prop02}")
+
+    # T126-03: the override: a protruding-object clause that names its group is written for that group, by named_in_text,
+    # with none of the default's links; the skill names the override. No code chooses the lens.
+    skill126 = (REPO / "skills" / "run-pipeline_SKILL.md").read_text(encoding="utf-8")
+    r03_, fig03_, res03 = t126_add(code126, T126_PROTRUDE, "--identity", blind126, "--lens-basis", "named_in_text",
+                                   "--lens-basis-text", "blind or have low vision")
+    links03, _ = t126_links(fig03_) if fig03_ else (None, "")
+    record("T126-03", "a protruding-object clause naming people who are blind or have low vision is written for that group by "
+           "named_in_text with no default link, and the skill's guidance names the override",
+           r03_.returncode == 0 and links03 == [(blind126, None, None, "named_in_text", "blind or have low vision", None)]
+           and "protruding" in skill126 and "Overridden where the clause names another group" in skill126,
+           f"rc={r03_.returncode} {out_of(r03_)[-250:]!r} links={links03}")
+
+    # T126-04: context below tier 4 is refused, naming the sixteenth set; nothing is written.
+    nf4, nl4 = n_figures(), n_links_now()
+    r04_, fig04_, _ = t126_add(grey126, T126_CLAUSE, "--icf", reach126, *CTX("mounted at a height"))
+    record("T126-04", "basis context on a source below tier 4 is refused naming the sixteenth set, and writes nothing",
+           r04_.returncode != 0 and "sixteenth set" in out_of(r04_) and n_figures() == nf4 and n_links_now() == nl4,
+           f"rc={r04_.returncode} {out_of(r04_)[-250:]!r}")
+
+    # T126-05: context with a blank or missing reason is refused; a reason beside another basis is refused.
+    def ll126(*extra):
+        return run_cli("add-lens-link", "--extraction-id", str(fig126 or 0), "--icf", clear126, *extra, "--session", S)
+    nl5 = n_links_now()
+    refused5 = {
+        "context, no reason": ll126("--basis", "context", "--basis-text", "mounted at a height"),
+        "context, blank reason": ll126("--basis", "context", "--basis-text", "mounted at a height", "--basis-reason", "  "),
+        "context, reason with no letter": ll126("--basis", "context", "--basis-text", "mounted at a height",
+                                                "--basis-reason", "1200"),
+        "named_in_text with a reason": ll126("--basis", "named_in_text", "--basis-text", "mounted at a height",
+                                             "--basis-reason", T126_REASON),
+        "heading with a reason": ll126("--basis", "heading", "--basis-text", "Section 3.8", "--basis-reason", T126_REASON),
+        "study_participants with a reason": ll126("--basis", "study_participants", "--basis-text", "participants",
+                                                  "--basis-reason", T126_REASON),
+    }
+    missed5 = [k for k, v in refused5.items() if v.returncode == 0]
+    record("T126-05", "context with a missing, blank or letterless reason is refused, and a reason beside any other basis is "
+           "refused; nothing is written",
+           not missed5 and n_links_now() == nl5
+           and "--basis-reason" in out_of(refused5["context, no reason"])
+           and "belongs to basis `context` only" in out_of(refused5["named_in_text with a reason"]),
+           f"not refused: {missed5}; {[out_of(v)[-120:] for v in refused5.values()]}")
+
+    # T126-06: the context's words must be in the clause, its heading or a file saved for ITS source.
+    r06a = ll126("--basis", "context", "--basis-text", "zq not anywhere xq", "--basis-reason", T126_REASON)
+    r06b = ll126("--basis", "context", "--basis-text", "saved only for another source", "--basis-reason", T126_REASON)
+    r06c = ll126("--basis", "context", "--basis-text", "applies to sanitary rooms", "--basis-reason", T126_REASON)
+    r06d = run_cli("add-lens-link", "--extraction-id", str(fig126 or 0), "--needs",
+                   t126_first("SELECT need_code FROM access_needs WHERE need_code<>? ORDER BY need_code", need126),
+                   "--basis", "context", "--basis-text", "Section 3.8", "--basis-reason", T126_REASON, "--session", S)
+    record("T126-06", "context words found nowhere, or only in a file saved for another source, are refused naming where it "
+           "looked; words in the source's own saved scope clause and in its heading are accepted",
+           r06a.returncode != 0 and r06b.returncode != 0 and "source_section" in out_of(r06b)
+           and r06c.returncode == 0 and r06d.returncode == 0,
+           f"{out_of(r06a)[-120:]!r} | {out_of(r06b)[-160:]!r} | {out_of(r06c)[-160:]!r} | {out_of(r06d)[-160:]!r}")
+
+    # T126-07: a code row with no lens flag at all is refused (D-0182), as before.
+    nf7, nl7 = n_figures(), n_links_now()
+    r07_, _, _ = t126_add(code126, T126_CLAUSE + " (no lens)", *CTX("mounted at a height"))
+    record("T126-07", "a code row with no lens flag is refused in the D-0182 words and writes nothing",
+           r07_.returncode != 0 and "at least one lens" in out_of(r07_) and n_figures() == nf7 and n_links_now() == nl7,
+           f"rc={r07_.returncode} {out_of(r07_)[-200:]!r}")
+
+    # T126-08: a stored code figure holding only carried links takes a context link, then its carried link is retired
+    # (the T-127 sequence). The probe is derived: the first such figure on the copy with a claim text to quote.
+    probe8 = q("SELECT x.extraction_id, x.claim_text, MIN(k.link_id) FROM source_value_extractions x JOIN evidence_sources e "
+               "ON e.ref_id = x.ref_id JOIN v_live_lens_links k ON k.extraction_id = x.extraction_id WHERE e.tier >= 4 "
+               "AND TRIM(COALESCE(x.claim_text,'')) <> '' GROUP BY x.extraction_id HAVING SUM(k.basis <> 'carried') = 0 "
+               "AND SUM(COALESCE(k.icf_code = ?, 0)) = 0 ORDER BY x.extraction_id LIMIT 1", clear126)
+    if probe8:
+        fig8, ct8, carried8 = probe8[0]
+        word8 = max(re.findall(r"[^\W\d_]+", ct8), key=len)
+        r08a = run_cli("add-lens-link", "--extraction-id", str(fig8), "--icf", clear126, "--basis", "context",
+                       "--basis-text", word8, "--basis-reason", T126_REASON, "--session", S)
+        r08b = run_cli("retire-lens-link", "--link-id", str(carried8), "--reason",
+                       "TASK-FIXTURE T126: replaced by a judged context link", "--session", S)
+        ok8 = (r08a.returncode == 0 and r08b.returncode == 0
+               and q("SELECT basis, basis_reason FROM v_live_lens_links WHERE extraction_id=? AND icf_code=?", fig8,
+                     clear126) == [("context", T126_REASON)]
+               and q("SELECT retired_at IS NOT NULL FROM extraction_lens_links WHERE link_id=?", carried8) == [(1,)])
+        detail8 = f"{out_of(r08a)[-200:]!r} | {out_of(r08b)[-200:]!r}"
+    else:
+        ok8, detail8 = False, "no stored code figure holding only carried links to probe"
+    record("T126-08", "add-lens-link --basis context on a stored code figure holding only carried links is accepted, and "
+           "retire-lens-link then retires the carried link", ok8, detail8)
+
+    # T126-09: the migration itself, against its parent. The parent is built by the project's own replay
+    # (migrate_db.build_plan / rebuild_from_migrations) of every step before the migration, in a temp directory; the
+    # migration is then applied to a copy, and every row of extraction_lens_links is compared column by column (the
+    # parent's columns), basis_reason must be NULL on every row, and the view must carry it after basis_text. The
+    # canonical database is checked for the same column shape.
+    import contextlib
+    import io
+    import migrate_db as _mdb9                                         # noqa: E402
+    ok9, detail9 = False, ""
+    _orig_plan9 = _mdb9.build_plan
+    try:
+        plan9 = _orig_plan9()
+        idx9 = next(i for i, st in enumerate(plan9) if st[0] == "schema"
+                    and st[2].name.endswith("_lens_link_context_basis.sql"))
+        par9, mig9 = os.path.join(TMP, "t126-parent.db"), os.path.join(TMP, "t126-migrated.db")
+        _mdb9.build_plan = lambda: plan9[:idx9]
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            _mdb9.rebuild_from_migrations(par9)
+        _mdb9.build_plan = _orig_plan9
+        # The replayed parent's rows hold NULL in basis_text and the three retired_* cells (every link is carried and
+        # live), so a migration swapping them would pass a plain comparison: give them distinct values first, within the
+        # parent's own CHECKs (a stated basis carries words; a retired link carries all three retired_* cells).
+        _f9 = sqlite3.connect(par9)
+        try:
+            _f9.execute("UPDATE extraction_lens_links SET basis='named_in_text', basis_text='TASK-FIXTURE words '||link_id "
+                        "WHERE link_id % 2 = 0")
+            _f9.execute("UPDATE extraction_lens_links SET retired_at='2026-01-01 00:'||printf('%02d', link_id % 60), "
+                        "retired_by_session='TASK-FIXTURE session '||link_id, retirement_reason='TASK-FIXTURE reason '||link_id "
+                        "WHERE link_id % 3 = 0")
+            _f9.commit()
+        finally:
+            _f9.close()
+        shutil.copy(par9, mig9)
+        _c9 = sqlite3.connect(mig9, isolation_level=None)
+        _p9 = sqlite3.connect(par9)
+        try:
+            _, _v9, _path9 = plan9[idx9]
+            _mdb9._apply_atomically(_c9, _mdb9._prepare_body(_path9.read_text(encoding="utf-8"))[0],
+                                    label=_path9.name, user_version=_v9, fk_blocking=False)
+            cols9 = [r[1] for r in _p9.execute("PRAGMA table_info(extraction_lens_links)")]
+            sel9 = f"SELECT {', '.join(cols9)} FROM extraction_lens_links ORDER BY link_id"
+            want9, got9 = _p9.execute(sel9).fetchall(), _c9.execute(sel9).fetchall()
+            nonnull9 = _c9.execute("SELECT COUNT(basis_reason) FROM extraction_lens_links").fetchone()[0]
+            seq9 = [x.execute("SELECT seq FROM sqlite_sequence WHERE name='extraction_lens_links'").fetchall()
+                    for x in (_p9, _c9)]
+            vcols9 = [r[1] for r in _c9.execute("PRAGMA table_info(v_live_lens_links)")]
+            live9 = [x.execute("SELECT COUNT(*) FROM extraction_lens_links WHERE retired_at IS NULL").fetchone()[0]
+                     for x in (_p9, _c9)] + [_c9.execute("SELECT COUNT(*) FROM v_live_lens_links").fetchone()[0]]
+            vwant9 = _p9.execute("SELECT link_id, extraction_id, identity_code, icf_code, needs_code, basis, basis_text, "
+                                 "NULL, created_at, created_by_session FROM extraction_lens_links WHERE retired_at IS NULL "
+                                 "ORDER BY link_id").fetchall()
+            vgot9 = _c9.execute("SELECT * FROM v_live_lens_links ORDER BY link_id").fetchall()
+            idx_sql = ("SELECT name, sql FROM sqlite_master WHERE type='index' AND tbl_name='extraction_lens_links' "
+                       "ORDER BY name")
+            idx9 = [x.execute(idx_sql).fetchall() for x in (_p9, _c9)]
+            spread9 = _p9.execute("SELECT COUNT(DISTINCT basis_text), COUNT(retired_at), COUNT(*) - COUNT(retired_at) "
+                                  "FROM extraction_lens_links").fetchone()
+        finally:
+            _c9.close()
+            _p9.close()
+        canon9 = sqlite3.connect(f"file:{REPO / 'data' / 'guidebook.db'}?mode=ro", uri=True)
+        try:
+            ccols9 = [r[1] for r in canon9.execute("PRAGMA table_info(v_live_lens_links)")]
+        finally:
+            canon9.close()
+        ok9 = (len(want9) > 0 and want9 == got9 and nonnull9 == 0 and seq9[0] == seq9[1]
+               and all(n > 0 for n in spread9) and vwant9 == vgot9 and idx9[0] == idx9[1] and len(idx9[0]) > 0
+               and "basis_reason" in vcols9 and vcols9.index("basis_reason") == vcols9.index("basis_text") + 1
+               and len(set(live9)) == 1 and ccols9 == vcols9)
+        detail9 = (f"view rows equal={vwant9 == vgot9}, indexes equal={idx9[0] == idx9[1]}, spread {spread9}; "
+                   f"parent rows {len(want9)}, migrated rows {len(got9)}, equal={want9 == got9}, basis_reason set "
+                   f"{nonnull9}, seq {seq9}, view {vcols9}, live {live9}, canonical view {ccols9}")
+    except Exception as exc:  # noqa: BLE001 -- recorded red below
+        detail9 = f"{exc.__class__.__name__}: {exc}"
+    finally:
+        _mdb9.build_plan = _orig_plan9
+        for _tmp9 in ("t126-parent.db", "t126-migrated.db"):
+            try:
+                os.remove(os.path.join(TMP, _tmp9))
+            except OSError:
+                pass
+    record("T126-09", "replayed to its parent and migrated, extraction_lens_links keeps every row column for column with "
+           "basis_reason NULL and its sequence floor, and v_live_lens_links returns the same live rows with basis_reason "
+           "after basis_text (as the canonical view does)", ok9, detail9)
+
+    # T126-10: the skill carries the owner's guidance and no longer asks for a ruling the owner has given.
+    record("T126-10", "the skill holds the owner's warrant, the proposals and no sentence keeping the identity off the links",
+           skill126.count("typically concerns wheelchair users") >= 1
+           and skill126.count("Moving it earlier needs a ruling") == 0
+           and skill126.count("identity_icf_map") >= 1
+           and "A proposal is never written because it was proposed" in skill126
+           and not re.search(r"not written beside|never written beside", skill126), "")
+
+    # T126-11: a silent omission is flagged: an ICF-only code row whose map proposes a group prints the warning, writes
+    # no identity, and the audit lists it.
+    r11_, fig11, res11 = t126_add(code126, T126_KNEE, "--icf", clear126, *CTX("knee clearance"),
+                                  section="TASK-FIXTURE T126 Section 3.9")
+
+    def audit126():
+        return subprocess.run([sys.executable, str(REPO / "scripts" / "audit" / "code_value_identity_audit.py")],
+                              env=dict(os.environ, GUIDEBOOK_DB_PATH=DB), capture_output=True, text=True)
+    a11 = audit126()
+    list_i = a11.stdout.split("(ii)")[0]
+    record("T126-11", "an ICF-only code row whose map proposes a group is accepted with 'WARNING: maps propose', writes no "
+           "identity, and the audit lists it in (i)",
+           r11_.returncode == 0 and "WARNING: maps propose" in r11_.stderr and res11.get("identities_written") == []
+           and fig11 and f"extraction {fig11}:" in list_i and a11.returncode == 1,
+           f"rc={r11_.returncode} {r11_.stderr[-250:]!r} res={res11} audit rc={a11.returncode} {a11.stdout[-400:]!r}")
+
+    # T126-12: the audit is not vacuous: it examines the figures, lists T126-11's, and leaves out T126-01's (it carries an
+    # identity) and a figure whose every link is a heading (OD-31).
+    r12_, fig12, _ = t126_add(code126, T126_KNEE, "--icf", clear126, "--lens-basis", "heading",
+                              "--lens-basis-text", "Heading Gamma", section="TASK-FIXTURE T126 Heading Gamma")
+    a12 = audit126()
+    m12 = re.search(r"EXAMINED: (\d+)", a12.stdout)
+    list_i = a12.stdout.split("(ii)")[0]
+    record("T126-12", "the audit prints EXAMINED above 0, lists the omission, and not a figure with an identity link nor one "
+           "whose every link is a heading",
+           m12 and int(m12.group(1)) > 0 and fig11 and f"extraction {fig11}:" in list_i and fig126
+           and f"extraction {fig126}:" not in list_i and r12_.returncode == 0 and fig12
+           and f"extraction {fig12}:" not in list_i,
+           f"{a12.stdout[-500:]!r} heading fig={fig12} {out_of(r12_)[-150:]!r}")
+
+    # T126-13: a map row created after a figure's newest live link that proposes a group the figure lacks puts it in
+    # list (iii), for information: the exit code does not move.
+    new13 = t126_first("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code NOT IN "
+                       "(SELECT identity_code FROM v_live_lens_links WHERE extraction_id=? AND identity_code IS NOT NULL) "
+                       "AND identity_code <> 'ALL' AND identity_code NOT IN (SELECT identity_code FROM identity_icf_map "
+                       "WHERE icf_code=?) ORDER BY identity_code", fig126 or 0, reach126)
+    before13 = audit126()
+    w("INSERT INTO identity_icf_map (identity_code, icf_code, mechanism, mapping_confidence, provenance, created_at, "
+      "created_by_session) VALUES (?, ?, 'TASK-FIXTURE later map row', 'low_indicative', 'TASK-FIXTURE T126-13', "
+      "'2099-01-01 00:00', ?)", new13, reach126, S)
+    after13 = audit126()
+    list_iii = after13.stdout.split("(iii)")[-1]
+    w("UPDATE identity_icf_map SET retired_at='2099-01-02 00:00', retired_by_session=?, retired_reason='TASK-FIXTURE' "
+      "WHERE provenance='TASK-FIXTURE T126-13'", S)
+    retired13 = audit126()
+    record("T126-13", "a later map row proposing a group a stored figure lacks lists the figure in (iii), and the exit code "
+           "does not change; once that map row is retired it proposes nothing and the figure leaves (iii)",
+           fig126 and new13 and f"extraction {fig126}: " in list_iii and new13 in list_iii
+           and f"extraction {fig126}: " not in before13.stdout.split("(iii)")[-1]
+           and before13.returncode == after13.returncode
+           and f"extraction {fig126}: " not in retired13.stdout.split("(iii)")[-1],
+           f"before rc={before13.returncode} after rc={after13.returncode} {after13.stdout[-300:]!r} "
+           f"retired {retired13.stdout[-200:]!r}")
+
+    # ── T126, repair after the adversarial pass: one case for each branch a seeded defect left green ──────────────────
+    def t126_parts(text):
+        """The audit's lists (i), (ii) and (iii), and its queue line, by their headings."""
+        i_, rest = (text.split("(ii)", 1) + [""])[:2]
+        ii_, iii_ = (rest.split("(iii)", 1) + [""])[:2]
+        q_ = next((ln for ln in text.splitlines() if ln.startswith("queue")), "")
+        return i_, ii_, iii_, q_
+
+    _ro14 = sqlite3.connect(DB)
+    try:
+        # T126-14: a need reaches groups through its b/d access_need_icf rows. Derived: the first need whose b/d row's
+        # ICF code has a live map row, and the groups that route gives.
+        n14 = t126_first("SELECT a.need_code FROM access_need_icf a JOIN identity_icf_map m ON m.icf_code = a.icf_code "
+                         "AND m.retired_at IS NULL WHERE a.icf_type <> 'e' ORDER BY a.need_code")
+        want14 = {c for (c,) in q("SELECT DISTINCT m.identity_code FROM access_need_icf a JOIN identity_icf_map m ON "
+                                   "m.icf_code = a.icf_code AND m.retired_at IS NULL WHERE a.need_code=? AND "
+                                   "a.icf_type <> 'e'", n14)}
+        got14 = db.identity_proposals(_ro14, [], [n14]) if n14 else []
+    finally:
+        _ro14.close()
+    record("T126-14", "the proposals for a need alone are the groups its b/d access_need_icf rows reach, each naming the need",
+           n14 and want14 and {p["identity_code"] for p in got14} == want14
+           and all(n14 in (p["via_needs"] or "") for p in got14), f"need {n14} want {want14} got {got14}")
+
+    # T126-15: an e-code (environmental factor) of a need proposes nothing: fixture map row on the copy, from an e-code
+    # of a need to a group no b/d route of that need reaches.
+    n15, e15 = (q("SELECT need_code, icf_code FROM access_need_icf WHERE icf_type='e' ORDER BY need_code, icf_code") or
+                [(None, None)])[0]
+    _ro15 = sqlite3.connect(DB)
+    try:
+        reach15 = {p["identity_code"] for p in db.identity_proposals(_ro15, [], [n15])}
+    finally:
+        _ro15.close()
+    x15 = t126_first("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code<>'ALL' "
+                     "ORDER BY identity_code") if not reach15 else sorted(
+        {c for (c,) in q("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code<>'ALL'")}
+        - reach15)[0]
+    w("INSERT INTO identity_icf_map (identity_code, icf_code, mechanism, mapping_confidence, provenance, created_at, "
+      "created_by_session) VALUES (?, ?, 'TASK-FIXTURE e-code', 'low_indicative', 'TASK-FIXTURE T126-15', '2026-01-01 00:00', ?)",
+      x15, e15, S)
+    _ro15 = sqlite3.connect(DB)
+    try:
+        got15 = {p["identity_code"] for p in db.identity_proposals(_ro15, [], [n15])}
+        direct15 = {p["identity_code"] for p in db.identity_proposals(_ro15, [e15], [])}
+    finally:
+        _ro15.close()
+    record("T126-15", "a map row on a need's e-code proposes nothing for the need, though the same code given as an ICF code does",
+           n15 and x15 not in got15 and x15 in direct15, f"need {n15} e {e15} fixture group {x15} via need {got15} direct {direct15}")
+
+    # T126-01's own output: the warning stays silent with an identity live, the parent and the need's text are printed.
+    parent01 = reach126[:-1] if q("SELECT 1 FROM base_icf WHERE icf_code=?", reach126[:-1]) else None
+    record("T126-16", "a figure written with an identity link prints no WARNING", r01_.returncode == 0
+           and "WARNING" not in r01_.stderr, r01_.stderr[-300:])
+    record("T126-17", "a proposal through an ICF code with a parent in the registry names the parent beside it",
+           parent01 and f"parent {parent01}" in r01_.stderr, f"parent {parent01}: {r01_.stderr[-300:]!r}")
+    record("T126-18", "each need's own registry text is printed with the proposals",
+           f"need {need126}: design_obligation:" in r01_.stderr and "absorbs:" in r01_.stderr, r01_.stderr[-300:])
+
+    # T126-19: below tier 4 the writer does not warn, and the audit does not list the figure (an ICF-only research figure
+    # whose map proposes groups, by named_in_text: the clause holds the words).
+    r19_, fig19, _ = t126_add(grey126, T126_CLAUSE, "--icf", clear126, "--lens-basis", "named_in_text",
+                              "--lens-basis-text", "Controls")
+    i19, _, _, _ = t126_parts(audit126().stdout)
+    record("T126-19", "an ICF-only figure of a source below tier 4 whose map proposes groups prints no WARNING and is not in (i)",
+           r19_.returncode == 0 and fig19 and "PROPOSALS" in r19_.stderr and "WARNING" not in r19_.stderr
+           and f"extraction {fig19}:" not in i19, f"{out_of(r19_)[-250:]!r}")
+
+    # T126-20 / T126-21: add-lens-link reads the figure's live codes for its proposals, warns, and reports both fields.
+    r20a, fig20, _ = t126_add(code126, T126_KNEE, "--needs", need126, *CTX("knee clearance"),
+                              section="TASK-FIXTURE T126 Section 4.1")
+    r20b = run_cli("add-lens-link", "--extraction-id", str(fig20 or 0), "--icf", clear126, "--basis", "context",
+                   "--basis-text", "knee clearance", "--basis-reason", T126_REASON, "--session", S)
+    r20c = run_cli("add-lens-link", "--extraction-id", str(fig20 or 0), "--identity", wheel126, "--basis", "context",
+                   "--basis-text", "knee clearance", "--basis-reason", T126_REASON, "--session", S)
+    try:
+        res20b, res20c = json.loads(r20b.stdout), json.loads(r20c.stdout)
+    except ValueError:
+        res20b, res20c = {}, {}
+    record("T126-20", "add-lens-link on an identity proposes from the ICF code already live on the figure, and returns the "
+           "groups proposed and the identities written",
+           r20c.returncode == 0 and set(live_prop02) <= set(res20c.get("identities_proposed") or ())
+           and res20c.get("identities_written") == [wheel126] and set(live_prop02) <= set(res20b.get("identities_proposed") or ()),
+           f"{out_of(r20b)[-200:]!r} | {out_of(r20c)[-300:]!r}")
+    record("T126-21", "add-lens-link that leaves a code figure with ICF or need links, no identity and a proposal prints the "
+           "WARNING, and an empty identities_written",
+           r20a.returncode == 0 and "WARNING" not in r20a.stderr and r20b.returncode == 0
+           and "WARNING: maps propose" in r20b.stderr and res20b.get("identities_written") == [],
+           f"{r20a.stderr[-150:]!r} | {r20b.stderr[-250:]!r}")
+
+    # T126-22: derive-extraction carries the reason: two figures a code source states in one unit, then a derived row by
+    # context. The inputs' words are in the source's saved file.
+    D22_BASE = "TASK-FIXTURE T126 The clear width shall be not less than 900 mm"
+    D22_DELTA = "TASK-FIXTURE T126 Where a door swings into the room add 100 mm"
+    t126_save(code126, "t126-code-derive.txt", D22_BASE + "\n" + D22_DELTA)
+
+    def num22(text, value, comp, clause):
+        r = run_cli("add-extraction", "--ref-id", code126, "--parameter-id", str(PARAM), "--icf", clear126,
+                    *CTX("applies to sanitary rooms"), "--claim-text", text, "--claim-type", "numerical",
+                    "--claimed-value", value, "--claimed-unit", "mm", "--comparator", comp, "--figure-role", "claim",
+                    "--relation", "none", "--extraction-method", "full-read", "--loc-clause", clause, "--session", S)
+        got = q("SELECT extraction_id FROM source_value_extractions WHERE ref_id=? AND claim_text=?", code126, text)
+        return r, (got[0][0] if got else None)
+    rb22, b22 = num22(D22_BASE, "900", ">=", "TASK-FIXTURE 3.8.1")
+    rd22, d22 = num22(D22_DELTA, "100", "=", "TASK-FIXTURE 3.8.2")
+    r22 = run_cli("derive-extraction", "--base", str(b22 or 0), "--delta", str(d22 or 0), "--parameter-id", str(PARAM),
+                  "--icf", clear126, *CTX("applies to sanitary rooms"), "--session", S)
+    l22 = q("SELECT k.basis, k.basis_reason FROM v_live_lens_links k JOIN source_value_extractions x ON x.extraction_id = "
+            "k.extraction_id WHERE x.figure_role='derived' AND x.ref_id=?", code126)
+    record("T126-22", "derive-extraction --lens-basis context --lens-basis-reason writes the derived row's link with its reason",
+           rb22.returncode == 0 and rd22.returncode == 0 and r22.returncode == 0 and l22 == [("context", T126_REASON)],
+           f"{out_of(rb22)[-150:]!r} | {out_of(rd22)[-150:]!r} | {out_of(r22)[-250:]!r} links {l22}")
+
+    # T126-23: list (ii) names each live identity no live map row proposes, a retired map row included.
+    lone23 = [c for (c,) in q("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code <> ? "
+                              "AND identity_code NOT IN (SELECT identity_code FROM identity_icf_map WHERE retired_at IS NULL) "
+                              "ORDER BY 1", dbcore.SCOPE_MARKER_IDENTITY)]
+    if lone23:
+        w("INSERT INTO identity_icf_map (identity_code, icf_code, mechanism, mapping_confidence, provenance, created_at, "
+          "created_by_session, retired_at, retired_by_session, retired_reason) VALUES (?, ?, 'TASK-FIXTURE retired', "
+          "'low_indicative', 'TASK-FIXTURE T126-23', '2026-01-01 00:00', ?, '2026-01-02 00:00', ?, 'TASK-FIXTURE')",
+          lone23[0], clear126, S, S)
+    _, ii23, _, _ = t126_parts(audit126().stdout)
+    record("T126-23", "list (ii) names every live identity no live map row proposes, one with only a retired map row included",
+           lone23 and all(re.search(rf"(?<![\w-]){re.escape(c)}(?![\w-])", ii23) for c in lone23),
+           f"want {lone23} got {ii23[:200]!r}")
+
+    # T126-24: list (iii) reads the date of the access_need_icf row a proposal comes through: an old map row reached
+    # through a need row created after the figure's newest live link lists the figure. Fixtures on the copy.
+    n24 = n14
+    r24, fig24, _ = t126_add(code126, T126_CLAUSE, "--needs", n24, "--identity", wheel126, *CTX("mounted at a height"),
+                             section="TASK-FIXTURE T126 Section 5.1")
+    have24 = {c for (c,) in q("SELECT identity_code FROM v_live_lens_links WHERE extraction_id=? AND identity_code IS NOT "
+                               "NULL", fig24 or 0)}
+    c24 = t126_first("SELECT icf_code FROM base_icf WHERE component='d' AND icf_code NOT IN (SELECT icf_code FROM "
+                     "access_need_icf WHERE need_code=?) AND icf_code NOT IN (SELECT icf_code FROM identity_icf_map) "
+                     "ORDER BY icf_code", n24)
+    g24 = sorted({c for (c,) in q("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND "
+                                   "identity_code<>'ALL'")} - have24 - {p for p in want14})[0]
+    w("INSERT INTO identity_icf_map (identity_code, icf_code, mechanism, mapping_confidence, provenance, created_at, "
+      "created_by_session) VALUES (?, ?, 'TASK-FIXTURE old map row', 'low_indicative', 'TASK-FIXTURE T126-24', "
+      "'2026-01-01 00:00', ?)", g24, c24, S)
+    _, _, iii24a, _ = t126_parts(audit126().stdout)
+    w("INSERT INTO access_need_icf (need_code, icf_code, icf_type, confidence, created_at, created_by_session) "
+      "VALUES (?, ?, 'd', 'proposed', '2099-01-01T00:00:00Z', ?)", n24, c24, S)
+    _, _, iii24b, _ = t126_parts(audit126().stdout)
+    record("T126-24", "a need row created after the figure's newest link, reaching an old map row, lists the figure in (iii)",
+           r24.returncode == 0 and fig24 and f"extraction {fig24}:" not in iii24a and f"extraction {fig24}: " in iii24b
+           and g24 in iii24b, f"{out_of(r24)[-150:]!r} c={c24} g={g24} before {iii24a[-150:]!r} after {iii24b[-200:]!r}")
+
+    # T126-25: list (i) needs a proposal: a code figure whose ICF code no map row reaches, with no identity, is not listed.
+    c25 = t126_first("SELECT icf_code FROM base_icf WHERE component='d' AND icf_code NOT IN (SELECT icf_code FROM "
+                     "identity_icf_map) ORDER BY icf_code DESC")
+    r25, fig25, _ = t126_add(code126, T126_KNEE, "--icf", c25, *CTX("knee clearance"), section="TASK-FIXTURE T126 Section 6.1")
+    i25, _, _, _ = t126_parts(audit126().stdout)
+    record("T126-25", "a code figure with an ICF link no map row reaches and no identity is not in (i), and prints no WARNING",
+           r25.returncode == 0 and fig25 and f"extraction {fig25}:" not in i25 and "WARNING" not in r25.stderr,
+           f"{c25} {out_of(r25)[-200:]!r}")
+
+    # T126-26: ALL is refused as an identity under the context basis, by both writers (OD-31); nothing is written.
+    nf26, nl26 = n_figures(), n_links_now()
+    r26a = run_cli("add-lens-link", "--extraction-id", str(fig126 or 0), "--identity", "ALL", "--basis", "context",
+                   "--basis-text", "mounted at a height", "--basis-reason", T126_REASON, "--session", S)
+    r26b, _, _ = t126_add(code126, T126_KNEE, "--identity", "ALL", *CTX("knee clearance"), section="TASK-FIXTURE T126 7.1")
+    record("T126-26", "--identity ALL with basis context is refused by add-lens-link and add-extraction, naming OD-31",
+           r26a.returncode != 0 and "OD-31" in out_of(r26a) and r26b.returncode != 0 and "OD-31" in out_of(r26b)
+           and n_figures() == nf26 and n_links_now() == nl26, f"{out_of(r26a)[-200:]!r} | {out_of(r26b)[-200:]!r}")
+
+    # T126-27: ALL is not an identity in the audit: a code figure carrying ICF d-links the maps reach and only ALL as an
+    # identity (written by named_in_text, which T-056 governs) is listed in (i).
+    t126_save(code126, "t126-code-all.txt", "TASK-FIXTURE T126 for all users the knee space shall be clear")
+    r27, fig27, _ = t126_add(code126, "TASK-FIXTURE T126 for all users the knee space shall be clear", "--icf", clear126,
+                             *CTX("knee space"), section="TASK-FIXTURE T126 8.1")
+    r27b = run_cli("add-lens-link", "--extraction-id", str(fig27 or 0), "--identity", "ALL", "--basis", "named_in_text",
+                   "--basis-text", "for all users", "--session", S)
+    a27 = audit126()
+    i27, _, _, q27 = t126_parts(a27.stdout)
+    record("T126-27", "a code figure whose only identity link is ALL is listed in (i)",
+           r27.returncode == 0 and r27b.returncode == 0 and fig27 and f"extraction {fig27}:" in i27,
+           f"{out_of(r27b)[-150:]!r} {i27[-200:]!r}")
+
+    # T126-28: the queue line counts, by its own query, the tier-4-and-above figures with no judged non-ALL identity link.
+    want28 = q("SELECT COUNT(*) FROM (SELECT k.extraction_id FROM v_live_lens_links k JOIN source_value_extractions x ON "
+               "x.extraction_id = k.extraction_id JOIN evidence_sources e ON e.ref_id = x.ref_id WHERE e.tier >= ? "
+               "GROUP BY k.extraction_id HAVING SUM(COALESCE(k.identity_code <> 'ALL' AND k.basis <> 'carried', 0)) = 0)",
+               dbcore.REGULATORY_FROM_TIER)[0][0]
+    m28 = re.search(r"queue \(derived, not a failure\): (\d+)", q27)
+    record("T126-28", "the audit's queue line equals the count of tier-4-and-above figures with no judged identity link other "
+           "than ALL, and is above 0 (the stored carried links)",
+           m28 and int(m28.group(1)) == want28 and want28 > 0, f"line {q27!r} want {want28}")
+
+    # ── T126, second repair ──────────────────────────────────────────────────────────────────────────────────────────
+    # T126-29: the scope marker is no group to the writer either: adding an ICF code the maps reach to a stored code figure
+    # whose only live link is a carried ALL warns (the critic's walk; the figure is derived by query), and so does
+    # adding ALL to T126-27's ICF-only figure.
+    probe29 = q("SELECT x.extraction_id, x.claim_text FROM source_value_extractions x JOIN evidence_sources e ON e.ref_id = "
+                "x.ref_id JOIN v_live_lens_links k ON k.extraction_id = x.extraction_id WHERE e.tier >= ? AND "
+                "TRIM(COALESCE(x.claim_text,'')) <> '' GROUP BY x.extraction_id HAVING COUNT(*) = 1 AND "
+                "MAX(k.identity_code) = ? AND MAX(k.basis) = 'carried' ORDER BY x.extraction_id LIMIT 1",
+                dbcore.REGULATORY_FROM_TIER, dbcore.SCOPE_MARKER_IDENTITY)
+    if probe29:
+        fig29, ct29 = probe29[0]
+        word29 = max(re.findall(r"[^\W\d_]+", ct29), key=len)
+        r29 = run_cli("add-lens-link", "--extraction-id", str(fig29), "--icf", clear126, "--basis", "context",
+                      "--basis-text", word29, "--basis-reason", T126_REASON, "--session", S)
+        ok29, d29 = (r29.returncode == 0 and "WARNING: maps propose" in r29.stderr), out_of(r29)[-250:]
+    else:
+        ok29, d29 = False, "no stored code figure whose only live link is a carried scope marker"
+    record("T126-29", "a code figure carrying only the scope marker, given an ICF code the maps reach, is warned (the scope "
+           "marker is no group), as is adding the marker to an ICF-only figure",
+           ok29 and "WARNING: maps propose" in r27b.stderr, f"{d29!r} | {r27b.stderr[-200:]!r}")
+
+    # T126-30: tier 4 is the regulatory stratum's first tier: a source the ladder places exactly there (its type and
+    # scope read from the ladder) takes a context link, is warned, and is listed by the audit.
+    from schemas.tier_derivation import TIER_MAP as _TM30  # noqa: E402
+    # The stratum's first tier is read from CLAUDE.md §6's evidence model ("T4–T6 the regulatory stratum"), not from the
+    # constant under test.
+    _ts30 = re.search(r"\bT(\d)[–-]T6\*\* the regulatory stratum", (REPO / "CLAUDE.md").read_text(encoding="utf-8"))
+    ruled30 = int(_ts30.group(1)) if _ts30 else None
+    t4 = next(((et, sc) for (et, sc), tier in sorted(_TM30.items()) if tier == ruled30), None)
+    ref30, _ = add_o("T126 tier 4", "--evidence-type", t4[0], "--scope", t4[1]) if t4 else (None, None)
+    if ref30:
+        readable(ref30)
+        t126_save(ref30, "t126-tier4.txt", T126_KNEE)
+    r30, fig30, _ = t126_add(ref30 or code126, T126_KNEE, "--icf", clear126, *CTX("knee clearance"),
+                             section="TASK-FIXTURE T126 tier 4")
+    i30, _, _, _ = t126_parts(audit126().stdout)
+    record("T126-30", "an ICF-only context link on a tier-4 source is accepted, warned and listed in (i)",
+           t4 and dbcore.REGULATORY_FROM_TIER == ruled30 and q("SELECT tier FROM evidence_sources WHERE ref_id=?", ref30) == [(ruled30,)]
+           and r30.returncode == 0 and "WARNING: maps propose" in r30.stderr and fig30 and f"extraction {fig30}:" in i30,
+           f"{t4} {out_of(r30)[-250:]!r}")
+
+    # T126-31: a map row naming the scope marker proposes nothing: not to the writer, and not in list (iii).
+    w("INSERT INTO identity_icf_map (identity_code, icf_code, mechanism, mapping_confidence, provenance, created_at, "
+      "created_by_session) VALUES (?, ?, 'TASK-FIXTURE scope marker row', 'low_indicative', 'TASK-FIXTURE T126-31', "
+      "'2099-01-01 00:00', ?)", dbcore.SCOPE_MARKER_IDENTITY, clear126, S)
+    _ro31 = sqlite3.connect(DB)
+    try:
+        got31 = {p["identity_code"] for p in db.identity_proposals(_ro31, [clear126], [])}
+    finally:
+        _ro31.close()
+    _, _, iii31, _ = t126_parts(audit126().stdout)
+    record("T126-31", "a later map row naming the scope marker proposes it to no writer and lists no figure in (iii)",
+           got31 and dbcore.SCOPE_MARKER_IDENTITY not in got31 and fig27 and f"extraction {fig27}:" not in iii31,
+           f"{got31} {iii31[-200:]!r}")
+
+    # T126-32: list (ii) leaves out a deprecated identity (state set by SQL on the copy and undone, as T018-12 does).
+    dep32 = next((c for c in lone23 if c != dbcore.SCOPE_MARKER_IDENTITY), None)
+    if dep32:
+        w("UPDATE base_taxonomy_identity SET status='deprecated', superseded_by_need=(SELECT need_code FROM access_needs "
+          "ORDER BY need_code LIMIT 1) WHERE identity_code=?", dep32)
+        try:
+            _, ii32, _, _ = t126_parts(audit126().stdout)
+        finally:
+            w("UPDATE base_taxonomy_identity SET status='active', superseded_by_need=NULL WHERE identity_code=?", dep32)
+    record("T126-32", "list (ii) names no deprecated identity",
+           dep32 and not re.search(rf"(?<![\w-]){re.escape(dep32)}(?![\w-])", ii32), f"{dep32} {ii32[:200]!r}")
+
+    # T126-33: the confirm-or-replace walk. A figure whose only link is a context link takes its replacement on another
+    # basis in one add-lens-link call, which retires the context link; a context link is not replaced by another context
+    # link, and a stated link is not replaced by a context one.
+    r33a, fig33, _ = t126_add(code126, T126_KNEE, "--icf", clear126, *CTX("knee clearance"), section="TASK-FIXTURE T126 9.1")
+    old33 = q("SELECT link_id FROM v_live_lens_links WHERE extraction_id=?", fig33 or 0)
+    r33b = run_cli("add-lens-link", "--extraction-id", str(fig33 or 0), "--icf", clear126, "--basis", "context",
+                   "--basis-text", "knee clearance", "--basis-reason", T126_REASON + " again", "--session", S)
+    r33c = run_cli("add-lens-link", "--extraction-id", str(fig33 or 0), "--icf", clear126, "--basis", "named_in_text",
+                   "--basis-text", "Knee clearance", "--session", S)
+    live33 = q("SELECT link_id, basis FROM v_live_lens_links WHERE extraction_id=?", fig33 or 0)
+    gone33 = q("SELECT retirement_reason FROM extraction_lens_links WHERE link_id=?", old33[0][0]) if old33 else []
+    r33d = run_cli("add-lens-link", "--extraction-id", str(fig33 or 0), "--icf", clear126, "--basis", "context",
+                   "--basis-text", "knee clearance", "--basis-reason", T126_REASON, "--session", S)
+    try:
+        res33c = json.loads(r33c.stdout)
+    except ValueError:
+        res33c = {}
+    record("T126-33", "add-lens-link on another basis replaces a figure's only context link in one call (retired 'superseded "
+           "by judged link <id>'); a second context link on the code and a context link over a stated one are refused",
+           r33a.returncode == 0 and len(old33) == 1 and r33b.returncode != 0 and "already holds a live context" in out_of(r33b)
+           and r33c.returncode == 0 and len(live33) == 1 and live33[0][1] == "named_in_text"
+           and gone33 == [(f"superseded by judged link {live33[0][0]}",)]
+           and res33c.get("retired_context_link_id") == old33[0][0]
+           and r33d.returncode != 0 and "already holds a live named_in_text" in out_of(r33d),
+           f"{out_of(r33b)[-150:]!r} | {out_of(r33c)[-200:]!r} | live {live33} gone {gone33} | {out_of(r33d)[-150:]!r}")
+
+    # T126-34: list (iv) names, by their own query, the figures with no ICF or need link that carry no identity but the
+    # scope marker (they reach no group cell) and those reached only through carried identity links.
+    rows34 = q("SELECT k.extraction_id, SUM(k.icf_code IS NOT NULL OR k.needs_code IS NOT NULL), "
+               "SUM(COALESCE(k.identity_code <> ?, 0)), SUM(k.basis <> 'carried') FROM v_live_lens_links k JOIN "
+               "source_value_extractions x ON x.extraction_id = k.extraction_id JOIN evidence_sources e ON e.ref_id = "
+               "x.ref_id WHERE e.tier >= ? GROUP BY k.extraction_id ORDER BY k.extraction_id",
+               dbcore.SCOPE_MARKER_IDENTITY, dbcore.REGULATORY_FROM_TIER)
+    marker34 = [r[0] for r in rows34 if not r[1] and not r[2]]
+    carried34 = [r[0] for r in rows34 if not r[1] and r[2] and not r[3]]
+    line34 = next((ln for ln in audit126().stdout.splitlines() if ln.startswith("(iv)")), "")
+    m34 = re.search(r": (\d+) carry no identity but \S+, so reach no group cell: (.*?); (\d+) are reached only through "
+                    r"carried \(unjudged\) identity links: (.*)$", line34)
+    ids34 = lambda txt: [] if txt.strip() == "none" else [int(x) for x in txt.split(", ")]  # noqa: E731
+    record("T126-34", "list (iv) names the figures that reach no group cell and those reached only through carried links, "
+           "as their own query finds them",
+           m34 and marker34 and ids34(m34.group(2)) == marker34 and int(m34.group(1)) == len(marker34)
+           and ids34(m34.group(4)) == carried34 and int(m34.group(3)) == len(carried34),
+           f"want {len(marker34)}/{len(carried34)} line {line34[:300]!r}")
+
     # G. THE MARKER IS A CACHE OVER `confirms` EDGES, so an edge aimed at a row a LIVE PROXY
     # determination is governed by is refused (dbcore.live_determinations_linked), through both
     # writers, and so is regrading a row in a live determination's provenance; neither is refused
@@ -3174,6 +3825,885 @@ try:
                    f"{merged} before={listed_before} {moved12} at={at12} {gone13} {again12!r} {again13!r} {on_folded!r}")
         else:
             record("T079-31", "a merge case needs two active parameters with no live work", False, "none on the copy")
+
+    # ── T083: set-parameter-kind sets the kind and its warrant on an existing parameter, once ─────────────────
+    # What reaches the guidebook without it: T-109 could give the live parameters their kind only by hand SQL, and a
+    # parameter with no kind cannot have its units checked against the right family. Probes are derived on the copy.
+    print("Section T083: set-parameter-kind (the kind and its warrant on an existing parameter, written once)")
+    FREE_P = ("SELECT parameter_id FROM base_parameters p WHERE status='active' AND quantity_kind IS NULL "
+              "AND NOT EXISTS (SELECT 1 FROM specifications s WHERE s.parameter_id=p.parameter_id AND s.retired_at IS NULL) "
+              "AND NOT EXISTS (SELECT 1 FROM determination_gates g WHERE g.parameter_id=p.parameter_id AND g.resolved_at IS NULL) "
+              "ORDER BY parameter_id")
+    free_p = [r[0] for r in q(FREE_P)]
+    kinds83 = [r[0] for r in q("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id")]
+    W83 = dict(KIND_WARRANT, quantity_kind_ref_id="TASK-FIXTURE")
+    if len(free_p) < 3 or not kinds83:
+        record("T083-00", "three active parameters with no kind and no live work, and a kind", False, f"{free_p} {kinds83}")
+    else:
+        p1, p2, p3 = free_p[:3]
+        cols = [r[1] for r in q("PRAGMA table_info(base_parameters)")]
+        kind_cols = {"quantity_kind", "quantity_kind_source_url", "quantity_kind_source_page", "quantity_kind_source_line",
+                     "quantity_kind_source_clause", "quantity_kind_ref_id", "quantity_kind_quote", "updated_at",
+                     "updated_by_session"}
+        before = dict(zip(cols, q("SELECT * FROM base_parameters WHERE parameter_id=?", p1)[0]))
+        cp = run_cli("set-parameter-kind", "--parameter-id", str(p1), "--quantity-kind", kinds83[0],
+                     "--quantity-kind-source-url", W83["quantity_kind_source_url"],
+                     "--quantity-kind-source-page", W83["quantity_kind_source_page"],
+                     "--quantity-kind-ref-id", W83["quantity_kind_ref_id"],
+                     "--quantity-kind-quote", W83["quantity_kind_quote"], "--session", S)
+        after = dict(zip(cols, q("SELECT * FROM base_parameters WHERE parameter_id=?", p1)[0]))
+        record("T083-01", "set-parameter-kind (through argparse) writes the kind, the locator and the ref_id on an existing "
+               "parameter, stamps updated_*, and leaves every other column unchanged",
+               cp.returncode == 0 and after["quantity_kind"] == kinds83[0]
+               and after["quantity_kind_source_url"] == W83["quantity_kind_source_url"]
+               and after["quantity_kind_source_page"] == W83["quantity_kind_source_page"]
+               and after["quantity_kind_ref_id"] == "TASK-FIXTURE" and after["updated_by_session"] == S
+               and after["quantity_kind_quote"] == W83["quantity_kind_quote"]
+               and all(after[c] == before[c] for c in cols if c not in kind_cols),
+               f"rc={cp.returncode} {cp.stderr[-300:]!r} {after}")
+        spk = db.set_parameter_kind
+        r_unknown = refusal(spk, p2, "zz_" + kinds83[0], S, **W83)
+        r_none = refusal(spk, p2, kinds83[0], S)
+        r_nopage = refusal(spk, p2, kinds83[0], S, quantity_kind_source_url=W83["quantity_kind_source_url"])
+        r_url = refusal(spk, p2, kinds83[0], S, **dict(W83, quantity_kind_source_url="ftp://example.org/x"))
+        r_noq = refusal(spk, p2, kinds83[0], S, **dict(W83, quantity_kind_quote=None))
+        r_nodig = refusal(spk, p2, kinds83[0], S, **dict(W83, quantity_kind_quote="TASK-FIXTURE: wide enough"))
+        r_zwp = refusal(spk, p2, kinds83[0], S, **dict(W83, quantity_kind_source_page="3\u200b"))
+        r_zwc = refusal(spk, p2, kinds83[0], S, **dict(W83, quantity_kind_source_clause="\u200b4.1"))
+        record("T083-02", "the shared refusals fire through the new verb: an unknown kind (naming every kind and add-quantity-kind), "
+               "no warrant, a URL with no page or clause, a non-http URL, no quote, a quote with no digit, U+200B in the page or "
+               "the clause; nothing written",
+               r_unknown and all(k in r_unknown for k in kinds83) and "add-quantity-kind" in r_unknown
+               and r_none and "--quantity-kind-source-url" in r_none and r_nopage and "--quantity-kind-source-page" in r_nopage
+               and r_url and "--quantity-kind-source-url" in r_url and r_noq and "--quantity-kind-quote" in r_noq
+               and r_nodig and "holds no digit" in r_nodig and r_zwp and "invisible" in r_zwp and "--quantity-kind-source-page" in r_zwp
+               and r_zwc and "invisible" in r_zwc and "--quantity-kind-source-clause" in r_zwc
+               and q("SELECT quantity_kind FROM base_parameters WHERE parameter_id=?", p2)[0][0] is None,
+               (r_unknown, r_none, r_nopage, r_url, r_noq, r_nodig, r_zwp, r_zwc))
+        other = kinds83[-1]
+        r_again = refusal(spk, p1, other, S, **W83)
+        record("T083-03", "a second call on the same parameter is refused (written once), naming the stored kind and its warrant, "
+               "and the stored kind is unchanged",
+               r_again and repr(kinds83[0]) in r_again and W83["quantity_kind_source_url"] in r_again and "written once" in r_again
+               and q("SELECT quantity_kind FROM base_parameters WHERE parameter_id=?", p1)[0][0] == kinds83[0], r_again)
+        db.retire_parameter(p2, "TASK-FIXTURE T083: a retired parameter", S)
+        r_ret = refusal(spk, p2, kinds83[0], S, **W83)
+        db.merge_parameter(p3, free_p[3] if len(free_p) > 3 else p1, "TASK-FIXTURE T083: a merged parameter", S)
+        surv = q("SELECT merged_into FROM base_parameters WHERE parameter_id=?", p3)[0][0]
+        r_mer = refusal(spk, p3, kinds83[0], S, **W83)
+        gated = q("SELECT g.parameter_id FROM determination_gates g JOIN base_parameters p USING (parameter_id) "
+                  "WHERE g.resolved_at IS NULL AND p.status='active' AND p.quantity_kind IS NULL ORDER BY 1 LIMIT 1")
+        r_gate = refusal(spk, gated[0][0], kinds83[0], S, **W83) if gated else "SKIPPED-NO-FIXTURE"
+        spec = q("SELECT s.specification_id, s.parameter_id FROM specifications s JOIN base_parameters p USING (parameter_id) "
+                 "WHERE s.retired_at IS NOT NULL AND p.status='active' AND p.quantity_kind IS NULL ORDER BY 1 LIMIT 1")
+        if spec:
+            con83 = sqlite3.connect(DB)
+            unretire(con83, spec[0][0])          # HAND, on the copy: a TASK-FIXTURE live determination (no writer revives one)
+            con83.commit()
+            con83.close()
+            r_live = refusal(spk, spec[0][1], kinds83[0], S, **W83)
+            reretire(spec[0][0])
+        else:
+            r_live = "SKIPPED-NO-FIXTURE"
+        record("T083-04", "a retired parameter is refused; a merged one names its survivor; a live determination and an open gate "
+               "on the parameter are refused (SKIPPED-NO-FIXTURE where the copy holds none)",
+               r_ret and "retired" in r_ret and r_mer and "merged" in r_mer and f"parameter {surv}" in r_mer
+               and r_gate and (("OPEN determination gate" in r_gate and "must be resolved before the parameter is given its kind" in r_gate
+                                and "retired or merged" not in r_gate) or r_gate == "SKIPPED-NO-FIXTURE")
+               and r_live and ("LIVE determination" in r_live or r_live == "SKIPPED-NO-FIXTURE"),
+               (r_ret, r_mer, r_gate, r_live))
+        if gated:
+            print(f"      open-gate probe: parameter {gated[0][0]}")
+        if not spec:
+            print("      SKIPPED-NO-FIXTURE: no retired specification on an active parameter with no kind (live-determination probe)")
+        free_t = [t for (t,) in q("SELECT term_id FROM terms WHERE term_id NOT IN (SELECT term_id FROM base_parameters) "
+                                  "AND term_id NOT IN (SELECT term_id FROM parameter_declinations) ORDER BY term_id")
+                  if not db._VALUE_BEARING_NAME.search(q("SELECT canonical_en FROM terms WHERE term_id=?", t)[0][0])
+                  and dbcore.domain_key(q("SELECT domain FROM terms WHERE term_id=?", t)[0][0]) not in dbcore.NON_QUANTITY_DOMAINS]
+        free_p2 = [r[0] for r in q(FREE_P)]
+        if not free_t or not free_p2:
+            record("T083-05", "a free term and a free parameter to compare the two callers' messages", False, f"{free_t[:1]} {free_p2[:1]}")
+        else:
+            def tail(m):
+                return m.split("): ", 1)[1] if m and "): " in m else m
+            pairs = [(refusal(db.insert_parameter, free_t[0], S, dry_run=True, **kw),
+                      refusal(spk, free_p2[0], kw.pop("quantity_kind", None), S, dry_run=True, **kw))
+                     for kw in (dict(), dict(quantity_kind="zz_fixture"), dict(quantity_kind=kinds83[0]))]
+            record("T083-05", "add-parameter and set-parameter-kind give the same kind and warrant refusals, word for word after "
+                   "the term label (one home, _kind_refusal)",
+                   all(a and b and tail(a) == tail(b) for a, b in pairs), pairs)
+        # ── T083 repair (after the adversarial passes): the surviving branches, the CHECKs of the quantity-kind migrations ──
+        free_p3 = [r[0] for r in q(FREE_P)]
+        if len(free_p3) < 2:
+            record("T083-06", "two more free parameters for the repair cases", False, free_p3)
+        else:
+            pa, pb = free_p3[:2]
+            sha = lambda: __import__("hashlib").sha256(open(DB, "rb").read()).hexdigest()
+            h0 = sha()
+            dr = db.set_parameter_kind(pa, kinds83[0], S, dry_run=True, **W83)
+            record("T083-07", "--dry-run reports the cells and writes nothing (the copy's bytes are unchanged)",
+                   dr["dry_run"] is True and dr["quantity_kind"] == kinds83[0] and sha() == h0
+                   and q("SELECT quantity_kind FROM base_parameters WHERE parameter_id=?", pa)[0][0] is None, dr)
+            r_line = refusal(spk, pa, kinds83[0], S, **dict(W83, quantity_kind_source_line=0))
+            r_blank = refusal(spk, pa, kinds83[0], S, **dict(W83, quantity_kind_source_page="\u00a0",
+                                                               quantity_kind_source_clause="4.1"))
+            r_host = refusal(spk, pa, kinds83[0], S, **dict(W83, quantity_kind_source_url="https:///no-host"))
+            record("T083-08", "set-parameter-kind refuses a line of 0, a page holding only a no-break space beside a clause, and a URL "
+                   "with no host, each naming its own flag",
+                   r_line and "--quantity-kind-source-line" in r_line and r_blank and "--quantity-kind-source-page" in r_blank
+                   and r_host and "--quantity-kind-source-url" in r_host, (r_line, r_blank, r_host))
+            out = db.set_parameter_kind(pa, kinds83[0], S, **dict(W83, quantity_kind_source_page=None,
+                                                                   quantity_kind_source_clause="TASK-FIXTURE 4.1",
+                                                                   quantity_kind_source_line=7))
+            got = q("SELECT quantity_kind_source_clause, quantity_kind_source_line, quantity_kind_source_page "
+                    "FROM base_parameters WHERE parameter_id=?", pa)[0]
+            record("T083-06", "a clause and a line are written as given (no page)",
+                   got == ("TASK-FIXTURE 4.1", 7, None) and out["quantity_kind_source_line"] == 7, got)
+            old = [run_cli(v, *a, "--quantity-kind", kinds83[0], "--quantity-kind-observation-id", "1", "--session", S)
+                   for v, a in (("set-parameter-kind", ("--parameter-id", str(pb))), ("add-parameter", ("--term-id", "TERM-NONE")))]
+            record("T083-09", "the dropped flag --quantity-kind-observation-id is refused by argparse (rc 2) on both verbs",
+                   all(cp.returncode == 2 and "quantity-kind-observation-id" in cp.stderr for cp in old),
+                   [(cp.returncode, cp.stderr[-160:]) for cp in old])
+            # Direct UPDATEs, each rolled back, on the committed copy AND on a fresh schema replay of the parent with the
+            # newest quantity-kind migration applied to it: the second reads the migration file itself, so a CHECK
+            # missing from the file turns this red even when the committed database still holds it.
+            mig_qk = sorted((REPO / "scripts" / "migrations").glob("[0-9][0-9][0-9]_quantity_kind_*.sql"))[-1]
+            good = dict(quantity_kind=kinds83[0], **{k: v for k, v in W83.items()})
+            bad = {"kind with no quote": dict(good, quantity_kind_quote=None),
+                   "kind with a URL and no page or clause": dict(good, quantity_kind_source_page=None),
+                   "a page holding only a no-break space": dict(good, quantity_kind_source_page="\u00a0"),
+                   "U+200B in the page": dict(good, quantity_kind_source_page="3\u200b"),
+                   "a clause of U+200B alone": dict(good, quantity_kind_source_clause="\u200b"),
+                   "a no-break space inside the URL": dict(good, quantity_kind_source_url="https://example.org/a\u00a0b"),
+                   "U+FEFF in the URL": dict(good, quantity_kind_source_url="https://example.org/\ufeff"),
+                   "a BLOB page": dict(good, quantity_kind_source_page=b"3"),
+                   "a line of text": dict(good, quantity_kind_source_line="seven"),
+                   "a quote of spaces and U+200B": dict(good, quantity_kind_quote=" \u200b "),
+                   "a ref_id with no kind": dict(quantity_kind_ref_id="TASK-FIXTURE"),
+                   "a page with no kind": dict(quantity_kind_source_url="https://example.org/a", quantity_kind_source_page="3"),
+                   "a page of U+00AD alone": dict(good, quantity_kind_source_page="\u00ad"),
+                   "a page of U+180E alone": dict(good, quantity_kind_source_page="\u180e"),
+                   "a page of U+2063 alone": dict(good, quantity_kind_source_page="\u2063"),
+                   "a quote of U+3164 alone": dict(good, quantity_kind_quote="\u3164"),
+                   "a BLOB kind": dict(good, quantity_kind=kinds83[0].encode()),
+                   "a BLOB quote": dict(good, quantity_kind_quote=b"9 mm"),
+                   "U+200B in the ref_id": dict(good, quantity_kind_ref_id="TASK\u200bFIXTURE")}
+
+            def holes(path, pid):
+                con10 = sqlite3.connect(path)
+                con10.execute("PRAGMA foreign_keys=OFF")        # the BLOB kind must meet the CHECK, not the foreign key
+                out = {}
+                try:
+                    for name, cells in [("the legitimate shape", good)] + list(bad.items()):
+                        try:
+                            con10.execute("UPDATE base_parameters SET " + ", ".join(f"{k}=?" for k in cells)
+                                          + " WHERE parameter_id=?", list(cells.values()) + [pid])
+                            out[name] = True
+                        except sqlite3.IntegrityError:
+                            out[name] = False
+                        con10.rollback()
+                finally:
+                    con10.close()
+                return out
+
+            import contextlib, io
+            import migrate_db
+            fresh = os.path.join(TMP, "parent-replay.db")
+            mine = int(mig_qk.name[:3])
+            cr = sqlite3.connect(fresh, isolation_level=None)
+            with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                for step in migrate_db.build_plan():
+                    if step[0] == "schema" and step[1] <= mine:
+                        stmts, uv = migrate_db._prepare_body(step[2].read_text(encoding="utf-8"))
+                        migrate_db._apply_atomically(cr, stmts, label=step[2].name, fk_blocking=False,
+                                                     user_version=(uv if "baseline" in step[2].name else step[1]))
+            cr.execute("PRAGMA foreign_keys=OFF")
+            fresh_pid = cr.execute("INSERT INTO base_parameters (term_id, status, created_at, created_by_session) "
+                                   "VALUES ('TASK-FIXTURE', 'active', '2026-01-01 00:00', ?)", (S,)).lastrowid
+            fresh_uv = cr.execute("PRAGMA user_version").fetchone()[0]
+            cr.close()
+            passed10, fresh10 = holes(DB, pb), holes(fresh, fresh_pid)
+            record("T083-10", f"the quantity-kind CHECKs, on the committed copy and on a fresh replay of the parent with {mig_qk.name} "
+                   "applied: the legitimate shape is accepted and each hole refused (no quote, no page or clause, wholly blank by "
+                   "dbcore.blank_chars, an invisible character in the URL, page, clause or ref_id, a BLOB or text in a typed "
+                   "cell, a BLOB kind, a ref_id or a locator with no kind)",
+                   fresh_uv == mine and all(r.get("the legitimate shape") is True and not any(r[k] for k in bad)
+                                            for r in (passed10, fresh10)),
+                   {"committed": {k: v for k, v in passed10.items() if v != (k == "the legitimate shape")},
+                    "fresh": {k: v for k, v in fresh10.items() if v != (k == "the legitimate shape")}, "uv": fresh_uv})
+            # Pin the migration's spellings to the one definition, as T078-40 pins migration 160.
+            mtext = mig_qk.read_text()
+            sets = lambda frag: {chr(int(n)) for grp in re.findall(r"char\(([0-9,]+)\)", frag) for n in grp.split(",")}
+            blank = set(dbcore.blank_chars()) - {"\x00"}
+            hidden = set(db._kind_hidden_chars()) - {"\x00"}
+            grab = lambda pat, text: (lambda m: m.group(1) if m else "")(re.search(pat, text, re.S))
+            url_glob = grab(r"quantity_kind_source_url NOT GLOB '\*\[' \|\| (.*?) \|\| '\]\*'", mtext)
+            cell = lambda c: grab(rf"(ADD COLUMN {c} TEXT.*?;)", mtext)
+            spell = {}
+            for c in ("quantity_kind_source_page", "quantity_kind_source_clause", "quantity_kind_ref_id"):
+                body = cell(c)
+                spell[c] = (sets(grab(rf"trim\({c}, (.*?)\) <> ''", body)),
+                            sets(grab(rf"{c} NOT GLOB '\*\[' \|\| (.*?) \|\| '\]\*'", body)))
+            q_trim = sets(grab(r"trim\(quantity_kind_quote, (.*?)\) <> ''", cell("quantity_kind_quote")))
+            record("T083-12", f"{mig_qk.name} spells dbcore.blank_chars() (less U+0000) for the URL and every blank test, and "
+                   "db._kind_hidden_chars() for what a page, clause or ref_id may not carry anywhere",
+                   sets(url_glob) == blank and q_trim == blank
+                   and all(t == blank and g == hidden for t, g in spell.values()), (len(blank), len(hidden)))
+            # The surviving branches of the second adversarial pass: each case below is red on its own seeded defect.
+            free_p4 = [r[0] for r in q(FREE_P)]
+            r_zwu = refusal(spk, pb, kinds83[0], S, **dict(W83, quantity_kind_source_url="https://example.org/\u200bx"))
+            r_zwr = refusal(spk, pb, kinds83[0], S, **dict(W83, quantity_kind_ref_id="TASK\u200bFIXTURE"))
+            record("T083-13", "set-parameter-kind refuses an invisible character in the URL and in the ref_id, naming each flag",
+                   r_zwu and "--quantity-kind-source-url" in r_zwu and "invisible" in r_zwu
+                   and r_zwr and "--quantity-kind-ref-id" in r_zwr and "invisible" in r_zwr, (r_zwu, r_zwr))
+            r_bq = refusal(spk, pb, kinds83[0], S, **dict(W83, quantity_kind_quote="\u3164 \u00a0"))
+            record("T083-14", "a quote that is only blank characters is refused as a missing warrant (naming the flags), not as "
+                   "a quote with no digit", r_bq and "needs its warrant" in r_bq and "--quantity-kind-quote" in r_bq
+                   and "holds no digit" not in r_bq, r_bq)
+            if len(free_p4) < 2:
+                record("T083-15", "two more free parameters for the argparse cases", False, free_p4)
+            else:
+                pc, pd = free_p4[:2]
+                cp15 = run_cli("set-parameter-kind", "--parameter-id", str(pc), "--quantity-kind", kinds83[0],
+                               "--quantity-kind-quote", "\u3000TASK-FIXTURE: at least 900 mm\u00a0",
+                               "--quantity-kind-source-url", W83["quantity_kind_source_url"],
+                               "--quantity-kind-source-clause", "TASK-FIXTURE 4.2", "--quantity-kind-source-line", "12",
+                               "--quantity-kind-ref-id", "  TASK-FIXTURE  ", "--session", S)
+                got15 = q("SELECT quantity_kind_source_clause, quantity_kind_source_line, typeof(quantity_kind_source_line), "
+                          "quantity_kind_ref_id, quantity_kind_quote FROM base_parameters WHERE parameter_id=?", pc)[0]
+                cp15b = run_cli("set-parameter-kind", "--parameter-id", str(pd), "--quantity-kind", kinds83[0],
+                                "--quantity-kind-quote", W83["quantity_kind_quote"],
+                                "--quantity-kind-source-url", W83["quantity_kind_source_url"],
+                                "--quantity-kind-source-page", "TASK-FIXTURE", "--quantity-kind-source-line", "twelve",
+                                "--session", S)
+                record("T083-15", "through argparse: the clause and the line reach the row (the line as an integer), the ref_id and "
+                       "the quote are stored without their surrounding blanks; a line that is not a number is refused by "
+                       "argparse (rc 2)",
+                       cp15.returncode == 0 and got15 == ("TASK-FIXTURE 4.2", 12, "integer", "TASK-FIXTURE",
+                                                         "TASK-FIXTURE: at least 900 mm")
+                       and cp15b.returncode == 2 and "quantity-kind-source-line" in cp15b.stderr,
+                       (cp15.returncode, cp15.stderr[-200:], got15, cp15b.returncode, cp15b.stderr[-120:]))
+
+    # ── T-078: a figure retires in place (AT-18; owner 2026-09-16, "retire in place then") ──────────────────────────
+    # The figure is a fixture this section builds (a fresh source, made readable on the copy, one `absent` finding in
+    # one identity code), so its pair in the scan ledger holds no other figure. Every expected value is read from the
+    # copy: the ledger status the pair would have with no figure is read inside a transaction that deletes the figure
+    # and is rolled back.
+    try:
+        import assess_cell as _t078_engine                                 # noqa: E402
+        con78 = sqlite3.connect(DB)
+        try:
+            PID78 = con78.execute("SELECT parameter_id FROM base_parameters WHERE status='active' ORDER BY 1 LIMIT 1").fetchone()[0]
+        finally:
+            con78.close()
+        REF78 = next_ref()
+        add_source(REF78, title=f"TASK-FIXTURE T078 source {REF78}")
+        readable(REF78)
+        P78 = {"ref_id": REF78, "parameter_id": PID78, "identity_code": POP, "claim_type": "absent", "figure_role": "finding",
+               "claim_text": "TASK-FIXTURE T078: the source states nothing for this parameter",
+               "lens_basis": "named_in_text", "lens_basis_text": "states nothing", "extraction_method": "skim"}
+        EX78 = "TASK-FIXTURE T078: a test payload, no retrieved artefact exists"
+        LENS78 = {"identity_code": POP}
+
+        def t078_state(fig):
+            """(count_extractions, the figure's live links, its pair's ledger status, the figure among the graded links)."""
+            c = sqlite3.connect(DB)
+            try:
+                return (_t078_engine.count_extractions(c, PID78, LENS78),
+                        c.execute("SELECT COUNT(*) FROM v_live_lens_links WHERE extraction_id=?", (fig,)).fetchone()[0],
+                        c.execute("SELECT status FROM v_scan_ledger WHERE ref_id=? AND parameter_id=?", (REF78, PID78)).fetchone()[0],
+                        fig in {l["extraction_id"] for l in _t078_engine.gather_extraction_links(c, PID78, [], LENS78)})
+            finally:
+                c.close()
+
+        try:
+            db.link_source_slug(REF78, plain, "TASK-FIXTURE T078: speaks to this slug", S)
+            F78 = db.insert_extraction(dict(P78), S, relations=[], verbatim_exempt=EX78)["extraction_id"]
+        except Exception as exc:  # noqa: BLE001 -- recorded red below
+            F78 = None
+            print(f"      T078 fixture failed: {exc.__class__.__name__}: {exc}")
+        if F78 is not None:
+            c = sqlite3.connect(DB)
+            try:
+                c.execute("DELETE FROM extraction_lens_links WHERE extraction_id=?", (F78,))
+                c.execute("DELETE FROM source_value_extractions WHERE extraction_id=?", (F78,))
+                want_status = c.execute("SELECT status FROM v_scan_ledger WHERE ref_id=? AND parameter_id=?",
+                                        (REF78, PID78)).fetchone()[0]
+                c.rollback()
+            finally:
+                c.close()
+            before78 = t078_state(F78)
+            dup_before = refusal(db.insert_extraction, dict(P78), S, relations=[], verbatim_exempt=EX78)
+            # T078-03: a LIVE determination linking the figure blocks the retirement. A TASK-FIXTURE determination is
+            # written by hand on the copy, in an identity code no live determination of the parameter holds, linking the
+            # figure; it is deleted again after the refusal.
+            code78 = q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code NOT IN (SELECT identity_code "
+                       "FROM specifications WHERE retired_at IS NULL AND parameter_id=? AND identity_code IS NOT NULL) "
+                       "ORDER BY 1 LIMIT 1", PID78)[0][0]
+            c = sqlite3.connect(DB)
+            try:
+                sid78 = c.execute("INSERT INTO specifications (parameter_id, identity_code, state, created_at, "
+                                  "created_by_session, updated_at, updated_by_session) VALUES (?, ?, 'pending', 't', ?, 't', ?)",
+                                  (PID78, code78, S, S)).lastrowid
+                c.execute("INSERT INTO specification_extraction_links (specification_id, extraction_id, role, exclusion_reason, "
+                          "created_at, created_by_session) VALUES (?, ?, 'excluded', 'TASK-FIXTURE T078', 't', ?)", (sid78, F78, S))
+                c.commit()
+            finally:
+                c.close()
+            try:
+                r_live = refusal(db.retire_extraction, F78, "TASK-FIXTURE T078", S)
+                still = q("SELECT retired_at FROM source_value_extractions WHERE extraction_id=?", F78)
+            finally:
+                w("DELETE FROM specification_extraction_links WHERE specification_id=?", sid78)
+                w("DELETE FROM specifications WHERE specification_id=?", sid78)
+            record("T078-03", "retire-extraction refuses a figure a live determination links, naming the determination and "
+                   "retire-specification",
+                   r_live and f"live determination(s) {sid78}" in r_live and "retire-specification" in r_live
+                   and still == [(None,)], (r_live, still))
+            n78 = counts("source_value_extractions", "extraction_lens_links")
+            cp78 = run_cli("retire-extraction", "--extraction-id", str(F78), "--reason", "TASK-FIXTURE T078: misread", "--session", S)
+            row78 = q("SELECT retired_at IS NOT NULL, retired_by_session, retirement_reason FROM source_value_extractions "
+                      "WHERE extraction_id=?", F78)
+            record("T078-01", "retire-extraction RETIRES the figure in place: the row and its links stay, the three retired columns "
+                   "are set (the verb is reached through argparse, so an absent verb is red)",
+                   cp78.returncode == 0 and row78 == [(1, S, "TASK-FIXTURE T078: misread")]
+                   and counts("source_value_extractions", "extraction_lens_links") == n78,
+                   f"rc={cp78.returncode} err={cp78.stderr[-300:]!r} row={row78}")
+            after78 = t078_state(F78)
+            record("T078-04", "the readers drop the retired figure: count_extractions falls by one, v_live_lens_links lists no link "
+                   "of it, gather_extraction_links grades it no more, and v_scan_ledger gives its pair the status it has with "
+                   "no figure",
+                   before78[0] - after78[0] == 1 and before78[1] > 0 and after78[1] == 0 and before78[3] and not after78[3]
+                   and before78[2] != want_status and after78[2] == want_status,
+                   f"before={before78} after={after78} want_status={want_status!r}")
+            n78 = counts("source_value_extractions")
+            r_blank = refusal(db.retire_extraction, F78, "  ", S)
+            r_unknown = refusal(db.retire_extraction, q("SELECT COALESCE(MAX(extraction_id), 0) + 1 FROM source_value_extractions")[0][0],
+                                "TASK-FIXTURE T078", S)
+            r_again = refusal(db.retire_extraction, F78, "TASK-FIXTURE T078: a second, different reason", S)
+            raw = {}
+            for name, sql in (("un-retire", "UPDATE source_value_extractions SET retired_at=NULL, retired_by_session=NULL, "
+                                            "retirement_reason=NULL WHERE extraction_id=?"),
+                              ("one column alone", "UPDATE source_value_extractions SET retired_at='2026-01-01T00:00:00Z' "
+                                                   "WHERE extraction_id=(SELECT MIN(extraction_id) FROM source_value_extractions "
+                                                   "WHERE retired_at IS NULL AND extraction_id <> ?)"),
+                              ("a blank reason", "UPDATE source_value_extractions SET retired_at='2026-01-01T00:00:00Z', "
+                                                 "retired_by_session='s', retirement_reason=' ' WHERE extraction_id=(SELECT "
+                                                 "MIN(extraction_id) FROM source_value_extractions WHERE retired_at IS NULL "
+                                                 "AND extraction_id <> ?)")):
+                try:
+                    w(sql, F78)
+                    raw[name] = None
+                except sqlite3.DatabaseError as exc:
+                    raw[name] = str(exc)
+            record("T078-02", "retire-extraction refuses a blank reason, an unknown id and a figure already retired (the first reason "
+                   "stands); the trigger refuses an un-retire by raw UPDATE and the CHECK or migration 159's triggers refuse one column alone and a blank reason",
+                   r_blank and "--reason is required" in r_blank and r_unknown and "no such figure" in r_unknown
+                   and r_again and "already retired" in r_again
+                   and q("SELECT retirement_reason FROM source_value_extractions WHERE extraction_id=?", F78) == [("TASK-FIXTURE T078: misread",)]
+                   and raw["un-retire"] and "stays retired" in raw["un-retire"]
+                   and raw["one column alone"] and ("CHECK" in raw["one column alone"] or "is retired with" in raw["one column alone"])
+                   and raw["a blank reason"] and ("CHECK" in raw["a blank reason"] or "is retired with" in raw["a blank reason"])
+                   and counts("source_value_extractions") == n78,
+                   (r_blank, r_unknown, r_again, raw))
+            other78 = q("SELECT MIN(extraction_id) FROM source_value_extractions WHERE retired_at IS NULL AND extraction_id <> ?", F78)[0][0]
+            r_amend = refusal(db.amend_extraction, F78, "extraction_status", "reviewed", "TASK-FIXTURE T078", S)
+            r_from = refusal(db.relate_extraction, F78, "condition_on", S, to_extraction=other78)
+            r_to = refusal(db.relate_extraction, other78, "condition_on", S, to_extraction=F78)
+            record("T078-05", "amend-extraction and relate-extraction (from or to the figure) refuse a retired figure, naming "
+                   "retire-extraction",
+                   all(m and "retire-extraction" in m and "was retired" in m for m in (r_amend, r_from, r_to)),
+                   (r_amend, r_from, r_to))
+            try:
+                again78 = db.insert_extraction(dict(P78), S, relations=[], verbatim_exempt=EX78)
+            except Exception as exc:  # noqa: BLE001 -- recorded red below
+                again78 = {"error": f"{exc.__class__.__name__}: {exc}"}
+            record("T078-06", "the same reading is written again once its figure is retired (a wrong retirement is answered by a "
+                   "new figure); before the retirement add-extraction refused it as a copy",
+                   dup_before and "already carries this exact row" in dup_before and "extraction_id" in again78,
+                   (dup_before, again78))
+        else:
+            record("T078-01", "retire-extraction fixture", False, "the fixture figure could not be written")
+    except Exception as exc:  # noqa: BLE001 -- a crash (no verb, no column) is red, never a pass
+        record("T078", "the T-078 section ran to its end", False, f"{exc.__class__.__name__}: {exc}")
+    # ── T-078 repair: every reader that filters a retired figure, each on a seeded figure, and the refusals the
+    # adversarial pass found missing. Fixtures are TASK-FIXTURE rows written by SQL on the copy (the readers are under
+    # test, not the writers); every id, code and expected value is read from the copy.
+    try:
+        import assess_cell as _t78r_engine                              # noqa: E402
+        WHY = "TASK-FIXTURE T078R"
+        PR = q("SELECT parameter_id FROM base_parameters WHERE status='active' ORDER BY 1 LIMIT 1")[0][0]
+        OUT_CODE = q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code <> ? AND identity_code NOT IN "
+                     "(SELECT identity_code FROM base_taxonomy_identity WHERE parent_code = ?) ORDER BY 1 LIMIT 1", POP, POP)[0][0]
+
+        def fresh(read=True):
+            r = next_ref()
+            add_source(r, title=f"{WHY} source {r}")
+            if read:
+                readable(r)
+            return r
+
+        def seed(ref, pid=None, code=None, **kw):
+            row = dict(ref_id=ref, parameter_id=pid or PR, claim_type="numerical", claimed_value="1", claimed_unit="mm",
+                       claim_text=f"{WHY} 1 mm", figure_role="claim", comparator=">=", extraction_method="full-read",
+                       created_at="t", created_by_session=S, updated_at="t", updated_by_session=S)
+            row.update(kw)
+            c = sqlite3.connect(DB)
+            try:
+                x = c.execute(f"INSERT INTO source_value_extractions ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
+                              list(row.values())).lastrowid
+                c.execute("INSERT INTO extraction_lens_links (extraction_id, identity_code, basis, created_at, "
+                          "created_by_session, updated_at, updated_by_session) VALUES (?, ?, 'carried', 't', ?, 't', ?)",
+                          (x, code or POP, S, S))
+                c.commit()
+            finally:
+                c.close()
+            return x
+
+        def edge(frm, rel, to, role=None):
+            w("INSERT INTO extraction_relations (from_extraction_id, relation, to_extraction_id, stated, input_role, quote, "
+              "created_at, created_by_session) VALUES (?, ?, ?, 'named', ?, ?, 't', ?)", frm, rel, to, role, WHY, S)
+
+        def retire(x):
+            return db.retire_extraction(x, WHY, S)
+
+        def ro():
+            c = sqlite3.connect(DB)
+            c.row_factory = None
+            return c
+
+        def sub(*cmd):
+            cp = subprocess.run([sys.executable, *cmd], env=dict(os.environ, GUIDEBOOK_DB_PATH=DB), capture_output=True,
+                                text=True, cwd=str(REPO))
+            return cp.stdout + cp.stderr
+
+        LENS = {"identity_code": POP}
+        RA = fresh()
+
+        # R01 gather_confirmers: a finding of one source confirms a claim of another; the claim is retired.
+        RC = fresh()
+        t1 = seed(RA)
+        x1 = seed(RC, figure_role="finding", claim_type="qualitative", claimed_value="agrees", claimed_unit=None, comparator=None)
+        edge(x1, "confirms", t1)
+        c = ro(); b1 = RC in {r["ref_id"] for r in _t78r_engine.gather_confirmers(c, PR, LENS)}; c.close()
+        # Set by SQL on the copy: retire-extraction refuses a figure a live figure's edge names (T078-26), so this
+        # state is reached only by a row written before that refusal; the engine's filter is its floor.
+        w("UPDATE source_value_extractions SET retired_at=?, retired_by_session=?, retirement_reason=? WHERE extraction_id=?",
+          dbcore.now(), S, WHY, t1)
+        c = ro(); a1 = RC in {r["ref_id"] for r in _t78r_engine.gather_confirmers(c, PR, LENS)}; c.close()
+        record("T078-07", "gather_confirmers drops a confirmer whose confirmed figure is retired", b1 and not a1, (b1, a1))
+
+        # R02 the out-of-lens count, and R03/R04 cell-status's extractions and slugs.
+        y2 = seed(RA, code=OUT_CODE)
+        c = ro(); b2 = _t78r_engine.determine(c, PR, LENS, None, None)["n_extractions_outside_lens"]; c.close()
+        ex = q("SELECT se.exec_id, se.slug FROM search_executions se WHERE se.parameter_id IS NULL AND se.slug IS NOT NULL "
+               "AND se.deferred_reason IS NULL AND se.slug NOT IN (SELECT slug FROM source_value_extractions WHERE "
+               "parameter_id = ? AND slug IS NOT NULL AND retired_at IS NULL) ORDER BY 1 LIMIT 1", PR)
+        z3 = seed(RA, slug=ex[0][1], claimed_value="3") if ex else None
+
+        def research_execs():
+            st = db.cell_status(PR)["stages"]
+            return set(st["research"]["held"]) | set(st["research"]["examined_empty"]), st["judgment"]["held"]
+        bx, bj = research_execs()
+        retire(y2)
+        if z3:
+            retire(z3)
+        ax, aj = research_execs()
+        c = ro(); a2 = _t78r_engine.determine(c, PR, LENS, None, None)["n_extractions_outside_lens"]; c.close()
+        record("T078-08", "the engine's out-of-lens count falls by the retired figure", b2 - a2 == 1, (b2, a2))
+        record("T078-09", "cell-status lists a figure under judgment and drops it once retired", y2 in bj and y2 not in aj
+               and z3 in bj and z3 not in aj, (y2, z3))
+        record("T078-10", "cell-status reaches a search through the slug a live figure carries, and not through a retired one",
+               bool(ex) and ex[0][0] in bx and ex[0][0] not in ax, ex)
+
+        # R05 set-parameter-direction: the source's only figure of a parameter with no direction is retired.
+        PD = q("SELECT parameter_id FROM base_parameters WHERE status='active' AND accessibility_direction IS NULL "
+               "ORDER BY 1 LIMIT 1")[0][0]
+        RD = fresh()
+        d5 = seed(RD, pid=PD)
+        dirv = sorted(dbcore.check_values(ro(), "base_parameters", "accessibility_direction"))[0]
+        ok5 = refusal(db.set_parameter_direction, parameter_id=PD, direction=dirv, rationale=WHY, session=S, ref_id=RD,
+                      dry_run=True)
+        retire(d5)
+        r5 = refusal(db.set_parameter_direction, parameter_id=PD, direction=dirv, rationale=WHY, session=S, ref_id=RD,
+                     dry_run=True)
+        record("T078-11", "set-parameter-direction accepts a source's live figure and refuses once that figure is retired",
+               ok5 is None and r5 and "holds no extraction" in r5, (ok5, r5))
+
+        # R06 add-extraction's NOTE names live prior figures only.
+        RN = fresh()
+        db.link_source_slug(RN, plain, f"{WHY}: speaks to this slug", S)
+        n6 = seed(RN, claimed_value="6")
+        retire(n6)
+        import contextlib, io                                           # noqa: E401,E402
+        buf = io.StringIO()
+        with contextlib.redirect_stderr(buf):
+            got6 = db.insert_extraction({"ref_id": RN, "parameter_id": PR, "identity_code": POP, "claim_type": "absent",
+                                         "figure_role": "finding", "claim_text": f"{WHY}: the source states nothing here",
+                                         "lens_basis": "named_in_text", "lens_basis_text": "states nothing",
+                                         "extraction_method": "skim"}, S, relations=[], verbatim_exempt=WHY)
+        record("T078-12", "add-extraction's NOTE does not count a retired prior figure",
+               "extraction_id" in got6 and "already carries" not in buf.getvalue(), buf.getvalue()[-300:])
+
+        # R07-R09 the audits, each on a figure it reports, counted before and after the retirement.
+        def num(text, pat):
+            m = re.search(pat, text)
+            return int(m.group(1)) if m else None
+        RU = fresh(read=False)
+        u7 = seed(RU, claimed_value="7")
+        RQ = fresh()
+        w("UPDATE evidence_sources SET tier = 6 WHERE ref_id = ?", RQ)
+        q8 = seed(RQ, claimed_value="8")
+        b7 = num(sub("scripts/audit/verified_scan_integrity.py"), r"EXAMINED: (\d+)")
+        b8 = num(sub("scripts/audit/research_batch_dod.py", "--all"), r"R3: (\d+)")
+        b9 = num(sub("scripts/audit/adjudication_integrity.py"), r"source_value_extractions: (\d+)")
+        retire(u7); retire(q8)
+        a7 = num(sub("scripts/audit/verified_scan_integrity.py"), r"EXAMINED: (\d+)")
+        a8 = num(sub("scripts/audit/research_batch_dod.py", "--all"), r"R3: (\d+)")
+        a9 = num(sub("scripts/audit/adjudication_integrity.py"), r"source_value_extractions: (\d+)")
+        record("T078-13", "verified_scan_integrity examines two figures fewer once two figures it reads are retired",
+               None not in (b7, a7) and b7 - a7 == 2, (b7, a7))
+        record("T078-14", "research_dod R3 counts one uncited regulatory source fewer once its only figure is retired",
+               None not in (b8, a8) and b8 - a8 == 1, (b8, a8))
+        record("T078-15", "adjudication_integrity counts live figures (two fewer after two retirements)",
+               None not in (b9, a9) and b9 - a9 == 2, (b9, a9))
+
+        # R10-R14 the views, on seeded rows.
+        RV = fresh()
+        v1 = seed(RV, root_type="measurement_primary", root_ref_id=RV, claimed_value="10")
+        v2 = seed(RA, root_id=f"{WHY}-ROOT-UNREG", claimed_value="11")
+        v3a = seed(RV, root_ref_id=RV, root_id=f"{WHY}-ROOT-A", claimed_value="12")
+        v3b = seed(RV, root_ref_id=RV, root_id=f"{WHY}-ROOT-B", claimed_value="13")
+        RS = fresh()
+        b_ind = q("SELECT COALESCE(SUM(independent_root_count), 0) FROM v_value_independence WHERE parameter_id=?", PR)[0][0]
+        b_unr = q("SELECT COUNT(*) FROM v_unregistered_roots WHERE extraction_id=?", v2)[0][0]
+        b_con = q("SELECT COUNT(*) FROM v_root_id_conflicts WHERE conflict_key=?", RV)[0][0]
+        pre_ledger = q("SELECT status FROM v_scan_ledger WHERE ref_id=? AND parameter_id=?", RS, PR)[0][0]
+        s14 = seed(RS, claimed_value="14")
+        b_led = q("SELECT status FROM v_scan_ledger WHERE ref_id=? AND parameter_id=?", RS, PR)[0][0]
+        cov = q("SELECT sa.exec_id, sa.ref_id, UPPER(se.language), COALESCE(b.parent_code, se.jurisdiction), p.parameter_id "
+                "FROM base_parameters p CROSS JOIN search_admissions sa "
+                "JOIN search_executions se USING (exec_id) LEFT JOIN base_jurisdictions b ON b.jurisdiction_code = se.jurisdiction "
+                "JOIN evidence_sources e ON e.ref_id = sa.ref_id AND e.superseded_by_ref_id IS NULL "
+                "WHERE sa.retired_at IS NULL AND se.deferred_reason IS NULL AND EXISTS (SELECT 1 FROM v_research_scope v "
+                "WHERE v.language = UPPER(se.language) AND v.jurisdiction = COALESCE(b.parent_code, se.jurisdiction)) "
+                "AND p.status = 'active' AND NOT EXISTS (SELECT 1 FROM source_value_extractions x WHERE x.ref_id = sa.ref_id "
+                "AND x.parameter_id = p.parameter_id AND x.retired_at IS NULL) ORDER BY 1, 5 LIMIT 1")
+        CV = "SELECT sources_admitted FROM v_coverage_parameter_via_admission WHERE parameter_id=? AND language=? AND jurisdiction=?"
+        b_cov = q(CV, cov[0][4], cov[0][2], cov[0][3])[0][0] if cov else None
+        c15 = seed(cov[0][1], pid=cov[0][4], claimed_value="15") if cov else None
+        m_cov = q(CV, cov[0][4], cov[0][2], cov[0][3])[0][0] if cov else None
+        for x in (v1, v2, v3a, s14) + ((c15,) if c15 else ()):
+            retire(x)
+        record("T078-16", "v_value_independence counts one root fewer once its figure is retired",
+               b_ind - q("SELECT COALESCE(SUM(independent_root_count), 0) FROM v_value_independence WHERE parameter_id=?", PR)[0][0] == 1,
+               b_ind)
+        record("T078-17", "v_unregistered_roots drops a retired figure", b_unr == 1
+               and q("SELECT COUNT(*) FROM v_unregistered_roots WHERE extraction_id=?", v2)[0][0] == 0, b_unr)
+        record("T078-18", "v_root_id_conflicts drops a conflict once one of its two figures is retired", b_con == 1
+               and q("SELECT COUNT(*) FROM v_root_id_conflicts WHERE conflict_key=?", RV)[0][0] == 0, b_con)
+        record("T078-19", "v_scan_ledger's EXTRACTED arm is earned by a live figure only: the pair returns to its reading status",
+               b_led == "EXTRACTED" and q("SELECT status FROM v_scan_ledger WHERE ref_id=? AND parameter_id=?", RS, PR)[0][0]
+               == pre_ledger, (pre_ledger, b_led))
+        record("T078-20", "v_coverage_parameter_via_admission reaches a parameter through a live figure only",
+               bool(cov) and m_cov - b_cov == 1 and q(CV, cov[0][4], cov[0][2], cov[0][3])[0][0] == b_cov, (cov, b_cov, m_cov))
+
+        # R15 K02 and T018-05, read by test_db_integrity on the copy: a live TASK-FIXTURE determination of PR links every
+        # live figure of PR; a retired figure of PR is not linked and has no live link in the view.
+        code_k = q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code NOT IN (SELECT identity_code FROM "
+                   "specifications WHERE retired_at IS NULL AND parameter_id=? AND identity_code IS NOT NULL) ORDER BY 1 LIMIT 1", PR)[0][0]
+        c = sqlite3.connect(DB)
+        try:
+            sk = c.execute("INSERT INTO specifications (parameter_id, identity_code, state, rule_version, created_at, "
+                           "created_by_session, updated_at, updated_by_session) VALUES (?, ?, 'pending', ?, 't', ?, 't', ?)",
+                           (PR, code_k, _t78r_engine.RULE_VERSION, S, S)).lastrowid
+            c.executemany("INSERT INTO specification_extraction_links (specification_id, extraction_id, role, exclusion_reason, "
+                          "created_at, created_by_session) VALUES (?, ?, 'excluded', ?, 't', ?)",
+                          [(sk, x, WHY, S) for (x,) in c.execute("SELECT extraction_id FROM source_value_extractions WHERE "
+                                                                 "parameter_id=? AND retired_at IS NULL", (PR,)).fetchall()])
+            c.commit()
+        finally:
+            c.close()
+        integ = sub("scripts/tests/test_db_integrity.py")
+        w("DELETE FROM specification_extraction_links WHERE specification_id=?", sk)
+        w("DELETE FROM specifications WHERE specification_id=?", sk)
+        record("T078-21", "test_db_integrity K02 accounts for live figures only (a retired figure of the parameter is not "
+               "owed a link; the check names no defect of the fixture determination)",
+               "K02" in integ and f"spec {sk} " not in integ and f"spec {sk}:" not in integ,
+               [l for l in integ.splitlines() if f"spec {sk}" in l][:3])
+        record("T078-22", "test_db_integrity T018-05 asks a live lens link of live figures only",
+               "[✓] T018-05" in integ, [l for l in integ.splitlines() if "T018-05" in l][:2])
+
+        # R16 the three retirement columns are not amendable.
+        live = q("SELECT MIN(extraction_id) FROM source_value_extractions WHERE retired_at IS NULL")[0][0]
+        r16 = [refusal(db.amend_extraction, live, f, "2026-11-19 00:00", WHY, S)
+               for f in ("retired_at", "retired_by_session", "retirement_reason")]
+        record("T078-23", "amend-extraction refuses each retirement column (set only by retire-extraction)",
+               all(m and "refused" in m for m in r16) and q("SELECT retired_at FROM source_value_extractions WHERE "
+                                                            "extraction_id=?", live) == [(None,)], r16)
+
+        # The refusals the adversarial pass found missing.
+        b24 = seed(RA, claimed_value="20", claim_text=f"{WHY} 20 mm", source_section=f"{WHY} 1")
+        d24 = seed(RA, claimed_value="5", claim_text=f"{WHY} 5 mm", source_section=f"{WHY} 1")
+        retire(d24)
+        r24 = refusal(db.derive_extraction, parameter_id=PR, base=b24, delta=d24, session=S, identity=POP,
+                      lens_basis="named_in_text", lens_basis_text=WHY)
+        r25 = refusal(db.insert_extraction, {"ref_id": RA, "parameter_id": PR, "identity_code": POP, "claim_type": "numerical",
+                                             "claimed_value": "21", "claimed_unit": "mm", "comparator": ">=",
+                                             "claim_text": f"{WHY} 21 mm", "figure_role": "claim", "source_section": "1",
+                                             "lens_basis": "named_in_text", "lens_basis_text": WHY,
+                                             "extraction_method": "full-read"}, S,
+                      relations=[{"relation": "condition_on", "to_extraction": d24, "stated": "named", "quote": WHY}],
+                      verbatim_exempt=WHY)
+        record("T078-24", "derive-extraction refuses a retired input, naming retire-extraction (red with the derived-input "
+               "refusal alone removed: this fixture's warrant then fails first; T078-24b holds the edge writer's part)",
+               r24 and "was retired" in r24 and "retire-extraction" in r24, r24)
+        record("T078-25", "add-extraction refuses an edge to a retired figure (the shared edge writer)",
+               r25 and "was retired" in r25, r25)
+        # Every relation kind the column's CHECK declares can name a row (no CHECK of the table forbids a row for any
+        # kind), so each is probed; the kinds are read, never typed.
+        lean_kinds = sorted(dbcore.check_values(ro(), "extraction_relations", "relation"))
+        lean, last = {}, None
+        for kind in lean_kinds:
+            to, frm = seed(RA, claimed_value="30"), seed(RA, claimed_value="31")
+            edge(frm, kind, to, "base" if kind == "derived_from" else None)
+            lean[kind] = refusal(db.retire_extraction, to, WHY, S)
+            last = (to, frm)
+        record("T078-26", "retire-extraction refuses a figure while any live figure holds a row edge to it, of every relation "
+               "kind, naming the edge and the next act",
+               len(lean_kinds) > 0 and all(m and "hold edges to" in m and f"edge " in m and "Retire each" in m
+                                           for m in lean.values()), (lean_kinds, lean))
+        retire(last[1])
+        r39 = refusal(db.retire_extraction, last[0], WHY, S)
+        record("T078-39", "once the leaning figure is retired, the figure it leaned on can be retired",
+               r39 is None and q("SELECT retired_at IS NOT NULL FROM source_value_extractions WHERE extraction_id=?",
+                                 last[0]) == [(1,)], r39)
+        r27a = refusal(db.add_lens_link, d24, S, identity=OUT_CODE, basis="named_in_text", basis_text=WHY)
+        n_live = q("SELECT COUNT(*) FROM extraction_lens_links WHERE extraction_id=? AND retired_at IS NULL", d24)[0][0]
+        link_d = q("SELECT link_id FROM extraction_lens_links WHERE extraction_id=? AND retired_at IS NULL", d24)[0][0]
+        r27b = refusal(db.retire_lens_link, link_d, WHY, S)
+        record("T078-27", "add-lens-link refuses a retired figure, and retire-lens-link still refuses a retired figure's last "
+               "live link (counted on the link table, not the view)",
+               r27a and "was retired" in r27a and n_live == 1 and r27b and "last live link" in r27b, (r27a, r27b))
+        reasons = sorted(dbcore.check_values(ro(), "extraction_follow_ups", "reason"))
+        r28 = [refusal(db.raise_follow_up, d24, r, WHY, S) for r in reasons]
+        w("INSERT INTO extraction_follow_ups (extraction_id, reason, warrant, raised_at, raised_by_session) VALUES (?, ?, ?, 't', ?)",
+          d24, reasons[0], WHY, S)
+        import yaml                                                     # noqa: E402
+        ob = next(s_["sql"] for s_ in yaml.safe_load((REPO / "governance" / "owner-browser.yaml").read_text())["queue"]
+                  if s_["id"] == "open_follow_ups")
+        shown = [r[1] for r in q(ob)]
+        audit = sub("scripts/audit/extraction_follow_up_audit.py")
+        record("T078-28", "raise-follow-up refuses a retired figure; the owner browser's open_follow_ups and "
+               "extraction_follow_up_audit do not list a follow-up on one",
+               all(m and "was retired" in m for m in r28) and not any(f"extraction {d24}:" in l for l in shown)
+               and not re.search(rf"\b{d24}\b.*{WHY}", audit), (r28, audit[-200:]))
+        live2 = seed(RA, claimed_value="40")
+        blank = [refusal(db.retire_extraction, live2, rs, S) for rs in (" ​", "\t\n", "⁠ ﻿")]
+        raws = {}
+        for name, sql_, args in (
+                ("reason of NBSP and ZWSP", "UPDATE source_value_extractions SET retired_at=?, retired_by_session=?, "
+                 "retirement_reason=? WHERE extraction_id=?", (dbcore.now(), S, " ​", live2)),
+                ("session of a tab and a newline", "UPDATE source_value_extractions SET retired_at=?, retired_by_session=?, "
+                 "retirement_reason=? WHERE extraction_id=?", (dbcore.now(), "\t\n", WHY, live2)),
+                ("retired_at not a date", "UPDATE source_value_extractions SET retired_at=?, retired_by_session=?, "
+                 "retirement_reason=? WHERE extraction_id=?", ("not a date", S, WHY, live2)),
+                ("a retired row's reason rewritten", "UPDATE source_value_extractions SET retirement_reason=? "
+                 "WHERE extraction_id=?", ("another reason", d24)),
+                ("a retired row's session rewritten", "UPDATE source_value_extractions SET retired_by_session=? "
+                 "WHERE extraction_id=?", ("another session", d24)),
+                ("the legitimate shape", "UPDATE source_value_extractions SET retired_at=?, retired_by_session=?, "
+                 "retirement_reason=? WHERE extraction_id=?", (dbcore.now(), S, WHY, live2))):
+            try:
+                w(sql_, *args)
+                raws[name] = None
+            except sqlite3.DatabaseError as exc:
+                raws[name] = str(exc)
+        record("T078-29", "a blank reason of whitespace and zero-width characters is refused by retire-extraction and by "
+               "migration 159's triggers, as are a session of whitespace, a retired_at not stamped YYYY-MM-DD HH:MM and any "
+               "rewrite of a retired row; the legitimate shape passes",
+               all(m and "--reason is required" in m for m in blank) and raws.pop("the legitimate shape") is None
+               and all(raws.values()), (blank, raws))
+        mig = (REPO / "scripts" / "migrations" / "159_figure_retirement_holes.sql").read_text()
+        ws154 = re.search(r"char\((32,9,[0-9,]+)\)", (REPO / "scripts" / "migrations" / "154_source_clauses_identity.sql").read_text()).group(1)
+        zw = ",".join(str(ord(ch)) for ch in dbcore.ZERO_WIDTH)
+        stamp_glob = re.search(r"NOT GLOB '([^']+)'", mig).group(1)
+        c = ro()
+        try:
+            glob_ok = c.execute("SELECT ? GLOB ?, 'not a date' GLOB ?", (dbcore.now(), stamp_glob, stamp_glob)).fetchone()
+        finally:
+            c.close()
+        record("T078-30", "migration 159 spells 154's whitespace set and dbcore.ZERO_WIDTH, and its stamp shape matches "
+               "dbcore.now()", set(re.findall(r"char\(([0-9,]+)\)", mig)) == {zw, ws154} and glob_ok == (1, 0),
+               (glob_ok,))
+        # ── Second repair (T-078): every writer that takes a figure id refuses a retired one; the readers of connections
+        # and of the translation queue drop it; amend sees live derived figures only; migration 160's shape.
+        g1, g2 = seed(RA, claimed_value="50", claim_text=f"{WHY} 50 mm"), seed(RA, claimed_value="51")
+        # translations: a request made while the figure was live, then the figure retired
+        LANG = q("SELECT language FROM lang_jur_map ORDER BY language LIMIT 1")[0][0]
+        STAGE = next(st["id"] for st in yaml.safe_load((REPO / "governance" / "pipeline-contract.yaml").read_text())["stages"]
+                     if st["id"] == "judgment")
+        TK = sorted(dbcore.check_values(ro(), "translations", "translator_kind"))[0]
+        RK = sorted(dbcore.check_values(ro(), "translations", "reviewed_by_kind"))[0]
+        t_rec = db.request_translation("source_value_extractions", "claim_text", str(g1), LANG, STAGE, session=S)["translation_id"]
+        t_rev = None
+        g3 = seed(RA, claimed_value="52", claim_text=f"{WHY} 52 mm")
+        t_rev = db.request_translation("source_value_extractions", "claim_text", str(g3), LANG, STAGE, session=S)["translation_id"]
+        db.record_translation(f"{WHY} 52", TK, "TASK-FIXTURE translator", translation_id=t_rev, session=S)
+        DUE = db._translation_contract(None).translation.default_stage
+        due_b = {r["translation_id"] for r in db.translations_due(DUE)}
+        # a label edge from a live figure, to repoint onto a retired one
+        lab = seed(RA, claimed_value="53")
+        w("INSERT INTO extraction_relations (from_extraction_id, relation, to_label, to_kind, stated, quote, created_at, "
+          "created_by_session) VALUES (?, 'tested_at', 'TASK-FIXTURE label', 'standard', 'named', ?, 't', ?)", lab, WHY, S)
+        conf = sorted(dbcore.check_values(ro(), "connections", "confidence"))[0]
+        cstat = "PENDING" if "PENDING" in dbcore.check_values(ro(), "connections", "status") else \
+            sorted(dbcore.check_values(ro(), "connections", "status"))[0]
+        cdata = lambda: {"status": cstat, "confidence": conf, "connection_type": "METHODOLOGY", "filed_in": plain,  # noqa: E731
+                         "description": WHY, "source_skill": WHY, "opus_reviewed": 0}
+        con_live = db.insert_connection(cdata(), [("methodology", WHY), ("extraction_id", g2)], S)
+        listed_b = [c_ for c_ in db.get_connections(status=cstat) if c_["con_id"] == con_live]
+        for x in (g1, g2, g3):
+            retire(x)
+        r31a = refusal(db.repoint_extraction_relation, lab, "tested_at", g1, S)
+        r31b = refusal(db.repoint_extraction_relation, g2, "tested_at", lab, S)
+        record("T078-31", "relate-extraction --repoint refuses a retired figure at either end",
+               all(m and "was retired" in m for m in (r31a, r31b)), (r31a, r31b))
+        r32 = refusal(db.insert_connection, cdata(), [("methodology", WHY), ("extraction_id", g1)], S)
+        record("T078-32", "add-connection refuses a retired figure as a target", r32 and "was retired" in r32, r32)
+        r33 = refusal(db.request_translation, "source_value_extractions", "claim_text", str(g1), LANG, STAGE, session=S)
+        r34 = refusal(db.record_translation, f"{WHY} 50", TK, "TASK-FIXTURE translator", translation_id=t_rec, session=S)
+        r35 = refusal(db.review_translation, t_rev, "reviewed", RK, "TASK-FIXTURE reviewer", session=S)
+        record("T078-33", "request-translation refuses a retired figure", r33 and "was retired" in r33, r33)
+        record("T078-34", "record-translation refuses a request whose figure was retired after the request",
+               r34 and "was retired" in r34, r34)
+        record("T078-35", "review-translation refuses a translation whose figure was retired", r35 and "was retired" in r35, r35)
+        listed_a = [c_ for c_ in db.get_connections(status=cstat) if c_["con_id"] == con_live]
+        record("T078-36", "db.py connections lists a live connection without its retired figure target",
+               listed_b and f"extraction {g2}" in (listed_b[0]["targets"] or "") and listed_a
+               and f"extraction {g2}" not in (listed_a[0]["targets"] or ""), (listed_b, listed_a))
+        due_a = {r["translation_id"] for r in db.translations_due(DUE)}
+        record("T078-37", "translations --due-at does not owe a request on a retired figure",
+               t_rec in due_b and t_rec not in due_a, (t_rec, sorted(due_b)[-3:], sorted(due_a)[-3:]))
+        # amend-extraction --field comparator on a base: refused while a LIVE derived figure uses it, accepted once retired
+        b38, d38 = seed(RA, claimed_value="60"), seed(RA, claimed_value="61")
+        k38 = seed(RA, claimed_value="121", figure_role="derived", claim_text=None)
+        edge(k38, "derived_from", b38, "base")
+        edge(k38, "derived_from", d38, "delta")
+        newcmp = next(v for v in sorted(dbcore.check_values(ro(), "source_value_extractions", "comparator")) if v != ">=")
+        r38a = refusal(db.amend_extraction, b38, "comparator", newcmp, WHY, S)
+        retire(k38)
+        r38b = refusal(db.amend_extraction, b38, "comparator", newcmp, WHY, S)
+        record("T078-38", "amend-extraction --field comparator on a base is refused while a live derived figure uses it and "
+               "accepted once that derived figure is retired",
+               r38a and "is an input of derived" in r38a and f"[{k38}]" in r38a and r38b is None, (r38a, r38b))
+        # migration 160: one blank set, pinned; the frozen columns derived; the holes
+        mig160 = (REPO / "scripts" / "migrations" / "160_figure_retirement_shape.sql").read_text()
+        trig = re.search(r"CREATE TRIGGER trg_sve_retirement_shape_insert.*?END;", mig160, re.S).group(0)
+        in_glob = re.search(r"GLOB '\*\[' \|\| (.*?) \|\| '\]\*'", trig).group(1)
+        spelled = {chr(int(n)) for grp in re.findall(r"char\(([0-9,]+)\)", in_glob) for n in grp.split(",")}
+        in_trim = re.search(r"trim\(NEW\.retirement_reason, (.*?)\) = ''", trig).group(1)
+        record("T078-40", "migration 160 spells dbcore.blank_chars() (less U+0000) in both its session and its reason test",
+               spelled == set(dbcore.blank_chars()) - {"\x00"} and in_trim == in_glob, len(spelled))
+        frozen = re.search(r"trg_sve_retired_row_frozen\s+BEFORE UPDATE OF (.*?) ON source_value_extractions", mig160,
+                           re.S).group(1)
+        want = [r[1] for r in q("PRAGMA table_info(source_value_extractions)")
+                if r[1] not in ("retired_at", "retired_by_session", "retirement_reason", "updated_at", "updated_by_session")]
+        record("T078-41", "the frozen-row trigger names every column of the table but the three retirement columns and the "
+               "updated_* stamps (a later column fails this case until a migration adds it)",
+               [x.strip() for x in frozen.split(",")] == want, (frozen[:80], len(want)))
+        live3 = seed(RA, claimed_value="70")
+        ret3 = seed(RA, claimed_value="71")
+        retire(ret3)
+        U3 = ("UPDATE source_value_extractions SET retired_at=?, retired_by_session=?, retirement_reason=? "
+              "WHERE extraction_id=?")
+        cases = {"retired_at 9999-99-99 99:99": (U3, ("9999-99-99 99:99", S, WHY, live3)),
+                 "retired_at 2026-02-30 00:00": (U3, ("2026-02-30 00:00", S, WHY, live3)),
+                 "retired_at in the future": (U3, ("2999-01-01 00:00", S, WHY, live3)),
+                 "retired_at a BLOB": (U3, (b"2026-11-19 00:00", S, WHY, live3)),
+                 "session not-a-session": (U3, (dbcore.now(), "not-a-session", WHY, live3)),
+                 "claimed_value of a retired row": ("UPDATE source_value_extractions SET claimed_value='72' "
+                                                    "WHERE extraction_id=?", (ret3,)),
+                 "parameter_id of a retired row": ("UPDATE source_value_extractions SET parameter_id=parameter_id "
+                                                   "WHERE extraction_id=?", (ret3,)),
+                 "a retired row re-stamped": ("UPDATE source_value_extractions SET retired_at=? WHERE extraction_id=?",
+                                              ("2026-01-01 00:00", ret3))}
+        for ch in "᠎­⠀ㅤ‎⁣\x1f":
+            cases[f"reason U+{ord(ch):04X}"] = (U3, (dbcore.now(), S, ch, live3))
+        got42 = {}
+        for name, (sql_, args) in cases.items():
+            try:
+                w(sql_, *args)
+                got42[name] = None
+            except sqlite3.DatabaseError as exc:
+                got42[name] = str(exc)
+        try:
+            w("UPDATE source_value_extractions SET created_at=created_at WHERE extraction_id=?", live3)
+            ok42 = True
+        except sqlite3.DatabaseError:
+            ok42 = False
+        record("T078-42", "migration 160's triggers refuse an impossible, future or BLOB retired_at, a session that is not a "
+               "stem, a reason of any blank character, a re-stamp and any change to a retired row's value columns",
+               all(got42.values()) and ok42, {k: v for k, v in got42.items() if not v})
+        vb = [refusal(db.retire_extraction, live3, ch, S) for ch in "᠎­⠀ㅤ‎⁣\x1f"]
+        vs = refusal(db.retire_extraction, live3, WHY, "not-a-session")
+        record("T078-43", "retire-extraction refuses the same blank reasons and a session that is not a stem",
+               all(m and "--reason is required" in m for m in vb) and vs and "not a session stem" in vs, (vb, vs))
+        cols44 = dict(ref_id=RA, parameter_id=PR, claim_type="numerical", claimed_value="73", claimed_unit="mm",
+                      claim_text=WHY, figure_role="claim", comparator=">=", extraction_method="full-read", created_at="t",
+                      created_by_session=S, updated_at="t", updated_by_session=S, retired_by_session=S, retirement_reason=WHY)
+        born = {}
+        for name, at in (("bad", "not a date"), ("good", dbcore.now())):
+            c44 = dict(cols44, retired_at=at)
+            try:
+                w(f"INSERT INTO source_value_extractions ({','.join(c44)}) VALUES ({','.join('?' * len(c44))})", *c44.values())
+                born[name] = None
+            except sqlite3.DatabaseError as exc:
+                born[name] = str(exc)
+        record("T078-44", "a born-retired INSERT is refused when malformed and accepted when well formed (emit_batch_sql's "
+               "capture of a figure added and retired in one batch)", born["bad"] and born["good"] is None, born)
+        # the second filter sites of two views
+        u45 = seed(RA, root_type="measurement_primary", claimed_value="74")
+        k46a = seed(RA, root_ref_id=RA, root_id=f"{WHY}-SPAN", claimed_value="75")
+        k46b = seed(RV, root_ref_id=RV, root_id=f"{WHY}-SPAN", claimed_value="76")
+        b45 = q("SELECT COUNT(*) FROM v_unregistered_roots WHERE extraction_id=? AND defect='rootless'", u45)[0][0]
+        b46 = q("SELECT COUNT(*) FROM v_root_id_conflicts WHERE conflict_key=?", f"{WHY}-SPAN")[0][0]
+        retire(u45); retire(k46a)
+        record("T078-45", "v_unregistered_roots' rootless arm drops a retired figure", b45 == 1 and
+               q("SELECT COUNT(*) FROM v_unregistered_roots WHERE extraction_id=?", u45)[0][0] == 0, b45)
+        record("T078-46", "v_root_id_conflicts' root-spans-sources arm drops a conflict once one figure is retired", b46 == 1
+               and q("SELECT COUNT(*) FROM v_root_id_conflicts WHERE conflict_key=?", f"{WHY}-SPAN")[0][0] == 0, b46)
+        mem = sqlite3.connect(":memory:")
+        mem.execute("CREATE TABLE extraction_relations (relation TEXT CHECK (relation IN ('a','b')), to_extraction_id INT)")
+        r47 = refusal(db._row_only_relations, mem)
+        mem.close()
+        record("T078-47", "_row_only_relations refuses when the CHECK it reads is absent, never returns nothing",
+               r47 and "cannot be read" in r47, r47)
+        # T078-24b: derive-extraction with a warrant that holds (a study_population), so a retired input reaches the
+        # writers' refusals and not the warrant's; the live control derives.
+        grade = sorted(dbcore.check_values(ro(), "evidence_population_match", "match_grade"))[0]
+        w("INSERT INTO evidence_population_match (match_id, source_ref, target_population, study_population, match_grade, "
+          "created_at, created_by_session) VALUES (?, ?, ?, ?, ?, 't', ?)", f"{WHY}-M", RA, POP, f"{WHY} participants", grade, S)
+        # The inputs' words are figures the writer already accepted (their quotes stand in a persisted artefact, as
+        # add-extraction requires of an edge's quote); read from the copy, three plain numerals in mm.
+        src24 = q("SELECT claim_text, claimed_value FROM source_value_extractions WHERE retired_at IS NULL AND "
+                  "figure_role='claim' AND claimed_unit='mm' AND claimed_value GLOB '[0-9]*' AND claimed_value NOT GLOB "
+                  "'*[^0-9]*' AND extraction_method='full-read' AND claim_text IS NOT NULL ORDER BY extraction_id LIMIT 3")
+        b24b, d24b, e24b = (seed(RA, claimed_value=v, claim_text=t_, source_section=f"{WHY} 1") for t_, v in src24)
+        kw24 = dict(parameter_id=PR, session=S, identity=POP, lens_basis="study_participants", lens_basis_text=WHY)
+        try:
+            ok24 = db.derive_extraction(base=b24b, delta=d24b, **kw24)
+        except Exception as exc:  # noqa: BLE001 -- recorded red below
+            ok24 = {"error": f"{exc.__class__.__name__}: {exc}"}
+        retire(e24b)
+        r24b = refusal(db.derive_extraction, base=b24b, delta=e24b, **kw24)
+        record("T078-24b", "derive-extraction with a holding warrant derives from live inputs and refuses a retired input "
+               "(the edge writer refuses it when the derived-input refusal is removed)",
+               "extraction_id" in ok24 and r24b and "was retired" in r24b, (ok24, r24b))
+    except Exception as exc:  # noqa: BLE001 -- a crash is red, never a pass
+        import traceback
+        traceback.print_exc()
+        record("T078R", "the T-078 repair section ran to its end", False, f"{exc.__class__.__name__}: {exc}")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

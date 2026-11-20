@@ -68,8 +68,12 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   --outcome NAMES-EXISTING --term-id` → `add-alias --alias-type` (from the CHECK; it writes `attestation`, `other_source`
   unless `--attestation instrument`). A form read where no observation exists takes the base route (`add-alias --alias
   --language --jurisdiction --source-url --source-page|--source-clause --attestation`; the pair must be in `lang_jur_map`);
-  a search aid with no locator takes `--seed owner_supplied --approval-ref '<ledger heading naming it>'` and is never vocabulary (`--seed model_seed` is refused, OR-17). A search names the forms it
-  fired with `log-search --form-id`. A comparator ("not steeper than")
+  a search aid with no locator takes `--seed owner_supplied --approval-ref '<ledger heading naming it>'` and is never vocabulary (`--seed model_seed` is refused, OR-17).
+  A row of `term_aliases` is one OCCURRENCE (T-028): the same form in another source, jurisdiction or locator is a new
+  row with its own `form_id`; the usage of a form goes in `--usage-type` (DOMAIN, like TRANSLATION and DEPRECATED, is a
+  legacy value no route writes). A search names the forms of its own language it fired with `log-search --form-id
+  <form_id>`, never the label. `terms.canonical_en` is our English descriptive label, never a form; the name a page shows
+  is derived by `v_term_names` (E1). A comparator ("not steeper than")
   or a value is not a name for the concept: adjudicate it `NOT-OURS`. The name rule is the writer's own: `add-term
   --canonical-en` and `rename-term --canonical-en` refuse a name carrying a digit, a comparison symbol, a `min` or
   `max` word, or a comparator word (`than`, `at least`, `at most`, `no more`, `no less`, `no fewer`, `no greater`,
@@ -78,10 +82,31 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
 - **A new concept arises while a source is in hand** (`observe-term` needs `--ref-id` and a persisted quote), so base
   is re-entered from stages 3–4. **Claude never generates a phrase, name or alias** (OR-17): it is the source's own
   wording, present in its jurisdiction and language. `add-term --from-observation` mints the term and its NAMES-NEW
-  adjudication together; it refuses a near match (shared tokens with a term or an alias that is not a `model_seed`) unless `--distinct-from
-  TERM-ID` names it and the rationale says why. `adjudicate-term` never writes NAMES-NEW. Owner approval is the data
+  adjudication together, and writes the observed phrase as the concept's first form (`unrecorded` until its quote is
+  verified, then promoted by `add-alias`); the English label must sit inside the phrase only when the phrase is English.
+  A concept met in a located form with no observation is minted by `add-term --first-form` with its language,
+  jurisdiction, locator and `--attestation`, an English descriptive `--canonical-en`, and `--judge`. Both refuse a phrase whose observation is judged to name no term, a label
+  another term holds, a form another term holds attested in the same language, and a near match (shared tokens with an
+  attested form of the same language, or with a label when the name is English; a seed never counts, E4; a word in
+  another language is another name, OD-68) unless `--distinct-from TERM-ID` names it and the rationale says why.
+  `rename-term` takes one warrant (`--from-form <form_id>`, an attested English member form of the term; `--from-observation`, which rests on the term's form of that phrase, so record it with `add-alias --observation-id`
+  first; or `--ruling-quote`) and `--judge`, and records the former label in `term_label_picks`, the observation's
+  source kept there as `ref_id`, provenance only (OD-71). `adjudicate-term` never writes NAMES-NEW. Owner approval is the data
   PR the owner reads (OR-17: "bulk, with me reading the PR"); `add-parameter` and `decline-parameter` take no
-  approval flag; `--approval-ref` is the flag of the verbs that record an approval (derive them: `grep -n -F -- '"--approval-ref"' scripts/db.py`). `add-parameter` takes instead `--quantity-kind` and `--quantity-kind-observation-id` (T-020): the kind of quantity, from `base_quantity_kinds`, and the observation whose quote states a value of it.
+  approval flag; `--approval-ref` is the flag of the verbs that record an approval (derive them: `grep -n -F -- '"--approval-ref"' scripts/db.py`). `add-parameter` takes instead `--quantity-kind` (T-020), the kind of quantity from `base_quantity_kinds`, and its warrant held on the parameter's own row (OD-71, T-083): `--quantity-kind-quote`, the source's words stating a value of it (they must hold a digit), `--quantity-kind-source-url` with `--quantity-kind-source-page` or `--quantity-kind-source-clause`, where it states it, and `--quantity-kind-ref-id`, provenance only. A parameter that already exists gets its kind, once, from `set-parameter-kind`.
+- **Three places record a likeness, and a fact lives in one of them.** `term_aliases` relates a **phrase** to a term, by
+  its `alias_type` (the column's own CHECK holds the values). `term_relations` relates a **term to another term**, by its
+  `kind` (the column's own CHECK holds the values; the migration's DDL comment defines each kind and which way it reads).
+  T-032's relation rows relate a **provision to a provision** at synthesis, judged at the Opus floor (OD-25).
+  `add-term-relation --from-term --kind --to-term` writes one row grounded in the base's own cells (OD-71): where a
+  source says so (`--source-url` with `--source-page` or `--source-clause`, and `--source-line`), required for every
+  kind but `distinct`, which rests on its `--reason` (a provision is never justified by a reason alone, OD-56); the
+  source's `--ref-id` is provenance only and nothing reads it. `retire-term-relation --relation-id --reason` changes
+  it (a relation is retired, never UPDATEd); `element-parameters --element` reads an element's parameters (a merged one followed to the parameter that
+  stands) and provisions. There is no `equivalent` kind: two terms that name one concept are merged (T-129), not pointed at, and
+  until that merge verb exists (T-129) they are left as they are and listed. A provision whose question is whether it is present
+  (a hearing loop, a visual alarm) is related to its element by `element has provision` and is never made a parameter
+  (OD-56).
 - `set-parameter-direction --ref-id` records which way is better **from an admitted source** that holds an
   extraction for the parameter (ledger 2026-10-30, ACTION 6; stored in `base_parameters.direction_ref_id`); a
   direction with no source is refused. Without a direction stage 6 cannot select a value and says so in its gap. A
@@ -138,7 +163,7 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   never the column. Such a source shows as `BLOCKED` rather than as reading debt, no extraction can be written on it
   until it is VERIFIED, and it is never described as read. Set the reason at admission, or later with `amend-source
   --ref-id … --field processing_blocked_reason --replacement <value> --reason <why>`. **Nothing clears it:** `record-scan`
-  writes `source_scans` only, and the column stays as the retrieval record. The ledger alone says whether a pair is still
+  writes the reading (`source_scans`, and its clause inventory) only, and the column stays as the retrieval record. The ledger alone says whether a pair is still
   blocked. A full reading outranks the block (the pair reads READ-NOTHING-FOUND, or EXTRACTED once a row is written). A
   partial, fragment or abstract reading does not: the pair reads `BLOCKED` with that reading's scan beside it, which is not
   reading debt. "Abstract read, full text paywalled" is recorded as the abstract `record-scan` plus the reason, and the
@@ -181,7 +206,15 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   it lands as the operator's claim: the result says uncounted, the row keeps `pages_read` empty, and `scan_debt` prints
   a count of such readings ("full readings nothing counted") for the adversarial pass to read. Derive the text from the
   PDF with `full_text.py` where the pages can be counted. A second reading of a source is normal
-  (ledger 2026-10-30, ACTION 2). A scan row records that a reading happened at a catalogue version, not what it found;
+  (ledger 2026-10-30, ACTION 2), and kept few (OD-23, "minimize duplicate reads"): before reading a source, list every
+  pair owed for it (`scripts/audit/scan_debt.py --reread`) and read once for all of them (`catalogue`); use `targeted`
+  only when exactly one parameter is owed; never re-read a pair a `full` scan of the same `file_sha256` covers; a
+  re-read is allowed when the earlier scan was not `full`, the file changed, or the pair is flagged (`reread`). The open
+  pass of a `full` reading records the source's clauses (`record-scan --mode catalogue --method full-read --open-pass-done --clauses <json>`,
+  one string per cell; a clause's text is stored as given and its letters and digits must be a passage of the file read); a later parameter is matched against them (`inventory`), then the retained
+  text is swept, and only where neither reaches is a source already read in full read again (a source never read in full owes a first
+  reading, not a re-read). A figure read from an
+  inventoried clause is written with `add-extraction --clause-id` and no `--loc-*` flag. The clause text is never shown. A scan row records that a reading happened at a catalogue version, not what it found;
   what it found is in `observe-term` (verbatim), extractions (stage 4, including an `absent` extraction with its quoted
   passage for a parameter the source is silent on) and `link-source-slug --rationale` (the relevance note per slug;
   `add-source --slug` leaves it empty, this fills it once and refuses to overwrite grounds). Debt:
@@ -198,12 +231,63 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
 
 ## 4. judgment — populations, access needs, ICF codes; figures stored so later stages can use them
 *(Your "evidence stage" adjudication lives here: CLAUDE.md §6 records the owner's 2026-08-27 ruling that the lens
-crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map.yaml` change.)*
+crossing is judgment's output, and the owner's "yes lens in judgment" (2026-11-14) keeps it here, fixing only its
+timing for a code value: its lens is judged in the call that records it (`grep -n -F "(sixteenth set, last)"
+references/project-standards.md`; `grep -n -F "Correction and registration 2026-11-15" references/project-standards.md`).
+The judgment stage may later confirm a context link (nothing to write) or replace it: `add-lens-link` on the same code
+with its own warrant on another basis retires the context link in the same call; it never copies a lens elsewhere.)*
+- **A code value's lens, at recording** (guidance for your judgment, not a lookup any code consults: the owner's
+  "typically"; OD-65, "use contextual judgment"). *When you record a value from a code (a tier 4 to 6 source), give it
+  its lens in the same call, from the clause and its context, with its warrant: the ICF link, the access-need link, and
+  an identity link for each group you judge the value serves.* If the clause names the users, the function or the need,
+  use `named_in_text`; if its heading names the group, `heading` (OD-31); otherwise `--lens-basis context`, with
+  `--lens-basis-text` the source's words that state the context and `--lens-basis-reason` your judgment
+  (`add-lens-link --basis context --basis-text ... --basis-reason ...` for a stored figure). `context` is refused below
+  tier 4. Read the context from what you already hold: the clause and its heading (`--claim-text`, `--source-section`),
+  the source's scope, application or purpose clause (its saved file), the building type or use and interior or exterior
+  (`--setting`), and the jurisdiction (`evidence_sources.jurisdiction`: it locates the code and gives no lens).
+  **The proposals are where you start, never where you stop.** Before writing, `add-extraction` and `add-lens-link`
+  print the groups the maps (`identity_icf_map`, and the b/d rows of `access_need_icf` for a need) tie to the ICF codes
+  and needs on the figure, each with its confidence, mechanism and provenance, and each need's own registry text, and
+  their JSON result lists the groups proposed beside the groups written. Read them as the owner's "populations still get
+  coded as a result": confirm each group the clause serves and write it, by `context` with your reason; leave out a
+  group the clause does not serve, however high the map's confidence (one activity code can propose several groups:
+  `select icf_code, group_concat(distinct identity_code) from identity_icf_map where retired_at is null group by icf_code having count(distinct identity_code) > 1`); and
+  add a group no map proposes when the clause serves it. A proposal is never written because it was proposed. A code
+  value left with ICF or need links and no identity while the maps propose one prints `WARNING: maps propose`, and
+  `scripts/audit/code_value_identity_audit.py` lists it.
+  **Worked defaults (the owner's, 2026-11-14).** A value that concerns a **mounting height** (a control, a counter, a
+  fixture, a mirror) or **any clearance** (height, width, depth, clear floor space, turning space; knee and toe
+  clearance) takes, by default, the ICF code and the access need of reach and seated use, and the wheelchair-user
+  identity, one link each, with `--lens-basis context`, `--lens-basis-text` the clause's own words for the quantity (for
+  example `mounting height`, `knee clearance`) and `--lens-basis-reason` `typically concerns wheelchair users` (the
+  owner's warrant, "mounting height; typically concerns wheelchair users", in its two cells). Derive the codes from the
+  live registries when you record, never from this page. The ICF codes, from the maps and the registry (`base_icf.title`
+  says what a code is; where it is NULL, as for most codes, the map row's `mechanism` is the only recorded account of
+  it): `python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select m.icf_code, b.title, m.mechanism, m.identity_code from identity_icf_map m join base_icf b using(icf_code) where m.retired_at is null and m.identity_code in (select identity_code from base_taxonomy_identity where status='active' and lower(display_name||' '||coalesce(description,'')) like '%wheelchair%') union all select a.icf_code, b.title, 'via need '||a.need_code, null from access_need_icf a join base_icf b using(icf_code) where a.icf_type<>'e' and a.need_code in (select need_code from access_needs where lower(coalesce(design_obligation,'')) like '%reach%' or lower(coalesce(design_obligation,'')) like '%seated%') order by 1\").fetchall())"`
+  (for a mounting height, the most specific reach code it prints, with a posture code where the clause concerns use
+  from a seated position; for a clearance, the code for moving around using equipment; write no code the query does
+  not print: where it prints none for what the clause concerns, that is the map gap T-128 fills, and the session
+  records the ICF code it can derive here or none, never one from memory). The access need: `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select need_code, substr(design_obligation,1,90) from access_needs where lower(coalesce(design_obligation,'')) like '%reach%' or lower(coalesce(design_obligation,'')) like '%seated%' or lower(coalesce(design_obligation,'')) like '%turning%'\").fetchall())"`
+  (the need whose obligation names seated-height controls and turning clearance; the range-of-bodies need where the
+  clause concerns the range of body sizes). The identity, the most specific live wheelchair-user code: `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select identity_code, display_name, parent_code from base_taxonomy_identity where status='active' and lower(display_name||' '||coalesce(description,'')) like '%wheelchair%'\").fetchall())"`
+  (the mobility family until the wheelchair-user child is minted). The default writes the identity whether or not a
+  map proposes it yet. **Overridden where the clause names another group:** an overhead or protruding-object clearance
+  (headroom, a protruding object's projection) whose clause concerns people who are blind or have low vision takes
+  that group, by `named_in_text` or `heading`, and not the default's links.
+  **A clause whose context names no group and no worked default applies** (OD-47, still the owner's): the ICF and
+  access-need links of the function the clause serves, by `context` with the reason stated, and an identity link for
+  each group you judge the clause serves, from the proposals or beyond them, by `context` with its reason. Never `ALL`.
+  If you judge that it serves no proposed group, write none; the warning and the audit record the omission. This is a
+  default pending OD-47; an answer replaces the links through `add-lens-link` and `retire-lens-link`, never by edit. A
+  provision whose only warrant is a heading that names no group keeps OD-31's answer: no identity, only its ICF and
+  access-need lenses.
 - `adjudicate-term` for every observed phrase (`NOT-OURS` and `DEFERRED` are answers). `add-extraction` per stated
   figure: parameter, at least one lens (`--identity`, `--icf` code and name, `--needs`; an extraction
   is stated in at least one lens, D-0182). Each flag repeats, one link per code in `extraction_lens_links` (the
   figure's own lens columns are held NULL), and `--lens-basis` with `--lens-basis-text` (the figure's own words that
-  name the group) are required; a code with a different warrant, or a judged one that replaces a carried link, is
+  name the group, or, for a code value's `context` basis, the words that state its context, with `--lens-basis-reason`)
+  are required; a code with a different warrant, or a judged one that replaces a carried link, is
   `add-lens-link`, and `retire-lens-link` retires one (never the last). Value and unit (a number the source writes in words, or with an ambiguous
   mark, is entered as a numeral in `--claimed-value` with the source's own wording in `--value-as-written`;
   `--comparator` for a numerical figure, `=` for a point; the comparator is read from what the wording says about direction, owner 2026-11-14: "at most" and "maximum" are a ceiling, `<=`; "minimum" and "at least" a floor, `>=`; "within" followed by two figures is both ends, `between`, and followed by one figure is a ceiling on that figure's own quantity, `<=` (a deviation: "within 5 mm"); this is a starting list, not a vocabulary, so map any other wording by the same test (a ceiling, a floor, both ends, a point, a deviation), and where the wording does not make the direction clear, keep it in `--value-as-written` and `--claim-text`, guess no comparator, and let the writer's refusal of a value-supplying numerical row without one stop it (raise the question as a gap); ledger: `grep -n -F "Owner statement 2026-11-14 — convergence means values coming together" references/project-standards.md`), `--claim-text`
@@ -226,7 +310,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   `--comparator`, also by `amend-extraction --field figure_role`; a `derived` figure that disagrees with its own base +
   delta (`add-extraction`, `relate-extraction`, `amend-extraction`). A stored figure whose value or unit the writer would now
   refuse is reformatted in place with `amend-extraction --field claimed_value` (same numbers) and then `--field claimed_unit` (a
-  unit already in the cell, or a notation family's spelling of it: `ratio` to `rise:run ratio`, OD-41 (a)), and an empty setting filled with `--field setting` (OR-3); a different figure is a second row. The
+  unit already in the cell, or a unit of `base_units` that spells it out: `ratio` to `rise:run ratio`, OD-41 (a)), and an empty setting filled with `--field setting` (OR-3); a different figure is a second row. A figure that is wrong (misread, corrected by the source, filed against the wrong parameter) is withdrawn with `retire-extraction --extraction-id N --reason ... --session session_<name>`, never deleted: the row stays, frozen, and the readers swept for it drop it (the engine's gathers, `v_live_lens_links`, `v_scan_ledger` and the views migration 158 names, `cell-status`, the coverage and root views, the audits, `connections`' targets and the translation queue); `v_determination_provenance`, `v_derived_figure_check` and `v_translations_current` still show it. It is refused while a live determination links the figure (`retire-specification` first) or a live figure holds any edge to it (retire that one first), and every writer that takes a figure id refuses a retired one (amend, lens link, follow-up, edge, repoint, derive, connection target, translation request, record and review). The
   exemption is accepted on a persisted page render, or on a source holding nothing decodable; the marker it writes
   names the renders, so the adversarial pass can check the locator against them; a
   byte-identical second row (a divergent reading is a contest, D-0168, and is written).

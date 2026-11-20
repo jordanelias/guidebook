@@ -7,7 +7,7 @@ owner can read every table, follow every pointer and see what is waiting on them
 the owner's answer on the code it adds: references/project-standards.md, "Owner statement 2026-10-28".
 
 WHAT IT INJECTS. The page derives tables, columns, keys, pointers and views from the embedded database. It cannot
-derive four things, each read from its single home: the stage of a table (governance/stage-map.yaml), the
+derive five things, each read from its single home: the columns never displayed (dbcore.NOT_SHOWN, OD-23), the stage of a table (governance/stage-map.yaml), the
 vocabularies and CHECK shapes (dbcore.check_values / check_expression), the determinations a source holds up
 (dbcore.determinations_resting_on), and the glossary and queue (governance/owner-browser.yaml).
 
@@ -79,6 +79,13 @@ def meta(conn, db_file):
                       ("table with no stage", set(tables) - set(stages["tables"]))):
         for t in sorted(bad):
             print(f"owner_browser_build: {what}: {t}", file=sys.stderr)
+    # Columns held and never displayed (OD-23): read from their one home, each checked against the live schema, so a
+    # renamed column fails the build rather than reappearing on the page.
+    hidden = {t: list(cs) for t, cs in dbcore.NOT_SHOWN.items()}
+    for t, cs in hidden.items():
+        for c in cs:
+            if c not in dbcore.columns(conn, t):
+                sys.exit(f"owner_browser_build: dbcore.NOT_SHOWN names {t}.{c}, which the database does not hold")
     order = [s["id"] if isinstance(s, dict) else s for s in load("pipeline-contract.yaml")["stages"]]
     commit = subprocess.run(["git", "-C", REPO, "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
     with open(db_file, "rb") as f:
@@ -87,7 +94,7 @@ def meta(conn, db_file):
         "stamp": {"sha256": sha, "user_version": conn.execute("PRAGMA user_version").fetchone()[0], "commit": commit or "unknown"},
         "stage_order": order + ["cross-stage", "infrastructure"], "stage": stages["tables"],
         "stage_judged": {"by": stages["judged_by"], "on": stages["judged_on"]},
-        "vocab": vocab, "shape": shape, "holds": holds,
+        "vocab": vocab, "shape": shape, "holds": holds, "hidden": hidden,
         "glossary": owner["glossary"], "words": owner["words"], "decisions": owner["decisions"], "rulings": rulings, "queue": owner["queue"],
         "gloss_status": {k: owner[k] for k in ("drafted_by", "drafted_on", "ratified_by", "ratified_on")},
     }

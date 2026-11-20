@@ -36,7 +36,8 @@ instrument uses "an empty search on an invented word", and a search that fired n
 form is that shape. Recording the forms is opt-in (log-search --form-id), so a search that
 omitted it is not detectable here and reads as "no form recorded".
 
-Read-only. Exit 1 on an unmarked post-cutoff alias; exit 0 otherwise.
+Read-only. Exit 1 on an unmarked post-cutoff alias; exit 2 (NOT RUN, no EXAMINED line) when the zero-result
+search read cannot run; exit 0 otherwise.
 """
 import os
 import sqlite3
@@ -131,12 +132,14 @@ def main():
             "COALESCE(SUM(a.attestation IN ('instrument','other_source')), 0) AS attested "
             "FROM search_executions s "
             "LEFT JOIN search_execution_forms f ON f.exec_id = s.exec_id "
-            "LEFT JOIN term_aliases a ON a.term_id = f.term_id AND a.alias = f.alias "
-            "AND a.language = f.language "
+            "LEFT JOIN term_aliases a ON a.form_id = f.form_id "
             "WHERE s.results_found = 0 AND s.deferred_reason IS NULL "
             "GROUP BY s.exec_id ORDER BY s.exec_id").fetchall()
-    except sqlite3.OperationalError:
-        zero = []
+    except sqlite3.OperationalError as exc:
+        # A query that cannot run read nothing: NOT RUN, never an empty subject (T-028 repair).
+        print(f"NOT RUN: the zero-result searches and the forms each fired could not be read ({exc}); "
+              f"nothing is reported as examined.")
+        return 2
     print(f"zero-result searches: {len(zero)}")
     print(f"EXAMINED: {len(rows) + len(zero)}\n")
 

@@ -8,6 +8,8 @@ approved 2026-07-20 ("approve my decisions like tier model").
 **Amends:** `governance/tier-system.md` (adds §8, §9, §10; supersedes the binary rule in §3 line 45).
 **Closes:** GAP-298 (review-species tiering); GAP-299 (practitioner practice-stream).
 
+> **SUPERSEDED IN PART — appended 2026-11-19, not edited.** As to the bands in the owner's directive quoted above only: the owner's later words of 2026-11-14 replace them, on contact (CLAUDE.md rule 0), by the owner's circle table of 2026-11-14 (the answer to OD-57; T-117 builds it into `band()` and T-120 into `governance/tier-system.md` §5, and until they land the ledger entries it rests on govern). "All evidence tiers can be used to anchor a best practice claim" stands. Ledger: `references/project-standards.md`, "Unification 2026-11-14 — best, most common, minimum; showing and grading": best, most common and minimum are read as the owner defined them on 2026-11-14.
+
 ---
 
 ## 1. Weighted-strength anchoring (supersedes §3's binary rule)
@@ -25,10 +27,14 @@ Three strength bands — the existing `●◐○` markers (§5), now given ancho
 | **◐ Partial** | T4, T5 | Anchors, but the claim is rendered as *current standards practice* — flagged "standards basis, not primary evidence." |
 | **○ Weak** | **T3-grey, T6** (code-floor), expert-consensus / thin base | Anchors only a floor/convergence claim, rendered with an explicit honesty flag: *"best available given current regulation/practice, NOT academically adjudicated."* |
 
+> **SUPERSEDED IN PART — appended 2026-11-19, not edited.** The table's rows for T3-clinical, T5 and T3-grey no longer hold; the bands are the owner's circle table of 2026-11-14 (the answer to OD-57; T-117 builds it into `band()` and T-120 into `governance/tier-system.md` §5, and until they land the ledger entries it rests on govern). For a grey, unverified or thin basis see the owner's answer to OD-64. Ledger: `references/project-standards.md`, "Unification 2026-11-14 — best, most common, minimum; showing and grading": best, most common and minimum are read as the owner defined them on 2026-11-14.
+
 **Convergence-not-evidence (§3) is preserved** as an honesty rule *within* the weak band: multiple T4–T6
 codes agreeing on a value is convergence of floors, stated as regulatory practice at weak strength — never
 relabelled "preferred/best practice." The change is only that such a claim is *stated and flagged*, not
 suppressed, when no stronger evidence exists.
+
+> **SUPERSEDED IN PART — appended 2026-11-19, not edited.** As to the gloss "convergence of floors" only: agreement among codes is most common practice (the mode), not a floor; the minimum is the code stratum's least accommodating value in the parameter's direction. The honesty rule that such agreement is never relabelled best practice stands. Ledger: `references/project-standards.md`, "Unification 2026-11-14 — best, most common, minimum; showing and grading": best, most common and minimum are read as the owner defined them on 2026-11-14.
 
 ## 2. Review-species tiering (closes GAP-298)
 

@@ -251,6 +251,18 @@ stages:
     references: 'references/project-standards.md, "Owner rulings 2026-10-29 (second)" OR-11a
       ("Yes, require a full-scope scan"); the scan contract (migration 103, v_scan_ledger)'
     check: scripts/audit/verified_scan_integrity.py
+  - id: judgment-code-value-identity-not-omitted
+    kind: integrity
+    criterion: No live figure of a tier 4 to 6 source carries a live ICF or access-need link, no live identity link
+      other than the scope marker ALL, at least one group the maps propose for its codes, and a basis other than
+      heading on some live link; the audit's list (i) holds every such figure and the check exits 1 while it is
+      non-empty. Not part of the criterion, and printed beside it as information, the figures that carry no judged
+      identity link (the carried links T-127 replaces) and those that reach no group cell (list iv).
+    references: 'references/project-standards.md: "Owner instruction 2026-11-14 (sixteenth set)", "(sixteenth set,
+      later", "(sixteenth set, last)" and "Correction and registration 2026-11-15" (the recording session judges and
+      writes the identity link; the maps propose); OD-65. Renamed 2026-11-20 from judgment-code-value-identity-judged
+      (its only caller, the check registry, renamed with it), because the audit checks an omission, not a judgment'
+    check: scripts/audit/code_value_identity_audit.py
   re_entry:
   - id: judgment-from-specification-skim
     from_stage: specification
@@ -367,3 +379,18 @@ cross_stage:
 # at the end: hand-written atoms cite the lines above by number.
 translation:
   default_stage: synthesis
+# Amended 2026-11-19 (ledger: Owner ratification 2026-11-19; adjudication item 68). A prose note, not a rule
+# change: no entry above is edited by it. What now governs where the determination machine sits is the owner's
+# spine, "you research slugs, evidence research, judge evidence, synthesize judgments, specify syntheses, and
+# render specifications" (2026-08-27): directness belongs to `judgment`, convergence to `synthesis`, and the
+# determination machine to `specification`; convergence stays computed inside the engine (OD-07), so the
+# engine writes its synthesis output in the same run as the determination. The `judgment` entry's `anchor:`
+# ("the 4-state determination machine + convergence + directness") and the `specification` entry's order are
+# read through this note until the governance text edit the adjudication names (its item 68, follow-on) is made
+# as its own tooling change. Appended at the end: hand-written atoms cite the lines above by number.
+# Correction 2026-11-19 to the note above (adjudication items 68 and 13 of section 4; repair after an adversarial
+# review). "the governance text edit the adjudication names … as its own tooling change" has NO task: none of
+# T-136 to T-143 makes it (grep -l "item 68" workplan/2026-11-12-bidirectional-pipeline/tasks/T-13*.md
+# workplan/2026-11-12-bidirectional-pipeline/tasks/T-14*.md), no loader reads this comment, and the `judgment`
+# entry's `anchor:` above is unchanged. The rule change itself is an OPEN POINT for the owner: OD-17 ratified the
+# contract before it was made.

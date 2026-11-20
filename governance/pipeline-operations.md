@@ -114,3 +114,7 @@ What is forbidden is a **state written as prose in a value column**. This is not
 four rows held `[author surname pending …]` in `first_author_last`, and because the string was
 non-empty the blocking `C03` check counted them as having an author. A missing author passed a
 gate by wearing a value's clothes. Check `C07` now forbids the pattern.
+
+*Amended 2026-11-19 (ledger: Owner ratification 2026-11-19; adjudication item 68). A note, not a rule change: row 5 of the table in section 1 is not edited by it. What now governs is the owner's spine of 2026-08-27, "you research slugs, evidence research, judge evidence, synthesize judgments, specify syntheses, and render specifications": synthesis weighs judgments together (convergence, computed inside the engine, OD-07) and the **specification** stage produces the determination in `specifications`; the engine writes both in one run. Row 5's "Synthesis … `specifications` + `convergence_assessment`" is read through this note until the governance text edit the adjudication names (its item 68, follow-on) is made as its own tooling change.*
+
+*Correction 2026-11-19 to the note above (adjudication item 68; repair after an adversarial review). The "governance text edit the adjudication names … as its own tooling change" has no task (none of T-136 to T-143 makes it), and row 5 of the table is unchanged; this note binds no reader. The rule change itself is an open point for the owner: OD-17 ratified the contract before it was made.*

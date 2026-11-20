@@ -7768,3 +7768,310 @@ SUPERSEDES: decisions/DR-2026-08-19-research-restart-operative-instrument.md :: 
 CONDITION: any session screening a name across languages, proposing consolidation candidates, assigning or changing a concept's domain, executing T-135, or meeting §12.5's "tier and evidence-type assignment".
 ACTION: (1) Treat a written word in two languages as two names (OD-68). (2) Read "category" as a concept's topic area, and do not execute T-135 or add or change a domain until the owner confirms the list (OD-69). (3) Compute the tier from the judged type and scope (OD-70). (4) Ask the owner the open part of OD-69 in its plain form; do not resolve it under delegation.
 DATE: 2026-11-17 — owner answers (typed words, quoted above).
+
+## Owner statements 2026-11-18 — OD-71 (the base grounds itself, and how evidence that allowed a new term, form or parameter is absorbed) and OD-72 (how a concept's displayed name is chosen)
+
+Given in the session `session_2026-11-16-remediation-batch-1-tooling-stack` (https://claude.ai/code/session_01Ub36iMfdrQNV9XzGP4dyZm), in four typed messages while the second tooling stack was being built, the first after the coordinator reported that `term_label_picks.observation_id` and the warrant keys of `term_relations` point from base tables into the evidence stage, the third after the coordinator put the two questions of the term-name view (the sweep list of `session_2026-11-18-remediation-batch-1-tooling-stack-2`) to the owner, and the fourth in answer to the coordinator's one question whether a base row may keep a source's `ref_id`. Server-clock times were not captured; derive them from the preserved transcript (`git grep -n -F "absorbed by base and grounded" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "then the base grounds itself except for when evidence that allows for new terms/aliases/parameters to be found is pointed to as justification"
+>
+> "but this justification should then be absorbed by base and grounded as if it were always there to prevent loops/recursion/sequencing conflicts"
+>
+> "likely have to do a convergence test for number of term appearances for concept or I rule"
+>
+> "ref_id as provenance? sure. but it's ONLY for provenance"
+
+**Readings.**
+
+- [ASSUMPTION: OD-71. A base row (a term, a form of it, a parameter, a relation, a label pick) may cite the evidence row (an observation, a source, an extraction) that allowed the item to be found, as its justification; that is the exception to "the base grounds itself" (2026-11-06, seventh statement) — basis: the first sentence].
+- [ASSUMPTION: OD-71. "absorbed by base and grounded as if it were always there" means the base keeps the justification in its OWN columns (what was found and where: the form, its language and jurisdiction, the source's URL, page and line, and the quoted words), so the base row reads, checks and orders without any evidence row, and nothing in the base waits on that evidence being admitted, adjudicated or verified, or is sequenced after it; the evidence stage keeps its own judgment, tier and verification of the source, which the base does not hold — basis: the second sentence and its stated purpose, "to prevent loops/recursion/sequencing conflicts"; this keeps CLAUDE.md rule 5 (a fact in one home) where it can: where a form was found is the base's fact, the source's standing is the evidence stage's].
+- [ASSUMPTION: OD-71. A base row may keep the source's `ref_id` (or an observation id) beside the absorbed grounding, and that is ONLY provenance: nothing in the base validates against it, orders after it, joins through it to decide a state, or waits on it; a base writer neither requires it nor refuses a row for lacking it — basis: "ref_id as provenance? sure. but it's ONLY for provenance"]. The wording of the owner's second statement on whether the quoted words are repeated in the base row (or only the locator) is NOT stated and is not read in.
+- [ASSUMPTION: OD-72. "number of term appearances for concept" means the number of occurrences of a form among a concept's forms (the rows of `term_aliases`, one per occurrence since migration 146), and "a convergence test" means the displayed name is the form whose appearances converge, and "or I rule" means the owner may set the name by a named judge's pick as OD-38 already provides — basis: the words; "likely" marks a direction, not a settled rule].
+- OD-72 is a DIRECTION, not a decision: "likely have to do". It moves OD-38's "first recorded" (2026-11-12, fifth set) toward a count of appearances; it does not withdraw OD-38's "until a named judge picks; the pick is recorded with its reason".
+
+OD-71: the base grounds itself; evidence that allowed a new term, form or parameter is absorbed into the base's own columns
+OD-71 STATUS: ANSWERED BY THE OWNER
+
+OD-72: displayed name by a convergence test on the appearances of a form for a concept, or the owner's ruling; the test is not specified
+OD-72 STATUS: REFERRED BACK TO THE OWNER
+
+**What it does.**
+
+- **OD-71.** A base table holds no foreign key into the evidence stage and no pointer that a base row's validity waits on. Where a base row is justified by evidence, the justification is written into the base row's own cells. Sequencing runs one way only: evidence may be found and named from the base; the base is never ordered after evidence. It reaches `term_label_picks.observation_id` and `add-term --from-observation`'s hold of a form `unrecorded` until a quote verifies (T-028), the warrant keys of `term_relations` (T-029), `term_aliases`' own source columns, and any later base table that carries a warrant.
+- **OD-72.** The displayed name of a concept stops reading "first recorded" and reads a count of appearances, unless a named judge has picked; the owner is to specify the test.
+
+**What it does not decide.** OD-71: whether the absorbed grounding repeats the quoted words or only the locator; how an existing pointer is migrated. OD-72: what counts as an appearance (a row of `term_aliases`; a row per language and jurisdiction; a source), the tolerance of the convergence, the tie, a concept with no form, and how "a concept first met outside English" is decided (the second question of the sweep list).
+
+CONDITION: any session adding or changing a base table, a base writer, or the displayed name of a concept; any session meeting `term_label_picks.observation_id`, the warrant keys of `term_relations`, or "first recorded" in `v_term_names`.
+ACTION: (1) Write a base row's justification into the base's own columns; add no foreign key from a base table into evidence or judgment; a `ref_id` may be kept as plain provenance, a cell nothing depends on (OD-71). (2) Do not choose the displayed name by `MIN(form_id)` or by recency; until the owner specifies the test, the view keeps showing the name by the form's number and picks by a named judge stay as recorded (OD-72). (3) Ask the owner the open parts in their plain form; do not resolve them under delegation.
+DATE: 2026-11-18 — owner statements (typed words, quoted above).
+
+## Owner statement 2026-11-18 (second) — OD-72 refined: record the forms as written, count them, a preferred display term, and CSA and ISO first for terminology
+
+Given in the session `session_2026-11-16-remediation-batch-1-tooling-stack` (https://claude.ai/code/session_01Ub36iMfdrQNV9XzGP4dyZm), in one typed message after the entry "Owner statements 2026-11-18 — OD-71 …" recorded OD-72 as a direction (a convergence test on the appearances of a form, or the owner rules). Server-clock times were not captured; derive them from the preserved transcript (`git grep -n -F "I would prefer to prioritize CSA/ISO" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "for the displayed name of parameter, record it in whatever form and then have a preferred display term column maybe"
+>
+> "but we're basically just counting the number of times it appears written in a given way. I would prefer to prioritize CSA/ISO for terminology"
+
+**Readings.**
+
+- [ASSUMPTION: every written form of a concept is recorded as found, without choosing one at recording; the displayed name is a separate, derived choice — basis: "record it in whatever form"].
+- [ASSUMPTION: the concept (or parameter) carries a cell for its preferred display term, separate from the forms it was found in — basis: "have a preferred display term column maybe"; "maybe" marks it as a proposal the owner offers, not a settled design].
+- [ASSUMPTION: OD-72's "what counts as an appearance": an occurrence of a form written in a given way, that is, one row of `term_aliases` (one per occurrence since migration 146), so the convergence test is a count of how often each way of writing a form appears for the concept — basis: "just counting the number of times it appears written in a given way"].
+- [ASSUMPTION: "prioritize CSA/ISO for terminology": a form attested in a CSA or an ISO instrument takes priority over a form attested elsewhere when the displayed name is chosen — basis: the words; "I would prefer" marks a preference].
+- [GAP: how the priority combines with the count (a CSA or ISO form wins whatever the count; or it only breaks a tie; or it weights the count), whether "CSA/ISO" means those two bodies exactly or standards bodies in general, which of their documents are terminology sources, and the tolerance, the tie, a concept with no form and a concept first met outside English (the rest of OD-72) are NOT stated. They are not read in.]
+
+OD-72: displayed name from a count of the appearances of each written form, a preferred-display-term cell, CSA and ISO forms prioritized; the combination rule is not specified
+OD-72 STATUS: REFERRED BACK TO THE OWNER
+
+**What it does.** It narrows OD-72 (it does not close it): the test is a count of appearances (answering what counts as one), recording is separate from displaying, a preferred-display-term cell is proposed, and CSA and ISO come first for terminology. It does not withdraw OD-38's "until a named judge picks; the pick is recorded with its reason".
+
+**What it does not decide.** The combination rule above; whether the preferred-display cell lives on the concept or on the parameter (the owner wrote "displayed name of parameter"); whether it is derived (a view) or stored (a cell) and, if stored, who writes it.
+
+CONDITION: any session choosing or storing the displayed name of a concept or a parameter, or editing `v_term_names`.
+ACTION: (1) Record every written form as found; do not choose a name at recording (OD-72). (2) Do not build the displayed-name rule until the owner confirms the combination rule; `v_term_names` keeps its ordering and has no reader. (3) The coordinator's recommended rule, for the owner to confirm in one answer: a CSA or ISO form of the concept if one is attested in an instrument of that body; otherwise the most frequent written form; a named judge's pick overrides and is recorded with its reason; a concept with no form shows its English label.
+DATE: 2026-11-18 — owner statement (typed words, quoted above).
+
+## Owner statement 2026-11-18 (third) — OD-69: the list of topic areas is not fixed
+
+Given in the session `session_2026-11-16-remediation-batch-1-tooling-stack` (https://claude.ai/code/session_01Ub36iMfdrQNV9XzGP4dyZm), in one typed message answering the question the entry "Owner answers 2026-11-17 — OD-68 …" left open under OD-69 (is the list of classes fixed, and which of the domains in use are the classes). Server-clock times were not captured; derive them from the preserved transcript (`git grep -n -F "list of topic areas is not fixed" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "list of topic areas is not fixed"
+
+**Readings.**
+
+- [ASSUMPTION: the classes of a concept (a topic area such as circulation) are an open set: a new class is added when the work finds one, and no closed list is confirmed by the owner once and changed only by the owner — basis: the words; it is the register's "without a fixed list"].
+- [GAP: whether the column then stays free text (no vocabulary, the register's "(a), free text": nothing built, the defect of rule 8 accepted), or becomes a vocabulary held as rows that is extended by data with a warrant and no code edit (as the quantity kinds are: `base_quantity_kinds`, OD-24), is NOT stated. Which of the 18 values in `terms.domain` are classes, and which are kinds of concept a parameter may not be (`dbcore.NON_QUANTITY_DOMAINS`), is also not stated. They are not read in.]
+
+OD-69: (a) a concept's topic area, the overall class of a parameter; the list is not fixed; whether it is free text or a vocabulary extended by data is not answered
+OD-69 STATUS: REFERRED BACK TO THE OWNER
+
+**What it does.** The first of OD-69's two open parts is answered: the list is not fixed, so T-135's "seeded from the list the owner confirms, changed only by the owner" is not the design. T-135 stays held.
+
+**What it does not decide.** The form (free text, or rows extended by data with a warrant: the coordinator recommends the second, because it keeps a vocabulary that readers and the `NON_QUANTITY_DOMAINS` rule can derive from while leaving the set open); the non-quantity domains; and whether an existing value is renamed or merged.
+
+CONDITION: any session assigning or changing a concept's domain, or executing T-135.
+ACTION: (1) Do not treat the 18 values in use as a closed or confirmed list (OD-69). (2) Do not execute T-135 until the owner answers the form; its design (a table seeded from a confirmed list) no longer fits. (3) Ask the owner the form in its plain form; do not resolve it under delegation.
+DATE: 2026-11-18 — owner statement (typed words, quoted above).
+
+## Unification 2026-11-14 — best, most common, minimum; showing and grading
+
+Written 2026-11-19 by the executor of T-119 in `session_2026-11-18-remediation-batch-1-tooling-stack-2`, under the owner's instruction to fold the term-resolution plan into the remediation plan (`grep -n -F "Owner instruction 2026-11-14 (last) — fold the term-resolution plan" references/project-standards.md`) and section 3 of that plan (`workplan/2026-11-12-bidirectional-pipeline/TERM-RESOLUTION-PLAN.md`). **Not the owner's words, and it decides nothing.** It gathers under one heading the owner's rulings of 2026-11-14 on best practice, most common practice and the minimum, and on showing and grading; it quotes each in the owner's words from the entry that records it (each quote is found verbatim by `grep -n -F '<the quoted words>' references/project-standards.md`), names the home that is to hold the operative text, and points rather than re-explains (rule 5). Where a home does not yet carry the text (`governance/evidence-architecture.md` §0 and `governance/tier-system.md` §5 are written by T-120, `band()` by T-117), the entries quoted govern. A reading of the recorder's is marked [ASSUMPTION] and is not the owner's.
+
+**The definitions (the term-resolution plan's section 1, U1 to U9).**
+
+- **U1, best.** "my definition of best practice IS the same as ideal IS the same as most accommodating"; "The most accommodating, then, is the one that best responds to an ICF/access need/identity within whatever context, and that means it is the ideal from what we have found"; "The most accommodating value is one that has been identified in our research, which in turn means that it is based in the evidence that we have collected enough if the research source itself simply asserts the value". The one exception: "does the research prove that the more accommodating value leads to worse results? if so, research wins. if no, code wins", where what shows worse results is the owner's answer to OD-58 (fourteenth set). [ASSUMPTION: a source's tier sets the marker and the weight, not whether its value may be the best — basis: the reading recorded under the entry "Owner statement 2026-11-14 — what "best practice" is, and how the term is swept" (`grep -n -F "the source's tier sets the marker and the weight, not eligibility" references/project-standards.md`), and "The tier still sets the marker" in the harm-test entry.] Home: `governance/evidence-architecture.md` §0.
+- **U2, most common.** "convergence just means values coming together"; "you can still converge across tiers like a tier 1 and a tier 6 proposing same value"; "convergence is not evidence of best practice but most common practice". Home: §0 holds the sentence; the definition of convergence stays in `governance/evidence-methodology.md` §3.2 (T-068).
+- **U3, minimum.** "the minimum is a factual data point"; "minimum is code stratum unless there is no code data"; "the minimum in some contexts may be the highest allowable number in absolute terms". Home: §0.
+- **U4, the figures and their direction.** "we just have minimum, mode, median, maximum"; "remember that value direction of parameter matters". Over which values the maximum, the mode and the median are taken, and what the render page shows, is the owner's answer to OD-63 (`grep -n -F "Owner answers 2026-11-14 (fifteenth set)" references/project-standards.md`). [ASSUMPTION: the best is the maximum in accommodation order, except where U1's exception replaces it — basis: the reading recorded under the entry on the parameter's direction (`grep -n -F "the best (ideal, most accommodating) figure is therefore the maximum in accommodation order" references/project-standards.md`), with the harm test.] Home: §0.
+- **U5, show, do not rule.** "we gather and show"; "remember that we are showing data, not determining"; "acceptable isn't relevant as that's a value judgment"; "determination means to determine the ideal within the context of all evidence factors and consequently what to choose and how to grade quality of evidence for it". [ASSUMPTION: a determination states the ideal and grades its evidence; "must" or "should" said of a design remains a verdict — basis: the readings recorded under the entry on what "determination" means.] Home: `governance/mission-and-epistemics.md`, commitment 2 and the posture section.
+- **U6, code only.** "if the only values are from code then code determines the ideal/best"; "that's why we have the circles: we can say something is best practice but the empty circle makes it clear that it's not academically or clinically derived". The marker a code-only best carries is U7's. Home: §0.
+- **U7, markers.** The owner's proposal, put as a question: "i think empty for code, half for tier 3/4 as 4 is above jurisdiction code, full for tier 1/2?"; then "empty for 5/6"; "Co-1 stays full, Co-2 full too"; "T4 only half circle"; "no, triangle instead if the value is coming from grey or unverified"; "thin too"; "except use the Unicode one"; "I think thin is when the evidence doesn't directly concern someone but is conjecture"; "this is not thin. a clinician has rendered a professional judgment that has been vetted by colleagues based upon available information"; "derivation by a clinician or academic counts"; "because if it mixes then it's a new value proposed for something so it's conjecture because we don't have authority". See also the owner's answers to OD-57 and OD-59 (fourteenth set) and to OD-64 (fifteenth set). Home: `governance/tier-system.md` §5 (T-120); in code, `schemas/tier_derivation.py` `band()` (T-117).
+- **U8, transparency.** "remember our project is radically transparent, presents all values/approaches/data for comparative purposes, provides citations for values/approaches/data, does not claim with own authority that something is the correct way to design but instead simply showcases the best/ideal value/approach/datum for the parameter in whatever context it's in". Home: `governance/mission-and-epistemics.md`, with U5.
+- **U9, names.** "the pipeline stage tools should match the actual name of the stage". [ASSUMPTION: the stage stays specification, and `v_best_practice` keeps its name while OD-62 is open — basis: the term plan's section 1, U9, and the registration of OD-62.] Home: this ledger and `governance/stage-map.yaml`.
+
+**The back-pointer.** A decision record that carries a marker naming this entry is read this way: best, most common and minimum are read as the owner defined them on 2026-11-14.
+
+**(a) Machine pairs.** One pair per passage of a decision record a live reader still reaches that says the opposite of the owner's words above, or more than they allow; each quote occurs once in its file under the audit's normalisation (`scripts/audit/supersession_backpointer_audit.py`), and a marker naming SUPERSEDED (the quoted clause no longer holds) or AMENDED (it holds, narrowed), carrying the back-pointer sentence above, sits in the passage's paragraph or the one after it. The old text stays. Each passage was located by the term plan's line number and then by its text; find each with `git grep -n -F '<the quote>' -- decisions`. Five quotes wrap across a line break and are not found by that command: the option-A execution's "I5 applies with the register map's ○ row as ceiling", "is a best-practice determination at the weak band (○)", "§6 register map row 3 (weak-band best-practice phrasing at ○" and "an unflagged or above-weak-band code-consensus best-practice claim *is* still in error", and the weighted-strength anchor model's "multiple T4–T6 codes agreeing on a value is convergence of floors"; grep for their first words, and the audit checks them under its normalisation, which joins lines.
+
+The best-practice supersession protocol: the evidence hierarchy as what selects best practice (superseded); a value from a superseded Tier-3 source as "in error" (superseded as to whether it may be the best; currency is not touched by the owner's words of 2026-11-14); a Tier-1 candidate replacing a Tier-3 anchor (amended: it governs searching, not the best value).
+
+SUPERSEDES: decisions/DR-2026-05-24-best-practice-supersession-protocol.md :: "best practice for the guidebook is determined by the evidence hierarchy"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+SUPERSEDES: decisions/DR-2026-05-24-best-practice-supersession-protocol.md :: "a best-practice claim derived from a *superseded* Tier-3 source is also in error"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+SUPERSEDES: decisions/DR-2026-05-24-best-practice-supersession-protocol.md :: "a Tier-1 candidate supersedes a Tier-3 anchor regardless of recency"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+
+The gap-driven mining protocol's mission test 3, read by no sweep and by the unifier (amended: searching stays tier-prioritised).
+
+SUPERSEDES: decisions/DR-2026-05-26-gap-driven-mining-protocol.md :: "Grounds best practice in evidence hierarchy?** Yes — search matrix is tier-prioritized per gap pattern"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+
+The evidence-architecture unification, item G1 (a): a determination resting on the regulatory stratum alone never rendered as best practice (superseded by U6).
+
+SUPERSEDES: decisions/DR-2026-07-12-evidence-architecture-unification.md :: "T4–6-only determinations are Universal-Mode regulatory determinations, never rendered as best practice in any register"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+
+The cell-state schema reconciliation: the gloss of code convergence as the regulatory floor (item 2, superseded as to the gloss by U2 and U3; the decision stands) and the exclusion of a Tier-6-only cell from `v_best_practice` (item 9, superseded by U6).
+
+SUPERSEDES: decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md :: "jurisdiction-specific code convergence, e.g. 1800mm"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+SUPERSEDES: decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md :: "`v_best_practice` must exclude `code_floor_only = 1` rows"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+
+The value genealogy, H1: the roots count as what tells best practice from consensus (superseded as to that clause by U1 and U2; the fields and the view stand). The intra-category cross-test, which cites that method (amended).
+
+SUPERSEDES: decisions/DR-2026-07-13-value-genealogy-and-derivation-handshake.md :: "the computable best-practice-vs-consensus discriminator"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+SUPERSEDES: decisions/DR-2026-07-20-intra-category-cross-test.md :: "the *method* for cross-mode best-practice adjudication is ratified (DR-2026-07-13)"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+
+The Option A execution: the ○ ceiling of its header, decision 1's weak band and register row 3, each amended by the owner's circle table of 2026-11-14 (U7; moved here from T-117 on the owner's answers to OD-57 and OD-59); and §6's two sentences on a code-consensus best-practice claim (amended by U2 and U6: the owner's ruling of 2026-07-21 recorded there, "no, it's just weak", stands as to a code-only cell having a best at the weak marker; what narrows it is that the value named best is the most accommodating code value, never the value codes agree on; one marker serves both, as they sit in one paragraph).
+
+SUPERSEDES: decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md :: "I5 applies with the register map's ○ row as ceiling"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+SUPERSEDES: decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md :: "is a best-practice determination at the weak band (○)"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+SUPERSEDES: decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md :: "§6 register map row 3 (weak-band best-practice phrasing at ○"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+SUPERSEDES: decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md :: "it is a weak-band (○) best-practice claim"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+SUPERSEDES: decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md :: "an unflagged or above-weak-band code-consensus best-practice claim *is* still in error"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+
+The weighted-strength reconciliation (already SUPERSEDED-BY the Option A execution): Option A's ○ for every regulatory-stratum cell (amended by U7; moved here from T-117 with the pairs above).
+
+SUPERSEDES: decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md :: "cell becomes a `○`-strength best-practice determination"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+
+The weighted-strength anchor model (OPERATIVE; **not named by the term plan**, added by the repair of T-119 for the owner to confirm): the owner's directive of 2026-07-20 as to its bands, "T1/2/3 full, T4/5 partial, T6/grey weak" (superseded as to the bands by the owner's later words of U7, on contact under rule 0; its "all evidence tiers can be used to anchor a best practice claim" stands); the band table's rows for T3-clinical, T5 and T3-grey (superseded by U7); and its gloss of code agreement as "convergence of floors" (superseded as to the gloss by U2 and U3; the honesty rule that such agreement is never relabelled best practice stands).
+
+SUPERSEDES: decisions/DR-2026-07-20-weighted-strength-anchor-model.md :: "T1/2/3 full, T4/5 partial, T6/grey weak"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+SUPERSEDES: decisions/DR-2026-07-20-weighted-strength-anchor-model.md :: "T1, Co-1, T2, Co-2, **T3-clinical**"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+SUPERSEDES: decisions/DR-2026-07-20-weighted-strength-anchor-model.md :: "multiple T4–T6 codes agreeing on a value is convergence of floors"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+
+The product posture: its definition of best practice by the support of the evidence (superseded by U1 as to what selects the value; its "offered as a figure for thought, not imposed as a requirement" stands). **Its passage quoting the owner's words of 2026-07-21, that the machinery must adjudicate to surface the best, is not superseded:** the owner's definition of determination (U5) answers it.
+
+SUPERSEDES: decisions/DR-2026-07-21-product-posture-thinking-tool-not-authority.md :: "the practice the evidence best supports"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+
+The ratification package of 2026-07-12: the code-only cell given no best at all (superseded by U6; refusing to call agreeing codes best stands, by U2), and the roots count as the engine of best practice against consensus (superseded as to that clause by U1 and U2).
+
+SUPERSEDES: decisions/RATIFICATION-PACKAGE-2026-07-12.md :: "the machinery refuses to call it best practice in any register"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+SUPERSEDES: decisions/RATIFICATION-PACKAGE-2026-07-12.md :: "The adjudication engine for best-practice-vs-consensus, made computable"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+
+**(b) Superseded in prose only (no pair, no marker).** The following frozen corpora are superseded by this entry in their sense of best practice (best as convergence, as Tier 1 and 2 only, or as the code floor); they are not edited: `references/bpc/` (every file; count them with `find references/bpc -type f | wc -l`; already FROZEN or RETRACTED); `references/audits/bpc-audit-pass0-2026-05-10.md` and `references/audits/bpc-audit-pass2-2026-05-10.md`; `references/connections/` (every file); `references/fdr/reach-range-and-accessible-controls.md`; `references/systematic-reviews/dd1-ndv-qualitative-dd7-umbrella.md`; `references/methodology/economics-research-methodology-v1.9-archived.md`; in `workplan/`, `2026-08-11-remediation-and-pipeline-anatomy.md` (its I3 passages included), `2026-08-12-commit-91-adversarial-review.md`, `2026-08-18-research-frame-proposal.md`, `2026-08-20-provenance-walk-execution-plan.md`, `2026-10-30-ramp-spec-pages/owner-rules/code-baselines-accepted.md`, `2026-10-30-ramp-spec-pages/owner-rules/spec-page-requirements.md`, `2026-10-30-ramp-spec-pages/reports/spec-page-design-requirements-2026-10-29.md`, `2026-10-30-ramp-spec-pages/reports/stress-test-ramp-slopes-2026-10-29__report.md`, `2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, `best-practices-assessment-system.md`, `methodology-and-pipeline-enforcement-plan-2026-07-23.md`, `next-steps-synthesis-2026-07-14.md` and `phase-e-execution-plan-v1.md`; the attestations `attestations/decisions_DR-2026-05-24-best-practice-supersession-protocol.json`, `attestations/sessions_session_2026-07-20-bathroom-typology-global-south-rederivation.json` and `attestations/sessions_session_2026-07-20-retracted-slice-rederivation-batch.json` (frozen JSON); `governance/mission-PROVISIONAL.md` and `governance/pre-stage-a-decisions.md`. `governance/doctrine-deltas.json` is not superseded here: T-120 appends a new state to it when commitment 2 is amended.
+
+**(c) Earlier ledger rules and migration rows, superseded in prose only.** This ledger is append-only, so no marker can sit beside these; find each by its text, not its line number. From the adjudication of the sweeps: `grep -n -F 'walled off from best-practice anchoring' references/project-standards.md` and `grep -n -F 'Best practice is determined by the evidence hierarchy' references/project-standards.md` (as to tier deciding which value is best, U1; and, in the second, a code-consensus value named best, U2 and U6); `grep -n -F 'A T4–6-only basis never renders best-practice language' references/project-standards.md` (that sentence by U6, and the marker bands of that RULE by U7); `grep -n -F 'Best practice based on [N] jurisdictions and [tier] evidence is [value]' references/project-standards.md` (as to naming a best by a count of jurisdictions, U2; its point on authority stands); `grep -n -F 'Working target: 18–22°C' references/project-standards.md` (as to "require", "Working target" and "not acceptable", U5; the figures stand as data with their sources); `grep -n -F 'MAXIMUM ACCEPTABLE gradient' references/project-standards.md` (as to framing the question as acceptability, U5); and `grep -n -F 'the guidebook uses to say *this is best practice today*' references/project-standards.md` (as to the tier deciding the label, U1; its point on currency stands). Two lines the term plan names have no adjudication record, and the sense given is the recorder's: [ASSUMPTION: `grep -n -F 'Population Mode = Population-Informed Inclusive Design (ranges; median as default)' references/project-standards.md`, as to the median as the default figure — basis: "we just have minimum, mode, median, maximum", in which the median is one of four data points, and U1]; [ASSUMPTION: `grep -n -F 'BPC best_practice_synthesis governs as primary evidence basis' references/project-standards.md`, as to a synthesis governing over the identified values — basis: U1, "The most accommodating value is one that has been identified in our research"]. A third the plan names, the RULE `grep -n -F 'Universal design is co-extensive with code compliance' references/project-standards.md`, is not superseded: no owner word of 2026-11-14 contradicts it. OR-4 (`grep -n -E '^OR-4:' references/project-standards.md`) and the ACTION (3) of the same entry ("Let the most accommodating anchoring value win among differing figures that can all be met"), as to confining the choice of the best to T1, Co-1, T2 and Co-2 (the harm-test entry's "What this does" resolves it); and OR-6c (`grep -n -F 'OR-6c — how far' references/project-standards.md`) as to selection only. OR-6 and OR-6b keep their status words. In `scripts/migrations/057_baseline_2026-08-12.sql`, the `decisions` rows D-0004, D-0042 and D-0076 are superseded in the same senses as the RULE lines they carry; they stay `ACTIVE` in the `decisions` table because no writer exists to mark them (`OPEN-ITEMS-PLAN.md`, the term plan's TT-6). D-0005 is superseded as its RULE line is, except its clause that a value derived solely from code consensus is in error, which this entry does not supersede (a departure from the term plan's section 3 (c)): that clause was already overtaken, as to a code-only cell, by the owner's ruling of 2026-07-21 recorded in `decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md` §6, and under U2 a value named best because codes agree is still wrong.
+
+**What is answered and what stays open.** OD-57 to OD-61 are answered by the owner, 2026-11-14: `grep -n -F "Owner answers 2026-11-14 (fourteenth set)" references/project-standards.md`, with OD-61 by `grep -n -F "Owner correction 2026-11-14 (fourteenth set, later) — OD-61" references/project-standards.md`. OD-62 (whether "best practice" is renamed "ideal") is open, and its default, no rename, stands.
+
+CONDITION: any session reading, writing, rendering or checking best practice (ideal, most accommodating), most common practice, the minimum or a marker, or meeting one of the decision-record passages, corpora, RULE lines or `decisions` rows named above.
+ACTION: (1) Read the three terms, the four figures and the markers by the quotes above and the home each names; where a home does not yet hold the text, read the entries quoted. (2) Read each passage named in (a) by its marker; leave the old text in place. (3) Read the corpora in (b) and the rules and rows in (c) as superseded in their sense of best practice, though unmarked, within the limits (c) states. (4) Treat every [ASSUMPTION] above as unratified. (5) Leave OD-62 to the owner.
+DATE: 2026-11-19 — record by the executor of T-119 of rulings the owner gave on 2026-11-14; not a new owner statement.
+
+
+## Owner ratification 2026-11-19 — the third adjudication's resolutions are appended and ratified (OD-17, OD-46 to OD-48, OD-51, OD-52, OD-54, OD-62, OD-67, OD-69, OD-71's residue, OD-72, and the stack's design questions)
+
+Given in the session `session_2026-11-18-remediation-batch-1-tooling-stack-2` (https://claude.ai/code/session_01Ub36iMfdrQNV9XzGP4dyZm), in two typed messages; the second answered the coordinator's report of the adjudication (`workplan/2026-11-12-bidirectional-pipeline/OPEN-DECISIONS-ADJUDICATION-3.md`, which lists nine items reserved to the owner under CLAUDE.md section 8 as recommended defaults). Server-clock times were not captured; derive them from the preserved transcript (`git grep -n -F "have Opus adjudicate all open decisions" -- transcripts`; `git grep -n -F "Sure, append. Ratify all." -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "have Opus adjudicate all open decisions based upon long-term integrity re provenance and walkability as well as context from my prior rulings"
+>
+> "Sure, append. Ratify all."
+
+**Readings.**
+
+- [ASSUMPTION: "all open decisions" covers every register entry not answered or resolved with its check satisfied, every item the three sweep lists left open, and the eleven questions of pull request #240 — basis: the words; the list is section 2 of the adjudication].
+- [ASSUMPTION: the first instruction supersedes, for those items and on contact (CLAUDE.md rule 0), the sentences that said they were not to be resolved under delegation: ACTION (3) of "Owner statements 2026-11-18 — OD-71 …", ACTION (3) of "Owner statement 2026-11-18 (third) — OD-69", ACTION (4) of "Owner answers 2026-11-17 — OD-68 …", ACTION (4) of "Correction and registration 2026-11-15", and the "Registration 2026-11-14" sentence on OD-62 — basis: a live owner instruction naming "all open decisions"].
+- [ASSUMPTION: "provenance" and "walkability" are read as defined in section 0 of the adjudication — basis: the owner's rulings it quotes].
+- [ASSUMPTION: "Ratify all" covers every resolution of the adjudication: the nine items it reserved to the owner become the owner's answers (status ANSWERED BY THE OWNER), and each resolution it made under delegation is confirmed (CHECK: confirmed); the design questions numbered 12 to 91 that carry no OD number are ratified by reference to the adjudication and are given no status line — basis: the owner replied to a report that named both kinds; if only the nine were meant, the CHECK lines below are the ones to withdraw by a later line].
+- [ASSUMPTION: "all" includes OD-17, ratification of the corrected contract, an act that is the owner's by its nature — basis: the report named it among the nine; the owner has not been shown the contract diff in this session].
+- [ASSUMPTION: "append" means the draft entry of section 4 of the adjudication, as corrected here (the statuses above replace its REFERRED BACK lines, and the borderline passage it left unpaired is paired below) — basis: the words].
+
+OD-17: the corrected contract is ratified (the owner's act; its condition, T-022 merged, is met)
+OD-17 STATUS: ANSWERED BY THE OWNER
+
+OD-46: admit as declared, scoped-out codes (the adjudication's recommended default, ratified)
+OD-46 STATUS: ANSWERED BY THE OWNER
+
+OD-47: the document's stated audience judged per item by context, the audience words quoted (the adjudication's recommended default, ratified)
+OD-47 STATUS: ANSWERED BY THE OWNER
+
+OD-48: whom it is for (the adjudication's recommended default, ratified)
+OD-48 STATUS: ANSWERED BY THE OWNER
+
+OD-51: yes, on retrieved proof of authorship (the adjudication's recommended default, ratified)
+OD-51 STATUS: ANSWERED BY THE OWNER
+
+OD-52: names the term; the contrast provision is separate (the adjudication's recommended default, ratified)
+OD-52 STATUS: ANSWERED BY THE OWNER
+
+OD-54: into the register, replayed through the writer
+OD-54 STATUS: RESOLVED UNDER DELEGATION
+OD-54 CHECK: confirmed
+
+OD-62: no rename (the registered default)
+OD-62 STATUS: RESOLVED UNDER DELEGATION
+OD-62 CHECK: confirmed
+
+OD-67: yes, one answer on the full list, VES withheld (the adjudication's recommended default, ratified)
+OD-67 STATUS: ANSWERED BY THE OWNER
+
+OD-69: a concept's topic area; the list is not fixed; held as rows extended by data with a warrant
+OD-69 STATUS: RESOLVED UNDER DELEGATION
+OD-69 CHECK: confirmed
+
+OD-71: the absorbed grounding holds the locator and the words the base cell asserts were found, as far as a base refusal reads them; `direction_ref_id` and `term_aliases.observation_id` become provenance only or are dropped; an absorbed phrase with a URL and a page or clause is attested
+OD-71 STATUS: ANSWERED BY THE OWNER
+
+OD-72: an appearance is one attested occurrence; CSA or ISO wins, then the count; an exact tie shows the label and a judge is owed; a named judge's pick overrides; no form shows the label; a concept with no attested English instrument form of an in-scope jurisdiction is counted across its attested forms in every language
+OD-72 STATUS: RESOLVED UNDER DELEGATION
+OD-72 CHECK: confirmed
+
+Retained clause text in git history (the adjudication's item 15, a licensing default reserved under section 8): the text may enter git history; showing it stays forbidden. Ratified with the rest; no status line, because no register number carries it.
+
+Correction to the delegated resolution of OD-11: a cross-stage table is walkable as an intermediate and counted in no stage; "count it as a member of each stage it carries" is withdrawn; ACTION (3), "lose no path", is met.
+
+SUPERSEDES: decisions/DR-2026-07-21-tier-doctrine-source-class-consistency.md :: "weak-band convergence floor"
+  BY: references/project-standards.md :: "best, most common and minimum are read as the owner defined them on 2026-11-14"
+
+CONDITION: any session executing a task the adjudication names, writing a base warrant, a lens link, a unit, a direction, a domain or a displayed name, or meeting an item of its section 2.
+ACTION: (1) Read each decision's gate by the convention of 2026-11-12: the status line above opens it, a RESOLVED UNDER DELEGATION line opens it with its CHECK as recorded here; a task that requires the owner's own words is open only on ANSWERED BY THE OWNER. (2) Author the tooling tasks of the adjudication's section 4 in its order, each its own pull request; ship research separately (rule 10). (3) Treat every [ASSUMPTION] above as unratified except where the owner's words state it; the breadth of "all" is the first to confirm. (4) The recommended defaults the owner ratified are the owner's rulings from this date; a later owner statement supersedes them on contact (rule 0).
+DATE: 2026-11-19 — the owner's typed instruction and ratification (quoted above); the resolutions themselves are the adjudicator's, ratified by the owner.
+
+## Owner statement 2026-11-19 (second) — "grab bar" and "grabbar" are one parameter: the displayed-name key merges whitespace variants
+
+Given in the session `session_2026-11-18-remediation-batch-1-tooling-stack-2` (https://claude.ai/code/session_01Ub36iMfdrQNV9XzGP4dyZm), typed while the coordinator reported a critic's finding that the displayed-name grouping key of T-142 merges "grab bar" with "grabbar". Derive the time from the preserved transcript (`git grep -n -F "are obviously the same parameter" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "grab bar and grab bar are obviously the same parameter"
+
+**Readings.**
+
+- [ASSUMPTION: the second "grab bar" is "grabbar" — basis: the coordinator's message the owner answered named the pair "grab bar" and "grabbar", and a pair of identical strings states nothing].
+- [ASSUMPTION: the statement confirms the ratified grouping key of the third adjudication's item 11 (an appearance grouped by language and by the form after the one quote normaliser, case-folded), which merges whitespace variants of one form; it says nothing of accents, which stay as the ratified words leave them — basis: the words; "obviously the same parameter" speaks of whitespace variants of one term].
+- The critic's finding that the key "strips spaces" was a false alarm, and the coordinator's repair instruction to keep whitespace was wrong; both are withdrawn here (CLAUDE.md rule 0: the live statement supersedes the instruction).
+
+CONDITION: any session writing or reading a displayed name, a form grouping key or a test of one (T-142).
+ACTION: (1) Group the forms of a concept by the ratified key; a form that differs from another only in whitespace or case is the same form. (2) Do not narrow the key to keep whitespace. (3) Accents are not decided here.
+DATE: 2026-11-19 — owner statement (typed words, quoted above).
+
+## Owner statements 2026-11-19 (third) — "ramp slopes" and "ramp gradient" are one concept; the door-width forms are one concept
+
+Given in the session `session_2026-11-18-remediation-batch-1-tooling-stack-2` (https://claude.ai/code/session_01Ub36iMfdrQNV9XzGP4dyZm), in three typed messages sent while the coordinator was reporting the critics' findings on the displayed-name and alias tasks. Derive the times from the preserved transcript (`git grep -n -F "ramp slopes and ramp gradient are the same" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "ramp slopes and ramp gradient are the same"
+>
+> "doorway width and door opening width and door clear space are the same"
+>
+> "*clear width"
+
+**Readings.**
+
+- [ASSUMPTION: "are the same" says the forms are names of ONE concept (one term, one parameter), so no second term or parameter is minted for any of them — basis: the words; the live base already holds one term for each set: `select term_id, alias from term_aliases where lower(alias) = 'ramp slope'` (an alias of the term "ramp gradient") and `select term_id, canonical_en from terms where canonical_en = 'door width'`].
+- [ASSUMPTION: "ramp slopes" is the plural of the recorded alias "ramp slope" — basis: the form "ramp slope" is already an alias of the term "ramp gradient"].
+- [ASSUMPTION: "*clear width" adds "clear width", said of a door, to the door set; the "clear width" of a corridor, a route or any other element is not covered — basis: the message followed the door statement directly; "clear width" alone names the width of any element, and the ledger treats a corridor's clear width as its own matter].
+- [ASSUMPTION: "door clear space" is the clear opening of the door, not the clear floor space or manoeuvring clearance beside it — basis: it is listed beside "doorway width" and "door opening width"; if the floor space at a door was meant, a later line withdraws this one].
+- The statements are the owner's own words, not a source's: under E4 (owner statement 2026-11-06 (second)) they make the forms recorded vocabulary of the owner's supply (`attestation` `owner_supplied`, a value of the column's CHECK: `select sql from sqlite_master where name = 'term_aliases'`), which counts for nothing toward a displayed name until a source attests the form. Writing the alias rows is research data (rule 10) and is not done in the tooling pull request this entry rides in.
+
+CONDITION: any session adding a term, an alias or a parameter for a door's width or opening, or a ramp's slope or gradient; any session reading a source that names one of these forms.
+ACTION: (1) Do not mint a second term or parameter for any form above; file the form as an alias of the one concept. (2) A form a source states is recorded with its locator through the alias writer; a form only the owner stated is recorded as an owner-supplied alias. (3) A source's figure for any of these forms is extracted against the one parameter whatever slug the source came in under. (4) The alias rows themselves are written in a research pull request, after the tooling it needs (T-136, T-142).
+DATE: 2026-11-19 — owner statements (typed words, quoted above).

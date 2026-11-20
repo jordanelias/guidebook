@@ -42,6 +42,8 @@ The one substantive thing precedence does **not** silently fix: `v_best_practice
 ### Option A — Weak-anchor: regulatory-stratum cells enter the best-practice surface at the weak band, with mandatory honesty flags
 §8 is read as fully repealing the anchoring gate. A `regulatory_stratum_only` cell becomes a `○`-strength best-practice determination — surfaced, but always labelled weak/code-floor and carrying the anti-laundering language.
 
+> **AMENDED — appended 2026-11-19, not edited.** Option A's ○ for every regulatory-stratum cell is narrowed by the owner's circle table of 2026-11-14 (the answer to OD-57; T-117 builds it into `band()` and T-120 into `governance/tier-system.md` §5, and until they land the ledger entries it rests on govern): such a cell takes the marker of its tier there (◐ for a basis of T4 alone). Ledger: `references/project-standards.md`, "Unification 2026-11-14 — best, most common, minimum; showing and grading": best, most common and minimum are read as the owner defined them on 2026-11-14.
+
 **Edits this entails (all deferred to a follow-up execution DR, none applied here):**
 - `evidence-architecture.md §2` (:44): rewrite the "do not anchor" wall to the graded-strength rule.
 - `evidence-architecture.md §3` matrix (:77–78): `code×population` / `code×person` move from NON-ANCHORING to a weak/`◐`–`○` band.

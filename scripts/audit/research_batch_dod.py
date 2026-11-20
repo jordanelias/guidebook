@@ -386,11 +386,15 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # written by any other path or before the refusal). Scoped by the ROW's session.
     _loc_cols = [c[1] for c in cx.execute('PRAGMA table_info("source_value_extractions")')
                  if c[1].startswith("loc_") and not c[1].endswith("_end") and c[1] != "loc_note"]
-    _pinpoint = " OR ".join(f"COALESCE(x.{c},'') <> ''" for c in _loc_cols) or "0"
+    # A figure that points at an inventoried clause of its own source naming a place (T-031; dbcore.clause_pinpoint_sql,
+    # the one test) reaches its locator through that row, so the pointer is a pinpoint.
+    _clause = [dbcore.clause_pinpoint_sql(cx, "x") for c in cx.execute('PRAGMA table_info("source_value_extractions")')
+               if c[1] == "clause_id"]
+    _pinpoint = " OR ".join([f"COALESCE(x.{c},'') <> ''" for c in _loc_cols] + _clause) or "0"
     uncited = _rows(cx, f"SELECT DISTINCT x.ref_id FROM source_value_extractions x "
-                        f"JOIN evidence_sources e ON e.ref_id = x.ref_id WHERE e.tier >= 4 AND "
+                        f"JOIN evidence_sources e ON e.ref_id = x.ref_id WHERE e.tier >= {dbcore.REGULATORY_FROM_TIER} AND "
                         f"x.claim_type IN ('numerical','range') AND NOT ({_pinpoint}) AND "
-                        f"COALESCE(x.notes,'') NOT LIKE '%UNVERIFIED-QUANT%'"
+                        f"COALESCE(x.notes,'') NOT LIKE '%UNVERIFIED-QUANT%' AND x.retired_at IS NULL"
                         f"{scope.replace('created_by_session', 'x.created_by_session')}", sargs)
     if uncited:
         fail("R3", f"{len(uncited)} regulatory-stratum source(s) carry quantified rows with no "
@@ -1005,8 +1009,9 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # disposed of by decline-parameter; a quantity filed under the wrong domain by amend-term --field
     # domain. A body of law or a cost term is neither: OD-53 lets a batch decline only elements, lens
     # terms and methods, never a quantity, so for those the term stays undisposed and a GAP is filed.
-    # A THIRD, since T-020: add-parameter also asks for a quantity kind (a row of base_quantity_kinds) and the
-    # observation that warrants it, so the disposal is one call only once the batch has judged the kind.
+    # A THIRD, since T-020: add-parameter also asks for a quantity kind (a row of base_quantity_kinds) and its
+    # warrant, where a source states a value of it (held on the row since T-083, OD-71), so the disposal is one call
+    # only once the batch has judged the kind.
     # THE PREDICATE IS WIDER THAN THE RULE'S TITLE. Nothing here can tell whether a source
     # states a figure for a named concept, so every named term must be disposed of, figure
     # or none. A disposition is per term and corpus-wide, so that costs one call per term
@@ -1040,7 +1045,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
         fail("R16",
              "%d of %d term(s) named by adjudications of %s observations hold "
              "neither a parameter nor a declination: %s. A concept a source states a figure "
-             "for is filed against a parameter (db.py add-parameter --term-id T --quantity-kind K --quantity-kind-observation-id N) or, if it is "
+             "for is filed against a parameter (db.py add-parameter --term-id T --quantity-kind K --quantity-kind-quote Q --quantity-kind-source-url U --quantity-kind-source-page P) or, if it is "
              "not a quantity under determination (an element, a lens term, a method), "
              "declined with its reason (db.py decline-parameter --term-id T --reason ...)" % (
                  len(undisposed), n_named, whose,

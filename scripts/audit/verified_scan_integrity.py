@@ -62,7 +62,7 @@ def main():
             "FROM source_value_extractions x "
             "JOIN evidence_sources e ON e.ref_id = x.ref_id "
             "JOIN base_parameters p ON p.parameter_id = x.parameter_id "
-            "WHERE e.superseded_by_ref_id IS NULL AND p.status = 'active' "
+            "WHERE e.superseded_by_ref_id IS NULL AND p.status = 'active' AND x.retired_at IS NULL "
             "ORDER BY x.ref_id, x.parameter_id, x.extraction_id"
         ).fetchall()
     finally:

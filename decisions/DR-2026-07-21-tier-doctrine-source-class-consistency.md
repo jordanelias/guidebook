@@ -43,6 +43,8 @@ consistent already, which anchors the rulings below:
    carries the **standard-level T5** unless the surviving citation is specifically the code-floor use.
    → **DIN 18040-2** and **DIN 18040-1** groups: normalize the canonical to **T5**, then merge.
 
+> **AMENDED — appended 2026-11-19, not edited.** The gloss on the T6 `code` instance above, which calls the floor a convergence of the weak band, is narrowed, as to the gloss only: under the owner's definitions of 2026-11-14 a code floor is the minimum (the least accommodating value of the code stratum), and convergence is where values come together, which is most common practice, not the floor. The tier ruling for this class stands. Ledger: `references/project-standards.md`, "Unification 2026-11-14 — best, most common, minimum; showing and grading": best, most common and minimum are read as the owner defined them on 2026-11-14.
+
 3. **Peer-reviewed conceptual/framework papers are T3, not T2.** A framework-proposing primary paper
    (peer-reviewed, but not a synthesis) is T3, not `sr_meta`. → **ASPECTSS** (Mostafa 2014, "Architecture
    for Autism", ArchNet-IJAR — a design-index framework paper): re-tier the T2 rows → **T3**, then merge.

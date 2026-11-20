@@ -78,6 +78,7 @@ glossary:
   search_execution_forms: "Joins each search to the vocabulary forms it fired, so a search run on a model-made word can be told from one run on a word an instrument uses."
   search_executions: "One logged search: the query as typed, where it ran, how many results came back and how many were admitted. Empty searches are kept."
   slugs: "The research topics that searches are organised under."
+  source_clauses: "The clauses of a source, each with where it stands, recorded once when the source is read in full, so a parameter added later is matched against them before anyone reads the source again. The clause text is held for matching and is not shown on a page."
   source_locators: "Where each known source can be found (DOI, URL, PMID, ISBN, standard number), including leads not yet admitted."
   source_scans: "A record that a source was read in full against the parameter list, and how much of it was read."
   source_slug_links: "Which sources were admitted under which research topics."
@@ -87,8 +88,10 @@ glossary:
   specifications: "The determinations: for one parameter and one lens, the answer, its evidence marker and its state. Computed by the engine, never typed."
   supersession_check: "A check that an anchor source is still the best current evidence."
   term_adjudications: "The decision about an observed phrase: it names an existing term, names a new one, is not ours, or is deferred, with the reason."
-  term_aliases: "Alternative names for each term, by language and jurisdiction, used when searching."
-  terms: "The project's vocabulary: each concept's canonical English name and definition."
+  term_aliases: "The names of each concept as sources use them, one row per occurrence (language, jurisdiction, where it is used, how it is attested), plus the search aids nobody has attested yet."
+  term_label_picks: "Who picked each concept's label, why, and the label it replaced."
+  term_relations: "How one concept relates to another, by a typed kind: where a source says so (its own locator, not a pointer into another stage), why, who judged it, and whether it still stands; a relation is changed by retiring it with a reason."
+  terms: "The project's vocabulary: each concept, its English descriptive label (ours, not a source's name) and definition."
   translations: "A translation of one cell of another table (a quotation, a term or a title), pointing at the cell it translates, with who translated it, who reviewed it and whether it was accepted."
   weighting_profile: "How evidence tiers are weighted and presented for each audience and use."
 
@@ -1135,8 +1138,10 @@ queue:
     table: extraction_follow_ups
     key: follow_up_id
     sql: |
-      SELECT follow_up_id AS id, 'extraction ' || extraction_id || ': ' || substr(reason, 1, 120) AS label
-        FROM extraction_follow_ups WHERE resolved_at IS NULL ORDER BY follow_up_id
+      SELECT f.follow_up_id AS id, 'extraction ' || f.extraction_id || ': ' || substr(f.reason, 1, 120) AS label
+        FROM extraction_follow_ups f
+        JOIN source_value_extractions x ON x.extraction_id = f.extraction_id AND x.retired_at IS NULL
+       WHERE f.resolved_at IS NULL ORDER BY f.follow_up_id
     question: "Do the follow-up pass, or close this follow-up?"
     why_yours: "Closing a follow-up without the pass accepts the figure as it stands."
     options:

@@ -239,14 +239,15 @@ try:
         if not db._VALUE_BEARING.search(q("SELECT canonical_en FROM terms WHERE term_id=?",
                                           t)[0][0])
         and q("SELECT domain FROM terms WHERE term_id=?", t)[0][0] not in dbcore.NON_QUANTITY_DOMAINS]
-    # T-020: a promotion names a quantity kind and an observation whose quote holds a digit; both derived.
+    # T-020, T-083: a promotion names a quantity kind (derived) and where a source states a value of it, held on
+    # the parameter's own row (OD-71; a fixture locator).
     KIND = q("SELECT kind_id FROM base_quantity_kinds ORDER BY kind_id LIMIT 1")[0][0]
-    WARRANT = q("SELECT observation_id FROM observed_terms WHERE context_quote GLOB '*[0-9]*' "
-                "ORDER BY observation_id LIMIT 1")[0][0]
 
     def promote(term_id):
         return attempt(db.insert_parameter, term_id, S, quantity_kind=KIND,
-                       quantity_kind_observation_id=WARRANT)
+                       quantity_kind_source_url="https://example.org/task-fixture",
+                       quantity_kind_source_page="TASK-FIXTURE",
+                       quantity_kind_quote="TASK-FIXTURE: a clear width of at least 900 mm")
 
     PAGES = ["Fixture page one: the clear width of a door leaf is measured here.",
              "Fixture page two: the clear width of a corridor route is measured here.",
@@ -540,8 +541,12 @@ try:
     record("L15", "outside the two history tables, NO row holds the folded id (derived "
            "from the live FK graph)", not left, left)
 
-    # rename-term
-    rename = fn("rename_term")
+    # rename-term. Every route names its judge (OD-38, T-028): the cases below give a fixture judge,
+    # so each still reaches the refusal it is about; T028-07 calls the writer without one.
+    _rename = fn("rename_term")
+
+    def rename(*a, **k):
+        return _rename(*a, **{"judge": "TASK-FIXTURE judge", **k})
     TR = FREE[7]
     adj = fn("adjudicate_term")
     # Page three is in the FULL text registered above (H01, or its by-hand stand-in),
@@ -570,17 +575,26 @@ try:
                    "already the name of",
                    rename, TR, other_name, "fixture", S, from_observation=OTZ)
     old_name = q("SELECT canonical_en FROM terms WHERE term_id=?", TR)[0][0]
+    old_scope = q("SELECT scope_note FROM terms WHERE term_id=?", TR)[0][0]
+    # OD-71: a pick rests on a form the base holds, so the observed phrase is recorded as TR's form first.
+    attempt(fn("add_alias"), TR, OTZ, "SYNONYM", S)
+    FTZ = q("SELECT form_id FROM term_aliases WHERE term_id=? AND alias='turnwise clearance zone'", TR)
     n7 = attempt(rename, TR, "turnwise clearance zone", "fixture: the sources' own phrase",
                  S, from_observation=OTZ)
     alias = q("SELECT alias_type, language, notes FROM term_aliases WHERE term_id=? AND "
               "alias=?", TR, old_name)
     trow = q("SELECT canonical_en, scope_note FROM terms WHERE term_id=?", TR)[0]
-    record("N07", "rename-term renames from the observation; the old name is a DEPRECATED "
-           "alias in term_aliases' own letter case, marked 'curated'; scope_note records it",
-           trow[0] == "turnwise clearance zone" and alias
-           and alias[0][0] == "DEPRECATED" and alias[0][1] == "en"
-           and "curated" in alias[0][2] and f"canonical_en was '{old_name}'" in (trow[1] or ""),
-           f"{n7} {alias} {trow}")
+    pick7 = q("SELECT former_label, form_id, ref_id, ruling_quote, judge, reason FROM "
+              "term_label_picks WHERE term_id=?", TR)
+    # T-028: the label is not a form, so the former label is not written into term_aliases, and a
+    # correction appended to a note is a fact in the wrong cell (2026-11-06): one pick row holds it.
+    record("N07", "rename-term renames from the observation; the old label is NOT written as an alias, "
+           "scope_note is unchanged, and one term_label_picks row holds the former label, the "
+           "form holding the observed phrase, the source as provenance (ref_id), the judge and the reason",
+           trow[0] == "turnwise clearance zone" and alias == [] and trow[1] == old_scope and FTZ
+           and pick7 == [(old_name, FTZ[0][0], REF_A, None, "TASK-FIXTURE judge",
+                          "fixture: the sources' own phrase")],
+           f"{n7} {alias} {trow} {pick7}")
     ap = subprocess.run([sys.executable, str(REPO / "scripts" / "audit" /
                                              "alias_provenance_audit.py")],
                         env=ENV, capture_output=True, text=True)
@@ -819,6 +833,14 @@ try:
     o_nl = attempt(observe, obs("turnwise clearance zone", "PDF page 3 / nl",
                                 "the turnwise clearance zone of a wheelchair", language="NL"), S)
     attempt(adj, o_nl.get("observation_id"), "NAMES-EXISTING", "fixture", S, term_id=FREE[16])
+    # T028-20 (OD-71): with no form of FREE[16] holding the observed phrase, the pick has no base warrant
+    # and is refused, naming add-alias; once the phrase is recorded as its form, the rename is accepted.
+    m20 = refusal(rename, FREE[16], "turnwise clearance", "fixture: native name", S,
+                  from_observation=o_nl.get("observation_id"), dry_run=True)
+    record("T028-20", "rename-term --from-observation is refused while the term holds no form of the observed "
+           "phrase (a pick rests on a base form, OD-71), naming add-alias",
+           m20 and "holds no form" in m20 and "add-alias --observation-id" in m20, m20)
+    attempt(fn("add_alias"), FREE[16], o_nl.get("observation_id"), "SYNONYM", S)
     n10 = attempt(rename, FREE[16], "turnwise clearance", "fixture: native name", S,
                   from_observation=o_nl.get("observation_id"), dry_run=True)
     record("N10b", "rename-term accepts a non-English observation as the warrant for a native name",
@@ -1151,10 +1173,10 @@ try:
             return x(f"INSERT INTO term_aliases ({','.join(cols)}) VALUES "
                      f"({','.join('?' * len(cols))})", *cols.values())
 
-        def near(name):
+        def near(name, language="EN"):
             c = sqlite3.connect(DB)
             try:
-                return {t for t, _ in db._near_terms(c, name)}
+                return {t for t, _ in db._near_terms(c, name, language)}
             finally:
                 c.close()
 
@@ -1175,20 +1197,19 @@ try:
                (near(f"{att_a} {FIXW[5]}"), near(f"{LAB[1]} {FIXW[6]}")))
 
         # T026-03 (AT-24 b): a search that fired the seed is found by the flag join; the junction
-        # stores the form's KEY, not the rowid.
-        rid = q("SELECT rowid FROM term_aliases WHERE term_id=? AND alias=?", T26[0], seed_a)
+        # stores the form's form_id (T-028: the declared key, which the capture path carries).
+        rid = q("SELECT form_id FROM term_aliases WHERE term_id=? AND alias=?", T26[0], seed_a)
         LS = ["log-search", "--results-found", "1", "--prior-expectation", "fixture: nothing", "--slug", SLUG_A,
               "--language", "EN", "--query-text", "TASK-FIXTURE fixture query", "--engine", "web",
               "--depth-method", "scoping", "--session", S]
         r3 = run(*LS, *(["--form-id", str(rid[0][0])] if rid else []))
         e3 = json.loads(r3.stdout)["exec_id"] if r3.returncode == 0 and r3.stdout.strip() else None
         flagged = q("SELECT DISTINCT f.exec_id FROM search_execution_forms f JOIN term_aliases a "
-                    "USING (term_id, alias, language) WHERE a.attestation NOT IN "
-                    "('instrument','other_source')")
-        stored = q("SELECT term_id, alias, language FROM search_execution_forms WHERE exec_id=?", e3)
-        record("T026-03", "log-search --form-id writes a search_execution_forms row by the form's key, "
+                    "USING (form_id) WHERE a.attestation NOT IN ('instrument','other_source')")
+        stored = q("SELECT form_id FROM search_execution_forms WHERE exec_id=?", e3)
+        record("T026-03", "log-search --form-id writes a search_execution_forms row by the form's form_id, "
                "and the flag join (a seed's attestation) finds the search (AT-24 b)",
-               e3 and (e3,) in flagged and stored == [(T26[0], seed_a, ALANG)],
+               e3 and rid and (e3,) in flagged and stored == [(rid[0][0],)],
                (r3.stdout[-200:], r3.stderr[-300:], flagged, stored))
 
         # T026-04: --terms-used is refused naming --form-id; an unknown --form-id is refused;
@@ -1206,7 +1227,8 @@ try:
                (r4a.returncode, r4a.stderr[-200:], r4b.returncode, r4b.stderr[-200:]))
 
         # T026-05: the base route writes the locator and attestation; it promotes a seed in place
-        # (one row, type kept); an observation route cannot re-attest an attested row.
+        # (one row, type kept); an observation of an attested form is a further occurrence, a new
+        # row, and never re-attests the held one (T-028's occurrence grain replaced T-026's refusal).
         aliasfn = fn("add_alias")
         base_kw = dict(language=LJ_EN[0], jurisdiction=LJ_EN[1], source_url="https://example.org/t26",
                        source_clause="2.3", attestation="instrument")
@@ -1221,17 +1243,18 @@ try:
         o5 = attempt(observe, obs("corridor route", "PDF page 2 / T026",
                                   "the clear width of a corridor route is measured here"), S)
         attempt(adj, o5.get("observation_id"), "NAMES-EXISTING", "fixture", S, term_id=T26[2])
-        d5 = refusal(aliasfn, T26[2], o5.get("observation_id"), "SYNONYM", S)
+        d5 = attempt(aliasfn, T26[2], o5.get("observation_id"), "SYNONYM", S)
         record("T026-05", "add-alias base route writes the locator and attestation; it promotes a "
-               "seed in place (one row, type kept); a held instrument row is refused by the "
-               "observation route (no downgrade)",
+               "seed in place (one row, type kept); an observation of a held instrument form is a "
+               "new occurrence row, and the instrument row is not re-attested (no downgrade)",
                r5 == [("instrument", "https://example.org/t26", "2.3", LJ_EN[1], None)]
                and p5.get("promoted") is True
                and r5p == [("instrument", "SYNONYM", "2.3")]
                and q("SELECT COUNT(*) FROM term_aliases WHERE term_id=?", T26[3])[0][0] == n_t3
-               and d5 and "already holds" in d5
-               and q("SELECT attestation FROM term_aliases WHERE term_id=? AND alias='corridor route'",
-                     T26[2]) == [("instrument",)], (b5, r5, p5, r5p, d5))
+               and d5.get("form_id") and not d5.get("promoted")
+               and q("SELECT attestation, observation_id FROM term_aliases WHERE term_id=? AND "
+                     "alias='corridor route' ORDER BY form_id", T26[2])
+               == [("instrument", None), ("other_source", o5.get("observation_id"))], (b5, r5, p5, r5p, d5))
 
         # T026-06: the refusals of the base and seed routes; none writes a row.
         n_all = q("SELECT COUNT(*) FROM term_aliases")[0][0]
@@ -1343,27 +1366,28 @@ try:
                   "'2026-11-13 00:00', ?, '2026-11-13 00:00', ?, ?)",
                   term, text, lang or ALANG, atype, jur, T26S, T26S, att)
 
-            # T026-10 (finding 1): the screen is not switched off. An `unrecorded` EN alias still
-            # screens a near name; the same row typed model_seed does not.
+            # T026-10, as T-028 leaves it: an `unrecorded` alias is a seed, a search aid and never
+            # vocabulary (E4), so it no longer screens a near name; the same row attested by a source
+            # (typed other_source with a locator, by SQL on the copy, then put back) does.
             cands = q("SELECT term_id, alias FROM term_aliases WHERE upper(language)='EN' AND "
                       "attestation='unrecorded' AND created_by_session <> ? ORDER BY term_id, alias", T26S)
             pick = None
             for t_, a_ in cands:
-                if len(db._name_tokens(a_)) < 2:
-                    continue
                 nm = f"{a_} {FIXW[6]}"
-                if t_ in near(nm):
-                    x("UPDATE term_aliases SET attestation='model_seed' WHERE term_id=? AND alias=? "
-                      "AND upper(language)='EN'", t_, a_)
-                    gone = t_ not in near(nm)
-                    x("UPDATE term_aliases SET attestation='unrecorded' WHERE term_id=? AND alias=? "
-                      "AND upper(language)='EN'", t_, a_)
-                    if gone:
-                        pick = (t_, a_, nm)
-                        break
-            record("T026-10", "_near_terms still compares an `unrecorded` EN alias (a live refusal is "
-                   "not weakened on an open question) and stops comparing it only when it is typed "
-                   "model_seed", bool(pick) and pick[0] in near(pick[2]), pick)
+                if len(db._name_tokens(a_)) < 2 or t_ in near(nm):
+                    continue                     # reached by its label or another form: not this probe
+                x("UPDATE term_aliases SET attestation='other_source', source_url='https://example.org/"
+                  "task-fixture', source_clause='TASK-FIXTURE' WHERE term_id=? AND alias=? AND "
+                  "upper(language)='EN' AND attestation='unrecorded'", t_, a_)
+                found = t_ in near(nm)
+                x("UPDATE term_aliases SET attestation='unrecorded', source_url=NULL, source_clause=NULL "
+                  "WHERE term_id=? AND alias=? AND source_clause='TASK-FIXTURE'", t_, a_)
+                if found:
+                    pick = (t_, a_, nm)
+                    break
+            record("T026-10", "_near_terms does not compare an `unrecorded` EN alias (a seed, E4; T-028) "
+                   "and does compare the same row once a source attests it",
+                   bool(pick) and pick[0] not in near(pick[2]), pick)
 
             # T026-11 (finding 2a): `instrument` by the observation route needs a regulatory-stratum
             # source, derived from the tier ladder; other_source needs none, and writes the pointer.
@@ -1432,8 +1456,8 @@ try:
             # per distinct form however often --form-id is repeated.
             fr = db._alias_language(sqlite3.connect(DB), FR_PAIR[0])
             seed_row(T27[3], "t26 forme", lang=fr)
-            rid_fr = q("SELECT rowid FROM term_aliases WHERE term_id=? AND alias='t26 forme'", T27[3])[0][0]
-            rid_en = q("SELECT rowid FROM term_aliases WHERE term_id=? AND alias=?", T26[0], seed_a)[0][0]
+            rid_fr = q("SELECT form_id FROM term_aliases WHERE term_id=? AND alias='t26 forme'", T27[3])[0][0]
+            rid_en = q("SELECT form_id FROM term_aliases WHERE term_id=? AND alias=?", T26[0], seed_a)[0][0]
             r13a = run(*LS, "--form-id", str(rid_fr))
             r13b = run(*LS, "--form-id", str(rid_en), "--form-id", str(rid_en))
             e13 = json.loads(r13b.stdout)["exec_id"] if r13b.returncode == 0 else None
@@ -1451,7 +1475,7 @@ try:
                 return json.loads(r.stdout)["exec_id"] if r.returncode == 0 else None
             e_none = exec_of()
             e_un = exec_of("--form-id", str(rid_en))
-            e_att = exec_of("--form-id", str(q("SELECT rowid FROM term_aliases WHERE term_id=? AND alias=?",
+            e_att = exec_of("--form-id", str(q("SELECT form_id FROM term_aliases WHERE term_id=? AND alias=?",
                                                T26[1], att_a)[0][0]))
             a14 = run_audit("alias_provenance_audit.py")
             ex = lambda n: re.search(rf"exec {n} \(EN\): (\d+) form\(s\) recorded, (\d+) attested", a14.stdout)
@@ -1524,27 +1548,1101 @@ try:
                    and "1 alias(es) written by this batch" in g16.stdout,
                    (c16, p16, row16, g16.stdout[-400:]))
 
-            # T026-17 (finding 10): the junction follows a corrected spelling and refuses a vanished form.
+            # T026-17 (finding 10), as T-028 leaves it: the junction points by form_id, so a corrected
+            # spelling is still the form the search fired, and a vanished form is refused.
             fk = sqlite3.connect(DB)
             fk.execute("PRAGMA foreign_keys=ON")
+            fid17 = rid_en
             try:
                 try:
-                    fk.execute("UPDATE term_aliases SET alias='t26 respelt' WHERE term_id=? AND alias=?",
-                               (T26[0], seed_a))
-                    moved = fk.execute("SELECT COUNT(*) FROM search_execution_forms WHERE term_id=? "
-                                       "AND alias='t26 respelt'", (T26[0],)).fetchone()[0]
+                    fk.execute("UPDATE term_aliases SET alias='t26 respelt' WHERE form_id=?", (fid17,))
+                    moved = fk.execute("SELECT COUNT(*) FROM search_execution_forms f JOIN term_aliases a "
+                                       "USING (form_id) WHERE a.form_id=? AND a.alias='t26 respelt'",
+                                       (fid17,)).fetchone()[0]
                 except sqlite3.IntegrityError:
-                    moved = 0                      # the key is frozen by the junction row
+                    moved = 0
                 try:
-                    fk.execute("DELETE FROM term_aliases WHERE term_id=? AND alias='t26 respelt'", (T26[0],))
+                    fk.execute("DELETE FROM term_aliases WHERE form_id=?", (fid17,))
                     deleted = True
                 except sqlite3.IntegrityError:
                     deleted = False
                 fk.rollback()
             finally:
                 fk.close()
-            record("T026-17", "an UPDATE of a searched form's spelling propagates to search_execution_forms; "
-                   "a DELETE of it is refused", moved >= 1 and deleted is False, (moved, deleted))
+            record("T026-17", "a corrected spelling of a searched form is still the form the search fired "
+                   "(the junction points by form_id); a DELETE of it is refused", moved >= 1 and deleted is False,
+                   (moved, deleted))
+
+    # ── T028: a concept that is not an English string (AT-25). The concept is its id; its names are
+    # forms, one row per occurrence; canonical_en is our English label; every label set by judgment
+    # names its judge in term_label_picks (OD-38); a name is screened only within its own language
+    # (OD-68). Probes are derived by query; names are fixture words no live name holds.
+    T28S = "session_2026-11-18-t028-task-fixture"
+    con = sqlite3.connect(DB)
+    try:
+        held28 = set()
+        for (n_,) in con.execute("SELECT canonical_en FROM terms UNION ALL SELECT alias FROM term_aliases"):
+            held28 |= db._name_tokens(n_)
+        W = [w for w in ("taskfixturezel", "taskfixturekap", "taskfixturequil", "taskfixtureumb",
+                         "taskfixturepas", "taskfixturecle", "taskfixturemor", "taskfixturesed",
+                         "taskfixturebri", "taskfixturevan") if w not in held28]
+        NONEN = con.execute("SELECT language, jurisdiction FROM lang_jur_map WHERE upper(language) <> 'EN' "
+                            "ORDER BY language, jurisdiction LIMIT 1").fetchone()
+        TWOJ = con.execute("SELECT language, MIN(jurisdiction), MAX(jurisdiction) FROM lang_jur_map "
+                           "GROUP BY language HAVING COUNT(*) > 1 ORDER BY language LIMIT 1").fetchone()
+        ENSC = con.execute("SELECT r.jurisdiction FROM v_research_scope r JOIN lang_jur_map m ON "
+                           "upper(m.language) = upper(r.language) AND m.jurisdiction = r.jurisdiction "
+                           "WHERE upper(r.language) = 'EN' ORDER BY 1 LIMIT 1").fetchone()
+        LAB28 = next(((t, n) for t, n in con.execute("SELECT term_id, canonical_en FROM terms ORDER BY term_id")
+                      if len(db._name_tokens(n)) >= 2), None)
+        USAGE = sorted(dbcore.check_values(con, "term_aliases", "usage_type") or [])
+        EN28 = db._alias_language(con, "EN")
+    finally:
+        con.close()
+    if len(W) < 10 or not (NONEN and TWOJ and ENSC and LAB28):
+        print("      SKIPPED-NO-FIXTURE: T028 needs 10 unheld words, a non-EN pair, a language with two "
+              "jurisdictions, an EN jurisdiction in research scope and a two-token label")
+    else:
+        LOC = ["--source-url", "https://example.org/task-fixture-t028", "--source-clause", "TASK-FIXTURE 1.1"]
+        LOCK = dict(source_url="https://example.org/task-fixture-t028", source_clause="TASK-FIXTURE 1.1")
+        JUDGE = "TASK-FIXTURE judge"
+        aliasfn28 = fn("add_alias")
+
+        def forms_of(term):
+            return q("SELECT form_id, alias, upper(language), jurisdiction, attestation, observation_id "
+                     "FROM term_aliases WHERE term_id=? ORDER BY form_id", term)
+
+        def picks_of(term):
+            return q("SELECT former_label, form_id, ref_id, ruling_quote, judge, reason "
+                     "FROM term_label_picks WHERE term_id=? ORDER BY pick_id", term)
+
+        def names(term):
+            r = q("SELECT label_is_attested_form, display_basis, display_name FROM v_term_names "
+                  "WHERE term_id=?", term)
+            return r[0] if r else None
+
+        # T028-01 (AT-25): a concept whose first and only attested form is not English, with an English
+        # label marked as ours and not counted as an attested English form.
+        F1, L1 = f"{W[0]} {W[1]}weg", f"{W[2]} {W[3]} label"
+        n_terms = q("SELECT COUNT(*) FROM terms")[0][0]
+        r1 = run("add-term", "--first-form", F1, "--form-language", NONEN[0], "--form-jurisdiction", NONEN[1],
+                 *LOC, "--attestation", "instrument", "--canonical-en", L1, "--judge", JUDGE,
+                 "--rationale", "TASK-FIXTURE: a concept first met in another language", "--session", T28S)
+        TA28 = json.loads(r1.stdout).get("term_id") if r1.returncode == 0 and r1.stdout.strip() else None
+        f1 = forms_of(TA28)
+        record("T028-01", "add-term --first-form mints a concept from a non-English instrument form with an "
+               "English label: one term, one member row in that language, one pick row (former_label NULL), "
+               "label_is_attested_form 0, display_basis origin_instrument_form, no attested EN form",
+               TA28 and q("SELECT COUNT(*) FROM terms")[0][0] == n_terms + 1
+               and len(f1) == 1 and f1[0][1:5] == (F1, NONEN[0].upper(), NONEN[1], "instrument")
+               and picks_of(TA28) == [(None, f1[0][0], None, None, JUDGE,
+                                       "TASK-FIXTURE: a concept first met in another language")]
+               and names(TA28) == (0, "origin_instrument_form", F1)
+               and not [f for f in f1 if f[2] == "EN" and f[4] in dbcore.ATTESTED_FORMS],
+               (r1.returncode, r1.stdout[-300:], r1.stderr[-400:], f1, TA28 and names(TA28)))
+
+        # T028-02 (C-04): add-term --from-observation on a non-English observation, with an English label
+        # that is not inside the phrase: accepted, the phrase is the first member row, no pick row.
+        o28 = attempt(observe, obs("turnwise clearance zone", "PDF page 3 / T028-02",
+                                   "the turnwise clearance zone of a wheelchair", language=NONEN[0]), S)
+        L2 = f"{W[4]} {W[5]} label"
+        t2 = attempt(ins, o28.get("observation_id"), L2, "TASK-FIXTURE: a concept first met in another language",
+                     T28S)
+        TB28 = t2.get("term_id")
+        f2 = forms_of(TB28)
+        record("T028-02", "add-term --from-observation takes an English label not inside a non-English phrase; "
+               "the phrase is the first member row (other_source, the observation), and no pick row is written",
+               TB28 and f2 == [(f2[0][0], "turnwise clearance zone", NONEN[0].upper(), f2[0][3], "other_source",
+                                o28.get("observation_id"))] and picks_of(TB28) == []
+               and q("SELECT outcome FROM term_adjudications WHERE observation_id=? AND term_id=?",
+                     o28.get("observation_id"), TB28) == [("NAMES-NEW",)], (t2, f2))
+
+        # T028-03: one form attested in two jurisdictions for one term is two occurrences, two form_ids.
+        F3 = f"{W[6]} {W[7]}"
+        a3 = [attempt(aliasfn28, TA28, None, "SYNONYM", T28S, alias=F3, language=TWOJ[0], jurisdiction=j,
+                      attestation="other_source", **LOCK) for j in (TWOJ[1], TWOJ[2])]
+        r3 = q("SELECT form_id, jurisdiction FROM term_aliases WHERE term_id=? AND alias=? ORDER BY form_id", TA28, F3)
+        record("T028-03", "the same form attested in two jurisdictions for one term is two rows with two form_ids",
+               len(r3) == 2 and r3[0][0] != r3[1][0] and {r3[0][1], r3[1][1]} == {TWOJ[1], TWOJ[2]}, (a3, r3))
+
+        # T028-04: rename-term --from-form picks an attested English instrument form of an owed English
+        # jurisdiction as the label: display_basis english_instrument_label; no alias row; scope_note unchanged.
+        F4 = f"{W[8]} {W[0]}"
+        w4 = attempt(aliasfn28, TA28, None, "SYNONYM", T28S, alias=F4, language="EN", jurisdiction=ENSC[0],
+                     attestation="instrument", **LOCK)
+        fid4 = w4.get("form_id")
+        n_forms4, scope4 = len(forms_of(TA28)), (q("SELECT scope_note FROM terms WHERE term_id=?", TA28) or [(None,)])[0][0]
+        b4 = names(TA28)
+        p4 = attempt(_rename, TA28, F4, "TASK-FIXTURE: the instrument's own term", T28S, from_form=fid4, judge=JUDGE)
+        record("T028-04", "rename-term --from-form sets the label to an attested English instrument form: "
+               "display_basis english_instrument_label, no alias row written, scope_note unchanged, the pick recorded",
+               b4 == (0, "english_instrument_form", F4) and names(TA28) == (1, "english_instrument_label", F4)
+               and len(forms_of(TA28)) == n_forms4
+               and q("SELECT canonical_en, scope_note FROM terms WHERE term_id=?", TA28) == [(F4, scope4)]
+               and picks_of(TA28)[-1] == (L1, fid4, None, None, JUDGE, "TASK-FIXTURE: the instrument's own term"),
+               (w4, b4, p4, names(TA28), picks_of(TA28)))
+
+        # T028-05 (AT-24 for names): a model_seed row whose text equals a new name does not clash; it is
+        # reported in seed_matches.
+        S5 = f"{W[9]} {W[1]}"
+        x("INSERT INTO term_aliases (term_id, alias, language, alias_type, notes, created_at, created_by_session, "
+          "updated_at, updated_by_session, attestation) VALUES (?, ?, ?, 'SYNONYM', 'model-generated TASK-FIXTURE', "
+          "'t', ?, 't', ?, 'model_seed')", TB28, S5, EN28, T28S, T28S)
+        c5 = sqlite3.connect(DB)
+        try:
+            h5 = attempt(db._name_holder, c5, S5, "EN")
+        finally:
+            c5.close()
+        record("T028-05", "_name_holder: a model_seed row with the same text is no clash, and is reported "
+               "in seed_matches", isinstance(h5, dict) and h5.get("clashes") == []
+               and [m["term_id"] for m in h5.get("seed_matches", [])] == [TB28], h5)
+
+        # T028-06: _near_terms on a non-English name does not return English labels (the control: the
+        # same name in EN does).
+        nm6 = f"{LAB28[1]} {W[9]}"
+        c6 = sqlite3.connect(DB)
+        try:
+            n6 = [attempt(lambda nm, l: {t for t, _ in db._near_terms(c6, nm, l)}, nm6, lang) for lang in (NONEN[0], "EN")]
+            n6 += [attempt(lambda nm, l: {t for t, _ in db._near_terms(c6, nm, l)}, f"{F1} {W[9]}", NONEN[0])]
+        finally:
+            c6.close()
+        record("T028-06", "_near_terms on a non-English name compares no English label (the same name in EN does) "
+               "and finds a term through an attested form of its own language",
+               isinstance(n6[0], set) and LAB28[0] not in n6[0] and LAB28[0] in n6[1]
+               and isinstance(n6[2], set) and TA28 in n6[2], (LAB28, n6))
+
+        # T028-07 (OD-38): every rename-term route without --judge is refused; with it, each writes one pick
+        # row holding the former label and the route's one pointer, and no AMENDED trailer.
+        F7 = f"{W[7]} {W[3]}"
+        fid7 = attempt(aliasfn28, TA28, None, "SYNONYM", T28S, alias=F7, language="EN", jurisdiction=ENSC[0],
+                       attestation="other_source", **LOCK).get("form_id")
+        words7 = [w.lower() for w in (QUOTE or "").split() if w.isalpha() and len(w) > 4]
+        RN7 = next((f"{a} {b}" for a, b in zip(words7, words7[1:])
+                    if f"{a} {b}" in (QUOTE or "").lower() and f"{a} {b}" != RNAME
+                    and not db._VALUE_BEARING.search(f"{a} {b}")
+                    and not q("SELECT 1 FROM terms WHERE lower(canonical_en)=?", f"{a} {b}")
+                    and not q("SELECT 1 FROM term_aliases WHERE lower(alias)=?", f"{a} {b}")), None)
+        f28 = q("SELECT form_id FROM term_aliases WHERE term_id=? AND alias='turnwise clearance zone'", TB28)
+        routes7 = [(TA28, F7, dict(from_form=fid7), "form_id", fid7, None),
+                   (TB28, "turnwise clearance", dict(from_observation=o28.get("observation_id")),
+                    "form_id", f28[0][0] if f28 else -1, REF_A),
+                   (TA28, RN7, dict(ruling_quote=QUOTE), "ruling_quote", (QUOTE or "").strip(), None)]
+        ok7 = bool(RN7 and fid7)
+        for term7, new7, kw7, col7, val7, ref7 in routes7:
+            m7 = refusal(_rename, term7, new7, "TASK-FIXTURE: picked", T28S, **kw7)
+            old7, scope7 = (q("SELECT canonical_en, scope_note FROM terms WHERE term_id=?", term7) or [(None, None)])[0]
+            n7p = len(picks_of(term7))
+            w7 = attempt(_rename, term7, new7, "TASK-FIXTURE: picked", T28S, judge=JUDGE, **kw7)
+            last = q(f"SELECT former_label, {col7}, judge, (form_id IS NOT NULL) + (ruling_quote IS NOT NULL), "
+                     f"ref_id FROM term_label_picks WHERE term_id=? ORDER BY pick_id DESC LIMIT 1", term7)
+            ok7 = ok7 and bool(m7 and "--judge" in m7) and len(picks_of(term7)) == n7p + 1 \
+                and last == [(old7, val7, JUDGE, 1, ref7)] \
+                and q("SELECT canonical_en, scope_note FROM terms WHERE term_id=?", term7) == [(new7, scope7)]
+            if not ok7:
+                print(f"      T028-07 route {col7}: {m7!r} {w7} {last}")
+        record("T028-07", "rename-term refuses each route (form, observation, ruling) without --judge; with it each "
+               "writes one term_label_picks row (former label, the one base warrant: the form or the quote, the "
+               "judge, the source as provenance on the observation route) and no AMENDED trailer",
+               ok7, (RN7, fid7))
+
+        # T028-08: DOMAIN is refused naming --usage-type; a usage outside the column's CHECK is refused; one
+        # inside it is written.
+        F8 = f"{W[5]} {W[8]}"
+        base8 = dict(alias=F8, language="EN", jurisdiction=ENSC[0], attestation="other_source", **LOCK)
+        m8a = refusal(aliasfn28, TB28, None, "DOMAIN", T28S, **base8)
+        m8b = refusal(aliasfn28, TB28, None, "SYNONYM", T28S, usage_type="taskfixture_usage", **base8)
+        U8 = USAGE[0] if USAGE else None          # the column's CHECK; none on a schema without T-028: red below
+        w8 = attempt(aliasfn28, TB28, None, "SYNONYM", T28S, usage_type=U8, **base8)
+        record("T028-08", "add-alias refuses DOMAIN naming --usage-type, refuses a usage outside the column's "
+               "CHECK, and writes one inside it",
+               m8a and "--usage-type" in m8a and m8b and "usage_type" in m8b
+               and U8 and q("SELECT usage_type FROM term_aliases WHERE term_id=? AND alias=?", TB28, F8) == [(U8,)],
+               (m8a, m8b, w8))
+
+        # T028-09 (guard, and OD-68): a name equal to another term's attested form in the SAME language is
+        # refused by rename-term and by add-term --first-form unless --distinct-from names the term; the same
+        # written word in ANOTHER language is another name (owner, 2026-11-17) and is not refused.
+        m9a = refusal(_rename, TB28, F7, "TASK-FIXTURE", T28S, from_observation=o28.get("observation_id"),
+                      judge=JUDGE)
+        kw9 = dict(first_form=F7, form_language="EN", form_jurisdiction=ENSC[0], attestation="other_source",
+                   judge=JUDGE, dry_run=True, **LOCK)
+        m9b = refusal(ins, None, F7, "TASK-FIXTURE: a distinct concept", T28S, **kw9)
+        w9c = attempt(ins, None, F7, "TASK-FIXTURE: a distinct concept", T28S, distinct_from=[TA28], **kw9)
+        w9d = attempt(ins, None, f"{W[6]} {W[2]} label", "TASK-FIXTURE: another language", T28S,
+                      **{**kw9, "form_language": NONEN[0], "form_jurisdiction": NONEN[1]})
+        record("T028-09", "an attested same-language form of another term refuses rename-term and add-term "
+               "--first-form (unless --distinct-from names it); the same word in another language does not",
+               m9a and TA28 in m9a and m9b and TA28 in m9b and w9c.get("term_id") and w9d.get("term_id"),
+               (m9a, m9b, w9c, w9d))
+
+        # T028-10: an observation whose quote is in no file saved for its source and is not VERBATIM-EXEMPT
+        # still mints the term; its member row is unrecorded, with the observation, and the output says so.
+        # Fixture by SQL: observe-term refuses such a quote, and the corpus rows that carry one name live terms.
+        F10 = f"{W[4]} {W[9]}"
+        o10 = x("INSERT INTO observed_terms (ref_id, surface_form, language, locator, context_quote, created_at, "
+                "created_by_session) VALUES (?, ?, 'EN', 'TASK-FIXTURE', ?, 't', ?)", REF_A, F10,
+                f"a TASK-FIXTURE sentence using {F10} once, in no saved file", T28S)
+        t10 = attempt(ins, o10, F10, "TASK-FIXTURE: the quote is not verified", T28S)
+        J10 = q("SELECT jurisdiction FROM evidence_sources WHERE ref_id=?", REF_A)[0][0]
+        f10 = forms_of(t10.get("term_id"))
+        record("T028-10", "add-term --from-observation with an unverified quote mints the term, writes its form "
+               "unrecorded with the observation, and says add-alias promotes it",
+               t10.get("term_id") and [f[1:] for f in f10] == [(F10, "EN", J10, "unrecorded", o10)]
+               and "add-alias" in (t10.get("form_unrecorded") or ""), (t10, f10))
+        # T028-10b: once the quote is verified (here: the observation recorded VERBATIM-EXEMPT, by SQL on the
+        # copy), add-alias promotes that unrecorded member row in place; no second row.
+        x("UPDATE observed_terms SET notes=? WHERE observation_id=?", f"{retrieval_log.EXEMPT_MARK} TASK-FIXTURE]", o10)
+        p10 = attempt(aliasfn28, t10.get("term_id"), o10, "SYNONYM", T28S)
+        record("T028-10b", "add-alias --observation-id promotes add-term's unrecorded first form in place once "
+               "the quote is verified: one row, now other_source",
+               p10.get("promoted") is True
+               and [f[4:] for f in forms_of(t10.get("term_id"))] == [("other_source", o10)], (p10,))
+
+        # T028-11: add-term's own refusals, each in words, none writing a term.
+        n11 = q("SELECT COUNT(*) FROM terms")[0][0]
+        NOPAIR = q("SELECT a.language, b.jurisdiction FROM (SELECT DISTINCT language FROM lang_jur_map) a, "
+                   "(SELECT DISTINCT jurisdiction FROM lang_jur_map) b WHERE NOT EXISTS (SELECT 1 FROM lang_jur_map "
+                   "m WHERE m.language = a.language AND m.jurisdiction = b.jurisdiction) ORDER BY 1, 2 LIMIT 1")
+        L11, F11 = f"{W[1]} {W[2]}", f"{W[1]} {W[2]} {W[3]}"
+        b11 = dict(first_form=F11, form_language="EN", form_jurisdiction=ENSC[0], attestation="other_source",
+                   judge=JUDGE, **LOCK)
+        c11 = [(refusal(ins, None, L11, "r", T28S), "exactly one route"),
+               (refusal(ins, o28.get("observation_id"), L11, "r", T28S, **b11), "exactly one route"),
+               (refusal(ins, o28.get("observation_id"), L11, "r", T28S, judge=JUDGE), "belong to --first-form"),
+               (refusal(ins, None, L11, "r", T28S, **{**b11, "judge": None}), "--judge"),
+               (refusal(ins, None, f"{W[4]} {W[6]}", "r", T28S, **b11), "not inside the English first form"),
+               (refusal(ins, None, L11, "r", T28S, **{**b11, "source_clause": None}), "--source-page or --source-clause"),
+               (refusal(ins, None, L11, "r", T28S, **{**b11, "attestation": "model_seed"}), "other_source"),
+               (refusal(ins, None, L11, "r", T28S, **{**b11, "form_language": NOPAIR[0][0] if NOPAIR else None,
+                                                      "form_jurisdiction": NOPAIR[0][1] if NOPAIR else None}),
+                "lang_jur_map holds no pair"),
+               (refusal(ins, None, L11, "r", T28S, **{**b11, "usage_type": "taskfixture_usage"}), "usage_type")]
+        record("T028-11", "add-term refuses no route, two routes, a base flag on the observation route, a first form "
+               "with no judge, an English first form not holding the label, no page or clause, a seed attestation, "
+               "an unpaired language and a usage outside the CHECK; each in words, no term written",
+               NOPAIR and all(m and w in m for m, w in c11) and q("SELECT COUNT(*) FROM terms")[0][0] == n11,
+               [m for m, w in c11 if not (m and w in m)])
+
+        # T028-12: rename-term --from-form refuses a form of another term, an unattested form of this term, and
+        # an attested form whose text is not the new label.
+        seed12 = q("SELECT form_id, alias FROM term_aliases WHERE term_id=? AND attestation='model_seed'", TB28)
+        other12 = q("SELECT form_id, alias FROM term_aliases WHERE term_id=? AND attestation IN "
+                    "('instrument','other_source') ORDER BY form_id LIMIT 1", TA28)
+        mine12 = q("SELECT form_id, alias FROM term_aliases WHERE term_id=? AND alias=?", TB28, F8)
+        c12 = [refusal(_rename, TB28, other12[0][1], "r", T28S, from_form=other12[0][0], judge=JUDGE)
+               if other12 else None,
+               refusal(_rename, TB28, seed12[0][1], "r", T28S, from_form=seed12[0][0], judge=JUDGE)
+               if seed12 else None,
+               refusal(_rename, TB28, f"{W[8]} {W[9]}", "r", T28S, from_form=mine12[0][0], judge=JUDGE)
+               if mine12 else None]
+        record("T028-12", "rename-term --from-form refuses another term's form and an unattested form (not an "
+               "attested member form) and a form whose text is not the new label",
+               c12[0] and "not an attested member form" in c12[0] and c12[1] and "not an attested member form"
+               in c12[1] and c12[2] and "that form's text" in c12[2], c12)
+
+        # T028-13 (OD-68, _name_holder): a name is compared with labels only when it is English, and with
+        # attested forms only of its own language: the same word in another language is no clash.
+        c13 = sqlite3.connect(DB)
+        try:
+            h13 = [db._name_holder(c13, n, l)["clashes"] for n, l in
+                   ((LAB28[1], NONEN[0]), (LAB28[1], "EN"), (F7, NONEN[0]), (F7, "EN"))]
+        finally:
+            c13.close()
+        record("T028-13", "_name_holder: a label is no clash for a non-English name and is one for the English "
+               "name; an attested English form is no clash in another language and is one in English",
+               h13[0] == [] and [c["term_id"] for c in h13[1] if c["kind"] == "label"] == [LAB28[0]]
+               and h13[2] == [] and [c["term_id"] for c in h13[3]] == [TA28], h13)
+
+        # T028-14 (OD-68, _near_terms through a writer): add-term --first-form with a name near another term's
+        # attested English form is accepted in another language and refused in English.
+        N14 = f"{F7} {W[9]}"
+        k14 = dict(first_form=N14, attestation="other_source", judge=JUDGE, dry_run=True, **LOCK)
+        w14 = attempt(ins, None, f"{W[2]} {W[8]} label", "TASK-FIXTURE: another language", T28S,
+                      form_language=NONEN[0], form_jurisdiction=NONEN[1], **k14)
+        m14 = refusal(ins, None, N14, "TASK-FIXTURE: English", T28S, form_language="EN",
+                      form_jurisdiction=ENSC[0], **k14)
+        record("T028-14", "add-term --first-form: a name near an attested English form of another term is accepted "
+               "in another language (two independent names) and refused in English (a near match)",
+               w14.get("term_id") and m14 and "near match" in m14 and TA28 in m14, (w14, m14))
+
+        # T028-15: add-term --first-form refuses a phrase whose observation is judged NOT-OURS, as the base route
+        # of add-alias does (one helper for both).
+        P15 = "corridor route is measured"
+        o15 = attempt(observe, obs(P15, "PDF page 2 / T028-15",
+                                   "the clear width of a corridor route is measured here"), S).get("observation_id")
+        attempt(adj, o15, "NOT-OURS", "TASK-FIXTURE: not a concept of ours", S)
+        n15 = q("SELECT COUNT(*) FROM terms")[0][0]
+        m15 = [refusal(ins, None, P15, "TASK-FIXTURE", T28S, first_form=P15, form_language="EN",
+                       form_jurisdiction=ENSC[0], attestation="other_source", judge=JUDGE, **LOCK),
+               refusal(aliasfn28, TA28, None, "SYNONYM", T28S, alias=P15, language="EN", jurisdiction=ENSC[0],
+                       attestation="other_source", **LOCK)]
+        record("T028-15", "add-term --first-form and add-alias's base route both refuse a phrase whose observation's "
+               "standing judgment names no term, naming the observation; no term is written",
+               all(m and f"observation {o15}" in m and "base route is for a form no observation covers" in m
+                   for m in m15) and q("SELECT COUNT(*) FROM terms")[0][0] == n15, m15)
+
+        # T028-16: rename-term --from-form refuses a form whose language is not the English label's.
+        fid16 = q("SELECT form_id FROM term_aliases WHERE term_id=? AND alias=?", TA28, F1)
+        m16 = refusal(_rename, TA28, F1, "TASK-FIXTURE", T28S, from_form=fid16[0][0] if fid16 else -1, judge=JUDGE)
+        record("T028-16", "rename-term --from-form refuses a non-English form as the English label, naming the "
+               "next action", m16 and "English label" in m16 and "add-alias" in m16, m16)
+
+        # T028-17: rename-term --from-form refuses an attested NARROWER form: a related search string is not a
+        # name of the concept (the member rule, read from v_term_names).
+        F17 = f"{W[3]} {W[5]}"
+        w17 = attempt(aliasfn28, TA28, None, "NARROWER", T28S, alias=F17, language="EN", jurisdiction=ENSC[0],
+                      attestation="other_source", **LOCK)
+        m17 = refusal(_rename, TA28, F17, "TASK-FIXTURE", T28S, from_form=w17.get("form_id", -1), judge=JUDGE)
+        record("T028-17", "rename-term --from-form refuses an attested NARROWER form (not a member form)",
+               w17.get("form_id") and m17 and "not an attested member form" in m17, (w17, m17))
+
+        # T028-18: alias_provenance_audit is NOT RUN (exit 2, no EXAMINED line, the cause named) when the
+        # zero-result search read cannot run; it never reports an empty subject. Fixture: a copy whose junction
+        # lacks form_id (SQL on a second copy).
+        DB18 = os.path.join(TMP, "t028-18.db")
+        shutil.copy(DB, DB18)
+        c18 = sqlite3.connect(DB18)
+        c18.execute("ALTER TABLE search_execution_forms RENAME COLUMN form_id TO taskfixture_fid")
+        c18.commit()
+        c18.close()
+        a18 = subprocess.run([sys.executable, str(REPO / "scripts" / "audit" / "alias_provenance_audit.py")],
+                             env={**ENV, "GUIDEBOOK_DB_PATH": DB18}, capture_output=True, text=True)
+        record("T028-18", "alias_provenance_audit exits 2 NOT RUN, with no EXAMINED line and the cause named, when "
+               "the zero-result search read cannot run",
+               a18.returncode == 2 and "NOT RUN" in a18.stdout and "EXAMINED" not in a18.stdout
+               and "form_id" in a18.stdout, (a18.returncode, a18.stdout[-300:]))
+
+        # T028-19 (E4; task file section 4 item 2): every writer whose name screen ran reports the seeds that
+        # hold the name, as information that refuses nothing: add-term on both routes, add-alias, rename-term,
+        # mint-term-from-catalogue.
+        P19 = "measured here"
+        x("INSERT INTO term_aliases (term_id, alias, language, alias_type, notes, created_at, "
+          "created_by_session, updated_at, updated_by_session, attestation) VALUES (?, ?, ?, 'SYNONYM', "
+          "'model-generated TASK-FIXTURE', 't', ?, 't', ?, 'model_seed')", TB28, P19, EN28, T28S, T28S)
+        o19 = attempt(observe, obs(P19, "PDF page 1 / T028-19",
+                                   "the clear width of a door leaf is measured here"), S).get("observation_id")
+        out19 = {
+            "add-term --from-observation": attempt(ins, o19, P19, "TASK-FIXTURE", T28S, dry_run=True),
+            "add-term --first-form": attempt(ins, None, S5, "TASK-FIXTURE", T28S, first_form=S5, form_language="EN",
+                                             form_jurisdiction=ENSC[0], attestation="other_source", judge=JUDGE,
+                                             dry_run=True, **LOCK),
+            "mint-term-from-catalogue": attempt(mint, **mt(canonical_en=S5), dry_run=True),
+            "add-alias": attempt(aliasfn28, TA28, None, "SYNONYM", T28S, alias=S5, language="EN",
+                                 jurisdiction=ENSC[0], attestation="other_source", **LOCK)}
+        out19["rename-term"] = attempt(_rename, TA28, S5, "TASK-FIXTURE: seed report", T28S,
+                                       from_form=out19["add-alias"].get("form_id", -1), judge=JUDGE)
+        bad19 = {k: v for k, v in out19.items() if [m.get("term_id") for m in v.get("seed_matches") or []] != [TB28]}
+        record("T028-19", "add-term (both routes), add-alias, rename-term and mint-term-from-catalogue each report "
+               "the seed holding the name in seed_matches and write or accept as before", not bad19, bad19)
+
+        # T028-21 (OD-71): base tables are derived from the stage map; a base table holds no foreign key into
+        # another stage other than a nullable provenance ref_id. Asserted for the table this task owns,
+        # term_label_picks; the other base tables' foreign keys into evidence and judgment are listed, not
+        # failed here (term_aliases.observation_id waits on the owner's answer on an absorbed observation's
+        # attestation; term_relations, T-029's, is asserted since migration 151; base_parameters' are T-020's and the 2026-10-30 ruling's).
+        import yaml as _yaml
+        SM = _yaml.safe_load((REPO / "governance" / "stage-map.yaml").read_text(encoding="utf-8"))["tables"]
+        c21 = sqlite3.connect(DB)
+        try:
+            v21 = []
+            for t21 in sorted(t for t, st in SM.items() if st == "base"):
+                cols = {r[1]: r[3] for r in c21.execute(f'PRAGMA table_info("{t21}")')}
+                for f in c21.execute(f'PRAGMA foreign_key_list("{t21}")'):
+                    if SM.get(f[2]) != "base" and not (f[3] == "ref_id" and not cols.get(f[3])):
+                        v21.append((t21, f[3], f[2], SM.get(f[2])))
+        finally:
+            c21.close()
+        others21 = [v for v in v21 if v[0] not in ("term_label_picks", "term_relations")]
+        if others21:
+            print(f"      REPORTED (other base tables, not this task's): {others21}")
+        record("T028-21", "term_label_picks and term_relations, base tables by the stage map, hold no foreign key into "
+               "another stage; each ref_id is a plain provenance cell",
+               SM.get("term_label_picks") == "base" and SM.get("term_relations") == "base"
+               and not [v for v in v21 if v[0] in ("term_label_picks", "term_relations")]
+               and "ref_id" in [r[1] for r in q("PRAGMA table_info(term_relations)")]
+               and "ref_id" in [r[1] for r in q("PRAGMA table_info(term_label_picks)")], v21)
+
+
+    # ── T029: typed pointers from one term to another, grounded in the base's own cells (AT-67; migrations 147,
+    # 148, 151; OD-71). Probes are derived by query; every fixture is labelled TASK-FIXTURE and lives on the copy.
+    T29S = "session_2026-11-18-t029-task-fixture"
+    con = sqlite3.connect(DB)
+    try:
+        nonparam29 = [t for (t,) in con.execute("SELECT term_id FROM terms WHERE term_id NOT IN "
+                                                "(SELECT term_id FROM base_parameters) ORDER BY term_id")]
+        PARAM29 = con.execute("SELECT term_id, parameter_id FROM base_parameters WHERE status = 'active' "
+                              "ORDER BY parameter_id LIMIT 1").fetchone()
+        KINDS29 = sorted(dbcore.check_values(con, "term_relations", "kind") or [])
+    except sqlite3.OperationalError as exc:
+        if not _absent_schema(exc):
+            raise
+        nonparam29, PARAM29, KINDS29 = [], None, []
+    finally:
+        con.close()
+    if len(nonparam29) < 3 or not PARAM29:
+        print("      SKIPPED-NO-FIXTURE: T029 needs three terms that are not parameters and an active parameter")
+        record("T029-00", "the T029 fixtures exist (three non-parameter terms, an active parameter)",
+               False, (len(nonparam29), PARAM29))
+    else:
+        E29, P29, O29 = nonparam29[:3]
+        PT29, PID29 = PARAM29
+        K_PROV, K_PAR = "element has provision", "element has parameter"
+        URL29 = "https://example.org/task-fixture-t029"
+        LOC29 = dict(source_url=URL29, source_page="3", source_line=12)      # where a source says so
+        LOC29B = dict(source_url=URL29, source_clause="TASK-FIXTURE 4.1")
+        addrel = fn("add_term_relation")
+        retrel = fn("retire_term_relation")
+        elemread = fn("element_parameters")
+
+        def rels(sql="", *a):
+            return q("SELECT relation_id, from_term_id, kind, to_term_id, reason, source_url, source_page, "
+                     "source_line, source_clause, ref_id, created_by_session, retired_at FROM term_relations "
+                     + sql, *a)
+
+        # T029-01 (AT-67, OD-56): a row of kind `element has provision` between two held terms, with where a source
+        # says so, is accepted and the reader prints it among the element's provisions (and not among its
+        # parameters), with the locator it was grounded in.
+        a1 = attempt(addrel, E29, K_PROV, P29, "TASK-FIXTURE: the element should carry the provision", T29S, **LOC29)
+        r1 = attempt(elemread, E29)
+        pv1 = (r1.get("provisions") or [{}])[0]
+        record("T029-01", "an `element has provision` row between two held terms, grounded in a locator, is "
+               "accepted and printed by element-parameters among the provisions with its locator and reason",
+               a1.get("relation_id") and [p["term_id"] for p in r1.get("provisions", [])] == [P29]
+               and r1.get("parameters") == []
+               and (pv1.get("source_url"), pv1.get("source_page"), pv1.get("source_line"),
+                    pv1.get("source_clause")) == (URL29, "3", 12, None)
+               and pv1.get("reason") == "TASK-FIXTURE: the element should carry the provision"
+               and pv1.get("created_by_session") == T29S, (a1, r1))
+
+        # T029-02 (AT-67): a kind outside the CHECK is refused, naming the CHECK's own set; nothing is written.
+        n02 = len(rels())
+        e2 = refusal(addrel, E29, "equivalent", O29, "TASK-FIXTURE", T29S, **LOC29)
+        record("T029-02", "a kind outside the column's CHECK (`equivalent`) is refused, naming the CHECK's set, and "
+               "nothing is written; the set is the column's own and holds `distinct`",
+               e2 and all(k in e2 for k in KINDS29) and "equivalent" not in KINDS29 and "distinct" in KINDS29
+               and len(rels()) == n02, (e2, KINDS29))
+
+        # T029-03: `element has parameter` reads the parameter of the term it points at by looking it up.
+        a3 = attempt(addrel, E29, K_PAR, PT29, "TASK-FIXTURE: the element's dimension", T29S, **LOC29B)
+        r3 = attempt(elemread, E29)
+        pr3 = r3.get("parameters", [])
+        record("T029-03", "an `element has parameter` row is printed among the parameters with the parameter the "
+               "term carries (looked up, not copied) and its clause locator; a provision that carries no "
+               "parameter prints none",
+               a3.get("relation_id") and len(pr3) == 1 and pr3[0]["term_id"] == PT29
+               and pr3[0]["parameter_id"] == PID29 and pr3[0]["source_clause"] == "TASK-FIXTURE 4.1"
+               and [p["parameter_id"] for p in r3["provisions"]] == [None], (a3, r3))
+
+        # T029-04 (amendment 1): `distinct` is stored with the lower term id first whichever way the pair is named,
+        # rests on its reason alone, and a second live row for the pair is refused naming the held row.
+        lo, hi = sorted((P29, O29))
+        a4 = attempt(addrel, hi, "distinct", lo, "TASK-FIXTURE: two concepts", T29S)
+        e4a = refusal(addrel, lo, "distinct", hi, "TASK-FIXTURE: again", T29S)
+        e4b = refusal(addrel, hi, "distinct", lo, "TASK-FIXTURE: again", T29S)
+        r4 = rels("WHERE kind = 'distinct'")
+        record("T029-04", "a `distinct` row, justified by its reason alone, is stored lower id first whichever way "
+               "it is named; a second live row of the pair, either way round, is refused naming the held relation "
+               "and retire-term-relation",
+               a4.get("relation_id") and (a4.get("from_term_id"), a4.get("to_term_id")) == (lo, hi)
+               and [(r[1], r[3]) for r in r4] == [(lo, hi)]
+               and all(e and str(a4["relation_id"]) in e and "retire-term-relation" in e for e in (e4a, e4b)),
+               (a4, e4a, e4b, r4))
+
+        # T029-05 (rule 5): the converse of a directed row is a second home of one fact, refused by the same
+        # index; a different kind between the same pair is not.
+        a5 = attempt(addrel, E29, "broader", O29, "TASK-FIXTURE: broader", T29S, **LOC29)
+        e5 = refusal(addrel, O29, "broader", E29, "TASK-FIXTURE: converse", T29S, **LOC29)
+        a5b = attempt(addrel, O29, "part of", E29, "TASK-FIXTURE: another kind", T29S, **LOC29)
+        record("T029-05", "the converse of a live directed row is refused naming the held relation; a different "
+               "kind for the same pair is accepted", a5.get("relation_id") and e5 and str(a5["relation_id"]) in e5
+               and a5b.get("relation_id"), (a5, e5, a5b))
+
+        # T029-06 (OD-71): the justification is the base's own cells. Each of these is refused, naming what is
+        # required, and writes nothing: no locator on a kind but `distinct` (a reason alone does not justify it),
+        # a URL with no page or clause, a page with no URL, a URL that is not http(s), a line below 1, a blank
+        # page, and a `distinct` row with no reason.
+        n06 = len(rels())
+        e6 = {"none": refusal(addrel, E29, "adjacent", O29, "TASK-FIXTURE: reason only", T29S),
+              "url only": refusal(addrel, E29, "adjacent", O29, "TASK-FIXTURE", T29S, source_url=URL29),
+              "page only": refusal(addrel, E29, "adjacent", O29, "TASK-FIXTURE", T29S, source_page="3"),
+              "scheme": refusal(addrel, E29, "adjacent", O29, "TASK-FIXTURE", T29S, source_url="ftp://x.org/a",
+                                source_page="3"),
+              "line": refusal(addrel, E29, "adjacent", O29, "TASK-FIXTURE", T29S, source_line=0, **LOC29B),
+              "blank page": refusal(addrel, E29, "adjacent", O29, "TASK-FIXTURE", T29S, source_url=URL29,
+                                    source_page="  ", source_clause="c"),
+              "distinct no reason": refusal(addrel, E29, "distinct", O29, None, T29S, **LOC29),
+              "distinct partial locator": refusal(addrel, E29, "distinct", O29, "TASK-FIXTURE", T29S,
+                                                  source_url=URL29)}
+        record("T029-06", "no locator, a partial or malformed one, and a `distinct` row with no reason are each "
+               "refused, naming what is required, and write nothing",
+               all(e6.values()) and "--source-url" in e6["none"] and "--source-page or --source-clause" in e6["none"]
+               and "--reason" in e6["distinct no reason"] and len(rels()) == n06, e6)
+
+        # T029-07: a blank reason, an unknown term and one term at both ends are each refused.
+        e7 = {"reason": refusal(addrel, E29, "adjacent", O29, "   ", T29S, **LOC29),
+              "term": refusal(addrel, E29, "adjacent", "TASK-FIXTURE-NO-SUCH-TERM", "TASK-FIXTURE", T29S, **LOC29),
+              "self": refusal(addrel, E29, "adjacent", E29, "TASK-FIXTURE", T29S, **LOC29)}
+        record("T029-07", "a blank reason, an unknown term and the same term at both ends are each refused and "
+               "write nothing", e7["reason"] and "--reason" in e7["reason"] and e7["term"] and "no such term" in
+               e7["term"] and e7["self"] and "both ends" in e7["self"] and "two different terms" in e7["self"]
+               and len(rels()) == n06, e7)
+
+        # T029-08 (amendment 2): a relation is retired in place with a reason, never revived, and the reader keeps
+        # only live rows; the pair can then be written again.
+        id8 = a1["relation_id"]
+        z8 = refusal(retrel, id8, "  ", T29S)
+        d8 = attempt(retrel, id8, "TASK-FIXTURE: the source was withdrawn", T29S)
+        again8 = refusal(retrel, id8, "TASK-FIXTURE: again", T29S)
+        nosuch8 = refusal(retrel, 10 ** 9, "TASK-FIXTURE: none", T29S)
+        row8 = q("SELECT retired_at, retired_by_session, retirement_reason, reason, kind, source_url FROM "
+                 "term_relations WHERE relation_id=?", id8)
+        r8 = attempt(elemread, E29)
+        w8 = attempt(addrel, E29, K_PROV, P29, "TASK-FIXTURE: written again", T29S, **LOC29)
+        record("T029-08", "retire-term-relation retires in place with a reason (the row stays, its other cells "
+               "untouched), refuses a blank reason, a retired row and an unknown one; the reader drops it; the "
+               "pair can be written again", z8 and d8.get("retired") is True and again8 and "retired at" in again8
+               and nosuch8 and "no such relation" in nosuch8 and "select relation_id" in nosuch8
+               and row8 and row8[0][0] and row8[0][1] == dbcore.session_stem(T29S)
+               and row8[0][2] == "TASK-FIXTURE: the source was withdrawn"
+               and row8[0][3] == "TASK-FIXTURE: the element should carry the provision" and row8[0][4] == K_PROV
+               and row8[0][5] == URL29
+               and r8.get("provisions") == [] and w8.get("relation_id") and w8["relation_id"] != id8,
+               (z8, d8, again8, nosuch8, row8, r8, w8))
+
+        # T029-09: the schema holds what the writers hold, so a route past the writers meets the same refusals.
+        def raw(sql, *a):
+            c = sqlite3.connect(DB)
+            try:
+                c.execute(sql, a)
+                c.commit()
+                return None
+            except sqlite3.IntegrityError as exc:
+                return str(exc)
+            finally:
+                c.close()
+        ins = ("INSERT INTO term_relations (from_term_id, kind, to_term_id, reason, source_url, source_page, "
+               "created_at, created_by_session) VALUES (?, ?, ?, ?, ?, ?, 't', 't')")
+        lo9, hi9 = sorted((E29, O29))        # a pair with no live `distinct` row, so only the CHECK can refuse
+        raw9 = {
+            "a": ("no locator on a kind but `distinct`", raw(ins, E29, "adjacent", P29, "TASK-FIXTURE", None, None)),
+            "b": ("a `distinct` row stored higher id first", raw(ins, hi9, "distinct", lo9, "TASK-FIXTURE", None,
+                                                                 None)),
+            "c": ("one term at both ends", raw(ins, E29, "adjacent", E29, "TASK-FIXTURE", URL29, "3")),
+            "e": ("a kind outside the CHECK", raw(ins, E29, "equivalent", O29, "TASK-FIXTURE", URL29, "3")),
+            "f": ("the converse of a live row of the same kind", raw(ins, O29, "broader", E29, "TASK-FIXTURE",
+                                                                    URL29, "3")),
+            "g": ("a `distinct` row with no reason", raw(ins, lo9, "distinct", hi9, None, None, None)),
+            "h": ("a page with no URL", raw(ins, lo9, "distinct", hi9, "TASK-FIXTURE", None, "3")),
+            "i": ("a URL that is not http(s)", raw(ins, E29, "adjacent", P29, "TASK-FIXTURE", "ftp://x.org/a", "3")),
+        }
+        # T029-09d: the three retirement cells are set together or not at all, and none is blank: every partial
+        # combination and every blank one, derived by looping over the three columns, is refused.
+        RET = ("retired_at", "retired_by_session", "retirement_reason")
+        bad9d = []
+        for mask in range(1, 7):          # every proper, non-empty subset of the three cells set
+            vals = {c: ("t" if mask >> i & 1 else None) for i, c in enumerate(RET)}
+            if not raw("UPDATE term_relations SET " + ", ".join(f"{c}=?" for c in RET) + " WHERE relation_id=?",
+                       *vals.values(), w8["relation_id"]):
+                bad9d.append(vals)
+        vals = {c: "  " for c in RET}       # all three set, all blank
+        if not raw("UPDATE term_relations SET " + ", ".join(f"{c}=?" for c in RET) + " WHERE relation_id=?",
+                   *vals.values(), w8["relation_id"]):
+            bad9d.append(vals)
+        for i, c in enumerate(RET):       # all three set, exactly one of them blank
+            vals = {k: ("  " if k == c else "t") for k in RET}
+            if not raw("UPDATE term_relations SET " + ", ".join(f"{k}=?" for k in RET) + " WHERE relation_id=?",
+                       *vals.values(), w8["relation_id"]):
+                bad9d.append(vals)
+        record("T029-09d", "the schema refuses a retirement with any one or two of its three cells set, any all-"
+               "three set with one or all of them blank (a NULL reason passes a length check, so the form is the "
+               "siblings' equality)", not bad9d and q("SELECT retired_at FROM term_relations WHERE relation_id=?",
+                                                       w8["relation_id"]) == [(None,)], bad9d)
+        for key, (what, err) in raw9.items():
+            record(f"T029-09{key}", f"the schema refuses {what}, so a route past the writers meets the same refusal",
+                   bool(err), err)
+
+        # T029-10: the table is in the derived capture set, so a relation made on a scratch copy reaches the
+        # canonical database through emit_batch_sql.
+        con = sqlite3.connect(DB)
+        try:
+            cap29 = set(dbcore.writable_tables(con))
+        finally:
+            con.close()
+        record("T029-10", "term_relations is in the derived capture set (dbcore.writable_tables)",
+               "term_relations" in cap29)
+
+        # T029-11: the reader refuses an unknown element, in a sentence; through the CLI it exits 1, not a traceback.
+        r11 = run("element-parameters", "--element", "TASK-FIXTURE-NO-SUCH-TERM")
+        record("T029-11", "element-parameters refuses an unknown element in a sentence",
+               r11.returncode == 1 and r11.stderr.startswith("REFUSING:") and "no such term" in r11.stderr
+               and "Traceback" not in r11.stderr, (r11.returncode, r11.stderr[-200:]))
+
+        # T029-12: the CLI is wired for each verb, takes a kind containing spaces and the grounding flags; the
+        # vocabulary offered is the CHECK's own.
+        r12 = run("add-term-relation", "--from-term", O29, "--kind", "adjacent", "--to-term", P29, "--reason",
+                  "TASK-FIXTURE: via the CLI", "--source-url", URL29, "--source-clause", "TASK-FIXTURE 9",
+                  "--ref-id", "TASK-FIXTURE-REF", "--session", T29S)
+        id12 = json.loads(r12.stdout).get("relation_id") if r12.returncode == 0 and r12.stdout.strip() else None
+        r12b = run("retire-term-relation", "--relation-id", str(id12), "--reason", "TASK-FIXTURE: via the CLI",
+                   "--session", T29S)
+        r12c = run("add-term-relation", "--help")
+        record("T029-12", "add-term-relation and retire-term-relation run through the CLI, and --kind offers "
+               "exactly the column's own CHECK set", id12 and r12b.returncode == 0
+               and all(k in r12c.stdout.replace("\n", " ") for k in KINDS29)
+               and q("SELECT retired_at IS NOT NULL FROM term_relations WHERE relation_id=?", id12) == [(1,)],
+               (r12.returncode, r12.stderr[-200:], r12b.returncode, r12b.stderr[-200:]))
+
+        # T029-12b: the parser's --kind choices are READ from the column's CHECK, never a typed list (rule 8).
+        import ast
+        tree12 = ast.parse((REPO / "scripts" / "db.py").read_text(encoding="utf-8"))
+        kind_calls = [n for n in ast.walk(tree12) if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
+                      and n.func.attr == "add_argument" and isinstance(n.func.value, ast.Name)
+                      and n.func.value.id == "p_atr" and n.args and isinstance(n.args[0], ast.Constant)
+                      and n.args[0].value == "--kind"]
+        ch12 = [k.value for c in kind_calls for k in c.keywords if k.arg == "choices"]
+        record("T029-12b", "add-term-relation's --kind takes its choices from dbcore.schema_choices(\"term_relations\", "
+               "\"kind\"), not a typed list", len(ch12) == 1 and isinstance(ch12[0], ast.Call)
+               and getattr(ch12[0].func, "attr", None) == "schema_choices"
+               and [a.value for a in ch12[0].args if isinstance(a, ast.Constant)] == ["term_relations", "kind"],
+               [ast.dump(c) for c in ch12])
+
+        # T029-13 (OD-56, OD-71): a provision is justified by where a source says the element should carry it,
+        # never by a reason alone (the old rule, that an adjudication is no warrant, in the base's own terms): the
+        # writer refuses it naming the locator, and the schema refuses it; with a locator it is accepted.
+        n13 = len(rels())
+        e13 = refusal(addrel, O29, K_PROV, P29, "TASK-FIXTURE: a reason alone", T29S)
+        r13 = raw(ins, O29, K_PROV, P29, "TASK-FIXTURE: a reason alone", None, None)
+        a13 = attempt(addrel, O29, K_PROV, P29, None, T29S, **LOC29B)
+        record("T029-13", "an `element has provision` row with a reason and no locator is refused by the writer "
+               "(naming --source-url) and by the schema; one with a locator is accepted",
+               e13 and "--source-url" in e13 and r13 and a13.get("relation_id") and len(rels()) == n13 + 1,
+               (e13, r13, a13))
+
+        # T029-14: the reason is optional off `distinct`, a blank one is refused by the schema.
+        a14 = attempt(addrel, O29, "part of", P29, None, T29S, **LOC29)
+        r14 = raw(ins, E29, "adjacent", P29, "  ", URL29, "3")
+        record("T029-14", "a relation with no reason is accepted and holds NULL there; a blank reason is refused by "
+               "the schema", a14.get("relation_id") and q("SELECT reason FROM term_relations WHERE relation_id=?",
+                                                          a14["relation_id"]) == [(None,)] and r14, (a14, r14))
+
+        # T029-15 (a merged or retired parameter), on fixture terms and parameters written by SQL on the copy
+        # (no writer builds a merged or retired state without a figure to merge); ids are derived from the form of
+        # the held ids.
+        pre = q("SELECT substr(term_id, 1, instr(term_id, '-')) FROM terms ORDER BY term_id LIMIT 1")[0][0]
+        FT = {n: f"{pre}{num}" for n, num in (("keep", 9990), ("fold", 9991), ("gone", 9992), ("nope", 9993),
+                                             ("lo", 9998), ("hi", 10001))}
+        if q("SELECT COUNT(*) FROM terms WHERE term_id IN (%s)" % ",".join("?" * len(FT)), *FT.values())[0][0]:
+            record("T029-15", "the fixture term ids are free", False, FT)
+        else:
+            for tid in FT.values():
+                x("INSERT INTO terms (term_id, canonical_en, created_at, created_by_session, updated_at, "
+                  "updated_by_session) VALUES (?, 'TASK-FIXTURE term', 't', ?, 't', ?)", tid, T29S, T29S)
+            for n in ("keep", "fold", "gone"):
+                x("INSERT INTO base_parameters (term_id, status, created_at, created_by_session) "
+                  "VALUES (?, 'active', 't', ?)", FT[n], T29S)
+            pid = {n: q("SELECT parameter_id FROM base_parameters WHERE term_id=?", FT[n])[0][0]
+                   for n in ("keep", "fold", "gone")}
+            x("INSERT INTO parameter_declinations (term_id, reason, created_at, created_by_session) "
+              "VALUES (?, 'TASK-FIXTURE', 't', ?)", FT["nope"], T29S)
+            w15 = {n: attempt(addrel, E29, K_PAR, FT[n], None, T29S, **LOC29) for n in ("fold", "nope")}
+            x("UPDATE base_parameters SET status='merged', merged_into=? WHERE parameter_id=?", pid["keep"],
+              pid["fold"])
+            x("UPDATE base_parameters SET status='retired' WHERE parameter_id=?", pid["gone"])
+            r15 = attempt(elemread, E29)
+            by15 = {p["term_id"]: p for p in r15.get("parameters", [])}
+            e15m = refusal(addrel, E29, K_PAR, FT["fold"], None, T29S, **LOC29B)
+            e15r = refusal(addrel, E29, K_PAR, FT["gone"], None, T29S, **LOC29)
+            a15 = attempt(addrel, E29, K_PAR, FT["keep"], None, T29S, **LOC29)
+            record("T029-15a", "the reader follows a merged parameter to the one that stands (its id and term, and "
+                   "the id it was written against)", by15.get(FT["fold"], {}).get("parameter_id") == pid["keep"]
+                   and by15[FT["fold"]]["parameter_term_id"] == FT["keep"]
+                   and by15[FT["fold"]]["merged_from_parameter_id"] == pid["fold"], (w15, by15.get(FT["fold"])))
+            record("T029-15b", "the reader flags a term with a live declination: no parameter, declined",
+                   by15.get(FT["nope"], {}).get("parameter_id", 0) is None and by15[FT["nope"]]["declined"] is True
+                   and by15[FT["fold"]]["declined"] is False, by15.get(FT["nope"]))
+            record("T029-15c", "a new `element has parameter` row to a term whose parameter is merged names the "
+                   "survivor's term; to one whose parameter is retired says so; to an active one is accepted",
+                   e15m and FT["keep"] in e15m and e15r and "retired" in e15r and a15.get("relation_id"),
+                   (e15m, e15r, a15))
+
+            # T029-16: `distinct` is stored lower first by the number after the hyphen (a text order puts the
+            # 10001 id before the 9998 one); the schema holds the same order.
+            a16 = attempt(addrel, FT["hi"], "distinct", FT["lo"], "TASK-FIXTURE: two", T29S)
+            r16 = raw(ins, FT["hi"], "distinct", FT["gone"], "TASK-FIXTURE: two", None, None)
+            record("T029-16", "a `distinct` row between a 4-digit and a 5-digit id is stored with the numerically "
+                   "lower id first, whichever way it is named, and the schema refuses the other order",
+                   (a16.get("from_term_id"), a16.get("to_term_id")) == (FT["lo"], FT["hi"]) and r16, (a16, r16))
+
+        # T029-17 (OD-71): term_relations is a base table by the stage map and holds no foreign key into another
+        # stage (its only foreign keys are into terms); its ref_id is a plain provenance cell: any text is
+        # accepted, validated against nothing, printed by the reader and read by no decision.
+        import yaml as _yaml
+        SM29 = _yaml.safe_load((REPO / "governance" / "stage-map.yaml").read_text(encoding="utf-8"))["tables"]
+        fk29 = [(f[2], SM29.get(f[2])) for f in q("PRAGMA foreign_key_list(term_relations)")]
+        cols29 = {r[1]: r[2] for r in q("PRAGMA table_info(term_relations)")}
+        a17 = attempt(addrel, O29, "adjacent", E29, "TASK-FIXTURE: provenance", T29S, ref_id="TASK-FIXTURE-NOT-A-REF",
+                      **LOC29)
+        a17b = attempt(addrel, P29, "adjacent", E29, "TASK-FIXTURE: no provenance", T29S, **LOC29)
+        record("T029-17", "term_relations, a base table, holds no foreign key into another stage; ref_id is a "
+               "plain nullable cell, accepted unvalidated and equally absent",
+               SM29.get("term_relations") == "base" and fk29 and all(st == "base" for _, st in fk29)
+               and "ref_id" in cols29 and a17.get("relation_id") and a17b.get("relation_id")
+               and q("SELECT ref_id FROM term_relations WHERE relation_id IN (?, ?) ORDER BY relation_id",
+                     a17["relation_id"], a17b["relation_id"]) == [("TASK-FIXTURE-NOT-A-REF",), (None,)],
+               (fk29, a17, a17b))
+
+    # ── T031: the clause inventory, the re-read flag and the clause pointer (OD-23, migration 153). Probes are derived
+    # by query; every fixture is labelled TASK-FIXTURE and lives on the copy and in the temp log.
+    T31S = "session_2026-11-18-t031-task-fixture"
+    norm = retrieval_log.normalise_quote
+
+    def forms31(term_id):
+        return {f for (n,) in q("SELECT canonical_en FROM terms WHERE term_id=? UNION SELECT alias FROM term_aliases "
+                                "WHERE term_id=? AND alias_type NOT IN ('NARROWER','BROADER')", term_id, term_id)
+                for f in [norm(n)] if f}
+
+    FREE31 = [t for t in FREE[30:] if not q("SELECT 1 FROM base_parameters WHERE term_id=?", t)
+              and not q("SELECT 1 FROM parameter_declinations WHERE term_id=? AND revoked_at IS NULL", t)]
+    T_IN = FREE31[0] if FREE31 else None
+    NAME_IN = q("SELECT canonical_en FROM terms WHERE term_id=?", T_IN)[0][0] if T_IN else ""
+    CL31 = [{"locator_scheme": "TASK-FIXTURE clause", "loc_clause": "4.1",
+             "clause_text": f"Clause 4.1 The {NAME_IN} of every primary route shall be not less than 1500 mm."},
+            {"locator_scheme": "TASK-FIXTURE clause", "loc_clause": "4.2",
+             "clause_text": "Clause 4.2 A landing is provided at each change of direction."}]
+    PAGES31 = [c["clause_text"] for c in CL31] + ["Clause 4.3 TASK-FIXTURE text of the T031 inventory."]
+    BODY31 = "\n".join(f"[PDF page {i} of 3]\n{t}\n" for i, t in enumerate(PAGES31, start=1))
+    T_OUT = next((t for t in FREE31[1:] if not any(f in norm(BODY31) for f in forms31(t))), None)
+    record("T031-00", "the T031 fixtures exist: two free terms, the second named nowhere in the fixture text",
+           T_IN and T_OUT, FREE31)
+    SHA31 = put("t031-full-text.txt", BODY31.encode(), REF_A, derived_from="fixture3pages.pdf")
+    PATH31 = pathlib.Path(LOG) / FIX / "t031-full-text.txt"
+
+    def sc31(**k):
+        d = {"ref_id": REF_A, "mode": "catalogue", "text_scope": "full", "file_sha256": SHA31,
+             "method": "full-read", "open_pass_done": True, "clauses": [dict(c) for c in CL31]}
+        d.update(k)
+        return d
+
+    n31 = (q("SELECT COUNT(*) FROM source_scans")[0][0], q("SELECT COUNT(*) FROM source_clauses")[0][0])
+    expect_refusal("T031-02", "clauses without --open-pass-done are refused: the open pass writes the inventory",
+                   "open pass", scan, sc31(open_pass_done=False), T31S)
+    m3 = [refusal(scan, sc31(**k), T31S) for k in ({"text_scope": "partial"}, {"method": "pre-screen"},
+                                                     {"mode": "targeted", "target_parameter_id": PE})]
+    record("T031-03", "clauses on a reading that is not full, on a pre-screen and on a targeted reading are each "
+           "refused (the open pass of a full catalogue full-read writes the inventory)",
+           all(m and "--mode catalogue" in m for m in m3), m3)
+    expect_refusal("T031-04", "a clause whose text is not in the file read is refused (backed by retained text)",
+                   "does not occur in", scan,
+                   sc31(clauses=[{"loc_clause": "9.9", "clause_text": "TASK-FIXTURE clause typed from memory"}]), T31S)
+    expect_refusal("T031-05", "a clause that names no level of the hierarchy is refused", "names no place", scan,
+                   sc31(clauses=[{"locator_scheme": "TASK-FIXTURE", "clause_text": CL31[1]["clause_text"]}]), T31S)
+    m6a = refusal(scan, sc31(clauses=[{"loc_clause": "4.2", "clause_text": "  "}]), T31S)
+    m6b = refusal(scan, sc31(clauses=[{"loc_clause": "4.2", "clause_text": CL31[1]["clause_text"],
+                                       "loc_page": "2"}]), T31S)
+    record("T031-06", "a blank clause text and a key that is not a column of source_clauses are each refused",
+           m6a and "no clause_text" in m6a and m6b and "not columns a clause takes" in m6b, (m6a, m6b))
+    m6c = [refusal(scan, sc31(clauses=c), T31S) for c in ([], "TASK-FIXTURE", ["TASK-FIXTURE"])]
+    m6d = refusal(scan, sc31(clauses=[{"loc_clause": "4.2", "clause_text": "?!"}]), T31S)
+    record("T031-06c", "an empty list, a list that is not of objects, and a clause text with no letter or digit "
+           "(it matches anything) are each refused",
+           all(m and "non-empty list of objects" in m for m in m6c) and m6d and "does not occur in" in m6d,
+           (m6c, m6d))
+    m6d = [refusal(scan, sc31(clauses=[{"loc_clause": v, "clause_text": CL31[1]["clause_text"]}]), T31S)
+           for v in (["4.1", "4.2"], 4, None, {"a": "4.2"})]
+    record("T031-06d", "a cell given as a list, a number, a null or an object is refused (one string per cell)",
+           all(m and "other than text" in m for m in m6d), m6d)
+    m6e = refusal(scan, sc31(clauses=[dict(CL31[1]), {**CL31[1], "clause_text": "A landing is provided"}]), T31S)
+    record("T031-06e", "two clauses at one place in one reading are refused (one row per clause per reading)",
+           m6e and "same place" in m6e, m6e)
+    SHA31X = put("t031-undecodable-text.txt", b"Clause 7 \x81\x82\x83 TASK-FIXTURE", REF_A,
+                  derived_from="fixture3pages.pdf")
+    expect_refusal("T031-06b", "a file that cannot be decoded is refused: no clause can be checked against it",
+                   "cannot be decoded", scan,
+                   sc31(file_sha256=SHA31X, clauses=[{"loc_clause": "7", "clause_text": "Clause 7"}]), T31S)
+    record("T031-07", "every refused inventory wrote nothing: no reading and no clause (T031-02 to 06e)",
+           (q("SELECT COUNT(*) FROM source_scans")[0][0], q("SELECT COUNT(*) FROM source_clauses")[0][0]) == n31, n31)
+    s31 = attempt(scan, sc31(), T31S)
+    rows31 = q("SELECT clause_id, loc_clause, clause_text FROM source_clauses WHERE scan_id=? ORDER BY clause_id",
+               s31.get("scan_id", -1))
+    record("T031-01", "the open pass of a full reading writes one source_clauses row per clause, keyed by its scan_id",
+           s31.get("clause_ids") == [r[0] for r in rows31] and [r[1] for r in rows31] == ["4.1", "4.2"]
+           and [r[2] for r in rows31] == [c["clause_text"] for c in CL31], (s31, rows31))
+    cl_path = os.path.join(TMP, "t031-clauses.json")
+    with open(cl_path, "w", encoding="utf-8") as fh:
+        json.dump(CL31, fh)
+    r31 = run("record-scan", "--ref-id", REF_A, "--mode", "catalogue", "--text-scope", "full", "--file-sha256",
+              SHA31, "--method", "full-read", "--open-pass-done", "--clauses", cl_path, "--session", T31S,
+              "--dry-run")
+    r31b = run("record-scan", "--ref-id", REF_A, "--mode", "catalogue", "--text-scope", "full", "--file-sha256",
+               SHA31, "--method", "full-read", "--clauses", cl_path, "--session", T31S, "--dry-run")
+    r31c = run("record-scan", "--ref-id", REF_A, "--mode", "catalogue", "--text-scope", "full", "--file-sha256",
+               SHA31, "--method", "full-read", "--open-pass-done", "--clauses", cl_path + ".missing",
+               "--session", T31S, "--dry-run")
+    record("T031-01c", "record-scan refuses a --clauses path that is not a readable JSON file, in a sentence",
+           r31c.returncode == 1 and r31c.stderr.startswith("REFUSING:") and "not a readable JSON" in r31c.stderr,
+           r31c.stderr[-300:])
+    record("T031-01b", "record-scan --clauses reads the JSON file on the CLI (dry run lands two clause ids) and "
+           "refuses in a sentence without --open-pass-done",
+           r31.returncode == 0 and len(json.loads(r31.stdout or "{}").get("clause_ids", [])) == 2
+           and r31b.returncode == 1 and r31b.stderr.startswith("REFUSING:") and "open pass" in r31b.stderr,
+           r31.stdout[-300:] + r31.stderr[-300:] + r31b.stderr[-300:])
+
+    # Item 2: held clause text is not shown (dbcore.NOT_SHOWN, the one home). The render contract lists no view yet
+    # (T-037 has not landed), so every view is held to it, and so is the owner-browser page, which embeds the whole
+    # database: it must read no hidden column and never read a table by `*`. Each detector is proven on a seed.
+    HIDDEN = {c for cs in dbcore.NOT_SHOWN.values() for c in cs}
+
+    def views_showing(views):
+        return [n for n, sql in views
+                if any(c in (sql or "").lower() for c in HIDDEN)
+                or (any(t in (sql or "") for t in dbcore.NOT_SHOWN)
+                    and re.search(r"(^|[\s,])(\w+\.)?\*(\s|,|$)", (sql or "").lower()))]
+
+    def page_shows(html):
+        return re.findall(r'"select (?:rowid as _rid, )?\*', html) + (
+            [] if "!(META.hidden[r.name] || []).includes(c.name)" in html else ["no META.hidden filter"])
+
+    live_views = q("SELECT name, sql FROM sqlite_master WHERE type='view'")
+    seeded = views_showing([("v_seed_a", "SELECT clause_id, clause_text FROM source_clauses"),
+                            ("v_seed_b", "SELECT s.ref_id, c.* FROM source_scans s JOIN source_clauses c "
+                                         "ON c.scan_id = s.scan_id"),
+                            ("v_seed_c", "SELECT count(*) FROM source_clauses")])
+    PAGE = (REPO / "scripts" / "generate" / "owner_browser.html").read_text(encoding="utf-8")
+    page_seeded = page_shows(PAGE.replace('"select " + sel(name) + " from " + q(name) + " where rowid',
+                                          '"select * from " + q(name) + " where rowid', 1))
+    page_unfiltered = page_shows(PAGE.replace("!(META.hidden[r.name] || []).includes(c.name)", "true", 1))
+    sys.path.insert(0, str(REPO / "scripts" / "generate"))
+    con = sqlite3.connect(DB)
+    try:
+        ob_meta = attempt(importlib.import_module("owner_browser_build").meta, con, DB)
+    finally:
+        con.close()
+    record("T031-08", "no view and not the owner-browser page shows clause_text (OD-23: clause NOT shown); the "
+           "detectors flag a seeded view naming it, a seeded `c.*` view, a seeded `select *` page and a page with no "
+           "hidden-column filter, and pass count(*); the page build carries dbcore.NOT_SHOWN",
+           views_showing(live_views) == [] and seeded == ["v_seed_a", "v_seed_b"] and page_shows(PAGE) == []
+           and page_seeded and page_unfiltered == ["no META.hidden filter"]
+           and ob_meta.get("hidden") == {t: list(cs) for t, cs in dbcore.NOT_SHOWN.items()},
+           (views_showing(live_views), seeded, page_shows(PAGE), page_seeded, page_unfiltered, ob_meta.get("hidden")))
+
+    # Items 3 and 4: the route of each owed pair, and the re-read flag.
+    P_IN = promote(T_IN).get("parameter_id") if T_IN else None
+    P_OUT = promote(T_OUT).get("parameter_id") if T_OUT else None
+    sys.path.insert(0, str(REPO / "scripts" / "audit"))
+    scan_debt = importlib.import_module("scan_debt")
+
+    def route(pid):
+        con = sqlite3.connect(DB)
+        try:
+            return next((r for r in scan_debt.reread_routes(con, retrieval_log, pid) if r["ref_id"] == REF_A), None)
+        finally:
+            con.close()
+
+    ri, ro = route(P_IN), route(P_OUT)
+    record("T031-09", "a parameter promoted after the reading is matched against the inventory first (the clause "
+           "naming it), then the retained text (on disk): neither pair is flagged",
+           ri and ri["route"] == "inventory" and ri["clauses"] == [r[0] for r in rows31[:1]]
+           and ro and ro["route"] == "retained-text" and ro["file"].endswith("t031-full-text.txt"), (ri, ro))
+    d17 = run_audit("scan_debt.py", "--reread", "--limit", "100000")
+    record("T031-17", "with the inventory and the retained text reaching every owed pair of a source read in full, "
+           "scan_debt.py --reread passes (exit 0)", d17.returncode == 0 and "PASS:" in d17.stdout,
+           d17.stdout[-600:] + d17.stderr)
+    con = sqlite3.connect(DB)
+    try:
+        listed = {r["ref_id"] for r in scan_debt.reread_routes(con, retrieval_log)}
+        unread_full = {r for (r,) in con.execute(
+            "SELECT DISTINCT ref_id FROM v_scan_ledger WHERE status IN ('NOT-READ','READ-PARTIAL') AND ref_id NOT IN "
+            "(SELECT ref_id FROM source_scans WHERE text_scope = 'full' AND method = 'full-read')")}
+    finally:
+        con.close()
+    record("T031-18", "a pair of a source never read in full (REF_B, read in part only; a source never read) is plain "
+           "debt, never routed for a re-read",
+           REF_B in unread_full and len(unread_full) > 1 and not (listed & unread_full), sorted(listed & unread_full)[:5])
+    PATH31.rename(PATH31.with_suffix(".gone"))          # the retained text leaves the disk
+    try:
+        ro2, ri2 = route(P_OUT), route(P_IN)
+        d31 = run_audit("scan_debt.py", "--reread", "--limit", "100000")
+        cs_out = attempt(db.cell_status, P_OUT)
+        cs_in = attempt(db.cell_status, P_IN)
+    finally:
+        PATH31.with_suffix(".gone").rename(PATH31)
+    record("T031-09b", "with no retained text on disk the pair no clause matches is flagged `reread`; the matched "
+           "pair is still reached through the inventory",
+           ro2 and ro2["route"] == "reread" and ri2 and ri2["route"] == "inventory", (ro2, ri2))
+    good31 = PATH31.read_bytes()
+    PATH31.write_bytes(good31 + b"TASK-FIXTURE: the file changed")    # on disk, but no longer the bytes read
+    try:
+        ro3 = route(P_OUT)
+    finally:
+        PATH31.write_bytes(good31)
+    record("T031-09c", "a retained file that no longer hashes to the scan's sha256 is not retained text: flagged",
+           ro3 and ro3["route"] == "reread", ro3)
+    # The forms matched are those v_term_names reads (its display name, and the attested forms of
+    # v_attested_term_forms), word by word: a BROADER form, an unrecorded form and a form inside a word do not reach
+    # the pair; an attested SYNONYM does. Alias rows by SQL on the copy, a state for a fixture.
+    def alias31(alias, kind, att):
+        loc = ("https://example.org/task-fixture-t031", "1") if att in ("instrument", "other_source") else (None, None)
+        return x("INSERT INTO term_aliases (term_id, alias, language, alias_type, attestation, source_url, "
+                 "source_page, created_at, created_by_session, updated_at, updated_by_session) VALUES "
+                 "(?, ?, 'EN', ?, ?, ?, ?, 't', ?, 't', ?)", T_OUT, alias, kind, att, *loc, T31S, T31S)
+
+    tried = {}
+    for key, args in (("broader", ("landing", "BROADER", "other_source")),
+                      ("unrecorded", ("change of direction", "SYNONYM", "unrecorded")),
+                      ("inside", ("rect", "SYNONYM", "other_source")),
+                      ("attested", ("change of direction", "SYNONYM", "other_source"))):
+        fid = alias31(*args)
+        tried[key] = route(P_OUT)
+        x("DELETE FROM term_aliases WHERE form_id = ?", fid)
+    record("T031-09d", "a BROADER form, an unrecorded form and a form found only inside a word (`rect` in `direction`) "
+           "do not reach the pair; an attested SYNONYM does, through the clause that holds it",
+           all(tried[k] and tried[k]["route"] == "retained-text" for k in ("broader", "unrecorded", "inside"))
+           and tried["attested"] and tried["attested"]["route"] == "inventory"
+           and tried["attested"]["clauses"] == [r[0] for r in rows31[1:2]], tried)
+    record("T031-10", "scan_debt.py --reread prints the flagged pair under reread, a REREAD line and EXAMINED, "
+           "and exits 1",
+           d31.returncode == 1 and "EXAMINED:" in d31.stdout and "REREAD:" in d31.stdout
+           and f"{REF_A} x parameter {P_OUT} (NOT-READ)" in d31.stdout.split("  reread")[-1],
+           d31.stdout[-600:] + d31.stderr)
+    record("T031-13", "cell-status lists the flagged source under evidence, owed, reread_flagged, and not for the "
+           "parameter the inventory reaches",
+           REF_A in cs_out.get("stages", {}).get("evidence", {}).get("owed", {}).get("reread_flagged", [])
+           and REF_A not in cs_in.get("stages", {}).get("evidence", {}).get("owed", {}).get("reread_flagged", [REF_A]),
+           (cs_out.get("error"), cs_in.get("error")))
+    attempt(scan, sc31(mode="targeted", target_parameter_id=P_OUT, open_pass_done=False, clauses=None), T31S)
+    record("T031-15", "the flag is cleared by recording the reading: a targeted reading leaves the pair owed nowhere",
+           route(P_OUT) is None and ledger(REF_A, P_OUT) == ("READ-NOTHING-FOUND", "full"), ledger(REF_A, P_OUT))
+    # A later full reading of a CHANGED file: the clauses of the old file are not read for it.
+    SHA31N = put("t031-full-text-2.txt", (BODY31 + "\nTASK-FIXTURE: a later edition").encode(), REF_A,
+                 derived_from="fixture3pages.pdf")
+    s31n = attempt(scan, sc31(file_sha256=SHA31N, open_pass_done=False, clauses=None), T31S)
+    T3 = next((t for t in FREE31 if t not in (T_IN, T_OUT)), None)
+    P3 = promote(T3).get("parameter_id") if T3 else None      # promoted after both readings: owed
+    con = sqlite3.connect(DB)
+    try:                                                       # an attested form that clause 4.2 of the OLD file holds
+        f3 = con.execute("INSERT INTO term_aliases (term_id, alias, language, alias_type, attestation, source_url, "
+                         "source_page, created_at, created_by_session, updated_at, updated_by_session) VALUES "
+                         "(?, 'change of direction', 'EN', 'SYNONYM', 'other_source', "
+                         "'https://example.org/task-fixture-t031', '1', 't', ?, 't', ?)", (T3, T31S, T31S)).lastrowid
+        con.commit()
+        rn = next((r for r in scan_debt.reread_routes(con, retrieval_log, P3) if r["ref_id"] == REF_A), None)
+        con.execute("DELETE FROM term_aliases WHERE form_id = ?", (f3,))
+        con.commit()
+    finally:
+        con.close()
+    record("T031-19", "after a full reading of a changed file the old file's clauses no longer reach the pair "
+           "(the inventory of the current file is read)",
+           s31n.get("scan_id") and P3 and rn and rn["route"] == "retained-text"
+           and rn["file"].endswith("t031-full-text-2.txt"),
+           (s31n, rn))
+
+    # Item 1, the pointer: a figure read from a clause points at it and types no locator. REF_A is put in the
+    # regulatory stratum for these cases (tier 4: R3 demands a pinpoint), restored after: a state for a fixture.
+    tier31 = q("SELECT tier FROM evidence_sources WHERE ref_id=?", REF_A)[0][0]
+    x("UPDATE evidence_sources SET tier=4 WHERE ref_id=?", REF_A)
+    PB = PE if q("SELECT 1 FROM base_parameters WHERE parameter_id=? AND status='active'", PE) else P_IN
+    SHA31B = put("t031-b-text.txt", b"Section 2 TASK-FIXTURE the landing length of a ramp, read whole.", REF_B,
+                 derived_from="fixture-b.html")
+    sb = attempt(scan, {"ref_id": REF_B, "mode": "catalogue", "text_scope": "full", "file_sha256": SHA31B,
+                        "method": "full-read", "open_pass_done": True,
+                        "clauses": [{"loc_section": "2", "clause_text": "the landing length of a ramp"}]}, T31S)
+
+    def fig31(**k):
+        d = {"ref_id": REF_A, "parameter_id": PB, "identity_code": POP, "claim_type": "numerical",
+             "lens_basis": "named_in_text", "lens_basis_text": "Clause", "claimed_value": "1500",
+             "claimed_unit": "mm", "comparator": ">=", "figure_role": "claim", "extraction_method": "full-read",
+             "claim_text": CL31[0]["clause_text"], "clause_id": rows31[0][0] if rows31 else -1}
+        d.update(k)
+        return d
+
+    try:
+        expect_refusal("T031-12a", "add-extraction refuses a clause another source's reading recorded",
+                       "is a clause of", db.insert_extraction,
+                       fig31(clause_id=(sb.get("clause_ids") or [-1])[0]), T31S, relations=[])
+        expect_refusal("T031-12b", "add-extraction refuses a locator typed beside --clause-id (rule 5)",
+                       ("second", "--loc-section"), db.insert_extraction, fig31(loc_section="4.1"), T31S,
+                       relations=[])
+        expect_refusal("T031-12c", "add-extraction refuses a clause_id that is no clause", "not a clause",
+                       db.insert_extraction, fig31(clause_id=2 ** 30), T31S, relations=[])
+        expect_refusal("T031-12d", "add-extraction refuses --source-section beside --clause-id (a prose locator is a "
+                       "locator)", ("second", "--source-section"), db.insert_extraction,
+                       fig31(source_section="Clause 9.9 somewhere else"), T31S, relations=[])
+        expect_refusal("T031-12e", "add-extraction refuses a quote that is not inside the clause pointed at (clause "
+                       "4.1's words with clause 4.2's id)", "not inside clause", db.insert_extraction,
+                       fig31(clause_id=rows31[1][0] if len(rows31) > 1 else -1), T31S, relations=[])
+        f31 = attempt(db.insert_extraction, fig31(), T31S, relations=[])
+        row31 = q("SELECT clause_id, locator_scheme, loc_clause, source_section FROM source_value_extractions "
+                  "WHERE extraction_id=?", f31.get("extraction_id", -1))
+        record("T031-11", "a tier-4 figure with --clause-id and no locator of its own lands (R3 reads the clause's "
+               "place) and stores only the pointer",
+               bool(rows31) and row31 == [(rows31[0][0], None, None, None)], (f31, row31))
+        g31 = run("--session", T31S, script="audit/research_batch_dod.py")
+        record("T031-11b", "the batch gate's R3 counts the clause pointer as a pinpoint for that figure",
+               "R3: PASS" in g31.stdout, [l for l in g31.stdout.splitlines() if "R3" in l])
+        con = sqlite3.connect(DB)
+        con.row_factory = sqlite3.Row
+        try:
+            inp31 = con.execute("SELECT * FROM source_value_extractions WHERE extraction_id=?",
+                                (f31.get("extraction_id", -1),)).fetchone()
+            m16 = refusal(db._refuse_bad_derived_input, con, "TASK-FIXTURE", inp31) if inp31 else "no row"
+        finally:
+            con.close()
+        record("T031-16", "a derived figure's input that points at a clause has a locator (R3 for derived inputs)",
+               inp31 is not None and m16 is None, m16)
+        # R3 joins the clause: a figure (written past the writer, by SQL on the copy) pointing at another source's
+        # clause or at no clause has no pinpoint, at the batch gate and as a derived input.
+        T31R = "session_2026-11-18-t031-task-fixture-r3"
+        bad_ids = [x("INSERT INTO source_value_extractions (ref_id, parameter_id, claim_type, claimed_value, claim_text, "
+                     "extraction_method, created_at, created_by_session, updated_at, figure_role, clause_id) VALUES "
+                     "(?, ?, 'numerical', '1500', 'TASK-FIXTURE', 'full-read', 't', ?, 't', 'claim', ?)",
+                     REF_A, PB, T31R, cid) for cid in ((sb.get("clause_ids") or [-1])[0], 987654321)]
+        g20 = run("--session", T31R, script="audit/research_batch_dod.py")
+        con = sqlite3.connect(DB)
+        con.row_factory = sqlite3.Row
+        try:
+            m20 = [refusal(db._refuse_bad_derived_input, con, "TASK-FIXTURE", con.execute(
+                "SELECT * FROM source_value_extractions WHERE extraction_id=?", (i,)).fetchone()) for i in bad_ids]
+        finally:
+            con.close()
+        x("DELETE FROM source_value_extractions WHERE created_by_session = ?", T31R)
+        record("T031-20", "R3 (batch gate and derived input) finds no pinpoint in a pointer to another source's clause "
+               "or to no clause",
+               "R3: PASS" not in g20.stdout and REF_A in "".join(l for l in g20.stdout.splitlines() if "R3" in l)
+               and all(m and "R3" in m for m in m20), ([l for l in g20.stdout.splitlines() if "R3" in l], m20))
+    finally:
+        x("UPDATE evidence_sources SET tier=? WHERE ref_id=?", tier31, REF_A)
+    # The schema itself (migration 154): blank locator cells and blank text, an `_end` without its start, and a second
+    # row at one place in one reading are refused by SQL that bypasses the writer.
+    def schema_refuses(**cells):
+        row = {"scan_id": s31.get("scan_id", -1), "loc_clause": "8.1", "clause_text": "TASK-FIXTURE",
+               "created_at": "t", "created_by_session": T31S, **cells}
+        con = sqlite3.connect(DB)
+        try:
+            con.execute(f"INSERT INTO source_clauses ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
+                        list(row.values()))
+            return False
+        except sqlite3.IntegrityError:
+            return True
+        finally:
+            con.rollback()
+            con.close()
+
+    held = {"blank loc_clause": schema_refuses(loc_clause=""),
+            "spaces loc_section": schema_refuses(loc_section="   "),
+            "nbsp clause_text": schema_refuses(clause_text="\u00a0"),
+            "end without start": schema_refuses(loc_clause=None, loc_section="8", loc_clause_end="8.2"),
+            "same place twice": schema_refuses(locator_scheme=CL31[0]["locator_scheme"], loc_clause="4.1"),
+            "control lands": not schema_refuses()}
+    record("T031-21", "the schema refuses a blank locator cell, a blank text (no-break space), an `_end` without its "
+           "start and a second row at one place in one reading; a good row lands", all(held.values()), held)
+    con = sqlite3.connect(DB)
+    try:
+        record("T031-14", "source_clauses is in the derived capture set, and clause_id is not amendable (the locator "
+               "is where the quote was read)",
+               "source_clauses" in dbcore.writable_tables(con) and "clause_id" in db._NOT_AMENDABLE_SVE
+               and "clause_id" not in db._amendable_sve_fields(con))
+    finally:
+        con.close()
 
     # ── A: the observation-quote backstop can go red ─────────────────────────────────
     a1 = run_audit("observation_verbatim_audit.py")
@@ -1667,7 +2765,7 @@ try:
         ("retire-parameter", ["--parameter-id", str(P["R"]), "--reason", "x"], "already"),
         ("merge-parameter", ["--from", str(P["B"]), "--into", str(P["B"]), "--reason", "x"],
          "same parameter"),
-        ("rename-term", ["--term-id", TR, "--canonical-en", "x y", "--reason", "x"],
+        ("rename-term", ["--term-id", TR, "--canonical-en", "x y", "--reason", "x", "--judge", "x"],
          "warrant"),
         ("revoke-declination", ["--term-id", TD, "--reason", "x", "--decision-ref", "nope"],
          "--decision-ref"),

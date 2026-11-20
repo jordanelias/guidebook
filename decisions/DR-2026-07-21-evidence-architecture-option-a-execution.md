@@ -16,6 +16,8 @@ cells"). I3 survives in amended form: no *unflagged* and no *above-weak-band* be
 on regulatory-stratum-only cells, in any register, under any weighting profile; I5 applies with the
 register map's ○ row as ceiling.
 
+> **AMENDED — appended 2026-11-19, not edited.** The ○ ceiling above is narrowed by the owner's circle table of 2026-11-14 (the answer to OD-57; T-117 builds it into `band()` and T-120 into `governance/tier-system.md` §5, and until they land the ledger entries it rests on govern): a regulatory-stratum cell takes the marker of its tier there (◐ for a basis of T4 alone), not ○ for every such cell; for a grey, unverified or thin basis see the owner's answer to OD-64. Ledger: `references/project-standards.md`, "Unification 2026-11-14 — best, most common, minimum; showing and grading": best, most common and minimum are read as the owner defined them on 2026-11-14.
+
 ---
 
 ## 1. The decision
@@ -27,6 +29,7 @@ register map's ○ row as ceiling.
    caveat, in every register, for every audience — never unflagged, never at anchoring strength.
    Convergence-not-evidence is retained as the honesty rule within the weak band
    (`tier-system.md` §3 banner + §8), not as a suppression rule.
+   **AMENDED — appended 2026-11-19, not edited.** Decision 1's weak band is narrowed by the owner's circle table of 2026-11-14 (the answer to OD-57; T-117 builds it into `band()` and T-120 into `governance/tier-system.md` §5, and until they land the ledger entries it rests on govern): a code-only best carries the marker of its tier there, not ○ for every regulatory-stratum basis; for the grade of a showcased value see the owner's answer to OD-59. Never ● for a code basis stands. Ledger: `references/project-standards.md`, "Unification 2026-11-14 — best, most common, minimum; showing and grading": best, most common and minimum are read as the owner defined them on 2026-11-14.
 2. **Direction-aware most-accommodating floor selection.** Where jurisdictions' code floors differ
    on a parameter, the regulatory-stratum determination anchors on the most accommodating available
    value, read per the parameter's accessibility direction — best-for-the-user, not largest-number:
@@ -78,6 +81,8 @@ examples. `decisions/DR-2026-07-20-evidence-architecture-weighted-strength-recon
 status → SUPERSEDED-BY. Every doc statement that outruns the engine carries an inline
 `[ENGINE-LAG → DR-2026-07-21 §5]` marker; markers are removed only by the follow-up that lands
 the behavior.
+
+> **AMENDED — appended 2026-11-19, not edited.** Register row 3's ○ is narrowed by the owner's circle table of 2026-11-14 (the answer to OD-57; T-117 builds it into `band()` and T-120 into `governance/tier-system.md` §5, and until they land the ledger entries it rests on govern): it reads as the marker of the cell's tier there (◐ for a basis of T4 alone). Ledger: `references/project-standards.md`, "Unification 2026-11-14 — best, most common, minimum; showing and grading": best, most common and minimum are read as the owner defined them on 2026-11-14.
 
 **Governing-source reconciliation (added 2026-07-21 after adversarial review).** The precedence clause
 (`evidence-architecture.md:4`) makes divergent *cited sources* govern, so Option A does not fully hold
@@ -138,6 +143,8 @@ other active sources that carried the repealed "in error" rule: `references/proj
 mission draft and prior DRs are left as historical/append-only records). Option A now holds across the
 evidence architecture, its governing sources, and the mission; no mission-level reconciliation remains
 outstanding.
+
+> **AMENDED — appended 2026-11-19, not edited.** The owner's ruling recorded above ("no, it's just weak") stands: a code-only cell has a best, at the weak marker, flagged with the caveat. What narrows the two sentences is the owner's words of 2026-11-14: the value named best is the most accommodating code value, never the value codes agree on, and agreement among codes, flagged or not, is most common practice. An unflagged or above-weak-band claim is still in error. Ledger: `references/project-standards.md`, "Unification 2026-11-14 — best, most common, minimum; showing and grading": best, most common and minimum are read as the owner defined them on 2026-11-14.
 
 **Adversarial-remediation provenance.** This DR's §3 governing-source reconciliation, the §2.5 safeguard, and
 the attestation fixes were produced by a three-reviewer adversarial pass (Fable-5, max effort) over the

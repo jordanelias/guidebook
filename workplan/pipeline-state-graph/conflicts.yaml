@@ -482,5 +482,9 @@ status_corrections:
   - {atom: WRK-172, current: ACTIVE, should_be: AMENDED, by: [OPI-015, OPI-022], why: "its first limb (the strip is done manually) is overtaken -- no item name becomes a slug by stripping at all; its second limb (a regex smuggles the bias through) is subsumed by the stronger rule and still stands."}
   - {atom: WRK-004, current: ACTIVE, should_be: AMENDED, by: [LED-128, LED-110], why: "the lens count is four, not three."}
   - {atom: WRK-173, current: ACTIVE, should_be: AMENDED, by: [LED-128, LED-110], why: "the lens count is four, not three."}
+  # 2026-11-19 (T-134 repair): the two `why` lines above are dated. The lens count is three today (identity, ICF, access
+  # need): "Owner instruction 2026-11-16 — the medical taxonomy, the medical maps and the medical codes are deleted"
+  # (references/project-standards.md; find it with grep -n -F). LED-110, the medical lens these lines cite, is superseded
+  # by that entry; its atom is not edited here (T-120 owns the atoms' text).
   - {atom: WRK-043, current: ACTIVE, should_be: SUPERSEDED, by: [LED-091], why: "owner 2026-08-26 keyed the determination on the canonical parameter; migration 071 re-keyed specifications."}
   - {atom: WRK-068, current: ACTIVE, should_be: SUPERSEDED, by: [LED-091], why: "as WRK-043."}

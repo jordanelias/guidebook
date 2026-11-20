@@ -125,7 +125,12 @@ from schemas.evidence_state import (  # noqa: E402
     ConvergenceAssessment, EvidenceStateRecord, ProvisionalConfidenceFlag,
 )
 
-RULE_VERSION = "pilot-7"  # pilot-7 (2026-11-16, the medical lens deleted by the owner): derivation_sha hashes the three lens codes of the
+RULE_VERSION = "pilot-8"  # pilot-8 (T-030, OR-10, OD-22, OD-42): governing claims in units of one quantity kind (`base_units`: mm, cm, m,
+#   in, ft; the gradient notations) compose on the kind's canonical unit, exactly, and the notations are shown with the rounding rule
+#   of dbcore.SHOWN_STEPS; before, only the gradient notations composed. The sha payload is unchanged from pilot-7 (the
+#   label moves because the same evidence now gives a different value, and "same evidence + same rule_version => same
+#   answer" is the engine's contract).
+#   pilot-7 (2026-11-16, the medical lens deleted by the owner): derivation_sha hashes the three lens codes of the
 #   cell, not four; the payload loses one `|`-joined slot, so test_db_integrity K01 keeps pilot-6 on the four-slot form
 #   (FOUR_LENS_SHA_VERSIONS). Nothing else in the engine changed.
 #   pilot-6 (T-019, prior workplan T-3): a figure reaches a cell only through the live lens
@@ -372,6 +377,13 @@ def _has_column(conn, table, column):
     return any(r[1] == column for r in conn.execute(f'PRAGMA table_info("{table}")'))
 
 
+def _live_figure(conn, alias):
+    """`AND <alias>.retired_at IS NULL`: a retired figure (db.py retire-extraction, migration 158) is history and feeds no
+    cell. Every reader `_lens_clause` serves already drops it, because `v_live_lens_links` lists no link of a retired
+    figure; this is for the reads that select figures by parameter alone. Nothing on a pre-158 fixture."""
+    return f"AND {alias}.retired_at IS NULL" if _has_column(conn, "source_value_extractions", "retired_at") else ""
+
+
 #: The ruling lives in dbcore (stdlib only) so the stdlib-only checks can read it too.
 NOT_PUBLISHABLE_METHODS = dbcore.NOT_PUBLISHABLE_METHODS
 
@@ -454,7 +466,7 @@ def gather_confirmers(conn, parameter_id, lens):
         conn,
         "JOIN extraction_relations r ON r.from_extraction_id = x.extraction_id "
         "AND r.relation = 'confirms' JOIN source_value_extractions t "
-        "ON t.extraction_id = r.to_extraction_id AND t.parameter_id = x.parameter_id",
+        f"ON t.extraction_id = r.to_extraction_id AND t.parameter_id = x.parameter_id {_live_figure(conn, 't')}",
         f"x.figure_role IN ({','.join('?' * len(DIRECTION_SUPPLYING_ROLES))}) {skim} {lens_sql}",
         (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params, *lens_vals))
 
@@ -504,7 +516,7 @@ def gather_extraction_links(conn, parameter_id, governing_refs, lens):
         f"SELECT x.extraction_id, x.ref_id, x.figure_role, x.claim_type, {method_col}, "
         "e.superseded_by_ref_id IS NOT NULL FROM source_value_extractions x "
         "LEFT JOIN evidence_sources e ON e.ref_id = x.ref_id "
-        "WHERE x.parameter_id = ? ORDER BY x.extraction_id", (parameter_id,)).fetchall()
+        f"WHERE x.parameter_id = ? {_live_figure(conn, 'x')} ORDER BY x.extraction_id", (parameter_id,)).fetchall()
     gov = set(governing_refs or ())
     lens_sql, lens_vals = _lens_clause(lens, "x")
     in_lens = {r[0] for r in conn.execute(
@@ -561,10 +573,11 @@ def gather_extraction_links(conn, parameter_id, governing_refs, lens):
     return out
 
 
-# The notation arithmetic lives in dbcore, so the writer that refuses an unreadable figure and the
-# engine that reads it are one definition. Names are imported back so the engine's names stay valid.
-from dbcore import (NOTATION_FAMILIES, notation_family,  # noqa: E402 -- one home (T-016)
-                    from_canonical, bound_on_scale)
+# The unit arithmetic lives in dbcore and its units in `base_units` (T-030), so the writer that refuses an unreadable
+# figure and the engine that reads it are one definition. Names are imported back so the engine's names stay valid.
+from fractions import Fraction  # noqa: E402
+from dbcore import (unit_kind, kind_members, canonical_unit,  # noqa: E402 -- one home (T-016, T-030)
+                    from_canonical, bound_on_scale, MARK_STATED, MARK_UNROUNDED)
 
 
 def derivation_handshake(conn, parameter_id, lens, sources):
@@ -737,6 +750,8 @@ def conditioned_governing(conn, links):
     gov = {l["extraction_id"] for l in links if l["role"] == "governing"}
     if not gov or not _table_exists(conn, "extraction_relations"):
         return []
+    # An edge to a RETIRED condition figure is kept (T-078): the source still states the claim under a condition; a
+    # withdrawn condition figure does not make the claim unconditioned, so it stays a branch (K01 reads the same set).
     return sorted({r[0] for r in conn.execute(
         "SELECT from_extraction_id FROM extraction_relations WHERE relation = 'condition_on'")} & gov)
 
@@ -795,8 +810,9 @@ def _compose_headline(conn, links, direction, scope=""):
 
     THE FOUR WAYS IT DECLINES, each reported rather than defaulted:
       * no governing claim states a number (every one is qualitative or a ratio);
-      * the governing claims are in DIFFERENT UNITS, so there is no common interval and
-        converting them here would invent a figure no source stated;
+      * the governing claims are in DIFFERENT UNITS that no row of `base_units` relates (units of one kind
+        compose on the kind's canonical unit, exactly; units of different kinds, or a unit with no row beside
+        another, have no common interval, and converting them here would invent a figure no source stated);
       * `direction` is NULL -- nobody has recorded which way is better for a disabled
         person on this parameter, so "most accommodating" has no meaning yet
         (`db.py set-parameter-direction` is the remedy, and the note says so);
@@ -830,17 +846,16 @@ def _compose_headline(conn, links, direction, scope=""):
         "FROM source_value_extractions WHERE extraction_id IN (%s)"
         % ",".join("?" * len(ids)), ids).fetchall()
 
-    # ── COMPOSE ACROSS NOTATIONS, NEVER WITHIN ONE (owner ruling 2026-09-17) ──
-    # Each governing bound is placed on a COMMON SCALE. For a value written in a
-    # notation family -- `1:12` and `5 %` are two notations of one dimensionless
-    # gradient -- the scale is the family's canonical member and the conversion is
-    # exact, in Fraction. For anything else the scale IS the stated unit, and two
-    # different ones still refuse to compose: millimetres and degrees are units, not
-    # notations, and the ruling's ACTION (4) leaves that refusal alone.
+    # ── COMPOSE ACROSS UNITS OF ONE KIND, NEVER ACROSS KINDS (owner rulings 2026-09-17 and OR-10) ──
+    # Each governing bound is placed on a COMMON SCALE. For a unit that is a row of `base_units` -- `1:12` and `5 %` are
+    # two notations of one dimensionless gradient, `80 cm` and `800 mm` two units of one length -- the scale is the
+    # canonical unit of its quantity kind and the conversion is exact, in Fraction. For a unit with no row the scale
+    # IS the stated unit, and two different ones still refuse to compose: millimetres and degrees are different
+    # kinds of quantity, and the ruling's ACTION (4) leaves that refusal alone.
     bounds, scales, stated_notations, unparsed = [], set(), set(), []
     for _eid, val, unit, cmp_, ctype in rows:
-        fam = notation_family(unit)
-        b = bound_on_scale(val, unit, cmp_, ctype)
+        fam = unit_kind(conn, unit)
+        b = bound_on_scale(conn, val, unit, cmp_, ctype)
         if b is None:
             # Still reported, still not silently dropped (086). What changes since the
             # ruling is that a RATIO is no longer in this bucket -- it is a notation
@@ -849,7 +864,9 @@ def _compose_headline(conn, links, direction, scope=""):
             unparsed.append((val, unit))
             continue
         bounds.append((b, (unit or "").strip()))
-        scales.add(fam or (unit or "").strip())
+        # a scale is a kind or a stand-alone unit, keyed apart so a unit string can never equal a kind id (a unit
+        # named like a kind would otherwise merge with the kind's units, in an order-dependent way)
+        scales.add(("kind", fam) if fam else ("unit", (unit or "").strip()))
         if fam:
             stated_notations.add((unit or "").strip())
     if not bounds:
@@ -860,10 +877,9 @@ def _compose_headline(conn, links, direction, scope=""):
         return None, None, None, (
             "%sgoverning claims are stated in different units (%s); composing an interval "
             "would require a conversion no source stated"
-            % (scope, ", ".join(sorted(repr(u) for u in scales)))), None
-    scale = next(iter(scales))
-    family = scale if scale in NOTATION_FAMILIES else None
-    unit = (NOTATION_FAMILIES[family][0] if family
+            % (scope, ", ".join(sorted({repr(u) for _b, u in bounds})))), None
+    family = unit_kind(conn, bounds[0][1])             # one scale, so every bound's unit is of this kind or none is
+    unit = (canonical_unit(conn, family) if family
             else (next(iter({u for _b, u in bounds})) or None))
 
     if direction is None:
@@ -924,25 +940,53 @@ def _compose_headline(conn, links, direction, scope=""):
     # where a source's own figure would. 1:12 is 8.333...% and this says so.
     notations = None
     if family:
-        _written = {u for b, u in bounds
-                    if (vmax is not None and b[1] == vmax)
-                    or (vmin is not None and b[0] == vmin)}
+        _lo_from = {u for b, u in bounds if vmin is not None and b[0] == vmin}
+        _hi_from = {u for b, u in bounds if vmax is not None and b[1] == vmax}
+        # A POINT is ONE claim that states one value (both bounds are its own): shown at the nearest increment on both
+        # ends. A floor and a ceiling that merely coincide are two claims: the minimum is still never shown below its
+        # source and the maximum never above (OD-22: "a minimum never shows below the source, a maximum never above
+        # it"), the rule is dbcore.SHOWN_STEPS.
+        _point = vmin is not None and any(b[0] == vmin and b[1] == vmin for b, _u in bounds)
+        _lo_kind, _hi_kind = (None, None) if _point else ("min", "max")
+
+        def _num(text):
+            try:
+                return Fraction(text)
+            except (TypeError, ValueError):
+                return None                    # an a:b figure is no number to order
+
         notations = []
-        for member in NOTATION_FAMILIES[family]:
+        for member in kind_members(conn, family):
             if member not in stated_notations:
                 continue                      # the governing set never used it
-            lo_txt, lo_exact = from_canonical(vmin, member)
-            hi_txt, hi_exact = from_canonical(vmax, member)
+            lo = from_canonical(conn, vmin, member, _lo_kind, _lo_from)
+            hi = from_canonical(conn, vmax, member, _hi_kind, _hi_from)
+            _a, _b = _num(lo[0]), _num(hi[0])
+            _crossed = _a is not None and _b is not None and _a > _b
+            if _crossed:
+                # the increment cannot hold both bounds on their safe sides (a minimum rounded up passes a maximum
+                # rounded down): show the exact conversion of each, which is on no wrong side, and say so
+                lo = from_canonical(conn, vmin, member, _lo_kind, ())
+                hi = from_canonical(conn, vmax, member, _hi_kind, ())
+            lo_mark = None if lo[0] is None else MARK_STATED if member in _lo_from else (MARK_UNROUNDED if _crossed else lo[2])
+            hi_mark = None if hi[0] is None else MARK_STATED if member in _hi_from else (MARK_UNROUNDED if _crossed else hi[2])
             notations.append({
                 "notation": member,
-                "min": lo_txt, "max": hi_txt,
-                "stated": member in _written,
-                "exact": bool(lo_exact and hi_exact),
+                "min": lo[0], "max": hi[0],
+                # each bound says how it was reached: `stated` (a source wrote this bound in this unit) or derived,
+                # with the rounding direction, because no source stated 765 mm for a bound it stated as 30 in
+                "min_mark": lo_mark, "max_mark": hi_mark,
+                "stated": all(m == MARK_STATED for m in (lo_mark, hi_mark) if m is not None),
+                "exact": bool(lo[1] and hi[1]),
             })
         if len(notations) > 1:
             caveat = ((caveat + "; ") if caveat else "") + (
                 "value presented in %d notations of one quantity (owner ruling "
                 "2026-09-17: present both, never choose)" % len(notations))
+        if stated_notations - {unit}:
+            caveat = ((caveat + "; ") if caveat else "") + (
+                "the headline is in %s, the canonical unit of its kind, converted from the stated %s"
+                % (unit, ", ".join(sorted(repr(u) for u in stated_notations))))
 
     return (float(vmin) if vmin is not None else None,
             float(vmax) if vmax is not None else None,
@@ -1303,8 +1347,8 @@ def determine(conn, parameter_id, lens, slug, note):
     # `main`, so every caller sees it. The engine cannot judge whether the lens is relevant to the
     # parameter, so the gap is the judgment session's to raise.
     n_extractions = count_extractions(conn, parameter_id, lens)
-    n_outside_lens = conn.execute("SELECT COUNT(*) FROM source_value_extractions WHERE parameter_id = ?",
-                                  (parameter_id,)).fetchone()[0] - n_extractions
+    n_outside_lens = conn.execute(f"SELECT COUNT(*) FROM source_value_extractions x WHERE x.parameter_id = ? "
+                                  f"{_live_figure(conn, 'x')}", (parameter_id,)).fetchone()[0] - n_extractions
     if n_extractions == 0:
         raise Refusal(
             f"no figure of parameter {parameter_id} is stated in this lens "
@@ -1988,7 +2032,7 @@ def validate_parameter(conn, parameter_id):
     if not row:
         raise Refusal(
             f"parameter_id {parameter_id}: no such parameter. Mint one from a term:\n"
-            f"  db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-observation-id N --session ...")
+            f"  db.py add-parameter --term-id TERM-NNN --quantity-kind K --quantity-kind-quote Q --quantity-kind-source-url U --quantity-kind-source-page P --session ...")
     status, merged_into = row[0], row[1]
     if status != "active":
         target = f" (merged into {merged_into})" if merged_into else ""
