@@ -504,9 +504,23 @@ else:
     record("T049-91", "a non-English figure with no English translation and no request is listed as owed at the "
                       "default stage", str(plain["id"]) in owed(DEFAULT), owed(DEFAULT)[:10])
     record("T049-92", "nothing is listed as owed at a stage other than the default", not owed(OTHER), owed(OTHER)[:10])
-    db.record_translation("TASK-FIXTURE " + " ".join(NUM.findall(plain["text"])), source_table="source_value_extractions",
-                          source_column="claim_text", source_row_key=str(plain["id"]), target_language=EN,
-                          stage=JUDGMENT, **KW)
+    rec = db.record_translation("TASK-FIXTURE " + " ".join(NUM.findall(plain["text"])),
+                                source_table="source_value_extractions", source_column="claim_text",
+                                source_row_key=str(plain["id"]), target_language=EN, stage=JUDGMENT, **KW)
     record("T049-93", "once its English translation is recorded the figure is no longer owed",
            str(plain["id"]) not in owed(DEFAULT), owed(DEFAULT)[:10])
+    # === what a reader is shown (OD-30: reviewed, beside the original) ======================================
+    db.review_translation(rec["translation_id"], "reviewed", "model", "TASK-REVIEWER", session=S)
+    mine = lambda: [x for x in db.translations_shown()  # noqa: E731
+                    if x["source"] == f"source_value_extractions.claim_text[{plain['id']}]"]
+    record("T049-94", "--show prints a reviewed translation beside the original it was made from",
+           len(mine()) == 1 and mine()[0]["original"] == plain["text"]
+           and mine()[0]["translation"].startswith("TASK-FIXTURE") and mine()[0]["reviewed_by"].endswith("TASK-REVIEWER"),
+           mine())
+    con.execute("UPDATE source_value_extractions SET claim_text = claim_text || ' (changed)' WHERE extraction_id=?",
+                (plain["id"],))
+    con.commit()
+    record("T049-95", "a cell that changed after it was translated is shown with no original and the reason, never "
+                      "a translation beside other text",
+           len(mine()) == 1 and mine()[0]["original"] is None and bool(mine()[0]["problem"]), mine())
 finish()

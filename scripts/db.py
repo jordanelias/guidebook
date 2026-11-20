@@ -3612,10 +3612,14 @@ def main():
     p_rvt.add_argument("--session", required=True)
     p_rvt.add_argument("--dry-run", action="store_true")
 
-    p_trl = sub.add_parser("translations", help="List the open translation requests due at a stage (read-only)")
-    p_trl.add_argument("--due-at", required=True,
+    p_trl = sub.add_parser("translations", help="List the open translation requests due at a stage, or show the "
+                                                "reviewed translations beside their originals (read-only)")
+    p_trl.add_argument("--due-at",
                        help="A stage id: lists open requests whose due stage is this one, by the row's override "
                             "or else by the translation rule of governance/pipeline-contract.yaml")
+    p_trl.add_argument("--show", action="store_true",
+                       help="Print every reviewed, current translation beside its original, with who translated "
+                            "and who reviewed it: what a reader is shown (OD-30)")
 
     args = _ARGS = parser.parse_args()
 
@@ -4594,7 +4598,9 @@ def main():
                                  args.reason, session=args.session, dry_run=args.dry_run))
 
     elif args.command == "translations":
-        _emit(translations_due(args.due_at))
+        if bool(args.due_at) == bool(args.show):
+            raise Refusal("translations: pass exactly one of --due-at STAGE or --show. Nothing was read.")
+        _emit(translations_shown() if args.show else translations_due(args.due_at))
 
 
 
@@ -14261,6 +14267,30 @@ def _translations_owed(conn):
         "ORDER BY 1, 3", (en,) * 4).fetchall()
     return [{"translation_id": None, "source_table": t, "source_column": c, "source_row_key": k,
              "target_language": en, "requested_at_stage": None} for t, c, k in cells if (t, c, k) not in held]
+
+
+def translations_shown():
+    """What a reader is shown (OD-30): each current `reviewed` translation beside the original it was made from,
+    with who translated it and who reviewed it. The original is read through the one pointer rule
+    (`dbcore.read_cell`), so any pointed cell works and no table or column is listed here; a pointer that no
+    longer resolves, or whose cell changed since it was translated, shows `original: null` and the reason, never
+    a translation beside the wrong text."""
+    with connect(readonly=True) as conn:
+        rows = conn.execute(
+            "SELECT * FROM translations WHERE status='reviewed' AND superseded_by_translation_id IS NULL "
+            "ORDER BY source_table, source_column, CAST(source_row_key AS INTEGER), source_row_key").fetchall()
+        out = []
+        for r in rows:
+            original, _, why = dbcore.read_cell(conn, r["source_table"], r["source_column"], r["source_row_key"])
+            if not why and translation_sha256(original) != r["source_sha256"]:
+                original, why = None, "the original cell changed after it was translated"
+            out.append({"source": f"{r['source_table']}.{r['source_column']}[{r['source_row_key']}]",
+                        "original": original, "problem": why, "translation": r["translated_text"],
+                        "target_language": r["target_language"],
+                        "translated_by": f"{r['translator_kind']}: {r['translator_name']}",
+                        "reviewed_by": f"{r['reviewed_by_kind']}: {r['reviewed_by_name']}",
+                        "reviewed_at": r["reviewed_at"], "review_note": r["review_reason"]})
+    return out
 
 
 def translations_due(stage, contract_path=None):

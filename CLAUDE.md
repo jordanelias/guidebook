@@ -6,13 +6,19 @@ The owner's goal, verbatim (2026-11-20): *"we research, we record, we verify we 
 evaluate things in context with other related things, we synthesize then show"*.
 
 The project is a database that records research properly, and a pipeline that processes it; `base` is the owner's
-request layer, standing where the owner would otherwise ask for a topic directly. Three things are never got wrong:
+request layer, standing where the owner would otherwise ask for a topic directly. The owner reads only English, so
+three things are never to be got wrong:
 
 1. **Fetch before you write any author, title or figure.** A bibliographic field is never written from memory.
 2. **Keep the original beside every translated figure,** and show an English rendering that records who translated
-   it and when (`translations`, read through `v_translations_current`); never English into `claimed_value` or
-   `claimed_unit`.
+   and who reviewed it, and when (`translations`; `db.py translations --show` prints each reviewed one beside its
+   original); never English into `claimed_value` or `claimed_unit`.
 3. **Co-1 co-producers are evidence and stay credited.**
+
+This file holds **process, workflow and rules only**; every volatile fact (counts, versions, CI state) is derived,
+never stated. Where it disagrees with `decisions/DR-2026-08-19-research-restart-operative-instrument.md`, that
+instrument wins and this file is what to correct — **unless a live owner ruling has superseded the instrument itself,
+per rule 0, in which case the ruling wins over both.**
 
 **Correction histories do not live here.** When a sentence in this file is found wrong, fix the
 sentence and put the account of the error in the commit message; `git log -p CLAUDE.md` is the record.

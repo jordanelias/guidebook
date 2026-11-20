@@ -4,6 +4,8 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 
 **Pilot status.** **Piloted** 2026-11-13: report `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/pilot/T-049-report.md`, patch `.../T-049.patch` (stacked on the T-008 re-pilot); defects folded. Expect to find a defect in this file still, and report it rather than work around it.
 
+> **Superseded in part, 2026-11-20.** The default stage this file sets, `synthesis`, was replaced by `judgment` on the owner's words "yes, translation runs before judgment" (ledger: `grep -n -F "yes, translation runs before judgment" references/project-standards.md`); the contract holds the live value, and `db.py translations --due-at judgment` lists what is owed. The text below records what was built then.
+
 ## 1. Identity
 
 | | |
