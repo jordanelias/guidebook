@@ -1,6 +1,6 @@
 # T-145  A disability identity, an access need and an ICF code are linked in one judged, reviewable table, readable from any of the three
 
-> **DESIGN, NOT READY.** Four questions in section 4 are the owner's. An executor that opens this file before they are answered in the ledger does not start it: it reports that the task is waiting, and for which question.
+> **ANSWERED 2026-11-20 and BUILT** (migration 165, `identity_need_icf`, `v_lens_crosswalk`, verbs `propose-identity-need-icf`, `review-identity-need-icf`, `lens-crosswalk`). Question 1: all three keys, in the owner's words. Questions 2 to 4 at the recommendations, as unratified assumptions. Ledger: `grep -n -F "Owner statements 2026-11-20 (fifth)" references/project-standards.md`. The triples that fill it are the later research pull request.
 
 _One task, one pull request, tooling only (CLAUDE.md rule 10: the rows that fill the table are a later research pull request). Read `CLAUDE.md` first. Authored 2026-11-20 on the owner's ruling (ledger: `grep -n -F "## Owner statement 2026-11-20 (second)" references/project-standards.md`). Every figure below is given with the command that produces it: re-run the command; do not trust the number._
 

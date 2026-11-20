@@ -64,6 +64,7 @@ glossary:
   gap_mining: "Records of searches run specifically to close a recorded gap."
   gaps: "Known weaknesses in the evidence: what is missing, how much it matters, and whether it is still open."
   identity_icf_map: "Maps each group of people to the ICF codes that describe their functioning, with where each mapping came from."
+  identity_need_icf: "The judged links between a group of people, an access need and an ICF code, each with the reason it was made and whether the owner has reviewed it. Only a reviewed link counts."
   lang_jur_map: "Which languages are searched for which jurisdictions, and whether a language is primary there."
   life_stage_modifiers: "Life-stage modifiers, such as older adults and children, that apply across every group and need."
   observed_terms: "A phrase a source uses for a concept, recorded in the source's own words with where it appears. Not yet judged."

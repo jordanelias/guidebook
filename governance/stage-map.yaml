@@ -126,6 +126,7 @@ tables:
   gap_mining: research
   gaps: cross-stage          # resolved, no longer disputed: ledger "Delegated resolution 2026-11-12 — OD-11"
   identity_icf_map: base
+  identity_need_icf: base
   lang_jur_map: base
   life_stage_modifiers: base
   observed_terms: evidence

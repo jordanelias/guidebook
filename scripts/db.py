@@ -2377,6 +2377,42 @@ def main():
                                "by live term_relations rows, each with its warrant")
     p_ep.add_argument("--element", required=True, help="terms.term_id of the building element")
 
+    # propose-identity-need-icf / review-identity-need-icf / lens-crosswalk -- the judged identity x access need x ICF
+    # matrix (T-145, migration 165). A session proposes; only the owner's review makes a triple `stated`.
+    p_pin = sub.add_parser("propose-identity-need-icf",
+                           help="Propose one triple of the identity, access-need and ICF matrix, with its warrant "
+                                "(state `pending`, or `not_applicable` with --not-applicable)")
+    p_pin.add_argument("--identity", required=True, help="base_taxonomy_identity.identity_code (live)")
+    p_pin.add_argument("--need", required=True, help="access_needs.need_code")
+    p_pin.add_argument("--icf-code", dest="icf_code", required=True, help="base_icf.icf_code")
+    p_pin.add_argument("--warrant", required=True,
+                       help="why the three belong together (or, with --not-applicable, why they do not), in the "
+                            "judge's words; a source it rests on is named in it")
+    p_pin.add_argument("--not-applicable", dest="not_applicable", action="store_true",
+                       help="record a judged non-link: the three do not go together, and the row says why")
+    p_pin.add_argument("--session", required=True)
+    p_pin.add_argument("--dry-run", action="store_true")
+
+    p_rin = sub.add_parser("review-identity-need-icf",
+                           help="Record the owner's review of a batch of triples: accept (stated), accept with a "
+                                "caveat (provisional) or reject (retire in place with the reason)")
+    p_rin.add_argument("--triple-ids", dest="triple_ids", required=True,
+                       help="comma-separated triple_id values of the batch; every one must be live and unreviewed")
+    p_rin.add_argument("--decision", required=True, choices=("stated", "provisional", "reject"))
+    p_rin.add_argument("--reviewed-by", dest="reviewed_by", required=True,
+                       help="who reviewed the batch (the owner's name as recorded)")
+    p_rin.add_argument("--reason", help="required for reject and for provisional (what the caveat is)")
+    p_rin.add_argument("--session", required=True)
+    p_rin.add_argument("--dry-run", action="store_true")
+
+    p_lcw = sub.add_parser("lens-crosswalk",
+                           help="Read-only: the live triples of the identity x access need x ICF matrix from an "
+                                "identity, a need or an ICF code; --uncovered lists identities and needs with none")
+    p_lcw.add_argument("--identity")
+    p_lcw.add_argument("--need")
+    p_lcw.add_argument("--icf-code", dest="icf_code")
+    p_lcw.add_argument("--uncovered", action="store_true")
+
     # Tooling T1 (owner approval D8, 2026-10-09): the reading record, the vocabulary
     # lifecycle, the catalogue minting route and extraction follow-ups. Each function's
     # docstring holds its refusals; vocabularies are read from each column's CHECK.
@@ -4005,6 +4041,18 @@ def main():
 
     elif args.command == "element-parameters":
         _emit(element_parameters(args.element))
+
+    elif args.command == "propose-identity-need-icf":
+        _emit(propose_identity_need_icf(
+            args.identity, args.need, args.icf_code, args.warrant, args.session,
+            not_applicable=args.not_applicable, dry_run=args.dry_run))
+
+    elif args.command == "review-identity-need-icf":
+        _emit(review_identity_need_icf(
+            args.triple_ids, args.decision, args.reviewed_by, args.reason, args.session, dry_run=args.dry_run))
+
+    elif args.command == "lens-crosswalk":
+        _emit(lens_crosswalk(args.identity, args.need, args.icf_code, args.uncovered))
 
     elif args.command == "record-scan":
         _emit(record_scan({
@@ -10262,6 +10310,121 @@ def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str
         return {"link_id": cur.lastrowid, "identity_code": population,
                 "icf_code": icf_code, "mechanism": mechanism,
                 "mapping_confidence": mapping_confidence, "dry_run": dry_run}
+
+
+def propose_identity_need_icf(identity: str, need: str, icf_code: str, warrant, session: str, *,
+                              not_applicable: bool = False, dry_run: bool = False):
+    """Write one `identity_need_icf` row in state `pending` (or `not_applicable`): a judged triple (T-145; owner,
+    2026-11-20: all three keys, and the owner reviews each batch before a triple counts as stated).
+
+    A session proposes; nothing here sets `stated` (that is `review-identity-need-icf`, run on the owner's review).
+    Refuses, each sentence naming the next act: a blank warrant; an identity that is not held, or is deprecated; a
+    need or an ICF code that is not held (the ICF registry grows with `add-icf-code`); and a second live row for the
+    same three (a different judgment is written by retiring the held row, with the reason, through a review)."""
+    warrant = (warrant or "").strip()
+    if not warrant:
+        raise Refusal("propose-identity-need-icf: --warrant is required. Say why this identity, this need and this "
+                      "ICF code belong together (or, with --not-applicable, why they do not): a quiet link or a "
+                      "quiet non-link is what the cell states exist to prevent. Nothing was written.")
+    with connect(dry_run) as conn:
+        for table, col, flag, val, fix in (
+                ("base_taxonomy_identity", "identity_code", "--identity", identity,
+                 "select identity_code from base_taxonomy_identity where status='active'"),
+                ("access_needs", "need_code", "--need", need, "select need_code from access_needs"),
+                ("base_icf", "icf_code", "--icf-code", icf_code,
+                 "mint it with add-icf-code, or read: select icf_code from base_icf")):
+            if not dbcore.exists(conn, table, col, val):
+                raise Refusal(f"propose-identity-need-icf: {flag} {val!r} is not in {table}. Read the codes with "
+                              f"`{fix}`. Nothing was written.")
+        dbcore.check_identity_live(conn, identity, "propose-identity-need-icf")
+        held = conn.execute("SELECT triple_id, state, created_by_session FROM identity_need_icf WHERE "
+                            "identity_code=? AND need_code=? AND icf_code=? AND retired_at IS NULL",
+                            (identity, need, icf_code)).fetchone()
+        if held is not None:
+            raise Refusal(f"propose-identity-need-icf: triple {held['triple_id']} ({held['state']}, session "
+                          f"{held['created_by_session']}) already holds this identity, need and ICF code. A second "
+                          f"live row is a dual home; to change the judgment, reject it with "
+                          f"review-identity-need-icf --decision reject --reason ... and propose the new one. "
+                          f"Nothing was written.")
+        row = {"identity_code": identity, "need_code": need, "icf_code": icf_code,
+               "state": "not_applicable" if not_applicable else "pending", "warrant": warrant}
+        row.update(dbcore.stamp_for(conn, "identity_need_icf", session))
+        cur = conn.execute(f"INSERT INTO identity_need_icf ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
+                           list(row.values()))
+        return {"triple_id": cur.lastrowid, "identity_code": identity, "need_code": need, "icf_code": icf_code,
+                "state": row["state"], "dry_run": dry_run}
+
+
+def review_identity_need_icf(triple_ids: str, decision: str, reviewed_by: str, reason, session: str,
+                             dry_run: bool = False):
+    """Record the owner's review of a batch of `identity_need_icf` rows, all or none (T-145).
+
+    `stated` and `provisional` stamp the reviewer and the time; a `pending` row takes the decision as its state, and a
+    `not_applicable` row keeps its state and is stamped reviewed. `reject` retires each row in place with the reason
+    (never an UPDATE of the rest, never revived). Refuses: a blank reviewer; no ids, or an id that is not held, is
+    retired, or (for an accept) already reviewed (a reviewed row is changed by rejecting it and proposing again); `provisional`
+    or `reject` without a reason (the caveat, or why not). Nothing is written when any row is refused."""
+    reviewed_by = (reviewed_by or "").strip()
+    if not reviewed_by:
+        raise Refusal("review-identity-need-icf: --reviewed-by is required: name who reviewed the batch. Nothing "
+                      "was written.")
+    try:
+        ids = [int(x) for x in triple_ids.replace(" ", "").split(",") if x]
+    except ValueError:
+        ids = []
+    if not ids:
+        raise Refusal("review-identity-need-icf: --triple-ids names no rows. Give the comma-separated triple_id "
+                      "values of the batch (select triple_id from v_lens_crosswalk where reviewed_at is null). "
+                      "Nothing was written.")
+    if decision in ("provisional", "reject"):
+        reason = dbcore.require_reason(reason, "review-identity-need-icf",
+                                       why="Say what the caveat is, or why the triple is rejected.")
+    with connect(dry_run) as conn:
+        rows = {r["triple_id"]: r for r in conn.execute(
+            f"SELECT triple_id, state, reviewed_at, retired_at FROM identity_need_icf "
+            f"WHERE triple_id IN ({','.join('?' * len(ids))})", ids)}
+        for i in ids:
+            r = rows.get(i)
+            why = ("is not a held triple" if r is None else "is retired" if r["retired_at"] is not None
+                   else "was already reviewed; only a reject may follow" if r["reviewed_at"] is not None
+                   and decision != "reject" else None)
+            if why:
+                raise Refusal(f"review-identity-need-icf: triple {i} {why}. Read the batch with `select triple_id "
+                              f"from v_lens_crosswalk where reviewed_at is null`. Nothing was written.")
+        stamp = dbcore.now()
+        for i in ids:
+            if decision == "reject":
+                conn.execute("UPDATE identity_need_icf SET retired_at=?, retired_by_session=?, retirement_reason=? "
+                             "WHERE triple_id=?", [stamp, dbcore.session_stem(session), reason, i])
+            else:
+                state = rows[i]["state"] if rows[i]["state"] == "not_applicable" else decision
+                conn.execute("UPDATE identity_need_icf SET state=?, reviewed_at=?, reviewed_by=?, review_note=? "
+                             "WHERE triple_id=?",
+                             [state, stamp, reviewed_by, reason if state == "provisional" else None, i])
+        return {"triple_ids": ids, "decision": decision, "reviewed_by": reviewed_by, "dry_run": dry_run}
+
+
+def lens_crosswalk(identity: str = None, need: str = None, icf_code: str = None, uncovered: bool = False):
+    """Read-only (T-145): the live rows of `v_lens_crosswalk` for an identity, a need and/or an ICF code, each with its
+    state (`stated` counts; `pending` awaits the owner; `not_applicable` was judged and does not apply). With
+    `--uncovered`, the identities and access needs that no live triple names: the gaps to close."""
+    with connect(readonly=True) as conn:
+        if uncovered:
+            return {"identities_without_a_triple": [r[0] for r in conn.execute(
+                        "SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code NOT "
+                        "IN (SELECT identity_code FROM identity_need_icf WHERE retired_at IS NULL) ORDER BY 1")],
+                    "needs_without_a_triple": [r[0] for r in conn.execute(
+                        "SELECT need_code FROM access_needs WHERE need_code NOT IN (SELECT need_code FROM "
+                        "identity_need_icf WHERE retired_at IS NULL) ORDER BY 1")]}
+        if identity is None and need is None and icf_code is None:
+            raise Refusal("lens-crosswalk: name --identity, --need or --icf-code (any one or more), or --uncovered.")
+        where = [f"{col} = ?" for col, v in (("identity_code", identity), ("need_code", need),
+                                             ("icf_code", icf_code)) if v is not None]
+        args = [v for v in (identity, need, icf_code) if v is not None]
+        rows = [dict(r) for r in conn.execute(
+            f"SELECT * FROM v_lens_crosswalk WHERE {' AND '.join(where)} ORDER BY identity_code, need_code, icf_code",
+            args)]
+        return {"rows": rows, "count": len(rows)}
 
 
 def insert_icf_code(*, icf_code: str, title: str = None, title_source: str = None,
