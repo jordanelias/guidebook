@@ -1456,6 +1456,7 @@ checks:
   kinds:
   - tooling
   - schema
+  - data
   level: advisory
   basis: hygiene
   cost: fast

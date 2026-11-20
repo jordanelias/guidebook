@@ -2394,14 +2394,16 @@ def main():
     p_pin.add_argument("--dry-run", action="store_true")
 
     p_rin = sub.add_parser("review-identity-need-icf",
-                           help="Record the owner's review of a batch of triples: accept (stated), accept with a "
-                                "caveat (provisional) or reject (retire in place with the reason)")
+                           help="Record the owner's review of a batch of triples, bound to the ledger entry that "
+                                "records it: accept (stated), accept a pending one with a caveat (provisional), or "
+                                "reject (retire in place with the reason)")
     p_rin.add_argument("--triple-ids", dest="triple_ids", required=True,
-                       help="comma-separated triple_id values of the batch; every one must be live and unreviewed")
+                       help="comma-separated triple_id values of the batch; every one must be live")
     p_rin.add_argument("--decision", required=True, choices=("stated", "provisional", "reject"))
-    p_rin.add_argument("--reviewed-by", dest="reviewed_by", required=True,
-                       help="who reviewed the batch (the owner's name as recorded)")
-    p_rin.add_argument("--reason", help="required for reject and for provisional (what the caveat is)")
+    p_rin.add_argument("--approval-ref", dest="approval_ref", required=True,
+                       help="the heading of the dated ledger entry, beginning 'Owner', that records the owner's "
+                            "review and names each triple as the token TRIPLE-<id> (e.g. TRIPLE-12)")
+    p_rin.add_argument("--reason", help="required for reject (why) and provisional (the caveat)")
     p_rin.add_argument("--session", required=True)
     p_rin.add_argument("--dry-run", action="store_true")
 
@@ -2411,7 +2413,9 @@ def main():
     p_lcw.add_argument("--identity")
     p_lcw.add_argument("--need")
     p_lcw.add_argument("--icf-code", dest="icf_code")
-    p_lcw.add_argument("--uncovered", action="store_true")
+    p_lcw.add_argument("--uncovered", action="store_true",
+                       help="identities and needs no REVIEWED live triple names")
+    p_lcw.add_argument("--retired", action="store_true", help="the rejected triples, each with its reason")
 
     # Tooling T1 (owner approval D8, 2026-10-09): the reading record, the vocabulary
     # lifecycle, the catalogue minting route and extraction follow-ups. Each function's
@@ -4049,10 +4053,10 @@ def main():
 
     elif args.command == "review-identity-need-icf":
         _emit(review_identity_need_icf(
-            args.triple_ids, args.decision, args.reviewed_by, args.reason, args.session, dry_run=args.dry_run))
+            args.triple_ids, args.decision, args.approval_ref, args.reason, args.session, dry_run=args.dry_run))
 
     elif args.command == "lens-crosswalk":
-        _emit(lens_crosswalk(args.identity, args.need, args.icf_code, args.uncovered))
+        _emit(lens_crosswalk(args.identity, args.need, args.icf_code, args.uncovered, args.retired))
 
     elif args.command == "record-scan":
         _emit(record_scan({
@@ -10355,19 +10359,18 @@ def propose_identity_need_icf(identity: str, need: str, icf_code: str, warrant, 
                 "state": row["state"], "dry_run": dry_run}
 
 
-def review_identity_need_icf(triple_ids: str, decision: str, reviewed_by: str, reason, session: str,
+def review_identity_need_icf(triple_ids: str, decision: str, approval_ref: str, reason, session: str,
                              dry_run: bool = False):
     """Record the owner's review of a batch of `identity_need_icf` rows, all or none (T-145).
 
-    `stated` and `provisional` stamp the reviewer and the time; a `pending` row takes the decision as its state, and a
-    `not_applicable` row keeps its state and is stamped reviewed. `reject` retires each row in place with the reason
-    (never an UPDATE of the rest, never revived). Refuses: a blank reviewer; no ids, or an id that is not held, is
-    retired, or (for an accept) already reviewed (a reviewed row is changed by rejecting it and proposing again); `provisional`
-    or `reject` without a reason (the caveat, or why not). Nothing is written when any row is refused."""
-    reviewed_by = (reviewed_by or "").strip()
-    if not reviewed_by:
-        raise Refusal("review-identity-need-icf: --reviewed-by is required: name who reviewed the batch. Nothing "
-                      "was written.")
+    The review is BOUND to the owner's words: `--approval-ref` is the heading of a dated ledger entry that begins
+    "Owner" (`_owner_approval`: a delegated resolution or a session heading approves nothing) and names every triple
+    of the batch as the token TRIPLE-<id>. `stated` and `provisional` record that heading, the time and the running
+    session; a `pending` row takes the decision as its state, a `not_applicable` row keeps its state and is stamped
+    reviewed. `provisional` is for a pending row only (a caveat on a judged non-link has no cell). `reject` retires the
+    row in place with the reason and the heading. Refuses: no ids, or an id that is not held, is retired, or (for an
+    accept) was already reviewed; a heading that is not an owner entry or does not name a triple of the batch; a
+    missing reason where one is required. Nothing is written when any row is refused."""
     try:
         ids = [int(x) for x in triple_ids.replace(" ", "").split(",") if x]
     except ValueError:
@@ -10379,6 +10382,12 @@ def review_identity_need_icf(triple_ids: str, decision: str, reviewed_by: str, r
     if decision in ("provisional", "reject"):
         reason = dbcore.require_reason(reason, "review-identity-need-icf",
                                        why="Say what the caveat is, or why the triple is rejected.")
+    heading = _owner_approval(approval_ref, "review-identity-need-icf")
+    for i in ids:
+        if not dbcore.ledger_entry_names(heading, f"TRIPLE-{i}"):
+            raise Refusal(f"review-identity-need-icf: the ledger entry {heading!r} does not name TRIPLE-{i}. Record "
+                          f"the owner's review in a dated 'Owner ...' entry that names each triple of the batch as "
+                          f"TRIPLE-<id>, then give that entry's heading. Nothing was written.")
     with connect(dry_run) as conn:
         rows = {r["triple_id"]: r for r in conn.execute(
             f"SELECT triple_id, state, reviewed_at, retired_at FROM identity_need_icf "
@@ -10387,37 +10396,49 @@ def review_identity_need_icf(triple_ids: str, decision: str, reviewed_by: str, r
             r = rows.get(i)
             why = ("is not a held triple" if r is None else "is retired" if r["retired_at"] is not None
                    else "was already reviewed; only a reject may follow" if r["reviewed_at"] is not None
-                   and decision != "reject" else None)
+                   and decision != "reject" else
+                   "is a judged non-link, which takes no caveat: use stated or reject"
+                   if decision == "provisional" and r["state"] == "not_applicable" else None)
             if why:
                 raise Refusal(f"review-identity-need-icf: triple {i} {why}. Read the batch with `select triple_id "
                               f"from v_lens_crosswalk where reviewed_at is null`. Nothing was written.")
-        stamp = dbcore.now()
+        stamp, ran = dbcore.now(), dbcore.session_stem(session)
         for i in ids:
             if decision == "reject":
-                conn.execute("UPDATE identity_need_icf SET retired_at=?, retired_by_session=?, retirement_reason=? "
-                             "WHERE triple_id=?", [stamp, dbcore.session_stem(session), reason, i])
+                conn.execute("UPDATE identity_need_icf SET retired_at=?, retired_by_session=?, retirement_reason=?, "
+                             "retirement_ref=? WHERE triple_id=?", [stamp, ran, reason, heading, i])
             else:
                 state = rows[i]["state"] if rows[i]["state"] == "not_applicable" else decision
-                conn.execute("UPDATE identity_need_icf SET state=?, reviewed_at=?, reviewed_by=?, review_note=? "
-                             "WHERE triple_id=?",
-                             [state, stamp, reviewed_by, reason if state == "provisional" else None, i])
-        return {"triple_ids": ids, "decision": decision, "reviewed_by": reviewed_by, "dry_run": dry_run}
+                conn.execute("UPDATE identity_need_icf SET state=?, review_ref=?, reviewed_at=?, reviewed_session=?, "
+                             "review_note=? WHERE triple_id=?",
+                             [state, heading, stamp, ran, reason if state == "provisional" else None, i])
+        return {"triple_ids": ids, "decision": decision, "approval_ref": heading, "dry_run": dry_run}
 
 
-def lens_crosswalk(identity: str = None, need: str = None, icf_code: str = None, uncovered: bool = False):
+def lens_crosswalk(identity: str = None, need: str = None, icf_code: str = None, uncovered: bool = False,
+                   retired: bool = False):
     """Read-only (T-145): the live rows of `v_lens_crosswalk` for an identity, a need and/or an ICF code, each with its
-    state (`stated` counts; `pending` awaits the owner; `not_applicable` was judged and does not apply). With
-    `--uncovered`, the identities and access needs that no live triple names: the gaps to close."""
+    state (`stated` counts; `provisional` counts with its caveat; `pending` awaits the owner; `not_applicable` was
+    judged and does not apply) and the owner entry that reviewed it. `--uncovered` lists the identities and access
+    needs that no REVIEWED live triple (stated or provisional) names: the gaps to close, so an unreviewed proposal
+    does not hide one. `--retired` lists the rejected triples with the reason and the owner entry."""
     with connect(readonly=True) as conn:
         if uncovered:
-            return {"identities_without_a_triple": [r[0] for r in conn.execute(
-                        "SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code NOT "
-                        "IN (SELECT identity_code FROM identity_need_icf WHERE retired_at IS NULL) ORDER BY 1")],
-                    "needs_without_a_triple": [r[0] for r in conn.execute(
-                        "SELECT need_code FROM access_needs WHERE need_code NOT IN (SELECT need_code FROM "
-                        "identity_need_icf WHERE retired_at IS NULL) ORDER BY 1")]}
+            ok = "state IN ('stated', 'provisional') AND retired_at IS NULL"
+            return {"identities_without_a_reviewed_triple": [r[0] for r in conn.execute(
+                        f"SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code "
+                        f"NOT IN (SELECT identity_code FROM identity_need_icf WHERE {ok}) ORDER BY 1")],
+                    "needs_without_a_reviewed_triple": [r[0] for r in conn.execute(
+                        f"SELECT need_code FROM access_needs WHERE need_code NOT IN (SELECT need_code FROM "
+                        f"identity_need_icf WHERE {ok}) ORDER BY 1")]}
+        if retired:
+            rows = [dict(r) for r in conn.execute(
+                "SELECT triple_id, identity_code, need_code, icf_code, state, warrant, retired_at, retired_by_session, "
+                "retirement_reason, retirement_ref FROM identity_need_icf WHERE retired_at IS NOT NULL ORDER BY triple_id")]
+            return {"rows": rows, "count": len(rows)}
         if identity is None and need is None and icf_code is None:
-            raise Refusal("lens-crosswalk: name --identity, --need or --icf-code (any one or more), or --uncovered.")
+            raise Refusal("lens-crosswalk: name --identity, --need or --icf-code (any one or more), or --uncovered "
+                          "or --retired.")
         where = [f"{col} = ?" for col, v in (("identity_code", identity), ("need_code", need),
                                              ("icf_code", icf_code)) if v is not None]
         args = [v for v in (identity, need, icf_code) if v is not None]
