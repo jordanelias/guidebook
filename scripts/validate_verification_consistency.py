@@ -60,7 +60,9 @@ def _check(con) -> list:
         "SELECT specification_id,parameter_id,"
         "COALESCE(identity_code,icf_code,needs_code),state,"
         "has_unverified_sources FROM specifications "
-        "WHERE state IN ('stated','provisional')"
+        # A retired determination states nothing: every reader filters retired_at IS NULL, and a
+        # source downgraded after a row was retired does not make that row's flag a lie today.
+        "WHERE state IN ('stated','provisional') AND retired_at IS NULL"
     ).fetchall()
     errors = []
     for specification_id, parameter_id, lens, state, hus in rows:
@@ -98,7 +100,7 @@ def selftest() -> int:
         "CREATE TABLE evidence_sources(ref_id TEXT, verification_status TEXT);"
         "CREATE TABLE specifications(specification_id INT, parameter_id INT,"
         " identity_code TEXT, icf_code TEXT, needs_code TEXT,"
-        " state TEXT, has_unverified_sources INT);"
+        " state TEXT, has_unverified_sources INT, retired_at TEXT);"
         # THE JUNCTION, because that is what the checker reads since the 2026-09-21
         # retirement of `specifications.governing_refs`. A fixture is a caller (rule 4),
         # and one still building the retired column would have exercised nothing.
@@ -114,12 +116,14 @@ def selftest() -> int:
         ((3, 3, "X", None, None, "stated", 1), ["R1"], True, "stale: flag 1 but no unverified ref"),
         ((4, 4, "X", None, None, "provisional", 1), ["R2"], False, "honest: unverified ref, flag 1"),
         ((5, 5, "X", None, None, "provisional", 0), ["R9"], True, "dangling: R9 not in sources"),
+        ((6, 6, "X", None, None, "provisional", 0, "2026-11-20"), ["R2"], False,
+         "retired: cites UNVERIFIED with flag 0, but a retired row states nothing"),
     ]
     ok = True
     for row, refs, expect, why in cases:
         con.execute("DELETE FROM specifications")
         con.execute("DELETE FROM specification_source_links")
-        con.execute("INSERT INTO specifications VALUES(?,?,?,?,?,?,?)", row)
+        con.execute("INSERT INTO specifications VALUES(?,?,?,?,?,?,?,?)", (tuple(row) + (None,))[:8])
         for _r in refs:
             con.execute("INSERT INTO specification_source_links VALUES(?,?,'governing')",
                         (row[0], _r))
