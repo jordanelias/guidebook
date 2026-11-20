@@ -8148,3 +8148,25 @@ Given in the session `session_2026-11-20-unregistered-map-codes` (https://claude
 CONDITION: any session that records, judges or renders a figure from a source not in English; that writes or reads `translations`, `base_units`, `identity_icf_map`, `access_need_icf` or `extraction_lens_links`; or that plans T-049, T-112, T-086 or T-126 to T-128.
 ACTION: (1) Translation of a non-English source's title and of each figure's wording is recorded, with the original, before judgment reads it; where `governance/pipeline-contract.yaml` says synthesis, this entry supersedes that default (rule 0), and the contract is corrected in a tooling pull request, not by hand here. (2) An English rendering is not written into `claimed_value` or `claimed_unit`. (3) Treat a disability identity as the first lens of the repository: an identity with no ICF code, and an identity with no recorded need, is a gap to close and not a state to leave. (4) Treat every [ASSUMPTION] above as unratified except where the owner's words state it.
 DATE: 2026-11-20 — owner statements (typed words, quoted above).
+
+## Owner statement 2026-11-20 (second) — the identity, access-need and ICF crosswalk is a table of judged triples, proposed by a session and reviewed by the owner in batches
+
+Given in the session `session_2026-11-20-unregistered-map-codes` (https://claude.ai/code/session_01Ub36iQWmsqeLLsdnXfD7Pu), in two typed messages. Derive the times from the preserved transcript (`git grep -n -F "big 3D matrix of ICF codes" -- transcripts`; `git grep -n -F "yes, correct" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "you basically need to have a big 3D matrix of ICF codes * access needs * disability identities"
+>
+> "yes, correct"
+
+The second answered the coordinator's description, which the owner confirmed. The description, for the record (it is the coordinator's wording, not the owner's): the cube is stored sparsely, as a table of the triples someone judged, each with a warrant, who or what judged it and when, and a state from the project's cell states (stated, provisional, pending, not_applicable); a cell with no row reads as not yet judged and a not_applicable row as judged and not applying; the cube is a view over the table, readable from an identity, a code or a need; a session proposes the triples and the owner reviews each batch before it counts as stated.
+
+**Readings.**
+
+- [ASSUMPTION: "yes, correct" confirms the whole description above, including that the owner reviews each batch before a triple counts as stated — basis: it answered the description's closing question, "does a session propose the triples and you review each batch before it counts as stated?"].
+- [ASSUMPTION: this supersedes, on contact (rule 0), the row of `workplan/2026-11-12-bidirectional-pipeline/MAPPING-DESIGN.md` section 2(a) that rejected a new `identity_need_map` ("a second home beside `access_needs.absorbs`"): the home beside it is `access_needs.absorbs`, a delimited cell that names identities in free text (16 of 17 rows delimited per that file; derive: `python3 scripts/audit/joined_cells_census.py`), which the schema-shape ruling of 2026-11-06 (one value per cell) does not allow to stay the only home — basis: the owner's words; the design file is a plan, and the ledger outranks it].
+- The name, columns and grain of the table are not decided here; the second reading names no schema.
+
+CONDITION: any session designing, writing or reading the link between an identity, an access need and an ICF code; T-126 to T-128; any task that reads `access_needs.absorbs` or `identity_icf_map`.
+ACTION: (1) Design the table as a tooling task and ship it before any triple is written (rule 10); name what reads it (CLAUDE.md section 8). (2) Do not take `MAPPING-DESIGN.md` section 2(a)'s rejection as a reason not to build it. (3) The batch that fills it is research data and goes in its own pull request; the owner reviews it before its rows count as stated. (4) Treat the two assumptions above as unratified except where the owner's words state them.
+DATE: 2026-11-20 — owner statements (typed words, quoted above).
