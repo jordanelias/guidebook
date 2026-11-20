@@ -598,9 +598,7 @@ checks:
   level: blocking
   basis: unattributed
   cost: fast
-  no_floor: empty-by-decision — every stored determination is retired and the check reads live
-    ones only (a retired row states nothing), so its subject is empty. The first run that
-    examines a row contradicts this reason, which is the signal to ratchet back to min_items 1.
+  min_items: 1
 - id: audit_evidence_metadata
   cmd:
   - python3

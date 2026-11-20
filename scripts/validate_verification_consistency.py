@@ -59,13 +59,16 @@ def _check(con) -> list:
         # (D-0182) guarantees at least one is non-NULL.
         "SELECT specification_id,parameter_id,"
         "COALESCE(identity_code,icf_code,needs_code),state,"
-        "has_unverified_sources FROM specifications "
-        # A retired determination states nothing: every reader filters retired_at IS NULL, and a
-        # source downgraded after a row was retired does not make that row's flag a lie today.
-        "WHERE state IN ('stated','provisional') AND retired_at IS NULL"
+        "has_unverified_sources, retired_at FROM specifications "
+        "WHERE state IN ('stated','provisional')"
     ).fetchall()
     errors = []
-    for specification_id, parameter_id, lens, state, hus in rows:
+    for specification_id, parameter_id, lens, state, hus, retired_at in rows:
+        if retired_at:
+            # A retired determination is history. It is read and counted (T-004: EXAMINED is the rows this check
+            # reads), but its flag is not held to the sources' standing today: a source downgraded after the row
+            # was retired (no logged retrieval, db.py amend-source) must not redden a blocking check forever.
+            continue
         tag = f"specification {specification_id} (param {parameter_id}×{lens}, {state})"
         # THE JUNCTION, not the JSON copy. `governing_refs` is frozen history since the
         # writer retired it, so a row written after that carries NULL and this dangling-ref
