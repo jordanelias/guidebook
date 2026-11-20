@@ -8234,3 +8234,28 @@ Given in the session `session_2026-11-20-unregistered-map-codes` (https://claude
 CONDITION: any session shaping the pull request or pull requests for the work of the entry "Owner statements 2026-11-20 — translation runs before judgment …" or the remediation plan of 2026-11-20.
 ACTION: (1) Ship that work as one pull request, with the matrix excluded; ship the matrix as its own. (2) Order the commits inside the pull request tooling first, then the rows they enable, so each commit stands on the one before. (3) Keep the checks of each part in the same pull request and report any that cannot go red on the defect. (4) Treat the assumptions above as unratified except where the owner's words state them.
 DATE: 2026-11-20 — owner statements (typed words, quoted above).
+
+## Owner statements 2026-11-20 (fifth) — the identity, need and ICF matrix holds all three keys; a qualitative value cell may be corrected in place (GAP-368)
+
+Given in the session `session_2026-11-20-core-work` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in typed messages answering the coordinator's two owner questions after an Opus adjudication of eight decisions and an antagonist's critique of it. Derive the times from the preserved transcript (`git grep -n -F "should be all three" -- transcripts`; `git grep -n -F "you can correct in place" -- transcripts`; `git grep -n -F "Yes @ T-145" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "Yes @ T-145"
+>
+> "T-145: should be all three. We need to do the identity-ICF-access matrix."
+>
+> "GAP-368: Yes, you can correct in place."
+
+**Readings.**
+
+- "should be all three" answers T-145 section 4 question 1: a row of the judged identity, access-need and ICF table holds an identity, an access need and an ICF code, each present. The owner's words decide it; it supersedes the task's recommendation of at least two. It does not touch D-0182, which governs a determination's lens columns.
+- [ASSUMPTION: "Yes @ T-145" confirms question 2 as the coordinator put it: only the owner's review of a batch marks a row `stated` — basis: it answered the coordinator's line that question 2 "needs only your yes"].
+- [ASSUMPTION: question 3 (the two flat maps and `access_needs.absorbs` stay as proposals, `absorbs` retired in a later task) and question 4 (a `not_applicable` row carries the same warrant cell as a stated row) are taken at the task's recommendations, since the owner asked that the matrix be built and answered neither — basis: both are the task's own recommendations, and the table is empty, so either reverses by a schema migration at no data cost].
+- [ASSUMPTION: "correct in place" answers the coordinator's question whether the English paraphrases written into the value cell of eleven qualitative figures (`source_value_extractions` ids 20, 21, 27, 31, 32, 93, 102, 104, 106, 112, and 80, whose value is the Finnish words) may be corrected without retiring and re-adding the figure, treating the paraphrase as an error and not as a changed value under D-0168 — basis: the question put, and the critique's finding that the retire-and-re-add route is refused by the writer (no covering `source_scans` row, five verified figures downgraded, new lens-link warrants owed)]. The original wording stays in `claim_text`; the English is in `translations`.
+- The guard that a qualitative value cell must be a span of its own `claim_text`, and the verb that corrects a cell in place, are the coordinator's proposal and are unratified.
+- The Opus adjudication of the eight decisions is not relied on. Its critique found one blocking and nine must-amend defects; neither file is a ruling.
+
+CONDITION: any session building, reading or filling the identity, access-need and ICF table (T-145, T-126 to T-128); any session correcting a qualitative figure's value cell, or planning GAP-368, GAP-372 or GAP-376.
+ACTION: (1) Build T-145 as its own tooling pull request with all three keys NOT NULL; the triples that fill it are a later research pull request the owner reviews. (2) Correct the eleven value cells in place, through one writer that refuses a value not found in the figure's own `claim_text`; it goes in the large pull request, tooling first. (3) Treat the assumptions above as unratified except where the owner's words state them.
+DATE: 2026-11-20 — owner statements (typed words, quoted above).
