@@ -2,575 +2,645 @@
  {
   "identity": "BLIND",
   "need": "A-NOSIGHT",
-  "icf": "d460",
-  "warrant": "The need's registry text names blindness and low vision, and the identity is blind and low-vision people. Need A-NOSIGHT registry text: \"blindness, low vision\". Identity BLIND: \"blind and low-vision people\". Code d460 (title recorded in base_icf: \"Moving around in different locations\"): identity_icf_map link 41/55 holds it for BLIND; AX-VIS-N (status ESTABLISHED) lists it among its ICF anchors in governance/functional-taxonomy.md 2.1; tie: the identity's map holds it for spatial orientation and AX-VIS-N lists it; the need makes information perceivable without sight.",
-  "support": "identity map"
- },
- {
-  "identity": "BLIND",
-  "need": "A-NOSIGHT",
-  "icf": "d310–d329",
-  "warrant": "The need's registry text names blindness and low vision, and the identity is blind and low-vision people. Need A-NOSIGHT registry text: \"blindness, low vision\". Identity BLIND: \"blind and low-vision people\". Code d310–d329: identity_icf_map link 42/56 holds it for BLIND; tie: the identity's map holds it for information access, and the need's obligation is text alternatives, braille and a logical reading order.",
-  "support": "identity map"
- },
- {
-  "identity": "BLIND",
-  "need": "A-NOSIGHT",
-  "icf": "e240",
-  "warrant": "The need's registry text names blindness and low vision, and the identity is blind and low-vision people. Need A-NOSIGHT registry text: \"blindness, low vision\". Identity BLIND: \"blind and low-vision people\". Code e240: access_need_icf holds A-NOSIGHT -> e240 (annotated: Light).",
-  "support": "need map"
- },
- {
-  "identity": "BLIND",
-  "need": "A-NOSIGHT",
   "icf": "e125",
-  "warrant": "The need's registry text names blindness and low vision, and the identity is blind and low-vision people. Need A-NOSIGHT registry text: \"blindness, low vision\". Identity BLIND: \"blind and low-vision people\". Code e125: access_need_icf holds A-NOSIGHT -> e125 (annotated: products & technology for communication).",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names blindness and low vision, and the identity is blind and low-vision people. Need A-NOSIGHT registry text: \"blindness, low vision\". Identity BLIND: \"blind and low-vision people\". Code e125: access_need_icf holds A-NOSIGHT -> e125."
+ },
+ {
+  "identity": "BLIND",
+  "need": "A-NOSIGHT",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names blindness and low vision, and the identity is blind and low-vision people. Need A-NOSIGHT registry text: \"blindness, low vision\". Identity BLIND: \"blind and low-vision people\". Code e150: access_need_icf holds A-NOSIGHT -> e150."
  },
  {
   "identity": "BLIND",
   "need": "A-NOSIGHT",
   "icf": "e155",
-  "warrant": "The need's registry text names blindness and low vision, and the identity is blind and low-vision people. Need A-NOSIGHT registry text: \"blindness, low vision\". Identity BLIND: \"blind and low-vision people\". Code e155: access_need_icf holds A-NOSIGHT -> e155 (annotated: building design (private)).",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names blindness and low vision, and the identity is blind and low-vision people. Need A-NOSIGHT registry text: \"blindness, low vision\". Identity BLIND: \"blind and low-vision people\". Code e155: access_need_icf holds A-NOSIGHT -> e155."
+ },
+ {
+  "identity": "BLIND",
+  "need": "A-NOSIGHT",
+  "icf": "e240",
+  "support": "need",
+  "warrant": "The need's registry text names blindness and low vision, and the identity is blind and low-vision people. Need A-NOSIGHT registry text: \"blindness, low vision\". Identity BLIND: \"blind and low-vision people\". Code e240: access_need_icf holds A-NOSIGHT -> e240."
  },
  {
   "identity": "DEAF",
   "need": "A-NOSOUND",
-  "icf": "d310–d329",
-  "warrant": "The need's registry text names Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND registry text: \"Deaf, hard of hearing, late-deafened\". Identity DEAF: \"Deaf, or late-deafened\". Code d310–d329: identity_icf_map link 20 holds it for DEAF; tie: the identity's map holds it for communication and alert receipt, and the need's obligation is captions, transcripts and visual alerts.",
-  "support": "identity map"
- },
- {
-  "identity": "DEAF",
-  "need": "A-NOSOUND",
-  "icf": "e250",
-  "warrant": "The need's registry text names Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND registry text: \"Deaf, hard of hearing, late-deafened\". Identity DEAF: \"Deaf, or late-deafened\". Code e250: access_need_icf holds A-NOSOUND -> e250 (annotated: Sound).",
-  "support": "need map"
+  "icf": "e125",
+  "support": "need",
+  "warrant": "The need's registry text names Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND registry text: \"Deaf, hard of hearing, late-deafened\". Identity DEAF: \"Deaf, or late-deafened\". Code e125: access_need_icf holds A-NOSOUND -> e125."
  },
  {
   "identity": "DEAF",
   "need": "A-NOSOUND",
   "icf": "e1251",
-  "warrant": "The need's registry text names Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND registry text: \"Deaf, hard of hearing, late-deafened\". Identity DEAF: \"Deaf, or late-deafened\". Code e1251: access_need_icf holds A-NOSOUND -> e1251 (annotated: assistive products & technology for communication (sub-code of e125); verified WHO/ICF 2026-07-23).",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND registry text: \"Deaf, hard of hearing, late-deafened\". Identity DEAF: \"Deaf, or late-deafened\". Code e1251: access_need_icf holds A-NOSOUND -> e1251."
  },
  {
   "identity": "DEAF",
   "need": "A-NOSOUND",
-  "icf": "e125",
-  "warrant": "The need's registry text names Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND registry text: \"Deaf, hard of hearing, late-deafened\". Identity DEAF: \"Deaf, or late-deafened\". Code e125: access_need_icf holds A-NOSOUND -> e125.",
-  "support": "need map"
+  "icf": "e250",
+  "support": "need",
+  "warrant": "The need's registry text names Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND registry text: \"Deaf, hard of hearing, late-deafened\". Identity DEAF: \"Deaf, or late-deafened\". Code e250: access_need_icf holds A-NOSOUND -> e250."
+ },
+ {
+  "identity": "DEAF",
+  "need": "A-NOSOUND",
+  "icf": "d310–d329",
+  "support": "ground",
+  "warrant": "The need's registry text names Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND registry text: \"Deaf, hard of hearing, late-deafened\". Identity DEAF: \"Deaf, or late-deafened\". Code d310–d329: identity_icf_map link 20 holds it for DEAF; the word \"alert\" appears in that link's mechanism or in the code's recorded title and in the need's own text, which is the tie."
  },
  {
   "identity": "DEAFBLIND",
   "need": "A-TACTILE",
-  "icf": "e340",
-  "warrant": "The need's registry text names DeafBlind (Protactile) access and the identity's description says it is not blindness plus deafness. The need's own note records that DeafBlind access is distinct, and functional-taxonomy.md 4 maps DBL to VIS-N x AUD at compound weight, so only the need's environmental codes are proposed. Need A-TACTILE registry text: \"DeafBlind (Protactile)\". Identity DEAFBLIND: \"Not VIS+DEAF\". Code e340: access_need_icf holds A-TACTILE -> e340 (annotated: personal-care providers / SSPs).",
-  "support": "need map"
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names DeafBlind (Protactile) access, and the identity's description says it is not blindness plus deafness. Need A-TACTILE registry text: \"DeafBlind (Protactile)\". Identity DEAFBLIND: \"Not VIS+DEAF\". Code e150: access_need_icf holds A-TACTILE -> e150."
  },
  {
   "identity": "DEAFBLIND",
   "need": "A-TACTILE",
   "icf": "e155",
-  "warrant": "The need's registry text names DeafBlind (Protactile) access and the identity's description says it is not blindness plus deafness. The need's own note records that DeafBlind access is distinct, and functional-taxonomy.md 4 maps DBL to VIS-N x AUD at compound weight, so only the need's environmental codes are proposed. Need A-TACTILE registry text: \"DeafBlind (Protactile)\". Identity DEAFBLIND: \"Not VIS+DEAF\". Code e155: access_need_icf holds A-TACTILE -> e155.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names DeafBlind (Protactile) access, and the identity's description says it is not blindness plus deafness. Need A-TACTILE registry text: \"DeafBlind (Protactile)\". Identity DEAFBLIND: \"Not VIS+DEAF\". Code e155: access_need_icf holds A-TACTILE -> e155."
  },
  {
-  "identity": "VES",
-  "need": "A-STABLE",
-  "icf": "d415",
-  "warrant": "The identity's description says it is served primarily by this need, and the need's registry text names vestibular disorders. Need A-STABLE registry text: \"vestibular disorders\". Identity VES: \"Served primarily by A-STABLE\". Code d415: AX-BAL (status STUB) lists it among its ICF anchors in governance/functional-taxonomy.md 2.1; tie: the balance axis lists it, and the need's obligation includes handrails and signalled level changes.",
-  "support": "taxonomy anchor"
- },
- {
-  "identity": "VES",
-  "need": "A-STABLE",
-  "icf": "e240",
-  "warrant": "The identity's description says it is served primarily by this need, and the need's registry text names vestibular disorders. Need A-STABLE registry text: \"vestibular disorders\". Identity VES: \"Served primarily by A-STABLE\". Code e240: access_need_icf holds A-STABLE -> e240.",
-  "support": "need map"
+  "identity": "DEAFBLIND",
+  "need": "A-TACTILE",
+  "icf": "e340",
+  "support": "need",
+  "warrant": "The need's registry text names DeafBlind (Protactile) access, and the identity's description says it is not blindness plus deafness. Need A-TACTILE registry text: \"DeafBlind (Protactile)\". Identity DEAFBLIND: \"Not VIS+DEAF\". Code e340: access_need_icf holds A-TACTILE -> e340."
  },
  {
   "identity": "BRAIN",
   "need": "A-STABLE",
-  "icf": "d415",
-  "warrant": "The need's registry text names post-concussion and the identity's description includes post-concussion; functional-taxonomy.md 4 maps PCS-TBI to BAL. The named condition is one member of this identity; the row is keyed on the whole identity, and whether the link holds for each member is for the owner to confirm. Need A-STABLE registry text: \"post-concussion\". Identity BRAIN: \"post-concussion\". Code d415: AX-BAL (status STUB) lists it among its ICF anchors in governance/functional-taxonomy.md 2.1; tie: the balance axis lists it, and the need's obligation includes handrails and signalled level changes.",
-  "support": "taxonomy anchor"
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names post-concussion, and the identity's description includes post-concussion. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STABLE registry text: \"post-concussion\". Identity BRAIN: \"post-concussion\". Code e150: access_need_icf holds A-STABLE -> e150."
  },
  {
   "identity": "BRAIN",
   "need": "A-STABLE",
   "icf": "e240",
-  "warrant": "The need's registry text names post-concussion and the identity's description includes post-concussion; functional-taxonomy.md 4 maps PCS-TBI to BAL. The named condition is one member of this identity; the row is keyed on the whole identity, and whether the link holds for each member is for the owner to confirm. Need A-STABLE registry text: \"post-concussion\". Identity BRAIN: \"post-concussion\". Code e240: access_need_icf holds A-STABLE -> e240.",
-  "support": "need map"
- },
- {
-  "identity": "BRAIN",
-  "need": "A-NOSPEECH",
-  "icf": "d330",
-  "warrant": "The need's registry text names aphasia and the identity's description includes stroke. populations.json (neurological and acquired brain injury profile) lists \"stroke sequelae (unilateral neglect, navigation impairment, aphasia, hemiplegia)\", and functional-taxonomy.md 4 maps NEU to COM-E but also lists aphasia/dysarthria (COM-E) as a deferred candidate profile, so aphasia is not yet filed under any identity. The named condition is one member of this identity; the row is keyed on the whole identity, and whether the link holds for each member is for the owner to confirm. Need A-NOSPEECH registry text: \"aphasia\". Identity BRAIN: \"stroke\". Code d330: AX-COM-E (status STUB) lists it among its ICF anchors in governance/functional-taxonomy.md 2.1; tie: the axis for producing speech lists it, and the need's obligation is never to require speech.",
-  "support": "taxonomy anchor"
- },
- {
-  "identity": "BRAIN",
-  "need": "A-NOSPEECH",
-  "icf": "d350",
-  "warrant": "The need's registry text names aphasia and the identity's description includes stroke. populations.json (neurological and acquired brain injury profile) lists \"stroke sequelae (unilateral neglect, navigation impairment, aphasia, hemiplegia)\", and functional-taxonomy.md 4 maps NEU to COM-E but also lists aphasia/dysarthria (COM-E) as a deferred candidate profile, so aphasia is not yet filed under any identity. The named condition is one member of this identity; the row is keyed on the whole identity, and whether the link holds for each member is for the owner to confirm. Need A-NOSPEECH registry text: \"aphasia\". Identity BRAIN: \"stroke\". Code d350: AX-COM-E (status STUB) lists it among its ICF anchors in governance/functional-taxonomy.md 2.1; tie: the axis for producing speech lists it, and the need's obligation is never to require speech.",
-  "support": "taxonomy anchor"
+  "support": "need",
+  "warrant": "The need's registry text names post-concussion, and the identity's description includes post-concussion. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STABLE registry text: \"post-concussion\". Identity BRAIN: \"post-concussion\". Code e240: access_need_icf holds A-STABLE -> e240."
  },
  {
   "identity": "BRAIN",
   "need": "A-NOSPEECH",
   "icf": "e125",
-  "warrant": "The need's registry text names aphasia and the identity's description includes stroke. populations.json (neurological and acquired brain injury profile) lists \"stroke sequelae (unilateral neglect, navigation impairment, aphasia, hemiplegia)\", and functional-taxonomy.md 4 maps NEU to COM-E but also lists aphasia/dysarthria (COM-E) as a deferred candidate profile, so aphasia is not yet filed under any identity. The named condition is one member of this identity; the row is keyed on the whole identity, and whether the link holds for each member is for the owner to confirm. Need A-NOSPEECH registry text: \"aphasia\". Identity BRAIN: \"stroke\". Code e125: access_need_icf holds A-NOSPEECH -> e125.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names aphasia, and the identity's description includes stroke; the neurological and acquired brain injury profile in populations.json lists \"stroke sequelae (unilateral neglect, navigation impairment, aphasia, hemiplegia)\". The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-NOSPEECH registry text: \"aphasia\". Identity BRAIN: \"stroke\". Code e125: access_need_icf holds A-NOSPEECH -> e125."
  },
  {
   "identity": "BRAIN",
   "need": "A-NOSPEECH",
   "icf": "e340",
-  "warrant": "The need's registry text names aphasia and the identity's description includes stroke. populations.json (neurological and acquired brain injury profile) lists \"stroke sequelae (unilateral neglect, navigation impairment, aphasia, hemiplegia)\", and functional-taxonomy.md 4 maps NEU to COM-E but also lists aphasia/dysarthria (COM-E) as a deferred candidate profile, so aphasia is not yet filed under any identity. The named condition is one member of this identity; the row is keyed on the whole identity, and whether the link holds for each member is for the owner to confirm. Need A-NOSPEECH registry text: \"aphasia\". Identity BRAIN: \"stroke\". Code e340: access_need_icf holds A-NOSPEECH -> e340.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names aphasia, and the identity's description includes stroke; the neurological and acquired brain injury profile in populations.json lists \"stroke sequelae (unilateral neglect, navigation impairment, aphasia, hemiplegia)\". The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-NOSPEECH registry text: \"aphasia\". Identity BRAIN: \"stroke\". Code e340: access_need_icf holds A-NOSPEECH -> e340."
+ },
+ {
+  "identity": "ID",
+  "need": "A-PLAIN",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names intellectual disability, and the identity is people with intellectual disability. Need A-PLAIN registry text: \"intellectual disability\". Identity ID: \"people with intellectual disability\". Code e150: access_need_icf holds A-PLAIN -> e150."
  },
  {
   "identity": "ID",
   "need": "A-PLAIN",
   "icf": "e155",
-  "warrant": "The need's registry text names intellectual disability and the identity is people with intellectual disability. Need A-PLAIN registry text: \"intellectual disability\". Identity ID: \"people with intellectual disability\". Code e155: access_need_icf holds A-PLAIN -> e155.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names intellectual disability, and the identity is people with intellectual disability. Need A-PLAIN registry text: \"intellectual disability\". Identity ID: \"people with intellectual disability\". Code e155: access_need_icf holds A-PLAIN -> e155."
+ },
+ {
+  "identity": "DEM",
+  "need": "A-PLAIN",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names dementia, and the identity is people living with dementia. Need A-PLAIN registry text: \"dementia\". Identity DEM: \"Alzheimer disease and related dementias\". Code e150: access_need_icf holds A-PLAIN -> e150."
+ },
+ {
+  "identity": "DEM",
+  "need": "A-PLAIN",
+  "icf": "e155",
+  "support": "need",
+  "warrant": "The need's registry text names dementia, and the identity is people living with dementia. Need A-PLAIN registry text: \"dementia\". Identity DEM: \"Alzheimer disease and related dementias\". Code e155: access_need_icf holds A-PLAIN -> e155."
  },
  {
   "identity": "DEM",
   "need": "A-PLAIN",
   "icf": "d460",
-  "warrant": "The need's registry text names dementia and the identity is people living with dementia; the identity's map and the need's signage row both mention wayfinding. Need A-PLAIN registry text: \"dementia\". Identity DEM: \"Cognitive — memory, attention, wayfinding, sequencing\". Code d460 (title recorded in base_icf: \"Moving around in different locations\"): identity_icf_map link 11 holds it for DEM; tie: the identity's map holds it for wayfinding, and the need's signage row is annotated wayfinding.",
-  "support": "identity map"
+  "support": "ground",
+  "warrant": "The need's registry text names dementia, and the identity is people living with dementia. Need A-PLAIN registry text: \"dementia\". Identity DEM: \"Alzheimer disease and related dementias\". Code d460: identity_icf_map link 11 holds it for DEM; the word \"wayfinding\" appears in that link's mechanism or in the code's recorded title and in the need's own text, which is the tie."
  },
  {
-  "identity": "DEM",
+  "identity": "BRAIN",
   "need": "A-PLAIN",
-  "icf": "e155",
-  "warrant": "The need's registry text names dementia and the identity is people living with dementia; the identity's map and the need's signage row both mention wayfinding. Need A-PLAIN registry text: \"dementia\". Identity DEM: \"Cognitive — memory, attention, wayfinding, sequencing\". Code e155: access_need_icf holds A-PLAIN -> e155.",
-  "support": "need map"
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names brain injury, and the identity is people with acquired brain injury. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-PLAIN registry text: \"brain injury\". Identity BRAIN: \"acquired brain injury\". Code e150: access_need_icf holds A-PLAIN -> e150."
  },
  {
   "identity": "BRAIN",
   "need": "A-PLAIN",
   "icf": "e155",
-  "warrant": "The need's registry text names brain injury and the identity is people with acquired brain injury. Need A-PLAIN registry text: \"brain injury\". Identity BRAIN: \"acquired brain injury\". Code e155: access_need_icf holds A-PLAIN -> e155.",
-  "support": "need map"
- },
- {
-  "identity": "MOB",
-  "need": "A-REACH",
-  "icf": "d465",
-  "warrant": "The need's registry text names wheelchair users, ambulatory wheelchair users and cane/crutch users, and the identity is people with mobility needs including wheelchair users. Need A-REACH registry text: \"wheelchair users, ambulatory wheelchair users, cane/crutch users\". Identity MOB: \"wheelchair users\". Code d465 (title recorded in base_icf: \"Moving around using equipment\"): identity_icf_map link 6 holds it for MOB; tie: the identity's map holds it for wheelchair use, which the need's registry text names.",
-  "support": "identity map"
- },
- {
-  "identity": "MOB",
-  "need": "A-REACH",
-  "icf": "d420",
-  "warrant": "The need's registry text names wheelchair users, ambulatory wheelchair users and cane/crutch users, and the identity is people with mobility needs including wheelchair users. Need A-REACH registry text: \"wheelchair users, ambulatory wheelchair users, cane/crutch users\". Identity MOB: \"wheelchair users\". Code d420 (title recorded in base_icf: \"Transferring oneself\"): identity_icf_map link 2 holds it for MOB; tie: the identity's map holds it for transfer, and the need asks for seated-height controls and clearance.",
-  "support": "identity map"
- },
- {
-  "identity": "MOB",
-  "need": "A-REACH",
-  "icf": "d450",
-  "warrant": "The need's registry text names wheelchair users, ambulatory wheelchair users and cane/crutch users, and the identity is people with mobility needs including wheelchair users. Need A-REACH registry text: \"wheelchair users, ambulatory wheelchair users, cane/crutch users\". Identity MOB: \"wheelchair users\". Code d450 (title recorded in base_icf: \"Walking\"): identity_icf_map link 3 holds it for MOB; tie: the identity's map holds it for ambulation, and the need names ambulatory wheelchair and cane/crutch users.",
-  "support": "identity map"
+  "support": "need",
+  "warrant": "The need's registry text names brain injury, and the identity is people with acquired brain injury. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-PLAIN registry text: \"brain injury\". Identity BRAIN: \"acquired brain injury\". Code e155: access_need_icf holds A-PLAIN -> e155."
  },
  {
   "identity": "MOB",
   "need": "A-REACH",
   "icf": "e120",
-  "warrant": "The need's registry text names wheelchair users, ambulatory wheelchair users and cane/crutch users, and the identity is people with mobility needs including wheelchair users. Need A-REACH registry text: \"wheelchair users, ambulatory wheelchair users, cane/crutch users\". Identity MOB: \"wheelchair users\". Code e120: access_need_icf holds A-REACH -> e120 (annotated: mobility products & technology).",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names wheelchair users, ambulatory wheelchair users and cane/crutch users, and the identity is people with mobility needs including wheelchair users. The named group is one member of this family identity, and the row is keyed on the whole identity. Need A-REACH registry text: \"wheelchair users, ambulatory wheelchair users, cane/crutch users\". Identity MOB: \"wheelchair users\". Code e120: access_need_icf holds A-REACH -> e120."
+ },
+ {
+  "identity": "MOB",
+  "need": "A-REACH",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names wheelchair users, ambulatory wheelchair users and cane/crutch users, and the identity is people with mobility needs including wheelchair users. The named group is one member of this family identity, and the row is keyed on the whole identity. Need A-REACH registry text: \"wheelchair users, ambulatory wheelchair users, cane/crutch users\". Identity MOB: \"wheelchair users\". Code e150: access_need_icf holds A-REACH -> e150."
  },
  {
   "identity": "MOB",
   "need": "A-REACH",
   "icf": "e155",
-  "warrant": "The need's registry text names wheelchair users, ambulatory wheelchair users and cane/crutch users, and the identity is people with mobility needs including wheelchair users. Need A-REACH registry text: \"wheelchair users, ambulatory wheelchair users, cane/crutch users\". Identity MOB: \"wheelchair users\". Code e155: access_need_icf holds A-REACH -> e155.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names wheelchair users, ambulatory wheelchair users and cane/crutch users, and the identity is people with mobility needs including wheelchair users. The named group is one member of this family identity, and the row is keyed on the whole identity. Need A-REACH registry text: \"wheelchair users, ambulatory wheelchair users, cane/crutch users\". Identity MOB: \"wheelchair users\". Code e155: access_need_icf holds A-REACH -> e155."
  },
  {
-  "identity": "SCI",
+  "identity": "MOB",
   "need": "A-REACH",
   "icf": "d465",
-  "warrant": "The need's registry text names wheelchair users; the identity is people with spinal cord injuries (paraplegia or tetraplegia), and functional-taxonomy.md 4 maps SCI to WHM and REA. Need A-REACH registry text: \"wheelchair users\". Identity SCI: \"paraplegia or tetraplegia\". Code d465 (title recorded in base_icf: \"Moving around using equipment\"): identity_icf_map link 26 holds it for SCI; tie: the identity's map holds it for wheelchair use, which the need's registry text names.",
-  "support": "identity map"
+  "support": "ground",
+  "warrant": "The need's registry text names wheelchair users, ambulatory wheelchair users and cane/crutch users, and the identity is people with mobility needs including wheelchair users. The named group is one member of this family identity, and the row is keyed on the whole identity. Need A-REACH registry text: \"wheelchair users, ambulatory wheelchair users, cane/crutch users\". Identity MOB: \"wheelchair users\". Code d465: identity_icf_map link 6 holds it for MOB; the word \"wheelchair\" appears in that link's mechanism or in the code's recorded title and in the need's own text, which is the tie."
  },
  {
-  "identity": "SCI",
-  "need": "A-REACH",
-  "icf": "d420",
-  "warrant": "The need's registry text names wheelchair users; the identity is people with spinal cord injuries (paraplegia or tetraplegia), and functional-taxonomy.md 4 maps SCI to WHM and REA. Need A-REACH registry text: \"wheelchair users\". Identity SCI: \"paraplegia or tetraplegia\". Code d420 (title recorded in base_icf: \"Transferring oneself\"): identity_icf_map link 23 holds it for SCI; tie: the identity's map holds it for transfer, and the need asks for seated-height controls and clearance.",
-  "support": "identity map"
- },
- {
-  "identity": "SCI",
+  "identity": "MOB",
   "need": "A-REACH",
   "icf": "d450",
-  "warrant": "The need's registry text names wheelchair users; the identity is people with spinal cord injuries (paraplegia or tetraplegia), and functional-taxonomy.md 4 maps SCI to WHM and REA. Need A-REACH registry text: \"wheelchair users\". Identity SCI: \"paraplegia or tetraplegia\". Code d450 (title recorded in base_icf: \"Walking\"): identity_icf_map link 24 holds it for SCI; tie: the identity's map holds it for ambulation, and the need names ambulatory wheelchair and cane/crutch users.",
-  "support": "identity map"
+  "support": "ground",
+  "warrant": "The need's registry text names wheelchair users, ambulatory wheelchair users and cane/crutch users, and the identity is people with mobility needs including wheelchair users. The named group is one member of this family identity, and the row is keyed on the whole identity. Need A-REACH registry text: \"wheelchair users, ambulatory wheelchair users, cane/crutch users\". Identity MOB: \"wheelchair users\". Code d450: identity_icf_map link 3 holds it for MOB; the word \"ambul\" appears in that link's mechanism or in the code's recorded title and in the need's own text, which is the tie."
  },
  {
-  "identity": "SCI",
+  "identity": "LMB",
   "need": "A-REACH",
-  "icf": "e120",
-  "warrant": "The need's registry text names wheelchair users; the identity is people with spinal cord injuries (paraplegia or tetraplegia), and functional-taxonomy.md 4 maps SCI to WHM and REA. Need A-REACH registry text: \"wheelchair users\". Identity SCI: \"paraplegia or tetraplegia\". Code e120: access_need_icf holds A-REACH -> e120 (annotated: mobility products & technology).",
-  "support": "need map"
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names limb difference, and the identity is people with limb differences, upper-limb disabilities. Need A-REACH registry text: \"limb difference\". Identity LMB: \"upper-limb disabilities\". Code e150: access_need_icf holds A-REACH -> e150."
  },
  {
-  "identity": "SCI",
+  "identity": "LMB",
   "need": "A-REACH",
   "icf": "e155",
-  "warrant": "The need's registry text names wheelchair users; the identity is people with spinal cord injuries (paraplegia or tetraplegia), and functional-taxonomy.md 4 maps SCI to WHM and REA. Need A-REACH registry text: \"wheelchair users\". Identity SCI: \"paraplegia or tetraplegia\". Code e155: access_need_icf holds A-REACH -> e155.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names limb difference, and the identity is people with limb differences, upper-limb disabilities. Need A-REACH registry text: \"limb difference\". Identity LMB: \"upper-limb disabilities\". Code e155: access_need_icf holds A-REACH -> e155."
  },
  {
   "identity": "LMB",
   "need": "A-REACH",
   "icf": "d440",
-  "warrant": "The need's registry text names limb difference and the identity is people with limb differences. Need A-REACH registry text: \"limb difference\". Identity LMB: \"limb differences\". Code d440 (title recorded in base_icf: \"Fine hand use\"): identity_icf_map link 35 holds it for LMB; tie: the identity's map holds it for grip, force and bilateral function, and the need asks for one-handed operation.",
-  "support": "identity map"
+  "support": "ground",
+  "warrant": "The need's registry text names limb difference, and the identity is people with limb differences, upper-limb disabilities. Need A-REACH registry text: \"limb difference\". Identity LMB: \"upper-limb disabilities\". Code d440: identity_icf_map link 35 holds it for LMB; the word \"hand\" appears in that link's mechanism or in the code's recorded title and in the need's own text, which is the tie."
  },
  {
   "identity": "LMB",
   "need": "A-REACH",
   "icf": "d445",
-  "warrant": "The need's registry text names limb difference and the identity is people with limb differences. Need A-REACH registry text: \"limb difference\". Identity LMB: \"limb differences\". Code d445 (title recorded in base_icf: \"Hand and arm use\"): identity_icf_map link 36 holds it for LMB; tie: the identity's map holds it for grip, force and bilateral function, and the need asks for one-handed operation.",
-  "support": "identity map"
- },
- {
-  "identity": "LMB",
-  "need": "A-REACH",
-  "icf": "e120",
-  "warrant": "The need's registry text names limb difference and the identity is people with limb differences. Need A-REACH registry text: \"limb difference\". Identity LMB: \"limb differences\". Code e120: access_need_icf holds A-REACH -> e120 (annotated: mobility products & technology).",
-  "support": "need map"
- },
- {
-  "identity": "LMB",
-  "need": "A-REACH",
-  "icf": "e155",
-  "warrant": "The need's registry text names limb difference and the identity is people with limb differences. Need A-REACH registry text: \"limb difference\". Identity LMB: \"limb differences\". Code e155: access_need_icf holds A-REACH -> e155.",
-  "support": "need map"
- },
- {
-  "identity": "MOVE",
-  "need": "A-PRECISION",
-  "icf": "d440",
-  "warrant": "The identity's description says it pairs with this need, and the need's registry text names tremor, dystonia and Parkinson's. Need A-PRECISION registry text: \"tremor, dystonia, Parkinson's\". Identity MOVE: \"Pairs with A-PRECISION\". Code d440 (title recorded in base_icf: \"Fine hand use\"): AX-REA (status ESTABLISHED) lists it among its ICF anchors in governance/functional-taxonomy.md 2.1; tie: the reach-and-manipulation axis lists it, and the need's obligation is no fine-motor or drag-only interaction.",
-  "support": "taxonomy anchor"
- },
- {
-  "identity": "MOVE",
-  "need": "A-PRECISION",
-  "icf": "e115",
-  "warrant": "The identity's description says it pairs with this need, and the need's registry text names tremor, dystonia and Parkinson's. Need A-PRECISION registry text: \"tremor, dystonia, Parkinson's\". Identity MOVE: \"Pairs with A-PRECISION\". Code e115: access_need_icf holds A-PRECISION -> e115 (annotated: products for daily living).",
-  "support": "need map"
+  "support": "ground",
+  "warrant": "The need's registry text names limb difference, and the identity is people with limb differences, upper-limb disabilities. Need A-REACH registry text: \"limb difference\". Identity LMB: \"upper-limb disabilities\". Code d445: identity_icf_map link 36 holds it for LMB; the word \"hand\" appears in that link's mechanism or in the code's recorded title and in the need's own text, which is the tie."
  },
  {
   "identity": "MOB",
   "need": "A-SELFCARE",
   "icf": "d510",
-  "warrant": "The need's registry text names bathing and toileting, the identity's map holds washing and toileting activity codes, and the identity includes wheelchair users. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity MOB: \"wheelchair users\". Code d510 (title recorded in base_icf: \"Washing oneself\"): access_need_icf holds A-SELFCARE -> d510 (annotated: washing oneself — beyond AX-CNT); identity_icf_map link 8 holds it for MOB.",
-  "support": "both maps"
- },
- {
-  "identity": "MOB",
-  "need": "A-SELFCARE",
-  "icf": "d530",
-  "warrant": "The need's registry text names bathing and toileting, the identity's map holds washing and toileting activity codes, and the identity includes wheelchair users. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity MOB: \"wheelchair users\". Code d530 (title recorded in base_icf: \"Toileting\"): identity_icf_map link 9 holds it for MOB; tie: the identity's map holds it and the need's registry text names toileting.",
-  "support": "identity map"
+  "support": "both",
+  "warrant": "The need's registry text names bathing, dressing, toileting and eating, and the identity is people with mobility needs including wheelchair users. The named group is one member of this family identity, and the row is keyed on the whole identity. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity MOB: \"wheelchair users\". Code d510: access_need_icf holds A-SELFCARE -> d510; identity_icf_map link 8 holds it for MOB."
  },
  {
   "identity": "MOB",
   "need": "A-SELFCARE",
   "icf": "e115",
-  "warrant": "The need's registry text names bathing and toileting, the identity's map holds washing and toileting activity codes, and the identity includes wheelchair users. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity MOB: \"wheelchair users\". Code e115: access_need_icf holds A-SELFCARE -> e115.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names bathing, dressing, toileting and eating, and the identity is people with mobility needs including wheelchair users. The named group is one member of this family identity, and the row is keyed on the whole identity. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity MOB: \"wheelchair users\". Code e115: access_need_icf holds A-SELFCARE -> e115."
+ },
+ {
+  "identity": "MOB",
+  "need": "A-SELFCARE",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names bathing, dressing, toileting and eating, and the identity is people with mobility needs including wheelchair users. The named group is one member of this family identity, and the row is keyed on the whole identity. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity MOB: \"wheelchair users\". Code e150: access_need_icf holds A-SELFCARE -> e150."
  },
  {
   "identity": "MOB",
   "need": "A-SELFCARE",
   "icf": "e340",
-  "warrant": "The need's registry text names bathing and toileting, the identity's map holds washing and toileting activity codes, and the identity includes wheelchair users. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity MOB: \"wheelchair users\". Code e340: access_need_icf holds A-SELFCARE -> e340.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names bathing, dressing, toileting and eating, and the identity is people with mobility needs including wheelchair users. The named group is one member of this family identity, and the row is keyed on the whole identity. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity MOB: \"wheelchair users\". Code e340: access_need_icf holds A-SELFCARE -> e340."
  },
  {
-  "identity": "SCI",
-  "need": "A-SELFCARE",
-  "icf": "d510",
-  "warrant": "The need's registry text names bathing and toileting, and the identity's map holds washing and toileting activity codes. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity SCI: \"paraplegia or tetraplegia\". Code d510 (title recorded in base_icf: \"Washing oneself\"): access_need_icf holds A-SELFCARE -> d510 (annotated: washing oneself — beyond AX-CNT); identity_icf_map link 27 holds it for SCI.",
-  "support": "both maps"
- },
- {
-  "identity": "SCI",
+  "identity": "MOB",
   "need": "A-SELFCARE",
   "icf": "d530",
-  "warrant": "The need's registry text names bathing and toileting, and the identity's map holds washing and toileting activity codes. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity SCI: \"paraplegia or tetraplegia\". Code d530 (title recorded in base_icf: \"Toileting\"): identity_icf_map link 29 holds it for SCI; tie: the identity's map holds it and the need's registry text names toileting.",
-  "support": "identity map"
- },
- {
-  "identity": "SCI",
-  "need": "A-SELFCARE",
-  "icf": "e115",
-  "warrant": "The need's registry text names bathing and toileting, and the identity's map holds washing and toileting activity codes. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity SCI: \"paraplegia or tetraplegia\". Code e115: access_need_icf holds A-SELFCARE -> e115.",
-  "support": "need map"
- },
- {
-  "identity": "SCI",
-  "need": "A-SELFCARE",
-  "icf": "e340",
-  "warrant": "The need's registry text names bathing and toileting, and the identity's map holds washing and toileting activity codes. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity SCI: \"paraplegia or tetraplegia\". Code e340: access_need_icf holds A-SELFCARE -> e340.",
-  "support": "need map"
+  "support": "ground",
+  "warrant": "The need's registry text names bathing, dressing, toileting and eating, and the identity is people with mobility needs including wheelchair users. The named group is one member of this family identity, and the row is keyed on the whole identity. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity MOB: \"wheelchair users\". Code d530: identity_icf_map link 9 holds it for MOB; the word \"toilet\" appears in that link's mechanism or in the code's recorded title and in the need's own text, which is the tie."
  },
  {
   "identity": "LMB",
   "need": "A-SELFCARE",
   "icf": "d510",
-  "warrant": "The need's registry text names bathing and dressing, and the identity's map holds washing and dressing activity codes. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity LMB: \"upper-limb disabilities\". Code d510 (title recorded in base_icf: \"Washing oneself\"): access_need_icf holds A-SELFCARE -> d510 (annotated: washing oneself — beyond AX-CNT); identity_icf_map link 37 holds it for LMB.",
-  "support": "both maps"
+  "support": "both",
+  "warrant": "The need's registry text names bathing, dressing, toileting and eating, and the identity is people with limb differences, upper-limb disabilities. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity LMB: \"upper-limb disabilities\". Code d510: access_need_icf holds A-SELFCARE -> d510; identity_icf_map link 37 holds it for LMB."
  },
  {
   "identity": "LMB",
   "need": "A-SELFCARE",
   "icf": "d540",
-  "warrant": "The need's registry text names bathing and dressing, and the identity's map holds washing and dressing activity codes. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity LMB: \"upper-limb disabilities\". Code d540 (title recorded in base_icf: \"Dressing\"): access_need_icf holds A-SELFCARE -> d540 (annotated: dressing — beyond AX-CNT); identity_icf_map link 39 holds it for LMB.",
-  "support": "both maps"
+  "support": "both",
+  "warrant": "The need's registry text names bathing, dressing, toileting and eating, and the identity is people with limb differences, upper-limb disabilities. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity LMB: \"upper-limb disabilities\". Code d540: access_need_icf holds A-SELFCARE -> d540; identity_icf_map link 39 holds it for LMB."
  },
  {
   "identity": "LMB",
   "need": "A-SELFCARE",
   "icf": "e115",
-  "warrant": "The need's registry text names bathing and dressing, and the identity's map holds washing and dressing activity codes. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity LMB: \"upper-limb disabilities\". Code e115: access_need_icf holds A-SELFCARE -> e115.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names bathing, dressing, toileting and eating, and the identity is people with limb differences, upper-limb disabilities. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity LMB: \"upper-limb disabilities\". Code e115: access_need_icf holds A-SELFCARE -> e115."
+ },
+ {
+  "identity": "LMB",
+  "need": "A-SELFCARE",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names bathing, dressing, toileting and eating, and the identity is people with limb differences, upper-limb disabilities. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity LMB: \"upper-limb disabilities\". Code e150: access_need_icf holds A-SELFCARE -> e150."
  },
  {
   "identity": "LMB",
   "need": "A-SELFCARE",
   "icf": "e340",
-  "warrant": "The need's registry text names bathing and dressing, and the identity's map holds washing and dressing activity codes. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity LMB: \"upper-limb disabilities\". Code e340: access_need_icf holds A-SELFCARE -> e340.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names bathing, dressing, toileting and eating, and the identity is people with limb differences, upper-limb disabilities. Need A-SELFCARE registry text: \"bathing, dressing, toileting, eating\". Identity LMB: \"upper-limb disabilities\". Code e340: access_need_icf holds A-SELFCARE -> e340."
+ },
+ {
+  "identity": "DEM",
+  "need": "A-LOWLOAD",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names dementia, and the identity is people living with dementia. Need A-LOWLOAD registry text: \"dementia\". Identity DEM: \"Alzheimer disease and related dementias\". Code e150: access_need_icf holds A-LOWLOAD -> e150."
  },
  {
   "identity": "DEM",
   "need": "A-LOWLOAD",
   "icf": "d460",
-  "warrant": "The need's registry text names dementia and the identity is people living with dementia; the identity's map and the need's wayfinding row both mention wayfinding. Need A-LOWLOAD registry text: \"dementia\". Identity DEM: \"Cognitive — memory, attention, wayfinding, sequencing\". Code d460 (title recorded in base_icf: \"Moving around in different locations\"): identity_icf_map link 11 holds it for DEM; tie: the identity's map holds it for wayfinding, and the need's wayfinding row is annotated wayfinding.",
-  "support": "identity map"
+  "support": "ground",
+  "warrant": "The need's registry text names dementia, and the identity is people living with dementia. Need A-LOWLOAD registry text: \"dementia\". Identity DEM: \"Alzheimer disease and related dementias\". Code d460: identity_icf_map link 11 holds it for DEM; the word \"wayfinding\" appears in that link's mechanism or in the code's recorded title and in the need's own text, which is the tie."
  },
  {
-  "identity": "COM",
-  "need": "A-EFFORT",
-  "icf": "d450",
-  "warrant": "The need's registry text names ME/CFS, Long COVID and POTS, and the identity's description lists the same conditions. Need A-EFFORT registry text: \"ME/CFS, Long COVID, POTS\". Identity COM: \"long COVID, MCAS, ME/CFS\". Code d450 (title recorded in base_icf: \"Walking\"): identity_icf_map link 43/58 holds it for COM; tie: the identity's map holds it for exertion limits, and the need asks for short paths and rest points.",
-  "support": "identity map"
+  "identity": "ADHD",
+  "need": "A-LOWLOAD",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names ADHD, and the identity is people with ADHD. Need A-LOWLOAD registry text: \"ADHD\". Identity ADHD: \"ADHD\". Code e150: access_need_icf holds A-LOWLOAD -> e150."
  },
  {
-  "identity": "COM",
-  "need": "A-EFFORT",
-  "icf": "d455",
-  "warrant": "The need's registry text names ME/CFS, Long COVID and POTS, and the identity's description lists the same conditions. Need A-EFFORT registry text: \"ME/CFS, Long COVID, POTS\". Identity COM: \"long COVID, MCAS, ME/CFS\". Code d455 (title recorded in base_icf: \"Moving around\"): identity_icf_map link 44/59 holds it for COM; tie: the identity's map holds it for exertion limits, and the need asks for short paths and rest points.",
-  "support": "identity map"
+  "identity": "BRAIN",
+  "need": "A-LOWLOAD",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names brain injury, and the identity is people with acquired brain injury. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-LOWLOAD registry text: \"brain injury\". Identity BRAIN: \"acquired brain injury\". Code e150: access_need_icf holds A-LOWLOAD -> e150."
+ },
+ {
+  "identity": "ID",
+  "need": "A-LOWLOAD",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names intellectual disability, and the identity is people with intellectual disability. Need A-LOWLOAD registry text: \"intellectual disability\". Identity ID: \"people with intellectual disability\". Code e150: access_need_icf holds A-LOWLOAD -> e150."
  },
  {
   "identity": "COM",
   "need": "A-EFFORT",
   "icf": "e120",
-  "warrant": "The need's registry text names ME/CFS, Long COVID and POTS, and the identity's description lists the same conditions. Need A-EFFORT registry text: \"ME/CFS, Long COVID, POTS\". Identity COM: \"long COVID, MCAS, ME/CFS\". Code e120: access_need_icf holds A-EFFORT -> e120.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names ME/CFS, Long COVID and POTS, and the identity's description lists the same conditions. Need A-EFFORT registry text: \"ME/CFS, Long COVID, POTS\". Identity COM: \"long COVID, MCAS, ME/CFS, POTS\". Code e120: access_need_icf holds A-EFFORT -> e120."
+ },
+ {
+  "identity": "COM",
+  "need": "A-EFFORT",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names ME/CFS, Long COVID and POTS, and the identity's description lists the same conditions. Need A-EFFORT registry text: \"ME/CFS, Long COVID, POTS\". Identity COM: \"long COVID, MCAS, ME/CFS, POTS\". Code e150: access_need_icf holds A-EFFORT -> e150."
+ },
+ {
+  "identity": "COM",
+  "need": "A-EFFORT",
+  "icf": "d450",
+  "support": "ground",
+  "warrant": "The need's registry text names ME/CFS, Long COVID and POTS, and the identity's description lists the same conditions. Need A-EFFORT registry text: \"ME/CFS, Long COVID, POTS\". Identity COM: \"long COVID, MCAS, ME/CFS, POTS\". Code d450: identity_icf_map link 43/58 holds it for COM; the word \"fatigue\" appears in that link's mechanism or in the code's recorded title and in the need's own text, which is the tie."
+ },
+ {
+  "identity": "COM",
+  "need": "A-EFFORT",
+  "icf": "d455",
+  "support": "ground",
+  "warrant": "The need's registry text names ME/CFS, Long COVID and POTS, and the identity's description lists the same conditions. Need A-EFFORT registry text: \"ME/CFS, Long COVID, POTS\". Identity COM: \"long COVID, MCAS, ME/CFS, POTS\". Code d455: identity_icf_map link 44/59 holds it for COM; the word \"fatigue\" appears in that link's mechanism or in the code's recorded title and in the need's own text, which is the tie."
  },
  {
   "identity": "MS",
   "need": "A-EFFORT",
   "icf": "e120",
-  "warrant": "The need's registry text names MS fatigue and the identity's description names fatigue. Need A-EFFORT registry text: \"MS fatigue\". Identity MS: \"fatigue\". Code e120: access_need_icf holds A-EFFORT -> e120.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names MS fatigue, and the identity's description names fatigue. Need A-EFFORT registry text: \"MS fatigue\". Identity MS: \"fatigue\". Code e120: access_need_icf holds A-EFFORT -> e120."
+ },
+ {
+  "identity": "MS",
+  "need": "A-EFFORT",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names MS fatigue, and the identity's description names fatigue. Need A-EFFORT registry text: \"MS fatigue\". Identity MS: \"fatigue\". Code e150: access_need_icf holds A-EFFORT -> e150."
+ },
+ {
+  "identity": "PAIN",
+  "need": "A-EFFORT",
+  "icf": "e120",
+  "support": "need",
+  "warrant": "The need's registry text names pain, and the identity's description says pain affects endurance. Need A-EFFORT registry text: \"pain\". Identity PAIN: \"sustained discomfort affecting endurance\". Code e120: access_need_icf holds A-EFFORT -> e120."
+ },
+ {
+  "identity": "PAIN",
+  "need": "A-EFFORT",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names pain, and the identity's description says pain affects endurance. Need A-EFFORT registry text: \"pain\". Identity PAIN: \"sustained discomfort affecting endurance\". Code e150: access_need_icf holds A-EFFORT -> e150."
  },
  {
   "identity": "PAIN",
   "need": "A-EFFORT",
   "icf": "d450",
-  "warrant": "The need's registry text names pain and the identity's description says pain affects endurance. Need A-EFFORT registry text: \"pain\". Identity PAIN: \"sustained discomfort affecting endurance\". Code d450 (title recorded in base_icf: \"Walking\"): identity_icf_map link 14 holds it for PAIN; tie: the identity's map holds it for pain-limited endurance, and the need asks for short paths and rest points.",
-  "support": "identity map"
+  "support": "ground",
+  "warrant": "The need's registry text names pain, and the identity's description says pain affects endurance. Need A-EFFORT registry text: \"pain\". Identity PAIN: \"sustained discomfort affecting endurance\". Code d450: identity_icf_map link 14 holds it for PAIN; the word \"fatigue\" appears in that link's mechanism or in the code's recorded title and in the need's own text, which is the tie."
  },
  {
   "identity": "PAIN",
   "need": "A-EFFORT",
   "icf": "d455",
-  "warrant": "The need's registry text names pain and the identity's description says pain affects endurance. Need A-EFFORT registry text: \"pain\". Identity PAIN: \"sustained discomfort affecting endurance\". Code d455 (title recorded in base_icf: \"Moving around\"): identity_icf_map link 15 holds it for PAIN; tie: the identity's map holds it for pain-limited endurance, and the need asks for short paths and rest points.",
-  "support": "identity map"
+  "support": "ground",
+  "warrant": "The need's registry text names pain, and the identity's description says pain affects endurance. Need A-EFFORT registry text: \"pain\". Identity PAIN: \"sustained discomfort affecting endurance\". Code d455: identity_icf_map link 15 holds it for PAIN; the word \"fatigue\" appears in that link's mechanism or in the code's recorded title and in the need's own text, which is the tie."
  },
  {
-  "identity": "PAIN",
-  "need": "A-EFFORT",
-  "icf": "e120",
-  "warrant": "The need's registry text names pain and the identity's description says pain affects endurance. Need A-EFFORT registry text: \"pain\". Identity PAIN: \"sustained discomfort affecting endurance\". Code e120: access_need_icf holds A-EFFORT -> e120.",
-  "support": "need map"
+  "identity": "AUT",
+  "need": "A-STIMULUS",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names autistic people, and the identity is autistic people. Need A-STIMULUS registry text: \"autistic people\". Identity AUT: \"Autism spectrum\". Code e150: access_need_icf holds A-STIMULUS -> e150."
+ },
+ {
+  "identity": "AUT",
+  "need": "A-STIMULUS",
+  "icf": "e240",
+  "support": "need",
+  "warrant": "The need's registry text names autistic people, and the identity is autistic people. Need A-STIMULUS registry text: \"autistic people\". Identity AUT: \"Autism spectrum\". Code e240: access_need_icf holds A-STIMULUS -> e240."
+ },
+ {
+  "identity": "AUT",
+  "need": "A-STIMULUS",
+  "icf": "e250",
+  "support": "need",
+  "warrant": "The need's registry text names autistic people, and the identity is autistic people. Need A-STIMULUS registry text: \"autistic people\". Identity AUT: \"Autism spectrum\". Code e250: access_need_icf holds A-STIMULUS -> e250."
  },
  {
   "identity": "AUT",
   "need": "A-STIMULUS",
   "icf": "d230",
-  "warrant": "The need's registry text names autistic people and the identity is autistic people. Need A-STIMULUS registry text: \"autistic people\". Identity AUT: \"Autism spectrum\". Code d230: identity_icf_map link 52 holds it for AUT; AX-SPR (status ESTABLISHED) lists it among its ICF anchors in governance/functional-taxonomy.md 2.1; tie: the identity's map holds it for environment consistency and the sensory-load axis lists it.",
-  "support": "identity map"
+  "support": "ground",
+  "warrant": "The need's registry text names autistic people, and the identity is autistic people. Need A-STIMULUS registry text: \"autistic people\". Identity AUT: \"Autism spectrum\". Code d230: identity_icf_map link 52 holds it for AUT; the word \"sensory\" appears in that link's mechanism or in the code's recorded title and in the need's own text, which is the tie."
  },
  {
-  "identity": "AUT",
+  "identity": "NDV",
+  "need": "A-STIMULUS",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names sensory processing differences, and the identity is the broad neurodivergent category; the owner retained it as an identity (ledger, third set). Need A-STIMULUS registry text: \"sensory processing differences\". Identity NDV: \"Broad neurodivergent category\". Code e150: access_need_icf holds A-STIMULUS -> e150."
+ },
+ {
+  "identity": "NDV",
   "need": "A-STIMULUS",
   "icf": "e240",
-  "warrant": "The need's registry text names autistic people and the identity is autistic people. Need A-STIMULUS registry text: \"autistic people\". Identity AUT: \"Autism spectrum\". Code e240: access_need_icf holds A-STIMULUS -> e240.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names sensory processing differences, and the identity is the broad neurodivergent category; the owner retained it as an identity (ledger, third set). Need A-STIMULUS registry text: \"sensory processing differences\". Identity NDV: \"Broad neurodivergent category\". Code e240: access_need_icf holds A-STIMULUS -> e240."
  },
  {
-  "identity": "AUT",
+  "identity": "NDV",
   "need": "A-STIMULUS",
   "icf": "e250",
-  "warrant": "The need's registry text names autistic people and the identity is autistic people. Need A-STIMULUS registry text: \"autistic people\". Identity AUT: \"Autism spectrum\". Code e250: access_need_icf holds A-STIMULUS -> e250.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names sensory processing differences, and the identity is the broad neurodivergent category; the owner retained it as an identity (ledger, third set). Need A-STIMULUS registry text: \"sensory processing differences\". Identity NDV: \"Broad neurodivergent category\". Code e250: access_need_icf holds A-STIMULUS -> e250."
+ },
+ {
+  "identity": "NDV",
+  "need": "A-STIMULUS",
+  "icf": "d230",
+  "support": "ground",
+  "warrant": "The need's registry text names sensory processing differences, and the identity is the broad neurodivergent category; the owner retained it as an identity (ledger, third set). Need A-STIMULUS registry text: \"sensory processing differences\". Identity NDV: \"Broad neurodivergent category\". Code d230: identity_icf_map link 17 holds it for NDV; the word \"sensory\" appears in that link's mechanism or in the code's recorded title and in the need's own text, which is the tie."
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-STIMULUS",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names post-concussion, and the identity's description includes post-concussion. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STIMULUS registry text: \"post-concussion\". Identity BRAIN: \"post-concussion\". Code e150: access_need_icf holds A-STIMULUS -> e150."
  },
  {
   "identity": "BRAIN",
   "need": "A-STIMULUS",
   "icf": "e240",
-  "warrant": "The need's registry text names post-concussion and the identity's description includes post-concussion. The named condition is one member of this identity; the row is keyed on the whole identity, and whether the link holds for each member is for the owner to confirm. Need A-STIMULUS registry text: \"post-concussion\". Identity BRAIN: \"post-concussion\". Code e240: access_need_icf holds A-STIMULUS -> e240.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names post-concussion, and the identity's description includes post-concussion. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STIMULUS registry text: \"post-concussion\". Identity BRAIN: \"post-concussion\". Code e240: access_need_icf holds A-STIMULUS -> e240."
  },
  {
   "identity": "BRAIN",
   "need": "A-STIMULUS",
   "icf": "e250",
-  "warrant": "The need's registry text names post-concussion and the identity's description includes post-concussion. The named condition is one member of this identity; the row is keyed on the whole identity, and whether the link holds for each member is for the owner to confirm. Need A-STIMULUS registry text: \"post-concussion\". Identity BRAIN: \"post-concussion\". Code e250: access_need_icf holds A-STIMULUS -> e250.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names post-concussion, and the identity's description includes post-concussion. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STIMULUS registry text: \"post-concussion\". Identity BRAIN: \"post-concussion\". Code e250: access_need_icf holds A-STIMULUS -> e250."
+ },
+ {
+  "identity": "MH",
+  "need": "A-STIMULUS",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names PTSD, and the identity's description names trauma. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STIMULUS registry text: \"PTSD\". Identity MH: \"trauma\". Code e150: access_need_icf holds A-STIMULUS -> e150."
+ },
+ {
+  "identity": "MH",
+  "need": "A-STIMULUS",
+  "icf": "e240",
+  "support": "need",
+  "warrant": "The need's registry text names PTSD, and the identity's description names trauma. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STIMULUS registry text: \"PTSD\". Identity MH: \"trauma\". Code e240: access_need_icf holds A-STIMULUS -> e240."
+ },
+ {
+  "identity": "MH",
+  "need": "A-STIMULUS",
+  "icf": "e250",
+  "support": "need",
+  "warrant": "The need's registry text names PTSD, and the identity's description names trauma. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STIMULUS registry text: \"PTSD\". Identity MH: \"trauma\". Code e250: access_need_icf holds A-STIMULUS -> e250."
  },
  {
   "identity": "MH",
   "need": "A-STIMULUS",
   "icf": "d230",
-  "warrant": "The need's registry text names PTSD and the identity's description names trauma. The named condition is one member of this identity; the row is keyed on the whole identity, and whether the link holds for each member is for the owner to confirm. Need A-STIMULUS registry text: \"PTSD\". Identity MH: \"trauma\". Code d230: identity_icf_map link 31 holds it for MH; AX-SPR (status ESTABLISHED) lists it among its ICF anchors in governance/functional-taxonomy.md 2.1; tie: the identity's map holds it for sensory safety and the sensory-load axis lists it.",
-  "support": "identity map"
- },
- {
-  "identity": "MH",
-  "need": "A-STIMULUS",
-  "icf": "e240",
-  "warrant": "The need's registry text names PTSD and the identity's description names trauma. The named condition is one member of this identity; the row is keyed on the whole identity, and whether the link holds for each member is for the owner to confirm. Need A-STIMULUS registry text: \"PTSD\". Identity MH: \"trauma\". Code e240: access_need_icf holds A-STIMULUS -> e240.",
-  "support": "need map"
- },
- {
-  "identity": "MH",
-  "need": "A-STIMULUS",
-  "icf": "e250",
-  "warrant": "The need's registry text names PTSD and the identity's description names trauma. The named condition is one member of this identity; the row is keyed on the whole identity, and whether the link holds for each member is for the owner to confirm. Need A-STIMULUS registry text: \"PTSD\". Identity MH: \"trauma\". Code e250: access_need_icf holds A-STIMULUS -> e250.",
-  "support": "need map"
+  "support": "ground",
+  "warrant": "The need's registry text names PTSD, and the identity's description names trauma. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STIMULUS registry text: \"PTSD\". Identity MH: \"trauma\". Code d230: identity_icf_map link 31 holds it for MH; the word \"sensory\" appears in that link's mechanism or in the code's recorded title and in the need's own text, which is the tie."
  },
  {
   "identity": "EPI",
   "need": "A-TRIGGER",
   "icf": "e240",
-  "warrant": "The need's registry text names photosensitive epilepsy and the identity's description names photosensitivity as a subtype; the need's e240 row is annotated flash/strobe. Need A-TRIGGER registry text: \"photosensitive epilepsy\". Identity EPI: \"photosensitivity\". Code e240: access_need_icf holds A-TRIGGER -> e240 (annotated: flash/strobe).",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names photosensitive epilepsy, and the identity's description names photosensitivity as a subtype. Need A-TRIGGER registry text: \"photosensitive epilepsy\". Identity EPI: \"photosensitivity\". Code e240: access_need_icf holds A-TRIGGER -> e240."
  },
  {
   "identity": "COM",
   "need": "A-TRIGGER",
   "icf": "e260",
-  "warrant": "The need's registry text names MCAS, the identity's description lists MCAS, and functional-taxonomy.md 4 maps MCAS to CHM. The named condition is one member of this identity; the row is keyed on the whole identity, and whether the link holds for each member is for the owner to confirm. Need A-TRIGGER registry text: \"MCAS\". Identity COM: \"MCAS\". Code e260: access_need_icf holds A-TRIGGER -> e260 (annotated: Air quality).",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The need's registry text names MCAS, and the identity's description lists MCAS. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-TRIGGER registry text: \"MCAS\". Identity COM: \"MCAS\". Code e260: access_need_icf holds A-TRIGGER -> e260."
  },
  {
   "identity": "MH",
   "need": "A-CALM",
-  "icf": "d240",
-  "warrant": "The need's registry text names anxiety, PTSD and psychiatric distress, and the identity's description names mood, anxiety and trauma. Need A-CALM registry text: \"anxiety, PTSD, psychiatric distress\". Identity MH: \"Mood, anxiety, trauma\". Code d240: AX-ARO (status STUB) lists it among its ICF anchors in governance/functional-taxonomy.md 2.1; tie: the arousal-safety axis lists it, and the need's obligation is not to manufacture pressure.",
-  "support": "taxonomy anchor"
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names anxiety, PTSD and psychiatric distress, and the identity's description names mood, anxiety and trauma. Need A-CALM registry text: \"anxiety, PTSD, psychiatric distress\". Identity MH: \"Mood, anxiety, trauma\". Code e150: access_need_icf holds A-CALM -> e150."
  },
  {
   "identity": "AUT",
   "need": "A-CALM",
-  "icf": "d240",
-  "warrant": "The need's registry text names autistic people and the identity is autistic people; functional-taxonomy.md 4 maps AUT to ARO. Need A-CALM registry text: \"autistic people\". Identity AUT: \"Autism spectrum\". Code d240: AX-ARO (status STUB) lists it among its ICF anchors in governance/functional-taxonomy.md 2.1; tie: the arousal-safety axis lists it, and the need's obligation is not to manufacture pressure.",
-  "support": "taxonomy anchor"
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names autistic people, and the identity is autistic people. Need A-CALM registry text: \"autistic people\". Identity AUT: \"Autism spectrum\". Code e150: access_need_icf holds A-CALM -> e150."
  },
  {
   "identity": "LPA",
   "need": "A-SIZE",
   "icf": "e115",
-  "warrant": "The identity's description says it is served by this need and the need's registry text names little people. No ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE registry text: \"little people\". Identity LPA: \"Served by A-SIZE\". Code e115: access_need_icf holds A-SIZE -> e115.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The identity's description says it is served by this need, and the need's registry text names little people. Need A-SIZE registry text: \"little people\". Identity LPA: \"Served by A-SIZE\". Code e115: access_need_icf holds A-SIZE -> e115."
  },
  {
   "identity": "LPA",
   "need": "A-SIZE",
   "icf": "e120",
-  "warrant": "The identity's description says it is served by this need and the need's registry text names little people. No ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE registry text: \"little people\". Identity LPA: \"Served by A-SIZE\". Code e120: access_need_icf holds A-SIZE -> e120.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The identity's description says it is served by this need, and the need's registry text names little people. Need A-SIZE registry text: \"little people\". Identity LPA: \"Served by A-SIZE\". Code e120: access_need_icf holds A-SIZE -> e120."
+ },
+ {
+  "identity": "LPA",
+  "need": "A-SIZE",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The identity's description says it is served by this need, and the need's registry text names little people. Need A-SIZE registry text: \"little people\". Identity LPA: \"Served by A-SIZE\". Code e150: access_need_icf holds A-SIZE -> e150."
  },
  {
   "identity": "LPA",
   "need": "A-SIZE",
   "icf": "e155",
-  "warrant": "The identity's description says it is served by this need and the need's registry text names little people. No ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE registry text: \"little people\". Identity LPA: \"Served by A-SIZE\". Code e155: access_need_icf holds A-SIZE -> e155.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The identity's description says it is served by this need, and the need's registry text names little people. Need A-SIZE registry text: \"little people\". Identity LPA: \"Served by A-SIZE\". Code e155: access_need_icf holds A-SIZE -> e155."
  },
  {
   "identity": "TALL",
   "need": "A-SIZE",
   "icf": "e115",
-  "warrant": "The identity's description says it is served by this need and the need's registry text names tall people. No ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE registry text: \"tall people\". Identity TALL: \"Served by A-SIZE\". Code e115: access_need_icf holds A-SIZE -> e115.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The identity's description says it is served by this need, and the need's registry text names tall people. Need A-SIZE registry text: \"tall people\". Identity TALL: \"Served by A-SIZE\". Code e115: access_need_icf holds A-SIZE -> e115."
  },
  {
   "identity": "TALL",
   "need": "A-SIZE",
   "icf": "e120",
-  "warrant": "The identity's description says it is served by this need and the need's registry text names tall people. No ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE registry text: \"tall people\". Identity TALL: \"Served by A-SIZE\". Code e120: access_need_icf holds A-SIZE -> e120.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The identity's description says it is served by this need, and the need's registry text names tall people. Need A-SIZE registry text: \"tall people\". Identity TALL: \"Served by A-SIZE\". Code e120: access_need_icf holds A-SIZE -> e120."
+ },
+ {
+  "identity": "TALL",
+  "need": "A-SIZE",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The identity's description says it is served by this need, and the need's registry text names tall people. Need A-SIZE registry text: \"tall people\". Identity TALL: \"Served by A-SIZE\". Code e150: access_need_icf holds A-SIZE -> e150."
  },
  {
   "identity": "TALL",
   "need": "A-SIZE",
   "icf": "e155",
-  "warrant": "The identity's description says it is served by this need and the need's registry text names tall people. No ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE registry text: \"tall people\". Identity TALL: \"Served by A-SIZE\". Code e155: access_need_icf holds A-SIZE -> e155.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The identity's description says it is served by this need, and the need's registry text names tall people. Need A-SIZE registry text: \"tall people\". Identity TALL: \"Served by A-SIZE\". Code e155: access_need_icf holds A-SIZE -> e155."
  },
  {
   "identity": "BAR",
   "need": "A-SIZE",
   "icf": "e115",
-  "warrant": "The identity's description says it is served by this need and the need's registry text names fat people. No ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE registry text: \"fat people\". Identity BAR: \"Served by A-SIZE\". Code e115: access_need_icf holds A-SIZE -> e115.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The identity's description says it is served by this need, and the need's registry text names fat people. Need A-SIZE registry text: \"fat people\". Identity BAR: \"Served by A-SIZE\". Code e115: access_need_icf holds A-SIZE -> e115."
  },
  {
   "identity": "BAR",
   "need": "A-SIZE",
   "icf": "e120",
-  "warrant": "The identity's description says it is served by this need and the need's registry text names fat people. No ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE registry text: \"fat people\". Identity BAR: \"Served by A-SIZE\". Code e120: access_need_icf holds A-SIZE -> e120.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The identity's description says it is served by this need, and the need's registry text names fat people. Need A-SIZE registry text: \"fat people\". Identity BAR: \"Served by A-SIZE\". Code e120: access_need_icf holds A-SIZE -> e120."
+ },
+ {
+  "identity": "BAR",
+  "need": "A-SIZE",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The identity's description says it is served by this need, and the need's registry text names fat people. Need A-SIZE registry text: \"fat people\". Identity BAR: \"Served by A-SIZE\". Code e150: access_need_icf holds A-SIZE -> e150."
  },
  {
   "identity": "BAR",
   "need": "A-SIZE",
   "icf": "e155",
-  "warrant": "The identity's description says it is served by this need and the need's registry text names fat people. No ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE registry text: \"fat people\". Identity BAR: \"Served by A-SIZE\". Code e155: access_need_icf holds A-SIZE -> e155.",
-  "support": "need map"
+  "support": "need",
+  "warrant": "The identity's description says it is served by this need, and the need's registry text names fat people. Need A-SIZE registry text: \"fat people\". Identity BAR: \"Served by A-SIZE\". Code e155: access_need_icf holds A-SIZE -> e155."
+ },
+ {
+  "identity": "MOB",
+  "need": "A-SIZE",
+  "icf": "e115",
+  "support": "need",
+  "warrant": "The need's registry text names wheelchair seating height, and the identity is people with mobility needs including wheelchair users. The named group is one member of this family identity, and the row is keyed on the whole identity. Need A-SIZE registry text: \"wheelchair seating height\". Identity MOB: \"wheelchair users\". Code e115: access_need_icf holds A-SIZE -> e115."
+ },
+ {
+  "identity": "MOB",
+  "need": "A-SIZE",
+  "icf": "e120",
+  "support": "need",
+  "warrant": "The need's registry text names wheelchair seating height, and the identity is people with mobility needs including wheelchair users. The named group is one member of this family identity, and the row is keyed on the whole identity. Need A-SIZE registry text: \"wheelchair seating height\". Identity MOB: \"wheelchair users\". Code e120: access_need_icf holds A-SIZE -> e120."
+ },
+ {
+  "identity": "MOB",
+  "need": "A-SIZE",
+  "icf": "e150",
+  "support": "need",
+  "warrant": "The need's registry text names wheelchair seating height, and the identity is people with mobility needs including wheelchair users. The named group is one member of this family identity, and the row is keyed on the whole identity. Need A-SIZE registry text: \"wheelchair seating height\". Identity MOB: \"wheelchair users\". Code e150: access_need_icf holds A-SIZE -> e150."
+ },
+ {
+  "identity": "MOB",
+  "need": "A-SIZE",
+  "icf": "e155",
+  "support": "need",
+  "warrant": "The need's registry text names wheelchair seating height, and the identity is people with mobility needs including wheelchair users. The named group is one member of this family identity, and the row is keyed on the whole identity. Need A-SIZE registry text: \"wheelchair seating height\". Identity MOB: \"wheelchair users\". Code e155: access_need_icf holds A-SIZE -> e155."
  },
  {
   "identity": "MOB",
   "need": "A-SIZE",
   "icf": "d465",
-  "warrant": "The need's registry text names wheelchair seating height and the identity includes wheelchair users. Need A-SIZE registry text: \"wheelchair seating height\". Identity MOB: \"wheelchair users\". Code d465 (title recorded in base_icf: \"Moving around using equipment\"): identity_icf_map link 6 holds it for MOB; tie: the identity's map holds it for wheelchair use, and the need's registry text names wheelchair seating height.",
-  "support": "identity map"
- },
- {
-  "identity": "MOB",
-  "need": "A-SIZE",
-  "icf": "e120",
-  "warrant": "The need's registry text names wheelchair seating height and the identity includes wheelchair users. Need A-SIZE registry text: \"wheelchair seating height\". Identity MOB: \"wheelchair users\". Code e120: access_need_icf holds A-SIZE -> e120.",
-  "support": "need map"
+  "support": "ground",
+  "warrant": "The need's registry text names wheelchair seating height, and the identity is people with mobility needs including wheelchair users. The named group is one member of this family identity, and the row is keyed on the whole identity. Need A-SIZE registry text: \"wheelchair seating height\". Identity MOB: \"wheelchair users\". Code d465: identity_icf_map link 6 holds it for MOB; the word \"wheelchair\" appears in that link's mechanism or in the code's recorded title and in the need's own text, which is the tie."
  }
 ]

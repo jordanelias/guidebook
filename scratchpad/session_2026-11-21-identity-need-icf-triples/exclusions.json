@@ -1,0 +1,38 @@
+[
+ {
+  "identity": "LMB",
+  "need": "A-REACH",
+  "icf": "e120",
+  "reason": "mobility products and technology; the owner placed this identity outside the mobility family (ledger, eighth set)"
+ },
+ {
+  "identity": "MOB",
+  "need": "A-SELFCARE",
+  "icf": "d540",
+  "reason": "need-map d code that MOB's own map does not hold"
+ },
+ {
+  "identity": "MOB",
+  "need": "A-SELFCARE",
+  "icf": "d550",
+  "reason": "need-map d code that MOB's own map does not hold"
+ },
+ {
+  "identity": "LMB",
+  "need": "A-SELFCARE",
+  "icf": "d550",
+  "reason": "need-map d code that LMB's own map does not hold"
+ },
+ {
+  "identity": "EPI",
+  "need": "A-TRIGGER",
+  "icf": "e260",
+  "reason": "air quality; the need's own annotation on e240 is flash/strobe, the photic row"
+ },
+ {
+  "identity": "COM",
+  "need": "A-TRIGGER",
+  "icf": "e240",
+  "reason": "annotated flash/strobe in the need's own row, a photic trigger not tied to MCAS in any record"
+ }
+]
