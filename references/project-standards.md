@@ -8259,3 +8259,135 @@ Given in the session `session_2026-11-20-core-work` (https://claude.ai/code/sess
 CONDITION: any session building, reading or filling the identity, access-need and ICF table (T-145, T-126 to T-128); any session correcting a qualitative figure's value cell, or planning GAP-368, GAP-372 or GAP-376.
 ACTION: (1) Build T-145 as its own tooling pull request with all three keys NOT NULL; the triples that fill it are a later research pull request the owner reviews. (2) Correct the eleven value cells in place, through one writer that refuses a value not found in the figure's own `claim_text`; it goes in the large pull request, tooling first. (3) Treat the assumptions above as unratified except where the owner's words state them.
 DATE: 2026-11-20 — owner statements (typed words, quoted above).
+
+## Owner statements 2026-11-21 — a session may correct a qualitative cell by hand, and records each hand fix openly; GAP-368 needs no writer
+
+Given in the session `session_2026-11-21-identity-need-icf-triples` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in two typed messages sent while the session was preparing the identity, need and ICF triples and had named a purpose-built writer for GAP-368 as the next tooling task. Derive the times from the preserved transcript (`git grep -n -F "Claude having permission to hand edit" -- transcripts`; `git grep -n -F "Claude IS a tool" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "I think GAP-368 points towards Claude having permission to hand edit as required for specific columns"
+>
+> "We don't need a tool for many qualitative judgments/corrections because Claude IS a tool. We just need to ensure that you make transparent and record your hand fixes"
+
+**Readings.**
+
+- [ASSUMPTION: "hand edit" means the session writes the corrected value itself, as a statement in a data migration, without a purpose-built writer verb; the write path of CLAUDE.md section 4 (scratch copy, `emit_data_migration`, `migrate_db`, committed migrations immutable) is unchanged — basis: the owner objected to building a tool, not to the migration path].
+- [ASSUMPTION: "specific columns" means columns whose content is a qualitative judgment or wording (the value cells of the qualitative figures of GAP-368 are the one case the owner named); identifiers, keys, vocabularies, counts and bibliographic fields (author, title, figure) stay behind their writers and the fetch-before-write rule — basis: "qualitative judgments/corrections"; the owner named no column list, and the list is not decided here].
+- [ASSUMPTION: "transparent and record your hand fixes" means each hand fix leaves, in a place a reader reaches from the row, the old value, the new value, the reason and the session; where that record lives (the migration header, a gap resolution, a column) is not decided here — basis: the words].
+- This supersedes, on contact (rule 0), the means in ACTION (2) of the entry "Owner statements 2026-11-20 (fifth)" ("through one writer that refuses a value not found in the figure's own `claim_text`"); the owner's answer of that entry, that the cells may be corrected in place, stands. The guard and the verb were the coordinator's proposal and are not built.
+
+CONDITION: any session correcting a qualitative value, paraphrase or wording cell; GAP-368, GAP-372; any session proposing a writer for a qualitative correction.
+ACTION: (1) Do not build a writer for a qualitative correction on the strength of GAP-368; correct the cell by hand in a data migration and record the old value, the new value, the reason and the session in the migration header and in the resolution of the gap. (2) Do not extend this to a column outside the owner's meaning of "qualitative"; ask. (3) Treat the assumptions above as unratified except where the owner's words state them.
+DATE: 2026-11-21 — owner statements (typed words, quoted above).
+
+## Owner answer 2026-11-21 (second) — a need may be keyed on an umbrella identity and on its members, both
+
+Given in the session `session_2026-11-21-identity-need-icf-triples` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in a typed message answering the numbered open questions of pull request 245; the question was GAP-379 ("may a member's need be keyed on its umbrella identity?"). Derive the time from the preserved transcript (`git grep -n -F "to umbrella and to specific, yes" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "3 to umbrella and to specific, yes"
+
+**Readings.**
+
+- [ASSUMPTION: "3" is the third of the four open questions of the pull request, GAP-379, the umbrella question — basis: the owner's earlier replies numbered the same list ("1 what is a body function code?", "2 pardon?")].
+- [ASSUMPTION: the answer is that a need's row may be keyed on the umbrella identity (NDV, COM, BRAIN, MH) and on each specific member identity, both held at once, so the NDV rows beside the AUT and ADHD rows stand — basis: the words].
+- Not answered by these words: whether the `e120` row (mobility products and technology) is attached to LPA, TALL and BAR through A-SIZE's own row; whether A-TRIGGER's two rows are attached to both EPI and COM. Both stay open in GAP-379.
+
+CONDITION: any session keying a need, a triple or a determination on an umbrella identity beside its members; GAP-379.
+ACTION: (1) Keep a row keyed on the umbrella identity beside the rows keyed on its members; do not collapse one into the other. (2) The question GAP-379 puts about `e120` and A-TRIGGER stays open. (3) Treat the assumptions above as unratified except where the owner's words state them.
+DATE: 2026-11-21 — owner answer (typed words, quoted above).
+
+## Owner answer 2026-11-21 (third) — an identity may be linked to a body-function (b) code
+
+Given in the session `session_2026-11-21-identity-need-icf-triples` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in a typed message answering the first of the four numbered open questions of pull request 245 (GAP-377: "may a disability identity be linked to an ICF body-function (b) code?"), after the coordinator had explained what a body-function code is. Derive the time from the preserved transcript (`git grep -n -F "b is seeing therefore ties into blind" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "1 yes b is seeing therefore ties into blind etc"
+
+**Readings.**
+
+- [ASSUMPTION: "1" is the first of the four open questions, GAP-377 — basis: the owner's earlier replies numbered the same list].
+- [ASSUMPTION: "yes" answers the question as put: an identity may be linked to a body-function code, which reverses the withholding of body-function rows in the matrix batch — basis: the words].
+- [ASSUMPTION: "b is seeing" names the code b210 (the project's `base_icf` holds it with no title), so the owner states the tie of b210 to the blind identity; "etc" extends the same kind of tie to other identities and codes, none of which the words name — basis: the words; the generalisation is not decided here].
+- This does not restore any basis from the retired axis layer: a body-function row still needs a basis that is not an axis anchor.
+
+CONDITION: any session proposing or reading an identity's body-function code; GAP-377; T-128.
+ACTION: (1) A body-function row may be proposed for an identity. (2) The only body-function tie the owner's words state is b210 to the blind identity; every other identity and code needs its own recorded basis (an owner statement, a recorded map row, or a payload fetched from WHO under T-128), never an axis anchor. (3) Treat the assumptions above as unratified except where the owner's words state them.
+DATE: 2026-11-21 — owner answer (typed words, quoted above).
+
+## Owner answer 2026-11-21 (fourth) — A-AT is inside the built-environment scope
+
+Given in the session `session_2026-11-21-identity-need-icf-triples` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in a typed message answering the fourth of the four numbered open questions of pull request 245 (GAP-380: is A-AT inside the built-environment scope?). Derive the time from the preserved transcript (`git grep -n -F "A-AT is in scope" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "4 A-AT is in scope"
+
+(The same typed message went on with an instruction to check the coordinator's work; it is not part of this answer.)
+
+**Readings.**
+
+- [ASSUMPTION: "4" is the fourth of the four open questions, GAP-380 — basis: the owner's earlier replies numbered the same list].
+- [ASSUMPTION: "in scope" settles the registry note on A-AT ("Digital — may be out of built-environment scope; flagged for owner decision") in favour of scope; it says nothing about which identities A-AT serves — basis: the words].
+
+CONDITION: any session pairing, reading or rendering the access need A-AT; GAP-380.
+ACTION: (1) Treat A-AT as an access need inside the built-environment scope; the flag in its registry note is answered. (2) A-AT may be paired with an identity on the same footing as any other need. (3) Treat the assumptions above as unratified except where the owner's words state them.
+DATE: 2026-11-21 — owner answer (typed words, quoted above).
+
+## Owner statements 2026-11-21 (fifth) — the project is about architectural design; building design and light are its concern (bearing on whether environmental rows count as an identity's ICF coverage)
+
+Given in the session `session_2026-11-21-identity-need-icf-triples` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in two typed messages after the coordinator explained what a need-side environmental row is (an identity-need row whose ICF code is one of the need's own environmental codes) and, in a reply, asked whether such rows count as an identity's ICF coverage (GAP-378). Derive the times from the preserved transcript (`git grep -n -F "concerned about building design and light" -- transcripts`; `git grep -n -F "literally about" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "we are concerned about building design and light."
+>
+> "our project is literally about artchitectural design techniques"
+
+**Readings.**
+
+- [ASSUMPTION: the two messages bear on the question put (GAP-378) in favour of yes, a row whose ICF code is an environmental factor of the need counting as the identity's ICF coverage, because environmental factors are the project's subject — basis: the words; the owner did not write "yes" and the coordinator's direct question was not answered before the second message, which continues the first].
+- [ASSUMPTION: "building design and light" names the ICF environmental codes for building design (e150, e155) and for light (e240) — basis: the titles recorded in `base_icf`; the words name no code].
+- Not decided here: whether rows 46 and 47 of the matrix (EPI with e260, COM with e240), which the coordinator proposed to reject for want of any record tying the pairing, stand; they await the owner's approval or disapproval.
+
+CONDITION: any session counting, reviewing or reading an identity's ICF coverage; GAP-378; any change to `db.py lens-crosswalk --uncovered`.
+ACTION: (1) Read these statements as bearing on GAP-378, not as answering it: the gap stays open until the owner says yes or no. (2) Until then do not file or build a change that excludes a need-side environmental row, and do not rely on one as an identity's ICF coverage. (3) The review of each matrix row stays the owner's. (4) Treat the assumptions above as unratified except where the owner's words state them.
+DATE: 2026-11-21 — owner statements (typed words, quoted above).
+
+## Owner answer 2026-11-21 (sixth) — a need-side environmental row counts as an identity's ICF coverage
+
+Given in the session `session_2026-11-21-identity-need-icf-triples` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in a typed message answering the coordinator's direct question (GAP-378): do need-side environmental rows, the ICF codes copied from a need's own list onto each identity that need serves, count as that identity's ICF coverage? Derive the time from the preserved transcript (`git grep -n -F "they count as identity" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "Yes, they count as identity's ICF coverage."
+
+**Readings.**
+
+- [ASSUMPTION: "they" are the need-side environmental rows as the coordinator explained them (an identity-need row whose ICF code is an environmental code held by the need's own `access_need_icf` rows) — basis: the question put].
+- This settles the question that the entry "Owner statements 2026-11-21 (fifth)" left open. It supersedes the coordinator's earlier recommendation of no; the 2026-11-20 rule that an identity with no ICF code is a gap to close is met for an identity that holds such a row.
+
+CONDITION: any session counting, reviewing or reading an identity's ICF coverage; any change to `db.py lens-crosswalk --uncovered`; GAP-378.
+ACTION: (1) Count a need-side environmental row as the identity's ICF coverage; do not file or build a change that excludes it. (2) The review of each matrix row stays the owner's. (3) Treat the reading above as unratified except where the owner's words state it.
+DATE: 2026-11-21 — owner answer (typed words, quoted above).
+
+## Owner review 2026-11-21 — rows 64 and 65 of the identity, need and ICF matrix: TRIPLE-64 accepted, TRIPLE-65 rejected
+
+Given in the session `session_2026-11-21-identity-need-icf-triples` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in a typed message answering the coordinator's account of the two body-function rows it had added on its own reading (pull request 245). Derive the time from the preserved transcript (`git grep -n -F "Reject Row 65" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "Reject Row 65. Accept Row 64."
+
+**Readings.**
+
+- [ASSUMPTION: "Row 65" and "Row 64" are the `triple_id` values 65 and 64 as the coordinator named them: TRIPLE-65 is COM with A-TIME and b164, and TRIPLE-64 is BLIND with A-NOSIGHT and b210 — basis: the coordinator's account of the rows, which numbered them so].
+- [ASSUMPTION: "Accept" is the owner's review of TRIPLE-64 as `stated`, made knowing the coordinator's disclosure that the code b210 and its meaning came from its general knowledge, that `base_icf` holds no title for it, and that the need holds no b210 row of its own — basis: the account the owner answered].
+- TRIPLE-65 is rejected: its warrant labelled a quotation from the need's ICF notes as registry text, and the pair is an inference no record states.
+
+CONDITION: any session reading, reviewing or counting TRIPLE-64 or TRIPLE-65.
+ACTION: (1) Record TRIPLE-64 as `stated` and retire TRIPLE-65 with this entry as the reference, by `db.py review-identity-need-icf`. (2) Do not propose a replacement for TRIPLE-65 without a recorded basis for the identity's link to the need. (3) Treat the readings above as unratified except where the owner's words state them.
+DATE: 2026-11-21 — owner review (typed words, quoted above).
