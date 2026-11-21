@@ -8298,3 +8298,22 @@ Given in the session `session_2026-11-21-identity-need-icf-triples` (https://cla
 CONDITION: any session keying a need, a triple or a determination on an umbrella identity beside its members; GAP-379.
 ACTION: (1) Keep a row keyed on the umbrella identity beside the rows keyed on its members; do not collapse one into the other. (2) The question GAP-379 puts about `e120` and A-TRIGGER stays open. (3) Treat the assumptions above as unratified except where the owner's words state them.
 DATE: 2026-11-21 — owner answer (typed words, quoted above).
+
+## Owner answer 2026-11-21 (third) — an identity may be linked to a body-function (b) code
+
+Given in the session `session_2026-11-21-identity-need-icf-triples` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in a typed message answering the first of the four numbered open questions of pull request 245 (GAP-377: "may a disability identity be linked to an ICF body-function (b) code?"), after the coordinator had explained what a body-function code is. Derive the time from the preserved transcript (`git grep -n -F "b is seeing therefore ties into blind" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "1 yes b is seeing therefore ties into blind etc"
+
+**Readings.**
+
+- [ASSUMPTION: "1" is the first of the four open questions, GAP-377 — basis: the owner's earlier replies numbered the same list].
+- [ASSUMPTION: "yes" answers the question as put: an identity may be linked to a body-function code, which reverses the withholding of body-function rows in the matrix batch — basis: the words].
+- [ASSUMPTION: "b is seeing" names the code b210 (the project's `base_icf` holds it with no title), so the owner states the tie of b210 to the blind identity; "etc" extends the same kind of tie to other identities and codes, none of which the words name — basis: the words; the generalisation is not decided here].
+- This does not restore any basis from the retired axis layer: a body-function row still needs a basis that is not an axis anchor.
+
+CONDITION: any session proposing or reading an identity's body-function code; GAP-377; T-128.
+ACTION: (1) A body-function row may be proposed for an identity. (2) The only body-function tie the owner's words state is b210 to the blind identity; every other identity and code needs its own recorded basis (an owner statement, a recorded map row, or a payload fetched from WHO under T-128), never an axis anchor. (3) Treat the assumptions above as unratified except where the owner's words state them.
+DATE: 2026-11-21 — owner answer (typed words, quoted above).
