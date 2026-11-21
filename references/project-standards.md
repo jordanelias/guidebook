@@ -8356,3 +8356,20 @@ Given in the session `session_2026-11-21-identity-need-icf-triples` (https://cla
 CONDITION: any session counting, reviewing or reading an identity's ICF coverage; GAP-378; any change to `db.py lens-crosswalk --uncovered`.
 ACTION: (1) Read these statements as bearing on GAP-378, not as answering it: the gap stays open until the owner says yes or no. (2) Until then do not file or build a change that excludes a need-side environmental row, and do not rely on one as an identity's ICF coverage. (3) The review of each matrix row stays the owner's. (4) Treat the assumptions above as unratified except where the owner's words state them.
 DATE: 2026-11-21 — owner statements (typed words, quoted above).
+
+## Owner answer 2026-11-21 (sixth) — a need-side environmental row counts as an identity's ICF coverage
+
+Given in the session `session_2026-11-21-identity-need-icf-triples` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in a typed message answering the coordinator's direct question (GAP-378): do need-side environmental rows, the ICF codes copied from a need's own list onto each identity that need serves, count as that identity's ICF coverage? Derive the time from the preserved transcript (`git grep -n -F "they count as identity" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "Yes, they count as identity's ICF coverage."
+
+**Readings.**
+
+- [ASSUMPTION: "they" are the need-side environmental rows as the coordinator explained them (an identity-need row whose ICF code is an environmental code held by the need's own `access_need_icf` rows) — basis: the question put].
+- This settles the question that the entry "Owner statements 2026-11-21 (fifth)" left open. It supersedes the coordinator's earlier recommendation of no; the 2026-11-20 rule that an identity with no ICF code is a gap to close is met for an identity that holds such a row.
+
+CONDITION: any session counting, reviewing or reading an identity's ICF coverage; any change to `db.py lens-crosswalk --uncovered`; GAP-378.
+ACTION: (1) Count a need-side environmental row as the identity's ICF coverage; do not file or build a change that excludes it. (2) The review of each matrix row stays the owner's. (3) Treat the reading above as unratified except where the owner's words state it.
+DATE: 2026-11-21 — owner answer (typed words, quoted above).
