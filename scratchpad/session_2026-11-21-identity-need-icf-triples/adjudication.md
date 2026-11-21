@@ -38,3 +38,20 @@ attacked the first emitted migration; pass 3 attacks the final one. Only one pas
 | M9 omissions | links 17 and 50 | NDV is added (ground: "sensory"). BRAIN|A-LOWLOAD|d460 is not added: the identity's map text holds no verified word shared with the need. |
 | M10 the recorded pass is not on the migrated rows | adversarial_pass_audit prints NOTHING-IN-SCOPE | Recorded as a gap (one pass per session); this file is the record of the later passes. |
 | N1 to N4 | | N1 repaired in the gap text; N2, N3 repaired in the warrants; N4 moot (no axis). |
+
+## Pass 3 (read the second emitted migration; not recorded)
+
+| Finding | Confirmed by the author against | Disposition |
+|---|---|---|
+| F1 LMB rows keyed on a code the owner ruled becomes UPL | ledger eighth set ACTION (2), tenth set OI-49; no UPL, WHEEL, WALKAID or LLD registry row | Repaired: no LMB row; recorded in the coverage gap. |
+| F2 MOB rows name groups with their own codes | ledger 2026-08-25 ACTION (1), fifth set OD-14, OD-31 | Repaired: no MOB row; recorded in the coverage gap. |
+| F3 a mechanism claimed for two links when one lacks the word | links 43, 44 against 58, 59 | Repaired by removal: no activity-code row is proposed. |
+| F4, F5 ground rows rest on a title only, or on another identity's condition | triples.json | Repaired by removal. |
+| F6 "one member of this identity" where the condition is the identity | BRAIN, MOB warrants | Repaired: the sentence is only on rows whose quote names a member condition. |
+| F7 warrants copy cells the owner has ruled will change (absorbs, MOB and LMB names) | ledger fifth set, OI-49, 2026-11-20 (fifth) | Repaired: every warrant is written in the past tense of its own recording ("As recorded when this row was written ... read:"), so it stays true after the cell changes. |
+| F8 gap rows contradicted by their own derive commands and the ledger text | the gaps | Repaired: the gaps are rewritten; the quoted phrase is the ledger's. |
+| F9 a shared word coincides at identity level and does not tie the code | the generator's own test on sibling codes | Repaired by removal: identity-side activity codes belong to T-128. |
+| F10 BLIND shares the word "vision" with A-NOSIGHT | links 55, 56, 57 | Not repaired by adding rows: BLIND's activity rows are T-128's. The earlier reason (no shared word) is withdrawn. |
+| F11 most rows are the pair crossed with the need's own rows; e-only identities | triples.json | Not repaired; filed as an owner question (the fan-out), with its derive command. |
+| F12 pairs where neither side names the other are not disclosed as inference | NDV, MOB, LMB | Repaired: NDV now rests on its description ("includes AUT, ADHD") and carries the member sentence; MOB and LMB have no row. |
+| NDV x A-LOWLOAD omitted | NDV description, need names ADHD | Added, with A-CALM. |
