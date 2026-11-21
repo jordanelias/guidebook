@@ -1,0 +1,1082 @@
+[
+ {
+  "identity": "BLIND",
+  "need": "A-NOSIGHT",
+  "icf": "b210",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names blindness and low vision and the identity is blind and low-vision people. Need A-NOSIGHT absorbs: \"blindness, low vision\"; identity BLIND: \"blind and low-vision people\". Code b210: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b210 among the ICF anchors of AX-VIS-N, the seeing-function anchor of the two vision axes, the function the need substitutes for. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "BLIND",
+  "need": "A-NOSIGHT",
+  "icf": "d460",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names blindness and low vision and the identity is blind and low-vision people. Need A-NOSIGHT absorbs: \"blindness, low vision\"; identity BLIND: \"blind and low-vision people\". Code d460: identity_icf_map link 41/55 ties BLIND to d460 (moderate_contextual; mechanism: Sensory — spatial orientation, information access). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "BLIND",
+  "need": "A-NOSIGHT",
+  "icf": "d310–d329",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names blindness and low vision and the identity is blind and low-vision people. Need A-NOSIGHT absorbs: \"blindness, low vision\"; identity BLIND: \"blind and low-vision people\". Code d310–d329: identity_icf_map link 42/56 ties BLIND to d310–d329 (moderate_contextual; mechanism: Sensory — spatial orientation, information access). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "BLIND",
+  "need": "A-NOSIGHT",
+  "icf": "e240",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names blindness and low vision and the identity is blind and low-vision people. Need A-NOSIGHT absorbs: \"blindness, low vision\"; identity BLIND: \"blind and low-vision people\". Code e240: access_need_icf holds A-NOSIGHT -> e240 (confirmed; note: Light). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BLIND",
+  "need": "A-NOSIGHT",
+  "icf": "e125",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names blindness and low vision and the identity is blind and low-vision people. Need A-NOSIGHT absorbs: \"blindness, low vision\"; identity BLIND: \"blind and low-vision people\". Code e125: access_need_icf holds A-NOSIGHT -> e125 (confirmed; note: products & technology for communication). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BLIND",
+  "need": "A-NOSIGHT",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names blindness and low vision and the identity is blind and low-vision people. Need A-NOSIGHT absorbs: \"blindness, low vision\"; identity BLIND: \"blind and low-vision people\". Code e150: access_need_icf holds A-NOSIGHT -> e150 (confirmed; note: building design (public)). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BLIND",
+  "need": "A-NOSIGHT",
+  "icf": "e155",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names blindness and low vision and the identity is blind and low-vision people. Need A-NOSIGHT absorbs: \"blindness, low vision\"; identity BLIND: \"blind and low-vision people\". Code e155: access_need_icf holds A-NOSIGHT -> e155 (confirmed; note: building design (private)). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "DEAF",
+  "need": "A-NOSOUND",
+  "icf": "b230",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND absorbs: \"Deaf, hard of hearing, late-deafened\"; identity DEAF: \"Deaf, or late-deafened\". Code b230: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b230 among the ICF anchors of AX-AUD, the hearing-function anchor of the auditory axis, the function the need substitutes for. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "DEAF",
+  "need": "A-NOSOUND",
+  "icf": "d310–d329",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND absorbs: \"Deaf, hard of hearing, late-deafened\"; identity DEAF: \"Deaf, or late-deafened\". Code d310–d329: identity_icf_map link 20 ties DEAF to d310–d329 (high_predictive; mechanism: Sensory — communication, alert receipt). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "DEAF",
+  "need": "A-NOSOUND",
+  "icf": "d330–d349",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND absorbs: \"Deaf, hard of hearing, late-deafened\"; identity DEAF: \"Deaf, or late-deafened\". Code d330–d349: identity_icf_map link 21 ties DEAF to d330–d349 (high_predictive; mechanism: Sensory — communication, alert receipt). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "DEAF",
+  "need": "A-NOSOUND",
+  "icf": "e250",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND absorbs: \"Deaf, hard of hearing, late-deafened\"; identity DEAF: \"Deaf, or late-deafened\". Code e250: access_need_icf holds A-NOSOUND -> e250 (confirmed; note: Sound). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "DEAF",
+  "need": "A-NOSOUND",
+  "icf": "e1251",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND absorbs: \"Deaf, hard of hearing, late-deafened\"; identity DEAF: \"Deaf, or late-deafened\". Code e1251: access_need_icf holds A-NOSOUND -> e1251 (confirmed; note: assistive products & technology for communication (sub-code of e125); verified WHO/ICF 2026-07-23). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "DEAF",
+  "need": "A-NOSOUND",
+  "icf": "e125",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND absorbs: \"Deaf, hard of hearing, late-deafened\"; identity DEAF: \"Deaf, or late-deafened\". Code e125: access_need_icf holds A-NOSOUND -> e125 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "DEAFBLIND",
+  "need": "A-TACTILE",
+  "icf": "e340",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the need's registry text names DeafBlind (Protactile) access and the identity's description centres touch; both records say DeafBlind access is distinct from blind plus Deaf, so no vision or hearing code is proposed. Need A-TACTILE absorbs: \"DeafBlind (Protactile)\"; identity DEAFBLIND: \"centring touch\". Code e340: access_need_icf holds A-TACTILE -> e340 (confirmed; note: personal-care providers / SSPs). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "DEAFBLIND",
+  "need": "A-TACTILE",
+  "icf": "e150",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the need's registry text names DeafBlind (Protactile) access and the identity's description centres touch; both records say DeafBlind access is distinct from blind plus Deaf, so no vision or hearing code is proposed. Need A-TACTILE absorbs: \"DeafBlind (Protactile)\"; identity DEAFBLIND: \"centring touch\". Code e150: access_need_icf holds A-TACTILE -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "DEAFBLIND",
+  "need": "A-TACTILE",
+  "icf": "e155",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the need's registry text names DeafBlind (Protactile) access and the identity's description centres touch; both records say DeafBlind access is distinct from blind plus Deaf, so no vision or hearing code is proposed. Need A-TACTILE absorbs: \"DeafBlind (Protactile)\"; identity DEAFBLIND: \"centring touch\". Code e155: access_need_icf holds A-TACTILE -> e155 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "VES",
+  "need": "A-STABLE",
+  "icf": "b235",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it is served primarily by this need and the need's registry text names vestibular disorders. Need A-STABLE absorbs: \"vestibular disorders\"; identity VES: \"Served primarily by A-STABLE\". Code b235: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b235 among the ICF anchors of AX-BAL, the vestibular-function anchor of the balance axis, which the axis table says includes environments that precipitate dizziness. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "VES",
+  "need": "A-STABLE",
+  "icf": "d415",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it is served primarily by this need and the need's registry text names vestibular disorders. Need A-STABLE absorbs: \"vestibular disorders\"; identity VES: \"Served primarily by A-STABLE\". Code d415: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists d415 among the ICF anchors of AX-BAL, an anchor of the balance axis (posture under visual and motion destabilisation). A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "VES",
+  "need": "A-STABLE",
+  "icf": "e150",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it is served primarily by this need and the need's registry text names vestibular disorders. Need A-STABLE absorbs: \"vestibular disorders\"; identity VES: \"Served primarily by A-STABLE\". Code e150: access_need_icf holds A-STABLE -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "VES",
+  "need": "A-STABLE",
+  "icf": "e240",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it is served primarily by this need and the need's registry text names vestibular disorders. Need A-STABLE absorbs: \"vestibular disorders\"; identity VES: \"Served primarily by A-STABLE\". Code e240: access_need_icf holds A-STABLE -> e240 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-STABLE",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names post-concussion and the identity's description includes post-concussion. Need A-STABLE absorbs: \"post-concussion\"; identity BRAIN: \"post-concussion\". Code e150: access_need_icf holds A-STABLE -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-STABLE",
+  "icf": "e240",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names post-concussion and the identity's description includes post-concussion. Need A-STABLE absorbs: \"post-concussion\"; identity BRAIN: \"post-concussion\". Code e240: access_need_icf holds A-STABLE -> e240 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-NOSPEECH",
+  "icf": "d330",
+  "kind": "E3",
+  "warrant": "Judged E3 by session_2026-11-21-identity-need-icf-triples: the need's registry text names aphasia and the identity's description includes stroke; that aphasia follows stroke is general medical knowledge that no project record states, so this pair is an inference for the owner to confirm. Need A-NOSPEECH absorbs: \"aphasia\"; identity BRAIN: \"stroke\". Code d330: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists d330 among the ICF anchors of AX-COM-E, an anchor of the expressive-communication axis (producing speech). A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-NOSPEECH",
+  "icf": "d350",
+  "kind": "E3",
+  "warrant": "Judged E3 by session_2026-11-21-identity-need-icf-triples: the need's registry text names aphasia and the identity's description includes stroke; that aphasia follows stroke is general medical knowledge that no project record states, so this pair is an inference for the owner to confirm. Need A-NOSPEECH absorbs: \"aphasia\"; identity BRAIN: \"stroke\". Code d350: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists d350 among the ICF anchors of AX-COM-E, an anchor of the expressive-communication axis (conversation). A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-NOSPEECH",
+  "icf": "e125",
+  "kind": "E3",
+  "warrant": "Judged E3 by session_2026-11-21-identity-need-icf-triples: the need's registry text names aphasia and the identity's description includes stroke; that aphasia follows stroke is general medical knowledge that no project record states, so this pair is an inference for the owner to confirm. Need A-NOSPEECH absorbs: \"aphasia\"; identity BRAIN: \"stroke\". Code e125: access_need_icf holds A-NOSPEECH -> e125 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-NOSPEECH",
+  "icf": "e340",
+  "kind": "E3",
+  "warrant": "Judged E3 by session_2026-11-21-identity-need-icf-triples: the need's registry text names aphasia and the identity's description includes stroke; that aphasia follows stroke is general medical knowledge that no project record states, so this pair is an inference for the owner to confirm. Need A-NOSPEECH absorbs: \"aphasia\"; identity BRAIN: \"stroke\". Code e340: access_need_icf holds A-NOSPEECH -> e340 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "ID",
+  "need": "A-PLAIN",
+  "icf": "b117",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names intellectual disability and the identity is people with intellectual disability. Need A-PLAIN absorbs: \"intellectual disability\"; identity ID: \"First-class\". Code b117: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b117 among the ICF anchors of AX-COG-L, an anchor of the information-access axis (comprehension load). A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "ID",
+  "need": "A-PLAIN",
+  "icf": "d166",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names intellectual disability and the identity is people with intellectual disability. Need A-PLAIN absorbs: \"intellectual disability\"; identity ID: \"First-class\". Code d166: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists d166 among the ICF anchors of AX-COG-L, an anchor of the information-access axis (reading signage and instructions). A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "ID",
+  "need": "A-PLAIN",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names intellectual disability and the identity is people with intellectual disability. Need A-PLAIN absorbs: \"intellectual disability\"; identity ID: \"First-class\". Code e150: access_need_icf holds A-PLAIN -> e150 (confirmed; note: signage/wayfinding). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "ID",
+  "need": "A-PLAIN",
+  "icf": "e155",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names intellectual disability and the identity is people with intellectual disability. Need A-PLAIN absorbs: \"intellectual disability\"; identity ID: \"First-class\". Code e155: access_need_icf holds A-PLAIN -> e155 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "DEM",
+  "need": "A-PLAIN",
+  "icf": "b117",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names dementia and the identity is people living with dementia. Need A-PLAIN absorbs: \"dementia\"; identity DEM: \"Alzheimer disease and related dementias\". Code b117: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b117 among the ICF anchors of AX-COG-L, an anchor of the information-access axis (comprehension load). A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "DEM",
+  "need": "A-PLAIN",
+  "icf": "d460",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names dementia and the identity is people living with dementia. Need A-PLAIN absorbs: \"dementia\"; identity DEM: \"Alzheimer disease and related dementias\". Code d460: identity_icf_map link 11 ties DEM to d460 (high_predictive; mechanism: Cognitive — memory, attention, wayfinding, sequencing). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "DEM",
+  "need": "A-PLAIN",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names dementia and the identity is people living with dementia. Need A-PLAIN absorbs: \"dementia\"; identity DEM: \"Alzheimer disease and related dementias\". Code e150: access_need_icf holds A-PLAIN -> e150 (confirmed; note: signage/wayfinding). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "DEM",
+  "need": "A-PLAIN",
+  "icf": "e155",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names dementia and the identity is people living with dementia. Need A-PLAIN absorbs: \"dementia\"; identity DEM: \"Alzheimer disease and related dementias\". Code e155: access_need_icf holds A-PLAIN -> e155 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-PLAIN",
+  "icf": "b117",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names brain injury and the identity is people with acquired brain injury. Need A-PLAIN absorbs: \"brain injury\"; identity BRAIN: \"acquired brain injury\". Code b117: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b117 among the ICF anchors of AX-COG-L, an anchor of the information-access axis (comprehension load). A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-PLAIN",
+  "icf": "d460",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names brain injury and the identity is people with acquired brain injury. Need A-PLAIN absorbs: \"brain injury\"; identity BRAIN: \"acquired brain injury\". Code d460: identity_icf_map link 50 ties BRAIN to d460 (moderate_contextual; mechanism: Cognitive + motor — variable). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-PLAIN",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names brain injury and the identity is people with acquired brain injury. Need A-PLAIN absorbs: \"brain injury\"; identity BRAIN: \"acquired brain injury\". Code e150: access_need_icf holds A-PLAIN -> e150 (confirmed; note: signage/wayfinding). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-PLAIN",
+  "icf": "e155",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names brain injury and the identity is people with acquired brain injury. Need A-PLAIN absorbs: \"brain injury\"; identity BRAIN: \"acquired brain injury\". Code e155: access_need_icf holds A-PLAIN -> e155 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "MOB",
+  "need": "A-REACH",
+  "icf": "d465",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names wheelchair users, ambulatory wheelchair users and cane/crutch users, and the identity is people with mobility needs including wheelchair users. Need A-REACH absorbs: \"wheelchair users\"; identity MOB: \"wheelchair users\". Code d465: identity_icf_map link 6 ties MOB to d465 (high_predictive; mechanism: Biomechanical — ambulation, balance, transfer, wheelchair use). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "MOB",
+  "need": "A-REACH",
+  "icf": "d420",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names wheelchair users, ambulatory wheelchair users and cane/crutch users, and the identity is people with mobility needs including wheelchair users. Need A-REACH absorbs: \"wheelchair users\"; identity MOB: \"wheelchair users\". Code d420: identity_icf_map link 2 ties MOB to d420 (high_predictive; mechanism: Biomechanical — ambulation, balance, transfer, wheelchair use). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "MOB",
+  "need": "A-REACH",
+  "icf": "d450",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names wheelchair users, ambulatory wheelchair users and cane/crutch users, and the identity is people with mobility needs including wheelchair users. Need A-REACH absorbs: \"wheelchair users\"; identity MOB: \"wheelchair users\". Code d450: identity_icf_map link 3 ties MOB to d450 (high_predictive; mechanism: Biomechanical — ambulation, balance, transfer, wheelchair use). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "MOB",
+  "need": "A-REACH",
+  "icf": "e120",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names wheelchair users, ambulatory wheelchair users and cane/crutch users, and the identity is people with mobility needs including wheelchair users. Need A-REACH absorbs: \"wheelchair users\"; identity MOB: \"wheelchair users\". Code e120: access_need_icf holds A-REACH -> e120 (confirmed; note: mobility products & technology). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "MOB",
+  "need": "A-REACH",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names wheelchair users, ambulatory wheelchair users and cane/crutch users, and the identity is people with mobility needs including wheelchair users. Need A-REACH absorbs: \"wheelchair users\"; identity MOB: \"wheelchair users\". Code e150: access_need_icf holds A-REACH -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "MOB",
+  "need": "A-REACH",
+  "icf": "e155",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names wheelchair users, ambulatory wheelchair users and cane/crutch users, and the identity is people with mobility needs including wheelchair users. Need A-REACH absorbs: \"wheelchair users\"; identity MOB: \"wheelchair users\". Code e155: access_need_icf holds A-REACH -> e155 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "LMB",
+  "need": "A-REACH",
+  "icf": "d440",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names limb difference and the identity is people with limb differences. Need A-REACH absorbs: \"limb difference\"; identity LMB: \"limb differences\". Code d440: identity_icf_map link 35 ties LMB to d440 (moderate_contextual; mechanism: Biomechanical — grip, force, range of motion, bilateral function). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "LMB",
+  "need": "A-REACH",
+  "icf": "d445",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names limb difference and the identity is people with limb differences. Need A-REACH absorbs: \"limb difference\"; identity LMB: \"limb differences\". Code d445: identity_icf_map link 36 ties LMB to d445 (moderate_contextual; mechanism: Biomechanical — grip, force, range of motion, bilateral function). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "LMB",
+  "need": "A-REACH",
+  "icf": "e120",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names limb difference and the identity is people with limb differences. Need A-REACH absorbs: \"limb difference\"; identity LMB: \"limb differences\". Code e120: access_need_icf holds A-REACH -> e120 (confirmed; note: mobility products & technology). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "LMB",
+  "need": "A-REACH",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names limb difference and the identity is people with limb differences. Need A-REACH absorbs: \"limb difference\"; identity LMB: \"limb differences\". Code e150: access_need_icf holds A-REACH -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "LMB",
+  "need": "A-REACH",
+  "icf": "e155",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names limb difference and the identity is people with limb differences. Need A-REACH absorbs: \"limb difference\"; identity LMB: \"limb differences\". Code e155: access_need_icf holds A-REACH -> e155 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "MOVE",
+  "need": "A-PRECISION",
+  "icf": "b765",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it pairs with this need and the need's registry text names tremor, dystonia and Parkinson's. Need A-PRECISION absorbs: \"tremor, dystonia, Parkinson's\"; identity MOVE: \"Pairs with A-PRECISION\". Code b765: access_need_icf holds A-PRECISION -> b765 (confirmed; note: involuntary movement functions: tremor, dystonia, chorea, dyskinesia (excl. b760 voluntary control, b770 gait); verified WHO/ICF 2026-07-23. No axis carries it.). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "MOVE",
+  "need": "A-PRECISION",
+  "icf": "e115",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it pairs with this need and the need's registry text names tremor, dystonia and Parkinson's. Need A-PRECISION absorbs: \"tremor, dystonia, Parkinson's\"; identity MOVE: \"Pairs with A-PRECISION\". Code e115: access_need_icf holds A-PRECISION -> e115 (confirmed; note: products for daily living). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "MOVE",
+  "need": "A-PRECISION",
+  "icf": "d440",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it pairs with this need and the need's registry text names tremor, dystonia and Parkinson's. Need A-PRECISION absorbs: \"tremor, dystonia, Parkinson's\"; identity MOVE: \"Pairs with A-PRECISION\". Code d440: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists d440 among the ICF anchors of AX-REA, an anchor of the reach-and-manipulation axis; the need's obligation is no fine-motor or drag-only interaction. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "MOB",
+  "need": "A-SELFCARE",
+  "icf": "d510",
+  "kind": "M",
+  "warrant": "Judged M by session_2026-11-21-identity-need-icf-triples: the identity's map holds washing and toileting activity codes and the need's registry text names bathing and toileting. Need A-SELFCARE absorbs: \"bathing, dressing, toileting, eating\"; identity MOB: \"wheelchair users\". Code d510: identity_icf_map link 8 ties MOB to d510 (high_predictive; mechanism: Biomechanical — ambulation, balance, transfer, wheelchair use); access_need_icf holds A-SELFCARE -> d510 (confirmed; note: washing oneself — beyond AX-CNT). A proposal for the owner's review, not a determination.",
+  "support": "both maps"
+ },
+ {
+  "identity": "MOB",
+  "need": "A-SELFCARE",
+  "icf": "d530",
+  "kind": "M",
+  "warrant": "Judged M by session_2026-11-21-identity-need-icf-triples: the identity's map holds washing and toileting activity codes and the need's registry text names bathing and toileting. Need A-SELFCARE absorbs: \"bathing, dressing, toileting, eating\"; identity MOB: \"wheelchair users\". Code d530: identity_icf_map link 9 ties MOB to d530 (high_predictive; mechanism: Biomechanical — ambulation, balance, transfer, wheelchair use). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "MOB",
+  "need": "A-SELFCARE",
+  "icf": "e115",
+  "kind": "M",
+  "warrant": "Judged M by session_2026-11-21-identity-need-icf-triples: the identity's map holds washing and toileting activity codes and the need's registry text names bathing and toileting. Need A-SELFCARE absorbs: \"bathing, dressing, toileting, eating\"; identity MOB: \"wheelchair users\". Code e115: access_need_icf holds A-SELFCARE -> e115 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "MOB",
+  "need": "A-SELFCARE",
+  "icf": "e150",
+  "kind": "M",
+  "warrant": "Judged M by session_2026-11-21-identity-need-icf-triples: the identity's map holds washing and toileting activity codes and the need's registry text names bathing and toileting. Need A-SELFCARE absorbs: \"bathing, dressing, toileting, eating\"; identity MOB: \"wheelchair users\". Code e150: access_need_icf holds A-SELFCARE -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "MOB",
+  "need": "A-SELFCARE",
+  "icf": "e340",
+  "kind": "M",
+  "warrant": "Judged M by session_2026-11-21-identity-need-icf-triples: the identity's map holds washing and toileting activity codes and the need's registry text names bathing and toileting. Need A-SELFCARE absorbs: \"bathing, dressing, toileting, eating\"; identity MOB: \"wheelchair users\". Code e340: access_need_icf holds A-SELFCARE -> e340 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "SCI",
+  "need": "A-SELFCARE",
+  "icf": "d510",
+  "kind": "M",
+  "warrant": "Judged M by session_2026-11-21-identity-need-icf-triples: the identity's map holds washing and toileting activity codes and the need's registry text names bathing and toileting. Need A-SELFCARE absorbs: \"bathing, dressing, toileting, eating\"; identity SCI: \"Spinal cord injury\". Code d510: identity_icf_map link 27 ties SCI to d510 (high_predictive; mechanism: Biomechanical + autonomic); access_need_icf holds A-SELFCARE -> d510 (confirmed; note: washing oneself — beyond AX-CNT). A proposal for the owner's review, not a determination.",
+  "support": "both maps"
+ },
+ {
+  "identity": "SCI",
+  "need": "A-SELFCARE",
+  "icf": "d530",
+  "kind": "M",
+  "warrant": "Judged M by session_2026-11-21-identity-need-icf-triples: the identity's map holds washing and toileting activity codes and the need's registry text names bathing and toileting. Need A-SELFCARE absorbs: \"bathing, dressing, toileting, eating\"; identity SCI: \"Spinal cord injury\". Code d530: identity_icf_map link 29 ties SCI to d530 (high_predictive; mechanism: Biomechanical + autonomic). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "SCI",
+  "need": "A-SELFCARE",
+  "icf": "e115",
+  "kind": "M",
+  "warrant": "Judged M by session_2026-11-21-identity-need-icf-triples: the identity's map holds washing and toileting activity codes and the need's registry text names bathing and toileting. Need A-SELFCARE absorbs: \"bathing, dressing, toileting, eating\"; identity SCI: \"Spinal cord injury\". Code e115: access_need_icf holds A-SELFCARE -> e115 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "SCI",
+  "need": "A-SELFCARE",
+  "icf": "e150",
+  "kind": "M",
+  "warrant": "Judged M by session_2026-11-21-identity-need-icf-triples: the identity's map holds washing and toileting activity codes and the need's registry text names bathing and toileting. Need A-SELFCARE absorbs: \"bathing, dressing, toileting, eating\"; identity SCI: \"Spinal cord injury\". Code e150: access_need_icf holds A-SELFCARE -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "SCI",
+  "need": "A-SELFCARE",
+  "icf": "e340",
+  "kind": "M",
+  "warrant": "Judged M by session_2026-11-21-identity-need-icf-triples: the identity's map holds washing and toileting activity codes and the need's registry text names bathing and toileting. Need A-SELFCARE absorbs: \"bathing, dressing, toileting, eating\"; identity SCI: \"Spinal cord injury\". Code e340: access_need_icf holds A-SELFCARE -> e340 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "LMB",
+  "need": "A-SELFCARE",
+  "icf": "d510",
+  "kind": "M",
+  "warrant": "Judged M by session_2026-11-21-identity-need-icf-triples: the identity's map holds washing and dressing activity codes that the need's own rows also hold. Need A-SELFCARE absorbs: \"bathing, dressing, toileting, eating\"; identity LMB: \"upper-limb disabilities\". Code d510: identity_icf_map link 37 ties LMB to d510 (moderate_contextual; mechanism: Biomechanical — grip, force, range of motion, bilateral function); access_need_icf holds A-SELFCARE -> d510 (confirmed; note: washing oneself — beyond AX-CNT). A proposal for the owner's review, not a determination.",
+  "support": "both maps"
+ },
+ {
+  "identity": "LMB",
+  "need": "A-SELFCARE",
+  "icf": "d540",
+  "kind": "M",
+  "warrant": "Judged M by session_2026-11-21-identity-need-icf-triples: the identity's map holds washing and dressing activity codes that the need's own rows also hold. Need A-SELFCARE absorbs: \"bathing, dressing, toileting, eating\"; identity LMB: \"upper-limb disabilities\". Code d540: identity_icf_map link 39 ties LMB to d540 (moderate_contextual; mechanism: Biomechanical — grip, force, range of motion, bilateral function); access_need_icf holds A-SELFCARE -> d540 (confirmed; note: dressing — beyond AX-CNT). A proposal for the owner's review, not a determination.",
+  "support": "both maps"
+ },
+ {
+  "identity": "LMB",
+  "need": "A-SELFCARE",
+  "icf": "e115",
+  "kind": "M",
+  "warrant": "Judged M by session_2026-11-21-identity-need-icf-triples: the identity's map holds washing and dressing activity codes that the need's own rows also hold. Need A-SELFCARE absorbs: \"bathing, dressing, toileting, eating\"; identity LMB: \"upper-limb disabilities\". Code e115: access_need_icf holds A-SELFCARE -> e115 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "LMB",
+  "need": "A-SELFCARE",
+  "icf": "e150",
+  "kind": "M",
+  "warrant": "Judged M by session_2026-11-21-identity-need-icf-triples: the identity's map holds washing and dressing activity codes that the need's own rows also hold. Need A-SELFCARE absorbs: \"bathing, dressing, toileting, eating\"; identity LMB: \"upper-limb disabilities\". Code e150: access_need_icf holds A-SELFCARE -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "LMB",
+  "need": "A-SELFCARE",
+  "icf": "e340",
+  "kind": "M",
+  "warrant": "Judged M by session_2026-11-21-identity-need-icf-triples: the identity's map holds washing and dressing activity codes that the need's own rows also hold. Need A-SELFCARE absorbs: \"bathing, dressing, toileting, eating\"; identity LMB: \"upper-limb disabilities\". Code e340: access_need_icf holds A-SELFCARE -> e340 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "ADHD",
+  "need": "A-LOWLOAD",
+  "icf": "b140",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names ADHD and the identity is people with ADHD. Need A-LOWLOAD absorbs: \"ADHD\"; identity ADHD: \"ADHD\". Code b140: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b140 among the ICF anchors of AX-SPR, the attention-function anchor of the sensory-load axis; the need's obligation keeps attention demand low. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "ADHD",
+  "need": "A-LOWLOAD",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names ADHD and the identity is people with ADHD. Need A-LOWLOAD absorbs: \"ADHD\"; identity ADHD: \"ADHD\". Code e150: access_need_icf holds A-LOWLOAD -> e150 (confirmed; note: wayfinding). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "DEM",
+  "need": "A-LOWLOAD",
+  "icf": "b144",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names dementia and the identity is people living with dementia. Need A-LOWLOAD absorbs: \"dementia\"; identity DEM: \"Alzheimer disease and related dementias\". Code b144: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b144 among the ICF anchors of AX-COG-O, the memory-function anchor of the orientation axis; the need's obligation keeps memory demand low. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "DEM",
+  "need": "A-LOWLOAD",
+  "icf": "d460",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names dementia and the identity is people living with dementia. Need A-LOWLOAD absorbs: \"dementia\"; identity DEM: \"Alzheimer disease and related dementias\". Code d460: identity_icf_map link 11 ties DEM to d460 (high_predictive; mechanism: Cognitive — memory, attention, wayfinding, sequencing). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "DEM",
+  "need": "A-LOWLOAD",
+  "icf": "d230",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names dementia and the identity is people living with dementia. Need A-LOWLOAD absorbs: \"dementia\"; identity DEM: \"Alzheimer disease and related dementias\". Code d230: identity_icf_map link 10 ties DEM to d230 (high_predictive; mechanism: Cognitive — memory, attention, wayfinding, sequencing). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "DEM",
+  "need": "A-LOWLOAD",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names dementia and the identity is people living with dementia. Need A-LOWLOAD absorbs: \"dementia\"; identity DEM: \"Alzheimer disease and related dementias\". Code e150: access_need_icf holds A-LOWLOAD -> e150 (confirmed; note: wayfinding). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-LOWLOAD",
+  "icf": "b144",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names brain injury and the identity is people with acquired brain injury. Need A-LOWLOAD absorbs: \"brain injury\"; identity BRAIN: \"acquired brain injury\". Code b144: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b144 among the ICF anchors of AX-COG-O, the memory-function anchor of the orientation axis; the need's obligation keeps memory demand low. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-LOWLOAD",
+  "icf": "d230",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names brain injury and the identity is people with acquired brain injury. Need A-LOWLOAD absorbs: \"brain injury\"; identity BRAIN: \"acquired brain injury\". Code d230: identity_icf_map link 47 ties BRAIN to d230 (moderate_contextual; mechanism: Cognitive + motor — variable). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-LOWLOAD",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names brain injury and the identity is people with acquired brain injury. Need A-LOWLOAD absorbs: \"brain injury\"; identity BRAIN: \"acquired brain injury\". Code e150: access_need_icf holds A-LOWLOAD -> e150 (confirmed; note: wayfinding). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "ID",
+  "need": "A-LOWLOAD",
+  "icf": "b117",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names intellectual disability and the identity is people with intellectual disability. Need A-LOWLOAD absorbs: \"intellectual disability\"; identity ID: \"First-class\". Code b117: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b117 among the ICF anchors of AX-COG-L, an anchor of the information-access axis (comprehension load). A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "ID",
+  "need": "A-LOWLOAD",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names intellectual disability and the identity is people with intellectual disability. Need A-LOWLOAD absorbs: \"intellectual disability\"; identity ID: \"First-class\". Code e150: access_need_icf holds A-LOWLOAD -> e150 (confirmed; note: wayfinding). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "COM",
+  "need": "A-TIME",
+  "icf": "b164",
+  "kind": "E3",
+  "warrant": "Judged E3 by session_2026-11-21-identity-need-icf-triples: the need's own ICF row records the owner's rationale that brain fog impairs organizing time; that the identity (complex, energy-limiting conditions including long COVID and ME/CFS) carries brain fog is not stated in a project record, so this pair is an inference for the owner to confirm. Need A-TIME absorbs: \"brain fog impairs organizing time\"; identity COM: \"long COVID\". Code b164: access_need_icf holds A-TIME -> b164 (confirmed; note: higher-level cognitive functions: time management, planning & sequencing (verified WHO/ICF 2026-07-23). Rationale (owner 2026-07-23): brain fog impairs organizing time and retaining the sequence of actions, so tasks run slower as people work to hold onto intent -> the environment must impose no time pressure. No axis carries it.). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "COM",
+  "need": "A-EFFORT",
+  "icf": "d450",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the need's registry text names ME/CFS, Long COVID and POTS and the identity's description lists the same conditions. Need A-EFFORT absorbs: \"ME/CFS, Long COVID, POTS\"; identity COM: \"long COVID, MCAS, ME/CFS\". Code d450: identity_icf_map link 43/58 ties COM to d450 (moderate_contextual; mechanism: Autonomic — activity tolerance, exertion limits, thermal). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "COM",
+  "need": "A-EFFORT",
+  "icf": "d455",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the need's registry text names ME/CFS, Long COVID and POTS and the identity's description lists the same conditions. Need A-EFFORT absorbs: \"ME/CFS, Long COVID, POTS\"; identity COM: \"long COVID, MCAS, ME/CFS\". Code d455: identity_icf_map link 44/59 ties COM to d455 (moderate_contextual; mechanism: Autonomic — activity tolerance, exertion limits, thermal). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "COM",
+  "need": "A-EFFORT",
+  "icf": "b455",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the need's registry text names ME/CFS, Long COVID and POTS and the identity's description lists the same conditions. Need A-EFFORT absorbs: \"ME/CFS, Long COVID, POTS\"; identity COM: \"long COVID, MCAS, ME/CFS\". Code b455: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b455 among the ICF anchors of AX-STA, the exercise-tolerance anchor of the sustained-exertion axis, the demand this need lowers. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "COM",
+  "need": "A-EFFORT",
+  "icf": "b130",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the need's registry text names ME/CFS, Long COVID and POTS and the identity's description lists the same conditions. Need A-EFFORT absorbs: \"ME/CFS, Long COVID, POTS\"; identity COM: \"long COVID, MCAS, ME/CFS\". Code b130: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b130 among the ICF anchors of AX-STA, the energy-and-drive anchor of the sustained-exertion axis, the demand this need lowers. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "COM",
+  "need": "A-EFFORT",
+  "icf": "e120",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the need's registry text names ME/CFS, Long COVID and POTS and the identity's description lists the same conditions. Need A-EFFORT absorbs: \"ME/CFS, Long COVID, POTS\"; identity COM: \"long COVID, MCAS, ME/CFS\". Code e120: access_need_icf holds A-EFFORT -> e120 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "COM",
+  "need": "A-EFFORT",
+  "icf": "e150",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the need's registry text names ME/CFS, Long COVID and POTS and the identity's description lists the same conditions. Need A-EFFORT absorbs: \"ME/CFS, Long COVID, POTS\"; identity COM: \"long COVID, MCAS, ME/CFS\". Code e150: access_need_icf holds A-EFFORT -> e150 (confirmed; note: rest points, seating). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "MS",
+  "need": "A-EFFORT",
+  "icf": "b455",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names MS fatigue and the identity's description names fatigue. Need A-EFFORT absorbs: \"MS fatigue\"; identity MS: \"fatigue\". Code b455: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b455 among the ICF anchors of AX-STA, the exercise-tolerance anchor of the sustained-exertion axis, the demand this need lowers. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "MS",
+  "need": "A-EFFORT",
+  "icf": "b130",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names MS fatigue and the identity's description names fatigue. Need A-EFFORT absorbs: \"MS fatigue\"; identity MS: \"fatigue\". Code b130: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b130 among the ICF anchors of AX-STA, the energy-and-drive anchor of the sustained-exertion axis, the demand this need lowers. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "MS",
+  "need": "A-EFFORT",
+  "icf": "e120",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names MS fatigue and the identity's description names fatigue. Need A-EFFORT absorbs: \"MS fatigue\"; identity MS: \"fatigue\". Code e120: access_need_icf holds A-EFFORT -> e120 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "MS",
+  "need": "A-EFFORT",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names MS fatigue and the identity's description names fatigue. Need A-EFFORT absorbs: \"MS fatigue\"; identity MS: \"fatigue\". Code e150: access_need_icf holds A-EFFORT -> e150 (confirmed; note: rest points, seating). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "PAIN",
+  "need": "A-EFFORT",
+  "icf": "d450",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names pain and the identity's description says pain affects endurance. Need A-EFFORT absorbs: \"pain\"; identity PAIN: \"sustained discomfort affecting endurance\". Code d450: identity_icf_map link 14 ties PAIN to d450 (high_predictive; mechanism: Pain-limited activity endurance; fatigue accumulation). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "PAIN",
+  "need": "A-EFFORT",
+  "icf": "d455",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names pain and the identity's description says pain affects endurance. Need A-EFFORT absorbs: \"pain\"; identity PAIN: \"sustained discomfort affecting endurance\". Code d455: identity_icf_map link 15 ties PAIN to d455 (high_predictive; mechanism: Pain-limited activity endurance; fatigue accumulation). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "PAIN",
+  "need": "A-EFFORT",
+  "icf": "b280",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names pain and the identity's description says pain affects endurance. Need A-EFFORT absorbs: \"pain\"; identity PAIN: \"sustained discomfort affecting endurance\". Code b280: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b280 among the ICF anchors of AX-PAI, the pain-sensation anchor of the pain-load axis. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "PAIN",
+  "need": "A-EFFORT",
+  "icf": "e120",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names pain and the identity's description says pain affects endurance. Need A-EFFORT absorbs: \"pain\"; identity PAIN: \"sustained discomfort affecting endurance\". Code e120: access_need_icf holds A-EFFORT -> e120 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "PAIN",
+  "need": "A-EFFORT",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names pain and the identity's description says pain affects endurance. Need A-EFFORT absorbs: \"pain\"; identity PAIN: \"sustained discomfort affecting endurance\". Code e150: access_need_icf holds A-EFFORT -> e150 (confirmed; note: rest points, seating). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "AUT",
+  "need": "A-STIMULUS",
+  "icf": "d230",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names autistic people and the identity is autistic people. Need A-STIMULUS absorbs: \"autistic people\"; identity AUT: \"Autism spectrum\". Code d230: identity_icf_map link 52 ties AUT to d230 (moderate_contextual; mechanism: Sensory + predictability — environment consistency). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "AUT",
+  "need": "A-STIMULUS",
+  "icf": "b156",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names autistic people and the identity is autistic people. Need A-STIMULUS absorbs: \"autistic people\"; identity AUT: \"Autism spectrum\". Code b156: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b156 among the ICF anchors of AX-SPR, the perceptual-function anchor of the sensory-load axis. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "AUT",
+  "need": "A-STIMULUS",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names autistic people and the identity is autistic people. Need A-STIMULUS absorbs: \"autistic people\"; identity AUT: \"Autism spectrum\". Code e150: access_need_icf holds A-STIMULUS -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "AUT",
+  "need": "A-STIMULUS",
+  "icf": "e240",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names autistic people and the identity is autistic people. Need A-STIMULUS absorbs: \"autistic people\"; identity AUT: \"Autism spectrum\". Code e240: access_need_icf holds A-STIMULUS -> e240 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "AUT",
+  "need": "A-STIMULUS",
+  "icf": "e250",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names autistic people and the identity is autistic people. Need A-STIMULUS absorbs: \"autistic people\"; identity AUT: \"Autism spectrum\". Code e250: access_need_icf holds A-STIMULUS -> e250 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "NDV",
+  "need": "A-STIMULUS",
+  "icf": "d230",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names sensory processing differences and the identity's map mechanism is sensory processing. Need A-STIMULUS absorbs: \"sensory processing differences\"; identity NDV: \"neurodivergent\". Code d230: identity_icf_map link 17 ties NDV to d230 (high_predictive; mechanism: Sensory processing, predictability, social navigation). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "NDV",
+  "need": "A-STIMULUS",
+  "icf": "b156",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names sensory processing differences and the identity's map mechanism is sensory processing. Need A-STIMULUS absorbs: \"sensory processing differences\"; identity NDV: \"neurodivergent\". Code b156: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b156 among the ICF anchors of AX-SPR, the perceptual-function anchor of the sensory-load axis. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "NDV",
+  "need": "A-STIMULUS",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names sensory processing differences and the identity's map mechanism is sensory processing. Need A-STIMULUS absorbs: \"sensory processing differences\"; identity NDV: \"neurodivergent\". Code e150: access_need_icf holds A-STIMULUS -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "NDV",
+  "need": "A-STIMULUS",
+  "icf": "e240",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names sensory processing differences and the identity's map mechanism is sensory processing. Need A-STIMULUS absorbs: \"sensory processing differences\"; identity NDV: \"neurodivergent\". Code e240: access_need_icf holds A-STIMULUS -> e240 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "NDV",
+  "need": "A-STIMULUS",
+  "icf": "e250",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names sensory processing differences and the identity's map mechanism is sensory processing. Need A-STIMULUS absorbs: \"sensory processing differences\"; identity NDV: \"neurodivergent\". Code e250: access_need_icf holds A-STIMULUS -> e250 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-STIMULUS",
+  "icf": "b156",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names post-concussion and the identity's description includes post-concussion. Need A-STIMULUS absorbs: \"post-concussion\"; identity BRAIN: \"post-concussion\". Code b156: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b156 among the ICF anchors of AX-SPR, the perceptual-function anchor of the sensory-load axis. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-STIMULUS",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names post-concussion and the identity's description includes post-concussion. Need A-STIMULUS absorbs: \"post-concussion\"; identity BRAIN: \"post-concussion\". Code e150: access_need_icf holds A-STIMULUS -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-STIMULUS",
+  "icf": "e240",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names post-concussion and the identity's description includes post-concussion. Need A-STIMULUS absorbs: \"post-concussion\"; identity BRAIN: \"post-concussion\". Code e240: access_need_icf holds A-STIMULUS -> e240 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BRAIN",
+  "need": "A-STIMULUS",
+  "icf": "e250",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names post-concussion and the identity's description includes post-concussion. Need A-STIMULUS absorbs: \"post-concussion\"; identity BRAIN: \"post-concussion\". Code e250: access_need_icf holds A-STIMULUS -> e250 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "MH",
+  "need": "A-STIMULUS",
+  "icf": "d230",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names PTSD and the identity's description includes trauma. Need A-STIMULUS absorbs: \"PTSD\"; identity MH: \"trauma\". Code d230: identity_icf_map link 31 ties MH to d230 (high_predictive; mechanism: Psychological — routine, retreat, sensory safety). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "MH",
+  "need": "A-STIMULUS",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names PTSD and the identity's description includes trauma. Need A-STIMULUS absorbs: \"PTSD\"; identity MH: \"trauma\". Code e150: access_need_icf holds A-STIMULUS -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "MH",
+  "need": "A-STIMULUS",
+  "icf": "e240",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names PTSD and the identity's description includes trauma. Need A-STIMULUS absorbs: \"PTSD\"; identity MH: \"trauma\". Code e240: access_need_icf holds A-STIMULUS -> e240 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "MH",
+  "need": "A-STIMULUS",
+  "icf": "e250",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names PTSD and the identity's description includes trauma. Need A-STIMULUS absorbs: \"PTSD\"; identity MH: \"trauma\". Code e250: access_need_icf holds A-STIMULUS -> e250 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "EPI",
+  "need": "A-TRIGGER",
+  "icf": "e240",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the need's registry text names photosensitive epilepsy and the identity's description names photosensitivity as a subtype; the need's e240 row is annotated flash/strobe. Need A-TRIGGER absorbs: \"photosensitive epilepsy\"; identity EPI: \"photosensitivity\". Code e240: access_need_icf holds A-TRIGGER -> e240 (confirmed; note: flash/strobe). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "COM",
+  "need": "A-TRIGGER",
+  "icf": "e260",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the need's registry text names MCAS and the identity's description lists MCAS; the need's e260 row concerns airborne exposure. Need A-TRIGGER absorbs: \"MCAS\"; identity COM: \"MCAS\". Code e260: access_need_icf holds A-TRIGGER -> e260 (confirmed; note: Air quality). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "COM",
+  "need": "A-TRIGGER",
+  "icf": "b435",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the need's registry text names MCAS and the identity's description lists MCAS; the need's e260 row concerns airborne exposure. Need A-TRIGGER absorbs: \"MCAS\"; identity COM: \"MCAS\". Code b435: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b435 among the ICF anchors of AX-CHM, an anchor of the airborne-exposure axis. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "COM",
+  "need": "A-TRIGGER",
+  "icf": "b440",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the need's registry text names MCAS and the identity's description lists MCAS; the need's e260 row concerns airborne exposure. Need A-TRIGGER absorbs: \"MCAS\"; identity COM: \"MCAS\". Code b440: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b440 among the ICF anchors of AX-CHM, an anchor of the airborne-exposure axis. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "MH",
+  "need": "A-CALM",
+  "icf": "b152",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names anxiety, PTSD and psychiatric distress and the identity's description names mood, anxiety and trauma. Need A-CALM absorbs: \"anxiety, PTSD, psychiatric distress\"; identity MH: \"Mood, anxiety, trauma\". Code b152: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists b152 among the ICF anchors of AX-ARO, the emotional-function anchor of the arousal-safety axis. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "MH",
+  "need": "A-CALM",
+  "icf": "d240",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names anxiety, PTSD and psychiatric distress and the identity's description names mood, anxiety and trauma. Need A-CALM absorbs: \"anxiety, PTSD, psychiatric distress\"; identity MH: \"Mood, anxiety, trauma\". Code d240: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists d240 among the ICF anchors of AX-ARO, the stress-handling anchor of the arousal-safety axis. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "MH",
+  "need": "A-CALM",
+  "icf": "d230",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names anxiety, PTSD and psychiatric distress and the identity's description names mood, anxiety and trauma. Need A-CALM absorbs: \"anxiety, PTSD, psychiatric distress\"; identity MH: \"Mood, anxiety, trauma\". Code d230: identity_icf_map link 31 ties MH to d230 (high_predictive; mechanism: Psychological — routine, retreat, sensory safety). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "MH",
+  "need": "A-CALM",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names anxiety, PTSD and psychiatric distress and the identity's description names mood, anxiety and trauma. Need A-CALM absorbs: \"anxiety, PTSD, psychiatric distress\"; identity MH: \"Mood, anxiety, trauma\". Code e150: access_need_icf holds A-CALM -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "AUT",
+  "need": "A-CALM",
+  "icf": "d230",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names autistic people and the identity is autistic people. Need A-CALM absorbs: \"autistic people\"; identity AUT: \"Autism spectrum\". Code d230: identity_icf_map link 52 ties AUT to d230 (moderate_contextual; mechanism: Sensory + predictability — environment consistency). A proposal for the owner's review, not a determination.",
+  "support": "identity map"
+ },
+ {
+  "identity": "AUT",
+  "need": "A-CALM",
+  "icf": "d240",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names autistic people and the identity is autistic people. Need A-CALM absorbs: \"autistic people\"; identity AUT: \"Autism spectrum\". Code d240: neither map holds this pair; governance/functional-taxonomy.md 2.1 lists d240 among the ICF anchors of AX-ARO, the stress-handling anchor of the arousal-safety axis. A proposal for the owner's review, not a determination.",
+  "support": "taxonomy anchor"
+ },
+ {
+  "identity": "AUT",
+  "need": "A-CALM",
+  "icf": "e150",
+  "kind": "E2",
+  "warrant": "Judged E2 by session_2026-11-21-identity-need-icf-triples: the need's registry text names autistic people and the identity is autistic people. Need A-CALM absorbs: \"autistic people\"; identity AUT: \"Autism spectrum\". Code e150: access_need_icf holds A-CALM -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "LPA",
+  "need": "A-SIZE",
+  "icf": "e115",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it is served by this need and the need's registry text names little people; no ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE absorbs: \"little people\"; identity LPA: \"Served by A-SIZE\". Code e115: access_need_icf holds A-SIZE -> e115 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "LPA",
+  "need": "A-SIZE",
+  "icf": "e120",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it is served by this need and the need's registry text names little people; no ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE absorbs: \"little people\"; identity LPA: \"Served by A-SIZE\". Code e120: access_need_icf holds A-SIZE -> e120 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "LPA",
+  "need": "A-SIZE",
+  "icf": "e150",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it is served by this need and the need's registry text names little people; no ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE absorbs: \"little people\"; identity LPA: \"Served by A-SIZE\". Code e150: access_need_icf holds A-SIZE -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "LPA",
+  "need": "A-SIZE",
+  "icf": "e155",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it is served by this need and the need's registry text names little people; no ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE absorbs: \"little people\"; identity LPA: \"Served by A-SIZE\". Code e155: access_need_icf holds A-SIZE -> e155 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "TALL",
+  "need": "A-SIZE",
+  "icf": "e115",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it is served by this need and the need's registry text names tall people; no ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE absorbs: \"tall people\"; identity TALL: \"Served by A-SIZE\". Code e115: access_need_icf holds A-SIZE -> e115 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "TALL",
+  "need": "A-SIZE",
+  "icf": "e120",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it is served by this need and the need's registry text names tall people; no ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE absorbs: \"tall people\"; identity TALL: \"Served by A-SIZE\". Code e120: access_need_icf holds A-SIZE -> e120 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "TALL",
+  "need": "A-SIZE",
+  "icf": "e150",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it is served by this need and the need's registry text names tall people; no ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE absorbs: \"tall people\"; identity TALL: \"Served by A-SIZE\". Code e150: access_need_icf holds A-SIZE -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "TALL",
+  "need": "A-SIZE",
+  "icf": "e155",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it is served by this need and the need's registry text names tall people; no ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE absorbs: \"tall people\"; identity TALL: \"Served by A-SIZE\". Code e155: access_need_icf holds A-SIZE -> e155 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BAR",
+  "need": "A-SIZE",
+  "icf": "e115",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it is served by this need and the need's registry text names fat people; no ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE absorbs: \"fat people\"; identity BAR: \"Served by A-SIZE\". Code e115: access_need_icf holds A-SIZE -> e115 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BAR",
+  "need": "A-SIZE",
+  "icf": "e120",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it is served by this need and the need's registry text names fat people; no ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE absorbs: \"fat people\"; identity BAR: \"Served by A-SIZE\". Code e120: access_need_icf holds A-SIZE -> e120 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BAR",
+  "need": "A-SIZE",
+  "icf": "e150",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it is served by this need and the need's registry text names fat people; no ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE absorbs: \"fat people\"; identity BAR: \"Served by A-SIZE\". Code e150: access_need_icf holds A-SIZE -> e150 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ },
+ {
+  "identity": "BAR",
+  "need": "A-SIZE",
+  "icf": "e155",
+  "kind": "E1",
+  "warrant": "Judged E1 by session_2026-11-21-identity-need-icf-triples: the identity's description says it is served by this need and the need's registry text names fat people; no ICF code is recorded for body size, so only the need's own environmental codes are proposed. Need A-SIZE absorbs: \"fat people\"; identity BAR: \"Served by A-SIZE\". Code e155: access_need_icf holds A-SIZE -> e155 (confirmed). A proposal for the owner's review, not a determination.",
+  "support": "need map"
+ }
+]

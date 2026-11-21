@@ -8259,3 +8259,24 @@ Given in the session `session_2026-11-20-core-work` (https://claude.ai/code/sess
 CONDITION: any session building, reading or filling the identity, access-need and ICF table (T-145, T-126 to T-128); any session correcting a qualitative figure's value cell, or planning GAP-368, GAP-372 or GAP-376.
 ACTION: (1) Build T-145 as its own tooling pull request with all three keys NOT NULL; the triples that fill it are a later research pull request the owner reviews. (2) Correct the eleven value cells in place, through one writer that refuses a value not found in the figure's own `claim_text`; it goes in the large pull request, tooling first. (3) Treat the assumptions above as unratified except where the owner's words state them.
 DATE: 2026-11-20 — owner statements (typed words, quoted above).
+
+## Owner statements 2026-11-21 — a session may correct a qualitative cell by hand, and records each hand fix openly; GAP-368 needs no writer
+
+Given in the session `session_2026-11-21-identity-need-icf-triples` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in two typed messages sent while the session was preparing the identity, need and ICF triples and had named a purpose-built writer for GAP-368 as the next tooling task. Derive the times from the preserved transcript (`git grep -n -F "Claude having permission to hand edit" -- transcripts`; `git grep -n -F "Claude IS a tool" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "I think GAP-368 points towards Claude having permission to hand edit as required for specific columns"
+>
+> "We don't need a tool for many qualitative judgments/corrections because Claude IS a tool. We just need to ensure that you make transparent and record your hand fixes"
+
+**Readings.**
+
+- [ASSUMPTION: "hand edit" means the session writes the corrected value itself, as a statement in a data migration, without a purpose-built writer verb; the write path of CLAUDE.md section 4 (scratch copy, `emit_data_migration`, `migrate_db`, committed migrations immutable) is unchanged — basis: the owner objected to building a tool, not to the migration path].
+- [ASSUMPTION: "specific columns" means columns whose content is a qualitative judgment or wording (the value cells of the qualitative figures of GAP-368 are the one case the owner named); identifiers, keys, vocabularies, counts and bibliographic fields (author, title, figure) stay behind their writers and the fetch-before-write rule — basis: "qualitative judgments/corrections"; the owner named no column list, and the list is not decided here].
+- [ASSUMPTION: "transparent and record your hand fixes" means each hand fix leaves, in a place a reader reaches from the row, the old value, the new value, the reason and the session; where that record lives (the migration header, a gap resolution, a column) is not decided here — basis: the words].
+- This supersedes, on contact (rule 0), the means in ACTION (2) of the entry "Owner statements 2026-11-20 (fifth)" ("through one writer that refuses a value not found in the figure's own `claim_text`"); the owner's answer of that entry, that the cells may be corrected in place, stands. The guard and the verb were the coordinator's proposal and are not built.
+
+CONDITION: any session correcting a qualitative value, paraphrase or wording cell; GAP-368, GAP-372; any session proposing a writer for a qualitative correction.
+ACTION: (1) Do not build a writer for a qualitative correction on the strength of GAP-368; correct the cell by hand in a data migration and record the old value, the new value, the reason and the session in the migration header and in the resolution of the gap. (2) Do not extend this to a column outside the owner's meaning of "qualitative"; ask. (3) Treat the assumptions above as unratified except where the owner's words state them.
+DATE: 2026-11-21 — owner statements (typed words, quoted above).
