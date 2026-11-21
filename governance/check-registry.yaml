@@ -1448,6 +1448,20 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
+- id: test_identity_need_icf
+  cmd:
+  - python3
+  - scripts/tests/test_identity_need_icf.py
+  battery: tests
+  kinds:
+  - tooling
+  - schema
+  - data
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures (a scratch copy of the database written through the matrix verbs); a
+    floor would count the wrong thing
 - id: test_translations
   cmd:
   - python3
