@@ -8280,3 +8280,21 @@ Given in the session `session_2026-11-21-identity-need-icf-triples` (https://cla
 CONDITION: any session correcting a qualitative value, paraphrase or wording cell; GAP-368, GAP-372; any session proposing a writer for a qualitative correction.
 ACTION: (1) Do not build a writer for a qualitative correction on the strength of GAP-368; correct the cell by hand in a data migration and record the old value, the new value, the reason and the session in the migration header and in the resolution of the gap. (2) Do not extend this to a column outside the owner's meaning of "qualitative"; ask. (3) Treat the assumptions above as unratified except where the owner's words state them.
 DATE: 2026-11-21 — owner statements (typed words, quoted above).
+
+## Owner answer 2026-11-21 (second) — a need may be keyed on an umbrella identity and on its members, both
+
+Given in the session `session_2026-11-21-identity-need-icf-triples` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in a typed message answering the numbered open questions of pull request 245; the question was GAP-379 ("may a member's need be keyed on its umbrella identity?"). Derive the time from the preserved transcript (`git grep -n -F "to umbrella and to specific, yes" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "3 to umbrella and to specific, yes"
+
+**Readings.**
+
+- [ASSUMPTION: "3" is the third of the four open questions of the pull request, GAP-379, the umbrella question — basis: the owner's earlier replies numbered the same list ("1 what is a body function code?", "2 pardon?")].
+- [ASSUMPTION: the answer is that a need's row may be keyed on the umbrella identity (NDV, COM, BRAIN, MH) and on each specific member identity, both held at once, so the NDV rows beside the AUT and ADHD rows stand — basis: the words].
+- Not answered by these words: whether the `e120` row (mobility products and technology) is attached to LPA, TALL and BAR through A-SIZE's own row; whether A-TRIGGER's two rows are attached to both EPI and COM. Both stay open in GAP-379.
+
+CONDITION: any session keying a need, a triple or a determination on an umbrella identity beside its members; GAP-379.
+ACTION: (1) Keep a row keyed on the umbrella identity beside the rows keyed on its members; do not collapse one into the other. (2) The question GAP-379 puts about `e120` and A-TRIGGER stays open. (3) Treat the assumptions above as unratified except where the owner's words state them.
+DATE: 2026-11-21 — owner answer (typed words, quoted above).
