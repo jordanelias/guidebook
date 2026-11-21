@@ -79,3 +79,19 @@ Transcripts: `transcripts/harness_de695d5a/subagents/` (the four files named `..
 | A10 gap text: typed locator, typed count, unsupported "identities are MOB, LMB, SCI", stale "three passes" | Repaired. |
 | A11 docstring prose | Repaired. |
 | A12 COM x A-LOWLOAD omitted | Added, recorded as an inference. |
+
+## Pass 5 (the whole final state, read while it changed)
+
+The fifth critic read the rows, the ledger entries, the gaps and the migrations. Dispositions:
+
+| Finding | Disposition |
+|---|---|
+| F1 GAP-378 closed on a "yes" the owner did not give | Sustained. The closing and the imperative ACTION were mine. Repaired before commit: the closing migration is removed, the gap is open, and the fifth ledger entry now says the statements bear on the question and do not answer it. The question is put to the owner again. |
+| F2 row 64 (BLIND, A-NOSIGHT, b210): the code is not named by the owner; its meaning came from the coordinator's general knowledge; the need has no b210 row | Sustained. The row is in a committed migration and cannot be edited. Disclosed in GAP-377; for the owner's review. |
+| F3 row 65 (COM, A-TIME, b164): a quotation from the need's ICF notes labelled registry text; an inference | Sustained. Committed and not editable. Disclosed; recommended for rejection. |
+| F4 gap text false or misleading | Sustained. Repaired by correction notes on GAP-377, 378, 379, 380 and 382 (a migration of this pull request). |
+| F5 pass 10 covers none of the final rows; two dispositions contradicted by rows 64 and 65 | Sustained. Disclosed in GAP-382 and the pull request; the dispositions cannot be amended. |
+| F6 hand-written rows bypass the tense guard | Sustained, note. The two hand rows that remain (64, 65) carry reported-content clauses that review does not falsify. |
+| F7 ledger quoting: a message's tail dropped; the second entry names COM, BRAIN and MH as umbrellas though the registry holds no members; the first entry's supersession sits outside an assumption bracket | The tail is now stated in the fourth entry. The other two are in committed entries and are recorded here: the second entry's ACTION is read as applying to NDV, the only umbrella with member identities; the first entry's supersession of the earlier means is the coordinator's reading of "I think". |
+| F8 a migration summary naming content the file lacked | Moot: the file is removed. |
+| F9 MH rows 42 to 44 stretch the template; DEAFBLIND quote weak; the A-AT pairing was selective; repeated codes across needs | Rows 42 to 44 and the DEAFBLIND rows are committed and are for the owner's review. The A-AT pairing (rows 66, 67) is removed: the owner's answer settled A-AT's scope and named no identity. Repeats are by design. |

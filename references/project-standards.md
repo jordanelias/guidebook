@@ -8317,3 +8317,42 @@ Given in the session `session_2026-11-21-identity-need-icf-triples` (https://cla
 CONDITION: any session proposing or reading an identity's body-function code; GAP-377; T-128.
 ACTION: (1) A body-function row may be proposed for an identity. (2) The only body-function tie the owner's words state is b210 to the blind identity; every other identity and code needs its own recorded basis (an owner statement, a recorded map row, or a payload fetched from WHO under T-128), never an axis anchor. (3) Treat the assumptions above as unratified except where the owner's words state them.
 DATE: 2026-11-21 — owner answer (typed words, quoted above).
+
+## Owner answer 2026-11-21 (fourth) — A-AT is inside the built-environment scope
+
+Given in the session `session_2026-11-21-identity-need-icf-triples` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in a typed message answering the fourth of the four numbered open questions of pull request 245 (GAP-380: is A-AT inside the built-environment scope?). Derive the time from the preserved transcript (`git grep -n -F "A-AT is in scope" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "4 A-AT is in scope"
+
+(The same typed message went on with an instruction to check the coordinator's work; it is not part of this answer.)
+
+**Readings.**
+
+- [ASSUMPTION: "4" is the fourth of the four open questions, GAP-380 — basis: the owner's earlier replies numbered the same list].
+- [ASSUMPTION: "in scope" settles the registry note on A-AT ("Digital — may be out of built-environment scope; flagged for owner decision") in favour of scope; it says nothing about which identities A-AT serves — basis: the words].
+
+CONDITION: any session pairing, reading or rendering the access need A-AT; GAP-380.
+ACTION: (1) Treat A-AT as an access need inside the built-environment scope; the flag in its registry note is answered. (2) A-AT may be paired with an identity on the same footing as any other need. (3) Treat the assumptions above as unratified except where the owner's words state them.
+DATE: 2026-11-21 — owner answer (typed words, quoted above).
+
+## Owner statements 2026-11-21 (fifth) — the project is about architectural design; building design and light are its concern (bearing on whether environmental rows count as an identity's ICF coverage)
+
+Given in the session `session_2026-11-21-identity-need-icf-triples` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in two typed messages after the coordinator explained what a need-side environmental row is (an identity-need row whose ICF code is one of the need's own environmental codes) and, in a reply, asked whether such rows count as an identity's ICF coverage (GAP-378). Derive the times from the preserved transcript (`git grep -n -F "concerned about building design and light" -- transcripts`; `git grep -n -F "literally about" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "we are concerned about building design and light."
+>
+> "our project is literally about artchitectural design techniques"
+
+**Readings.**
+
+- [ASSUMPTION: the two messages bear on the question put (GAP-378) in favour of yes, a row whose ICF code is an environmental factor of the need counting as the identity's ICF coverage, because environmental factors are the project's subject — basis: the words; the owner did not write "yes" and the coordinator's direct question was not answered before the second message, which continues the first].
+- [ASSUMPTION: "building design and light" names the ICF environmental codes for building design (e150, e155) and for light (e240) — basis: the titles recorded in `base_icf`; the words name no code].
+- Not decided here: whether rows 46 and 47 of the matrix (EPI with e260, COM with e240), which the coordinator proposed to reject for want of any record tying the pairing, stand; they await the owner's approval or disapproval.
+
+CONDITION: any session counting, reviewing or reading an identity's ICF coverage; GAP-378; any change to `db.py lens-crosswalk --uncovered`.
+ACTION: (1) Read these statements as bearing on GAP-378, not as answering it: the gap stays open until the owner says yes or no. (2) Until then do not file or build a change that excludes a need-side environmental row, and do not rely on one as an identity's ICF coverage. (3) The review of each matrix row stays the owner's. (4) Treat the assumptions above as unratified except where the owner's words state them.
+DATE: 2026-11-21 — owner statements (typed words, quoted above).
