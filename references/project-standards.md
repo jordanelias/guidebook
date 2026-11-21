@@ -8373,3 +8373,21 @@ Given in the session `session_2026-11-21-identity-need-icf-triples` (https://cla
 CONDITION: any session counting, reviewing or reading an identity's ICF coverage; any change to `db.py lens-crosswalk --uncovered`; GAP-378.
 ACTION: (1) Count a need-side environmental row as the identity's ICF coverage; do not file or build a change that excludes it. (2) The review of each matrix row stays the owner's. (3) Treat the reading above as unratified except where the owner's words state it.
 DATE: 2026-11-21 — owner answer (typed words, quoted above).
+
+## Owner review 2026-11-21 — rows 64 and 65 of the identity, need and ICF matrix: TRIPLE-64 accepted, TRIPLE-65 rejected
+
+Given in the session `session_2026-11-21-identity-need-icf-triples` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in a typed message answering the coordinator's account of the two body-function rows it had added on its own reading (pull request 245). Derive the time from the preserved transcript (`git grep -n -F "Reject Row 65" -- transcripts`).
+
+**Owner's words, quoted (typed):**
+
+> "Reject Row 65. Accept Row 64."
+
+**Readings.**
+
+- [ASSUMPTION: "Row 65" and "Row 64" are the `triple_id` values 65 and 64 as the coordinator named them: TRIPLE-65 is COM with A-TIME and b164, and TRIPLE-64 is BLIND with A-NOSIGHT and b210 — basis: the coordinator's account of the rows, which numbered them so].
+- [ASSUMPTION: "Accept" is the owner's review of TRIPLE-64 as `stated`, made knowing the coordinator's disclosure that the code b210 and its meaning came from its general knowledge, that `base_icf` holds no title for it, and that the need holds no b210 row of its own — basis: the account the owner answered].
+- TRIPLE-65 is rejected: its warrant labelled a quotation from the need's ICF notes as registry text, and the pair is an inference no record states.
+
+CONDITION: any session reading, reviewing or counting TRIPLE-64 or TRIPLE-65.
+ACTION: (1) Record TRIPLE-64 as `stated` and retire TRIPLE-65 with this entry as the reference, by `db.py review-identity-need-icf`. (2) Do not propose a replacement for TRIPLE-65 without a recorded basis for the identity's link to the need. (3) Treat the readings above as unratified except where the owner's words state them.
+DATE: 2026-11-21 — owner review (typed words, quoted above).
