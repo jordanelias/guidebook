@@ -1,14 +1,1 @@
-[
- {
-  "identity": "EPI",
-  "need": "A-TRIGGER",
-  "icf": "e260",
-  "reason": "air quality; the need's own annotation on e240 is flash/strobe, the photic row"
- },
- {
-  "identity": "COM",
-  "need": "A-TRIGGER",
-  "icf": "e240",
-  "reason": "annotated flash/strobe in the need's own row, a photic trigger not tied to MCAS in any record"
- }
-]
+[]

@@ -4,419 +4,440 @@
   "need": "A-NOSIGHT",
   "icf": "e125",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named blindness and low vision, and the identity is blind and low-vision people. Need A-NOSIGHT registry text read: \"blindness, low vision\". Identity BLIND read: \"blind and low-vision people\". Code e125: access_need_icf held A-NOSIGHT -> e125."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-NOSIGHT registry text read: \"blindness, low vision\". Identity BLIND read: \"blind and low-vision people\". Code e125: access_need_icf held A-NOSIGHT -> e125."
  },
  {
   "identity": "BLIND",
   "need": "A-NOSIGHT",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named blindness and low vision, and the identity is blind and low-vision people. Need A-NOSIGHT registry text read: \"blindness, low vision\". Identity BLIND read: \"blind and low-vision people\". Code e150: access_need_icf held A-NOSIGHT -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-NOSIGHT registry text read: \"blindness, low vision\". Identity BLIND read: \"blind and low-vision people\". Code e150: access_need_icf held A-NOSIGHT -> e150."
  },
  {
   "identity": "BLIND",
   "need": "A-NOSIGHT",
   "icf": "e155",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named blindness and low vision, and the identity is blind and low-vision people. Need A-NOSIGHT registry text read: \"blindness, low vision\". Identity BLIND read: \"blind and low-vision people\". Code e155: access_need_icf held A-NOSIGHT -> e155."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-NOSIGHT registry text read: \"blindness, low vision\". Identity BLIND read: \"blind and low-vision people\". Code e155: access_need_icf held A-NOSIGHT -> e155."
  },
  {
   "identity": "BLIND",
   "need": "A-NOSIGHT",
   "icf": "e240",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named blindness and low vision, and the identity is blind and low-vision people. Need A-NOSIGHT registry text read: \"blindness, low vision\". Identity BLIND read: \"blind and low-vision people\". Code e240: access_need_icf held A-NOSIGHT -> e240."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-NOSIGHT registry text read: \"blindness, low vision\". Identity BLIND read: \"blind and low-vision people\". Code e240: access_need_icf held A-NOSIGHT -> e240."
  },
  {
   "identity": "DEAF",
   "need": "A-NOSOUND",
   "icf": "e125",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND registry text read: \"Deaf, hard of hearing, late-deafened\". Identity DEAF read: \"Deaf, or late-deafened\". Code e125: access_need_icf held A-NOSOUND -> e125."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-NOSOUND registry text read: \"Deaf, hard of hearing, late-deafened\". Identity DEAF read: \"Deaf, or late-deafened\". Code e125: access_need_icf held A-NOSOUND -> e125."
  },
  {
   "identity": "DEAF",
   "need": "A-NOSOUND",
   "icf": "e1251",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND registry text read: \"Deaf, hard of hearing, late-deafened\". Identity DEAF read: \"Deaf, or late-deafened\". Code e1251: access_need_icf held A-NOSOUND -> e1251."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-NOSOUND registry text read: \"Deaf, hard of hearing, late-deafened\". Identity DEAF read: \"Deaf, or late-deafened\". Code e1251: access_need_icf held A-NOSOUND -> e1251."
  },
  {
   "identity": "DEAF",
   "need": "A-NOSOUND",
   "icf": "e250",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named Deaf, hard-of-hearing and late-deafened people. Need A-NOSOUND registry text read: \"Deaf, hard of hearing, late-deafened\". Identity DEAF read: \"Deaf, or late-deafened\". Code e250: access_need_icf held A-NOSOUND -> e250."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-NOSOUND registry text read: \"Deaf, hard of hearing, late-deafened\". Identity DEAF read: \"Deaf, or late-deafened\". Code e250: access_need_icf held A-NOSOUND -> e250."
  },
  {
   "identity": "DEAFBLIND",
   "need": "A-TACTILE",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named DeafBlind (Protactile) access, and the identity's description said it is not blindness plus deafness. Need A-TACTILE registry text read: \"DeafBlind (Protactile)\". Identity DEAFBLIND read: \"Not VIS+DEAF\". Code e150: access_need_icf held A-TACTILE -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-TACTILE registry text read: \"DeafBlind (Protactile)\". Identity DEAFBLIND read: \"Not VIS+DEAF\". Code e150: access_need_icf held A-TACTILE -> e150."
  },
  {
   "identity": "DEAFBLIND",
   "need": "A-TACTILE",
   "icf": "e155",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named DeafBlind (Protactile) access, and the identity's description said it is not blindness plus deafness. Need A-TACTILE registry text read: \"DeafBlind (Protactile)\". Identity DEAFBLIND read: \"Not VIS+DEAF\". Code e155: access_need_icf held A-TACTILE -> e155."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-TACTILE registry text read: \"DeafBlind (Protactile)\". Identity DEAFBLIND read: \"Not VIS+DEAF\". Code e155: access_need_icf held A-TACTILE -> e155."
  },
  {
   "identity": "DEAFBLIND",
   "need": "A-TACTILE",
   "icf": "e340",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named DeafBlind (Protactile) access, and the identity's description said it is not blindness plus deafness. Need A-TACTILE registry text read: \"DeafBlind (Protactile)\". Identity DEAFBLIND read: \"Not VIS+DEAF\". Code e340: access_need_icf held A-TACTILE -> e340."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-TACTILE registry text read: \"DeafBlind (Protactile)\". Identity DEAFBLIND read: \"Not VIS+DEAF\". Code e340: access_need_icf held A-TACTILE -> e340."
  },
  {
   "identity": "BRAIN",
   "need": "A-STABLE",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named post-concussion, and the identity's description included post-concussion. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STABLE registry text read: \"post-concussion\". Identity BRAIN read: \"post-concussion\". Code e150: access_need_icf held A-STABLE -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a condition that the identity's description listed or included. The row was keyed on the whole identity, not only that condition. Need A-STABLE registry text read: \"post-concussion\". Identity BRAIN read: \"post-concussion\". Code e150: access_need_icf held A-STABLE -> e150."
  },
  {
   "identity": "BRAIN",
   "need": "A-STABLE",
   "icf": "e240",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named post-concussion, and the identity's description included post-concussion. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STABLE registry text read: \"post-concussion\". Identity BRAIN read: \"post-concussion\". Code e240: access_need_icf held A-STABLE -> e240."
+  "warrant": "As recorded when this row was written: The need's registry text named a condition that the identity's description listed or included. The row was keyed on the whole identity, not only that condition. Need A-STABLE registry text read: \"post-concussion\". Identity BRAIN read: \"post-concussion\". Code e240: access_need_icf held A-STABLE -> e240."
  },
  {
   "identity": "BRAIN",
   "need": "A-NOSPEECH",
   "icf": "e125",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named aphasia, and the identity's description included stroke; the neurological and acquired brain injury profile in references/website/data/populations.json listed \"stroke sequelae (unilateral neglect, navigation impairment, aphasia, hemiplegia)\". The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-NOSPEECH registry text read: \"aphasia\". Identity BRAIN read: \"stroke\". Code e125: access_need_icf held A-NOSPEECH -> e125."
+  "warrant": "As recorded when this row was written: No record read stated this link; it was recorded as an inference. The row was keyed on the whole identity. Need A-NOSPEECH registry text read: \"aphasia\". Identity BRAIN read: \"stroke\". The need's registry text named aphasia; the identity's description listed stroke; that aphasia follows stroke was not stated by the identity's own description. Code e125: access_need_icf held A-NOSPEECH -> e125."
  },
  {
   "identity": "BRAIN",
   "need": "A-NOSPEECH",
   "icf": "e340",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named aphasia, and the identity's description included stroke; the neurological and acquired brain injury profile in references/website/data/populations.json listed \"stroke sequelae (unilateral neglect, navigation impairment, aphasia, hemiplegia)\". The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-NOSPEECH registry text read: \"aphasia\". Identity BRAIN read: \"stroke\". Code e340: access_need_icf held A-NOSPEECH -> e340."
+  "warrant": "As recorded when this row was written: No record read stated this link; it was recorded as an inference. The row was keyed on the whole identity. Need A-NOSPEECH registry text read: \"aphasia\". Identity BRAIN read: \"stroke\". The need's registry text named aphasia; the identity's description listed stroke; that aphasia follows stroke was not stated by the identity's own description. Code e340: access_need_icf held A-NOSPEECH -> e340."
  },
  {
   "identity": "ID",
   "need": "A-PLAIN",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named intellectual disability, and the identity is people with intellectual disability. Need A-PLAIN registry text read: \"intellectual disability\". Identity ID read: \"people with intellectual disability\". Code e150: access_need_icf held A-PLAIN -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-PLAIN registry text read: \"intellectual disability\". Identity ID read: \"people with intellectual disability\". Code e150: access_need_icf held A-PLAIN -> e150."
  },
  {
   "identity": "ID",
   "need": "A-PLAIN",
   "icf": "e155",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named intellectual disability, and the identity is people with intellectual disability. Need A-PLAIN registry text read: \"intellectual disability\". Identity ID read: \"people with intellectual disability\". Code e155: access_need_icf held A-PLAIN -> e155."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-PLAIN registry text read: \"intellectual disability\". Identity ID read: \"people with intellectual disability\". Code e155: access_need_icf held A-PLAIN -> e155."
  },
  {
   "identity": "DEM",
   "need": "A-PLAIN",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named dementia, and the identity is people living with dementia. Need A-PLAIN registry text read: \"dementia\". Identity DEM read: \"Alzheimer disease and related dementias\". Code e150: access_need_icf held A-PLAIN -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-PLAIN registry text read: \"dementia\". Identity DEM read: \"Alzheimer disease and related dementias\". Code e150: access_need_icf held A-PLAIN -> e150."
  },
  {
   "identity": "DEM",
   "need": "A-PLAIN",
   "icf": "e155",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named dementia, and the identity is people living with dementia. Need A-PLAIN registry text read: \"dementia\". Identity DEM read: \"Alzheimer disease and related dementias\". Code e155: access_need_icf held A-PLAIN -> e155."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-PLAIN registry text read: \"dementia\". Identity DEM read: \"Alzheimer disease and related dementias\". Code e155: access_need_icf held A-PLAIN -> e155."
  },
  {
   "identity": "BRAIN",
   "need": "A-PLAIN",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named brain injury, and the identity is people with acquired brain injury. Need A-PLAIN registry text read: \"brain injury\". Identity BRAIN read: \"acquired brain injury\". Code e150: access_need_icf held A-PLAIN -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-PLAIN registry text read: \"brain injury\". Identity BRAIN read: \"acquired brain injury\". Code e150: access_need_icf held A-PLAIN -> e150."
  },
  {
   "identity": "BRAIN",
   "need": "A-PLAIN",
   "icf": "e155",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named brain injury, and the identity is people with acquired brain injury. Need A-PLAIN registry text read: \"brain injury\". Identity BRAIN read: \"acquired brain injury\". Code e155: access_need_icf held A-PLAIN -> e155."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-PLAIN registry text read: \"brain injury\". Identity BRAIN read: \"acquired brain injury\". Code e155: access_need_icf held A-PLAIN -> e155."
  },
  {
   "identity": "DEM",
   "need": "A-LOWLOAD",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named dementia, and the identity is people living with dementia. Need A-LOWLOAD registry text read: \"dementia\". Identity DEM read: \"Alzheimer disease and related dementias\". Code e150: access_need_icf held A-LOWLOAD -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-LOWLOAD registry text read: \"dementia\". Identity DEM read: \"Alzheimer disease and related dementias\". Code e150: access_need_icf held A-LOWLOAD -> e150."
  },
  {
   "identity": "ADHD",
   "need": "A-LOWLOAD",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named ADHD, and the identity is people with ADHD. Need A-LOWLOAD registry text read: \"ADHD\". Identity ADHD read: \"ADHD\". Code e150: access_need_icf held A-LOWLOAD -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-LOWLOAD registry text read: \"ADHD\". Identity ADHD read: \"ADHD\". Code e150: access_need_icf held A-LOWLOAD -> e150."
  },
  {
   "identity": "NDV",
   "need": "A-LOWLOAD",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named ADHD. The identity's description says it includes AUT, ADHD and others; the owner retained it as an identity (ledger, third set). The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-LOWLOAD registry text read: \"ADHD\". Identity NDV read: \"includes AUT, ADHD, and others\". Code e150: access_need_icf held A-LOWLOAD -> e150."
+  "warrant": "As recorded when this row was written: The identity's description said it included the member whose condition the need's registry text named, and the owner retained the identity (ledger, third set). The row was keyed on the whole identity, not only that member. Need A-LOWLOAD registry text read: \"ADHD\". Identity NDV read: \"includes AUT, ADHD, and others\". Code e150: access_need_icf held A-LOWLOAD -> e150."
  },
  {
   "identity": "BRAIN",
   "need": "A-LOWLOAD",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named brain injury, and the identity is people with acquired brain injury. Need A-LOWLOAD registry text read: \"brain injury\". Identity BRAIN read: \"acquired brain injury\". Code e150: access_need_icf held A-LOWLOAD -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-LOWLOAD registry text read: \"brain injury\". Identity BRAIN read: \"acquired brain injury\". Code e150: access_need_icf held A-LOWLOAD -> e150."
  },
  {
   "identity": "ID",
   "need": "A-LOWLOAD",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named intellectual disability, and the identity is people with intellectual disability. Need A-LOWLOAD registry text read: \"intellectual disability\". Identity ID read: \"people with intellectual disability\". Code e150: access_need_icf held A-LOWLOAD -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-LOWLOAD registry text read: \"intellectual disability\". Identity ID read: \"people with intellectual disability\". Code e150: access_need_icf held A-LOWLOAD -> e150."
+ },
+ {
+  "identity": "COM",
+  "need": "A-LOWLOAD",
+  "icf": "e150",
+  "support": "need map",
+  "warrant": "As recorded when this row was written: No record read stated this link; it was recorded as an inference. The row was keyed on the whole identity. Need A-LOWLOAD registry text read: \"brain fog\". Identity COM read: \"long COVID, MCAS, ME/CFS, POTS\". The need's registry text named brain fog; the identity's description listed long COVID and ME/CFS; that the identity carried brain fog was not stated by the records read. Code e150: access_need_icf held A-LOWLOAD -> e150."
  },
  {
   "identity": "COM",
   "need": "A-EFFORT",
   "icf": "e120",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named ME/CFS, Long COVID and POTS, and the identity's description listed the same conditions. Need A-EFFORT registry text read: \"ME/CFS, Long COVID, POTS\". Identity COM read: \"long COVID, MCAS, ME/CFS, POTS\". Code e120: access_need_icf held A-EFFORT -> e120."
+  "warrant": "As recorded when this row was written: The need's registry text named a condition that the identity's description listed or included. The row was keyed on the whole identity, not only that condition. Need A-EFFORT registry text read: \"ME/CFS, Long COVID, POTS\". Identity COM read: \"long COVID, MCAS, ME/CFS, POTS\". Code e120: access_need_icf held A-EFFORT -> e120."
  },
  {
   "identity": "COM",
   "need": "A-EFFORT",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named ME/CFS, Long COVID and POTS, and the identity's description listed the same conditions. Need A-EFFORT registry text read: \"ME/CFS, Long COVID, POTS\". Identity COM read: \"long COVID, MCAS, ME/CFS, POTS\". Code e150: access_need_icf held A-EFFORT -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a condition that the identity's description listed or included. The row was keyed on the whole identity, not only that condition. Need A-EFFORT registry text read: \"ME/CFS, Long COVID, POTS\". Identity COM read: \"long COVID, MCAS, ME/CFS, POTS\". Code e150: access_need_icf held A-EFFORT -> e150."
  },
  {
   "identity": "MS",
   "need": "A-EFFORT",
   "icf": "e120",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named MS fatigue, and the identity's description named fatigue. Need A-EFFORT registry text read: \"MS fatigue\". Identity MS read: \"fatigue\". Code e120: access_need_icf held A-EFFORT -> e120."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-EFFORT registry text read: \"MS fatigue\". Identity MS read: \"fatigue\". Code e120: access_need_icf held A-EFFORT -> e120."
  },
  {
   "identity": "MS",
   "need": "A-EFFORT",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named MS fatigue, and the identity's description named fatigue. Need A-EFFORT registry text read: \"MS fatigue\". Identity MS read: \"fatigue\". Code e150: access_need_icf held A-EFFORT -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-EFFORT registry text read: \"MS fatigue\". Identity MS read: \"fatigue\". Code e150: access_need_icf held A-EFFORT -> e150."
  },
  {
   "identity": "PAIN",
   "need": "A-EFFORT",
   "icf": "e120",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named pain, and the identity's description said pain affects endurance. Need A-EFFORT registry text read: \"pain\". Identity PAIN read: \"sustained discomfort affecting endurance\". Code e120: access_need_icf held A-EFFORT -> e120."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-EFFORT registry text read: \"pain\". Identity PAIN read: \"sustained discomfort affecting endurance\". Code e120: access_need_icf held A-EFFORT -> e120."
  },
  {
   "identity": "PAIN",
   "need": "A-EFFORT",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named pain, and the identity's description said pain affects endurance. Need A-EFFORT registry text read: \"pain\". Identity PAIN read: \"sustained discomfort affecting endurance\". Code e150: access_need_icf held A-EFFORT -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-EFFORT registry text read: \"pain\". Identity PAIN read: \"sustained discomfort affecting endurance\". Code e150: access_need_icf held A-EFFORT -> e150."
  },
  {
   "identity": "AUT",
   "need": "A-STIMULUS",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named autistic people, and the identity is autistic people. Need A-STIMULUS registry text read: \"autistic people\". Identity AUT read: \"Autism spectrum\". Code e150: access_need_icf held A-STIMULUS -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-STIMULUS registry text read: \"autistic people\". Identity AUT read: \"Autism spectrum\". Code e150: access_need_icf held A-STIMULUS -> e150."
  },
  {
   "identity": "AUT",
   "need": "A-STIMULUS",
   "icf": "e240",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named autistic people, and the identity is autistic people. Need A-STIMULUS registry text read: \"autistic people\". Identity AUT read: \"Autism spectrum\". Code e240: access_need_icf held A-STIMULUS -> e240."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-STIMULUS registry text read: \"autistic people\". Identity AUT read: \"Autism spectrum\". Code e240: access_need_icf held A-STIMULUS -> e240."
  },
  {
   "identity": "AUT",
   "need": "A-STIMULUS",
   "icf": "e250",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named autistic people, and the identity is autistic people. Need A-STIMULUS registry text read: \"autistic people\". Identity AUT read: \"Autism spectrum\". Code e250: access_need_icf held A-STIMULUS -> e250."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-STIMULUS registry text read: \"autistic people\". Identity AUT read: \"Autism spectrum\". Code e250: access_need_icf held A-STIMULUS -> e250."
  },
  {
   "identity": "NDV",
   "need": "A-STIMULUS",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named autistic people and sensory processing differences. The identity's description says it includes AUT, ADHD and others; the owner retained it as an identity (ledger, third set). The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STIMULUS registry text read: \"autistic people\". Identity NDV read: \"includes AUT, ADHD, and others\". Code e150: access_need_icf held A-STIMULUS -> e150."
+  "warrant": "As recorded when this row was written: The identity's description said it included the member whose condition the need's registry text named, and the owner retained the identity (ledger, third set). The row was keyed on the whole identity, not only that member. Need A-STIMULUS registry text read: \"autistic people\". Identity NDV read: \"includes AUT, ADHD, and others\". Code e150: access_need_icf held A-STIMULUS -> e150."
  },
  {
   "identity": "NDV",
   "need": "A-STIMULUS",
   "icf": "e240",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named autistic people and sensory processing differences. The identity's description says it includes AUT, ADHD and others; the owner retained it as an identity (ledger, third set). The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STIMULUS registry text read: \"autistic people\". Identity NDV read: \"includes AUT, ADHD, and others\". Code e240: access_need_icf held A-STIMULUS -> e240."
+  "warrant": "As recorded when this row was written: The identity's description said it included the member whose condition the need's registry text named, and the owner retained the identity (ledger, third set). The row was keyed on the whole identity, not only that member. Need A-STIMULUS registry text read: \"autistic people\". Identity NDV read: \"includes AUT, ADHD, and others\". Code e240: access_need_icf held A-STIMULUS -> e240."
  },
  {
   "identity": "NDV",
   "need": "A-STIMULUS",
   "icf": "e250",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named autistic people and sensory processing differences. The identity's description says it includes AUT, ADHD and others; the owner retained it as an identity (ledger, third set). The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STIMULUS registry text read: \"autistic people\". Identity NDV read: \"includes AUT, ADHD, and others\". Code e250: access_need_icf held A-STIMULUS -> e250."
+  "warrant": "As recorded when this row was written: The identity's description said it included the member whose condition the need's registry text named, and the owner retained the identity (ledger, third set). The row was keyed on the whole identity, not only that member. Need A-STIMULUS registry text read: \"autistic people\". Identity NDV read: \"includes AUT, ADHD, and others\". Code e250: access_need_icf held A-STIMULUS -> e250."
  },
  {
   "identity": "BRAIN",
   "need": "A-STIMULUS",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named post-concussion, and the identity's description included post-concussion. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STIMULUS registry text read: \"post-concussion\". Identity BRAIN read: \"post-concussion\". Code e150: access_need_icf held A-STIMULUS -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a condition that the identity's description listed or included. The row was keyed on the whole identity, not only that condition. Need A-STIMULUS registry text read: \"post-concussion\". Identity BRAIN read: \"post-concussion\". Code e150: access_need_icf held A-STIMULUS -> e150."
  },
  {
   "identity": "BRAIN",
   "need": "A-STIMULUS",
   "icf": "e240",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named post-concussion, and the identity's description included post-concussion. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STIMULUS registry text read: \"post-concussion\". Identity BRAIN read: \"post-concussion\". Code e240: access_need_icf held A-STIMULUS -> e240."
+  "warrant": "As recorded when this row was written: The need's registry text named a condition that the identity's description listed or included. The row was keyed on the whole identity, not only that condition. Need A-STIMULUS registry text read: \"post-concussion\". Identity BRAIN read: \"post-concussion\". Code e240: access_need_icf held A-STIMULUS -> e240."
  },
  {
   "identity": "BRAIN",
   "need": "A-STIMULUS",
   "icf": "e250",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named post-concussion, and the identity's description included post-concussion. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STIMULUS registry text read: \"post-concussion\". Identity BRAIN read: \"post-concussion\". Code e250: access_need_icf held A-STIMULUS -> e250."
+  "warrant": "As recorded when this row was written: The need's registry text named a condition that the identity's description listed or included. The row was keyed on the whole identity, not only that condition. Need A-STIMULUS registry text read: \"post-concussion\". Identity BRAIN read: \"post-concussion\". Code e250: access_need_icf held A-STIMULUS -> e250."
  },
  {
   "identity": "MH",
   "need": "A-STIMULUS",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named PTSD, and the identity's description named trauma. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STIMULUS registry text read: \"PTSD\". Identity MH read: \"trauma\". Code e150: access_need_icf held A-STIMULUS -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a condition that the identity's description listed or included. The row was keyed on the whole identity, not only that condition. Need A-STIMULUS registry text read: \"PTSD\". Identity MH read: \"trauma\". PTSD was read as falling under the description's \"trauma\". Code e150: access_need_icf held A-STIMULUS -> e150."
  },
  {
   "identity": "MH",
   "need": "A-STIMULUS",
   "icf": "e240",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named PTSD, and the identity's description named trauma. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STIMULUS registry text read: \"PTSD\". Identity MH read: \"trauma\". Code e240: access_need_icf held A-STIMULUS -> e240."
+  "warrant": "As recorded when this row was written: The need's registry text named a condition that the identity's description listed or included. The row was keyed on the whole identity, not only that condition. Need A-STIMULUS registry text read: \"PTSD\". Identity MH read: \"trauma\". PTSD was read as falling under the description's \"trauma\". Code e240: access_need_icf held A-STIMULUS -> e240."
  },
  {
   "identity": "MH",
   "need": "A-STIMULUS",
   "icf": "e250",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named PTSD, and the identity's description named trauma. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-STIMULUS registry text read: \"PTSD\". Identity MH read: \"trauma\". Code e250: access_need_icf held A-STIMULUS -> e250."
+  "warrant": "As recorded when this row was written: The need's registry text named a condition that the identity's description listed or included. The row was keyed on the whole identity, not only that condition. Need A-STIMULUS registry text read: \"PTSD\". Identity MH read: \"trauma\". PTSD was read as falling under the description's \"trauma\". Code e250: access_need_icf held A-STIMULUS -> e250."
  },
  {
   "identity": "EPI",
   "need": "A-TRIGGER",
   "icf": "e240",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named photosensitive epilepsy, and the identity's description named photosensitivity as a subtype. Need A-TRIGGER registry text read: \"photosensitive epilepsy\". Identity EPI read: \"photosensitivity\". Code e240: access_need_icf held A-TRIGGER -> e240."
+  "warrant": "As recorded when this row was written: The need's registry text named a condition that the identity's description listed or included. The row was keyed on the whole identity, not only that condition. Need A-TRIGGER registry text read: \"photosensitive epilepsy\". Identity EPI read: \"photosensitivity\". Code e240: access_need_icf held A-TRIGGER -> e240."
+ },
+ {
+  "identity": "EPI",
+  "need": "A-TRIGGER",
+  "icf": "e260",
+  "support": "need map",
+  "warrant": "As recorded when this row was written: The need's registry text named a condition that the identity's description listed or included. The row was keyed on the whole identity, not only that condition. Need A-TRIGGER registry text read: \"photosensitive epilepsy\". Identity EPI read: \"photosensitivity\". Code e260: access_need_icf held A-TRIGGER -> e260."
+ },
+ {
+  "identity": "COM",
+  "need": "A-TRIGGER",
+  "icf": "e240",
+  "support": "need map",
+  "warrant": "As recorded when this row was written: The need's registry text named a condition that the identity's description listed or included. The row was keyed on the whole identity, not only that condition. Need A-TRIGGER registry text read: \"MCAS\". Identity COM read: \"MCAS\". Code e240: access_need_icf held A-TRIGGER -> e240."
  },
  {
   "identity": "COM",
   "need": "A-TRIGGER",
   "icf": "e260",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named MCAS, and the identity's description listed MCAS. The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-TRIGGER registry text read: \"MCAS\". Identity COM read: \"MCAS\". Code e260: access_need_icf held A-TRIGGER -> e260."
+  "warrant": "As recorded when this row was written: The need's registry text named a condition that the identity's description listed or included. The row was keyed on the whole identity, not only that condition. Need A-TRIGGER registry text read: \"MCAS\". Identity COM read: \"MCAS\". Code e260: access_need_icf held A-TRIGGER -> e260."
  },
  {
   "identity": "MH",
   "need": "A-CALM",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named anxiety, PTSD and psychiatric distress, and the identity's description named mood, anxiety and trauma. Need A-CALM registry text read: \"anxiety, PTSD, psychiatric distress\". Identity MH read: \"Mood, anxiety, trauma\". Code e150: access_need_icf held A-CALM -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a condition that the identity's description listed or included. The row was keyed on the whole identity, not only that condition. Need A-CALM registry text read: \"anxiety, PTSD, psychiatric distress\". Identity MH read: \"Mood, anxiety, trauma\". Code e150: access_need_icf held A-CALM -> e150."
  },
  {
   "identity": "AUT",
   "need": "A-CALM",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named autistic people, and the identity is autistic people. Need A-CALM registry text read: \"autistic people\". Identity AUT read: \"Autism spectrum\". Code e150: access_need_icf held A-CALM -> e150."
+  "warrant": "As recorded when this row was written: The need's registry text named a group that the identity's name or description covered. Need A-CALM registry text read: \"autistic people\". Identity AUT read: \"Autism spectrum\". Code e150: access_need_icf held A-CALM -> e150."
  },
  {
   "identity": "NDV",
   "need": "A-CALM",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The need's registry text named autistic people. The identity's description says it includes AUT, ADHD and others; the owner retained it as an identity (ledger, third set). The named condition is one member of this identity, and the row is keyed on the whole identity. Need A-CALM registry text read: \"autistic people\". Identity NDV read: \"includes AUT, ADHD, and others\". Code e150: access_need_icf held A-CALM -> e150."
+  "warrant": "As recorded when this row was written: The identity's description said it included the member whose condition the need's registry text named, and the owner retained the identity (ledger, third set). The row was keyed on the whole identity, not only that member. Need A-CALM registry text read: \"autistic people\". Identity NDV read: \"includes AUT, ADHD, and others\". Code e150: access_need_icf held A-CALM -> e150."
  },
  {
   "identity": "LPA",
   "need": "A-SIZE",
   "icf": "e115",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The identity's description said it is served by this need, and the need's registry text named little people. Need A-SIZE registry text read: \"little people\". Identity LPA read: \"Served by A-SIZE\". Code e115: access_need_icf held A-SIZE -> e115."
+  "warrant": "As recorded when this row was written: The identity's description named this need as serving it, and the need's registry text named the same group. Need A-SIZE registry text read: \"little people\". Identity LPA read: \"Served by A-SIZE\". Code e115: access_need_icf held A-SIZE -> e115."
  },
  {
   "identity": "LPA",
   "need": "A-SIZE",
   "icf": "e120",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The identity's description said it is served by this need, and the need's registry text named little people. Need A-SIZE registry text read: \"little people\". Identity LPA read: \"Served by A-SIZE\". Code e120: access_need_icf held A-SIZE -> e120."
+  "warrant": "As recorded when this row was written: The identity's description named this need as serving it, and the need's registry text named the same group. Need A-SIZE registry text read: \"little people\". Identity LPA read: \"Served by A-SIZE\". Code e120: access_need_icf held A-SIZE -> e120."
  },
  {
   "identity": "LPA",
   "need": "A-SIZE",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The identity's description said it is served by this need, and the need's registry text named little people. Need A-SIZE registry text read: \"little people\". Identity LPA read: \"Served by A-SIZE\". Code e150: access_need_icf held A-SIZE -> e150."
+  "warrant": "As recorded when this row was written: The identity's description named this need as serving it, and the need's registry text named the same group. Need A-SIZE registry text read: \"little people\". Identity LPA read: \"Served by A-SIZE\". Code e150: access_need_icf held A-SIZE -> e150."
  },
  {
   "identity": "LPA",
   "need": "A-SIZE",
   "icf": "e155",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The identity's description said it is served by this need, and the need's registry text named little people. Need A-SIZE registry text read: \"little people\". Identity LPA read: \"Served by A-SIZE\". Code e155: access_need_icf held A-SIZE -> e155."
+  "warrant": "As recorded when this row was written: The identity's description named this need as serving it, and the need's registry text named the same group. Need A-SIZE registry text read: \"little people\". Identity LPA read: \"Served by A-SIZE\". Code e155: access_need_icf held A-SIZE -> e155."
  },
  {
   "identity": "TALL",
   "need": "A-SIZE",
   "icf": "e115",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The identity's description said it is served by this need, and the need's registry text named tall people. Need A-SIZE registry text read: \"tall people\". Identity TALL read: \"Served by A-SIZE\". Code e115: access_need_icf held A-SIZE -> e115."
+  "warrant": "As recorded when this row was written: The identity's description named this need as serving it, and the need's registry text named the same group. Need A-SIZE registry text read: \"tall people\". Identity TALL read: \"Served by A-SIZE\". Code e115: access_need_icf held A-SIZE -> e115."
  },
  {
   "identity": "TALL",
   "need": "A-SIZE",
   "icf": "e120",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The identity's description said it is served by this need, and the need's registry text named tall people. Need A-SIZE registry text read: \"tall people\". Identity TALL read: \"Served by A-SIZE\". Code e120: access_need_icf held A-SIZE -> e120."
+  "warrant": "As recorded when this row was written: The identity's description named this need as serving it, and the need's registry text named the same group. Need A-SIZE registry text read: \"tall people\". Identity TALL read: \"Served by A-SIZE\". Code e120: access_need_icf held A-SIZE -> e120."
  },
  {
   "identity": "TALL",
   "need": "A-SIZE",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The identity's description said it is served by this need, and the need's registry text named tall people. Need A-SIZE registry text read: \"tall people\". Identity TALL read: \"Served by A-SIZE\". Code e150: access_need_icf held A-SIZE -> e150."
+  "warrant": "As recorded when this row was written: The identity's description named this need as serving it, and the need's registry text named the same group. Need A-SIZE registry text read: \"tall people\". Identity TALL read: \"Served by A-SIZE\". Code e150: access_need_icf held A-SIZE -> e150."
  },
  {
   "identity": "TALL",
   "need": "A-SIZE",
   "icf": "e155",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The identity's description said it is served by this need, and the need's registry text named tall people. Need A-SIZE registry text read: \"tall people\". Identity TALL read: \"Served by A-SIZE\". Code e155: access_need_icf held A-SIZE -> e155."
+  "warrant": "As recorded when this row was written: The identity's description named this need as serving it, and the need's registry text named the same group. Need A-SIZE registry text read: \"tall people\". Identity TALL read: \"Served by A-SIZE\". Code e155: access_need_icf held A-SIZE -> e155."
  },
  {
   "identity": "BAR",
   "need": "A-SIZE",
   "icf": "e115",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The identity's description said it is served by this need, and the need's registry text named fat people. Need A-SIZE registry text read: \"fat people\". Identity BAR read: \"Served by A-SIZE\". Code e115: access_need_icf held A-SIZE -> e115."
+  "warrant": "As recorded when this row was written: The identity's description named this need as serving it, and the need's registry text named the same group. Need A-SIZE registry text read: \"fat people\". Identity BAR read: \"Served by A-SIZE\". Code e115: access_need_icf held A-SIZE -> e115."
  },
  {
   "identity": "BAR",
   "need": "A-SIZE",
   "icf": "e120",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The identity's description said it is served by this need, and the need's registry text named fat people. Need A-SIZE registry text read: \"fat people\". Identity BAR read: \"Served by A-SIZE\". Code e120: access_need_icf held A-SIZE -> e120."
+  "warrant": "As recorded when this row was written: The identity's description named this need as serving it, and the need's registry text named the same group. Need A-SIZE registry text read: \"fat people\". Identity BAR read: \"Served by A-SIZE\". Code e120: access_need_icf held A-SIZE -> e120."
  },
  {
   "identity": "BAR",
   "need": "A-SIZE",
   "icf": "e150",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The identity's description said it is served by this need, and the need's registry text named fat people. Need A-SIZE registry text read: \"fat people\". Identity BAR read: \"Served by A-SIZE\". Code e150: access_need_icf held A-SIZE -> e150."
+  "warrant": "As recorded when this row was written: The identity's description named this need as serving it, and the need's registry text named the same group. Need A-SIZE registry text read: \"fat people\". Identity BAR read: \"Served by A-SIZE\". Code e150: access_need_icf held A-SIZE -> e150."
  },
  {
   "identity": "BAR",
   "need": "A-SIZE",
   "icf": "e155",
   "support": "need map",
-  "warrant": "As recorded when this row was written: The identity's description said it is served by this need, and the need's registry text named fat people. Need A-SIZE registry text read: \"fat people\". Identity BAR read: \"Served by A-SIZE\". Code e155: access_need_icf held A-SIZE -> e155."
+  "warrant": "As recorded when this row was written: The identity's description named this need as serving it, and the need's registry text named the same group. Need A-SIZE registry text read: \"fat people\". Identity BAR read: \"Served by A-SIZE\". Code e155: access_need_icf held A-SIZE -> e155."
  }
 ]
