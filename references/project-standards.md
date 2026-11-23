@@ -8391,3 +8391,79 @@ Given in the session `session_2026-11-21-identity-need-icf-triples` (https://cla
 CONDITION: any session reading, reviewing or counting TRIPLE-64 or TRIPLE-65.
 ACTION: (1) Record TRIPLE-64 as `stated` and retire TRIPLE-65 with this entry as the reference, by `db.py review-identity-need-icf`. (2) Do not propose a replacement for TRIPLE-65 without a recorded basis for the identity's link to the need. (3) Treat the readings above as unratified except where the owner's words state them.
 DATE: 2026-11-21 — owner review (typed words, quoted above).
+
+## Owner statements 2026-11-22 and 2026-11-23 — ICF classification umbrellas and a glossary of the codes under each; the base lists ICF, access needs and identities; three browsing approaches; identities and needs mapped to one another, then ICF codes chosen; a delegation to Opus to reconcile
+
+Given in the session `session_2026-11-22-icf-umbrella-glossary` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in six typed messages on 2026-11-22 and one on 2026-11-23, after the coordinator oriented on pull request 245. Times are in the preserved transcript (`git grep -n -F "Opus to reconcile" -- transcripts`; the same for each quotation). Recorded on contact (rule 0).
+
+**Owner's words, quoted (typed), in the order sent:**
+
+> "the ICF codes used are not what I was expecting. I had been expecting ICF codes like b210, b230, b265, b280 etc.. but then we have entire groups like b750 to b789 which are all under "Movement functions""
+>
+> "so perhaps for ICF I really want those classification umbrellas like "Movement functions" , "Pain", "Hearing and vestibular systems" etc and some kind of glossary that shows all the codes bundled under those classification umbrellas"
+
+> "gather all ICF, access needs, disability identities/populations in base"
+
+> "I don't think the mapping is correct"
+
+> "https://icd.who.int/browse/2026-01/icf/en"
+
+> "our project filters specifications based on three approaches, and the browsing user chooses one of those approaches to use for browsing"
+>
+> "ICF codes/classifications (e.g. Neuromusculoskeletal and movement-related functions, Movement functions b750-789)"
+> "Access needs (e.g. wheelchair access)"
+> "Disability identity (e.g. wheelchair user)"
+
+> "So we should have a list of access needs, we should have a list of disability identities, and we should be able to map them to one another"
+>
+> "and from there, perhaps, we select ICF codes that pertain to those relationships"
+
+> "Okay. Opus to reconcile, make rulings as required and allow us to keep moving forward in project"
+
+**Readings.**
+
+- [ASSUMPTION: the umbrellas the owner names are the WHO ICF blocks and the group above them, "Movement functions" being the block b750 to b789 and "Neuromusculoskeletal and movement-related functions" the group above it — basis: the persisted WHO ICF 2026-01 tabulation, `retrieval-log/session_2026-11-22-icf-umbrella-glossary/38776b09204984dc.zip`; the owner's words give the example and the range, the payload gives the names and the nesting].
+- [ASSUMPTION: "gather all ICF, access needs, disability identities/populations in base" asks for a listing of what `base` holds, as the coordinator produced it (`scratchpad/session_2026-11-22-icf-umbrella-glossary/base-gathered.md`); the owner did not say that the base should hold every ICF code — basis: the coordinator's response at the time was a listing and the owner moved on to the next message without objection, which is not an approval].
+- [ASSUMPTION: "the mapping" in "I don't think the mapping is correct" is not identified. Two candidates: the identity-to-ICF activity list `identity_icf_map` (61 live rows, all d-codes), and the identity-need-ICF rows of pull request 245 on which the session had been oriented. The message arrived before the coordinator had described `identity_icf_map` — basis: the transcript's timestamps; the question is put to the owner].
+- [ASSUMPTION: the three browsing approaches are the three lens columns of a specification (ICF, access need, identity) as ruled 2026-08-28 and D-0182; the owner's statement adds that a browsing user picks one — basis: the words].
+- [ASSUMPTION: "perhaps" in the last sentence of the sixth message makes the order (pair first, ICF codes after) a suggestion, not a ruling; it does not by itself reverse the owner's answer of 2026-11-20 (fifth), "should be all three" — basis: the word "perhaps"; the question is put to the owner].
+- The delegation of 2026-11-23 is the owner's. It does not reach decisions the decision protocol reserves to the owner (`governance/decision-protocol.md` section 2.4 item 2: population taxonomy structure), and the convention of 2026-11-12 says a task needing the owner's own words is not opened by a delegated resolution.
+
+CONDITION: any session building, reading or browsing the ICF lens, the access-need lens or the identity lens; any session planning an ICF glossary, an ICF hierarchy, or the pairing of identities with access needs; GAP-ICF-TITLES.
+ACTION: (1) Treat the umbrellas and the glossary as asked for; they are derived from the persisted WHO payload, never from recall. (2) Treat the pairing of identities and needs as not yet ruled as to whether a pair may be stored without an ICF code; do not build a pairs table until the owner answers (OD-73). (3) Do not treat the mapping the owner doubted as identified. (4) Treat the readings above as unratified except where the owner's words state them.
+DATE: 2026-11-22 and 2026-11-23 — owner statements (typed words, quoted above).
+
+
+## Delegated resolutions 2026-11-23 — the ICF hierarchy, the glossary, the umbrella gather and a hold on the identity-to-ICF map (OD-74, OD-75, OD-77); three decisions referred back to the owner (OD-73, OD-76, OD-78)
+
+Written by the coordinating session from the reconciliation of an Opus-class instance (`scratchpad/session_2026-11-22-icf-umbrella-glossary/reconciliation.md`, which also holds the full reasoning and the reversal cost of each ruling) after an independent adversarial pass by a different instance, whose findings are applied below. **Not an owner statement.** Each was decided under the owner's delegation of 2026-11-23 and is DG-REVIEW (schema shape of already-ruled methods) or is referred back.
+
+**What the check changed.** The reconciliation's R15 (write the SCI and LMB parent edges under MOB) executed a ruling the owner set aside on 2026-11-12 (eighth and ninth sets), and is withdrawn. The reconciliation's R1 to R4 (a pairs table) reverse part of the owner's own answer "should be all three" and were not for a delegate to decide, so are referred back; R3's seed would also have left the retired TRIPLE-65 pointing at no pair and wrote 29 judged-state rows by hand SQL in a schema migration. R12 (what may ground a body-function code) narrows an owner answer and is referred back. Question 5 of the reconciliation (wheelchair user's own code) is not asked: OD-14 is answered (`OD-14 STATUS`, last line), and the mobility split awaits its task.
+
+OD-73 (a pair of an identity and an access need may be recorded before any ICF code is chosen) — the reconciliation's R1 to R4, with the corrections of the check: whether "perhaps" in the owner's sixth message reverses the owner's 2026-11-20 answer; a pairs table would need an all-live partial unique index (so a retired or reviewed pair can be proposed again), a decision on the retired TRIPLE-65, no hand-written seed in a schema migration, and an inference flag carried onto each pair.
+OD-73 STATUS: REFERRED BACK TO THE OWNER
+OD-73 CHECK: referred back
+
+OD-74 (the ICF hierarchy in `base_icf`) — `base_icf.parent_code`, nullable, referencing `base_icf(icf_code)`; WHO's level-2 and level-3 blocks as rows keyed by the span of the 3-digit categories under them, derived from the payload (the payload holds no range strings); level 1 is the `component` column; `d910–d920` is not a WHO block (WHO's is d910–d999) and gets no parent and no umbrella standing; one writer that derives block spans, parents and titles from the persisted payload; a title verified against the payload may replace a title whose source is not a payload, the old value and its source recorded in the data migration's header. Corrections applied: "verified against the payload" is a substring test over the payload, so the writer must compare the title with that code's own row; the import's scope (every block and every 3-digit category, against only the codes the project holds) rests on the reading of "gather all ICF" above, which is unratified, so the first data batch imports the blocks and the codes the project already holds, and the rest only if the owner says so; the ten titles that differ from WHO are listed in the reconciliation (section 1, R8).
+OD-74 STATUS: RESOLVED UNDER DELEGATION
+OD-74 CHECK: confirmed with corrections applied
+
+OD-75 (a cell keyed on an ICF umbrella gathers the codes beneath it; the glossary is a read verb; browsing filters on the lens column through that lens's hierarchy) — `IDENTITY_FAMILY_SQL` and `identity_family` generalised, not copied; the callers are eight lines in three files (`assess_cell.py`, `db.py`, `derivation_handshake_integrity.py`) and three definitions in `dbcore.py` (derive: `git grep -n -E "IDENTITY_FAMILY_SQL|identity_family|lens_differs" -- scripts`), not the count the reconciliation gave; the access-need lens stays flat, its `family` column being its grouping; the glossary is `db.py icf-glossary`, no view and no committed file; no browse filter reads a crosswalk (D-0184 unchanged). Corrections applied: whether writing parents changes what an existing cell gathers (T055-03's `RULE_VERSION` premise) is to be tested before the change merges; the owner's go-ahead for a change to the engine's gather clause was asked of the owner in the session and the delegation of 2026-11-23 is read as it (an unratified reading), so the change goes in a tooling-only pull request the owner reads before it merges.
+OD-75 STATUS: RESOLVED UNDER DELEGATION
+OD-75 CHECK: confirmed with corrections applied
+
+OD-76 (write `parent_code = MOB` for SCI and LMB; add `amend-identity --parent`) — withdrawn: superseded by the owner's eighth and ninth sets of 2026-11-12 (LMB leaves mobility; SCI is held with WHEEL). No parent edge is written under the old ruling and no flag is added for it.
+OD-76 STATUS: WITHDRAWN, REFERRED BACK TO THE OWNER
+OD-76 CHECK: referred back
+
+OD-77 (a hold on `identity_icf_map`; `access_need_icf` stands; `access_needs.absorbs` untouched) — `identity_icf_map` is frozen: no session copies its rows into another table, cites one as a warrant, or runs T-128 (T-128 also needs WHEEL minted, which is not so) until the owner says which mapping was meant. `access_need_icf` stands; the recorded provenance of `identity_icf_map` is the functional-deficit-auditor skill's table through a crosswalk of retired population codes (UPL, VIS, LOW-VISION, OFS, PCS, ABI, ASD), not the axis layer as earlier text here said. `access_needs.absorbs` is read only as prose that proposes a pair, under owner review.
+OD-77 STATUS: RESOLVED UNDER DELEGATION
+OD-77 CHECK: confirmed with corrections applied
+
+OD-78 (what may ground a body-function code on an identity or a pair) — referred back: the reconciliation narrowed an owner-answer entry's ACTION and rested on one WHO file (the simple tabulation, which holds titles and hierarchy but no definitions or relations); the entity pages were not retrieved. Until the owner answers, the ACTION (2) of "Owner answer 2026-11-21 (third)" stands as written, and no session cites a WHO payload for a relation between an identity and a code.
+OD-78 STATUS: REFERRED BACK TO THE OWNER
+OD-78 CHECK: referred back
+
+CONDITION: any session building the ICF hierarchy, the glossary or the family helper; any session planning a pairs table, a body-function code, a parent edge on an identity, or a change to `identity_icf_map`; OD-73 to OD-78.
+ACTION: (1) Tooling for OD-74 and OD-75 may be authored and built in a tooling-only pull request (rule 10), with no rows, and the owner reads it before it merges; the data batch follows in its own pull request. (2) Do not build the pairs table, the identity parent writer or a rule for grounding body-function codes; put the owner's questions (section 2 of the reconciliation, as corrected: Q1 per-pair, Q2 naming both candidate mappings, Q3, Q4) in plain form. (3) Derive every count in the reconciliation again before use.
+DATE: 2026-11-23 — delegated resolutions after an independent check, not an owner statement.
