@@ -1463,6 +1463,12 @@ LENS_COLUMNS = {
 }
 
 
+def icf_key(code):
+    """One key for an ICF code or span however it is typed: a hyphen, an em dash, a hyphen with spaces or an en dash with spaces
+    all become the unspaced en dash the stored ranges use (`b750\u2013b789`)."""
+    return re.sub(r"\s*[-\u2010-\u2015\u2212]\s*", "\u2013", (code or "").strip())
+
+
 def family_sql(conn, col):
     """`(code, then every code below it)` for a lens column, one `?` for the code. A lens HAS a hierarchy when its registry carries
     `parent_code` (identity: T-055; ICF: OD-75, migration 167): derived from the schema, never listed (rule 8), so the access-need

@@ -7,17 +7,20 @@ cycle; a span with two keys (hyphen and en dash); a lens with a hierarchy that s
 IS BUILT HERE, not copied from the canonical database, so the cases keep their meaning after the data batch that runs the import
 has landed (T-148): the canonical rows are neither read nor written.
 
-  HI-0  `dbcore.LENS_COLUMNS` and `db._LENS_COLUMNS` (the deliberate mirror) are equal; a lens has a hierarchy exactly when its
+  HI-0  the lens map has one home (`db._LENS_COLUMNS` is `dbcore.LENS_COLUMNS`); a lens has a hierarchy exactly when its
         registry has `parent_code` (identity and ICF yes, access need no); a database that predates the column reads each code as
         its own family.
   HI-1  a dry run writes nothing; the import mints every block, parents the held codes, names the untitled, replaces a title whose
-        source is not a payload (returning the old value and source) and takes the payload as source of a title it confirms.
+        source is not a payload (returning the old value and source) and takes the payload as source of a title it confirms
+        (returning the old title and source).
   HI-2  the span and parent of a block come from the payload (b765 under b750\u2013b789, Movement functions, under b710\u2013b799); a
         parent WHO names that the project does not hold is skipped for the next one up; a stored range WHO does not name is left alone.
   HI-3  a second import changes nothing; a code minted afterwards is parented by the next one; an intermediate code minted later
         takes over its children; a payload-sourced title that differs is refused.
-  HI-4  the glossary lists an umbrella with the codes beneath it, ends on a parent cycle, and refuses a code with nothing beneath
-        it; a file that is not a WHO tabulation is refused; `add-icf-code` gives one key to a span however its dash is typed.
+  HI-4  the glossary lists an umbrella with the codes beneath it (finding it typed with a hyphen), labels the frozen map's count as
+        frozen, ends on a parent cycle, and refuses a code with nothing beneath it; a file that is not a WHO tabulation is refused;
+        `add-icf-code` gives one key to a span however its dash is typed.
+  HI-5  cell-status holds a figure linked to a code in the cell of the umbrella above it (a copy of the canonical database).
 """
 import os
 import shutil
@@ -79,8 +82,8 @@ seed("d540", "Dressing", "skills/x.md")                                      # a
 seed(f"d910{EN}d920", rng=1)                                                 # a stored range that is not a WHO block
 seed("b1100")                                                                # its WHO parent b110 is not held
 
-case("HI-0 the lens map has one home and its mirror agrees",
-     dbcore.LENS_COLUMNS == db._LENS_COLUMNS)
+case("HI-0 the lens map has one home: db and the engine read the dbcore dict itself",
+     db._LENS_COLUMNS is dbcore.LENS_COLUMNS)
 mem = sqlite3.connect(":memory:")
 mem.executescript("CREATE TABLE base_taxonomy_identity (identity_code TEXT PRIMARY KEY, parent_code TEXT);"
                   "CREATE TABLE base_icf (icf_code TEXT PRIMARY KEY, parent_code TEXT);"
@@ -109,8 +112,8 @@ case("HI-1 a held block range takes its parent and title; every held single code
 case("HI-1 a title whose source is not a payload and differs from WHO's is replaced, with the old value and source returned",
      out["replaced"] == [["d620", "Acquisition of goods/services", "skills/x.md", "Acquisition of goods and services"]]
      and q("SELECT title_source FROM base_icf WHERE icf_code = 'd620'") == [(f"payload:{ZIP}",)])
-case("HI-1 a title the payload confirms keeps its wording and takes the payload as its source",
-     out["confirmed"] == ["d540"] and q("SELECT title, title_source FROM base_icf WHERE icf_code = 'd540'") == [("Dressing", f"payload:{ZIP}")])
+case("HI-1 a title the payload confirms takes the payload's wording and source, and the old title and source are returned",
+     out["confirmed"] == [["d540", "Dressing", "skills/x.md"]] and q("SELECT title, title_source FROM base_icf WHERE icf_code = 'd540'") == [("Dressing", f"payload:{ZIP}")])
 case(f"HI-2 Movement functions is the block b750{EN}b789, parented on b710{EN}b799, named by the payload, with b765 and b770 beneath it",
      q(f"SELECT title, parent_code FROM base_icf WHERE icf_code = 'b750{EN}b789'") == [("Movement functions", f"b710{EN}b799")]
      and q(f"SELECT icf_code FROM base_icf WHERE parent_code = 'b750{EN}b789' ORDER BY 1") == [("b765",), ("b770",)])
@@ -121,29 +124,41 @@ case(f"HI-2 d910{EN}d920 is not a WHO block: left as stored, with no parent and 
 again = db.import_icf_tree(payload=ZIP, session=SS)
 case("HI-3 a second import changes nothing",
      not any(again[k] for k in ("inserted", "parented", "reparented", "titled", "replaced", "confirmed", "refused")))
-seed("b110")
-r2 = db.import_icf_tree(payload=ZIP, session=SS)
-case("HI-3 a code minted afterwards that WHO places between a code and its parent takes over: b1100 moves under b110",
-     r2["reparented"] == [["b1100", f"b110{EN}b139", "b110"]] and "b110" in r2["parented"]
+db.insert_icf_code(icf_code="b110", session=SS)               # minted afterwards, with no second import
+case("HI-3 a code minted afterwards that WHO places between a code and its parent is parented at once, and takes its children: "
+     "b110 under its block, b1100 under b110, with no second import",
+     q("SELECT parent_code FROM base_icf WHERE icf_code = 'b110'") == [(f"b110{EN}b139",)]
+     and q("SELECT parent_code FROM base_icf WHERE icf_code = 'b1100'") == [("b110",)]
      and dbcore.lens_families(con, {"icf_code": "b110"})["icf_code"] == {"b110", "b1100"})
+r2 = db.import_icf_tree(payload=ZIP, session=SS)
+case("HI-3 the import afterwards moves nothing and only names the code minted without a title (the mint parents, the import titles)",
+     r2["titled"] == ["b110"] and not any(r2[k] for k in ("inserted", "parented", "reparented", "replaced", "confirmed", "refused")))
 con.execute("UPDATE base_icf SET title='kept', title_source='payload:retrieval-log/other.zip' WHERE icf_code='d450'")
 r3 = db.import_icf_tree(payload=ZIP, session=SS)
 case("HI-3 a payload-sourced title that differs is refused, listed, and left",
      any(x.startswith("d450") for x in r3["refused"]) and q("SELECT title FROM base_icf WHERE icf_code='d450'") == [("kept",)])
 g = db.icf_glossary(f"b750{EN}b789")
-case("HI-4 the glossary lists the umbrella with its codes and the counts of what links to each",
+LINKS = ("access_need_icf_rows", "identity_icf_map_rows (frozen, OD-77)", "identity_need_icf_reviewed", "identity_need_icf_pending")
+case("HI-4 the glossary lists the umbrella with its codes and the labelled counts of what links to each, the frozen map named as frozen",
      g["count"] == 1 and [c["code"] for c in g["umbrellas"][0]["codes"]] == ["b765", "b770"]
      and g["umbrellas"][0]["title"] == "Movement functions"
-     and all(c[k] == 0 for c in g["umbrellas"][0]["codes"] for k in ("need_links", "identity_links", "triples")))
+     and all(c[k] == 0 for c in g["umbrellas"][0]["codes"] for k in LINKS))
+case("HI-4 the glossary finds an umbrella typed with a hyphen, as the owner types it",
+     db.icf_glossary("b750-b789")["count"] == 1)
 case("HI-4 with no argument it lists the top umbrellas, and each has codes beneath it",
      all(u["codes"] for u in db.icf_glossary()["umbrellas"]))
 case("HI-4 a code with nothing beneath it is not an umbrella", refused(db.icf_glossary, "b765"))
 con.execute(f"UPDATE base_icf SET parent_code = 'b765' WHERE icf_code = 'b750{EN}b789'")        # a cycle: b765 > b750-b789 > b765
-case("HI-4 the glossary ends on a parent cycle, and so does the family",
-     len(db.icf_glossary("b765")["umbrellas"]) == 1 and dbcore.lens_families(con, {"icf_code": "b765"})["icf_code"])
+case("HI-4 the glossary ends on a parent cycle, and so does the family, which is every code on it",
+     len(db.icf_glossary("b765")["umbrellas"]) == 1
+     and dbcore.lens_families(con, {"icf_code": "b765"})["icf_code"] == {"b765", f"b750{EN}b789", "b770"})
 con.execute(f"UPDATE base_icf SET parent_code = 'b710{EN}b799' WHERE icf_code = 'b750{EN}b789'")
-db.insert_icf_code(icf_code="e100-e199", session=SS)
-case("HI-4 a span typed with a hyphen is stored with the en dash, the one key the import mints",
+for typed in ("e100-e199", f"e100 {EN} e199", "e100\u2014e199"):
+    try:
+        db.insert_icf_code(icf_code=typed, session=SS)
+    except db.Refusal:
+        pass                                                  # the second and third are the same span: refused as already held
+case("HI-4 a span typed with a hyphen, a spaced en dash or an em dash is one key, the unspaced en dash the import mints",
      q("SELECT icf_code FROM base_icf WHERE icf_code LIKE 'e100%'") == [(f"e100{EN}e199",)])
 case("HI-4 a file that is not a WHO tabulation is refused", refused(db.import_icf_tree, payload=HTML, session=SS))
 
