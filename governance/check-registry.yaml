@@ -1462,6 +1462,19 @@ checks:
   cost: fast
   no_floor: selftest — subject is its own fixtures (a scratch copy of the database written through the matrix verbs); a
     floor would count the wrong thing
+- id: test_icf_hierarchy
+  cmd:
+  - python3
+  - scripts/tests/test_icf_hierarchy.py
+  battery: tests
+  kinds:
+  - tooling
+  - schema
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures (a scratch copy of the database and the persisted WHO payload read through
+    import-icf-tree); a floor would count the wrong thing
 - id: test_translations
   cmd:
   - python3

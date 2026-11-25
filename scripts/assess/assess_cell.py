@@ -255,8 +255,8 @@ def lens_key(lens):
     return None
 
 
-# The identity lens is the one lens with a hierarchy (base_taxonomy_identity.parent_code): a cell keyed on a code
-# gathers the figures linked to that code or to any code whose parent_code chain reaches it (T-055). Derived from
+# The identity and ICF lenses have a hierarchy (`parent_code`, `dbcore.FAMILY_TABLE`): a cell keyed on a code
+# gathers the figures linked to that code or to any code whose parent_code chain reaches it (T-055, OD-75). Derived from
 # the registry on every gather, never a list. UNION, not UNION ALL, so a cycle ends.
 
 
@@ -275,7 +275,7 @@ def _lens_clause(lens, alias):
     impose nothing and gather by parameter alone, which is the defect this closes, so it is refused."""
     parts = [(f"EXISTS (SELECT 1 FROM v_live_lens_links k WHERE "
               f"k.extraction_id = {alias}.extraction_id AND k.{c} "
-              + (f"IN {dbcore.IDENTITY_FAMILY_SQL}" if c == "identity_code" else "= ?") + ")", lens[c])
+              + (f"IN {dbcore.family_sql(c)}" if c in dbcore.FAMILY_TABLE else "= ?") + ")", lens[c])
              for c in LENS_ORDER if lens.get(c)]
     if not parts:
         raise Refusal("a cell states at least one lens (D-0182); gathering without one would "
@@ -700,7 +700,7 @@ def _open_gates(conn, parameter_id, lens, best, questions_only=False):
     never skips it); for the identity lens "different" means outside the cell's code and its descendants. A QUESTION (OD-21) is reported, never binding. Any other gate binds only when its trigger is at
     least as strong as the cell's best anchor `best` (the ladder-inversion guard)."""
     gates = []
-    family = dbcore.identity_family(conn, lens.get("identity_code"))
+    families = dbcore.lens_families(conn, lens)
     if _table_exists(conn, "determination_gates"):
         for g in conn.execute(
                 "SELECT gate_id, verdict, trigger_tier, trigger_evidence_type, "
@@ -709,7 +709,7 @@ def _open_gates(conn, parameter_id, lens, best, questions_only=False):
             # The identity lens counts through parent_code, as the figures do: a parent's cell gathers its descendants'
             # figures, so a gate on a descendant's code reaches it (the gate caps the figure wherever it is read); a gate
             # on the parent's code does not reach a child's cell, which does not gather the parent's own figures.
-            if dbcore.lens_differs(dict(zip(dbcore.LENS_ORDER, g[6:10])), lens, family):
+            if dbcore.lens_differs(dict(zip(dbcore.LENS_ORDER, g[6:10])), lens, families):
                 continue                      # a gate on another lens
             if g[1] == "QUESTION":
                 # An objection to a published value, recorded as an open gate (OD-21). It FLAGS the cell and never

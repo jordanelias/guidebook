@@ -156,7 +156,7 @@ def main(argv=None):
         for g in open_by_param.get(pid, []):
             if g["verdict"] == "QUESTION":
                 continue                       # flags the cell, never caps it (OD-21): no tier to weigh
-            if dbcore.lens_differs(g, s, dbcore.identity_family(con, s.get("identity_code"))):
+            if dbcore.lens_differs(g, s, dbcore.lens_families(con, s)):
                 continue                       # a gate on another lens (the identity lens through its descendants, as the engine reads it)
             if g["trigger_tier"] > best:
                 continue                       # correctly non-binding: see the guard above
