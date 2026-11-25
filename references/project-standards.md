@@ -8537,3 +8537,21 @@ OD-82 CHECK: referred back
 CONDITION: any session adjudicating, approving or ratifying a decision of the remediation plan; OD-73, OD-77 to OD-82; T-102, T-127, T-128; pull request 246.
 ACTION: (1) The tooling of OD-74 and OD-75 may merge once the owner has read it. (2) Build no pairs table, no body-function proposal, no mobility split and no identity-to-ICF row. (3) Put the five questions of the report of 2026-11-25 to the owner in plain form: the pairs table (OD-73), which mapping was meant, the pairs and the rows that repeat a need's own codes, body-function proposals (OD-78 clause 3), and OI-55 item 1 with SCI. (4) The check lines above read `confirmed` for the delegated resolutions only; nothing here is an owner answer.
 DATE: 2026-11-25 — delegated resolutions after an independent check, not an owner statement.
+
+## Owner statement 2026-11-25 (sixth) — Opus adjudicates the referred-back questions and logs the rulings
+
+Given in the session `session_2026-11-22-icf-umbrella-glossary` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in a typed message sent after the coordinator reported pull request 246 and put five questions to the owner (the pairs table, which mapping was meant, the 29 pairs and the 63 repeated rows, body-function proposals, OI-55 item 1 with SCI and the wheelchair-user code). Derive the time from the preserved transcript (`git grep -n -F "Opus to adjudicate all of the above" -- transcripts`). Recorded on contact (rule 0).
+
+**Owner's words, quoted (typed):**
+
+> "Opus to adjudicate all of the above and log it"
+
+**Readings.**
+
+- [ASSUMPTION: "all of the above" is the coordinator's report just before it: the decisions OD-73, OD-78 (clauses 3 and 4), OD-82, which mapping the owner doubted, the 29 pairs and the 63 repeated rows, and OI-55 item 1 with SCI — basis: the message answered that report and named no item].
+- [ASSUMPTION: the message delegates those questions to an Opus-class instance for decision, and so supersedes, on contact (rule 0), the limit in "Delegated resolutions 2026-11-25" (OD-79) that the grant did not reach them. It does not reach what the schema binds to the owner's own review: the `Owner` heading that `review-identity-need-icf --approval-ref` and `retire` need, which a delegate's ruling cannot be, and `governance/decision-protocol.md` section 2.4 stays the rule for everything the message does not name — basis: the words; the owner's earlier statement of this date (ACTION (3) of "Owner statements 2026-11-25")].
+- [ASSUMPTION: "log it" asks that each ruling be written in this ledger as a delegated resolution with its basis and its check, as the earlier ones were — basis: the words and the ledger's practice].
+
+CONDITION: any session reading, relying on or carrying out OD-73, OD-77 to OD-82, T-102, T-127, T-128 or a pair of an identity and an access need.
+ACTION: (1) An Opus-class instance rules on the questions named; each ruling is written as a delegated resolution (`RESOLVED UNDER DELEGATION`, never `ANSWERED BY THE OWNER`) and checked by a different instance before its check line reads `confirmed`. (2) A ruling says which tasks it opens and what it leaves for a mechanism the schema binds to the owner. (3) Treat the readings above as unratified except where the owner's words state them.
+DATE: 2026-11-25 — owner statement (typed words, quoted above).
