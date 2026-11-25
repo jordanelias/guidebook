@@ -5,6 +5,8 @@
 The owner's goal, verbatim (2026-11-20): *"we research, we record, we verify we recorded things accurately, we
 evaluate things in context with other related things, we synthesize then show"*.
 
+**The project is simple** (owner, 2026-11-25: *"this is a simple project where we build as little machinery as possible to enact our goal"*; also *"Remember that this project is simple!!!"*). Meet the goal with the least machinery: §8's order applies to every task, and a table, verb, check or rule that the goal does not need is not built.
+
 The project is a database that records research properly, and a pipeline that processes it; `base` is the owner's
 request layer, standing where the owner would otherwise ask for a topic directly. The owner reads only English, so
 three things are never to be got wrong:

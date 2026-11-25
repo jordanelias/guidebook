@@ -8561,3 +8561,20 @@ Given in the session `session_2026-11-22-icf-umbrella-glossary` (https://claude.
 CONDITION: any session reading, relying on or carrying out OD-73, OD-77 to OD-82, T-102, T-127, T-128 or a pair of an identity and an access need.
 ACTION: (1) An Opus-class instance rules on the questions named; each ruling is written as a delegated resolution (`RESOLVED UNDER DELEGATION`, never `ANSWERED BY THE OWNER`) and checked by a different instance before its check line reads `confirmed`. (2) A ruling says which tasks it opens and what it leaves for a mechanism the schema binds to the owner. (3) Rule for the smallest change that meets the owner's recorded words, and do not add apparatus the questions do not need. (4) Treat the readings above as unratified except where the owner's words state them.
 DATE: 2026-11-25 — owner statements (typed words, quoted above).
+
+## Owner statement 2026-11-25 (seventh) — CLAUDE.md's goal should say the project is simple and builds as little machinery as possible
+
+Given in the session `session_2026-11-22-icf-umbrella-glossary` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in a typed message after the coordinator waited on an independent check of the Opus adjudication. Derive the time from the preserved transcript (`git grep -n -F "build as little machinery as possible" -- transcripts`). Recorded on contact (rule 0).
+
+**Owner's words, quoted (typed):**
+
+> "maybe claude.md goal should also state this is a simple project where we build as little machinery as possible to enact our goal"
+
+**Readings.**
+
+- [ASSUMPTION: "maybe" invites the edit and does not forbid it, so the coordinator made it: a sentence in CLAUDE.md's Goal section quoting the owner's words and pointing at section 8 — basis: the words; the owner may replace the wording, and merging approves it, as the entry on the Goal section of pull request 243 said].
+- The sentence adds no rule and no check; it states the owner's standing direction (section 8, "Minimise code") where every session reads it first.
+
+CONDITION: any session reading CLAUDE.md's Goal section.
+ACTION: (1) Meet the goal with the least machinery; apply section 8's order to every task. (2) Treat the reading above as unratified except where the owner's words state it.
+DATE: 2026-11-25 — owner statement (typed words, quoted above).
