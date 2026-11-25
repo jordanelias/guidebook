@@ -7,10 +7,10 @@ _Tooling only (CLAUDE.md rule 10). The rows are T-148's. Read `CLAUDE.md` first.
 | Object | Change | What reads it |
 |---|---|---|
 | `base_icf.parent_code` (migration 167) | nullable pointer to the code or block above | `dbcore.family_sql('icf_code')`, `db.py icf-glossary` |
-| `dbcore.family_sql`, `lens_families`, `lens_differs` | one family rule per lens with a hierarchy (`FAMILY_TABLE`); replaces `IDENTITY_FAMILY_SQL`, `identity_family` and the identity-only `lens_differs` | `assess_cell._lens_clause` and its gate filter, `db.py cell-status` (the extraction count and the gap and gate filters), `derivation_handshake_integrity` |
-| `db.py import-icf-tree` | mints every WHO level-2 and level-3 block as a range row, sets `parent_code` on the codes the project holds, names the untitled, replaces a title whose source is not a payload (returning old value and source), refuses a payload-sourced title that differs, lists a held code WHO does not name (`d910–d920`) | the data batch (T-148) |
+| `dbcore.family_sql(conn, col)`, `lens_families`, `lens_differs`, `LENS_COLUMNS` | one family rule, derived from the schema: a lens has a hierarchy when its registry carries `parent_code` (identity, ICF; the access-need lens does not), and a database that predates the column reads each code as its own family. Replaces `IDENTITY_FAMILY_SQL`, `identity_family` and the identity-only `lens_differs`; `assess_cell.LENS_COLUMNS` is now `dbcore.LENS_COLUMNS` (`db._LENS_COLUMNS` stays a deliberate mirror, held equal by `HI-0`) | `assess_cell._lens_clause` (now takes `conn`) and its gate filter, `db.py cell-status` (the extraction count, gap and gate filters), `derivation_handshake_integrity` |
+| `db.py import-icf-tree` | mints every WHO level-2 and level-3 block as a range row, sets `parent_code` on the codes the project holds, names the untitled, resets a parent that differs from the payload's (parent is derived data, so the verb is safe to run again after a code is minted), replaces a title whose source is not a payload (returning old value and source), takes the payload as source of a title it confirms, refuses a payload-sourced title that differs, lists a held code WHO does not name (`d910–d920`) | the data batch (T-148) |
 | `db.py icf-glossary [--umbrella CODE]` | read-only: each umbrella with the codes beneath it, WHO's titles, and the live link counts | the owner |
-| `scripts/tests/test_icf_hierarchy.py`, `ICF-01..04` in `test_assess_cell_pilot.py` | the cases; `ICF-01` and `ICF-04` go red with `icf_code` removed from `FAMILY_TABLE` | `run_checks.py` |
+| `scripts/tests/test_icf_hierarchy.py`, `ICF-01..04` in `test_assess_cell_pilot.py` | the cases; the hierarchy test builds its own fixture (it does not read the canonical rows, so it keeps its meaning after T-148); `ICF-01` and `ICF-04` go red when the ICF lens is made flat | `run_checks.py` |
 
 Without the family rule a cell keyed on `b750–b789` gathers nothing from a figure linked to `b765`; without the import verb a session types some 440 parents and titles by hand (rule 8).
 
@@ -20,7 +20,7 @@ Without the family rule a cell keyed on `b750–b789` gathers nothing from a fig
 - `d910–d920` is not a WHO block (WHO's is `d910–d999`); the verb leaves it as stored.
 - The access-need lens stays flat (`access_needs.family`). No identity parent writer is added (OD-76 withdrawn). No pairs table (OD-73 is the owner's). `identity_icf_map` is untouched and frozen (OD-77).
 - `RULE_VERSION` stays: no ICF parent is written by this task, and the data batch changes only cells keyed on an ICF code, of which `specifications` holds none today (`select count(*) from specifications where icf_code is not null`). Re-derive before T-148 merges.
-- `set-icf-title` is unchanged: the import verb is the one path that replaces a title, because it compares a title with that code's own row. A code minted later by `add-icf-code` has no parent until `import-icf-tree` is run again (it is idempotent).
+- `set-icf-title` is unchanged: the import verb is the one path that replaces a title, because it compares a title with that code's own row. A code minted later by `add-icf-code` (a span typed with a hyphen is stored with the en dash) has no parent until `import-icf-tree` is run again; the run also moves a code whose WHO parent is a code minted since. Nothing reads the gap in between, so run it whenever a code is minted.
 
 ## T-148 (the research pull request, after this merges)
 

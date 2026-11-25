@@ -1453,16 +1453,26 @@ def check_declared(conn, table: str, column: str, value, context: str):
             % (context, table, column, value, sorted(allowed)))
 
 
-# The lenses that have a hierarchy, and the table whose `parent_code` carries it. A cell keyed on a code gathers the figures
-# linked to that code or to any code below it (identity: T-055; ICF: OD-75, migration 167). The access-need lens is flat; its
-# `family` column is its grouping. Both tables name their key column as the lens column is named. One home for
-# `assess_cell._lens_clause`, `db.py cell-status` and the derivation-handshake audit.
-FAMILY_TABLE = {"identity_code": "base_taxonomy_identity", "icf_code": "base_icf"}
+# THE THREE LENSES (owner 2026-08-28, the medical lens deleted 2026-11-16; CHECK relaxed to "at least one" by D-0182): each lens
+# column, the registry its real FK points into, and that registry's key. `assess_cell.LENS_COLUMNS` is this dict; `db._LENS_COLUMNS`
+# mirrors it deliberately (test_icf_hierarchy HI-0 holds the two equal).
+LENS_COLUMNS = {
+    "identity_code": ("base_taxonomy_identity", "identity_code"),
+    "icf_code": ("base_icf", "icf_code"),
+    "needs_code": ("access_needs", "need_code"),
+}
 
 
-def family_sql(col):
-    """`(code, then every code below it through parent_code)` for a lens column, one `?` for the code. UNION, so a cycle ends."""
-    return (f"(WITH RECURSIVE family AS (SELECT ? AS code UNION SELECT c.{col} FROM {FAMILY_TABLE[col]} c "
+def family_sql(conn, col):
+    """`(code, then every code below it)` for a lens column, one `?` for the code. A lens HAS a hierarchy when its registry carries
+    `parent_code` (identity: T-055; ICF: OD-75, migration 167): derived from the schema, never listed (rule 8), so the access-need
+    lens is flat because `access_needs` has no such column, and a database that predates the column reads every code as its own
+    family. A cell keyed on a code gathers the figures linked to that code or to any code below it. UNION, so a cycle ends.
+    One home for `assess_cell._lens_clause`, `db.py cell-status` and the derivation-handshake audit."""
+    table, key = LENS_COLUMNS[col]
+    if "parent_code" not in columns(conn, table):
+        return "(SELECT ? AS code)"
+    return (f"(WITH RECURSIVE family AS (SELECT ? AS code UNION SELECT c.{key} FROM {table} c "
             f"JOIN family f ON c.parent_code = f.code) SELECT code FROM family)")
 
 
@@ -1470,20 +1480,18 @@ LENS_ORDER = ("identity_code", "icf_code", "needs_code")
 
 
 def lens_families(conn, lens):
-    """{lens column: the cell's code and its descendants} for each lens that has a hierarchy and that the cell states."""
-    return {col: {r[0] for r in conn.execute("SELECT code FROM " + family_sql(col), (lens[col],))}
-            for col in FAMILY_TABLE if lens.get(col)}
+    """{lens column: the cell's code and its descendants} for each lens the cell states (a code with nothing below it is its own
+    family)."""
+    return {col: {r[0] for r in conn.execute("SELECT code FROM " + family_sql(conn, col), (lens[col],))}
+            for col in LENS_COLUMNS if lens.get(col)}
 
 
 def lens_differs(row, lens, families):
-    """True when `row` (a gate or a gap) names a code in a lens the cell states that is not the cell's. For a lens with a
-    hierarchy "not the cell's" means outside the cell's code and its descendants (`families`, from `lens_families`): a
-    parent's cell gathers its descendants' figures, so a gate on a descendant reaches it. One home for the engine,
-    `db.py cell-status` and the derivation-handshake audit."""
+    """True when `row` (a gate or a gap) names a code in a lens the cell states that is not the cell's: outside the cell's code and
+    its descendants (`families`, from `lens_families`). A parent's cell gathers its descendants' figures, so a gate on a descendant
+    reaches it. One home for the engine, `db.py cell-status` and the derivation-handshake audit."""
     cols = row.keys()
-    return any(c in cols and row[c] and lens.get(c)
-               and (row[c] not in families.get(c, ()) if c in FAMILY_TABLE else row[c] != lens[c])
-               for c in LENS_ORDER)
+    return any(c in cols and row[c] and lens.get(c) and row[c] not in families.get(c, ()) for c in LENS_ORDER)
 
 
 def check_identity_live(conn, code, context: str):

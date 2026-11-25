@@ -1384,7 +1384,7 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
         for col, val in lens.items():
             # the identity and ICF lenses count through parent_code, as the engine gathers a cell's figures (T-055, OD-75)
             ex_sql += (f" AND EXISTS (SELECT 1 FROM v_live_lens_links l WHERE l.extraction_id = e.extraction_id "
-                       f"AND l.{col} " + (f"IN {dbcore.family_sql(col)})" if col in dbcore.FAMILY_TABLE else "= ?)")); ex_args.append(val)
+                       f"AND l.{col} IN {dbcore.family_sql(conn, col)})"); ex_args.append(val)
         extractions = ids(ex_sql + " ORDER BY e.extraction_id", *ex_args)
         scan = lambda *st: ids("SELECT ref_id FROM v_scan_ledger WHERE parameter_id = ? AND status IN (%s) ORDER BY ref_id"  # noqa: E731
                                % ",".join("?" * len(st)), parameter_id, *st)
@@ -10498,7 +10498,7 @@ def insert_icf_code(*, icf_code: str, title: str = None, title_source: str = Non
     section 6 wants codes AND names, so an untitled code is a gap — but a gap is not a lie,
     and `set-icf-title` is how it closes.
     """
-    icf_code = (icf_code or "").strip()
+    icf_code = re.sub(r"\s*[-\u2014]\s*", "\u2013", (icf_code or "").strip())     # one key for a span: the en dash the stored ranges use
     if not _ICF_CODE_RE.match(icf_code):
         raise Refusal(
             f"{icf_code!r} is not shaped like an ICF code. Expected b/d/e/s followed by "
@@ -10600,7 +10600,7 @@ def _who_tree(pay):
                  if "\tClassKind\t" in b.split("\n", 1)[0]), None)
     if text is None:
         raise Refusal(f"--payload {str(pay)!r} REFUSED: no member of it is a WHO simple tabulation (its first row should "
-                      f"with a header row that names 'ClassKind').")
+                      f"be a header row that names 'ClassKind').")
     rows = list(csv.reader(io.StringIO(text), delimiter="\t"))
     ik, ic, ib, it = (rows[0].index(h) for h in ("ClassKind", "Code", "BlockId", "Title"))
     nodes, stack = [], []
@@ -10643,7 +10643,8 @@ def import_icf_tree(*, payload: str, session: str, dry_run: bool = False):
     none, its title. Nothing else is minted: the rest of the classification arrives only if the owner says so.
 
     DERIVED, NOT TYPED (rule 8): spans, parents and titles come from the payload; nothing is asked of the operator. A title
-    is compared with THAT code's own row, not searched for in the bytes. A stored title that differs from WHO's is replaced
+    is compared with THAT code's own row, not searched for in the bytes. A parent that differs from the payload's is reset (it is derived data), so the verb is safe to run again after a code is minted.
+    A stored title the payload confirms takes the payload as its source. A stored title that differs from WHO's is replaced
     when its source is not a payload (the old value and its source are returned, to be written in the data migration's
     header) and refused when its source is one. A stored code or range the payload does not name (for example
     `d910\u2013d920`, which is not a WHO block) is left as it is and listed."""
@@ -10652,7 +10653,7 @@ def import_icf_tree(*, payload: str, session: str, dry_run: bool = False):
     with connect(dry_run) as conn:
         held = {r["icf_code"]: dict(r) for r in conn.execute("SELECT icf_code, title, title_source, parent_code FROM base_icf")}
         present = set(held) | {n["code"] for n in tree if n["block"]}
-        out = {"inserted": [], "parented": [], "titled": [], "replaced": [], "refused": [], "unmatched": []}
+        out = {"inserted": [], "parented": [], "reparented": [], "titled": [], "replaced": [], "confirmed": [], "refused": [], "unmatched": []}
         by_code = {n["code"]: n for n in tree}
         for n in tree:
             code, row = n["code"], held.get(n["code"])
@@ -10668,11 +10669,10 @@ def import_icf_tree(*, payload: str, session: str, dry_run: bool = False):
                 out["inserted"].append(code)
                 held[code] = {"title": n["title"], "title_source": src, "parent_code": parent}
                 continue
-            if row["parent_code"] is None and parent is not None:
+            if row["parent_code"] != parent:       # derived data: the payload's nearest present ancestor, whatever was stored
                 conn.execute("UPDATE base_icf SET parent_code=? WHERE icf_code=?", [parent, code])
-                out["parented"].append(code)
-            elif row["parent_code"] != parent:
-                out["refused"].append(f"{code}: parent is {row['parent_code']!r}, WHO's is {parent!r}")
+                (out["reparented"] if row["parent_code"] else out["parented"]).append(
+                    [code, row["parent_code"], parent] if row["parent_code"] else code)
             old, same = row["title"], (row["title"] or "").strip().casefold() == n["title"].casefold()
             if old and not same and (row["title_source"] or "").startswith("payload:"):
                 out["refused"].append(f"{code}: title {old!r} is payload-sourced and differs from {n['title']!r}")
@@ -10680,6 +10680,9 @@ def import_icf_tree(*, payload: str, session: str, dry_run: bool = False):
                 conn.execute("UPDATE base_icf SET title=?, title_source=? WHERE icf_code=?", [n["title"], src, code])
                 (out["replaced"] if old else out["titled"]).append(
                     [code, old, row["title_source"], n["title"]] if old else code)
+            elif not (row["title_source"] or "").startswith("payload:"):   # the payload confirms the stored title: say so
+                conn.execute("UPDATE base_icf SET title=?, title_source=? WHERE icf_code=?", [n["title"], src, code])
+                out["confirmed"].append(code)
         out["unmatched"] = sorted(c for c in held if c not in by_code)
         out.update(payload=str(payload), dry_run=dry_run)
         return out
@@ -10698,8 +10701,9 @@ def icf_glossary(umbrella: str = None):
         out = []
         for root in roots:
             rows = [dict(r) for r in conn.execute(
-                "WITH RECURSIVE t(code, depth, path) AS (SELECT ?, 0, ? UNION ALL SELECT c.icf_code, t.depth + 1, t.path || '/' || "
-                "c.icf_code FROM base_icf c JOIN t ON c.parent_code = t.code) "
+                "WITH RECURSIVE t(code, depth, path) AS (SELECT ?, 0, '/' || ? || '/' UNION ALL SELECT c.icf_code, t.depth + 1, t.path || "
+                "c.icf_code || '/' FROM base_icf c JOIN t ON c.parent_code = t.code "
+                "WHERE instr(t.path, '/' || c.icf_code || '/') = 0) "
                 "SELECT t.code, t.depth, b.title, (SELECT COUNT(*) FROM access_need_icf WHERE icf_code = t.code) AS need_links, "
                 "(SELECT COUNT(*) FROM identity_icf_map WHERE icf_code = t.code AND retired_at IS NULL) AS identity_links, "
                 "(SELECT COUNT(*) FROM identity_need_icf WHERE icf_code = t.code AND retired_at IS NULL) AS triples "

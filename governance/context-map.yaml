@@ -714,6 +714,7 @@ writers:
     - terms
     scripts/tests/test_icf_hierarchy.py:
     - base_icf
+    - extraction_lens_links
     scripts/tests/test_identity_need_icf.py:
     - identity_need_icf
     scripts/tests/test_run_pipeline_refusals.py:

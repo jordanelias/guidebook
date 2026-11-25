@@ -1491,18 +1491,18 @@ def main():
             return determine(synth_db(_isrc, icf_family=fam, direction="lower_is_better"), 1, {"icf_code": cell}, "syn-slug", "od75")
         except Refusal as e:
             return {"links": [], "n_extractions_in_lens": -1, "refused": str(e)[:120]}
-    _iu, _ic, _ir = _icf("b750\u2013b789", _ifam), _icf("b765", _ifam), _icf("b750\u2013b789", ())
+    _iu, _ic = _icf("b750\u2013b789", _ifam), _icf("b765", _ifam)
     expect("ICF-01: an umbrella's cell gathers the figures of every code beneath it, once each, and not an unrelated code's",
            _ids(_iu) == [1, 2, 4] and _iu["n_extractions_in_lens"] == 3, f"{_ids(_iu)} {_iu.get('n_extractions_in_lens')} {_iu.get('refused')}")
     expect("ICF-02: a code's cell gathers only its own figures, never the umbrella's other codes",
            _ids(_ic) == [1, 4], f"{_ids(_ic)} {_ic.get('refused')}")
-    expect("ICF-03: with no parent written every ICF code is a root and an umbrella gathers nothing from its codes (why RULE_VERSION "
-           "stays: no ICF parent is live, so no existing cell gathers differently)", _ids(_ir) == [] or _ir.get("n_extractions_in_lens") in (0, -1),
-           f"{_ids(_ir)} {_ir.get('refused')}")
+    expect("ICF-03: with no parent written an ICF cell gathers exactly what it did before the hierarchy, its own code's figures (the premise "
+           "of leaving RULE_VERSION alone; `specifications` holds no ICF-keyed row, so no determination reads the new rule)",
+           _ids(_icf("b765", ())) == [1, 4] and _ids(_icf("b770", ())) == [2, 4], f"{_ids(_icf('b765', ()))} {_ids(_icf('b770', ()))}")
     _ig = lambda cell: dbcore.lens_differs({"icf_code": "b765"}, {"icf_code": cell}, dbcore.lens_families(synth_db([], icf_family=_ifam), {"icf_code": cell}))  # noqa: E731
     expect("ICF-04: a gate or gap on b765 reaches the cell of its umbrella and its own, and not another code's",
            not _ig("b750\u2013b789") and not _ig("b765") and not _ig("b710\u2013b799") and _ig("b770") and _ig("b210"),
-           f"{_ig('b750-b789')} {_ig('b765')} {_ig('b770')}")
+           f"{_ig('b750\u2013b789')} {_ig('b765')} {_ig('b770')}")
 
     def _cell19(sources, cell, **kw):
         return determine(synth_db(sources, direction="lower_is_better", **kw), 1, cell,
