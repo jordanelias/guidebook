@@ -8578,3 +8578,47 @@ Given in the session `session_2026-11-22-icf-umbrella-glossary` (https://claude.
 CONDITION: any session reading CLAUDE.md's Goal section.
 ACTION: (1) Meet the goal with the least machinery; apply section 8's order to every task. (2) Treat the reading above as unratified except where the owner's words state it.
 DATE: 2026-11-25 — owner statement (typed words, quoted above).
+
+## Delegated resolutions 2026-11-25 (second) — the referred-back questions ruled for the smallest change: no pairs table, the repeated rows kept, the 29 pairs classed, the doubted mapping held and T-128 withdrawn, no body-function proposals, SCI retired into WHEEL, carry-only batches gated by their own tests (OD-73, OD-77, OD-78, OD-82, OD-83 to OD-87)
+
+Written by the coordinating session from the adjudication of an Opus-class instance (`scratchpad/session_2026-11-22-icf-umbrella-glossary/adjudication-2.md`) under the owner's words of 2026-11-25 ("Opus to adjudicate all of the above and log it"; "I don't want to answer these right now so just make it happen"; "Remember that this project is simple!!!"; entry "Owner statements 2026-11-25 (sixth)"), after an independent check by a different instance, whose corrections are applied below. **Not an owner statement.** The schema ties `stated` and a retirement to an "Owner" ledger entry; no ruling here is one, none writes such a heading, and no guard is relaxed.
+
+**OD-73 (a pair of an identity and an access need before any ICF code): no pairs table; "should be all three" stands.** "We should be able to map them to one another" is met by `identity_need_icf` as it is: a pair is a row whose ICF code is one of the need's own `access_need_icf` codes, which the owner ruled counts as the identity's ICF coverage (2026-11-21, sixth). "Perhaps, we select ICF codes" means further rows for a pair with a body-function or activity code where one is grounded. Nothing is built. Basis: the 2026-11-20 (fifth) and 2026-11-21 (sixth) answers; CLAUDE.md section 8.
+OD-73 STATUS: RESOLVED UNDER DELEGATION
+OD-73 CHECK: confirmed
+
+**The 63 rows that repeat a need's own codes: kept.** They are the coverage the owner ruled (2026-11-21, sixth), and under OD-73 the record of each pair; that ruling is the later and more specific one on these rows (rule 0). Retiring them would need an "Owner" `retirement_ref`. Derive: `select count(*) from identity_need_icf t where retired_at is null and exists (select 1 from access_need_icf a where a.need_code=t.need_code and a.icf_code=t.icf_code)`.
+
+OD-85 (the 29 live pairs): classes A (17) and B (10) are accepted and class C (2) is rejected, under delegation, **with no row changing state**: a delegated accept is never cited as a review or as a warrant, and `stated` and retirement stay the owner's mechanism. Class A: the need's registry text names the identity's group, or each side names the other. Class B: the need names a condition that the identity's own description lists (mission commitment 1: co-occurring conditions are the norm); this settles A-TRIGGER for COM and EPI; the `e120` and A-SIZE question for LPA, TALL and BAR (GAP-379's other open part) stays open. Class C, BRAIN with A-NOSPEECH and COM with A-LOWLOAD: the warrant reads "recorded as an inference", the ground on which the owner rejected TRIPLE-65. T-127 does not take the class C rows as proposals. Harmless to the plan: no gather, determination or gate reads `identity_need_icf` (D-0184) and no task gate reads its state. Derive the classes: `select identity_code, need_code, warrant from identity_need_icf where retired_at is null`.
+OD-85 STATUS: RESOLVED UNDER DELEGATION
+OD-85 CHECK: confirmed with corrections applied
+
+**OD-77 (the mapping the owner doubted).** The table `identity_icf_map` is taken as the mapping meant, as a delegated reading that rests on the range codes: of the ICF link tables only `identity_icf_map` holds ranges (derive: count the `is_range` codes each table references), and the owner's message objected to "entire groups like b750 to b789". The timing of the message (04:04:08, after the table had been printed at 04:04:06) does not decide it. The freeze binds **additions a session proposes**: no session adds a row to `identity_icf_map`, cites one as a warrant or copies one. It does **not** bind rows the owner has already confirmed: the owner's answer to OI-03 ("Yes, as proposed": WHEEL to d465, d420 and d410 beside the SCI crossings T-102 judges to hold for wheelchair users, "T-102 writes them") governs, so T-102 writes the OI-03 crossings and carries each SCI crossing to WHEEL or retires it by judgment. The PR-245 rows are not condemned. Basis: OI-03 (owner) and rule 0.
+OD-77 STATUS: RESOLVED UNDER DELEGATION
+OD-77 CHECK: confirmed with corrections applied
+
+OD-87 (T-128 withdrawn): T-128 added rows to `identity_icf_map` for five groups and minted reach and posture codes; the groups' half is not needed (ADHD, DEAFBLIND, EPI and MS hold triples that count as coverage, and VES is an access need), and nothing else reads it. The reach code `d4452` that T-127, T-059 and T-110 take from it is minted by `add-icf-code` when T-127 needs it, after pull request 246 has merged, so the code is parented at mint (OD-74); T-127 therefore waits for that merge or for T-148, and T-059 and T-110 drop the clause that takes `d4452` from T-128. OD-67 is not resolved here (its ACTION (4) forbids it) and is moot while T-128 is withdrawn; if T-128 is reinstated its list is owed again.
+OD-87 STATUS: RESOLVED UNDER DELEGATION
+OD-87 CHECK: confirmed with corrections applied
+
+OD-78 (clauses 3 and 4: may a session propose a body-function code on an identity or a pair): do nothing. No proposal path is added. A body-function code reaches a figure as a lens link when the clause names the function, and reaches an identity only from the owner's words, as TRIPLE-64 did; the 2026-11-21 (third) ACTION (2) and the interim of 2026-11-23 stand. Nothing on the critical path reads an identity-level body-function code.
+OD-78 STATUS: RESOLVED UNDER DELEGATION
+OD-78 CHECK: confirmed
+
+OD-83 (SCI; replaces OD-82, which proposed leaving SCI active): SCI retires into WHEEL, as the owner answered OI-13 (the owner's typed words: "SCI is the same as WHEELCHAIR basically", 2026-11-12, seventh set) and as the eighth-set heading names ("Owner clarification 2026-11-12 (eighth set) — LMB becomes UPL (upper limb) and is not part of mobility; only SCI is the same as WHEEL"), which `retire-identity --approval-ref` takes; the deletion of the medical lens (2026-11-16) did not restore SCI. Order: T-102 mints WHEEL; carries SCI's three lens links to WHEEL and its `identity_icf_map` crossings to WHEEL or retires them by judgment (OD-77); closes GAP-111 (the OI-77 question) with `close-gap --resolution-kind ledger` citing this entry; then retires SCI, which `retire-identity` refuses while a carrier remains. **The retirement is one-way through the sanctioned verbs** (`amend-identity` takes no `--status`), so restoring SCI needs a compensating migration. T-127's reason (a row tagged once, never swept twice) holds.
+OD-83 STATUS: RESOLVED UNDER DELEGATION
+OD-83 CHECK: confirmed with corrections applied
+OD-82 STATUS: RESOLVED UNDER DELEGATION
+OD-82 CHECK: confirmed (decided the other way: OD-83)
+
+OD-84 (OI-55 item 1, how a carry-only batch is gated): a convention, no code. A batch that searches nothing and admits nothing is red on R1, R9a and R9b by construction; its red on those three rules, and only those, is recorded in its pull request body; every other rule of `research_batch_dod.py` must pass; its own task tests and the rebuild gate it; it does not move `sessions/LATEST-RESEARCH`. It applies to the tasks whose gate text names it: `grep -l "red by construction" workplan/2026-11-12-bidirectional-pipeline/tasks/*.md` and ISSUES-REGISTER ISS-005 (T-081, T-082, T-084, T-102, with T-111). `.claude/commands/batch-done.md` says so.
+OD-84 STATUS: RESOLVED UNDER DELEGATION
+OD-84 CHECK: confirmed with corrections applied
+
+OD-86 (the 63 rows) is the paragraph above; OD-80 and OD-81 stand as checked on 2026-11-25.
+OD-86 STATUS: RESOLVED UNDER DELEGATION
+OD-86 CHECK: confirmed
+
+CONDITION: any session reading, relying on or carrying out OD-73 to OD-87, T-102, T-126, T-127, T-128, T-059, T-110, a pair of an identity and an access need, or the identity SCI or WHEEL.
+ACTION: (1) Build no pairs table, no body-function proposal path and no new check. (2) Do not set a pair `stated` or retire a class C row; that is the owner's mechanism. (3) T-102 runs in full with existing verbs: mint WHEEL, write the OI-03 crossings, carry or retire SCI's rows, close GAP-111 citing OD-83, then retire SCI; its batch is carry-only under OD-84. (4) T-127 waits for pull request 246's merge (or T-148); T-059 and T-110 drop the `d4452`-from-T-128 clause; T-128's file is marked withdrawn. (5) The derivation of every count here is the command beside it; do not quote one.
+DATE: 2026-11-25 — delegated resolutions after an independent check, not an owner statement.

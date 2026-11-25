@@ -1348,7 +1348,7 @@ Each entry was written as **OWNER DECISION REQUIRED**; its status line says what
 
 ### OD-73  May a pair of an identity and an access need be recorded before any ICF code is chosen for it?
 
-- **Status:** read the ledger's last line, `grep -n -F "OD-73 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-73 CHECK:" references/project-standards.md | tail -1` (the ledger entries "Delegated resolutions 2026-11-23" and "Delegated resolutions 2026-11-25"). The owner answered "should be all three" to T-145 section 4 question 1; the owner's "we should be able to map them to one another, and from there, perhaps, we select ICF codes" (2026-11-22) may ask for a pairs table or may not. A pairs table (a partial unique index on live rows, a surrogate `pair_id` the triples point at, extended guards) is built only on the owner's answer. Releases: a pairs-layer task (T-146, to be authored).
+- **Status:** read the ledger's last line, `grep -n -F "OD-73 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-73 CHECK:" references/project-standards.md | tail -1` (the ledger entries "Delegated resolutions 2026-11-23" and "Delegated resolutions 2026-11-25"). Ruled: no pairs table ("should be all three" stands); a pair is an `identity_need_icf` row. Releases: nothing is built.
 
 ### OD-74  The ICF hierarchy in `base_icf`: a parent pointer, WHO's blocks as range rows, titles from the persisted payload.
 
@@ -1364,11 +1364,11 @@ Each entry was written as **OWNER DECISION REQUIRED**; its status line says what
 
 ### OD-77  A hold on `identity_icf_map` and on T-128; `access_need_icf` stands; `access_needs.absorbs` untouched.
 
-- **Status:** read the ledger's last line, `grep -n -F "OD-77 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-77 CHECK:" references/project-standards.md | tail -1` (the ledger entries "Delegated resolutions 2026-11-23" and "Delegated resolutions 2026-11-25"). Which mapping the owner doubted (2026-11-22) is the owner's to say, with `identity_icf_map` and the identity-need-ICF rows as the two candidates. Holds: T-128.
+- **Status:** read the ledger's last line, `grep -n -F "OD-77 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-77 CHECK:" references/project-standards.md | tail -1` (the ledger entries "Delegated resolutions 2026-11-23" and "Delegated resolutions 2026-11-25"). Ruled: `identity_icf_map` is the mapping taken as doubted (a delegated reading on the range codes); no session adds a row to it, but rows the owner confirmed (OI-03) are written by T-102. Holds: additions to the map.
 
 ### OD-78  What may ground a body-function code on an identity or a pair.
 
-- **Status:** read the ledger's last line, `grep -n -F "OD-78 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-78 CHECK:" references/project-standards.md | tail -1` (the ledger entries "Delegated resolutions 2026-11-23" and "Delegated resolutions 2026-11-25"). The ledger's OD-80 settles what WHO's tabulation grounds; whether a session may propose a code as a disclosed inference is the owner's. Holds: any body-function proposal.
+- **Status:** read the ledger's last line, `grep -n -F "OD-78 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-78 CHECK:" references/project-standards.md | tail -1` (the ledger entries "Delegated resolutions 2026-11-23" and "Delegated resolutions 2026-11-25"). Ruled: do nothing; no body-function proposal path; the tabulation grounds a code's existence, title and hierarchy (OD-80).
 
 ### OD-79  How far the owner's grant of 2026-11-25 to Opus reaches.
 
@@ -1384,7 +1384,27 @@ Each entry was written as **OWNER DECISION REQUIRED**; its status line says what
 
 ### OD-82  T-102 without retiring SCI, with T-127 and T-128 waiting only for WHEEL.
 
-- **Status:** read the ledger's last line, `grep -n -F "OD-82 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-82 CHECK:" references/project-standards.md | tail -1` (the ledger entries "Delegated resolutions 2026-11-23" and "Delegated resolutions 2026-11-25"). Referred back; T-102 is held as well by OI-55 item 1 and by OD-77. Holds: T-102, T-127, T-128.
+- **Status:** read the ledger's last line, `grep -n -F "OD-82 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-82 CHECK:" references/project-standards.md | tail -1` (the ledger entries "Delegated resolutions 2026-11-23" and "Delegated resolutions 2026-11-25"). Decided the other way: SCI retires into WHEEL (OD-83).
+
+### OD-83  SCI retires into WHEEL
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-83 STATUS:" references/project-standards.md | tail -1`, and its check line. Order and one-way reversal cost are in the ledger entry "Delegated resolutions 2026-11-25 (second)". Releases: T-102 (with OD-84).
+
+### OD-84  How a carry-only research batch is gated (OI-55 item 1)
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-84 STATUS:" references/project-standards.md | tail -1`. A convention, no code. Releases: T-102, and the carry-only tasks ISSUES-REGISTER ISS-005 names.
+
+### OD-85  The 29 identity-need pairs
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-85 STATUS:" references/project-standards.md | tail -1`. Classes A and B accepted and class C rejected under delegation; no row changes state. Releases: nothing.
+
+### OD-86  The 63 rows that repeat a need's own codes
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-86 STATUS:" references/project-standards.md | tail -1`. Kept. Releases: nothing.
+
+### OD-87  T-128 withdrawn
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-87 STATUS:" references/project-standards.md | tail -1`. Releases: T-127, T-059 and T-110 from waiting on T-128.
 
 ## 9. Retained stress-test value
 
