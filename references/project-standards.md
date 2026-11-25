@@ -8467,3 +8467,28 @@ OD-78 CHECK: referred back
 CONDITION: any session building the ICF hierarchy, the glossary or the family helper; any session planning a pairs table, a body-function code, a parent edge on an identity, or a change to `identity_icf_map`; OD-73 to OD-78.
 ACTION: (1) Tooling for OD-74 and OD-75 may be authored and built in a tooling-only pull request (rule 10), with no rows, and the owner reads it before it merges; the data batch follows in its own pull request. (2) Do not build the pairs table, the identity parent writer or a rule for grounding body-function codes; put the owner's questions (section 2 of the reconciliation, as corrected: Q1 per-pair, Q2 naming both candidate mappings, Q3, Q4) in plain form. (3) Derive every count in the reconciliation again before use.
 DATE: 2026-11-23 — delegated resolutions after an independent check, not an owner statement.
+
+## Owner statements 2026-11-25 — build the tooling pull request; double-check it and send it to Opus for rulings; authority to Opus to approve and ratify; finish the remediation plan quickly
+
+Given in the session `session_2026-11-22-icf-umbrella-glossary` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in four typed messages on 2026-11-25, after the coordinator put the questions of the entry "Delegated resolutions 2026-11-23" (OD-73 to OD-78) to the owner and opened pull request 246. Derive the times from the preserved transcript (`git grep -n -F "authority granted to opus" -- transcripts`; the same for each quotation). Recorded on contact (rule 0).
+
+**Owner's words, quoted (typed), in the order sent:**
+
+> "Yes, build the tooling PR"
+
+> "double check work carefully, send to opus for rulings/adjudication as required"
+
+> "authority granted to opus to approve and ratify"
+
+> "i just want to get this remediation plan done asap"
+
+**Readings.**
+
+- [ASSUMPTION: "Yes, build the tooling PR" answers the coordinator's question whether to build the tooling pull request of OD-74 and OD-75, including the change to the engine's gather clause for which the coordinator had asked the owner's go-ahead — basis: the question put and the word "Yes"].
+- [ASSUMPTION: "authority granted to opus to approve and ratify" delegates to an Opus-class instance the approval of the coordinator's work and the ratification of decisions the owner has so far kept, including those OD-73 to OD-78 referred back; it does not make the delegate's resolution the owner's words, so an owner review that the schema binds to an "Owner" ledger entry (`review-identity-need-icf --approval-ref`) is not met by a delegate's ratification — basis: the words; the verb's own guard, which migration 166 added so that no session states its own row].
+- [ASSUMPTION: "this remediation plan" is the plan of `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`, whose register of decisions (section 8) and tasks gate each other — basis: the words and the plan's name; the owner did not name a file].
+- The statements do not say that population-taxonomy decisions (`governance/decision-protocol.md` section 2.4 item 2) are delegable by a general grant, or that the convention of 2026-11-12 (a task needing the owner's own words is not opened by a delegated resolution) is replaced. They are read as a grant the delegate uses, each ruling recorded as a delegated resolution with an independent check, and each ruling that decides what a group of disabled people needs or which ICF code ties to which identity recorded with its basis in the record, not in the delegate's own knowledge.
+
+CONDITION: any session adjudicating, approving or ratifying a decision of the remediation plan; OD-73 to OD-78; pull request 246; any session asked whether the owner has delegated a decision.
+ACTION: (1) The tooling pull request of OD-74 and OD-75 is asked for; the owner reads it before it merges, as the entry of 2026-11-23 says. (2) An Opus-class delegate may approve the coordinator's work and ratify delegated resolutions under this grant; each such ruling is written as a delegated resolution (`OD-NN STATUS: RESOLVED UNDER DELEGATION`, never `ANSWERED BY THE OWNER`) and checked by a different instance before its check line reads `confirmed`. (3) Do not write an "Owner" ledger heading for a ruling the owner did not make, and do not relax a guard that binds a row to the owner's review. (4) Treat the readings above as unratified except where the owner's words state them.
+DATE: 2026-11-25 — owner statements (typed words, quoted above).
