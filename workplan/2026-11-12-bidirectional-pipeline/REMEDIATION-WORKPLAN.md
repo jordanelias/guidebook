@@ -1406,6 +1406,14 @@ Each entry was written as **OWNER DECISION REQUIRED**; its status line says what
 
 - **Status:** read the ledger's last line, `grep -n -F "OD-87 STATUS:" references/project-standards.md | tail -1`. Releases: T-127, T-059 and T-110 from waiting on T-128.
 
+### OD-88  Import every 3-digit ICF category
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-88 STATUS:" references/project-standards.md | tail -1`, and its check line. Releases: T-149 (tooling), then T-150 (research); T-127 waits for T-149.
+
+### OD-89  T-148 and T-150 are carry-only batches
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-89 STATUS:" references/project-standards.md | tail -1`. Same convention as OD-84.
+
 ## 9. Retained stress-test value
 
 Three rounds of stress scripts found defects that no registered check finds. What is kept and why is in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/RETAINED.md` (the owner permitted retention: `grep -n -F "retain" references/project-standards.md | tail -3`).
