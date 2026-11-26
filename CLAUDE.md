@@ -65,9 +65,9 @@ Debian-managed 6.0.1, pip refuses to uninstall it, and nothing lands. Install pa
 individually. `governance/check-registry.yaml`'s `batteries:` is the one home of the dependency
 list.
 
-**`--changed-from` does not run `--selftest`, and the selftest is where a rename fails.** The
-registry encodes stage-qualified `basis: <stage>/<criterion>` refs; CI runs the selftest and your
-local gate does not.
+**A bare `run_checks.py --changed-from` does not run `--selftest`, and the selftest is where a rename
+fails.** The registry encodes stage-qualified `basis: <stage>/<criterion>` refs; CI and
+`scripts/preflight.sh` run the selftest first.
 
 ---
 
@@ -87,7 +87,7 @@ names. Naming them is yours.
 
 **1. Commit format.** `{skill-name}: {action} [YYYY-MM-DD HH:MM]`, timestamp last, from
 `date -u '+%Y-%m-%d %H:%M'`. Use `governance` when no project skill fits.
-→ Enforced by `check_commit_msg.py`, **push events only** (`ci.yml:257`) — skipped on every PR.
+→ Enforced by `check_commit_msg.py`, **push events only** (`ci.yml` job `commit-msg`) — skipped on every PR.
 
 **2. Attestation on synthesis paths.** Touching `references/connection-reasoning/`,
 `decisions/` or `sessions/` needs `attestations/<slug>.json`
@@ -174,9 +174,9 @@ checked.
 **Where judgment IS genuinely required, the script asks for it** — constraining the answer to the
 live vocabulary, demanding the evidence for it, and recording the answer and its warrant in named
 columns. The model fills a field. It never invents a value, never invents a vocabulary term, and
-never supplies a number the schema could have computed. `add-source --tier` asking an operator to
-retype what `derive_tier(evidence_type, scope)` already knows is the anti-pattern in one line: a
-field that can only be right or wrong, never informative.
+never supplies a number the schema could have computed. A flag asking an operator to retype what
+`derive_tier(evidence_type, scope)` already knows is the anti-pattern in one line: a field that can
+only be right or wrong, never informative.
 *Proof: `dbcore.WRITABLE_TABLES` was a curated list of the tables a session may write. It went
 blind EIGHT times — its own comments record seven, and the eighth was added by the author who was
 reading those comments at the time. A `gap_mining` row written through the sanctioned CLI was
@@ -189,8 +189,7 @@ for identifiers, `dbcore.writable_tables()` for the capture set, `adjudication_i
 tiers. **As a general rule you are the gate**, and the violation to look for is a typed list that duplicates a column's CHECK. **Do not
 count them by grep**: `choices=` greps cannot see `dbcore.schema_choices`, `schema_range`, `check_values` or the helpers
 that call them. `python3 scripts/audit/derived_not_curated_audit.py` is the judge for the shapes it covers (it reads
-`scripts/db.py` and the writer modules it names); run it and read what it reports, not this sentence. Also outstanding:
-`amend-source --tier` asking for a value the machine can derive. A hand-typed figure in the registry's `note:`,
+`scripts/db.py` and the writer modules it names); run it and read what it reports, not this sentence. A hand-typed figure in the registry's `note:`,
 `floor_basis:` or `no_floor:` is a violation of the same rule in a shape no check reads: read those fields for a literal
 figure (`grep -n -E '[0-9]+ (today|on disk)|prints EXAMINED [0-9]+' governance/check-registry.yaml` finds two shapes only).
 **9. Do not watch PRs. Open the PR last** (owner instruction, 2026-09-23). Do not call
@@ -267,7 +266,6 @@ seven stages**; every assignment written before 2026-08-27 predates them.
 **A cross-stage view IS the pointer, and is therefore the most protected object in the schema.** A
 view joining two stages on the shared reference ID is what "point" MEANS in SQL. **Before deleting
 any view, ask which stages it spans** — deleting it forces the next reader back to copying.
-Convention: `base` is not a stage, so a view reading one stage plus base crosses nothing.
 
 **Re-entrancy.** A walk **re-enters** stages rather than passing through them once — digesting a
 reasoning document produced research leads, a backward edge, and that is normal. That answers *write
@@ -347,8 +345,8 @@ PY
 print `EXAMINED: <n>`; `run_checks.py` reports zero-subject passes as NOTHING-IN-SCOPE and escalates
 blocking-and-vacuous ones. **When a check passes, confirm it had a subject.**
 
-**(b) Prose that contradicts the database.** See rule 7. Counts in this file, in `index.html`, in
-manifests and in audits have all drifted.
+**(b) Prose that contradicts the database.** See rule 7. Counts in this file, in manifests and in
+audits have all drifted.
 
 **(c) A fabricated citation passing green gates.** On 2026-08-19 all five sources in the first
 research batch were stored with **invented co-authors** — including the deletion of autistic
@@ -369,7 +367,7 @@ experience / participatory design, **co-primary with T1** under CRPD Art 4.3 · 
 **Co-2** OT professional-body CPGs · **T3** grey primary · **T4–T6** the regulatory stratum, walled
 off from full-strength anchoring.
 
-Markers: **●** confirmed · **◐** policy/standards only · **○** grey, thin or unverified (the source could not be retrieved). Unmarked is an error.
+Markers (owner, 2026-11-14; `governance/tier-system.md` §5): **●** T1, T2, Co-1, Co-2 · **◐** T3, T4 · **○** T5, T6 · **⚠** (U+26A0, no U+FE0F) in place of the circle, never beside it, for a grey, unverified or thin basis. Unmarked is an error.
 Cell states: `stated` / `provisional` / `pending` / `not_applicable`.
 
 **Co-1's warrant is co-production.** The disabled people who produced the work are part of the
@@ -378,8 +376,9 @@ evidence, not metadata. Erasing them while claiming the tier is the worst failur
 Work from the **ICF/access-need frame with codes AND names**, never bare axis codes, never population
 umbrellas. **The crossing is JUDGMENT's output** (owner, 2026-08-27, overruling `DR-2026-08-24`
 §2.4): harvest concepts at evidence (`db.py observe-term`, verbatim and unjudged), adjudicate at
-judgment. Zero links **after judgment** is a defect. Only Opus-class models write
-`best_practice_synthesis`.
+judgment. Zero links **after judgment** is a defect. Only a model at the Opus-class-or-above floor
+(DR-2026-06-10; owner 2026-07-25: Fable included) authors judged synthesis text; a determination is
+computed, not written (owner, 2026-09-09).
 
 **Both halves of the determination's key are RULED.**
 
@@ -464,7 +463,8 @@ open. Do not read `slug × population` as any part of the answer: `base_taxonomy
 - **If you add a `SessionStart` hook, APPEND it — never insert at index 0.**
   `research_contract_hook.py` reads `SessionStart[0]["hooks"][0]["command"]` by hardcoded index; an
   insert turns the blocking `research_contract_sync` red with a diff that reads as contract drift.
-- **PI versioning is intentional** — highest-numbered `governance/project-instructions-v*.md` is live
+- **PI versioning is intentional** — the numerically highest `governance/project-instructions-v*.md`
+  (`ls governance/project-instructions-v*.md | sort -V | tail -1`; plain `sort` picks the wrong one) is live
   and legitimately lags doctrine. Prefer `references/project-standards.md` and recent DRs.
 - **Don't run `scripts/bootstrap.sh`** — PAT-gated, for the claude.ai surface.
 - **TWO TRACKED FILES APPEND ON EVERY TURN, so any "is the tree clean?" gate is
@@ -481,7 +481,8 @@ open. Do not read `slug × population` as any part of the answer: `base_taxonomy
   `scripts/fix_stop_hook_loop.sh` patches the harness hook
   to read that exclusion from `git config stophook.ignorePath`. **An agent cannot
   apply it:** the harness classifier blocks it as self-modification, so the owner
-  runs it or approves it when the agent asks.
+  runs it or approves it when the agent asks. SessionStart also runs it silently
+  (`.claude/settings.json`); whether it took: `grep -c stophook.ignorePath ~/.claude/stop-hook-git-check.sh`.
 - **`run_checks.py --all` over `--changed-from origin/main` is the expensive
   default.** `--all` runs every battery and prints every subject; §1's gate is the
   diff-scoped form, and `--battery <name> --kinds <kinds>` answers a targeted question (§1 says what it selects). Reach for

@@ -170,8 +170,8 @@ The following are deferred to subsequent A1-A2 iterations or to later phases:
 - Mission operative governance: `governance/mission-PROVISIONAL.md` (revised 2026-04-26 03:45) — operative until iter 4 lock
 - D-03 revised: `governance/pre-stage-a-decisions.md` (Co-1 evidence engagement only pre-launch)
 - Project standards: `references/project-standards.md` (RULE 2026-04-26 03:45 — pre-launch solo)
-- Workplan v3 §A1-A2: `workplan/workplan-co0007-v3.md` lines 146–160
-- Amendment 7: `workplan/workplan-co0007-v3-amendments.md` (A5 re-scoped; no Co-1 collaborator review at iteration boundaries)
+- Workplan v3 §A1-A2: `workplan/_superseded/workplan-co0007-v3.md` lines 146–160
+- Amendment 7: `workplan/_superseded/workplan-co0007-v3-amendments.md` (A5 re-scoped; no Co-1 collaborator review at iteration boundaries)
 - Audit v2 §T-05 (use-patterns within audiences): not in repo; T-05 framing is incorporated through this document's use-pattern structure
 
 ---

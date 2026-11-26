@@ -2,7 +2,7 @@
 **Status:** CANONICAL — A11 Session 1
 **Phase:** Stage A Phase 11 — Legal and regulatory framework
 **Created:** 2026-04-30 02:45 UTC
-**Doctrinal basis:** `governance/mission-and-epistemics.md` L137–143 ("not a substitute for professional judgment", "not a legal authority", "does not pursue universal jurisdictional adoption", "pre-launch single-author synthesis") · `workplan/workplan-co0007-v3.md` §A11 (counsel review of "teaches not prescribes" doctrine; disclaimer structure; licensing model; trajectory positioning) · `governance/adversarial-use-framework.md` V-08 (adversarial litigation citation — primary mitigation depends on this document) · `references/project-standards.md` Core Doctrine ("Codes are Tier 6 — the compliance floor, not the aspiration")
+**Doctrinal basis:** `governance/mission-and-epistemics.md` L137–143 ("not a substitute for professional judgment", "not a legal authority", "does not pursue universal jurisdictional adoption", "pre-launch single-author synthesis") · `workplan/_superseded/workplan-co0007-v3.md` §A11 (counsel review of "teaches not prescribes" doctrine; disclaimer structure; licensing model; trajectory positioning) · `governance/adversarial-use-framework.md` V-08 (adversarial litigation citation — primary mitigation depends on this document) · `references/project-standards.md` Core Doctrine ("Codes are Tier 6 — the compliance floor, not the aspiration")
 
 ---
 
@@ -10,7 +10,7 @@
 
 The guidebook is a synthesis of accessibility evidence and best practice. It is published into a regulatory environment where building codes, professional standards, and disability-rights statutes operate. This document specifies the project's posture toward that environment: how the guidebook positions itself in liability terms, how it discloses its limits to readers, how it is licensed for use and reuse, where it sits relative to formal jurisdictional adoption, and what questions remain for external counsel review.
 
-The document does not provide legal advice and does not substitute for counsel review of the live disclaimer language in any specific jurisdiction. Counsel review is an external dependency named at A11 in `workplan/workplan-co0007-v3.md`. The framework itself — the doctrinal positioning, the disclaimer structure, the licensing approach, the trajectory decision, and the counsel review queue — is determined in this session. Specific operative phrasing of the front-matter disclaimer is provisional pending counsel review (§3.4); all other decisions are final.
+The document does not provide legal advice and does not substitute for counsel review of the live disclaimer language in any specific jurisdiction. Counsel review is an external dependency named at A11 in `workplan/_superseded/workplan-co0007-v3.md`. The framework itself — the doctrinal positioning, the disclaimer structure, the licensing approach, the trajectory decision, and the counsel review queue — is determined in this session. Specific operative phrasing of the front-matter disclaimer is provisional pending counsel review (§3.4); all other decisions are final.
 
 The document covers all guidebook deliverables: Volumes I and II, the Supplementary Volume on Body Sizes, Appendices, Bibliography, Glossary, and any accompanying website or distribution channel. Counsel review is required per major release and on any material change to the disclaimer or licensing language.
 

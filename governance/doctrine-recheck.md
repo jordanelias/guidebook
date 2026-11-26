@@ -2,7 +2,7 @@
 **Status:** CANONICAL — A13 Session 1
 **Phase:** Stage A Phase 13 — Doctrine-recheck cadence
 **Created:** 2026-04-30 03:00 UTC
-**Doctrinal basis:** `workplan/workplan-co0007-v3.md` §A13 (resolves B-06 long-context drift; partial D-04 epistemic defense) · `workplan/workplan-co0007-v3-amendments.md` Amendment 6 (cadence: every 25 working sessions / at stage transition / on doctrinal-rule revision; sampling methodology from Stage 0.4 N=15 BPC contamination sample as recheck procedure) · `workplan/co0007-contamination-sample.md` (Stage 0.4 N=15 stratified sample; four-state classification CLEAN / AMBIGUOUS / STUB / MERGED per Amendment 3) · A12 decision-protocol.md §6 (CS8 decision capture activated)
+**Doctrinal basis:** `workplan/_superseded/workplan-co0007-v3.md` §A13 (resolves B-06 long-context drift; partial D-04 epistemic defense) · `workplan/_superseded/workplan-co0007-v3-amendments.md` Amendment 6 (cadence: every 25 working sessions / at stage transition / on doctrinal-rule revision; sampling methodology from Stage 0.4 N=15 BPC contamination sample as recheck procedure) · `workplan/co0007-contamination-sample.md` (Stage 0.4 N=15 stratified sample; four-state classification CLEAN / AMBIGUOUS / STUB / MERGED per Amendment 3) · A12 decision-protocol.md §6 (CS8 decision capture activated)
 
 ---
 
@@ -303,7 +303,7 @@ The sampler does not classify the sampled BPCs (that is human judgment). It does
 
 ### 8.1 What CS1 activates
 
-CS1 (cross-stage 1) per `workplan/workplan-co0007-v3.md`: doctrine-recheck cadence. With this document landing, CS1 is LIVE. From this point forward:
+CS1 (cross-stage 1) per `workplan/_superseded/workplan-co0007-v3.md`: doctrine-recheck cadence. With this document landing, CS1 is LIVE. From this point forward:
 
 - Every 25th working session triggers a periodic recheck (cadence enforced by session-consolidator)
 - Every stage transition triggers a stage-transition recheck (the transitioning phase's close commit references the recheck record)

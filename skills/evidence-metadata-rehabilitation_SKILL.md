@@ -23,7 +23,7 @@ Trigger this skill for ANY of:
 Do NOT invoke for:
 - Rows where `verification_status ∈ {CLOSED-DELETED, UNVERIFIED-CLOSED}` — already terminal
 - Rows where `metadata_quality ∈ {COMPLETE, COMPLETE-STATUTORY}` AND `metadata_integrity_status='OK'` — fully rehabilitated
-- Synthesis writes — those flow through `best-practice-synthesis-routing` (Opus only), not this skill
+- Synthesis writes — those flow through `best-practice-synthesis-routing` (Opus-class or above, Fable included), not this skill
 
 ## What this skill does NOT solve
 

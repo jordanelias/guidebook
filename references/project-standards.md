@@ -8622,3 +8622,35 @@ OD-86 CHECK: confirmed
 CONDITION: any session reading, relying on or carrying out OD-73 to OD-87, T-102, T-126, T-127, T-128, T-059, T-110, a pair of an identity and an access need, or the identity SCI or WHEEL.
 ACTION: (1) Build no pairs table, no body-function proposal path and no new check. (2) Do not set a pair `stated` or retire a class C row; that is the owner's mechanism. (3) T-102 runs in full with existing verbs: mint WHEEL, write the OI-03 crossings, carry or retire SCI's rows, close GAP-111 citing OD-83, then retire SCI; its batch is carry-only under OD-84. (4) T-127 waits for pull request 246's merge (or T-148); T-059 and T-110 drop the `d4452`-from-T-128 clause; T-128's file is marked withdrawn. (5) The derivation of every count here is the command beside it; do not quote one.
 DATE: 2026-11-25 — delegated resolutions after an independent check, not an owner statement.
+
+## Owner statements 2026-11-26 — one unified ecosystem reached by reconciling conflicts; items A and B approved, C4 reopened as one order of authority, D1 retire, Co-2 co-primary with Tier 2
+
+Given in the session `session_2026-11-26-governance-reconciliation`, in typed messages while the coordinator reported an Opus adjudication of the governing documents and the antagonist's verification of it. Derive the times from the preserved transcript (`git grep -n -F "approve A and B all" -- transcripts`). Recorded on contact (rule 0). The list the owner answered is `scratchpad/session_2026-11-26-governance-reconciliation/approval-list.md`.
+
+**Owner's words, quoted (typed):**
+
+> "our goal for Opus is to deliberately and cleanly reorganize our ecosystem so that it is unified and consistent and easily findable for each session as per claude.md"
+>
+> "it IS conflict reconciliation"
+>
+> "we have to reconcile in order to unify"
+>
+> "Co-2 is co-primary with tier 2."
+>
+> "approve A and B all; reject C4; D1 retire"
+>
+> "C4 actually does point towards there needing to be one order of authority? why would we want multiple authorities"
+>
+> "Please provide prompts with context and decisions for C & D"
+
+**Readings.**
+
+- [ASSUMPTION: "A and B" are items A1 to A5 and B1 to B10 of the approval list, "C4" is its item C4 and "D1" is its item D1 — basis: the list the coordinator put to the owner].
+- [ASSUMPTION: "reject C4" rejected the drafted wording of C4 (a rank order that put delegated resolutions above doctrine and CLAUDE.md); the later question asks why there would be more than one order, so C4 is reopened as a request for ONE order of authority, and the rejection is not read as a decision to keep several — basis: the second message].
+- [ASSUMPTION: "D1 retire" answers the question put under D1 (GAP-379: whether the pending rows of the need A-SIZE with the code e120, on LPA, TALL and BAR, are reviewed or retired) with retire — basis: the question put].
+- "Co-2 is co-primary with tier 2." is recorded as the owner's statement. The sweep that would bring every document to it (item C1) is not approved by these words and is not done.
+- Not answered: C1 (the sweep), C2, C3, C5 to C10 and D2 to D7.
+
+CONDITION: any session editing a governing document named in the approval list, writing a statement about the order of authority, the rank of Co-2, or the e120 rows of A-SIZE, or planning GAP-379.
+ACTION: (1) Items A1 to A5 and B1 to B10 are approved and are carried out in one governance-prose pull request; every other item waits. (2) Write no order-of-authority sentence and no change to which document answers "what to do now" until the owner approves ONE order, put to them in a separate decision prompt. (3) Retire the pending A-SIZE e120 rows (derive them: `select triple_id, identity_code from identity_need_icf where need_code = 'A-SIZE' and icf_code = 'e120' and retired_at is null`) through the sanctioned verb, citing this entry as the approval reference, in a data pull request that follows the governance-prose one (rule 10); GAP-379's other open part (A-TRIGGER) stays open. (4) Treat Co-2 as co-primary with Tier 2 in anything a session writes; do not sweep other documents to say so until C1 is approved. (5) Treat the readings above as unratified except where the owner's words state them.
+DATE: 2026-11-26 — owner statements (typed words, quoted above).

@@ -499,7 +499,7 @@ This workplan is the **sole authoritative content workplan** for the project as 
 
 | File | Was | Now superseded by |
 |---|---|---|
-| `workplan/workplan-co0007-v4.md` | OPERATIVE (Stage C1–C11 ACTIVE) | This workplan §Phase E. Stage A/B foundation work in v4 remains validly completed (~43 sessions consumed); only Stage C content scoping is replaced. |
+| `workplan/_superseded/workplan-co0007-v4.md` | OPERATIVE (Stage C1–C11 ACTIVE) | This workplan §Phase E. Stage A/B foundation work in v4 remains validly completed (~43 sessions consumed); only Stage C content scoping is replaced. |
 | `workplan/workplan-reconciliation-2026-05-08.md` | Prior reconciliation map | This appendix E (E.1–E.5) replaces it. |
 | `workplan/workplan-item-audit-pipeline-co0009.md` | PROPOSED (CO-0009) | This workplan §Phase F. Item audit pipeline runs after Phase E rehabilitates the source BPCs. |
 | `workplan/co0008-scope-infrastructure-overhaul.md` | DRAFT (CO-0008) | This workplan §Phase A (foundation infrastructure work is folded into A.1–A.12). |
@@ -551,10 +551,10 @@ These three files are NOT superseded. They continue to govern their specific pro
 | `_archived/workplan/slug-triage-2026-03-28.md` | Slug triage record (Phase 2A Session 4) |
 | `workplan/v10-5_2026-03-29.md` | Already marked DEPRECATED (v10-5 of co0007) |
 | `workplan/roadmap-2026-04-27.md` | Already marked DEPRECATED |
-| `workplan/workplan-co0007-audit.md` | Already marked DEPRECATED (Stage 0 audit) |
-| `workplan/workplan-co0007-synthesis.md` | Already marked DEPRECATED |
-| `workplan/workplan-co0007-v3-amendments.md` | Already marked DEPRECATED |
-| `workplan/workplan-co0007-v3.md` | Already marked DEPRECATED |
+| `workplan/_superseded/workplan-co0007-audit.md` | Already marked DEPRECATED (Stage 0 audit) |
+| `workplan/_superseded/workplan-co0007-synthesis.md` | Already marked DEPRECATED |
+| `workplan/_superseded/workplan-co0007-v3-amendments.md` | Already marked DEPRECATED |
+| `workplan/_superseded/workplan-co0007-v3.md` | Already marked DEPRECATED |
 
 ### E.4 DECISION-SUPPORT — not workplans; standalone analysis documents (preserve as-is)
 

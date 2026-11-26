@@ -96,7 +96,7 @@ The guidebook's epistemic commitments specify *how the project knows what it cla
 | Tier 5 | National beyond-code frameworks | BS 8300-2 Annex G, NL WMO-keuken, RCOTSS-Housing OT |
 | Tier 6 | Statutory codes | Reference baseline only |
 
-Schema encodes both `tier` (1–6) and `evidence_type` (`clinical`, `co1`, `co2`, `sr_meta`, `standard_evidence_based`, `national_framework`, `code`) per Stage 0.5 Decision T-03. Co-primary Co-1 records carry `tier: 1, evidence_type: co1`; Co-2 records carry `tier: 2, evidence_type: co2`. The encoding preserves co-primary parallelism without flattening it into a single tier.
+Schema encodes both `tier` (1–6) and `evidence_type` (the vocabulary `db.py add-source` admits: the keys of `TIER_MAP` in `schemas/tier_derivation.py`) per Stage 0.5 Decision T-03. Co-primary Co-1 records carry `tier: 1, evidence_type: co1`; Co-2 records carry `tier: 2, evidence_type: co2`. The encoding preserves co-primary parallelism without flattening it into a single tier.
 
 ### Two orthogonal axes of coverage; directness as a conditioning layer
 
@@ -123,7 +123,7 @@ Each cell (a parameter under at least one lens; `governance/evidence-architectur
 
 The questions-led pedagogical commitment (Doctrinal commitment 6) is informed by inquiry-based learning, scaffolded questioning in design education, and problem-based learning in professional formation (Schön, 1983, DOI: 10.4324/9781315237473; Hmelo-Silver, 2004, DOI: 10.1023/B:EDPR.0000034022.16470.f3; Royeen, 1995, DOI: 10.5014/ajot.49.4.338). The hypothesis is that questions-led resources improve designer outcomes more than prescriptive ones.
 
-The hypothesis is the project's distinctive epistemic claim. It is acknowledged as a claim, not asserted as established. Empirical testing is staged in B6 pilot validation; per Amendment 7 in `workplan/workplan-co0007-v3-amendments.md`, B6 pilot validation pre-launch is solo-author cross-checking against committed mission language, which is weaker rigor than external testing would provide. This methodological limit is declared, not papered over.
+The hypothesis is the project's distinctive epistemic claim. It is acknowledged as a claim, not asserted as established. Empirical testing is staged in B6 pilot validation; per Amendment 7 in `workplan/_superseded/workplan-co0007-v3-amendments.md`, B6 pilot validation pre-launch is solo-author cross-checking against committed mission language, which is weaker rigor than external testing would provide. This methodological limit is declared, not papered over.
 
 ### Treatment of evidence convergence and divergence
 
@@ -162,7 +162,7 @@ This is **evidence-level engagement** with Co-1, not **participation-level engag
 
 If the project launches and resources permit, the form of collaboration with disabled people becomes a co-design question — to be answered with disabled people, not for them. Specifying that form pre-launch, in the absence of participants, would reproduce the substantive problem CRPD Art. 4.3 exists to address.
 
-A5 (per `workplan/workplan-co0007-v3-amendments.md` Amendment 7) produces a design specification for the post-launch collaborative form: a how-it-would-work document that activates if and when conditions allow. This may never activate. **Solo-only-permanent is a possible end-state for the project.** The methodology must hold integrity in that case as well as in the launched-with-collaboration case.
+A5 (per `workplan/_superseded/workplan-co0007-v3-amendments.md` Amendment 7) produces a design specification for the post-launch collaborative form: a how-it-would-work document that activates if and when conditions allow. This may never activate. **Solo-only-permanent is a possible end-state for the project.** The methodology must hold integrity in that case as well as in the launched-with-collaboration case.
 
 The mission's claim to honor CRPD Art. 4.3 is calibrated honestly: partial pre-launch (corpus engagement); full only if launched-and-resourced; possibly never full.
 

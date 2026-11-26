@@ -109,7 +109,7 @@ Project-specific rules. Preference-level rules (tone, logging, output format, et
 
 5. **Connector posture.** Connectors (PubMed, Consensus, Scholar Gateway) only when task explicitly requires research and web sources are insufficient. Default off (per preferences `<mcp_connectors>`).
 
-6. **Canonical workplan.** Operative plan: `audits/bpc-rewrite-workplan-2026-05-11.md` (ADOPTED 2026-05-11 in session_2026-05-11h-bpc-rewrite-workplan-design, commit ce266114ef97). All work maps to its seven phases A–G. `workplan/workplan-co0007-v4.md` is SUPERSEDED — its Stage A/B foundation work (~43 sessions) remains valid; only the content-stage scoping is replaced.
+6. **Canonical workplan.** Operative plan: `audits/bpc-rewrite-workplan-2026-05-11.md` (ADOPTED 2026-05-11 in session_2026-05-11h-bpc-rewrite-workplan-design, commit ce266114ef97). All work maps to its seven phases A–G. `workplan/_superseded/workplan-co0007-v4.md` is SUPERSEDED — its Stage A/B foundation work (~43 sessions) remains valid; only the content-stage scoping is replaced.
 
    Phase ordering is STRICT SEQUENTIAL B before E. No BPC may be rewritten until its formally-linked sources have completed Phase B verification (`metadata_quality ≥ COMPLETE`; `verification_status ∈ {VERIFIED, UNVERIFIED-1}`). Phases A and D may run in parallel with B per workplan Appendix B.
 

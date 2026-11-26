@@ -19,7 +19,7 @@ The Guidebook's evidence tiers run T1–T6 with two parallel community-knowledge
 | **T3** | Clinical primary research at lower control level (cross-sectional, observational, qualitative, single-centre) plus grey-literature primary research | `clinical` (predominant), `grey`, occasionally `standard_eb` for specialised technical guidance | Supporting evidence for best-practice claims; rarely the sole basis |
 | **T4** | International standards (ISO, IEC, CEN, BSI PAS, EN 81-70, EN 17210, etc.) — published by international bodies; legally significant within their adoption scope | `standard_eb` (predominant) | Code-baseline citations of international harmonisation; supporting evidence for best-practice claims if the standard itself rests on T1/T2 evidence |
 | **T5** | National beyond-code frameworks — best-practice guidance issued by national bodies but not legally enforced (BS 8300, DIN 18040 draft, Boverket BBR advisories, national CPGs scoped to BE) | `national_fw` (predominant), `standard_eb` | Code-baseline citations at national best-practice tier; supporting evidence for best-practice claims if the framework rests on T1/T2 evidence |
-| **T6** | Statutory code — legally enforceable national / sub-national accessibility code (ADA, AS 1428.1, NZS 4121, EN 81-70 when adopted as legal compliance, NZ Building Code D1/AS1, Approved Document M Vol 2, AS/NZS, GB 50763, MLIT barrier-free law, etc.) | `code` | **Code-baseline citations.** Tier 6 establishes regulatory floor. ⚠ Superseded by §8 + Option A (2026-07-21): T6 anchors a **weak-band (○) "best practice as currently known"** claim, flagged code-derived; the convergence of multiple T6 codes on a value is convergence-not-evidence (see §3), retained as the weak-band honesty rule |
+| **T6** | Statutory code — legally enforceable national / sub-national accessibility code (ADA, AS 1428.1, NZS 4121, EN 81-70 when adopted as legal compliance, NZ Building Code D1/AS1, Approved Document M Vol 2, AS/NZS, GB 50763, MLIT barrier-free law, etc.) | `code` | **Code-baseline citations.** Tier 6 establishes regulatory floor. Superseded by §8 + Option A (2026-07-21): T6 anchors a **○ "best practice as currently known"** claim (§5), flagged code-derived; the convergence of multiple T6 codes on a value is convergence-not-evidence (see §3), retained as the honesty rule |
 
 ## 2. sr_meta placement — T2, not T3
 
@@ -60,12 +60,25 @@ Worked example surfaced 2026-05-25: `accessible-circulation-geometry.md` cites D
 
 ## 5. evidence_quality marker mapping
 
-`skills/guidebook-auditor_SKILL.md` §4.2 inline quality markers map to the canonical ladder:
-- `●` confirmed evidence base: T1, T2 (sr_meta + standard_eb + co2), **T3 clinical** (lower-control primary clinical research — confirmed primary evidence, lower control level), Co-1, Co-2
-- `◐` policy or standards basis only, not primary evidence: T4, T5
-- `○` grey literature, expert consensus, thin base, unconfirmed: T3 grey, `[EXPERT CONSENSUS]`, `[THIN BASE]`, `[UNSUPPORTED]`, T6 (code-floor), a source that could not be retrieved and so stays `UNVERIFIED` (owner, 2026-10-21: it cannot be claimed as primary evidence or at a top tier)
+The owner's answers of 2026-11-14 govern this section (ledger: "Owner answers 2026-11-14 (fourteenth set)", OD-57 and OD-59; "Owner answers 2026-11-14 (fifteenth set)", OD-64; and the 2026-11-14 entries they cite). The marker states are `●`, `◐`, `○` and `⚠` (U+26A0 WARNING SIGN, written without U+FE0F).
 
-The T3 split is deliberate: T3 holds two species (per §1) — lower-control *primary clinical* research and *grey-literature* primary research. The clinical species is confirmed primary evidence (just lower control) and maps to `●`; the grey species maps to `○`. The earlier version of this map listed only "T3 grey → ○" and left T3-clinical unplaced (R9-c).
+| Marker | Basis |
+|---|---|
+| `●` | T1, T2, Co-1, Co-2 |
+| `◐` | T3, T4 |
+| `○` | T5, T6 |
+| `⚠` | in place of the circle, where the value's basis is grey (any tier, T3 grey included), unverified (the source could not be retrieved) or thin |
+
+- A value carries `⚠` or a circle, never both.
+- **Thin:** the evidence does not directly concern the people the value is shown for and is conjecture (the owner's working view: "I think thin is when the evidence doesn't directly concern someone but is conjecture"). Not thin: a clinician's professional judgment vetted by colleagues; a derivation by a clinician or an academic. Thin: the project's own inferences (cross-referential analysis, pair testing), and a value that mixes a source's finding with a project inference; each finding shown by itself keeps its own marker.
+- **Sources that differ:** the value shown carries the marker of its own source, with `⚠` only where that value's own basis is grey, unverified or thin (OD-59).
+- **One stratum only:** a T4-only basis takes `◐`; a T5- or T6-only basis takes `○`. A code value shown as best carries the code-derived flag with the convergence-not-evidence caveat (§3).
+- A floor claim that a verified, retrieved study confirms by absence takes that study's marker (OR-22b).
+- An unretrievable source anchors only with a valid academic route (OR-23, 2026-10-29) or, for T4–T6, a registry citation by jurisdiction, standard number and clause (OR-23b); with one it carries `⚠`; without one it anchors nothing.
+- A derived figure (`figure_role='derived'`) takes the floor of the mean of its inputs' circle ordinals (`●` 3, `◐` 2, `○` 1; owner, 2026-09-13).
+- Unmarked is an error.
+- **Not yet ruled (owner):** how `⚠` enters a derived figure; whether every PROXY grade makes a value thin; how vetting and an author's standing are recorded; a single clinician's unvetted opinion; whether a `provisional` cell ("thin evidence", OD-10) is thin in the `⚠` sense.
+- Until T-117 lands, `schemas/tier_derivation.py` `band()` and the `specifications.marker` CHECK implement the earlier table; the table above governs.
 
 ## 6. Mapping back to legacy guidebook-auditor SKILL §4.1
 
@@ -85,24 +98,18 @@ The previous guidebook-auditor SKILL §4.1 had `[Tier 4]` = systematic review / 
 
 Enshrined by `decisions/DR-2026-07-20-weighted-strength-anchor-model.md` per owner directive. **Supersedes the binary rule in §3** ("best-practice claims require T1/Co-1/T2/Co-2").
 
-**Every tier can anchor a best-practice claim; the strength of the claim is weighted by the tier of its evidence.** The tiers exist so a reader can grade the confidence behind each proposal — not to gate whether a proposal may be stated. Three strength bands (the `●◐○` markers of §5, now with anchoring semantics):
+**Every tier can anchor a best-practice claim; the strength of the claim is weighted by the tier of its evidence.** The tiers exist so a reader can grade the confidence behind each proposal — not to gate whether a proposal may be stated. The bands are the markers of §5; they grade a claim and do not gate it. An unretrievable source keeps its tier and may still anchor a determination (D-0157: a return pass is owed), and is flagged `has_unverified_sources`.
 
-| Band | Tiers | Anchoring behaviour |
-|---|---|---|
-| **● Full** | T1, Co-1, T2, Co-2, T3-clinical | Full strength (adjudicated evidence). |
-| **◐ Partial** | T4, T5 | Anchors, rendered as *current standards practice* — flagged "standards basis, not primary evidence." |
-| **○ Weak** | T3-grey, T6 (code-floor), expert-consensus / thin base, an unretrievable (`UNVERIFIED`) source | Anchors only a floor/convergence claim, rendered with the flag: *"best available given current regulation/practice, NOT academically adjudicated."* An unretrievable source keeps its tier and may still anchor a determination (D-0157: a return pass is owed), but it earns no band above ○ and is flagged unverified (`has_unverified_sources`) in place of that flag. |
+> **AMENDED 2026-10-29** (owner rulings 2026-10-29, third; §5 states the conditions, OR-23 and OR-23b): "This applies only when the source is properly cited in an academic context, i.e. there is a valid academic route to the source." The sentence above holds only for a source that has such a route.
 
-> **AMENDED 2026-10-29** by an owner ruling (`references/project-standards.md`, "Owner rulings 2026-10-29 (third)"): "This applies only when the source is properly cited in an academic context, i.e. there is a valid academic route to the source." The sentence on an unretrievable source in the ○ row holds only for a source that has such a route.
+A band grades the strength of a claim; it does not set the cell's state (`governance/evidence-methodology.md` §2.2): T3-clinical alone is `provisional`; T3-grey alone is `pending`.
 
-A band grades the strength of a claim; it does not set the cell's state (`governance/evidence-methodology.md` §2.2): T3-clinical alone is full band and `provisional`; T3-grey alone is weak band and `pending`.
-
-Convergence-not-evidence (§3) is retained as the honesty rule within the weak band. **Amended 2026-07-21 (owner directive, Option A; `decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md`):** a T4–T6-only determination *is* rendered as **weak-band (○) "best practice as currently known"** — best available given that nothing stronger says otherwise — always flagged weak/code-derived with the convergence-not-evidence caveat, never unflagged and never above the ○ band. This supersedes the prior wording ("never relabelled 'best practice'"): such a claim is now stated-and-flagged as weak-band best practice, not suppressed and not merely labelled "regulatory floor," when no stronger evidence exists. **Band assignment at determination level:** a cell whose entire basis is T4–T6 takes ○ even where T4/T5 sources are present; the ◐ "current standards practice" band in the table above applies to individual T4/T5 *citations* within an otherwise-anchored cell, and to source-level `●◐○` markers (§5), which are unchanged (DR-2026-07-21 §2.3).
+Convergence-not-evidence (§3) is retained as the honesty rule for a code-only basis. **Amended 2026-07-21 (owner directive, Option A; `decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md`):** a T4–T6-only determination *is* rendered as **"best practice as currently known"** — best available given that nothing stronger says otherwise — always flagged code-derived with the convergence-not-evidence caveat, never unflagged. This supersedes the prior wording ("never relabelled 'best practice'"): such a claim is now stated-and-flagged, not suppressed and not merely labelled "regulatory floor," when no stronger evidence exists. **Band assignment at determination level:** a cell resting on T4 alone takes `◐`, on T5 or T6 alone `○` (§5).
 
 ## 9. Review-species tiering (closes GAP-298)
 
 - **Systematic reviews / meta-analyses → T2** (`sr_meta`) — unchanged (§2).
-- **Scoping reviews and narrative / literature reviews → T3** (`clinical`/`grey`, never `sr_meta`): they map breadth without graded critical-appraisal synthesis, so they are *supporting* (● band) but not a T2 synthesis anchor.
+- **Scoping reviews and narrative / literature reviews → T3** (`clinical`/`grey`, never `sr_meta`): they map breadth without graded critical-appraisal synthesis, so they are *supporting* but not a T2 synthesis anchor.
 - **Rapid reviews → case-by-case:** T2 only if a systematic search + appraisal was retained; else T3 (default).
 
 ## 10. Practitioner / firm practice-stream (closes GAP-299)
@@ -110,6 +117,6 @@ Convergence-not-evidence (§3) is retained as the honesty rule within the weak b
 Practitioner and firm design work (architects, accessibility consultants) is placed **by method, not authorship**, and sits **below Co-1 and Co-2 in authority**:
 - Firm POE / measured study (outcome or cost data) → primary evidence at its method tier (T1/T3).
 - Firm framework/index that genuinely synthesises evidence → T2-adjacent; else supporting (T3).
-- Firm guidance/white-paper without method → T3-grey (○ weak).
+- Firm guidance/white-paper without method → T3-grey (⚠).
 
 **Role-appropriate-authority gate.** A firm/architect source can anchor a *descriptive/measured* claim (what was built, cost, measured) at its method strength, but **cannot anchor a functional-need claim** ("disabled people need X / X works because Y") on its own — that requires **Co-1** (lived experience) or **Co-2** (OT). A firm asserting a functional-need claim alone is flagged *"designer assertion, unadjudicated."* A dedicated `practice` (Co-3) encoding is defined in the DR; its audit representation is deferred to the audit rework.

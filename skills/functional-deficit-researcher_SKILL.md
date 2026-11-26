@@ -198,9 +198,9 @@ FDR findings feed `item-specification-writer` and Opus synthesis independently o
 | CONTRADICTS | Full extraction in FDR file + flag for `evidence-auditor` before any spec integration. |
 | GAP | Log gap with rationale. No spatial parameter extractable. |
 
-### 6.3 Population Applicability (Downstream — Opus only)
+### 6.3 Population Applicability (Downstream — Opus-class or above, Fable included)
 
-Population codes are **not assigned during collection**. After FDR evidence is assembled, an Opus synthesis pass may annotate findings with applicable population codes where the functional deficit profile overlaps a defined population. This annotation is optional and does not constrain what evidence is collected.
+Population codes are **not assigned during collection**. After FDR evidence is assembled, an Opus-class-or-above synthesis pass may annotate findings with applicable population codes where the functional deficit profile overlaps a defined population. This annotation is optional and does not constrain what evidence is collected.
 
 **Universal Mode Escalation:** Same spatial specification converging from ≥3 functional scenarios with no cross-functional conflict → `TIER-0-CANDIDATE`. Route to connection-scout. Population codes not required for Universal Mode nomination.
 

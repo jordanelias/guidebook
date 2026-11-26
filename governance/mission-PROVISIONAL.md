@@ -110,7 +110,7 @@ DAR (Design for Adaptable Readiness) provisions are mandatory at all tiers — t
 
 The guidebook organizes around questions readers should ask, not around answers they should adopt. **Questions are first-class data, not annotations.** Navigation modes include a questions-led entry surface (per audit v2 §T-02 / D-01 resolution).
 
-The pedagogical hypothesis — that questions-led resources improve designer outcomes more than prescriptive ones — is informed by inquiry-based learning, scaffolded questioning in design education, and problem-based learning in professional formation literature. The hypothesis is engaged in A6 evidence methodology; empirical testing in B6 pilot validation is solo-author cross-checking against committed mission, not external Co-1 review (see §3 operational reality and §B6 in `workplan/workplan-co0007-v3-amendments.md`).
+The pedagogical hypothesis — that questions-led resources improve designer outcomes more than prescriptive ones — is informed by inquiry-based learning, scaffolded questioning in design education, and problem-based learning in professional formation literature. The hypothesis is engaged in A6 evidence methodology; empirical testing in B6 pilot validation is solo-author cross-checking against committed mission, not external Co-1 review (see §3 operational reality and §B6 in `workplan/_superseded/workplan-co0007-v3-amendments.md`).
 
 The hypothesis is the project's distinctive epistemic claim. It is acknowledged as a claim, not asserted as established.
 
@@ -172,6 +172,6 @@ PROVISIONAL until A1-A2 canonical version. The Coda's "sit with the mission ≥1
 
 - **Does not commit A1-A2 canonical mission.** That is the next mission revision.
 - **Does not implement schema, validators, or skills.** Implementation is B1, B2, C2.
-- **Does not specify A5 in either operational form.** A5 is re-scoped per Amendment 7 in `workplan/workplan-co0007-v3-amendments.md`: pre-launch produces design for post-launch collaborative form (a how-it-would-work specification); recruitment is post-launch only and may never run.
+- **Does not specify A5 in either operational form.** A5 is re-scoped per Amendment 7 in `workplan/_superseded/workplan-co0007-v3-amendments.md`: pre-launch produces design for post-launch collaborative form (a how-it-would-work specification); recruitment is post-launch only and may never run.
 - **Does not specify A11 (legal/regulatory framework).** Trajectory positioning toward formal adoption is A11 work.
 - **Does not pretend collaborator structures exist.** Pre-launch solo is the operational reality; post-launch collaboration is contingent and may never occur.

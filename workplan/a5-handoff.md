@@ -45,7 +45,7 @@ A5 must honor the following prior decisions without revisiting them:
 | Decision | Source | Status |
 |---|---|---|
 | **D-03 revised** | `governance/pre-stage-a-decisions.md` 2026-04-26 03:45 | Co-1 operational role is pre-launch solo authorship; collaboration contingent post-launch. Recruitment is inoperative pre-launch. |
-| **Amendment 7** | `workplan/workplan-co0007-v3-amendments.md` | Co-1 cadence is no longer a binding constraint pre-launch. Solo-only-permanent is a possible end-state. |
+| **Amendment 7** | `workplan/_superseded/workplan-co0007-v3-amendments.md` | Co-1 cadence is no longer a binding constraint pre-launch. Solo-only-permanent is a possible end-state. |
 | **Audience canonical** | `governance/audience-priority.md` 2026-04-26 | Primary: designers, disabled people. Secondary: OTs, policymakers. Pre-launch methodological note: solo cross-checking only; no live representation. |
 | **Advocacy identity** | Core Doctrine 2026-04-26 19:25 | Guidebook is advocacy, not authority. Equips with questions; does not confer competence. |
 | **Tier-appropriate specification language** | Core Doctrine 2026-04-26 19:25 + voice-style §8.1 (this A4) | Specification voice locates authority appropriately. |
@@ -137,7 +137,7 @@ A5 should be structured as **a single governance document** with the following s
 Mandatory reads (full file unless noted):
 1. `governance/audience-priority.md` — audience canonical, with pre-launch methodological note
 2. `governance/pre-stage-a-decisions.md` — D-03 revised text
-3. `workplan/workplan-co0007-v3-amendments.md` — Amendment 7 in full
+3. `workplan/_superseded/workplan-co0007-v3-amendments.md` — Amendment 7 in full
 4. `governance/mission-and-epistemics.md` — Co-1 doctrinal grounding
 5. `governance/conceptual-model.md` — EvidenceSource entity (A3 sign-off)
 6. `parts/v10/part01.md` §1.5 evidence hierarchy (just reframed in A4 — current state authoritative)

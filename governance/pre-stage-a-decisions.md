@@ -138,7 +138,7 @@ The project declares this honestly: pre-launch is partial Art. 4.3 honoring at t
 
 - **`governance/mission-PROVISIONAL.md`** — §3 revised with operational-reality replacement and post-launch contingency
 - **A1-A2 (canonical mission and audience)** — produced solo from current corpus; CRPD Art. 4.3 partial-honoring declared in canonical mission language
-- **A5 (Co-1 co-author relationship)** — re-scoped per Amendment 7 in `workplan/workplan-co0007-v3-amendments.md`: pre-launch produces post-launch collaboration model design (~2–3 sessions); recruitment thread is post-launch only and may never run
+- **A5 (Co-1 co-author relationship)** — re-scoped per Amendment 7 in `workplan/_superseded/workplan-co0007-v3-amendments.md`: pre-launch produces post-launch collaboration model design (~2–3 sessions); recruitment thread is post-launch only and may never run
 - **B4 multi-pilot construction** — Co-1-role cells inoperative pre-launch; pilot construction is solo authorship engaging the published Co-1 corpus
 - **B6 pilot validation** — solo-author cross-checking against committed mission language; weaker rigor than external Co-1 review; declared in mission §6
 - **CS2 (cross-stage Co-1 recruitment thread)** — null pre-launch; activates only if launch + resources occur
