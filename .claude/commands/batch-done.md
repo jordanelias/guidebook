@@ -2,6 +2,8 @@
 description: The gate that decides whether a research batch is actually finished
 ---
 
+A carry-only batch (it searches nothing and admits nothing; OD-84) may be red on R1, R9a and R9b and on no other rule: say so in its pull request body, and do not move `sessions/LATEST-RESEARCH`.
+
 Never claim a batch is done from your own reading of it. Run the gate the
 SessionStart contract names:
 

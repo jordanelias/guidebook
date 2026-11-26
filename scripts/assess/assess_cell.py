@@ -220,15 +220,7 @@ def _is_disqualified(rec) -> bool:
 # Each column, the base table its real FK points into, and that table's key. Derived
 # from the schema rather than restated as a vocabulary in code — the tables ARE the
 # vocabulary (CLAUDE.md §4).
-LENS_COLUMNS = {
-    "identity_code": ("base_taxonomy_identity", "identity_code"),
-    # RE-POINTED 2026-09-13 (owner ruling; migration 081). Was ("axes", "axis_code"),
-    # i.e. the ICF lens resolving to an AX- demand code -- the state the same day's
-    # ruling bans. db._LENS_COLUMNS carries the identical pair; the extraction and the
-    # determination it feeds must name the lens the same way.
-    "icf_code": ("base_icf", "icf_code"),
-    "needs_code": ("access_needs", "need_code"),
-}
+LENS_COLUMNS = dbcore.LENS_COLUMNS            # one home, in dbcore (db._LENS_COLUMNS mirrors it)
 # COALESCE order, matching the table's own CHECK and test_db_integrity K01's sha payload.
 LENS_ORDER = dbcore.LENS_ORDER
 # A cell's identity in SQL: the parameter and the three lens codes, blank and NULL alike (the COALESCE of
@@ -255,16 +247,16 @@ def lens_key(lens):
     return None
 
 
-# The identity lens is the one lens with a hierarchy (base_taxonomy_identity.parent_code): a cell keyed on a code
-# gathers the figures linked to that code or to any code whose parent_code chain reaches it (T-055). Derived from
+# The identity and ICF lenses have a hierarchy (their registry carries `parent_code`; `dbcore.family_sql`): a cell keyed on a code
+# gathers the figures linked to that code or to any code whose parent_code chain reaches it (T-055, OD-75). Derived from
 # the registry on every gather, never a list. UNION, not UNION ALL, so a cycle ends.
 
 
-def _lens_clause(lens, alias):
+def _lens_clause(conn, lens, alias):
     """`AND <every lens the cell states is among the figure's live links>` and its parameters.
 
-    The identity lens counts through `parent_code` (a parent's cell gathers its descendants' figures, a child's only
-    its own); the predicate stays inside the per-figure EXISTS, so a figure carrying two codes of one family is
+    A lens with a hierarchy (`dbcore.family_sql`: identity, ICF) counts through `parent_code` (a parent's cell gathers its
+    descendants' figures, a child's only its own); the predicate stays inside the per-figure EXISTS, so a figure carrying two codes of one family is
     gathered once and no count downstream multiplies by its number of links.
 
     A figure reaches a cell when, for each lens the cell states, it has a live link carrying that
@@ -275,7 +267,7 @@ def _lens_clause(lens, alias):
     impose nothing and gather by parameter alone, which is the defect this closes, so it is refused."""
     parts = [(f"EXISTS (SELECT 1 FROM v_live_lens_links k WHERE "
               f"k.extraction_id = {alias}.extraction_id AND k.{c} "
-              + (f"IN {dbcore.IDENTITY_FAMILY_SQL}" if c == "identity_code" else "= ?") + ")", lens[c])
+              + f"IN {dbcore.family_sql(conn, c)})", lens[c])
              for c in LENS_ORDER if lens.get(c)]
     if not parts:
         raise Refusal("a cell states at least one lens (D-0182); gathering without one would "
@@ -367,7 +359,7 @@ def gather_sources(conn, parameter_id, lens):
     # the reason. Fixture tolerance as above: a synthetic table without the column has no
     # skimmed rows to leave out.
     skim, skim_params = _publishable_clause(conn, "x")
-    lens_sql, lens_vals = _lens_clause(lens, "x")
+    lens_sql, lens_vals = _lens_clause(conn, lens, "x")
     return _gather(conn, "", f"x.figure_role IN ('claim', 'derived') {skim} {lens_sql}",
                    (parameter_id, *skim_params, *lens_vals))
 
@@ -443,7 +435,7 @@ def gather_findings(conn, parameter_id, lens):
     # and found nothing says nothing about which end of a permitted range the evidence favours.
     # Left out, never silently: `gather_extraction_links` says why on each such row.
     skim, skim_params = _publishable_clause(conn, "x")
-    lens_sql, lens_vals = _lens_clause(lens, "x")
+    lens_sql, lens_vals = _lens_clause(conn, lens, "x")
     return _gather(
         conn, "",
         f"x.figure_role IN ({','.join('?' * len(DIRECTION_SUPPLYING_ROLES))}) "
@@ -461,7 +453,7 @@ def gather_confirmers(conn, parameter_id, lens):
     if not _table_exists(conn, "extraction_relations"):
         return []
     skim, skim_params = _publishable_clause(conn, "x")
-    lens_sql, lens_vals = _lens_clause(lens, "x")
+    lens_sql, lens_vals = _lens_clause(conn, lens, "x")
     return _gather(
         conn,
         "JOIN extraction_relations r ON r.from_extraction_id = x.extraction_id "
@@ -518,7 +510,7 @@ def gather_extraction_links(conn, parameter_id, governing_refs, lens):
         "LEFT JOIN evidence_sources e ON e.ref_id = x.ref_id "
         f"WHERE x.parameter_id = ? {_live_figure(conn, 'x')} ORDER BY x.extraction_id", (parameter_id,)).fetchall()
     gov = set(governing_refs or ())
-    lens_sql, lens_vals = _lens_clause(lens, "x")
+    lens_sql, lens_vals = _lens_clause(conn, lens, "x")
     in_lens = {r[0] for r in conn.execute(
         f"SELECT x.extraction_id FROM source_value_extractions x WHERE x.parameter_id = ? {lens_sql}",
         (parameter_id, *lens_vals))}
@@ -697,19 +689,19 @@ def _open_gates(conn, parameter_id, lens, best, questions_only=False):
     """The open determination gates that reach this cell, as the engine reports them.
 
     A gate is skipped when the cell carries a DIFFERENT code in a lens the gate names (a lens the cell does not carry
-    never skips it); for the identity lens "different" means outside the cell's code and its descendants. A QUESTION (OD-21) is reported, never binding. Any other gate binds only when its trigger is at
+    never skips it); for a lens with a hierarchy (identity, ICF) "different" means outside the cell's code and its descendants. A QUESTION (OD-21) is reported, never binding. Any other gate binds only when its trigger is at
     least as strong as the cell's best anchor `best` (the ladder-inversion guard)."""
     gates = []
-    family = dbcore.identity_family(conn, lens.get("identity_code"))
+    families = dbcore.lens_families(conn, lens)
     if _table_exists(conn, "determination_gates"):
         for g in conn.execute(
                 "SELECT gate_id, verdict, trigger_tier, trigger_evidence_type, "
                 "trigger_ref_id, detail, identity_code, icf_code, needs_code "
                 "FROM v_open_determination_gates WHERE parameter_id = ?", (parameter_id,)):
-            # The identity lens counts through parent_code, as the figures do: a parent's cell gathers its descendants'
+            # A lens with a hierarchy counts through parent_code, as the figures do: a parent's cell gathers its descendants'
             # figures, so a gate on a descendant's code reaches it (the gate caps the figure wherever it is read); a gate
             # on the parent's code does not reach a child's cell, which does not gather the parent's own figures.
-            if dbcore.lens_differs(dict(zip(dbcore.LENS_ORDER, g[6:10])), lens, family):
+            if dbcore.lens_differs(dict(zip(dbcore.LENS_ORDER, g[6:10])), lens, families):
                 continue                      # a gate on another lens
             if g[1] == "QUESTION":
                 # An objection to a published value, recorded as an open gate (OD-21). It FLAGS the cell and never
@@ -1022,7 +1014,7 @@ def count_extractions(conn, parameter_id, lens):
     than infer it: 2 sources and 9 extractions is a normal, ruled shape (D-0168), and
     a report showing only "2 sources" hides which of the two carried the clauses.
     """
-    lens_sql, lens_vals = _lens_clause(lens, "x")
+    lens_sql, lens_vals = _lens_clause(conn, lens, "x")
     return conn.execute(
         f"SELECT COUNT(*) FROM source_value_extractions x WHERE x.parameter_id = ? {lens_sql}",
         (parameter_id, *lens_vals)).fetchone()[0]
@@ -1309,7 +1301,7 @@ def _confirmed_bands(conn, parameter_id, links, confirmer_anchors, lens):
     confirmer_bands = {r["ref_id"]: band(r["tier"], r["evidence_type"])
                        for r in confirmer_anchors if _verified(r)}
     skim, skim_params = _publishable_clause(conn, "e")
-    lens_sql, lens_vals = _lens_clause(lens, "e")
+    lens_sql, lens_vals = _lens_clause(conn, lens, "e")
     confirmers = {}
     for to_id, from_ref in conn.execute(
             "SELECT r.to_extraction_id, e.ref_id FROM extraction_relations r "

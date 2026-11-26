@@ -1,5 +1,7 @@
 # T-110  First live determinations
 
+> **OD-87 (2026-11-25): T-128 is withdrawn, so this task no longer waits for it and no longer takes `d4452` from it. Where the text below says a mounting height takes `d4452` "from T-128", `d4452` is minted by `add-icf-code` when this work needs it, after pull request 246 has merged (so it is parented at mint, OD-74); this task waits for that merge or for T-148**
+
 > **NOT FOR SONNET** — Opus-class or above; the engine computes, the session adjudicates and the adversarial pass is owed. A Sonnet-class executor that opens this file does not start it: it reports that the task is waiting, and for what.
 
 _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self-contained. Index, order and the owner decision register: `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`. Evidence base: `workplan/2026-11-12-bidirectional-pipeline/01-handshake-ledger.md`, as corrected by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/fa-corrections-for-suite.md` (where they differ, the corrections govern). Every number in this file was read on 2026-11-12 and is given with the command that produces it: re-run the command; do not trust the number._

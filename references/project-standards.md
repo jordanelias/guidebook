@@ -8391,3 +8391,234 @@ Given in the session `session_2026-11-21-identity-need-icf-triples` (https://cla
 CONDITION: any session reading, reviewing or counting TRIPLE-64 or TRIPLE-65.
 ACTION: (1) Record TRIPLE-64 as `stated` and retire TRIPLE-65 with this entry as the reference, by `db.py review-identity-need-icf`. (2) Do not propose a replacement for TRIPLE-65 without a recorded basis for the identity's link to the need. (3) Treat the readings above as unratified except where the owner's words state them.
 DATE: 2026-11-21 — owner review (typed words, quoted above).
+
+## Owner statements 2026-11-22 and 2026-11-23 — ICF classification umbrellas and a glossary of the codes under each; the base lists ICF, access needs and identities; three browsing approaches; identities and needs mapped to one another, then ICF codes chosen; a delegation to Opus to reconcile
+
+Given in the session `session_2026-11-22-icf-umbrella-glossary` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in six typed messages on 2026-11-22 and one on 2026-11-23, after the coordinator oriented on pull request 245. Times are in the preserved transcript (`git grep -n -F "Opus to reconcile" -- transcripts`; the same for each quotation). Recorded on contact (rule 0).
+
+**Owner's words, quoted (typed), in the order sent:**
+
+> "the ICF codes used are not what I was expecting. I had been expecting ICF codes like b210, b230, b265, b280 etc.. but then we have entire groups like b750 to b789 which are all under "Movement functions""
+>
+> "so perhaps for ICF I really want those classification umbrellas like "Movement functions" , "Pain", "Hearing and vestibular systems" etc and some kind of glossary that shows all the codes bundled under those classification umbrellas"
+
+> "gather all ICF, access needs, disability identities/populations in base"
+
+> "I don't think the mapping is correct"
+
+> "https://icd.who.int/browse/2026-01/icf/en"
+
+> "our project filters specifications based on three approaches, and the browsing user chooses one of those approaches to use for browsing"
+>
+> "ICF codes/classifications (e.g. Neuromusculoskeletal and movement-related functions, Movement functions b750-789)"
+> "Access needs (e.g. wheelchair access)"
+> "Disability identity (e.g. wheelchair user)"
+
+> "So we should have a list of access needs, we should have a list of disability identities, and we should be able to map them to one another"
+>
+> "and from there, perhaps, we select ICF codes that pertain to those relationships"
+
+> "Okay. Opus to reconcile, make rulings as required and allow us to keep moving forward in project"
+
+**Readings.**
+
+- [ASSUMPTION: the umbrellas the owner names are the WHO ICF blocks and the group above them, "Movement functions" being the block b750 to b789 and "Neuromusculoskeletal and movement-related functions" the group above it — basis: the persisted WHO ICF 2026-01 tabulation, `retrieval-log/session_2026-11-22-icf-umbrella-glossary/38776b09204984dc.zip`; the owner's words give the example and the range, the payload gives the names and the nesting].
+- [ASSUMPTION: "gather all ICF, access needs, disability identities/populations in base" asks for a listing of what `base` holds, as the coordinator produced it (`scratchpad/session_2026-11-22-icf-umbrella-glossary/base-gathered.md`); the owner did not say that the base should hold every ICF code — basis: the coordinator's response at the time was a listing and the owner moved on to the next message without objection, which is not an approval].
+- [ASSUMPTION: "the mapping" in "I don't think the mapping is correct" is not identified. Two candidates: the identity-to-ICF activity list `identity_icf_map` (61 live rows, all d-codes), and the identity-need-ICF rows of pull request 245 on which the session had been oriented. The message arrived before the coordinator had described `identity_icf_map` — basis: the transcript's timestamps; the question is put to the owner].
+- [ASSUMPTION: the three browsing approaches are the three lens columns of a specification (ICF, access need, identity) as ruled 2026-08-28 and D-0182; the owner's statement adds that a browsing user picks one — basis: the words].
+- [ASSUMPTION: "perhaps" in the last sentence of the sixth message makes the order (pair first, ICF codes after) a suggestion, not a ruling; it does not by itself reverse the owner's answer of 2026-11-20 (fifth), "should be all three" — basis: the word "perhaps"; the question is put to the owner].
+- The delegation of 2026-11-23 is the owner's. It does not reach decisions the decision protocol reserves to the owner (`governance/decision-protocol.md` section 2.4 item 2: population taxonomy structure), and the convention of 2026-11-12 says a task needing the owner's own words is not opened by a delegated resolution.
+
+CONDITION: any session building, reading or browsing the ICF lens, the access-need lens or the identity lens; any session planning an ICF glossary, an ICF hierarchy, or the pairing of identities with access needs; GAP-ICF-TITLES.
+ACTION: (1) Treat the umbrellas and the glossary as asked for; they are derived from the persisted WHO payload, never from recall. (2) Treat the pairing of identities and needs as not yet ruled as to whether a pair may be stored without an ICF code; do not build a pairs table until the owner answers (OD-73). (3) Do not treat the mapping the owner doubted as identified. (4) Treat the readings above as unratified except where the owner's words state them.
+DATE: 2026-11-22 and 2026-11-23 — owner statements (typed words, quoted above).
+
+
+## Delegated resolutions 2026-11-23 — the ICF hierarchy, the glossary, the umbrella gather and a hold on the identity-to-ICF map (OD-74, OD-75, OD-77); three decisions referred back to the owner (OD-73, OD-76, OD-78)
+
+Written by the coordinating session from the reconciliation of an Opus-class instance (`scratchpad/session_2026-11-22-icf-umbrella-glossary/reconciliation.md`, which also holds the full reasoning and the reversal cost of each ruling) after an independent adversarial pass by a different instance, whose findings are applied below. **Not an owner statement.** Each was decided under the owner's delegation of 2026-11-23 and is DG-REVIEW (schema shape of already-ruled methods) or is referred back.
+
+**What the check changed.** The reconciliation's R15 (write the SCI and LMB parent edges under MOB) executed a ruling the owner set aside on 2026-11-12 (eighth and ninth sets), and is withdrawn. The reconciliation's R1 to R4 (a pairs table) reverse part of the owner's own answer "should be all three" and were not for a delegate to decide, so are referred back; R3's seed would also have left the retired TRIPLE-65 pointing at no pair and wrote 29 judged-state rows by hand SQL in a schema migration. R12 (what may ground a body-function code) narrows an owner answer and is referred back. Question 5 of the reconciliation (wheelchair user's own code) is not asked: OD-14 is answered (`OD-14 STATUS`, last line), and the mobility split awaits its task.
+
+OD-73 (a pair of an identity and an access need may be recorded before any ICF code is chosen) — the reconciliation's R1 to R4, with the corrections of the check: whether "perhaps" in the owner's sixth message reverses the owner's 2026-11-20 answer; a pairs table would need an all-live partial unique index (so a retired or reviewed pair can be proposed again), a decision on the retired TRIPLE-65, no hand-written seed in a schema migration, and an inference flag carried onto each pair.
+OD-73 STATUS: REFERRED BACK TO THE OWNER
+OD-73 CHECK: referred back
+
+OD-74 (the ICF hierarchy in `base_icf`) — `base_icf.parent_code`, nullable, referencing `base_icf(icf_code)`; WHO's level-2 and level-3 blocks as rows keyed by the span of the 3-digit categories under them, derived from the payload (the payload holds no range strings); level 1 is the `component` column; `d910–d920` is not a WHO block (WHO's is d910–d999) and gets no parent and no umbrella standing; one writer that derives block spans, parents and titles from the persisted payload; a title verified against the payload may replace a title whose source is not a payload, the old value and its source recorded in the data migration's header. Corrections applied: "verified against the payload" is a substring test over the payload, so the writer must compare the title with that code's own row; the import's scope (every block and every 3-digit category, against only the codes the project holds) rests on the reading of "gather all ICF" above, which is unratified, so the first data batch imports the blocks and the codes the project already holds, and the rest only if the owner says so; the ten titles that differ from WHO are listed in the reconciliation (section 1, R8).
+OD-74 STATUS: RESOLVED UNDER DELEGATION
+OD-74 CHECK: confirmed with corrections applied
+
+OD-75 (a cell keyed on an ICF umbrella gathers the codes beneath it; the glossary is a read verb; browsing filters on the lens column through that lens's hierarchy) — `IDENTITY_FAMILY_SQL` and `identity_family` generalised, not copied; the callers are eight lines in three files (`assess_cell.py`, `db.py`, `derivation_handshake_integrity.py`) and three definitions in `dbcore.py` (derive: `git grep -n -E "IDENTITY_FAMILY_SQL|identity_family|lens_differs" -- scripts`), not the count the reconciliation gave; the access-need lens stays flat, its `family` column being its grouping; the glossary is `db.py icf-glossary`, no view and no committed file; no browse filter reads a crosswalk (D-0184 unchanged). Corrections applied: whether writing parents changes what an existing cell gathers (T055-03's `RULE_VERSION` premise) is to be tested before the change merges; the owner's go-ahead for a change to the engine's gather clause was asked of the owner in the session and the delegation of 2026-11-23 is read as it (an unratified reading), so the change goes in a tooling-only pull request the owner reads before it merges.
+OD-75 STATUS: RESOLVED UNDER DELEGATION
+OD-75 CHECK: confirmed with corrections applied
+
+OD-76 (write `parent_code = MOB` for SCI and LMB; add `amend-identity --parent`) — withdrawn: superseded by the owner's eighth and ninth sets of 2026-11-12 (LMB leaves mobility; SCI is held with WHEEL). No parent edge is written under the old ruling and no flag is added for it.
+OD-76 STATUS: WITHDRAWN, REFERRED BACK TO THE OWNER
+OD-76 CHECK: referred back
+
+OD-77 (a hold on `identity_icf_map`; `access_need_icf` stands; `access_needs.absorbs` untouched) — `identity_icf_map` is frozen: no session copies its rows into another table, cites one as a warrant, or runs T-128 (T-128 also needs WHEEL minted, which is not so) until the owner says which mapping was meant. `access_need_icf` stands; the recorded provenance of `identity_icf_map` is the functional-deficit-auditor skill's table through a crosswalk of retired population codes (UPL, VIS, LOW-VISION, OFS, PCS, ABI, ASD), not the axis layer as earlier text here said. `access_needs.absorbs` is read only as prose that proposes a pair, under owner review.
+OD-77 STATUS: RESOLVED UNDER DELEGATION
+OD-77 CHECK: confirmed with corrections applied
+
+OD-78 (what may ground a body-function code on an identity or a pair) — referred back: the reconciliation narrowed an owner-answer entry's ACTION and rested on one WHO file (the simple tabulation, which holds titles and hierarchy but no definitions or relations); the entity pages were not retrieved. Until the owner answers, the ACTION (2) of "Owner answer 2026-11-21 (third)" stands as written, and no session cites a WHO payload for a relation between an identity and a code.
+OD-78 STATUS: REFERRED BACK TO THE OWNER
+OD-78 CHECK: referred back
+
+CONDITION: any session building the ICF hierarchy, the glossary or the family helper; any session planning a pairs table, a body-function code, a parent edge on an identity, or a change to `identity_icf_map`; OD-73 to OD-78.
+ACTION: (1) Tooling for OD-74 and OD-75 may be authored and built in a tooling-only pull request (rule 10), with no rows, and the owner reads it before it merges; the data batch follows in its own pull request. (2) Do not build the pairs table, the identity parent writer or a rule for grounding body-function codes; put the owner's questions (section 2 of the reconciliation, as corrected: Q1 per-pair, Q2 naming both candidate mappings, Q3, Q4) in plain form. (3) Derive every count in the reconciliation again before use.
+DATE: 2026-11-23 — delegated resolutions after an independent check, not an owner statement.
+
+## Owner statements 2026-11-25 — build the tooling pull request; double-check it and send it to Opus for rulings; authority to Opus to approve and ratify; finish the remediation plan quickly
+
+Given in the session `session_2026-11-22-icf-umbrella-glossary` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in five typed messages on 2026-11-25, after the coordinator put the questions of the entry "Delegated resolutions 2026-11-23" (OD-73 to OD-78) to the owner and opened pull request 246. Derive the times from the preserved transcript (`git grep -n -F "authority granted to opus" -- transcripts`; the same for each quotation). Recorded on contact (rule 0).
+
+**Owner's words, quoted (typed), in the order sent:**
+
+> "Yes, build the tooling PR"
+
+> "double check work carefully, send to opus for rulings/adjudication as required"
+
+> "authority granted to opus to approve and ratify"
+
+> "i just want to get this remediation plan done asap"
+
+> "as always refer to doctrine/mission/claude.md etc for guidance as required"
+
+**Readings.**
+
+- [ASSUMPTION: "Yes, build the tooling PR" answers the coordinator's question whether to build the tooling pull request of OD-74 and OD-75, including the change to the engine's gather clause for which the coordinator had asked the owner's go-ahead — basis: the question put and the word "Yes"].
+- [ASSUMPTION: "authority granted to opus to approve and ratify" delegates to an Opus-class instance the approval of the coordinator's work and the ratification of decisions the owner has so far kept, including those OD-73 to OD-78 referred back; it does not make the delegate's resolution the owner's words, so an owner review that the schema binds to an "Owner" ledger entry (`review-identity-need-icf --approval-ref`) is not met by a delegate's ratification — basis: the words; the verb's own guard, which migration 166 added so that no session states its own row].
+- [ASSUMPTION: "this remediation plan" is the plan of `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`, whose register of decisions (section 8) and tasks gate each other — basis: the words and the plan's name; the owner did not name a file].
+- [ASSUMPTION: the last message directs every delegate to the project's doctrine (`governance/mission-and-epistemics.md`), `CLAUDE.md`, the tier system and the decision protocol as the guidance a ruling is made against, "as required" — basis: the words; it names no file].
+- The statements do not say that population-taxonomy decisions (`governance/decision-protocol.md` section 2.4 item 2) are delegable by a general grant, or that the convention of 2026-11-12 (a task needing the owner's own words is not opened by a delegated resolution) is replaced. They are read as a grant the delegate uses, each ruling recorded as a delegated resolution with an independent check, and each ruling that decides what a group of disabled people needs or which ICF code ties to which identity recorded with its basis in the record, not in the delegate's own knowledge.
+
+CONDITION: any session adjudicating, approving or ratifying a decision of the remediation plan; OD-73 to OD-78; pull request 246; any session asked whether the owner has delegated a decision.
+ACTION: (1) The tooling pull request of OD-74 and OD-75 is asked for; the owner reads it before it merges, as the entry of 2026-11-23 says. (2) An Opus-class delegate may approve the coordinator's work and ratify delegated resolutions under this grant; each such ruling is written as a delegated resolution (`OD-NN STATUS: RESOLVED UNDER DELEGATION`, never `ANSWERED BY THE OWNER`) and checked by a different instance before its check line reads `confirmed`. (3) Do not write an "Owner" ledger heading for a ruling the owner did not make, and do not relax a guard that binds a row to the owner's review. (4) A delegate rules against the doctrine and rules the owner has recorded (`governance/mission-and-epistemics.md`, `CLAUDE.md`, `governance/tier-system.md`, `governance/decision-protocol.md`, the ledger), and names the passage each ruling rests on. (5) Treat the readings above as unratified except where the owner's words state them.
+DATE: 2026-11-25 — owner statements (typed words, quoted above).
+
+## Delegated resolutions 2026-11-25 — the reach of the owner's grant (OD-79), what WHO's tabulation grounds (OD-80), the ICF import's grain (OD-81), the mapping hold corrected (OD-77); OD-73, OD-78 (clauses 3 and 4) and the mobility sequencing (OD-82) referred back
+
+Written by the coordinating session from the adjudication of an Opus-class instance (`scratchpad/session_2026-11-22-icf-umbrella-glossary/adjudication.md`, with its Part A verdict on pull request 246 and Part C path through the remediation plan) after an independent check by a different Opus-class instance, whose corrections are applied below. **Not an owner statement.** The grant is the owner's of 2026-11-25 ("authority granted to opus to approve and ratify"); the entry of that date holds its ACTION lines.
+
+**How far the grant reaches (OD-79).** It reaches the approval of the coordinator's work and decisions of schema, method and ordering that satisfy methods the owner has already ruled. It does not reach population-taxonomy structure and the statement that a group of people has a need (`governance/decision-protocol.md` section 2.4 item 2, "always DG-NON"), what the owner meant by the owner's own words, a row the schema binds to an "Owner" ledger entry, or the convention of 2026-11-12 that a task needing the owner's own words opens only on `ANSWERED BY THE OWNER`. A reading of the owner's word "perhaps" is the owner's meaning and is not supplied by a delegate.
+OD-79 STATUS: RESOLVED UNDER DELEGATION
+OD-79 CHECK: confirmed with corrections applied (the ground is section 2.4, which is stronger than the section 2.3 the adjudicator cited)
+
+**What WHO's tabulation grounds (OD-80).** The persisted WHO simple tabulation grounds a code's existence, its title and its place in the hierarchy; it holds no relation between an identity or a need and a code. A persisted WHO entity page, if one is retrieved through `retrieval_log`, may be quoted for what a code means. No entity page has been retrieved, so the second sentence is untested. This corrects the reading that the 2026-11-21 (third) ACTION (2) clause "a payload fetched from WHO under T-128" admits the tabulation as a warrant for an identity's code; it corrects recorder text, not the owner's words.
+OD-80 STATUS: RESOLVED UNDER DELEGATION
+OD-80 CHECK: confirmed with corrections applied (clause on entity pages marked untested)
+
+**The grain of the ICF import (OD-81).** The first data batch (T-148) imports the level-2 and level-3 blocks and the codes the project holds (OD-74). Importing every 3-digit category (373 in the payload; derive: the Code column matching `[bdes]\d{3}`) is a delegated reading of "a glossary that shows all the codes bundled under those classification umbrellas" and of "gather all ICF ... in base"; the grain is the delegate's choice, and the owner's words can also be read as the codes the project holds. It is therefore proposed to the owner with T-148, not run before it.
+OD-81 STATUS: RESOLVED UNDER DELEGATION
+OD-81 CHECK: confirmed with corrections applied (the warrant is a delegated reading, as written above)
+
+**The mapping hold corrected (OD-77).** The hold on `identity_icf_map` and on T-128 stands. The lean the adjudication drew, that the record favours the identity-need-ICF rows of pull request 245, is struck. The owner's message arrived at 04:04:08 on 2026-11-22; the table of identities with their `identity_icf_map` codes had been printed at 04:04:06 and the T-128 file read at 04:02:58, so the timing does not show which mapping was meant; and the message's complaint is of "entire groups like b750 to b789", which only `identity_icf_map` holds as ranges among the ICF link tables (derive: count the `is_range` codes each table references). The question stays the owner's, put with both candidates.
+OD-77 STATUS: RESOLVED UNDER DELEGATION
+OD-77 CHECK: confirmed with corrections applied
+
+**Referred back to the owner.**
+
+OD-73 (may a pair of an identity and an access need be recorded before any ICF code is chosen) — the adjudication ruled yes with a pairs table; the check found that it decides what "perhaps" meant and reverses the owner's answer "should be all three" to T-145 section 4 question 1 (which had offered identity-need faces with the third key left empty and recommended it, and which the owner declined), contrary to the 2026-11-22 ACTION (2); and the proposed schema is defective (a partial unique index cannot be a foreign-key parent, a surrogate `pair_id` can; migration 166's no-edit trigger does not list a new `inferred` column and its review verb is bound to the token `TRIPLE-<id>`, so the guards must be extended, not copied). No pairs table is built.
+OD-73 STATUS: REFERRED BACK TO THE OWNER
+OD-73 CHECK: referred back
+
+OD-78 (what may ground a body-function code on an identity or a pair), clauses 3 and 4 — the adjudication allowed a session to propose a body-function code as a disclosed inference. The check found that this adds a kind of basis the 2026-11-21 (third) ACTION (2) does not admit, reads owner meaning into "etc" and into the owner's review of TRIPLE-64 and TRIPLE-65 (both readings are unratified in the ledger), rests on a TRIPLE-65 whose code was copied from the need's own list, and has no home for an identity-only proposal (the one table that holds one, `identity_icf_map`, is frozen). The interim of 2026-11-23 stands.
+OD-78 STATUS: REFERRED BACK TO THE OWNER
+OD-78 CHECK: referred back
+
+OD-82 (the mobility split runs without retiring SCI, and T-127 and T-128 wait only for WHEEL) — referred back: it leaves two active codes for one group (the owner: "SCI is the same as WHEELCHAIR basically"), which is code structure, and it defeats T-127's stated reason (a row tagged once, never swept twice). It also opens nothing: T-102 stops before `emit_data_migration` unless the ledger carries the owner's answer to OI-55 item 1 (its gate is red by construction on R1, R9a and R9b), and its steps 3 and 4a write through `add-population-icf-link` into `identity_icf_map`, which OD-77 freezes.
+OD-82 STATUS: REFERRED BACK TO THE OWNER
+OD-82 CHECK: referred back
+
+**The 29 identity-need pairs.** Not resolved. The adjudication's recommendation is recorded as input to the owner's question, not as a resolution (a statement that a group has a need is the owner's): 17 pairs have a direct record or a registry statement (class A), 10 are keyed on an identity for a condition its description names (class B; the owner's answer "to umbrella and to specific, yes" concerned umbrella and member identities, and does not by itself reach these, and COM and EPI with A-TRIGGER are GAP-379's open part), and 2 (BRAIN with A-NOSPEECH, COM with A-LOWLOAD) carry the warrant "recorded as an inference", the ground on which the owner rejected TRIPLE-65. Derive: `select identity_code, need_code, warrant from identity_need_icf where retired_at is null`.
+
+**Part C, as corrected.** The critical path of the remediation plan is derived by the generator (`scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`): T-102, T-128, T-127, T-059 with T-143, T-068, T-117, T-122, T-037, T-038, closed by T-110. T-102 is held by OI-55 item 1 and by OD-77 as well as by its SCI step; T-120 and T-137 are ungated tooling. The plan's own records are wrong in four places: T-145 merged in pull request 244; the translation work of T-112 was largely done in pull request 243 and is recorded nowhere; T-128's file says HELD on OD-67 though OD-67's gate is open (the confirmation of its list is still owed); the generator's block of T-135 on OD-69 is an artefact of how it reads gates.
+
+CONDITION: any session adjudicating, approving or ratifying a decision of the remediation plan; OD-73, OD-77 to OD-82; T-102, T-127, T-128; pull request 246.
+ACTION: (1) The tooling of OD-74 and OD-75 may merge once the owner has read it. (2) Build no pairs table, no body-function proposal, no mobility split and no identity-to-ICF row. (3) Put the five questions of the report of 2026-11-25 to the owner in plain form: the pairs table (OD-73), which mapping was meant, the pairs and the rows that repeat a need's own codes, body-function proposals (OD-78 clause 3), and OI-55 item 1 with SCI. (4) The check lines above read `confirmed` for the delegated resolutions only; nothing here is an owner answer.
+DATE: 2026-11-25 — delegated resolutions after an independent check, not an owner statement.
+
+## Owner statements 2026-11-25 (sixth) — Opus adjudicates the referred-back questions and logs the rulings; the owner will not answer them now; carry the rulings out; the project is simple
+
+Given in the session `session_2026-11-22-icf-umbrella-glossary` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in three typed messages sent after the coordinator reported pull request 246 and put five questions to the owner (the pairs table, which mapping was meant, the 29 pairs and the 63 repeated rows, body-function proposals, OI-55 item 1 with SCI and the wheelchair-user code). Derive the time from the preserved transcript (`git grep -n -F "Opus to adjudicate all of the above" -- transcripts`). Recorded on contact (rule 0).
+
+**Owner's words, quoted (typed):**
+
+> "Opus to adjudicate all of the above and log it"
+
+> "I don't want to answer these right now so just make it happen"
+
+> "Remember that this project is simple!!!"
+
+**Readings.**
+
+- [ASSUMPTION: "all of the above" is the coordinator's report just before it: the decisions OD-73, OD-78 (clauses 3 and 4), OD-82, which mapping the owner doubted, the 29 pairs and the 63 repeated rows, and OI-55 item 1 with SCI — basis: the message answered that report and named no item].
+- [ASSUMPTION: the message delegates those questions to an Opus-class instance for decision, and so supersedes, on contact (rule 0), the limit in "Delegated resolutions 2026-11-25" (OD-79) that the grant did not reach them. It does not reach what the schema binds to the owner's own review: the `Owner` heading that `review-identity-need-icf --approval-ref` and `retire` need, which a delegate's ruling cannot be, and `governance/decision-protocol.md` section 2.4 stays the rule for everything the message does not name — basis: the words; the owner's earlier statement of this date (ACTION (3) of "Owner statements 2026-11-25")].
+- [ASSUMPTION: "I don't want to answer these right now so just make it happen" confirms that the questions are not to be put to the owner again before the work goes on, and that the coordinator is to carry out what the delegate's rulings open; it is not an answer to any of the five questions, and it does not by itself authorise merging a pull request, which the harness reserves to the owner's own ask — basis: the words].
+- [ASSUMPTION: "Remember that this project is simple!!!" directs the delegate and the coordinator to the smallest solution that satisfies the owner's recorded rulings (CLAUDE.md section 8, "Minimise code": do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code), and against adding a table, a verb or a check where an existing one serves — basis: the words and section 8].
+- [ASSUMPTION: "log it" asks that each ruling be written in this ledger as a delegated resolution with its basis and its check, as the earlier ones were — basis: the words and the ledger's practice].
+
+CONDITION: any session reading, relying on or carrying out OD-73, OD-77 to OD-82, T-102, T-127, T-128 or a pair of an identity and an access need.
+ACTION: (1) An Opus-class instance rules on the questions named; each ruling is written as a delegated resolution (`RESOLVED UNDER DELEGATION`, never `ANSWERED BY THE OWNER`) and checked by a different instance before its check line reads `confirmed`. (2) A ruling says which tasks it opens and what it leaves for a mechanism the schema binds to the owner. (3) Rule for the smallest change that meets the owner's recorded words, and do not add apparatus the questions do not need. (4) Treat the readings above as unratified except where the owner's words state them.
+DATE: 2026-11-25 — owner statements (typed words, quoted above).
+
+## Owner statement 2026-11-25 (seventh) — CLAUDE.md's goal should say the project is simple and builds as little machinery as possible
+
+Given in the session `session_2026-11-22-icf-umbrella-glossary` (https://claude.ai/code/session_01Ub36iMXTj2zDxrGgKjkaLX), in a typed message after the coordinator waited on an independent check of the Opus adjudication. Derive the time from the preserved transcript (`git grep -n -F "build as little machinery as possible" -- transcripts`). Recorded on contact (rule 0).
+
+**Owner's words, quoted (typed):**
+
+> "maybe claude.md goal should also state this is a simple project where we build as little machinery as possible to enact our goal"
+
+**Readings.**
+
+- [ASSUMPTION: "maybe" invites the edit and does not forbid it, so the coordinator made it: a sentence in CLAUDE.md's Goal section quoting the owner's words and pointing at section 8 — basis: the words; the owner may replace the wording, and merging approves it, as the entry on the Goal section of pull request 243 said].
+- The sentence adds no rule and no check; it states the owner's standing direction (section 8, "Minimise code") where every session reads it first.
+
+CONDITION: any session reading CLAUDE.md's Goal section.
+ACTION: (1) Meet the goal with the least machinery; apply section 8's order to every task. (2) Treat the reading above as unratified except where the owner's words state it.
+DATE: 2026-11-25 — owner statement (typed words, quoted above).
+
+## Delegated resolutions 2026-11-25 (second) — the referred-back questions ruled for the smallest change: no pairs table, the repeated rows kept, the 29 pairs classed, the doubted mapping held and T-128 withdrawn, no body-function proposals, SCI retired into WHEEL, carry-only batches gated by their own tests (OD-73, OD-77, OD-78, OD-82, OD-83 to OD-87)
+
+Written by the coordinating session from the adjudication of an Opus-class instance (`scratchpad/session_2026-11-22-icf-umbrella-glossary/adjudication-2.md`) under the owner's words of 2026-11-25 ("Opus to adjudicate all of the above and log it"; "I don't want to answer these right now so just make it happen"; "Remember that this project is simple!!!"; entry "Owner statements 2026-11-25 (sixth)"), after an independent check by a different instance, whose corrections are applied below. **Not an owner statement.** The schema ties `stated` and a retirement to an "Owner" ledger entry; no ruling here is one, none writes such a heading, and no guard is relaxed.
+
+**OD-73 (a pair of an identity and an access need before any ICF code): no pairs table; "should be all three" stands.** "We should be able to map them to one another" is met by `identity_need_icf` as it is: a pair is a row whose ICF code is one of the need's own `access_need_icf` codes, which the owner ruled counts as the identity's ICF coverage (2026-11-21, sixth). "Perhaps, we select ICF codes" means further rows for a pair with a body-function or activity code where one is grounded. Nothing is built. Basis: the 2026-11-20 (fifth) and 2026-11-21 (sixth) answers; CLAUDE.md section 8.
+OD-73 STATUS: RESOLVED UNDER DELEGATION
+OD-73 CHECK: confirmed
+
+**The 63 rows that repeat a need's own codes: kept.** They are the coverage the owner ruled (2026-11-21, sixth), and under OD-73 the record of each pair; that ruling is the later and more specific one on these rows (rule 0). Retiring them would need an "Owner" `retirement_ref`. Derive: `select count(*) from identity_need_icf t where retired_at is null and exists (select 1 from access_need_icf a where a.need_code=t.need_code and a.icf_code=t.icf_code)`.
+
+OD-85 (the 29 live pairs): classes A (17) and B (10) are accepted and class C (2) is rejected, under delegation, **with no row changing state**: a delegated accept is never cited as a review or as a warrant, and `stated` and retirement stay the owner's mechanism. Class A: the need's registry text names the identity's group, or each side names the other. Class B: the need names a condition that the identity's own description lists (mission commitment 1: co-occurring conditions are the norm); this settles A-TRIGGER for COM and EPI; the `e120` and A-SIZE question for LPA, TALL and BAR (GAP-379's other open part) stays open. Class C, BRAIN with A-NOSPEECH and COM with A-LOWLOAD: the warrant reads "recorded as an inference", the ground on which the owner rejected TRIPLE-65. T-127 does not take the class C rows as proposals. Harmless to the plan: no gather, determination or gate reads `identity_need_icf` (D-0184) and no task gate reads its state. Derive the classes: `select identity_code, need_code, warrant from identity_need_icf where retired_at is null`.
+OD-85 STATUS: RESOLVED UNDER DELEGATION
+OD-85 CHECK: confirmed with corrections applied
+
+**OD-77 (the mapping the owner doubted).** The table `identity_icf_map` is taken as the mapping meant, as a delegated reading that rests on the range codes: of the ICF link tables only `identity_icf_map` holds ranges (derive: count the `is_range` codes each table references), and the owner's message objected to "entire groups like b750 to b789". The timing of the message (04:04:08, after the table had been printed at 04:04:06) does not decide it. The freeze binds **additions a session proposes**: no session adds a row to `identity_icf_map`, cites one as a warrant or copies one. It does **not** bind rows the owner has already confirmed: the owner's answer to OI-03 ("Yes, as proposed": WHEEL to d465, d420 and d410 beside the SCI crossings T-102 judges to hold for wheelchair users, "T-102 writes them") governs, so T-102 writes the OI-03 crossings and carries each SCI crossing to WHEEL or retires it by judgment. The PR-245 rows are not condemned. Basis: OI-03 (owner) and rule 0.
+OD-77 STATUS: RESOLVED UNDER DELEGATION
+OD-77 CHECK: confirmed with corrections applied
+
+OD-87 (T-128 withdrawn): T-128 added rows to `identity_icf_map` for five groups and minted reach and posture codes; the groups' half is not needed (ADHD, DEAFBLIND, EPI and MS hold triples that count as coverage, and VES is an access need), and nothing else reads it. The reach code `d4452` that T-127, T-059 and T-110 take from it is minted by `add-icf-code` when T-127 needs it, after pull request 246 has merged, so the code is parented at mint (OD-74); T-127 therefore waits for that merge or for T-148, and T-059 and T-110 drop the clause that takes `d4452` from T-128. OD-67 is not resolved here (its ACTION (4) forbids it) and is moot while T-128 is withdrawn; if T-128 is reinstated its list is owed again.
+OD-87 STATUS: RESOLVED UNDER DELEGATION
+OD-87 CHECK: confirmed with corrections applied
+
+OD-78 (clauses 3 and 4: may a session propose a body-function code on an identity or a pair): do nothing. No proposal path is added. A body-function code reaches a figure as a lens link when the clause names the function, and reaches an identity only from the owner's words, as TRIPLE-64 did; the 2026-11-21 (third) ACTION (2) and the interim of 2026-11-23 stand. Nothing on the critical path reads an identity-level body-function code.
+OD-78 STATUS: RESOLVED UNDER DELEGATION
+OD-78 CHECK: confirmed
+
+OD-83 (SCI; replaces OD-82, which proposed leaving SCI active): SCI retires into WHEEL, as the owner answered OI-13 (the owner's typed words: "SCI is the same as WHEELCHAIR basically", 2026-11-12, seventh set) and as the eighth-set heading names ("Owner clarification 2026-11-12 (eighth set) — LMB becomes UPL (upper limb) and is not part of mobility; only SCI is the same as WHEEL"), which `retire-identity --approval-ref` takes; the deletion of the medical lens (2026-11-16) did not restore SCI. Order: T-102 mints WHEEL; carries SCI's three lens links to WHEEL and its `identity_icf_map` crossings to WHEEL or retires them by judgment (OD-77); closes GAP-111 (the OI-77 question) with `close-gap --resolution-kind ledger` citing this entry; then retires SCI, which `retire-identity` refuses while a carrier remains. **The retirement is one-way through the sanctioned verbs** (`amend-identity` takes no `--status`), so restoring SCI needs a compensating migration. T-127's reason (a row tagged once, never swept twice) holds.
+OD-83 STATUS: RESOLVED UNDER DELEGATION
+OD-83 CHECK: confirmed with corrections applied
+OD-82 STATUS: RESOLVED UNDER DELEGATION
+OD-82 CHECK: confirmed (decided the other way: OD-83)
+
+OD-84 (OI-55 item 1, how a carry-only batch is gated): a convention, no code. A batch that searches nothing and admits nothing is red on R1, R9a and R9b by construction; its red on those three rules, and only those, is recorded in its pull request body; every other rule of `research_batch_dod.py` must pass; its own task tests and the rebuild gate it; it does not move `sessions/LATEST-RESEARCH`. It applies to the tasks whose gate text names it: `grep -l "red by construction" workplan/2026-11-12-bidirectional-pipeline/tasks/*.md` and ISSUES-REGISTER ISS-005 (T-081, T-082, T-084, T-102, with T-111). `.claude/commands/batch-done.md` says so.
+OD-84 STATUS: RESOLVED UNDER DELEGATION
+OD-84 CHECK: confirmed with corrections applied
+
+OD-86 (the 63 rows) is the paragraph above; OD-80 and OD-81 stand as checked on 2026-11-25.
+OD-86 STATUS: RESOLVED UNDER DELEGATION
+OD-86 CHECK: confirmed
+
+CONDITION: any session reading, relying on or carrying out OD-73 to OD-87, T-102, T-126, T-127, T-128, T-059, T-110, a pair of an identity and an access need, or the identity SCI or WHEEL.
+ACTION: (1) Build no pairs table, no body-function proposal path and no new check. (2) Do not set a pair `stated` or retire a class C row; that is the owner's mechanism. (3) T-102 runs in full with existing verbs: mint WHEEL, write the OI-03 crossings, carry or retire SCI's rows, close GAP-111 citing OD-83, then retire SCI; its batch is carry-only under OD-84. (4) T-127 waits for pull request 246's merge (or T-148); T-059 and T-110 drop the `d4452`-from-T-128 clause; T-128's file is marked withdrawn. (5) The derivation of every count here is the command beside it; do not quote one.
+DATE: 2026-11-25 — delegated resolutions after an independent check, not an owner statement.

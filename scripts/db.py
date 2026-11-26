@@ -33,8 +33,10 @@ CLI usage:
     python3 scripts/db.py --help
 """
 
+import csv
 import functools
 import hashlib
+import io
 import json
 import os
 import re
@@ -1290,10 +1292,10 @@ def get_unmined_sources(slug: str) -> list[dict]:
     return [dict(r) for r in rows]
 
 
-def _gap_applies(row, lens, jurisdiction, lang, family=frozenset(), roll=lambda j: j):
+def _gap_applies(row, lens, jurisdiction, lang, families, roll=lambda j: j):
     """A gap names the subject it is about; it is skipped for a cell only when it names a DIFFERENT code in a lens the cell
     states, or a different jurisdiction or language than the one asked for (the rule the engine applies to a gate)."""
-    return not (dbcore.lens_differs(row, lens, family)
+    return not (dbcore.lens_differs(row, lens, families)
                 or (jurisdiction and row["jurisdiction"] and roll(row["jurisdiction"]) != jurisdiction)
                 or (lang and row["language"] and row["language"].upper() != lang))
 
@@ -1343,7 +1345,7 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
             dbcore.check_jurisdiction(jurisdiction, "cell-status --jurisdiction")
             jurisdiction = roll(jurisdiction)
         lang = _check_language(conn, language, "cell-status") if language else None
-        family = dbcore.identity_family(conn, lens.get("identity_code"))
+        families = dbcore.lens_families(conn, lens)
         # ---- research: the searches logged against this parameter, and the pairs the scope owes ----------
         pj = "COALESCE(b.parent_code, se.jurisdiction)"
         # Searches are keyed on a SLUG (most rows have no parameter_id): a parameter's searches are those logged against
@@ -1380,9 +1382,9 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
             ex_sql += (" AND COALESCE((SELECT parent_code FROM base_jurisdictions WHERE jurisdiction_code = e.jurisdiction), "
                        "e.jurisdiction) = ?"); ex_args.append(jurisdiction)
         for col, val in lens.items():
-            # the identity lens counts through parent_code, as the engine gathers a cell's figures (T-055)
+            # the identity and ICF lenses count through parent_code, as the engine gathers a cell's figures (T-055, OD-75)
             ex_sql += (f" AND EXISTS (SELECT 1 FROM v_live_lens_links l WHERE l.extraction_id = e.extraction_id "
-                       f"AND l.{col} " + (f"IN {dbcore.IDENTITY_FAMILY_SQL})" if col == "identity_code" else "= ?)")); ex_args.append(val)
+                       f"AND l.{col} IN {dbcore.family_sql(conn, col)})"); ex_args.append(val)
         extractions = ids(ex_sql + " ORDER BY e.extraction_id", *ex_args)
         scan = lambda *st: ids("SELECT ref_id FROM v_scan_ledger WHERE parameter_id = ? AND status IN (%s) ORDER BY ref_id"  # noqa: E731
                                % ",".join("?" * len(st)), parameter_id, *st)
@@ -1407,11 +1409,11 @@ def cell_status(parameter_id: int, identity: str = None, icf: str = None, needs:
                      "owed": {"open_gaps": [r["gap_id"] for r in conn.execute(
                          "SELECT gap_id, identity_code, icf_code, needs_code, jurisdiction, language FROM gaps "
                          "WHERE parameter_id = ? AND status LIKE 'OPEN%' ORDER BY gap_id", (parameter_id,))
-                         if _gap_applies(r, lens, jurisdiction, lang, family, roll)]}}
+                         if _gap_applies(r, lens, jurisdiction, lang, families, roll)]}}
         # ---- specification: the live determination(s) of the cell, their history, and the open gates ------
         sp = "SELECT specification_id FROM specifications WHERE parameter_id = ?" + "".join(f" AND {c} = ?" for c in lens)
         sp_args = [parameter_id, *lens.values()]
-        _lensed = lambda r: not dbcore.lens_differs(r, lens, family)          # noqa: E731
+        _lensed = lambda r: not dbcore.lens_differs(r, lens, families)          # noqa: E731
         gates = [r["gate_id"] for r in conn.execute(
             "SELECT gate_id, identity_code, icf_code, needs_code FROM v_open_determination_gates "
             "WHERE parameter_id = ? ORDER BY gate_id", (parameter_id,)) if _lensed(r)]
@@ -2743,6 +2745,19 @@ def main():
                        help="path under retrieval-log/ whose BYTES contain --title")
     p_sit.add_argument("--session", required=True)
     p_sit.add_argument("--dry-run", action="store_true")
+
+    p_iit = sub.add_parser(
+        "import-icf-tree",
+        help="Set base_icf.parent_code and WHO titles from a persisted WHO ICF tabulation (OD-74); mints the blocks")
+    p_iit.add_argument("--payload", required=True,
+                       help="path under retrieval-log/ of the WHO simple-tabulation zip (retrieved through retrieval_log)")
+    p_iit.add_argument("--session", required=True)
+    p_iit.add_argument("--dry-run", action="store_true")
+
+    p_igl = sub.add_parser(
+        "icf-glossary",
+        help="Read-only: each ICF umbrella with the codes beneath it, WHO's titles and what links to each (OD-75)")
+    p_igl.add_argument("--umbrella", help="one umbrella by code, e.g. b750\u2013b789")
 
     p_pil = sub.add_parser(
         "add-population-icf-link",
@@ -4158,6 +4173,12 @@ def main():
         _emit(set_icf_title(
             icf_code=args.icf_code, title=args.title, title_source=args.title_source,
             title_payload=args.title_payload, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "import-icf-tree":
+        _emit(import_icf_tree(payload=args.payload, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "icf-glossary":
+        _emit(icf_glossary(args.umbrella))
 
     elif args.command == "add-population-icf-link":
         _emit(insert_population_icf_link(
@@ -10477,7 +10498,7 @@ def insert_icf_code(*, icf_code: str, title: str = None, title_source: str = Non
     section 6 wants codes AND names, so an untitled code is a gap — but a gap is not a lie,
     and `set-icf-title` is how it closes.
     """
-    icf_code = (icf_code or "").strip()
+    icf_code = dbcore.icf_key(icf_code)                      # one key for a span: the unspaced en dash the stored ranges use
     if not _ICF_CODE_RE.match(icf_code):
         raise Refusal(
             f"{icf_code!r} is not shaped like an ICF code. Expected b/d/e/s followed by "
@@ -10513,6 +10534,15 @@ def insert_icf_code(*, icf_code: str, title: str = None, title_source: str = Non
         row.update(dbcore.stamp_for(conn, "base_icf", session))
         conn.execute(f"INSERT INTO base_icf ({','.join(row)}) "
                      f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+        # A parent is derived (OD-74): once the tree has been imported, a code minted later takes the payload's parent and the
+        # children WHO places beneath it, so no umbrella's cell goes missing a figure until someone runs the import again.
+        tree_src = conn.execute("SELECT title_source FROM base_icf WHERE is_range = 1 AND title_source LIKE 'payload:%' "
+                                "ORDER BY icf_code LIMIT 1").fetchone()
+        if tree_src:
+            try:
+                _apply_icf_tree(conn, _who_tree(tree_src[0][len("payload:"):]), tree_src[0], session, titles=False)
+            except Refusal:
+                pass                      # that payload is not a WHO tabulation: the code is minted without a parent
         return {"icf_code": icf_code, "component": icf_code[0],
                 "is_range": row["is_range"], "title": title,
                 "title_source": title_source,
@@ -10533,7 +10563,7 @@ def set_icf_title(*, icf_code: str, title: str, title_source: str = None,
     payload they established it from. A correction is a different act and owes its own
     reason.
     """
-    icf_code = (icf_code or "").strip()
+    icf_code = dbcore.icf_key(icf_code)
     title = (title or "").strip()
     if not title:
         raise Refusal("--title is required and may not be blank.")
@@ -10568,6 +10598,138 @@ def set_icf_title(*, icf_code: str, title: str, title_source: str = None,
                      [title, title_source, icf_code])
         return {"icf_code": icf_code, "title": title, "title_source": title_source,
                 "title_verified": bool(title_payload), "dry_run": dry_run}
+
+
+def _who_tree(pay):
+    """The ICF tree in a persisted WHO simple-tabulation zip, parents before children, as `{code, title, parent, block}`.
+    A block's code is the span of the 3-digit categories beneath it (`b750–b789`), because the tabulation holds no range
+    string; only its level-2 and level-3 blocks are kept, level 1 being `component`. A category's parent is its nearest
+    block or category. The second chapter (the qualifiers) is not a category tree and is left."""
+    text = next((b for b in _payload_bodies(pay, "--payload", "the tree is read from the persisted bytes")
+                 if "\tClassKind\t" in b.split("\n", 1)[0]), None)
+    if text is None:
+        raise Refusal(f"--payload {str(pay)!r} REFUSED: no member of it is a WHO simple tabulation (its first row should "
+                      f"be a header row that names 'ClassKind').")
+    rows = list(csv.reader(io.StringIO(text), delimiter="\t"))
+    ik, ic, ib, it = (rows[0].index(h) for h in ("ClassKind", "Code", "BlockId", "Title"))
+    nodes, stack = [], []
+    for r in rows[1:]:
+        title, depth = r[it].strip('"'), 0
+        if r[ik] == "chapter" and nodes:
+            break
+        while title.startswith("- "):
+            title, depth = title[2:], depth + 1
+        n = {"kind": r[ik], "code": r[ic], "block": r[ib], "title": title.strip(), "kids": [], "anc": stack[:depth]}
+        del stack[depth:]
+        if stack:
+            stack[-1]["kids"].append(n)
+        stack.append(n)
+        nodes.append(n)
+    cat = lambda n: n["kind"] == "category"                                              # noqa: E731
+    umbrella = lambda n: n["kind"] == "block" and n["block"].startswith(("BlockL2", "BlockL3"))    # noqa: E731
+
+    def under(n):
+        return [x for k in n["kids"] for x in ([k["code"]] if cat(k) and re.fullmatch(r"[bdes]\d{3}", k["code"]) else []) + under(k)]
+    for n in nodes:
+        if umbrella(n):
+            cs = sorted(under(n))
+            n["code"] = f"{cs[0]}\u2013{cs[-1]}" if cs else None
+    spans = [n["code"] for n in nodes if umbrella(n) and n["code"]]
+    if len(spans) != len(set(spans)):
+        raise Refusal("two WHO blocks span the same codes, so a span cannot name a block; nothing was written.")
+    out = []
+    for n in nodes:
+        if (umbrella(n) or cat(n)) and n["code"]:
+            above = next((a for a in reversed(n["anc"]) if a["code"] and (cat(a) or umbrella(a))), None)
+            out.append({"code": n["code"], "title": n["title"], "parent": above["code"] if above else None,
+                        "block": umbrella(n)})
+    return out
+
+
+def _apply_icf_tree(conn, tree, src, session, titles=True):
+    """Write the tree's blocks, the parent of every held code and (with `titles`) the WHO titles; return what changed."""
+    held = {r["icf_code"]: dict(r) for r in conn.execute("SELECT icf_code, title, title_source, parent_code FROM base_icf")}
+    present = set(held) | {n["code"] for n in tree if n["block"]}
+    out = {"inserted": [], "parented": [], "reparented": [], "titled": [], "replaced": [], "confirmed": [], "refused": [], "unmatched": []}
+    by_code = {n["code"]: n for n in tree}
+    for n in tree:
+        code, row = n["code"], held.get(n["code"])
+        if row is None and not n["block"]:
+            continue
+        parent = n["parent"]
+        while parent is not None and parent not in present:        # a parent the project does not hold: the next one up
+            parent = by_code[parent]["parent"]
+        if row is None:
+            cols = {"icf_code": code, "component": code[0], "is_range": 1, "title": n["title"], "title_source": src,
+                    "parent_code": parent, **dbcore.stamp_for(conn, "base_icf", session)}
+            conn.execute(f"INSERT INTO base_icf ({','.join(cols)}) VALUES ({','.join('?' * len(cols))})", list(cols.values()))
+            out["inserted"].append(code)
+            held[code] = {"title": n["title"], "title_source": src, "parent_code": parent}
+            continue
+        if row["parent_code"] != parent:       # derived data: the payload's nearest present ancestor, whatever was stored
+            conn.execute("UPDATE base_icf SET parent_code=? WHERE icf_code=?", [parent, code])
+            (out["reparented"] if row["parent_code"] else out["parented"]).append(
+                [code, row["parent_code"], parent] if row["parent_code"] else code)
+        if not titles:
+            continue
+        old, same = row["title"], (row["title"] or "").strip().casefold() == n["title"].casefold()
+        if old and not same and (row["title_source"] or "").startswith("payload:"):
+            out["refused"].append(f"{code}: title {old!r} is payload-sourced and differs from {n['title']!r}")
+        elif not same:
+            conn.execute("UPDATE base_icf SET title=?, title_source=? WHERE icf_code=?", [n["title"], src, code])
+            (out["replaced"] if old else out["titled"]).append([code, old, row["title_source"], n["title"]] if old else code)
+        elif not (row["title_source"] or "").startswith("payload:"):   # the payload confirms the stored title: say so
+            conn.execute("UPDATE base_icf SET title=?, title_source=? WHERE icf_code=?", [n["title"], src, code])
+            out["confirmed"].append([code, old, row["title_source"]])
+    out["unmatched"] = sorted(c for c in held if c not in by_code)
+    return out
+
+
+def import_icf_tree(*, payload: str, session: str, dry_run: bool = False):
+    """Set `base_icf.parent_code` and the WHO title from a persisted WHO tabulation (OD-74): every level-2 and level-3
+    block becomes a row (inserted if absent), and each code the project already holds takes its parent and, where it has
+    none, its title. Nothing else is minted: the rest of the classification arrives only if the owner says so.
+
+    DERIVED, NOT TYPED (rule 8): spans, parents and titles come from the payload; nothing is asked of the operator. A title
+    is compared with THAT code's own row, not searched for in the bytes. A parent that differs from the payload's is reset (it
+    is derived data), so the verb is safe to run again. A stored title the payload confirms takes the payload as its source
+    (the old title and source are returned). A stored title that differs from WHO's is replaced when its source is not a
+    payload (the old value and its source are returned, to be written in the data migration's header) and refused when its
+    source is one. A stored code or range the payload does not name (for example `d910\u2013d920`, which is not a WHO block) is
+    left as it is and listed. `add-icf-code` parents a code it mints by the same rule, so a new code is never orphaned."""
+    src = f"payload:{payload}"
+    with connect(dry_run) as conn:
+        out = _apply_icf_tree(conn, _who_tree(payload), src, session)
+        out.update(payload=str(payload), dry_run=dry_run)
+        return out
+
+
+def icf_glossary(umbrella: str = None):
+    """Read-only (OD-75): each ICF umbrella, a code that has others under it through `parent_code`, with every code beneath
+    it, WHO's title, and how many live rows of `access_need_icf`, `identity_icf_map` (frozen by OD-77, so labelled) and `identity_need_icf` (reviewed, and
+    pending) name the code. `--umbrella` names one umbrella (any code with children, not only a root)."""
+    umbrella = dbcore.icf_key(umbrella) if umbrella else None
+    with connect(readonly=True) as conn:
+        roots = [r[0] for r in conn.execute(
+            "SELECT icf_code FROM base_icf WHERE icf_code IN (SELECT parent_code FROM base_icf) "
+            + ("AND icf_code = ?" if umbrella else "AND parent_code IS NULL") + " ORDER BY icf_code", [umbrella] if umbrella else [])]
+        if umbrella and not roots:
+            raise Refusal(f"{umbrella!r} is not an ICF code with codes beneath it. Umbrellas: db.py icf-glossary.")
+        out = []
+        for root in roots:
+            rows = [dict(r) for r in conn.execute(
+                "WITH RECURSIVE t(code, depth, path) AS (SELECT ?, 0, '/' || ? || '/' UNION ALL SELECT c.icf_code, t.depth + 1, t.path || "
+                "c.icf_code || '/' FROM base_icf c JOIN t ON c.parent_code = t.code "
+                "WHERE instr(t.path, '/' || c.icf_code || '/') = 0) "
+                "SELECT t.code, t.depth, b.title, (SELECT COUNT(*) FROM access_need_icf WHERE icf_code = t.code) AS access_need_icf_rows, "
+                "(SELECT COUNT(*) FROM identity_icf_map WHERE icf_code = t.code AND retired_at IS NULL) AS \"identity_icf_map_rows (frozen, OD-77)\", "
+                "(SELECT COUNT(*) FROM identity_need_icf WHERE icf_code = t.code AND retired_at IS NULL AND state IN ('stated','provisional')) "
+                "AS identity_need_icf_reviewed, "
+                "(SELECT COUNT(*) FROM identity_need_icf WHERE icf_code = t.code AND retired_at IS NULL AND state = 'pending') "
+                "AS identity_need_icf_pending "
+                "FROM t JOIN base_icf b ON b.icf_code = t.code ORDER BY t.path", [root, root])]
+            out.append({"umbrella": root, "title": rows[0]["title"], "codes": rows[1:]})
+        return {"umbrellas": out, "count": len(out)}
 
 
 def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
@@ -10737,23 +10899,10 @@ def resolve_determination_gate(*, gate_id: int, rationale: str, session: str,
                 "dry_run": dry_run}
 
 
-# The three lenses (owner 2026-08-28, the medical lens deleted 2026-11-16; CHECK relaxed to "at least one" by D-0182).
-# Each column, the base registry its real FK points into, and that registry's key.
-# DERIVED FROM THE SCHEMA, not a vocabulary restated in code: the registries ARE the
-# vocabulary (CLAUDE.md §4). Mirrors assess_cell.LENS_COLUMNS deliberately — the
-# extraction and the determination it feeds must name the lens the same way, or the
-# hand-off needs a translation nobody wrote.
-_LENS_COLUMNS = {
-    "identity_code": ("base_taxonomy_identity", "identity_code"),
-    # RE-POINTED 2026-09-13 by owner ruling ("keep the ICF lens, give it real ICF
-    # codes"), executed by migration 081. It read ("axes", "axis_code") until then, so
-    # the column called `icf_code` resolved to an AX- functional-demand code -- which
-    # the same day's ruling bans outright: "'AX-' for ICF should never ever exist
-    # anywhere". The demand layer is simply no longer a lens, and migration `drop_axes`
-    # dropped its tables.
-    "icf_code": ("base_icf", "icf_code"),
-    "needs_code": ("access_needs", "need_code"),
-}
+# The three lenses: each lens column, the base registry its real FK points into, and that registry's key. ONE home, `dbcore.LENS_COLUMNS`
+# (the re-pointing of the ICF lens at `base_icf`, owner 2026-09-13, migration 081, is recorded there); the extraction and the determination
+# it feeds name the lens the same way because they read the same dict.
+_LENS_COLUMNS = dbcore.LENS_COLUMNS
 
 # Columns on source_value_extractions whose CHECK declares a closed vocabulary. The
 # MEMBERS are never listed here — dbcore.check_values() reads each column's own CHECK.

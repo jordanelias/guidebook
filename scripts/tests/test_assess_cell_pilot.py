@@ -57,7 +57,7 @@ def _default_scope(evidence_type, tier):
 
 
 def synth_db(sources, parameter_id=1, extractions_per_source=1,
-             icf_links=(), gates=(), direction=None, row_lens=({"identity_code": "MOB"},), family=()):
+             icf_links=(), gates=(), direction=None, row_lens=({"identity_code": "MOB"},), family=(), icf_family=()):
     """Minimal in-memory schema for determine(): evidence_sources +
     source_value_extractions + evidence_population_match.
 
@@ -121,6 +121,7 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
         accessibility_direction TEXT, direction_rationale TEXT);
       CREATE TABLE base_taxonomy_identity (identity_code TEXT PRIMARY KEY,
         parent_code TEXT REFERENCES base_taxonomy_identity(identity_code));
+      CREATE TABLE base_icf (icf_code TEXT PRIMARY KEY, parent_code TEXT REFERENCES base_icf(icf_code));
       CREATE TABLE determination_gates (
         gate_id INTEGER PRIMARY KEY AUTOINCREMENT, parameter_id INTEGER,
         identity_code TEXT, icf_code TEXT, needs_code TEXT,
@@ -163,6 +164,10 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
         for code in (parent, child):
             conn.execute("INSERT OR IGNORE INTO base_taxonomy_identity (identity_code) VALUES (?)", (code,))
         conn.execute("UPDATE base_taxonomy_identity SET parent_code = ? WHERE identity_code = ?", (parent, child))
+    for child, parent in icf_family:         # (child, parent) ICF codes; empty by default, so every code is a root (OD-75)
+        for code in (parent, child):
+            conn.execute("INSERT OR IGNORE INTO base_icf (icf_code) VALUES (?)", (code,))
+        conn.execute("UPDATE base_icf SET parent_code = ? WHERE icf_code = ?", (parent, child))
     for g in gates:
         conn.execute("INSERT INTO determination_gates (parameter_id, identity_code, verdict, "
                      "trigger_tier, trigger_evidence_type, detail, raised_at, "
@@ -1475,6 +1480,29 @@ def main():
     expect("T055-08: a population match graded against a child code is read for that child and never for its parent",
            population_match(_pc, "REF-KID", "KIDA") is not None and population_match(_pc, "REF-KID", "PAR") is None,
            f"{population_match(_pc, 'REF-KID', 'KIDA')} {population_match(_pc, 'REF-KID', 'PAR')}")
+
+    # OD-75 (migration 167): the ICF lens counts through base_icf.parent_code as the identity lens does, so a cell keyed on an
+    # umbrella gathers the figures linked to any code beneath it.
+    _ifam = [("b765", "b750\u2013b789"), ("b770", "b750\u2013b789"), ("b750\u2013b789", "b710\u2013b799")]
+    _isrc = [dict(_T55, lenses=[{"icf_code": "b765"}]), dict(_T55, lenses=[{"icf_code": "b770"}]),
+             dict(_T55, lenses=[{"icf_code": "b210"}]), dict(_T55, lenses=[{"icf_code": "b765"}, {"icf_code": "b770"}])]
+    def _icf(cell, fam):
+        try:
+            return determine(synth_db(_isrc, icf_family=fam, direction="lower_is_better"), 1, {"icf_code": cell}, "syn-slug", "od75")
+        except Refusal as e:
+            return {"links": [], "n_extractions_in_lens": -1, "refused": str(e)[:120]}
+    _iu, _ic = _icf("b750\u2013b789", _ifam), _icf("b765", _ifam)
+    expect("ICF-01: an umbrella's cell gathers the figures of every code beneath it, once each, and not an unrelated code's",
+           _ids(_iu) == [1, 2, 4] and _iu["n_extractions_in_lens"] == 3, f"{_ids(_iu)} {_iu.get('n_extractions_in_lens')} {_iu.get('refused')}")
+    expect("ICF-02: a code's cell gathers only its own figures, never the umbrella's other codes",
+           _ids(_ic) == [1, 4], f"{_ids(_ic)} {_ic.get('refused')}")
+    expect("ICF-03: with no parent written an ICF cell gathers exactly what it did before the hierarchy, its own code's figures (the premise "
+           "of leaving RULE_VERSION alone; `specifications` holds no ICF-keyed row, so no determination reads the new rule)",
+           _ids(_icf("b765", ())) == [1, 4] and _ids(_icf("b770", ())) == [2, 4], f"{_ids(_icf('b765', ()))} {_ids(_icf('b770', ()))}")
+    _ig = lambda cell: dbcore.lens_differs({"icf_code": "b765"}, {"icf_code": cell}, dbcore.lens_families(synth_db([], icf_family=_ifam), {"icf_code": cell}))  # noqa: E731
+    expect("ICF-04: a gate or gap on b765 reaches the cell of its umbrella and its own, and not another code's",
+           not _ig("b750\u2013b789") and not _ig("b765") and not _ig("b710\u2013b799") and _ig("b770") and _ig("b210"),
+           f"{_ig('b750\u2013b789')} {_ig('b765')} {_ig('b770')}")
 
     def _cell19(sources, cell, **kw):
         return determine(synth_db(sources, direction="lower_is_better", **kw), 1, cell,
