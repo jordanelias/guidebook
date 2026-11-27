@@ -1515,6 +1515,109 @@ with scratch() as c:
         record("T080-06", "a deferred search (not run) leaves its cell on the owed list and a search that ran takes it off (migration 137)",
                _e is None and _e2 is None and _n0 == 1 and _n1 == 1 and _n2 == 0, (_e, _e2, _n0, _n1, _n2))
 
+print("Section T081A: a search logged as run whose request returned no result list is amended to deferred (OD-45)")
+# Every row is chosen by query on a scratch copy; a state no writer builds (an admission edge on a zero-result search)
+# is made by HAND and marked TASK-FIXTURE. A row whose parameter reaches it in cell_status is the subject.
+_has81 = "set_deferred_reason" in inspect.signature(db.amend_search).parameters
+_ZERO81 = ("SELECT se.exec_id, COALESCE(se.parameter_id, (SELECT MIN(e.parameter_id) FROM source_value_extractions e "
+           "WHERE e.slug = se.slug)) AS pid FROM search_executions se WHERE se.results_found = 0 AND se.deferred_reason "
+           "IS NULL AND se.absence_class IS NULL AND NOT EXISTS (SELECT 1 FROM search_admissions a WHERE a.exec_id = "
+           "se.exec_id) ORDER BY (pid IS NULL), se.exec_id")
+_row81 = lambda c, eid: tuple(c.execute("SELECT deferred_reason, absence_class, findings_note FROM search_executions "
+                                        "WHERE exec_id=?", (eid,)).fetchone())
+_NOTE81 = "TASK-FIXTURE T081A: the request returned HTTP 429, no result list"
+_cands81 = q(_ZERO81)
+if not _cands81 or _cands81[0][1] is None:
+    for _t in ("T081A-01", "T081A-02", "T081A-03", "T081A-04"):
+        skip(_t, "no zero-result, undeferred, unclassed search that a parameter reaches")
+else:
+    _E81, _P81 = _cands81[0][0], _cands81[0][1]
+    if feature("T081A-01", "amend-search --set-deferred-reason sets the reason and moves the row from examined_empty to deferred",
+               _has81, "amend_search(set_deferred_reason=...)"):
+        with scratch() as c:
+            _before = db.cell_status(_P81)["stages"]["research"]
+            _res, _err = ok(db.amend_search, _E81, _NOTE81, session=S, dry_run=False,
+                            set_deferred_reason="TASK-FIXTURE HTTP 429")
+            _after = db.cell_status(_P81)["stages"]["research"]
+            _dr, _ac, _fn = _row81(c, _E81)
+            _listed = c.execute("SELECT COUNT(*) FROM v_deferred_acts WHERE kind='search' AND reason=?",
+                                ("TASK-FIXTURE HTTP 429",)).fetchone()[0]
+            record("T081A-01", "amend-search --set-deferred-reason sets the reason and moves the row from examined_empty to deferred",
+                   _err is None and _dr == "TASK-FIXTURE HTTP 429" and _ac is None and _NOTE81 in (_fn or "")
+                   and _E81 in _before["examined_empty"] and _E81 not in _before["never_examined"]["deferred_searches"]
+                   and _E81 not in _after["examined_empty"] and _E81 in _after["never_examined"]["deferred_searches"]
+                   and _listed == 1 and (_res or {}).get("deferred_reason") == "TASK-FIXTURE HTTP 429",
+                   (_err, _res, (_dr, _ac), _before["examined_empty"], _after["never_examined"]["deferred_searches"], _listed))
+    if feature("T081A-02", "--set-deferred-reason refuses a blank reason, a found, classed, already-deferred or admitting row, "
+               "and both flags in one call, writing nothing", _has81, "amend_search(set_deferred_reason=...)"):
+        _cls81 = sorted(dbcore.schema_choices("search_executions", "absence_class"))
+        _out81 = {}
+        with scratch() as c:
+            _found = c.execute("SELECT exec_id FROM search_executions WHERE results_found > 0 ORDER BY exec_id LIMIT 1").fetchone()
+            _defer = c.execute("SELECT exec_id FROM search_executions WHERE deferred_reason IS NOT NULL ORDER BY exec_id LIMIT 1").fetchone()
+            _zero = [r[0] for r in c.execute(_ZERO81)]
+            _classed = _zero[1] if len(_zero) > 1 else None
+            if _classed is not None:                          # the sanctioned writer classes it on this copy
+                db.amend_search(_classed, "TASK-FIXTURE T081A: classed", session=S, dry_run=False, set_absence_class=_cls81[0])
+            _admit = _zero[2] if len(_zero) > 2 else None
+            if _admit is not None:                            # HAND: no writer links a zero-result search to an admission
+                hand("INSERT INTO search_admissions (exec_id, ref_id, created_at, created_by_session) VALUES "
+                     "(?, (SELECT MIN(ref_id) FROM evidence_sources), '2026-11-27', 'TASK-FIXTURE')", _admit)
+            cases = {"blank": (_E81, {"set_deferred_reason": "   "}, "blank"),
+                     "found": (_found and _found[0], {"set_deferred_reason": "TASK-FIXTURE x"}, "results_found="),
+                     "classed": (_classed, {"set_deferred_reason": "TASK-FIXTURE x"}, "cannot assert both"),
+                     "deferred": (_defer and _defer[0], {"set_deferred_reason": "TASK-FIXTURE x"}, "write-once"),
+                     "admitted": (_admit, {"set_deferred_reason": "TASK-FIXTURE x"}, "search_admissions"),
+                     "both": (_E81, {"set_deferred_reason": "TASK-FIXTURE x", "set_absence_class": _cls81[0]}, "cannot assert both")}
+            for name, (eid, kw, words) in cases.items():
+                if eid is None:
+                    _out81[name] = "SKIPPED-NO-FIXTURE"
+                    continue
+                was = _row81(c, eid)
+                msg = refusal(db.amend_search, eid, _NOTE81 + f" ({name})", session=S, dry_run=False, **kw)
+                _out81[name] = (bool(msg) and words in msg and "Nothing was written" in msg and _row81(c, eid) == was, msg)
+        record("T081A-02", "--set-deferred-reason refuses a blank reason, a found, classed, already-deferred or admitting row, "
+               "and both flags in one call, writing nothing",
+               all(v != "SKIPPED-NO-FIXTURE" and v[0] for v in _out81.values()), _out81)
+with scratch() as c:
+    _d81 = c.execute("SELECT exec_id FROM search_executions WHERE deferred_reason IS NOT NULL AND absence_class IS NULL "
+                     "AND results_found = 0 ORDER BY exec_id LIMIT 1").fetchone()
+    if _d81 is None:
+        skip("T081A-03", "no deferred zero-result search on the live database")
+    else:
+        _was = _row81(c, _d81[0])
+        _msg = refusal(db.amend_search, _d81[0], _NOTE81 + " (converse)", session=S, dry_run=False,
+                       set_absence_class=sorted(dbcore.schema_choices("search_executions", "absence_class"))[0])
+        _now = _row81(c, _d81[0])
+        record("T081A-03", "--set-absence-class refuses a row already deferred (it says the search was not run) and writes nothing",
+               bool(_msg) and "cannot assert both" in _msg and "Nothing was written" in _msg and _now == _was,
+               (_msg, "absence_class after the call:", _now[1]))
+
+if feature("T081A-05", "two hand-built states the readers see as deferred or admitted are refused like their typed twins: "
+           "results_admitted set with no admission link, and deferred_reason set to the empty string", _has81,
+           "amend_search(set_deferred_reason=...)"):
+    with scratch() as c:
+        _z81 = [r[0] for r in c.execute(_ZERO81)]
+        _out5 = {}
+        if len(_z81) >= 2:
+            hand("UPDATE search_executions SET results_admitted=2 WHERE exec_id=?", _z81[0])   # HAND: a count with no link
+            hand("UPDATE search_executions SET deferred_reason='' WHERE exec_id=?", _z81[1])   # HAND: every reader tests IS NULL
+            for name, (eid, kw, words) in {
+                    "count": (_z81[0], {"set_deferred_reason": "TASK-FIXTURE x"}, "results_admitted"),
+                    "empty": (_z81[1], {"set_absence_class": sorted(dbcore.schema_choices("search_executions", "absence_class"))[0]},
+                              "cannot assert both")}.items():
+                was = _row81(c, eid)
+                msg = refusal(db.amend_search, eid, _NOTE81 + f" ({name})", session=S, dry_run=False, **kw)
+                _out5[name] = (bool(msg) and words in msg and "Nothing was written" in msg and _row81(c, eid) == was, msg)
+        record("T081A-05", "two hand-built states the readers see as deferred or admitted are refused like their typed twins",
+               len(_out5) == 2 and all(v[0] for v in _out5.values()), _out5)
+_h81 = cli("amend-search", "--help")
+_c81 = cli("amend-search", "--exec-id", str(_cands81[0][0]) if _cands81 else "1", "--append-note", _NOTE81,
+           "--set-deferred-reason", "  ", "--session", S, "--dry-run")
+record("T081A-04", "through the CLI, amend-search --help lists --set-deferred-reason and a blank reason is refused with the REFUSING prefix",
+       "--set-deferred-reason" in _h81.stdout and _c81.returncode != 0 and _c81.stderr.lstrip().startswith("REFUSING")
+       and "Nothing was written" in _c81.stderr, (_c81.returncode, _c81.stderr[-300:]))
+
 print("Section T073: a fixture retrieval root leaves out a folder filed under an id the database has not minted")
 import io as _io
 _hw = dbcore.ref_id_high_water(sqlite3.connect(f"file:{DB}?mode=ro", uri=True))

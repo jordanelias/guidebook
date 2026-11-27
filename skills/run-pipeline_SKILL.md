@@ -134,8 +134,11 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   ledger for those. Keep empties. R14's class (query-shape / wrong index / genuine absence) is a column,
   REQUIRED by `log-search` when `--results-found` is 0 (a request that returned no result list was not run: log it with
   `--deferred-reason` instead, T-080): `--absence-class` (or, for a row already written, `amend-search --exec-id N --append-note … --set-absence-class`; `--append-note` is
-  required on every `amend-search`, the class is write-once, and only a search that found nothing takes it); the batch
-  gate reads the column. `coverage --slug` and `v_coverage_priority` (the unsearched language × jurisdiction anti-join)
+  required on every `amend-search`, the class is write-once, and only a search that found nothing takes it). A row
+  already written as run whose request returned no result list takes `amend-search --exec-id N --append-note …
+  --set-deferred-reason '<the failure>'` instead (OD-45; write-once, refused on a row that found, admitted or was
+  classed, and a deferred row takes no class). The batch
+  gate reads `deferred_reason`. `coverage --slug` and `v_coverage_priority` (the unsearched language × jurisdiction anti-join)
   show what is unsearched.
 - **Citation mining** of every confirmed T1–T3 anchor, backward and forward, to the depth R2 requires: `citation-miner`,
   yields via `scripts/research/mining_screen.py`; open gaps via `gap-driven-mining`. `unmined --slug` prints each

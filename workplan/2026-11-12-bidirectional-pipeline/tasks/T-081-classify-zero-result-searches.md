@@ -21,7 +21,7 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 ## 2. Preconditions
 
 - **The integration base.** `origin/main` once the workplan's pull request is merged, otherwise the remote branch carrying the newest commit to this folder (the set-up block's first line finds it).
-- **Tasks that must be merged to the integration base first:** T-080 merged (it carries OD-45, as resolved under delegation, into the writer; option (c) adds no cause to the column's CHECK). Check: `git log "$BASE" --oneline | grep -F 'zero-result search states its cause'`.
+- **Tasks that must be merged to the integration base first:** T-080 merged (it carries OD-45, as resolved under delegation, into the writer; option (c) adds no cause to the column's CHECK). Check: `git log "$BASE" --oneline | grep -F 'zero-result search states its cause'`. The `amend-search --set-deferred-reason` flag merged (section 4, item 1). Check: `python3 scripts/db.py amend-search --help | grep -c set-deferred-reason` prints a non-zero count (the flag appears on the usage line and the option line).
 - **Owner decisions:** none in the register. Also OI-55 (1), how a carry-only research batch (it searches nothing and admits nothing) is gated: this batch is one, exactly as T-102 and T-111. The ruling is OD-84 (delegated, check confirmed; `git grep -n -E '^OD-84' references/project-standards.md`): a carry-only batch is red by construction on R1, R9a and R9b of `research_batch_dod.py`; record that red, and only that, in the pull request body; every other rule must pass; the task's own tests and the rebuild gate it; it does not move `sessions/LATEST-RESEARCH`.
 - **Delegated resolutions this task rests on.** OD-45 (the question T-080 carries into the writer): a logged search whose request never returned a result list is a search not run, deferred, with no absence class, and owed a re-run (option (c)). A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12, applied at the owner's question of 2026-11-13 (ledger: `grep -n -F "Delegated resolution 2026-11-13 — OD-45" references/project-standards.md`): not the owner's words, reversible by the owner, checked by a second, independent Opus-class instance and confirmed with corrections applied, and read only through the ledger's gate (`grep -n -F "Convention 2026-11-12 — how a delegated resolution" references/project-standards.md`). Run it before you start and again before you open the pull request; if any line prints CLOSED, stop (section 9):
 ```
@@ -75,7 +75,7 @@ If the output differs (other than a value T-080 added), the ground has moved: st
 1. **For each row the command prints, read its whole `findings_note` and its `query_text`, and decide its cause under R14 and OD-45 as resolved under delegation (section 2).** Write it with `db.py amend-search --exec-id N --set-absence-class <value> --append-note "<one sentence: which words of the note decide it>" --session "$STEM"`. The verb refuses a value outside the column's CHECK and a row already classed.
    - A note that names the cause in R14's own words decides it (for example a note that calls the zero "GENUINE WELL-FORMED" with the anchor resolved, or "ZERO FROM THIS INDEX, NOT ABSENCE" because another index holds citations).
    - A note that names one cause in words that describe another (a "genuine absence from this index" because the catalogue does not hold that kind of document reads as the wrong index) is decided by what the note says happened, and the appended sentence quotes those words.
-   - A request that never returned a result list (blocked, quota, cut off: on 2026-11-13 exec ids 87, 133, 138 and 191 by their notes) is, under OD-45 as resolved, a search not run: a deferral owed a re-run, with nothing in this column. A search logged as run cannot become a deferral by amendment (`amend-search` has no deferred-reason flag: `python3 scripts/db.py amend-search --help`), so the row is not amended here: list it in the pull request as a deferral owed a re-run, with its reason in the note's words. Exec id 81 calls itself "an R14 query-shape failure of a kind R14 does not name": judge it on its own words, not as one of these.
+   - A request that never returned a result list (blocked, quota, cut off: on 2026-11-13 exec ids 87, 133, 138 and 191 by their notes) is, under OD-45 as resolved, a search not run: a deferral owed a re-run, with nothing in this column. Write it with `db.py amend-search --exec-id N --set-deferred-reason "<the failure, in the note's words>" --append-note "<which words of the note decide it>" --session "$STEM"` (it refuses a row that found, admitted or was classed), and list it in the pull request as a deferral owed a re-run. Exec id 81 calls itself "an R14 query-shape failure of a kind R14 does not name": judge it on its own words, not as one of these.
 2. **A row whose note does not let you decide** is not classed: list it in the pull request with the note's words and leave it. Do not guess a cause.
 3. Nothing else changes: no new search, no deletion, no edit of `results_found` or of a note's existing text.
 
@@ -92,7 +92,7 @@ A sentence that says a stored zero-result search has no typed cause becomes fals
 
 ## 6. Verification
 
-**Red before, green after.** Before: section 2's count is above 0. After, on the migrated database: every row the command printed carries a cause, except those listed under item 1 (c) or item 2 with their reason; `select absence_class, count(*) from search_executions where results_found=0 and deferred_reason is null group by 1` shows the distribution. `research_dod`'s R14 still passes (it accepts the column).
+**Red before, green after.** Before: section 2's count is above 0. After, on the migrated database: every row the command printed carries a cause or, under item 1's third bullet, a `deferred_reason` (it then leaves the command's output), except those listed under item 2 with their reason; `select absence_class, count(*) from search_executions where results_found=0 and deferred_reason is null group by 1` shows the distribution. `research_dod`'s R14 still passes (it accepts the column).
 
 **The gates, once each, after the migration is applied and before the commit:**
 ```
@@ -112,13 +112,13 @@ git commit -m "research-log-manager: state the R14 cause on each stored zero-res
 
 ## 8. What you must NOT do
 
-- Do not start before T-080 is merged and the delegated resolution is confirmed (the gate of section 2 prints OPEN).
+- Do not start before T-080 and `amend-search --set-deferred-reason` are merged (section 2) and the delegated resolution is confirmed (the gate of section 2 prints OPEN).
 - Do not class a row whose note does not decide it; do not delete or re-run a search; do not rewrite a note.
 - No tooling in this pull request (rule 10). Do not write `data/guidebook.db` except by the write path. Do not run `run_checks.py --all`, `bootstrap.sh` or `pip install -r requirements.txt`. Do not push to `main`, rebase or force-push; do not subscribe to pull-request activity.
 
 ## 9. Stop conditions
 
-Stop and report when: a precondition is unmet; the evidence differs from section 3; `amend-search` refuses for a reason other than a value or an already-classed row; a check green before is red after; the rebuild does not reproduce the database; you would have to guess a cause.
+Stop and report when: a precondition is unmet; the evidence differs from section 3; `amend-search` refuses for a reason other than a value or an already-classed row (a refusal of a deferral on one of the four rows section 3 fixes as zero-result, unclassed, undeferred and unadmitted means the ground has moved: stop); a check green before is red after; the rebuild does not reproduce the database; you would have to guess a cause.
 
 ## 10. Rollback
 

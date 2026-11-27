@@ -97,6 +97,11 @@ After multilingual-research completes:
                         a query would be back-translation, forbidden by R11' \
      --session {session_stem}
    ```
+   A row already logged as run whose request returned no result list is
+   amended, not logged again: `amend-search --exec-id N --append-note '…'
+   --set-deferred-reason '<the failure>' --session {session_stem}` (write-once;
+   refused on a row that found, admitted or was classed).
+
    `deferred_reason` is what makes **"not looked for"** different from
    **"nothing found"**. A deferred row does not count its pair as searched:
    the pair stays on the owed list (`coverage --slug`, `v_coverage_priority`). That distinction is the thing the whole pipeline exists
