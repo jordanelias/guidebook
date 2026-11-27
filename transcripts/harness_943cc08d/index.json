@@ -23,14 +23,14 @@
   {
     "started": "2026-11-27T17:26:51",
     "role": "antagonist",
-    "bytes": 1788143,
+    "bytes": 1916927,
     "agent_id_prefix": "a6b6ffe0",
     "file": "2026-11-27T17-26-51_antagonist_a6b6ffe0.jsonl"
   },
   {
     "started": "2026-11-27T18:02:19",
     "role": "antagonist",
-    "bytes": 490859,
+    "bytes": 1310626,
     "agent_id_prefix": "a69d3234",
     "file": "2026-11-27T18-02-19_antagonist_a69d3234.jsonl"
   }
