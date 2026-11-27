@@ -198,21 +198,21 @@
   {
     "started": "2026-11-27T04:55:47",
     "role": "antagonist",
-    "bytes": 770682,
+    "bytes": 1195322,
     "agent_id_prefix": "a6250fc6",
     "file": "2026-11-27T04-55-47_antagonist_a6250fc6.jsonl"
   },
   {
     "started": "2026-11-27T04:55:47",
     "role": "antagonist",
-    "bytes": 765775,
+    "bytes": 1265712,
     "agent_id_prefix": "a95b5061",
     "file": "2026-11-27T04-55-47_antagonist_a95b5061.jsonl"
   },
   {
     "started": "2026-11-27T04:59:25",
     "role": "other",
-    "bytes": 737923,
+    "bytes": 1317324,
     "agent_id_prefix": "a5f1f596",
     "file": "2026-11-27T04-59-25_other_a5f1f596.jsonl"
   }
