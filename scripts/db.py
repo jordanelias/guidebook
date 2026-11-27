@@ -904,8 +904,8 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
     # R8 says log every query WITH the prior written before you run it. A flag that
     # is merely available is not that rule: batch 05 logged 43 searches and CHECK 7
     # reports 9 verified citations with no prior, permanently, because
-    # search_executions is append-only (R8) and `amend-search` writes only
-    # findings_note and harm_finding -- so those nine can never be cleared by any
+    # search_executions is append-only (R8) and `amend-search` cannot write
+    # prior_expectation -- so those nine can never be cleared by any
     # sanctioned path. The check went red forever, and a check that is red forever
     # is one its reader learns to skip: exactly the cry-wolf failure this session
     # fixed in the fidelity checker and then rebuilt here. Refusing at the writer is
@@ -1905,7 +1905,8 @@ def main():
     p_cs.add_argument("--dry-run", action="store_true")
 
     p_am = sub.add_parser("amend-search",
-                          help="APPEND a dated correction to a logged search's findings_note")
+                          help="APPEND a dated correction to a logged search's findings_note, and "
+                               "set the typed columns its flags name")
     p_am.add_argument("--exec-id", required=True, type=int)
     p_am.add_argument("--append-note", required=True, dest="append_note",
                       help="Appended after a '|| CORRECTED <date>:' marker. The existing "
@@ -1934,7 +1935,12 @@ def main():
     p_am.add_argument("--set-absence-class",
                       choices=dbcore.schema_choices("search_executions", "absence_class"),
                       help="R14: classify a zero-yield search (query-shape failure / wrong index / "
-                           "genuine absence). Write-once; refused when the search found anything.")
+                           "genuine absence). Write-once; refused when the search found anything or is deferred.")
+    p_am.add_argument("--set-deferred-reason",
+                      help="OD-45: a search logged as run whose request returned no result list (blocked, "
+                           "rate-limited, reset, a stub page) was not run. Records the failure in deferred_reason "
+                           "(free text; the column has no CHECK). Write-once; refused when the search found or "
+                           "admitted anything or carries an absence class.")
     p_am.add_argument("--set-harm-finding", action="store_true",
                       help="Raise harm_finding 0 -> 1. R7 makes harm first-class, so a "
                            "search logged with the flag down that did surface harm has an "
@@ -3917,7 +3923,8 @@ def main():
                            set_origin_pass_id=args.set_origin_pass_id,
                            add_result_artefacts=args.add_result_artefacts,
                            clear_target=args.clear_target,
-                           set_absence_class=args.set_absence_class))
+                           set_absence_class=args.set_absence_class,
+                           set_deferred_reason=args.set_deferred_reason))
 
     elif args.command == "amend-gap":
         # _emit, not a bare assignment: until 2026-09-25 both of these assigned the
@@ -5280,8 +5287,15 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
                  set_target_evidence_type: str = None,
                  set_origin: str = None, set_mined_ref_id: str = None,
                  set_origin_pass_id: int = None, add_result_artefacts=None,
-                 clear_target: bool = False, set_absence_class: str = None):
-    """APPEND a correction to a logged search's findings_note. Never rewrite it.
+                 clear_target: bool = False, set_absence_class: str = None,
+                 set_deferred_reason: str = None):
+    """APPEND a correction to a logged search's findings_note, and set the typed columns its flags name. Never
+    rewrite the note.
+
+    --set-deferred-reason (OD-45 ACTION (1), (2) and (4)). A search logged as run whose request returned no result
+    list (a block, a rate limit, a reset, a stub page) was not run, and every zero-result reader counts it as a search
+    that found nothing until deferred_reason says otherwise. Write-once, and refused on a row that ran: one with
+    results, an admission edge or an absence class. The re-run it is owed is a new row (R8).
 
     --clear-target (2026-09-27, exec 77 / DR-2026-09-26 5.2d). --set-origin's own
     refusal below requires target_tier/target_evidence_type/target_scope to be NULL
@@ -5318,15 +5332,16 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
         row = conn.execute("SELECT exec_id, findings_note, harm_finding, "
                            "target_evidence_type, mining_direction, origin, "
                            "mined_ref_id, origin_pass_id, query_text, "
-                           "target_tier, target_scope, results_found, absence_class "
-                           "FROM search_executions WHERE exec_id=?", [exec_id]).fetchone()
+                           "target_tier, target_scope, results_found, results_admitted, absence_class, "
+                           "deferred_reason FROM search_executions WHERE exec_id=?", [exec_id]).fetchone()
         if row is None:
             raise Refusal(f"exec {exec_id}: no such search execution.")
         stamp = audit(session)
         marker = f" || CORRECTED {stamp['created_at'][:10]}: "
         any_setter = (set_harm_finding or set_target_evidence_type or set_origin
                      or set_mined_ref_id or set_origin_pass_id is not None
-                     or add_result_artefacts or clear_target or set_absence_class)
+                     or add_result_artefacts or clear_target or set_absence_class
+                     or set_deferred_reason is not None)
         duplicate = note in (row["findings_note"] or "")
         if duplicate and not any_setter:
             return {"exec_id": exec_id, "appended": False,
@@ -5505,9 +5520,40 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
             if row["absence_class"]:
                 raise Refusal(f"exec {exec_id}: absence_class is already {row['absence_class']!r}. "
                               f"It is write-once.")
+            if row["deferred_reason"] is not None or set_deferred_reason is not None:
+                raise Refusal(f"exec {exec_id}: deferred_reason says this search was not run, and an absence class says "
+                              f"it ran and found nothing. A row cannot assert both (OD-45): pass the one that is true, "
+                              f"and log a re-run as a new row with log-search. Nothing was written.")
             conn.execute("UPDATE search_executions SET absence_class=? WHERE exec_id=?",
                          [set_absence_class, exec_id])
             absence_set = set_absence_class
+
+        deferral_set = None
+        if set_deferred_reason is not None:
+            reason = set_deferred_reason.strip()
+            if not reason:
+                raise Refusal(f"exec {exec_id}: a blank --set-deferred-reason states no cause. Name the failure the "
+                              f"request met (a 403, a 429, a reset, a stub page). Nothing was written.")
+            if row["deferred_reason"] is not None:
+                raise Refusal(f"exec {exec_id}: deferred_reason is already set. It is write-once; log the re-run as a "
+                              f"new row with log-search. Nothing was written.")
+            admitted = [r[0] for r in conn.execute(
+                "SELECT ref_id FROM search_admissions WHERE exec_id=? ORDER BY ref_id", [exec_id])]
+            if row["results_found"] != 0 or admitted or row["results_admitted"]:
+                raise Refusal(f"exec {exec_id}: results_found={row['results_found']}, search_admissions "
+                              f"{admitted or 'none'}, results_admitted={row['results_admitted']}: this search ran. "
+                              f"deferred_reason means not run, never a findings channel "
+                              f"(DR-2026-08-19 section 12.4 item 7); correct what it found with --append-note. "
+                              f"Nothing was written.")
+            if row["absence_class"]:
+                raise Refusal(f"exec {exec_id}: absence_class is {row['absence_class']!r}: the row says it ran and found "
+                              f"nothing. A row cannot assert both (OD-45); the class is write-once, so a wrong one is "
+                              f"corrected by a compensating migration. Nothing was written.")
+            conn.execute("UPDATE search_executions SET deferred_reason=? WHERE exec_id=?", [reason, exec_id])
+            trail = f"{marker}deferred_reason set: the request returned no result list, so the search was not run (OD-45)"
+            merged = (merged or "").rstrip() + trail
+            conn.execute("UPDATE search_executions SET findings_note=? WHERE exec_id=?", [merged, exec_id])
+            deferral_set = reason
 
         raised = False
         if set_harm_finding:
@@ -5536,7 +5582,7 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
                 "origin": origin_set, "mined_ref_id": mined_ref_set,
                 "origin_pass_id": origin_pass_set, "cleared_target": cleared,
                 "result_artefacts_added": len(add_result_artefacts or []),
-                "absence_class": absence_set}
+                "absence_class": absence_set, "deferred_reason": deferral_set}
 
 
 def amend_gap(gap_id: str, note: str, session: str, dry_run: bool = False):
