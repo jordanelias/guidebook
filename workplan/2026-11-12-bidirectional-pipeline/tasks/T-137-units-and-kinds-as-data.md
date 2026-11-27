@@ -84,7 +84,7 @@ Order of preference, CLAUDE.md §8: do nothing; change a convention; reuse; dele
    Do not change `stale_determinations`' filter in this task.
 5. **Reconciled with T-143.** The repair of 2026-11-19 appended a dated line to `tasks/T-143-degrees-rule.md` saying that T-143 changes or extends item 3's CHECK by its own migration (`grep -c -F "Amended 2026-11-19 (repair of T-137" workplan/2026-11-12-bidirectional-pipeline/tasks/T-143-degrees-rule.md` prints 1). Add nothing for it.
 
-**What reads it:** units and spellings: `load_units`, every converter, the engine, `emit_batch_sql.py`, T-047, item 34's research. Warrants: the owner browser. The reader: `add-unit`, `_kind_refusal`. Exact bounds: `stale_determinations`, the four `s.*` views, render. **Without it**, a unit a source writes in any script cannot enter without hand SQL; a kind can rest on a clause number; the book states a bound no source stated.
+**What reads it:** units and spellings: `load_units`, every converter, the engine, `emit_batch_sql.py`, item 34's research. Warrants: the owner browser. The reader: `add-unit`, `_kind_refusal`. Exact bounds: `stale_determinations`, the four `s.*` views, render. **Without it**, a unit a source writes in any script cannot enter without hand SQL; a kind can rest on a clause number; the book states a bound no source stated.
 
 **Code size.** Report `git diff --shortstat "$BASE_PRE" -- scripts schemas .github skills ':!scripts/migrations'` (after `git add`), naming what each addition reads and replaces.
 

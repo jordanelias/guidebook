@@ -2184,7 +2184,7 @@ try:
            r20a and "is text" in r20a and r20b and "as text" in r20b, f"{r20a!r} | {r20b!r}")
 
     # ── T126: a code value's lens is judged from its context when its row is recorded; the maps propose ────────────
-    # Every code is derived from the copy's registries; where one is not live yet (the Reaching code before T-128) the
+    # Every code is derived from the copy's registries; where one is not live yet (the Reaching code before it is minted) the
     # fixture mints it on the COPY only, with one identity_icf_map row joining the wheelchair-user identity to it, and
     # says so, so the case keeps asserting the path once the live row exists. The clause and the source's scope clause
     # are saved as a real file for the fixture source (and another for a second source) in the fixture retrieval-log root.

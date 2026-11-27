@@ -64,7 +64,7 @@ python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro'
 3. **Parameters 3 and 12** (a direction with no source): if the writer accepts a call on a parameter that already has a direction, record the source the direction is read from; if it refuses, leave them as history and list them. Do not change a direction a source does not support.
 4. List in the pull request, per parameter: the direction and the source's words, or the gap and the search that found none.
 
-**What reads what this task adds or changes:** the engine (`determine`, `_compose_headline`), T-059's selection, T-124's four figures, render, and T-110 (which depends on this task). **What wrong thing reaches the guidebook without it:** the first determinations state no value for most parameters that have evidence, and nothing says why.
+**What reads what this task adds or changes:** the engine (`determine`, `_compose_headline`), T-059's selection, T-124's four figures, render, and T-110. **What wrong thing reaches the guidebook without it:** the first determinations state no value for most parameters that have evidence, and nothing says why.
 
 **Data migration.** This task lands rows through `scripts/emit_data_migration.py`, which names the file itself; never type a migration name or number, and never edit the file it writes. The pull request contains no schema migration and no file under `scripts/` other than that one `scripts/migrations/data_*` file.
 

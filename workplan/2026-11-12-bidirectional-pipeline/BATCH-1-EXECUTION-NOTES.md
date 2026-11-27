@@ -8,6 +8,8 @@ T-001, T-002, T-003, T-004, T-006, T-007, T-009, T-010, T-011, T-015, T-021, T-0
 
 Second stack (the last section of this file), one commit per task and then one repair commit after an adversarial pass: T-020, T-022, T-049, T-050, T-089, T-093. Third stack (the last section of this file), the same shape: T-028, T-029, T-030, T-031, T-078, T-083, T-119, T-126, T-134; after it, as its own pull request, T-144. The generator reads this section only (`build_batches.py`, `_executed`), so a task is listed here, and not elsewhere in this section, when it was executed.
 
+- Merged outside the batches, each in its own pull request: T-145 (#244), T-147 (#246), T-148 (#247). Re-derive: `git log origin/main --merges --format='%h %s' | grep -E '#24[467]'`.
+
 ## Stopped, and why (not repaired: a design or owner question)
 
 - **T-052**: its paragraph names `db.py add-locator --jurisdiction`; the verb has no such flag and `source_locators.jurisdiction` is legacy free text exempted from the jurisdiction audit (GAP-008). Nothing was changed.

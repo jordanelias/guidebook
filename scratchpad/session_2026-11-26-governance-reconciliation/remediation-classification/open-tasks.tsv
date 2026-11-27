@@ -1,0 +1,74 @@
+id	batch	kind	status	deps	file	title
+T-005	1	TOOLING	READY	—	tasks/T-005-retired-row-view-fixture.md	A seeded test that a retired determination is surfaced by no determination view
+T-027	1	TOOLING	NOT FOR SONNET	—	tasks/T-027-source-identity-edition.md	The source's own title, edition and currency can be written
+T-032	1	TOOLING	NOT FOR SONNET	—	tasks/T-032-synthesis-relations.md	Relations synthesis can record, and what a synthesis row is
+T-033	1	TOOLING	READY	—	tasks/T-033-synthesis-candidates.md	Candidate relations on demand (read-only)
+T-035	2	TOOLING	NOT FOR SONNET	T-120	tasks/T-035-skills-repair.md	Skills that describe the database that exists
+T-036	2	TOOLING	READY	T-101	tasks/T-036-jurisdiction-comparison-view.md	The jurisdiction comparison as a view
+T-037	8	TOOLING	NOT FOR SONNET	T-032, T-036, T-122, T-124	tasks/T-037-render.md	Render from the database
+T-038	9	TOOLING	READY	T-037	tasks/T-038-stage-pair-gate.md	Register the stage-pair gate
+T-039	9	TOOLING	NOT FOR SONNET	T-037	tasks/T-039-owner-edits.md	The owner's edits as proposals through the write path
+T-040	2	TOOLING	READY	T-032	tasks/T-040-deletion-candidates-sweep.md	Caller sweep for the deletion candidates
+T-047	1	TOOLING	READY	—	tasks/T-047-add-by-data-test.md	A durable test that the base changes by data alone
+T-052	1	TOOLING	READY	—	tasks/T-052-mining-stages-out-of-scope-leads.md	Mining stages an out-of-scope source as a lead
+T-053	2	TOOLING	NOT FOR SONNET	T-032	tasks/T-053-engine-conflict-between-groups.md	Conflict between groups in the engine
+T-056	1	TOOLING	READY	—	tasks/T-056-all-leaves-identity-lens.md	ALL leaves the identity lens: universal is stated once, by design_scale
+T-057	1	TOOLING	READY	—	tasks/T-057-base-coverage-view.md	The base coverage view: one state per concept and in-scope pair
+T-058	2	TOOLING	READY	T-116	tasks/T-058-upl-prose-callers.md	UPL reinstated for upper limb: the retired crosswalk and the prose that names LMB or UPL
+T-059	4	TOOLING	NOT FOR SONNET	T-120, T-127, T-128	tasks/T-059-wp-t4-agreement.md	The prior workplan's T-4: agreement (true exclusion causes, recorded divergence, the fragi
+T-060	1	TOOLING	DESIGN: T-060-design.md; NOT FOR SONNET	—	tasks/T-060-element-determination.md	The specifications pass writes an element-level determination (OR-14b)
+T-062	2	TOOLING	READY	T-105	tasks/T-062-verified-reading-blocking.md	A `verified` figure with no full reading is refused at rest, not only at write (the prior 
+T-068	5	TOOLING	NOT FOR SONNET	T-059, T-120	tasks/T-068-convergent-counts-roots.md	A convergent cell states its sources, their tiers and its independent roots
+T-069	1	RESEARCH	NOT FOR SONNET	—	tasks/T-069-promote-adjudicated-observations.md	Promote the adjudicated non-English observations to forms of their terms
+T-070	1	RESEARCH	NOT FOR SONNET	—	tasks/T-070-blind-double-extraction.md	Blind double extraction: do two readers, and do model and effort, record the same rows?
+T-071	1	RESEARCH	NOT FOR SONNET	—	tasks/T-071-regrade-roots.md	Give every value-supplying figure its root
+T-072	2	RESEARCH	NOT FOR SONNET	T-101, T-105	tasks/T-072-seed-quantities-from-codes.md	Seed the list of quantities from the phrases the held codes use
+T-081	1	RESEARCH	NOT FOR SONNET	—	tasks/T-081-classify-zero-result-searches.md	Each stored zero-result search states its cause
+T-082	1	RESEARCH	NOT FOR SONNET	—	tasks/T-082-comparator-on-two-stored-figures.md	The two stored numerical claims with no comparator get one from their source
+T-084	1	RESEARCH	READY	—	tasks/T-084-unregistered-map-codes.md	The language-and-jurisdiction map names only declared jurisdictions
+T-085	2	TOOLING	READY	T-084	tasks/T-085-map-jurisdiction-foreign-key.md	The map's jurisdiction column points at the registry
+T-086	1	RESEARCH	NOT FOR SONNET	—	tasks/T-086-bare-ratio-rows.md	The stored gradients whose unit says only `ratio`
+T-087	1	RESEARCH	NOT FOR SONNET	—	tasks/T-087-edmonton-checklist-batch.md	Ship the Edmonton checklist digest as a research batch
+T-091	1	TOOLING	DESIGN: T-091-design.md; NOT FOR SONNET	—	tasks/T-091-typed-circumstance-carrier.md	A figure's circumstance (building use, interior or exterior) in typed cells
+T-092	2	RESEARCH	NOT FOR SONNET	T-091	tasks/T-092-retag-circumstances.md	Re-tag each stored figure's circumstance from its free-text setting
+T-101	1	RESEARCH	READY	—	tasks/T-101-scope-fill.md	Record the research scope on every pair
+T-102	1	RESEARCH	NOT FOR SONNET	—	tasks/T-102-mobility-split.md	Decompose the mobility family by device, and carry the rows filed under MOB
+T-104	1	RESEARCH	READY	—	tasks/T-104-verify-governing-sources.md	Verify the sources a first determination would rest on
+T-105	1	RESEARCH	NOT FOR SONNET	—	tasks/T-105-read-held-sources.md	Read what is held, in full, against every parameter
+T-106	1	RESEARCH	NOT FOR SONNET	—	tasks/T-106-retag-lenses.md	Tag figures with every relevant model
+T-107	2	RESEARCH	NOT FOR SONNET	T-057	tasks/T-107-attest-forms.md	Attest forms per language and jurisdiction from instruments
+T-108	1	RESEARCH	READY	—	tasks/T-108-unit-condition-repair.md	Move conditions out of the unit cell
+T-109	1	RESEARCH	NOT FOR SONNET	—	tasks/T-109-parameter-kinds-data.md	Give the live parameters their quantity kind
+T-110	8	RESEARCH	NOT FOR SONNET	T-059, T-068, T-102, T-104, T-117, T-123, T-127, T-128, T-133	tasks/T-110-first-determinations.md	First live determinations
+T-111	1	RESEARCH	READY	—	tasks/T-111-as-written-wording-for-stored-rows.md	Bring the two stored spelled-out figures into line
+T-112	1	RESEARCH	READY	—	tasks/T-112-translate-held-text.md	Translate the held non-English text that synthesis needs
+T-113	1	RESEARCH	READY	—	tasks/T-113-file-sub-national-instruments.md	File the four held sub-national instruments under their own codes
+T-114	1	RESEARCH	READY	—	tasks/T-114-retire-move-ves-to-needs.md	Retire MOVE and VES to the access needs that carry them
+T-115	4	RESEARCH	NOT FOR SONNET	T-056, T-127	tasks/T-115-retag-all-rows.md	Re-tag the figures filed under ALL by their heading's group, then retire ALL
+T-116	1	RESEARCH	READY	—	tasks/T-116-upl-for-upper-limb.md	Hold the upper-limb population as UPL, and retire LMB to it
+T-117	6	TOOLING	NOT FOR SONNET	T-068, T-102, T-120	tasks/T-117-marker-table-applied.md	The marker table applied: a circle by tier, and ⚠ in place of it for a grey, unverified or
+T-118	7	TOOLING	READY	T-059, T-068, T-117	tasks/T-118-stage-tools-carry-specification-name.md	The specification stage's tools carry the stage's name (deferred)
+T-120	1	TOOLING	NOT FOR SONNET	—	tasks/T-120-doctrine-amendments-and-deletions.md	Doctrine says what the owner ruled: one home for best, most common and minimum; dead names
+T-122	7	TOOLING	NOT FOR SONNET	T-059, T-068, T-117, T-124	tasks/T-122-contract-carries-the-owner-rulings.md	The stage contracts carry the owner's rulings of 2026-11-14 as criteria, each pointing at 
+T-123	1	RESEARCH	NOT FOR SONNET	—	tasks/T-123-parameter-directions-from-sources.md	Each parameter with figures gets an accessibility direction read from an admitted source, 
+T-124	6	TOOLING	NOT FOR SONNET	T-059, T-068	tasks/T-124-four-figures-of-a-cell.md	The four figures of a cell (minimum, mode, median, maximum), computed once at the specific
+T-125	5	TOOLING	NOT FOR SONNET	T-035, T-059	tasks/T-125-capture-statements-of-greater-difficulty.md	The judgment stage records a source's statement that disabled people struggle more at a va
+T-127	3	RESEARCH	NOT FOR SONNET	T-102, T-128	tasks/T-127-backfill-code-value-lenses.md	Give every stored code value its lens by contextual judgment, with its warrant (the one-ti
+T-128	2	RESEARCH	NOT FOR SONNET	T-102	tasks/T-128-population-icf-rows-for-proposals.md	The population-to-ICF rows the writer's proposals need: reaching, seated and standing post
+T-129	1	TOOLING	NOT FOR SONNET	—	tasks/T-129-merge-term.md	Two terms judged one concept merge by a row, the survivor is derived, and a judgment that 
+T-130	2	TOOLING	READY	T-129	tasks/T-130-consolidation-sweep.md	The consolidation sweep: candidate pairs proposed from the live base, judged, and stopped 
+T-131	3	RESEARCH	NOT FOR SONNET	T-069, T-130	tasks/T-131-first-consolidation-pass.md	The first consolidation pass over the base: every candidate pair judged, merged, related o
+T-132	9	TOOLING	READY	T-110, T-131	tasks/T-132-drift-detectors-bind.md	The drift detectors bind once their subject exists (a stale stored determination, a write 
+T-133	7	TOOLING	READY	T-059, T-068, T-124	tasks/T-133-determination-record-points.md	A determination's record points at the map rows it read, and a gate weighs its trigger at 
+T-135	1	TOOLING	OWNER: OD-69 (delegated, but this task needs the owner's words); NOT FOR SONNET	—	tasks/T-135-domain-vocabulary.md	A concept's domain comes from a vocabulary the schema holds, and the non-quantity domains 
+T-136	1	TOOLING	NOT FOR SONNET	—	tasks/T-136-base-grounding-absorbed.md	The base grounds itself: a direction and a relation carry their own words and locator, and
+T-137	1	TOOLING	NOT FOR SONNET	—	tasks/T-137-units-and-kinds-as-data.md	A unit is added by data with its warrant, a kind's quote states a value in a unit of that 
+T-138	2	TOOLING	NOT FOR SONNET	T-136, T-137	tasks/T-138-lens-and-figure-refusals.md	The lens and figure writers refuse what the rulings forbid, a withdrawn figure's pair is o
+T-139	1	TOOLING	NOT FOR SONNET	—	tasks/T-139-amendment-record.md	What a row said before an amendment is held in a typed record, not in a sentence appended 
+T-140	1	TOOLING	READY	—	tasks/T-140-state-graph-binding.md	An atom is bound to its section and its quote: found once inside the section passes, found
+T-141	1	TOOLING	NOT FOR SONNET	—	tasks/T-141-small-repairs.md	Small repairs the third adjudication resolved: the items of its section 4 item 9, each its
+T-142	2	TOOLING	NOT FOR SONNET	T-136	tasks/T-142-displayed-name-rule.md	A concept's displayed name is counted from its attested forms, CSA and ISO first, and each
+T-143	4	TOOLING	NOT FOR SONNET	T-120, T-127, T-128, T-137	tasks/T-143-degrees-rule.md	An angle in degrees converts to the gradient by its tangent, ordered exactly and shown on 
+T-145	1	TOOLING	READY	—	tasks/T-145-identity-need-icf-triples.md	A disability identity, an access need and an ICF code are linked in one judged, reviewable
+T-147	1	TOOLING	READY	—	tasks/T-147-icf-hierarchy.md	The ICF lens has a hierarchy: umbrellas, a glossary, and a gather that reaches the codes b
+T-148	1	TOOLING	READY	—	tasks/T-148-icf-tree-import.md	The WHO ICF block tree imported into `base_icf` (research, carry-only)
