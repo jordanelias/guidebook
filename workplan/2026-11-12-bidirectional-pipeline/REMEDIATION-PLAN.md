@@ -1,6 +1,6 @@
 # Remediation plan, in batches by dependency
 
-_Generated 2026-11-27 04:22 UTC from the 125 task files (63 open, 62 merged) at commit 253c2dcc by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
+_Generated 2026-11-27 16:27 UTC from the 125 task files (63 open, 62 merged) at commit 2ee5cf77 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
 
 **What this is.** The entry document for a Sonnet executor. `REMEDIATION-WORKPLAN.md` is the index (why, owner decision register, Definition of Done); `tasks/T-<id>-*.md` is the one self-contained file per task; this file says **in what order, in what groups, and where to stop.** Evidence base: `01-handshake-ledger.md` and the audit in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/`.
 
@@ -18,12 +18,12 @@ _Generated 2026-11-27 04:22 UTC from the 125 task files (63 open, 62 merged) at 
 
 | Batch | Tasks | READY | OWNER-blocked (a gate CLOSED) | DESIGN file missing | NOT FOR SONNET | Tooling / research | Lanes |
 |---|---|---|---|---|---|---|---|
-| 1 | 37 | 14 | 0 | 2 | 23 | 16 / 21 | 27 |
+| 1 | 38 | 14 | 0 | 2 | 24 | 17 / 21 | 27 |
 | 2 | 13 | 5 | 0 | 0 | 8 | 9 / 4 | 6 |
 | 3 | 4 | 0 | 0 | 0 | 4 | 2 / 2 | 3 |
 | 4 | 2 | 0 | 0 | 0 | 2 | 2 / 0 | 1 |
-| 5 | 2 | 0 | 0 | 0 | 2 | 2 / 0 | 1 |
-| 6 | 3 | 2 | 0 | 0 | 1 | 3 / 0 | 2 |
+| 5 | 2 | 1 | 0 | 0 | 1 | 2 / 0 | 2 |
+| 6 | 2 | 1 | 0 | 0 | 1 | 2 / 0 | 2 |
 | 7 | 1 | 0 | 0 | 0 | 1 | 0 / 1 | 1 |
 | 8 | 1 | 1 | 0 | 0 | 0 | 1 / 0 | 1 |
 
@@ -67,6 +67,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 | [T-113](tasks/T-113-file-sub-national-instruments.md) | File the four held sub-national instruments under their own codes | research | RESEARCH | READY | yes | — | not piloted |
 | [T-114](tasks/T-114-retire-move-ves-to-needs.md) | Retire MOVE and VES to the access needs that carry them | research | RESEARCH | READY | yes | — | not piloted |
 | [T-116](tasks/T-116-upl-for-upper-limb.md) | Hold the upper-limb population as UPL, and retire LMB to it | research | RESEARCH | READY | yes | — | not piloted |
+| [T-117](tasks/T-117-marker-table-applied.md) | The marker table applied: a circle by tier, and ⚠ in place of it for a grey, unverified or | 6 (after the term-resolution doctrine) | TOOLING | NOT FOR SONNET | no | — | not piloted |
 | [T-120](tasks/T-120-doctrine-amendments-and-deletions.md) | Doctrine says what the owner ruled: one home for best, most common and minimum; dead names | 0 (now, after T-119) | TOOLING | NOT FOR SONNET | no | — | not piloted |
 | [T-123](tasks/T-123-parameter-directions-from-sources.md) | Each parameter with figures gets an accessibility direction read from an admitted source,  | research | RESEARCH | NOT FOR SONNET | no | — | not piloted |
 | [T-129](tasks/T-129-merge-term.md) | Two terms judged one concept merge by a row, the survivor is derived, and a judgment that  | 4 | TOOLING | NOT FOR SONNET | no | — | not piloted |
@@ -80,7 +81,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 **Lanes** (parallel across, serial within; the shared file is the reason):
 
 - Lane 1.1: T-027
-- Lane 1.2: T-032 → T-056 → T-057 → T-120 → T-129 → T-135 → T-136 → T-137 → T-139 → T-140 → T-141 — sequenced by a soft dependency or a chain of shared files
+- Lane 1.2: T-032 → T-056 → T-057 → T-117 → T-120 → T-129 → T-135 → T-136 → T-137 → T-139 → T-140 → T-141 — sequenced by a soft dependency or a chain of shared files
 - Lane 1.3: T-033
 - Lane 1.4: T-052
 - Lane 1.5: T-060
@@ -107,7 +108,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 - Lane 1.26: T-116
 - Lane 1.27: T-123
 
-**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-027, T-032, T-060, T-069, T-070, T-071, T-081, T-082, T-086, T-087, T-091, T-102, T-105, T-106, T-109, T-120, T-123, T-129, T-135, T-136, T-137, T-139, T-141; a design file missing: T-060 (T-060-design.md), T-091 (T-091-design.md).
+**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-027, T-032, T-060, T-069, T-070, T-071, T-081, T-082, T-086, T-087, T-091, T-102, T-105, T-106, T-109, T-117, T-120, T-123, T-129, T-135, T-136, T-137, T-139, T-141; a design file missing: T-060 (T-060-design.md), T-091 (T-091-design.md).
 
 ## Batch 2
 
@@ -161,11 +162,11 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 ## Batch 4
 
-**Entry:** merged and green on `$BASE`: T-035, T-059, T-120.
+**Entry:** merged and green on `$BASE`: T-035, T-059, T-117, T-120.
 
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
-| [T-068](tasks/T-068-convergent-counts-roots.md) | A convergent cell states its sources, their tiers and its independent roots | 2 | TOOLING | NOT FOR SONNET | no | T-059, T-120 | not piloted |
+| [T-068](tasks/T-068-convergent-counts-roots.md) | A convergent cell states its sources, their tiers and its independent roots | 2 | TOOLING | NOT FOR SONNET | no | T-059, T-117, T-120 | not piloted |
 | [T-125](tasks/T-125-capture-statements-of-greater-difficulty.md) | The judgment stage records a source's statement that disabled people struggle more at a va | 6 (after the term-resolution tooling) | TOOLING | NOT FOR SONNET | no | T-035, T-059 | not piloted |
 
 **Lanes** (parallel across, serial within; the shared file is the reason):
@@ -176,33 +177,33 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 ## Batch 5
 
-**Entry:** merged and green on `$BASE`: T-059, T-068, T-102, T-120.
+**Entry:** merged and green on `$BASE`: T-059, T-068, T-117.
 
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
-| [T-117](tasks/T-117-marker-table-applied.md) | The marker table applied: a circle by tier, and ⚠ in place of it for a grey, unverified or | 6 (after the term-resolution doctrine) | TOOLING | NOT FOR SONNET | no | T-068, T-102, T-120 | not piloted |
+| [T-118](tasks/T-118-stage-tools-carry-specification-name.md) | The specification stage's tools carry the stage's name (deferred) | 6 (deferred: last of the term-resolution work) | TOOLING | READY | after T-059, T-068, T-102, T-117, T-120, T-127 | T-059, T-068, T-117 | not piloted |
 | [T-124](tasks/T-124-four-figures-of-a-cell.md) | The four figures of a cell (minimum, mode, median, maximum), computed once at the specific | 6 (after the term-resolution tooling) | TOOLING | NOT FOR SONNET | no | T-059, T-068 | not piloted |
 
 **Lanes** (parallel across, serial within; the shared file is the reason):
 
-- Lane 5.1: T-117 → T-124 — share `scripts/assess/assess_cell.py`
+- Lane 5.1: T-118
+- Lane 5.2: T-124
 
-**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-117, T-124.
+**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-124.
 
 ## Batch 6
 
-**Entry:** merged and green on `$BASE`: T-032, T-036, T-059, T-068, T-117, T-124.
+**Entry:** merged and green on `$BASE`: T-032, T-036, T-059, T-068, T-124.
 
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
 | [T-037](tasks/T-037-render.md) | Render from the database | 5 | TOOLING | NOT FOR SONNET | no | T-032, T-036, T-124 | not piloted |
-| [T-118](tasks/T-118-stage-tools-carry-specification-name.md) | The specification stage's tools carry the stage's name (deferred) | 6 (deferred: last of the term-resolution work) | TOOLING | READY | after T-059, T-068, T-102, T-117, T-120, T-127 | T-059, T-068, T-117 | not piloted |
-| [T-133](tasks/T-133-determination-record-points.md) | A determination's record points at the map rows it read, and a gate weighs its trigger at  | 6 | TOOLING | READY | after T-059, T-068, T-102, T-120, T-124, T-127 | T-059, T-068, T-124 | not piloted |
+| [T-133](tasks/T-133-determination-record-points.md) | A determination's record points at the map rows it read, and a gate weighs its trigger at  | 6 | TOOLING | READY | after T-059, T-068, T-102, T-117, T-120, T-124, T-127 | T-059, T-068, T-124 | not piloted |
 
 **Lanes** (parallel across, serial within; the shared file is the reason):
 
 - Lane 6.1: T-037
-- Lane 6.2: T-118 → T-133 — share `governance/context-map.yaml`
+- Lane 6.2: T-133
 
 **Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-037.
 
@@ -243,11 +244,11 @@ Every register decision (`grep -o -E '^### OD-[0-9]+' REMEDIATION-WORKPLAN.md`),
 | Decision | Gate | Tasks it holds | Waiting on those (hard dependencies) | In batches |
 |---|---|---|---|---|
 
-### Standing, blocks no task: CLOSED, and no task's gate reads it (3)
+### Standing, blocks no task: CLOSED, and no task's gate reads it (14)
 
-OD-76 (WITHDRAWN, REFERRED BACK TO THE OWNER), OD-88 (check: pending), OD-89 (check: pending)
+OD-76 (WITHDRAWN, REFERRED BACK TO THE OWNER), OD-88 (check: pending), OD-89 (check: pending), OD-92 (REFERRED BACK TO THE OWNER), OD-94 (REFERRED BACK TO THE OWNER), OD-96 (REFERRED BACK TO THE OWNER), OD-97 (REFERRED BACK TO THE OWNER), OD-99 (REFERRED BACK TO THE OWNER), OD-100 (REFERRED BACK TO THE OWNER), OD-104 (REFERRED BACK TO THE OWNER), OD-105 (REFERRED BACK TO THE OWNER), OD-106 (REFERRED BACK TO THE OWNER), OD-107 (REFERRED BACK TO THE OWNER), OD-109 (REFERRED BACK TO THE OWNER)
 
-### Open by the ledger gate (85)
+### Open by the ledger gate (98)
 
 | Decision | Gate | Read by |
 |---|---|---|
@@ -336,6 +337,19 @@ OD-76 (WITHDRAWN, REFERRED BACK TO THE OWNER), OD-88 (check: pending), OD-89 (ch
 | OD-85 | OPEN (delegated; confirmed with corrections applied) | no task gate |
 | OD-86 | OPEN (delegated; confirmed) | no task gate |
 | OD-87 | OPEN (delegated; confirmed with corrections applied) | no task gate |
+| OD-90 | OPEN (delegated; confirmed) | no task gate |
+| OD-91 | OPEN (delegated; confirmed with corrections applied) | no task gate |
+| OD-93 | OPEN (delegated; confirmed) | no task gate |
+| OD-95 | OPEN (delegated; confirmed with corrections applied) | no task gate |
+| OD-98 | OPEN (delegated; confirmed with corrections applied) | no task gate |
+| OD-101 | OPEN (delegated; confirmed) | no task gate |
+| OD-102 | OPEN (delegated; confirmed) | no task gate |
+| OD-103 | OPEN (delegated; confirmed with corrections applied) | no task gate |
+| OD-108 | OPEN (delegated; confirmed with corrections applied) | no task gate |
+| OD-110 | OPEN (delegated; confirmed with corrections applied) | no task gate |
+| OD-111 | OPEN (delegated; confirmed) | no task gate |
+| OD-112 | OPEN (delegated; confirmed with corrections applied) | no task gate |
+| OD-113 | OPEN (delegated; confirmed with corrections applied) | no task gate |
 
 ## NOT FOR SONNET
 
@@ -366,7 +380,7 @@ OD-76 (WITHDRAWN, REFERRED BACK TO THE OWNER), OD-88 (check: pending), OD-89 (ch
 | [T-109](tasks/T-109-parameter-kinds-data.md) | Give the live parameters their quantity kind | 1 | — / OD-24 |
 | [T-110](tasks/T-110-first-determinations.md) | First live determinations | 7 | — / — |
 | [T-115](tasks/T-115-retag-all-rows.md) | Re-tag the figures filed under ALL by their heading's group, then retire ALL | 3 | OD-31 / — |
-| [T-117](tasks/T-117-marker-table-applied.md) | The marker table applied: a circle by tier, and ⚠ in place of it for a grey, unv | 5 | OD-57, OD-59, OD-64 / — |
+| [T-117](tasks/T-117-marker-table-applied.md) | The marker table applied: a circle by tier, and ⚠ in place of it for a grey, unv | 1 | OD-57, OD-59, OD-64 / — |
 | [T-120](tasks/T-120-doctrine-amendments-and-deletions.md) | Doctrine says what the owner ruled: one home for best, most common and minimum;  | 1 | OD-57, OD-59 / — |
 | [T-123](tasks/T-123-parameter-directions-from-sources.md) | Each parameter with figures gets an accessibility direction read from an admitte | 1 | — / — |
 | [T-124](tasks/T-124-four-figures-of-a-cell.md) | The four figures of a cell (minimum, mode, median, maximum), computed once at th | 5 | OD-63 / — |
