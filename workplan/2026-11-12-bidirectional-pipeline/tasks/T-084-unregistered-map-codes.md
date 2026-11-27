@@ -1,7 +1,5 @@
 # T-084  The language-and-jurisdiction map names only declared jurisdictions
 
-> **HELD** — waits for the owner's answer to OI-55 (4): whether the jurisdiction codes the map holds and the registry lacks are admitted to the registry (and how their pairs are scoped), or their pairs are withdrawn. An executor that opens this file before the answer is in the ledger in the owner's words does not start it: it reports that the task is waiting, and for what.
-
 _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self-contained. Index, order and the owner decision register: `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`. Source: `workplan/2026-11-12-bidirectional-pipeline/OPEN-ITEMS-PLAN.md` rows OI-56 ("the foreign key on `lang_jur_map.jurisdiction` (after OI-55 (4))") and OI-55 (4); T-024's pilot report, defect 1 (`grep -n 'impossible as written' scratchpad/session_2026-11-12-pipeline-bidirectional-audit/pilot/T-024-report.md`). Every number in this file was read on 2026-11-13 on commit `66a5ba8a` and is given with the command that produces it: re-run the command; do not trust the number._
 
 **Pilot status.** Not piloted. Authored 2026-11-13. Expect to find a defect in this file, and report it rather than work around it.
@@ -16,13 +14,13 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 | Layer (CLAUDE.md §3) | 3 |
 | Kind | **RESEARCH** (CLAUDE.md rule 10: tooling and research never share a pull request; the rows are base rows landed by a data migration) |
 | Executor | Sonnet-class, once the owner has answered (every step is then mechanical from the answer) |
-| Traces to | OI-55 (4); AT-58 ("every jurisdiction in `lang_jur_map` resolves in the vocabulary the writers read", `grep -n 'AT-58' scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md`); T-085 (the foreign key, which needs this first) |
+| Traces to | OI-55 (4); AT-58 ("every jurisdiction in `lang_jur_map` resolves in the vocabulary the writers read", `grep -n 'AT-58' scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md`) |
 
 ## 2. Preconditions
 
 - **The integration base.** `origin/main` once the workplan's pull request is merged, otherwise the remote branch carrying the newest commit to this folder (the set-up block's first line finds it).
 - **Tasks that must be merged to the integration base first:** T-025 merged (its `set-pair-scope` writes a pair's `scope_status` with an approval pointer). Check: `git grep -c '"set-pair-scope"' -- scripts/db.py` prints 1 or more. (T-024's `add-jurisdiction` is merged on 2026-11-13.)
-- **Owner decisions:** OD-46 (OI-55 (4)), OPEN (registered 2026-11-13, not yet asked). **The question, as OI-55 records it:** the codes `lang_jur_map` holds that `base_jurisdictions` lacks: "admit as declared out-of-scope codes or remove their pairs". What it rests on: T-024's ruling that admitting such a code "is the owner's decision on scope" (`grep -n -F "is the owner's decision on scope" workplan/2026-11-12-bidirectional-pipeline/tasks/T-024-jurisdiction-registry.md`); jurisdiction scope is doctrine the owner holds (CLAUDE.md §8); the owner's "retire in place then" (`grep -n -F 'retire in place then' references/project-standards.md`), under which "remove their pairs" would be a delete the owner rules on case by case. Also OI-55 (1) (how a carry-only research batch is gated) applies: this batch searches nothing and admits no source.
+- **Owner decisions:** OD-46 (OI-55 (4)), ANSWERED BY THE OWNER 2026-11-19: "admit as declared, scoped-out codes" (`git grep -n -E '^OD-46( STATUS)?:' references/project-standards.md`, the last two lines; the approval pointer is that entry's full heading, `grep -n -F '## Owner ratification 2026-11-19' references/project-standards.md`). Section 4's first branch ("If the answer admits the codes") applies. **The question, as OI-55 records it:** the codes `lang_jur_map` holds that `base_jurisdictions` lacks: "admit as declared out-of-scope codes or remove their pairs". What it rests on: T-024's ruling that admitting such a code "is the owner's decision on scope" (`grep -n -F "is the owner's decision on scope" workplan/2026-11-12-bidirectional-pipeline/tasks/T-024-jurisdiction-registry.md`); jurisdiction scope is doctrine the owner holds (CLAUDE.md §8); the owner's "retire in place then" (`grep -n -F 'retire in place then' references/project-standards.md`), under which "remove their pairs" would be a delete the owner rules on case by case. Also OI-55 (1) (how a carry-only research batch is gated) applies: this batch searches nothing and admits no source.
 - **Tests that must be red before you start:** AT-58: section 3's command prints a non-empty list.
 - **Set-up.**
 
@@ -88,7 +86,7 @@ git commit -m "jurisdiction-tracker: declare the map's undeclared jurisdictions 
 ## 8. What you must NOT do
 
 - Do not start before the owner's answer is in the ledger in the owner's words.
-- Do not delete a `lang_jur_map` row by any route. Do not add the foreign key (T-085).
+- Do not delete a `lang_jur_map` row by any route. Do not add a foreign key.
 - No tooling in this pull request (rule 10). Do not write `data/guidebook.db` except by the write path. Do not run `run_checks.py --all`, `bootstrap.sh` or `pip install -r requirements.txt`. Do not push to `main`, rebase or force-push; do not subscribe to pull-request activity.
 
 ## 9. Stop conditions
