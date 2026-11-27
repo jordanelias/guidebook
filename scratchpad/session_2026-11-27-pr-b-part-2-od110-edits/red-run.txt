@@ -1,0 +1,30 @@
+# Red run, 2026-11-27: the new T-117 / T-056 cases against the UNCHANGED code (HEAD d13caa4d, tests added uncommitted).
+# Command: cd /tmp && python3 /home/user/guidebook/scripts/tests/test_assess_cell_pilot.py   (rc printed below)
+# Canonical DB sha256: 3d419efb94b7d5c8a1297ba9552bdee64228007e38da95af612e5406bb68edb9
+# Every pre-existing case passed (the only FAIL lines are the new ones); guards (T117-05 x2, T117-11 b/c, T117-12 circles and floor_mean) pass before and after by design.
+rc=1
+  FAIL: T117-01: one VERIFIED T4 states the value => ◐ (red: the override gives ○)  [provisional ○]
+  FAIL: T117-02: band(5, national_fw) is ○ (red: ◐)  [EvidenceMarker.PARTIAL]
+  FAIL: T117-03: band(3, clinical) is ◐ (red: ●)  [EvidenceMarker.FULL]
+  FAIL: T117-03: own() of a grey source is ⚠, U+26A0 alone, no U+FE0F (red: no module-level own(), no warning marker)  [None]
+  FAIL: T117-04: an UNVERIFIED source stating the shown value alone => Refusal naming OD-99 and OD-100, not OD-92 (red: a circle is written)  [answered provisional ○]
+  FAIL: T117-05: the specifications CHECK accepts ⚠ (red: refused)
+  FAIL: T117-05: the specifications CHECK accepts ◐ with regulatory_stratum_only = 1 (red: refused)
+  PASS: T117-05: guard, ● with regulatory_stratum_only = 1 is refused
+  PASS: T117-05: guard, the emoji form ⚠ + U+FE0F is refused
+  FAIL: T117-06: T4 states 1:20, T6 states 1:12, lower is better => 5 %, ◐ from the stating T4 (red: ○)  [provisional 5.0 ○]
+  FAIL: T117-07: an UNVERIFIED and a VERIFIED T6 both state the shown value => one Refusal naming OD-99, OD-100 and OD-92 (red: a circle is written)  [answered provisional ○]
+  FAIL: T117-08: a VERIFIED T4 and a VERIFIED T6 both state the shown value => Refusal naming OD-92, not OD-99 (red: a circle is written)  [answered provisional ○]
+  FAIL: T117-09: an UNVERIFIED T6 that governs without stating the value => no refusal, ◐, still governing  [○ ['REF-SYN-000', 'REF-U6N']]
+  FAIL: T117-12: EvidenceMarker.WARNING is U+26A0 (red: absent)  [None]
+  PASS: T117-12: the circles keep ● 3, ◐ 2, ○ 1
+  FAIL: T117-12: the warning marker has no ordinal (red: absent)
+  FAIL: T117-12: floor_mean refuses the warning marker (red: absent)
+  PASS: T117-12: floor_mean over circles is unchanged (floor of ● and ○ is ◐)
+  FAIL: T056-01: a G1 cell keyed on an identity => population (red: universal)  [provisional universal]
+  FAIL: T056-02: an anchored cell keyed on an ICF code only => universal (red: population)  [stated population]
+  FAIL: T117-11(a): a retrieved-UNVERIFIED governing source beside a VERIFIED one under ○ passes C10 (red: C10 refuses every non-VERIFIED source)  [passed=False subject=1]
+  PASS: T117-11(b): guard, an unretrieved source with no standard_number fails C10
+  PASS: T117-11(c): guard, every governing source non-VERIFIED under a circle fails C10
+  FAIL: T117-11(d): an unretrieved source with a route, sole governing, under ⚠ passes C10 (red: C10 refuses every non-VERIFIED source)  [passed=False subject=1]
+FAIL: 18 test(s): ['T117-01: one VERIFIE

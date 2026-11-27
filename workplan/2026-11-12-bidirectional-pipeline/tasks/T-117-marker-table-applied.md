@@ -26,7 +26,7 @@ gate(){ s=$(grep -F "$1 STATUS:" references/project-standards.md | tail -1); c=$
 for n in OD-57 OD-59 OD-64; do gate $n; done
 ```
 - **Delegated resolutions this task rests on:** none.
-- **Tests that must be red before you start:** every case of section 6, on the unchanged code (the guards T117-09 and T117-11 (b) and (c) excepted, which are green before and after).
+- **Tests that must be red before you start:** every case of section 6, on the unchanged code (the guards excepted, which are green before and after: T117-05's ● and emoji cases, T117-11 (b) and (c), T117-12's circle ordinals and circle floor mean; T117-09 is a guard after the change and is red before it only on the override's ○).
 - **Set-up.**
 
 ```
