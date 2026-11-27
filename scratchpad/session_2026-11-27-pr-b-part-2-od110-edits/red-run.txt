@@ -28,3 +28,7 @@ rc=1
   PASS: T117-11(c): guard, every governing source non-VERIFIED under a circle fails C10
   FAIL: T117-11(d): an unretrieved source with a route, sole governing, under ⚠ passes C10 (red: C10 refuses every non-VERIFIED source)  [passed=False subject=1]
 FAIL: 18 test(s): ['T117-01: one VERIFIE
+
+# F1 red run, 2026-11-27 18:15: the R39/F1 cases against HEAD dfd9f017 (code unchanged, test added uncommitted). Command: python3 scripts/tests/test_assess_cell_pilot.py; rc=1; the only FAIL lines:
+  FAIL: R39/F1: a floor claim with one code of three confirmed stays regulation-only (rso 1, tier_basis keeps the suffix): one confirmed clause does not confirm the code  [0 ○ T6-only(confirmed_by_study)]
+  FAIL: R39/F1: a floor claim with one clause of each code's two confirmed stays regulation-only (rso 1, tier_basis keeps the suffix): one confirmed clause does not confirm the code  [0 ◐ T6-only(confirmed_by_study)]

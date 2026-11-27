@@ -1133,6 +1133,16 @@ def main():
            _d["regulatory_stratum_only"] == 0 and _d["marker"] == FULL and _d["skimmed_findings"] == []
            and _d["tier_basis"].endswith("(confirmed_by_study)"),
            f"{_d['regulatory_stratum_only']} {_d['marker']} {_d['tier_basis']}")
+    # F1 (second antagonist): R39, "one confirmed clause does not confirm the code". A floor claim stops being
+    # regulation-only (OR-22b) only when the study confirms every governing row of the codes it rests on; one code
+    # of three confirmed, or one clause of a code's two, leaves the cell resting on codes, flagged so.
+    for _lbl, _kw in (("one code of three", dict(which=slice(1))),
+                      ("one clause of each code's two", dict(codes=two_rows, which=slice(None, None, 2)))):
+        _c, _d = _proxy_cell(finding=[_absent_src], confirmers_from=("REF-FIND-2",), proxy=0, **_kw)
+        expect(f"R39/F1: a floor claim with {_lbl} confirmed stays regulation-only (rso 1, tier_basis keeps the "
+               "suffix): one confirmed clause does not confirm the code",
+               _d["regulatory_stratum_only"] == 1 and _d["tier_basis"].endswith("(regulatory_stratum_only)"),
+               f"{_d['regulatory_stratum_only']} {_d['marker']} {_d['tier_basis']}")
 
     # An unverified Co-1 finding source is no anchor (classify holds it back), so it supplies no
     # direction; it is still an input the answer would turn on, and is flagged.
@@ -1984,23 +1994,28 @@ def main():
     else:
         _bad, _reached, _open = [], 0, []
         for pid, code in _pairs:
+            # A cell refused on an owner question (T-117) is examined too: the refusal must name the questions the
+            # ledger says block it (OD-92, OD-99 and OD-100 Meanwhile), and the links it graded are checked as any other.
             try:
                 d = determine(_live, pid, _mob(code), "syn-slug", "t019-live")
-            except OpenQuestion:          # refused, naming an owner question (T-117): no links to read
+                _links = d["links"]
+            except OpenQuestion as _q:
                 _open.append((pid, code))
-                continue
-            inl = {l["extraction_id"] for l in d["links"] if l["in_lens"]}
+                if not all(q in str(_q) for q in ("OD-92", "OD-99", "OD-100")):
+                    _bad.append((pid, code, "refusal does not name OD-92, OD-99 and OD-100"))
+                _links = _q.links
+            inl = {l["extraction_id"] for l in _links if l["in_lens"]}
             _reached += len(inl)
             carries = _carries(pid, code)
             out_ok = all(l["role"] == "excluded" and (l["exclusion_reason"] or "").startswith(LENS_REASON)
-                         for l in d["links"] if not l["in_lens"])
-            gov_ok = all(l["extraction_id"] in carries for l in d["links"] if l["role"] != "excluded")
+                         for l in _links if not l["in_lens"])
+            gov_ok = all(l["extraction_id"] in carries for l in _links if l["role"] != "excluded")
             if not (inl and inl == carries and out_ok and gov_ok):
                 _bad.append((pid, code))
         expect("T019-13 (AT-50): for every (parameter, identity code) the live links name, the figures "
-               f"a cell reaches are exactly those carrying its code ({len(_pairs) - len(_open)} cells, {_reached} "
-               f"figures reached; {len(_open)} refused on an open owner question, not examined: {_open}), none "
-               "is empty, and every other figure of the parameter is linked "
+               f"a cell reaches are exactly those carrying its code ({len(_pairs)} cells, {_reached} "
+               f"figures reached; {len(_open)} of them refused naming OD-92, OD-99 and OD-100, links checked: {_open}), "
+               "none is empty, and every other figure of the parameter is linked "
                "`excluded` with the lens reason", not _bad and _reached > 0, str(_bad))
 
         # AT-51 live: every parameter whose figures carry ALL and another identity, cell by cell. The

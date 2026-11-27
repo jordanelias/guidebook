@@ -1306,7 +1306,9 @@ def _confirmed_bands(conn, parameter_id, links, confirmer_anchors, lens, bands):
     not confirm the code (owner 2026-10-21): an unconfirmed row takes its source's own band
     (`bands`, the tier-system section 5 table; it was weak while a regulatory source could be
     nothing else), and a source takes the floor of the mean of its rows, so it reaches the
-    confirming band only when every row does. Every governing source is in the result.
+    confirming band only when every row does. Returns (bands, confirmed): every governing source's
+    band, and the sources every governing row of which a study confirms (only those are a "confirmed
+    claim, not a regulation-only floor", OR-22 and OR-22b).
 
     A row is confirmed by a `confirms` edge, whose referent is that row, from a VERIFIED
     anchoring source (`confirmer_anchors`, from `gather_confirmers`: not the direction set, which
@@ -1322,7 +1324,7 @@ def _confirmed_bands(conn, parameter_id, links, confirmer_anchors, lens, bands):
     here, though its source is a confirmer through a row that is."""
     rows = {l["extraction_id"]: l["ref_id"] for l in links if l["role"] == "governing"}
     if not rows or not _table_exists(conn, "extraction_relations"):
-        return dict(bands)
+        return dict(bands), set()
     confirmer_bands = {r["ref_id"]: band(r["tier"], r["evidence_type"])
                        for r in confirmer_anchors if _verified(r)}
     skim, skim_params = _publishable_clause(conn, "e")
@@ -1341,7 +1343,8 @@ def _confirmed_bands(conn, parameter_id, links, confirmer_anchors, lens, bands):
     for eid, ref in rows.items():
         by_source.setdefault(ref, []).append(
             floor_mean(confirmers[eid].values()) if eid in confirmers else bands[ref])
-    return {**bands, **{ref: floor_mean(rb) for ref, rb in by_source.items()}}
+    return ({**bands, **{ref: floor_mean(rb) for ref, rb in by_source.items()}},
+            {ref for ref in by_source if all(eid in confirmers for eid, r in rows.items() if r == ref)})
 
 
 def determine(conn, parameter_id, lens, slug, note):
@@ -1757,8 +1760,9 @@ def determine(conn, parameter_id, lens, slug, note):
     # cell that shows no value keeps RULINGS R7: the floor of the mean of its VERIFIED governing
     # sources' circles, weak when none is verified. A floor claim is no longer pinned weak: a T4 basis
     # shows the half circle ("T4 only half circle"). A row confirmed by a study takes the study's band
-    # (R39, `_confirmed_bands`); a regulatory basis that a study lifts off its own circle is then no
-    # longer regulation-only, so `regulatory_stratum_only` and the tier_basis suffix move together
+    # (R39, `_confirmed_bands`); a regulatory basis every governing row of which a study confirms is
+    # then no longer regulation-only (OR-22b; one confirmed clause does not confirm the code, R39), so
+    # `regulatory_stratum_only` and the tier_basis suffix move together
     # (the proxy branch's precedent; the CHECK keeps ● off a regulation-only row). THE MARKER IS A
     # CACHE over the `confirms` edges and over how rows are graded and sources verified:
     # `derivation_sha` hashes none of it (its one edge term is the set of conditioned governing
@@ -1772,7 +1776,7 @@ def determine(conn, parameter_id, lens, slug, note):
     if state in ("stated", "provisional"):
         by_ref = {r["ref_id"]: r for r in recs}
         bands = {g: band(by_ref[g]["tier"], by_ref[g]["evidence_type"]) for g in governing}
-        confirmed = _confirmed_bands(conn, parameter_id, links, confirmer_anchors, lens, bands)
+        confirmed, wholly_confirmed = _confirmed_bands(conn, parameter_id, links, confirmer_anchors, lens, bands)
         if value_min is not None or value_max is not None:
             _ref_of = {l["extraction_id"]: l["ref_id"] for l in links}
             basis = sorted({_ref_of[e] for e in stating_ids})
@@ -1799,12 +1803,12 @@ def determine(conn, parameter_id, lens, slug, note):
             if blocked:
                 raise OpenQuestion(
                     f"parameter {parameter_id} ({lens_key(lens)}): the cell is refused, naming every open "
-                    f"question that blocks it. " + " ".join(blocked) + " Nothing written.")
+                    f"question that blocks it. " + " ".join(blocked) + " Nothing written.", links)
             mark = next(iter(marks.values()))
         else:
             basis = [g for g in governing if _verified(by_ref[g])]
             mark = floor_mean([confirmed[g] for g in basis] or [EvidenceMarker.WEAK])
-        if regulatory_stratum_only and any(confirmed[g] != bands[g] for g in basis):
+        if regulatory_stratum_only and basis and all(g in wholly_confirmed for g in basis):
             regulatory_stratum_only = 0
             tier_basis = tier_basis.replace("(regulatory_stratum_only)", "(confirmed_by_study)")
         marker = mark.value
@@ -2056,6 +2060,10 @@ class Refusal(ValueError):
 class OpenQuestion(Refusal):
     """A refusal that names an open owner question (OD-92, OD-99, OD-100): the cell is not answered
     until the owner answers. Apart from a lens refusal so `stale_determinations` can say which."""
+
+    def __init__(self, message, links=()):
+        super().__init__(message)
+        self.links = list(links)    # the provenance graded before the refusal: what the cell gathered
 
 
 _ARGS = None   # main()'s parsed namespace: argparse takes abbreviations of any length, so the session and --db are read from it
