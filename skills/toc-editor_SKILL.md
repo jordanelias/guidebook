@@ -15,6 +15,8 @@ description: >
 
 # toc-editor
 
+> **Item codes are prior-version content.** The item layer was deleted (owner ruling 2026-09-01; `scripts/migrations/107_drop_item_layer_cluster.sql`): an `[A-Z]-NN` code met below or in the corpus is never a container to file into (CLAUDE.md §7).
+
 **Purpose:** Maintain `references/toc.md` as the canonical structural record of the Guidebook, and generate typed Change Orders that downstream skills (`find-and-replace`, `cross-reference-resolver`) can execute against the primary document.
 
 **GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API  

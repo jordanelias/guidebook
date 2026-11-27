@@ -1,6 +1,8 @@
 # Writing & Framing Skill — Guidebook for Accessible Design
 *Built from: 500+ sent emails (2019–2026), thesis (UBC MArch 2022), undergraduate papers (2018–2019), professional regulatory correspondence (2026), Claude conversation history (2025–2026). Last updated: 2026-07-24 (added §13 authorial fingerprints from the regulatory-correspondence corpus; previously 2026-04-29 A5 close added §8.3 Co-1 voice patterns, A4 close added §8.2 patterns + §12 false-positive guards).*
 
+> **Item codes are prior-version content.** The item layer was deleted (owner ruling 2026-09-01; `scripts/migrations/107_drop_item_layer_cluster.sql`): an `[A-Z]-NN` code met below or in the corpus is never a container to file into (CLAUDE.md §7).
+
 ## Purpose
 This skill governs all prose writing for the *Guidebook for Accessible Design*. It encodes: (1) Jordan Elias's writing voice — argument structure, sentence construction, vocabulary, and register — and (2) the framing standards the Guidebook must meet: social model alignment, CRPD consistency, advocacy-identity-appropriate epistemic authority.
 

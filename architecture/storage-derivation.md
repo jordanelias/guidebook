@@ -1,7 +1,7 @@
 # Storage Derivation
 **Status:** PROVISIONAL — proposal-of-record from B1 Session 8 (Opus 4.7); pending project-owner adoption per A12 §2.4 (D-DOCT default DG-NON).
 **Doctrinal basis:** `governance/mission-and-epistemics.md` §Doctrinal commitments 1, 3, 6; `governance/decision-protocol.md` (A12) §1.1, §2.2; `governance/co1-operational.md` (A5); `governance/evidence-methodology.md` (A6); `governance/time-model.md` (A9).
-**Workplan basis:** `workplan/workplan-co0007-v3.md` §B1.
+**Workplan basis:** `workplan/_superseded/workplan-co0007-v3.md` §B1.
 **Evaluation framework:** `workplan/b1-derivation-framework.md` (D-0108); `workplan/b1-criteria-weighting.md` (D-0110, D-0111, D-0112, D-0113); per-candidate evaluations D-0119 (A), D-0121 (B), D-0132 (C); D-0134 (D dismissed); D-0136 (comparative matrix); D-0137 (Rule 3 selection).
 **Decision recorded:** D-0138 D-DOCT/DG-NON storage-form selection — PENDING project-owner adoption.
 **Last updated:** 2026-05-02 02:40

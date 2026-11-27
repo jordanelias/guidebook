@@ -25,7 +25,7 @@
 # apparatus (plan step 1.1); no registered check reads this file until step 4.4 registers
 # its successor. A new table is mapped here in the PR that adds it, by review until then.
 #
-# `cross-stage` is not a stage either. It marks a table written by several stages and pointed at by several,
+# `cross-stage` is not a stage. It marks a table written by several stages and pointed at by several,
 # which has no single home (the gap register: delegated resolution OD-11, 2026-11-12).
 #
 # `infrastructure` is not a stage. It marks tables recording the repository's own
@@ -80,7 +80,7 @@ judged_on: '2026-09-17'
 # 2026-11-13, tooling T-018 (migration 131, OR-1c): `extraction_lens_links` as JUDGMENT, judged by the
 # executor of T-018 under T-018-design.md. A figure's lens codes are the crossing, which is judgment's
 # output (CLAUDE.md §6); its parent row, `source_value_extractions`, is already judgment; and its other
-# foreign keys point into `base`, which is not a stage, so the table crosses no stage.
+# foreign keys point into `base`.
 # 2026-11-19, tooling T-126 (migration 157): unchanged under the sixteenth set ("yes lens in judgment"): a code value's lens is judged in the recording call, basis `context`; no mapping changes.
 #
 # 2026-11-17, tooling T-049 (migration 144): `translations` as CROSS-STAGE, the value the gap register takes: a

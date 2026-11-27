@@ -18,7 +18,7 @@
 **Status:** CANONICAL — A5 complete (Session 2 of 2)
 **Phase:** Stage A Phase 5 — Co-1 operational specification
 **Created:** 2026-04-29 14:30 UTC (S1) · **Closed:** 2026-04-29 15:50 UTC (S2)
-**Doctrinal basis:** D-03 revised (`governance/pre-stage-a-decisions.md` 2026-04-26 03:45) · Amendment 7 (`workplan/workplan-co0007-v3-amendments.md`) · Core Doctrine 2026-04-26 03:45 (`references/project-standards.md`) · Mission §3, §Operational reality, §Epistemic commitments
+**Doctrinal basis:** D-03 revised (`governance/pre-stage-a-decisions.md` 2026-04-26 03:45) · Amendment 7 (`workplan/_superseded/workplan-co0007-v3-amendments.md`) · Core Doctrine 2026-04-26 03:45 (`references/project-standards.md`) · Mission §3, §Operational reality, §Epistemic commitments
 **Pattern:** Prose only (no Python; A5 is the second prose-only Stage A phase after A4)
 **Sessions consumed:** 2 of 2–3 budget (Amendment 7 revised)
 
@@ -78,7 +78,7 @@ This is the operational reality declared in:
 - `references/project-standards.md` Core Doctrine 2026-04-26 03:45 (RULE: Pre-launch operational reality — solo authorship; no collaborator infrastructure)
 - `governance/pre-stage-a-decisions.md` D-03 revised 2026-04-26 03:45
 - `governance/mission-and-epistemics.md` §Operational reality
-- `workplan/workplan-co0007-v3-amendments.md` Amendment 7
+- `workplan/_superseded/workplan-co0007-v3-amendments.md` Amendment 7
 
 Co-1 *evidence* is engaged through the published corpus only. Co-1 *participation* is not happening pre-launch.
 

@@ -17,6 +17,8 @@ description: >
   This skill handles discovery and classification; find-and-replace handles execution.
 ---
 
+> **Item codes are prior-version content.** The item layer was deleted (owner ruling 2026-09-01; `scripts/migrations/107_drop_item_layer_cluster.sql`): an `[A-Z]-NN` code met below or in the corpus is never a container to file into (CLAUDE.md §7).
+
 **Model:** Sonnet-class
 **Input:** assembled document (or section map + chunks) · scope (full doc / specific volumes)  
 **Output:** cross-reference register (YAML) + resolution table + find-and-replace handoff spec  

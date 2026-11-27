@@ -2,6 +2,7 @@
 **Phase:** A3 (Conceptual model)
 **Sessions:** 7 (infrastructure pour + S1–S6 + S7 sign-off)
 **Status:** SIGNED OFF 2026-04-26 · **Amended 2026-07-21** — entity codes renamed `E-##` → `ENT-##` to remove a namespace collision with `items.item_code` (per `decisions/DR-2026-07-21-entity-code-namespace-rename.md`; no entity semantics changed).
+**Item layer removed (noted 2026-11-26):** the Item entity (ENT-08) and every relationship keyed on it in §2 and §2.1 were removed with the item layer (owner ruling 2026-09-01; `scripts/migrations/107_drop_item_layer_cluster.sql`); determinations are keyed on a parameter and at least one lens column (CLAUDE.md §6). Item codes (`[A-Z]-NN`, such as `E-08`) are prior-version content: never file a finding into one. §2.1's evidence-flow paragraph, which `governance/pipeline-contract.yaml` cites as the specification stage's anchor, is not affected.
 **Resolves:** T-06 (design-stage cross-cutting), T-07 (entity list incomplete), N-03 (cross-cutting axes)
 **Co-production:** governance document + 6 schemas + 6 converters + 1 validator + CI integration (per CO-0008)
 

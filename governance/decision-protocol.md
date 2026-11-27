@@ -2,7 +2,7 @@
 **Status:** CANONICAL — A12 Session 1
 **Phase:** Stage A Phase 12 — Decision proxy and capture protocol
 **Created:** 2026-04-30 03:00 UTC
-**Doctrinal basis:** `workplan/workplan-co0007-v3.md` §A12 (decision proxy and capture protocol; resolves L-05 model-routing inconsistency) · `workplan/roadmap-2026-04-27.md` §A12 (Pattern: Governance + Code) · `references/project-standards.md` Architecture (Sonnet 4.6 conversational; Opus 4.6 best-practice synthesis) · `references/effort-guide.md` (effort levels 50–150) · CO-0008 Project Instructions update (Opus 4.6 primary)
+**Doctrinal basis:** `workplan/_superseded/workplan-co0007-v3.md` §A12 (decision proxy and capture protocol; resolves L-05 model-routing inconsistency) · `workplan/roadmap-2026-04-27.md` §A12 (Pattern: Governance + Code) · `references/project-standards.md` Architecture (Sonnet-class conversational; Opus-class best-practice synthesis) · `references/effort-guide.md` (effort levels 50–150) · CO-0008 Project Instructions update (Opus-class primary)
 
 ---
 
@@ -10,7 +10,7 @@
 
 This document specifies how decisions are made and captured in the project. It does not enumerate the decisions themselves — those live in the owner ledger (`references/project-standards.md`) and in `decisions/`. It does not legislate which specific design or evidence questions resolve in which way — those are A6, A7, A8 territory. The protocol is a meta-layer that governs decision discipline: who decides, what gets written down, what model-routing notation is used in phase tables.
 
-The document defines five decision categories (§1), three delegation categories (§2), the canonical capture format (§3), and the standardised model-routing notation that resolves audit finding L-05 (§4).
+The document defines five decision categories (§1), three delegation categories (§2), the capture protocol (§3), and the standardised model-routing notation that resolves audit finding L-05 (§4).
 
 ---
 
@@ -28,7 +28,7 @@ Decisions in this project fall into five categories, each with characteristic de
 | D-OP | Operational | Branch protection state; commit-message convention; session-file naming; CI matrix; PAT scope |
 | D-PRES | Presentation | Voice patterns; section ordering; figure conventions; plain-language register; role-based content variants |
 
-Categories are mutually exclusive at the level of the decision's primary effect. A decision that has cross-category effect (e.g., a schema change driven by a doctrinal commitment) records under the category of its primary effect and cross-references the secondary category in §3 capture fields.
+Categories are mutually exclusive at the level of the decision's primary effect. A decision that has cross-category effect (e.g., a schema change driven by a doctrinal commitment) records under the category of its primary effect and cross-references the secondary category.
 
 ### 1.2 Why these five
 
@@ -66,7 +66,7 @@ A decision can depart from the default delegation. Departures are explicit: the 
 - A D-OP decision with material consequence (e.g., changing the PAT scope) is recorded as DG-REVIEW (delegation upgraded).
 - A D-DOCT decision that merely operationalises a prior decision is recorded as DG-REVIEW (delegation downgraded).
 
-Departures are visible in the decision record's `delegation` field and `delegation_rationale` field.
+Departures are stated in the ledger entry that records the decision.
 
 ### 2.4 Non-delegable decisions explicitly
 
@@ -123,7 +123,7 @@ CS8 is not a "every minute decision needs a record" protocol. The five categorie
 
 ### 4.1 The L-05 finding
 
-Audit finding L-05 (per `workplan/workplan-co0007-v3.md` §L-05): model-routing notation is inconsistent across phase tables. Some phase tables write "Opus session"; some write "Opus 4.6"; some write "Opus assigned"; some write "best-practice synthesis"; some omit model-routing entirely. Readers cannot reliably tell which model is expected for a given phase.
+Audit finding L-05 (per `workplan/_superseded/workplan-co0007-v3.md` §L-05): model-routing notation is inconsistent across phase tables. Some phase tables write "Opus session"; some write "Opus 4.6"; some write "Opus assigned"; some write "best-practice synthesis"; some omit model-routing entirely. Readers cannot reliably tell which model is expected for a given phase.
 
 ### 4.2 Canonical notation
 

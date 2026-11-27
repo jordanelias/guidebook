@@ -1,7 +1,7 @@
 # Migration Survival Register
 
 **Status:** CANONICAL — adopted by project owner 2026-05-02 01:37 (instruction "perform all" in audit-remediation continuation session)
-**Doctrinal basis:** workplan/workplan-co0007-v3.md §Salvage matrix; governance/repo-strategy.md; project-standards 2026-04-25 best-practice rule; A6 evidence-methodology.md §Evidence-state machine; A12 decision-protocol.md §1 categories
+**Doctrinal basis:** workplan/_superseded/workplan-co0007-v3.md §Salvage matrix; governance/repo-strategy.md; project-standards 2026-04-25 best-practice rule; A6 evidence-methodology.md §Evidence-state machine; A12 decision-protocol.md §1 categories
 **Audit basis:** audit_2026-04-30 R1 — Block 33 supersession created a kept-research/retired-form overhang with no canonical "what survives migration" register. This document is that register.
 **Issued (PROVISIONAL):** 2026-05-01 04:30
 **Adopted (CANONICAL):** 2026-05-02 01:37
@@ -139,7 +139,7 @@ The 14 categories below cover every pre-pivot artifact class. Each row carries: 
 
 | Category | Disposition | Scope | Gating | Notes |
 |---|---|---|---|---|
-| workplan/workplan-co0007-v3.md + amendments | SURVIVES_AS_IS | 2 docs | Amendment 7 close | Operative plan post-2026-04-26. |
+| workplan/_superseded/workplan-co0007-v3.md + amendments | SURVIVES_AS_IS | 2 docs | Amendment 7 close | Operative plan post-2026-04-26. |
 | workplan/co0008-scope-infrastructure-overhaul.md | SURVIVES_AS_IS | 1 doc | None | Operative through Stage A; partially absorbed into Stage A schedule. |
 | workplan/roadmap-2026-04-27.md | SURVIVES_AS_IS | 1 doc | None | Stage A→B navigation document. |
 | workplan/co0007-stage-0_*.md (Stage 0 deliverables) | SURVIVES_AS_IS | 6 docs (0.1 grounding, 0.2 quant, 0.3 skill, 0.4 contamination, 0.5 decisions, 0.7 synthesis re-issue) | None | Verification-gate audit trail; durable. |

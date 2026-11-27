@@ -2,7 +2,7 @@
 **Status:** CANONICAL — A10 Session 1
 **Phase:** Stage A Phase 10 — Adversarial-use review framework
 **Created:** 2026-04-30 02:11 UTC
-**Doctrinal basis:** `workplan/workplan-co0007-v3.md` §A10 (three canonical vectors) · CS9 (cross-stage adversarial-use review) · A4 voice-style §§8.1–8.3 (tier-located authority, mitigation against minimum-compliance weaponization) · A5 §3.4 (synthesis attribution requirement, mitigation against Co-1 instrumentalization) · A6 §2 (evidence-state machine, mitigation against tier laundering) · A7 §3.4 (population variability, mitigation against deficit-list surveillance) · project-standards L20 (no code-only synthesis)
+**Doctrinal basis:** `workplan/_superseded/workplan-co0007-v3.md` §A10 (three canonical vectors) · CS9 (cross-stage adversarial-use review) · A4 voice-style §§8.1–8.3 (tier-located authority, mitigation against minimum-compliance weaponization) · A5 §3.4 (synthesis attribution requirement, mitigation against Co-1 instrumentalization) · A6 §2 (evidence-state machine, mitigation against tier laundering) · A7 §3.4 (population variability, mitigation against deficit-list surveillance) · project-standards L20 (no code-only synthesis)
 
 ---
 

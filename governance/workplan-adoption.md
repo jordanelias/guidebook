@@ -13,7 +13,7 @@
 
 **Option B · Adopt workplan v3 with documented amendments — with C2 cut-list applied.**
 
-Workplan v3 (`workplan/workplan-co0007-v3.md`, committed `3385209da72c`) is the operative structural plan. The paired amendments file (`workplan/workplan-co0007-v3-amendments.md`, this commit) records the seven budget and methodology adjustments Stage 0 surfaced (six committed initially; Amendment 7 added 2026-04-26 03:45 UTC under pre-launch operational correction). The combination — v3 + amendments — is the operative plan from this commit forward.
+Workplan v3 (`workplan/_superseded/workplan-co0007-v3.md`, committed `3385209da72c`) is the operative structural plan. The paired amendments file (`workplan/_superseded/workplan-co0007-v3-amendments.md`, this commit) records the seven budget and methodology adjustments Stage 0 surfaced (six committed initially; Amendment 7 added 2026-04-26 03:45 UTC under pre-launch operational correction). The combination — v3 + amendments — is the operative plan from this commit forward.
 
 Rejected options:
 - **Option A (adopt v3 as-is):** rejected because three explicit budget adjustments (C2, C7, salvage matrix) and two methodology refinements (A8 jurisdiction glossary, A13 contamination-sampling cadence) are known and would otherwise be silently absorbed. Audit B-01 surfaced silent compression as a recurring failure mode; carrying it forward defeats the audit's purpose.
@@ -79,7 +79,7 @@ Real-world months: the v3 binding range of 15–24 months was set by Co-1 cadenc
 - **Repo strategy:** `governance/repo-strategy.md` — committed Stage 0.8.
 - **Synthesis re-issue v2:** `workplan/co0007-synthesis-workplan-2.md` — committed Stage 0.7.
 - **Stage 0 materials package:** `workplan/co0007-stage-0_9-adoption-package.md` — this decision's input.
-- **Amendments operative companion:** `workplan/workplan-co0007-v3-amendments.md` — paired with this file.
+- **Amendments operative companion:** `workplan/_superseded/workplan-co0007-v3-amendments.md` — paired with this file.
 
 ---
 
@@ -123,7 +123,7 @@ Until both conditions are met, no Stage A phase may begin.
 
 ## Status
 
-DECIDED. Adopted as the operative plan, paired with `workplan/workplan-co0007-v3-amendments.md`.
+DECIDED. Adopted as the operative plan, paired with `workplan/_superseded/workplan-co0007-v3-amendments.md`.
 
 | Field | Value |
 |---|---|
@@ -133,7 +133,7 @@ DECIDED. Adopted as the operative plan, paired with `workplan/workplan-co0007-v3
 | Resolution principle | Clean data + transparent methodology |
 | Stage 0 status | CLOSED (9 of 9 sub-phases committed) |
 | Stage A status | GATED on mission sit-with (≥2026-04-27 03:22 UTC) |
-| Operative plan | `workplan/workplan-co0007-v3.md` + `workplan/workplan-co0007-v3-amendments.md` |
+| Operative plan | `workplan/_superseded/workplan-co0007-v3.md` + `workplan/_superseded/workplan-co0007-v3-amendments.md` |
 
 
 ---

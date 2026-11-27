@@ -1,7 +1,7 @@
 # A1-A2 Iteration Plan
 **Created:** 2026-04-26 03:55 UTC
 **Phase:** A1-A2 (Audience and mission iteration)
-**Workplan reference:** `workplan/workplan-co0007-v3.md` §A1-A2 + Amendment 7 in `workplan/workplan-co0007-v3-amendments.md`
+**Workplan reference:** `workplan/_superseded/workplan-co0007-v3.md` §A1-A2 + Amendment 7 in `workplan/_superseded/workplan-co0007-v3-amendments.md`
 **Operative frame:** Pre-launch solo authorship per revised D-03 and project-standards 2026-04-26 03:45 RULE
 **Budget:** 4–6 sessions per v3; this file scopes how those sessions sequence
 
@@ -50,8 +50,8 @@ This is a known weaker rigor than external Co-1 review would provide. It is what
 
 ## Cross-references
 
-- Workplan v3 §A1-A2 (lines 146–160 of `workplan/workplan-co0007-v3.md`)
-- Amendment 7 in `workplan/workplan-co0007-v3-amendments.md`
+- Workplan v3 §A1-A2 (lines 146–160 of `workplan/_superseded/workplan-co0007-v3.md`)
+- Amendment 7 in `workplan/_superseded/workplan-co0007-v3-amendments.md`
 - Mission input: `governance/mission-PROVISIONAL.md` (revised 2026-04-26 03:45 UTC)
 - Doctrinal base: `references/project-standards.md` (RULE added 2026-04-26 03:45)
 - Pre-Stage-A decisions: `governance/pre-stage-a-decisions.md` (D-03 revised 2026-04-26 03:45)

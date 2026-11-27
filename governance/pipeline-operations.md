@@ -54,7 +54,7 @@ boundary: no re-retrieval, no admission.
 
 **Extraction is not synthesis.** Capturing "RT60 ≤ 0.6 s, BB93 §1.2, classrooms" is extraction.
 Deciding what the best practice *is* across sources, populations and jurisdictions is synthesis,
-and only synthesis is gated to Opus-class authorship (PI rule #2, DR-2026-06-10).
+and only synthesis is gated to Opus-class-or-above authorship, Fable included (PI rule #2, DR-2026-06-10).
 
 ---
 

@@ -272,18 +272,19 @@ stages:
     carrier_value: skim
     references: TD section 3 boundary B11; REQ-037, REQ-038 (OD-18)
 - id: synthesis
-  anchor: 'best_practice_synthesis / ISW; PI rule #9 (9-step); Opus-only (rule #2)'
+  anchor: 'best_practice_synthesis / ISW; PI rule #9 (9-step); Opus-class or above, Fable included (rule #2)'
   entry:
   - one or more judgment rows for a parameter, ready to be weighed together across jurisdictions
   criteria:
   - id: opus-routing
     kind: completeness
-    criterion: 'best_practice_synthesis is authored at the ratified capability floor (Opus-class), never
-      by a lower tier (rule #2).'
+    criterion: 'Judged synthesis text is authored at the ratified capability floor (Opus-class or above,
+      Fable included), never by a lower tier (rule #2); a determination is computed, not written (owner,
+      2026-09-09).'
     references: 'PI rule #2; DR-2026-06-10-synthesis-model-floor'
     check: null
 - id: specification
-  anchor: the determination — "therefore 1200 mm, marked ●". conceptual-model.md:90 ("BPC synthesis produces
+  anchor: the determination — "therefore 1200 mm, marked ●". conceptual-model.md:91 ("BPC synthesis produces
     specifications"), restored by D-0167
   entry:
   - the syntheses and governing figures for a parameter and lens, ready for the determination
@@ -358,9 +359,9 @@ cross_stage:
   references: DR-2026-05-28 migration-ledger; GAP-290; ci.yml data battery
   check: scripts/audit/migration_reproducibility.py
 - id: doctrine-recheck
-  criterion: A doctrine recheck fires at every stage transition and every 25 sessions; work-product must
-    not contradict canonical doctrine.
-  references: governance/doctrine-recheck.md §1; RecheckTrigger STAGE_TRANSITION
+  criterion: Every doctrinal-basis cross-reference in a CANONICAL governance document resolves (the
+    `--cross-ref` pass, retained by DR-2026-08-19 §10).
+  references: governance/doctrine-recheck.md §2.3; DR-2026-08-19 §10
   check: scripts/doctrine_recheck.py
 - id: doctrine-currency
   criterion: A ruling that supersedes binding text elsewhere carries a SUPERSEDES/BY back-pointer at the

@@ -97,7 +97,7 @@ pointers:
   sessions_latest_resolves: true
   sessions_latest_research: session_2026-11-06-pipeline-batch-2.md
   sessions_latest_research_resolves: true
-  doctrine_sha: e647458
+  doctrine_sha: 2518e1b
   doctrine_file: governance/mission-and-epistemics.md
   newest_workplan:
   - 2026-11-06-run-pipeline-round-3-adjudication.md

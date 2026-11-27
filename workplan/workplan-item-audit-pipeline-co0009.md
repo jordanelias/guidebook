@@ -523,7 +523,7 @@ CON-0251 deleted and re-logged correctly. Audit brief committed at correct path.
 
 ### Phase 5 — Integrate into C3 workflow · 1 session · Sonnet
 
-Update `workplan/workplan-co0007-v4.md`:
+Update `workplan/_superseded/workplan-co0007-v4.md`:
 - C2 sub-stages: add Phases 0–4 as C2.x entries
 - C3 task list: add "run item-audit-pipeline" as first task per item
 - Note: items with open RP or CONF gaps after pipeline run should have those gaps closed
