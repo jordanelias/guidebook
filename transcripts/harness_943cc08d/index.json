@@ -5,5 +5,19 @@
     "bytes": 158805,
     "agent_id_prefix": "ace721d2",
     "file": "2026-11-27T16-19-21_other_ace721d2.jsonl"
+  },
+  {
+    "started": "2026-11-27T17:06:50",
+    "role": "antagonist",
+    "bytes": 1092784,
+    "agent_id_prefix": "a224f5f7",
+    "file": "2026-11-27T17-06-50_antagonist_a224f5f7.jsonl"
+  },
+  {
+    "started": "2026-11-27T17:14:57",
+    "role": "antagonist",
+    "bytes": 492200,
+    "agent_id_prefix": "a9584401",
+    "file": "2026-11-27T17-14-57_antagonist_a9584401.jsonl"
   }
 ]
