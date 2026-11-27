@@ -38,6 +38,8 @@ import argparse
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 import dbcore  # noqa: E402  -- for check_expression: vocabularies come from the schema
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+from schemas.enums import EvidenceMarker, EvidenceType  # noqa: E402  -- C10: the circles; the grey type
 
 DB_PATH = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 
@@ -547,43 +549,67 @@ def run_checks(db_path):
     # have fired on a fabricated cell.
     #
     # Read-ness is recorded in verification_status, not in capture status. That
-    # is what this now tests. DISPUTED counts as a failure: a best practice
+    # is what this tested until 2026-11-27, when OD-99's interim text replaced it (below). DISPUTED counts as a failure: a best practice
     # resting on a source whose standing is contested is exactly the case worth
     # surfacing. (The old note here counted 2 DISPUTED among 59; D-0157
     # retired that status and no governing ref has ever been one.)
-    # D-0157: a published cell may rest only on a source whose standing is
-    # VERIFIED. The old list admitted VERIFIED-2 -- corroborated but never
-    # obtained -- as sound; the remap moved those 71 rows to UNVERIFIED, so this
-    # narrowing is the same judgement applied consistently rather than a new one.
-    OK_VSTATUS = ("VERIFIED",)
+    # OD-99 MEANWHILE (referred to the owner 2026-11-27; its last bullet is this check's text): a
+    # published cell fails when (i) a governing source fails the interim test for "could not be
+    # retrieved" (OD-99 Question 2 (b): not VERIFIED, and no logged retrieval of it or a
+    # verification_method saying it was not retrieved) and has no route shown, or (ii) every
+    # governing source is non-VERIFIED or grey and the marker is a circle. The route, interim: for
+    # T4-T6 (OR-23b) a jurisdiction, a standard number and, on every live value-supplying row of the
+    # source for the cell's parameter, a clause id or a locator (`loc_*`, `loc_note` being prose);
+    # never for T1-T3, whose academic route is unsettled (OD-95). Titles are never parsed. The
+    # engine reads no retrieval log (its marker refuses instead), so this test is the one home of it.
+    # The two method values are the owner question's interim text, checked against the column's
+    # CHECK so a renamed value cannot silently pass; delete them when OD-99 is answered.
+    NOT_RETRIEVED_METHODS = ("corroborated-not-retrieved", "citing-bibliography")
     try:
-        ph = ",".join("?" * len(OK_VSTATUS))
-        unsound = conn.execute(f"""
-            SELECT COUNT(DISTINCT c.specification_id)
-            FROM specifications c
-            -- THE JUNCTION, not json_each over the retired copy. `governing_refs` is
-            -- NULL on every row written after the 2026-09-21 writer-retire, and
-            -- json_each(NULL) yields NO ROWS -- so this BLOCKING gate would have
-            -- examined nothing and passed green over exactly the cells it exists to
-            -- catch. CLAUDE.md 5(a), a gate that passes having examined nothing.
-            JOIN specification_source_links j
-              ON j.specification_id = c.specification_id AND j.role = 'governing'
-            JOIN evidence_sources e ON e.ref_id = j.ref_id
-            WHERE c.state IN ('stated','provisional')
-              AND c.retired_at IS NULL
-              AND COALESCE(e.verification_status,'') NOT IN ({ph})""",
-            OK_VSTATUS).fetchone()[0]
-        total_cells = conn.execute("""SELECT COUNT(*) FROM specifications
-            WHERE state IN ('stated','provisional')
-              AND retired_at IS NULL""").fetchone()[0]
-        record("C10", "no published cell rests on an unverified or disputed source",
-               unsound == 0,
-               f"{unsound} of {total_cells} published cells cite a source that is "
-               f"not verified (disputed, unverified, or no status)"
-               if unsound else "",
-               subject=total_cells)
-    except sqlite3.OperationalError as exc:
-        record("C10", "no published cell rests on an unverified or disputed source",
+        _vm = dbcore.check_values(conn, "evidence_sources", "verification_method")
+        assert set(NOT_RETRIEVED_METHODS) <= set(_vm), f"{NOT_RETRIEVED_METHODS} not in the CHECK {_vm}"
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "research"))
+        import retrieval_log as _rl                       # noqa: E402
+        _saved = _rl.LOG_ROOT                             # cwd-relative unless GUIDEBOOK_RETRIEVAL_LOG is set
+        if not _saved.is_absolute():
+            _rl.LOG_ROOT = _rl.Path(__file__).resolve().parents[2] / _saved
+        try:
+            _manifest = _rl.all_manifest_records()
+        finally:
+            _rl.LOG_ROOT = _saved
+        _loc = [r[1] for r in conn.execute("PRAGMA table_info(source_value_extractions)")
+                if r[1] == "clause_id" or (r[1].startswith("loc_") and r[1] != "loc_note")]
+        cells = conn.execute("""SELECT specification_id, parameter_id, marker FROM specifications
+            WHERE state IN ('stated','provisional') AND retired_at IS NULL""").fetchall()
+        failing = []
+        for sid, pid, marker in cells:
+            srcs = conn.execute("""SELECT e.ref_id, e.tier, e.evidence_type, e.verification_status,
+                    e.verification_method, e.url, e.doi, e.jurisdiction, e.standard_number
+                FROM specification_source_links j JOIN evidence_sources e ON e.ref_id = j.ref_id
+                WHERE j.specification_id = ? AND j.role = 'governing'""", (sid,)).fetchall()
+            unretrieved = []
+            for ref, tier, et, vs, vm, url, doi, jur, std in srcs:
+                if vs == "VERIFIED" or (vm not in NOT_RETRIEVED_METHODS
+                                         and _rl.manifest_lines_for(ref, url, doi, _manifest)):
+                    continue
+                routed = (tier is not None and tier >= dbcore.REGULATORY_FROM_TIER and jur and std
+                          and not conn.execute(
+                              f"""SELECT 1 FROM source_value_extractions WHERE ref_id = ? AND parameter_id = ?
+                                  AND retired_at IS NULL AND figure_role IN ({",".join("?" * len(dbcore.VALUE_SUPPLYING_ROLES))})
+                                  AND COALESCE({", ".join(_loc)}) IS NULL""",
+                              (ref, pid, *dbcore.VALUE_SUPPLYING_ROLES)).fetchone())
+                if not routed:
+                    unretrieved.append(ref)
+            all_weak = srcs and all(s[3] != "VERIFIED" or s[2] == EvidenceType.GREY.value for s in srcs)
+            if unretrieved or (all_weak and marker in [m.value for m in EvidenceMarker.circles()]):
+                failing.append(f"spec {sid}: " + (f"unretrieved without a route {unretrieved}" if unretrieved
+                                                  else f"every governing source unverified or grey under {marker}"))
+        record("C10", "no published cell rests on an unretrieved source without a route, or wholly on "
+                      "unverified or grey sources under a circle (OD-99 interim)",
+               not failing, "; ".join(failing[:5]), subject=len(cells))
+    except (sqlite3.OperationalError, AssertionError) as exc:
+        record("C10", "no published cell rests on an unretrieved source without a route, or wholly on "
+                      "unverified or grey sources under a circle (OD-99 interim)",
                False, f"could not evaluate: {exc}", subject=None)
 
     # C07 — a value column must hold a value, not a state written as prose.

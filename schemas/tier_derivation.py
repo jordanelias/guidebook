@@ -33,7 +33,7 @@ scope carries the sentinel 'intrinsic':
 
 from typing import Iterable, Optional
 
-from schemas.enums import EvidenceMarker
+from schemas.enums import EvidenceMarker, EvidenceType
 
 # --- Scope discriminator values ---
 SCOPE_HIGH_CONTROL = "high_control"
@@ -100,30 +100,30 @@ def derive_tier(evidence_type: str, scope: Optional[str]) -> int:
 
 
 def band(tier: int, evidence_type: str) -> EvidenceMarker:
-    """A source's evidence band, per tier-system section 5.
+    """A source's circle, per tier-system section 5 (owner answers 2026-11-14, fourteenth set: "od57 yes";
+    "Owner answer 2026-11-14 (last) -- a cell resting on tier 4 only takes the half circle").
 
-    FULL: T1, T2, Co-1, Co-2 and T3 clinical. PARTIAL: T4, T5 (a policy or standards basis,
-    not primary evidence). WEAK: T3 other than clinical (grey literature) and T6 (the code
-    floor). The T3 split is the one place the type matters.
+    FULL: T1, T2 (Co-1 and Co-2 are tiers 1 and 2 in TIER_MAP). PARTIAL: T3, T4. WEAK: T5, T6. A grey
+    basis is marked with the warning marker by the engine, never by a circle (OD-64, fifteenth set:
+    "triangle for all"); a grey source's band is left as it was (WEAK) and is never displayed.
     """
     if tier in (1, 2):
         return EvidenceMarker.FULL
-    if tier == 3:
-        return EvidenceMarker.FULL if evidence_type == "clinical" else EvidenceMarker.WEAK
-    if tier in (4, 5):
-        return EvidenceMarker.PARTIAL
-    if tier == 6:
+    if tier in (3, 4):
+        return EvidenceMarker.WEAK if evidence_type == EvidenceType.GREY.value else EvidenceMarker.PARTIAL
+    if tier in (5, 6):
         return EvidenceMarker.WEAK
     raise TierDerivationError(f"no band for tier {tier!r}")
 
 
 def floor_mean(bands: Iterable[EvidenceMarker]) -> EvidenceMarker:
     """The band of several equally weighted inputs: the floor of the mean of their ordinals
-    (owner, 2026-09-13: "yeah round down"). Only an all-FULL set is FULL."""
+    (owner, 2026-09-13: "yeah round down"). Only an all-FULL set is FULL. Circles only: the
+    warning marker has no ordinal, so an input carrying it raises."""
     ordinals = [b.ordinal for b in bands]
     if not ordinals:
         raise TierDerivationError("floor_mean of no bands")
-    return next(m for m in EvidenceMarker if m.ordinal == sum(ordinals) // len(ordinals))
+    return next(m for m in EvidenceMarker.circles() if m.ordinal == sum(ordinals) // len(ordinals))
 
 
 def expected_scope_from_tier(evidence_type: str, tier: int) -> Optional[str]:

@@ -6850,7 +6850,7 @@ def _retype_source(conn, ref_id: str, new_type: str, scope, tier, co1_provenance
 def _refuse_unlogged_verified(ref_id, url, doi, verb):
     """VERIFIED needs a retrieval in the log: a usable manifest line naming the source's ref_id, url or DOI
     (`retrieval_log.manifest_lines_for`, the subject of the corpus-wide author_fidelity check). CLAUDE.md section
-    5(c): verification leaves an artefact. Without one the source is UNVERIFIED and shown ○."""
+    5(c): verification leaves an artefact. Without one the source is UNVERIFIED, and a cell whose shown value it states is refused (OD-99)."""
     if not _retrieval_log().manifest_lines_for(ref_id, url, doi):
         raise Refusal(
             f"{verb}: VERIFIED needs a logged retrieval, and no usable retrieval-log manifest line names "

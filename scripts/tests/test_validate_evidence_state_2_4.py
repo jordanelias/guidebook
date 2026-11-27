@@ -349,6 +349,15 @@ try:
         _prep = [subprocess.run([sys.executable, os.path.join(REPO, "scripts", "db.py"), "retire-specification", "--specification-id",
                                  str(sid), "--reason", "TASK-FIXTURE T004", "--session", "session_t004-fixture"],
                                 capture_output=True, text=True, env=dict(os.environ, GUIDEBOOK_DB_PATH=_b)) for (sid,) in _lv]
+        # T-117: a cell whose shown value a non-VERIFIED source states is refused, naming OD-99 (owner); this case counts rows,
+        # not markers, so on the copy such sources' figures of the parameter are retired and the cell answers.
+        _bc = sqlite3.connect(_b)
+        _bc.execute("UPDATE source_value_extractions SET retired_at = strftime('%Y-%m-%d %H:%M', 'now', '-1 minute'), "
+                    "retired_by_session = 'session_t004-fixture', retirement_reason = 'T004 fixture: answer without an open "
+                    "owner question (T-117)' WHERE parameter_id = ? AND retired_at IS NULL AND ref_id IN (SELECT ref_id FROM "
+                    "evidence_sources WHERE COALESCE(verification_status, '') <> 'VERIFIED')", (_cell4[0],))
+        _bc.commit()
+        _bc.close()
         _before4 = _t004_q(_b, "SELECT COALESCE(SUM(retired_at IS NULL),0), COALESCE(SUM(retired_at IS NOT NULL),0) FROM specifications")
         _eng = subprocess.run([sys.executable, os.path.join(REPO, "scripts", "assess", "assess_cell.py"), "--db", _b, "--emit-sql",
                                os.path.join(_tmp4, "b.sql"), "--parameter-id", str(_cell4[0]), "--slug", _slug4[0], "--identity",

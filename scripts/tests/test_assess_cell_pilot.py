@@ -8,7 +8,7 @@ existed when they did not; this file makes the claim true).
 Branches covered here, each against a synthetic in-memory DB:
   - pure Co-2-only basis  -> stated, tier_basis CO2 (§2.2 condition 3)
   - pure T6-only, >=3 distinct jurisdictions -> provisional + code_floor_only
-    + regulatory_stratum_only + design_scale universal (G1)
+    + regulatory_stratum_only (G1); design_scale population, read off the key (OD-48)
   - pure T6-only, single jurisdiction -> pending (fails §2.3 jurisdiction
     distinctness, per the pilot-2 richness fix)
   - all sources disqualified -> pending + all_sources_disqualified flag (§2.8)
@@ -28,7 +28,7 @@ sys.path.insert(0, REPO_ROOT)
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "assess"))
 
 from assess_cell import (  # noqa: E402
-    NOT_PUBLISHABLE_METHODS, RULE_VERSION, STORED_ANSWER, Refusal, derivation_handshake, determine, gap_account, population_match,
+    NOT_PUBLISHABLE_METHODS, RULE_VERSION, STORED_ANSWER, OpenQuestion, Refusal, derivation_handshake, determine, gap_account, population_match,
     scan_command, stale_determinations, validate_lens)
 from schemas.enums import EvidenceMarker  # noqa: E402
 from schemas.evidence_state import ConvergenceAssessment, EvidenceStateRecord  # noqa: E402
@@ -459,7 +459,8 @@ def main():
     expect("T6-only(3 jur) => provisional", d["state"] == "provisional", d["state"])
     expect("T6-only => code_floor_only=1", d["code_floor_only"] == 1)
     expect("T6-only => regulatory_stratum_only=1", d["regulatory_stratum_only"] == 1)
-    expect("T6-only => design_scale universal", d["design_scale"] == "universal")
+    # T-056 item 3a (OD-48, "whom it is for"): the scale is read off the key, and this cell names MOB.
+    expect("T6-only keyed on an identity => design_scale population", d["design_scale"] == "population")
     expect("T6-only never stated", d["state"] != "stated")
 
     # 3. T6-only, one jurisdiction x3 -> pending (jurisdiction distinctness)
@@ -940,8 +941,8 @@ def main():
     expect("MARKER: an anchored (stated) cell takes the anchors' band", d["marker"] == FULL, str(d["marker"]))
     d = determine(synth_db([{"tier": 3, "evidence_type": "clinical", "scope": "lower_control"}]), 1,
                   {"identity_code": "MOB"}, "syn-slug", "marker-t3-clinical")
-    expect("MARKER: T3-clinical alone is provisional and still full (band = evidence, state = status)",
-           d["state"] == "provisional" and d["marker"] == FULL, f"{d['state']} {d['marker']}")
+    expect("MARKER: T3-clinical alone is provisional and takes the half circle (OD-57: ◐ T3)",
+           d["state"] == "provisional" and d["marker"] == PARTIAL, f"{d['state']} {d['marker']}")
     d = determine(synth_db([{"tier": 6, "evidence_type": "code", "jurisdiction": j}
                             for j in ("US", "GB", "AU")]), 1,
                   {"identity_code": "MOB"}, "syn-slug", "marker-floor")
@@ -1126,10 +1127,12 @@ def main():
            and _proxy_cell(finding=_find + [dict(_absent_src, verification_status="UNVERIFIED")],
                            confirmers_from=("REF-FIND-2",))[1]["has_unverified_sources"] == 1)
     _c, _d = _proxy_cell(finding=[_absent_src], confirmers_from=("REF-FIND-2",), proxy=0)
-    expect("R39: with NO counted finding there is no direction, so the cell is a floor claim and "
-           "stays weak (the CHECK pins it; a confirmed floor claim is the owner's to rule)",
-           _d["regulatory_stratum_only"] == 1 and _d["marker"] == WEAK and _d["skimmed_findings"] == [],
-           f"{_d['regulatory_stratum_only']} {_d['marker']}")
+    expect("R39: with NO counted finding there is no direction, so the cell is a floor claim; confirmed by "
+           "the study it reads the study's band and is no longer regulation-only (OR-22b, owner 2026-11-13: "
+           "\"The study's own band\")",
+           _d["regulatory_stratum_only"] == 0 and _d["marker"] == FULL and _d["skimmed_findings"] == []
+           and _d["tier_basis"].endswith("(confirmed_by_study)"),
+           f"{_d['regulatory_stratum_only']} {_d['marker']} {_d['tier_basis']}")
 
     # An unverified Co-1 finding source is no anchor (classify holds it back), so it supplies no
     # direction; it is still an input the answer would turn on, and is flagged.
@@ -1611,7 +1614,7 @@ def main():
     expect("BAND: section 5 reads off (tier, evidence_type)",
            [band(1, "co1"), band(2, "sr_meta"), band(2, "co2"), band(3, "clinical"),
             band(5, "national_fw"), band(3, "grey"), band(3, "standard_eb")]
-           == [M.FULL] * 4 + [M.PARTIAL, M.WEAK, M.WEAK] and (T1, T4, T6) == (M.FULL, M.PARTIAL, M.WEAK))
+           == [M.FULL] * 3 + [M.PARTIAL, M.WEAK, M.WEAK, M.PARTIAL] and (T1, T4, T6) == (M.FULL, M.PARTIAL, M.WEAK))
     expect("BAND: floor_mean reproduces the owner's five rows (2 x T1 + T4 is the acceptance case)",
            [floor_mean(x) for x in ([T1, T1, T4], [T1] * 3, [T1, T1, T6], [T1, T6, T6], [T1] * 99 + [T4])]
            == [M.PARTIAL, M.FULL, M.PARTIAL, M.WEAK, M.PARTIAL])
@@ -1834,8 +1837,10 @@ def main():
     # ── T-019 repair pass ───────────────────────────────────────────────────────────────────────
     # F1: the confirming row of a `confirms` edge is stated in the cell's lens too (`_confirmed_bands`).
     # One source holds finding f1 (tagged MOB) and f2; f1 confirms the first code, f2 all three.
+    # No direction, so no value is shown and the marker is the floor mean of the codes (R7): with a value, codes
+    # whose marks differ state it together and the cell is refused (OD-92), which is not what this case tests.
     def _f1(f2_lens, f2_edges=True):
-        c = synth_db(_t6 + [dict(_find[0], extraction_method="full")], direction="lower_is_better")
+        c = synth_db(_t6 + [dict(_find[0], extraction_method="full")])
         c.executescript("CREATE TABLE extraction_relations (relation_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                         "from_extraction_id INT, relation TEXT, to_extraction_id INT, to_label TEXT)")
         f1 = c.execute("SELECT MIN(extraction_id) FROM source_value_extractions WHERE ref_id='REF-FIND-1'").fetchone()[0]
@@ -1977,9 +1982,13 @@ def main():
     if not _pairs:
         print("      SKIPPED-NO-FIXTURE: T019-13..15 need the live database with identity links on figures")
     else:
-        _bad, _reached = [], 0
+        _bad, _reached, _open = [], 0, []
         for pid, code in _pairs:
-            d = determine(_live, pid, _mob(code), "syn-slug", "t019-live")
+            try:
+                d = determine(_live, pid, _mob(code), "syn-slug", "t019-live")
+            except OpenQuestion:          # refused, naming an owner question (T-117): no links to read
+                _open.append((pid, code))
+                continue
             inl = {l["extraction_id"] for l in d["links"] if l["in_lens"]}
             _reached += len(inl)
             carries = _carries(pid, code)
@@ -1989,8 +1998,9 @@ def main():
             if not (inl and inl == carries and out_ok and gov_ok):
                 _bad.append((pid, code))
         expect("T019-13 (AT-50): for every (parameter, identity code) the live links name, the figures "
-               f"a cell reaches are exactly those carrying its code ({len(_pairs)} cells, {_reached} "
-               "figures reached), none is empty, and every other figure of the parameter is linked "
+               f"a cell reaches are exactly those carrying its code ({len(_pairs) - len(_open)} cells, {_reached} "
+               f"figures reached; {len(_open)} refused on an open owner question, not examined: {_open}), none "
+               "is empty, and every other figure of the parameter is linked "
                "`excluded` with the lens reason", not _bad and _reached > 0, str(_bad))
 
         # AT-51 live: every parameter whose figures carry ALL and another identity, cell by cell. The
@@ -2074,6 +2084,14 @@ def main():
             are set to the oldest row of the cell (a pointer that already exists)."""
             f = os.path.join(_tmp, tag + ".db")
             shutil.copy(os.path.join(REPO_ROOT, "data", "guidebook.db"), f)
+            # T-117: a cell whose shown value a non-VERIFIED source states is refused, naming OD-99 (owner). These cases
+            # test the supersession pointer, not the marker, so on the copy such sources' figures of the parameter are
+            # retired and the cell answers.
+            _sql_on(f, "UPDATE source_value_extractions SET retired_at = strftime('%Y-%m-%d %H:%M', 'now', '-1 minute'), "
+                       "retired_by_session = ?, "
+                       "retirement_reason = 'T011 fixture: answer without an open owner question (T-117)' "
+                       "WHERE parameter_id = ? AND retired_at IS NULL AND ref_id IN (SELECT ref_id FROM evidence_sources "
+                       "WHERE COALESCE(verification_status, '') <> 'VERIFIED')", _SESS, _cell[0])
             live = _sql_on(f, f"SELECT specification_id {_CELLQ} AND retired_at IS NULL", *_cell)
             if live:
                 subprocess.run([sys.executable, os.path.join(REPO_ROOT, "scripts", "db.py"), "retire-specification",

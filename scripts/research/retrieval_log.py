@@ -2323,7 +2323,7 @@ def verify_corpus():
 
     Exit 1 on an author cross, a VERIFIED source's stored name or title absent from its bytes, or a VERIFIED source
     with no usable retrieval logged; else 0. An UNVERIFIED source's absent name is reported (its standing already
-    says it was not verified, shown ○).
+    says it was not verified; a cell whose shown value it states is refused, OD-99).
     """
     records = all_manifest_records()
     payloads = {}

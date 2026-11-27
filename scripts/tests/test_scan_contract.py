@@ -1016,7 +1016,7 @@ try:
         refs = [s["ref_id"] for s in ac.gather_sources(con, PE, lens)]
         links = ac.gather_extraction_links(con, PE, [REF_A, REF_S], lens)
         by_id = {l["extraction_id"]: l for l in links}
-        vmin, vmax, unit, note, _n = ac.compose_value(con, links, "lower_is_better")
+        vmin, vmax, unit, note, _n, _stating = ac.compose_value(con, links, "lower_is_better")
         det = ac.determine(con, PE, lens, SLUG_A, "fixture")
         check_vals = dbcore.check_values(con, "source_value_extractions",
                                          "extraction_method")
