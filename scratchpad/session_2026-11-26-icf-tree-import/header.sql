@@ -1,0 +1,38 @@
+-- T-148: the ICF tree imported from the persisted WHO ICF 2026-01 tabulation (OD-74; ledger "Delegated resolutions 2026-11-23" and "Delegated resolutions 2026-11-25").
+-- Source: retrieval-log/session_2026-11-22-icf-umbrella-glossary/38776b09204984dc.zip (sha256 in manifest.jsonl beside it).
+-- Written by: db.py import-icf-tree on a scratch copy. Re-derive with --dry-run on a copy; the verb's output is the authority, not these lists.
+-- Blocks minted (level-2 and level-3): 64. Held codes parented: 71. Untitled codes named: 42.
+-- d910-d920 is not a WHO block (WHO's is d910-d999) and is left as stored: unmatched = ['d910–d920'].
+-- Titles REPLACED (code | old title | old source | new WHO title). Where the source is access_need_icf.note the old text is still held there:
+--   b164 | higher-level cognitive functions: time management, planning & sequencing (verified WHO/ICF 2026-07-23). Rationale (owner 2026-07-23): brain fog impairs organizing time and retaining the sequence of actions, so tasks run slower as people work to hold onto intent -> the environment must impose no time pressure. No axis carries it. | access_need_icf.note | Higher-level cognitive functions
+--   b765 | involuntary movement functions: tremor, dystonia, chorea, dyskinesia (excl. b760 voluntary control, b770 gait); verified WHO/ICF 2026-07-23. No axis carries it. | access_need_icf.note | Involuntary movement functions
+--   d620 | Acquisition of goods/services | skills/functional-deficit-auditor_SKILL.md | Acquisition of goods and services
+--   e115 | products for daily living | access_need_icf.note | Products and technology for personal use in daily living
+--   e120 | mobility products & technology | access_need_icf.note | Products and technology for personal indoor and outdoor mobility and transportation
+--   e125 | products & technology for communication | access_need_icf.note | Products and technology for communication
+--   e1251 | assistive products & technology for communication (sub-code of e125); verified WHO/ICF 2026-07-23 | access_need_icf.note | Assistive products and technology for communication
+--   e150 | building design (public) | access_need_icf.note | Design, construction and building products and technology of buildings for public use
+--   e155 | building design (private) | access_need_icf.note | Design, construction and building products and technology of buildings for private use
+--   e340 | personal-care providers / SSPs | access_need_icf.note | Personal care providers and personal assistants
+-- Titles CONFIRMED by the payload (code | old title | old source); the stored wording takes WHO's casing and the source becomes the payload:
+--   d410 | Changing basic body position | skills/functional-deficit-auditor_SKILL.md
+--   d420 | Transferring oneself | skills/functional-deficit-auditor_SKILL.md
+--   d440 | Fine hand use | skills/functional-deficit-auditor_SKILL.md
+--   d445 | Hand and arm use | skills/functional-deficit-auditor_SKILL.md
+--   d450 | Walking | skills/functional-deficit-auditor_SKILL.md
+--   d455 | Moving around | skills/functional-deficit-auditor_SKILL.md
+--   d460 | Moving around in different locations | skills/functional-deficit-auditor_SKILL.md
+--   d465 | Moving around using equipment | skills/functional-deficit-auditor_SKILL.md
+--   d470 | Using transportation | skills/functional-deficit-auditor_SKILL.md
+--   d510 | Washing oneself | skills/functional-deficit-auditor_SKILL.md
+--   d520 | Caring for body parts | skills/functional-deficit-auditor_SKILL.md
+--   d530 | Toileting | skills/functional-deficit-auditor_SKILL.md
+--   d540 | Dressing | skills/functional-deficit-auditor_SKILL.md
+--   d550 | Eating | skills/functional-deficit-auditor_SKILL.md
+--   d630 | Preparing meals | skills/functional-deficit-auditor_SKILL.md
+--   d640 | Doing housework | skills/functional-deficit-auditor_SKILL.md
+--   e240 | Light | access_need_icf.note
+--   e250 | Sound | access_need_icf.note
+--   e260 | Air quality | access_need_icf.note
+-- specifications rows with an icf_code when this batch was made: 0 (RULE_VERSION is left alone).
+
