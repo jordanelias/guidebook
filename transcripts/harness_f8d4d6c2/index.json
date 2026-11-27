@@ -173,5 +173,47 @@
     "bytes": 1698101,
     "agent_id_prefix": "afa1c342",
     "file": "2026-11-27T04-11-11_other_afa1c342.jsonl"
+  },
+  {
+    "started": "2026-11-27T04:34:03",
+    "role": "antagonist",
+    "bytes": 1548959,
+    "agent_id_prefix": "a754afa8",
+    "file": "2026-11-27T04-34-03_antagonist_a754afa8.jsonl"
+  },
+  {
+    "started": "2026-11-27T04:34:03",
+    "role": "antagonist",
+    "bytes": 1857740,
+    "agent_id_prefix": "ad457672",
+    "file": "2026-11-27T04-34-03_antagonist_ad457672.jsonl"
+  },
+  {
+    "started": "2026-11-27T04:34:03",
+    "role": "adversarial",
+    "bytes": 1630349,
+    "agent_id_prefix": "ae1d92ba",
+    "file": "2026-11-27T04-34-03_adversarial_ae1d92ba.jsonl"
+  },
+  {
+    "started": "2026-11-27T04:55:47",
+    "role": "antagonist",
+    "bytes": 770682,
+    "agent_id_prefix": "a6250fc6",
+    "file": "2026-11-27T04-55-47_antagonist_a6250fc6.jsonl"
+  },
+  {
+    "started": "2026-11-27T04:55:47",
+    "role": "antagonist",
+    "bytes": 765775,
+    "agent_id_prefix": "a95b5061",
+    "file": "2026-11-27T04-55-47_antagonist_a95b5061.jsonl"
+  },
+  {
+    "started": "2026-11-27T04:59:25",
+    "role": "other",
+    "bytes": 737923,
+    "agent_id_prefix": "a5f1f596",
+    "file": "2026-11-27T04-59-25_other_a5f1f596.jsonl"
   }
 ]
