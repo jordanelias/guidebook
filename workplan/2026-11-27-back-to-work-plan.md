@@ -61,7 +61,7 @@ Name the gap ids in the commit message and the PR body. The tooling PR (with T-1
 
 ## 5. Next run: languages and jurisdictions
 
-Within OD-04's set, parameter 12 has no figure for US, AU, CA, NO, SE, ISO, EU, CH, NL, DK, FI, IT, JP, KR or CN. Search in `lang_jur_map`'s primary languages (NO/NO, SV/SE, JA/JP, ZH/CN), and log each search before it runs: `db.py log-search --parameter 12 --origin planned --prior-expectation …`. All 70 rows of `lang_jur_map.scope_status` are NULL.
+Within OD-04's set, parameter 12 has no figure for US, AU, CA, NO, SE, ISO, EU, CH, NL, DK, FI, IT, JP, KR or CN. Search in `lang_jur_map`'s primary languages (NO/NO, SV/SE, JA/JP, ZH/CN), and log each search before it runs: `db.py log-search --parameter 12 --origin planned --prior-expectation …`. Derive how many `lang_jur_map.scope_status` rows are set: `select count(*), sum(scope_status is not null) from lang_jur_map`.
 
 ## 6. Write path
 
