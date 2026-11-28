@@ -9102,3 +9102,8 @@ DATE: 2026-11-28 — owner statements, relayed in session and recorded on contac
 "Universal/Population Specific/Individual relates to Identity/ICF/Access Needs relates to accessible design domains under which parameters are categorized"
 READING (not the owner's words): the chain runs scope of a determination (universal, population specific, individual) → the groups it is stated for (identity, ICF, access needs) → the design domains that categorise parameters. The statement does not say which scope pairs with which lens, so none is assumed; whether it changes D-0170 (the lenses) or the 2026-08-27 ruling that the crossing is judgment's output is the owner's to say. It bears on GAP-388.
 DATE: 2026-11-28 — owner statement, relayed in session and recorded on contact per CLAUDE.md rule 0.
+
+## Owner statement 2026-11-28 (fifth) — judgment adjudicates what evidence cannot determine, and thereby admissibility
+"Where evidence is unable to determine for itself, the judgment phase will adjudicate the missing domains/values/relationships/etc and thereby determine admissible"
+READING (not the owner's words): a figure or source that arrives without its domain, a value, a relationship or a lens is recorded as it is, and judgment supplies what is missing; whether the result is admissible is judgment's finding, not a gate at recording. CLAUDE.md §3 places admission at the evidence stage ("what was admitted") and weighing at judgment, so this statement may move part of admission; whether it does is the owner's to say. It bears on GAP-388.
+DATE: 2026-11-28 — owner statement, relayed in session and recorded on contact per CLAUDE.md rule 0.
