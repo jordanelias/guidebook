@@ -9071,3 +9071,9 @@ DATE: 2026-11-27 — delegated resolutions after the independent checks named ab
 "solving by hand is also a clue for how to solve a tooling problem"
 SUPERSEDES: the 2026-11-27 delegated resolutions' ACTION items 1 and 2 (OD-110), as sequencing only.
 DATE: 2026-11-28 — owner statements, relayed in session and recorded on contact per CLAUDE.md rule 0.
+
+## Owner answer 2026-11-28 — GAP-070: a per-flight rise term (option b)
+"TERM-090 could work"
+Asked which to record, the owner selected "(b) Mint a per-flight rise term" (the option stating a term for the rise of a single flight between landings, distinct from TERM-090's total rise).
+ACTION: TERM-095 (`rise`, from REF-00992 Table 1's column 'Maximum rise') and parameter 13 minted the same day through `db.py add-term --from-observation` and `add-parameter`; direction set from REF-00992; one extraction written (REF-00992 para 1.26(c)). GAP-070 stays open until the held rise-stated landings (REF-00990, REF-01012, REF-01023/24, REF-00995, REF-01018, REF-01032) are filed under parameter 13.
+DATE: 2026-11-28 — owner statement and option selection, relayed in session; the first sentence alone was tentative and the selection is what is recorded as the ruling.
