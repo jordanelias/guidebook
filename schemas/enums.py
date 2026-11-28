@@ -83,19 +83,30 @@ class ItemAssignmentStatus(str, Enum):
 
 
 class EvidenceMarker(str, Enum):
-    """The three bands of tier-system section 5, as the glyphs a determination carries.
+    """The marks of tier-system section 5, as the glyphs a determination carries: three circles by
+    tier, and the warning marker in place of a circle (never beside it) for a grey basis (OD-64).
 
-    Declared strongest first: that order is the ordinal (FULL 3, PARTIAL 2, WEAK 1) the
-    owner's 2026-09-13 floor-of-the-mean ruling averages. `schemas.tier_derivation.band`
-    maps a source to one; `floor_mean` combines several.
+    The circles are declared strongest first: that order is the ordinal (FULL 3, PARTIAL 2, WEAK 1)
+    the owner's 2026-09-13 floor-of-the-mean ruling averages. WARNING has no ordinal: how it enters a
+    derived figure is not ruled (tier-system section 5), so asking for one raises. U+26A0 alone, never
+    with U+FE0F. `schemas.tier_derivation.band` maps a source to a circle; `floor_mean` combines circles.
     """
-    FULL = "\u25cf"      # confirmed evidence base
-    PARTIAL = "\u25d0"   # policy or standards basis only
-    WEAK = "\u25cb"      # grey literature, expert consensus, thin base, or a source not retrieved
+    FULL = "\u25cf"      # T1, T2, Co-1, Co-2
+    PARTIAL = "\u25d0"   # T3 (not grey), T4
+    WEAK = "\u25cb"      # T5, T6
+    WARNING = "\u26a0"   # in place of the circle: a grey basis (OD-64)
+
+    @classmethod
+    def circles(cls):
+        return tuple(m for m in cls if m is not cls.WARNING)
 
     @property
     def ordinal(self) -> int:
-        return len(EvidenceMarker) - list(EvidenceMarker).index(self)
+        circles = EvidenceMarker.circles()
+        if self not in circles:
+            raise ValueError("the warning marker has no ordinal: how it enters a derived figure is not "
+                             "ruled (tier-system section 5)")
+        return len(circles) - circles.index(self)
 
 
 class EvidenceType(str, Enum):

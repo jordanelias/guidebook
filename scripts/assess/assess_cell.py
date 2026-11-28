@@ -83,7 +83,7 @@ Module roster (PILOT-MANIFEST.md §4 — no silent omissions):
   (lens codes are validated against their own live base tables)
 
 G-fixes (evidence-architecture.md §4, DR-2026-07-12-evidence-architecture-unification):
-  G1  T4–6-only basis ⇒ regulatory-stratum determination: design_scale='universal',
+  G1  T4–6-only basis ⇒ regulatory-stratum determination (regulatory_stratum_only=1),
       never 'stated', code_floor_only=1 iff T6-only; T4/T5 keep GRAIN_CODE (no pilot
       source has documented T1/T2 traceability, so no re-graining is claimed).
       Engine-side (regulatory_richness(), below) — not a directness-model rule.
@@ -118,14 +118,19 @@ from schemas.directness import (  # noqa: E402
 )
 from schemas.tier_derivation import band, check_tier_consistency, floor_mean  # noqa: E402
 from schemas.enums import (  # noqa: E402
-    ConvergenceStatus, EvidenceCellState, EvidenceMarker,
+    ConvergenceStatus, EvidenceCellState, EvidenceMarker, EvidenceType,
     VerificationStatus,
 )
 from schemas.evidence_state import (  # noqa: E402
     ConvergenceAssessment, EvidenceStateRecord, ProvisionalConfidenceFlag,
 )
 
-RULE_VERSION = "pilot-8"  # pilot-8 (T-030, OR-10, OD-22, OD-42): governing claims in units of one quantity kind (`base_units`: mm, cm, m,
+RULE_VERSION = "pilot-9"  # pilot-9 (T-117, OD-57, OD-59, OD-64; T-056 item 3a, OD-48): the marker is the tier-system
+#   section 5 table applied to the sources that state the shown value (`own`), with no regulatory-only override; a cell
+#   whose shown value a non-VERIFIED source states, or whose stating sources' markers differ, is refused naming the open
+#   owner questions (OD-99, OD-100, OD-92); `design_scale` is read off the key (whom the cell is for), not the stratum.
+#   The sha payload is unchanged; the label moves because the same evidence now gives a different answer.
+#   pilot-8 (T-030, OR-10, OD-22, OD-42): governing claims in units of one quantity kind (`base_units`: mm, cm, m,
 #   in, ft; the gradient notations) compose on the kind's canonical unit, exactly, and the notations are shown with the rounding rule
 #   of dbcore.SHOWN_STEPS; before, only the gradient notations composed. The sha payload is unchanged from pilot-7 (the
 #   label moves because the same evidence now gives a different value, and "same evidence + same rule_version => same
@@ -772,13 +777,13 @@ def compose_value(conn, links, direction):
                 if not (l["role"] == "governing" and l["extraction_id"] in conditioned)]
     if conditioned and not any(l["role"] == "governing" for l in headline):
         return None, None, None, (f"piecewise only: all {len(conditioned)} governing claim(s) are "
-                                  f"conditioned (condition_on); the branches are the answer"), None
-    vmin, vmax, unit, note, notations = _compose_headline(
+                                  f"conditioned (condition_on); the branches are the answer"), None, []
+    vmin, vmax, unit, note, notations, stating = _compose_headline(
         conn, headline, direction, "unconditioned " if conditioned else "")
     if conditioned:
         note = ((note + "; ") if note else "") + (
             f"{len(conditioned)} conditioned claim(s) are branches, not the headline")
-    return vmin, vmax, unit, note, notations
+    return vmin, vmax, unit, note, notations, stating
 
 
 def _compose_headline(conn, links, direction, scope=""):
@@ -793,7 +798,9 @@ def _compose_headline(conn, links, direction, scope=""):
     value_unit` since the 057 baseline has been NULL because the engine passed literal None
     into those three slots, having no rule it could apply.
 
-    Returns (value_min, value_max, value_unit, note, notations). `scope` ("unconditioned " when the
+    Returns (value_min, value_max, value_unit, note, notations, stating): `stating` is the extraction ids
+    of the headline rows whose own bound is a shown bound (OD-59's "its own source"; empty when no value
+    is shown). `scope` ("unconditioned " when the
     caller has set conditioned claims aside) prefixes "governing claim(s)" in every note that counts
     or names them, so a denominator is named for what it counts. A NULL triple always arrives with a
     note saying WHY, because "no value" and "no rule to pick one" are different facts and a
@@ -821,7 +828,7 @@ def _compose_headline(conn, links, direction, scope=""):
     """
     gov = [l for l in links if l["role"] == "governing"]
     if not gov:
-        return None, None, None, None, None    # `pending` already says this
+        return None, None, None, None, None, []    # `pending` already says this
 
     ids = [l["extraction_id"] for l in gov]
     # Same fixture tolerance as the direction lookup: the pilot test builds a synthetic
@@ -832,7 +839,7 @@ def _compose_headline(conn, links, direction, scope=""):
     if not {"claimed_value", "claimed_unit", "comparator", "claim_type"} <= _cols:
         return None, None, None, (
             "this database's source_value_extractions carries no value columns, so no "
-            "interval can be composed from it"), None
+            "interval can be composed from it"), None, []
     rows = conn.execute(
         "SELECT extraction_id, claimed_value, claimed_unit, comparator, claim_type "
         "FROM source_value_extractions WHERE extraction_id IN (%s)"
@@ -844,7 +851,7 @@ def _compose_headline(conn, links, direction, scope=""):
     # canonical unit of its quantity kind and the conversion is exact, in Fraction. For a unit with no row the scale
     # IS the stated unit, and two different ones still refuse to compose: millimetres and degrees are different
     # kinds of quantity, and the ruling's ACTION (4) leaves that refusal alone.
-    bounds, scales, stated_notations, unparsed = [], set(), set(), []
+    bounds, scales, stated_notations, unparsed, bound_ids = [], set(), set(), [], []
     for _eid, val, unit, cmp_, ctype in rows:
         fam = unit_kind(conn, unit)
         b = bound_on_scale(conn, val, unit, cmp_, ctype)
@@ -856,6 +863,7 @@ def _compose_headline(conn, links, direction, scope=""):
             unparsed.append((val, unit))
             continue
         bounds.append((b, (unit or "").strip()))
+        bound_ids.append(_eid)
         # a scale is a kind or a stand-alone unit, keyed apart so a unit string can never equal a kind id (a unit
         # named like a kind would otherwise merge with the kind's units, in an order-dependent way)
         scales.add(("kind", fam) if fam else ("unit", (unit or "").strip()))
@@ -864,12 +872,12 @@ def _compose_headline(conn, links, direction, scope=""):
     if not bounds:
         return None, None, None, (
             f"no {scope}governing claim states a numeric value (all are qualitative, or a "
-            "notation this engine does not read into a bound)"), None
+            "notation this engine does not read into a bound)"), None, []
     if len(scales) > 1:
         return None, None, None, (
             "%sgoverning claims are stated in different units (%s); composing an interval "
             "would require a conversion no source stated"
-            % (scope, ", ".join(sorted({repr(u) for _b, u in bounds})))), None
+            % (scope, ", ".join(sorted({repr(u) for _b, u in bounds})))), None, []
     family = unit_kind(conn, bounds[0][1])             # one scale, so every bound's unit is of this kind or none is
     unit = (canonical_unit(conn, family) if family
             else (next(iter({u for _b, u in bounds})) or None))
@@ -878,12 +886,12 @@ def _compose_headline(conn, links, direction, scope=""):
         return None, None, unit, (
             "no accessibility_direction recorded for this parameter, so the "
             "most-accommodating rule (owner 2026-07-21) has nothing to read: record it "
-            "with db.py set-parameter-direction"), None
+            "with db.py set-parameter-direction"), None, []
     if direction == "contested":
         return None, None, unit, (
             "accessibility_direction is CONTESTED -- most-accommodating selection is "
             "inapplicable (DR-2026-07-21 section 5) and no single value is anchored; the "
-            "spread is rendered with each population's direction stated"), None
+            "spread is rendered with each population's direction stated"), None, []
 
     caveat = None
     if unparsed:
@@ -922,7 +930,7 @@ def _compose_headline(conn, links, direction, scope=""):
             "value and so contributes a floor as well as a ceiling"
             + (" — point-valued claims are in %s" % ", ".join(_pointy) if _pointy else "")
             + ". Fix the comparator on the extraction (`db.py amend-extraction "
-              "--field comparator`), do not widen the interval here"), None
+              "--field comparator`), do not widen the interval here"), None, []
 
     # ── PRESENT BOTH ──────────────────────────────────────────────────────────────
     # Every notation the governing set states, carrying the SELECTED bound. A notation
@@ -980,9 +988,11 @@ def _compose_headline(conn, links, direction, scope=""):
                 "the headline is in %s, the canonical unit of its kind, converted from the stated %s"
                 % (unit, ", ".join(sorted(repr(u) for u in stated_notations))))
 
+    stating = sorted(i for i, (b, _u) in zip(bound_ids, bounds)
+                     if (vmin is not None and b[0] == vmin) or (vmax is not None and b[1] == vmax))
     return (float(vmin) if vmin is not None else None,
             float(vmax) if vmax is not None else None,
-            unit, caveat, notations)
+            unit, caveat, notations, stating)
 
 
 def link_payload(links):
@@ -1272,16 +1282,33 @@ def sha(parameter_id, lens, links, conditioned=()):
 def _verified(rec):
     """Only a VERIFIED source earns a band ("must be verified", owner 2026-10-21). An unverified
     one may still anchor a determination (D-0157: a return pass is owed) and is flagged by
-    `has_unverified_sources`, but it is left out of the marker, so it can neither raise nor lower
-    it; a cell with no verified governing source is weak (evidence-methodology 2.8: unverified
-    sources are flagged and do not downgrade a cell the verified ones carry)."""
+    `has_unverified_sources`. When it states the shown value the cell is refused (`own`, OD-99);
+    otherwise it is left out of the marker, so it can neither raise nor lower it, and a cell that
+    shows no value and has no verified governing source is weak (evidence-methodology 2.8)."""
     return (rec["verification_status"] or "") in VERIFIED_OK
 
 
-def _confirmed_bands(conn, parameter_id, links, confirmer_anchors, lens):
+def own(rec, confirmed_band=None):
+    """One source's mark under the tier-system section 5 table, for a source that states the shown
+    value (OD-59, "its own"): the warning marker for a grey basis, whatever the tier (OD-64, "triangle
+    for all"); None for a source that is not VERIFIED, because which mark its value carries is OD-99
+    Question 1 (and, if it could not be retrieved, OD-100), both the owner's, so the caller refuses;
+    otherwise its band under confirmation by study (R39, `_confirmed_bands`) or its own circle."""
+    if rec["evidence_type"] == EvidenceType.GREY.value:
+        return EvidenceMarker.WARNING
+    if not _verified(rec):
+        return None
+    return confirmed_band or band(rec["tier"], rec["evidence_type"])
+
+
+def _confirmed_bands(conn, parameter_id, links, confirmer_anchors, lens, bands):
     """R39: each governing source's band under confirmation by study. One confirmed clause does
-    not confirm the code (owner 2026-10-21): an unconfirmed row is weak, and a source takes the
-    floor of the mean of its rows, so it reaches the confirming band only when every row does.
+    not confirm the code (owner 2026-10-21): an unconfirmed row takes its source's own band
+    (`bands`, the tier-system section 5 table; it was weak while a regulatory source could be
+    nothing else), and a source takes the floor of the mean of its rows, so it reaches the
+    confirming band only when every row does. Returns (bands, confirmed): every governing source's
+    band, and the sources every governing row of which a study confirms (only those are a "confirmed
+    claim, not a regulation-only floor", OR-22 and OR-22b).
 
     A row is confirmed by a `confirms` edge, whose referent is that row, from a VERIFIED
     anchoring source (`confirmer_anchors`, from `gather_confirmers`: not the direction set, which
@@ -1297,7 +1324,7 @@ def _confirmed_bands(conn, parameter_id, links, confirmer_anchors, lens):
     here, though its source is a confirmer through a row that is."""
     rows = {l["extraction_id"]: l["ref_id"] for l in links if l["role"] == "governing"}
     if not rows or not _table_exists(conn, "extraction_relations"):
-        return {}
+        return dict(bands), set()
     confirmer_bands = {r["ref_id"]: band(r["tier"], r["evidence_type"])
                        for r in confirmer_anchors if _verified(r)}
     skim, skim_params = _publishable_clause(conn, "e")
@@ -1315,8 +1342,9 @@ def _confirmed_bands(conn, parameter_id, links, confirmer_anchors, lens):
     by_source = {}
     for eid, ref in rows.items():
         by_source.setdefault(ref, []).append(
-            floor_mean(confirmers[eid].values()) if eid in confirmers else EvidenceMarker.WEAK)
-    return {ref: floor_mean(bands) for ref, bands in by_source.items()}
+            floor_mean(confirmers[eid].values()) if eid in confirmers else bands[ref])
+    return ({**bands, **{ref: floor_mean(rb) for ref, rb in by_source.items()}},
+            {ref for ref in by_source if all(eid in confirmers for eid, r in rows.items() if r == ref)})
 
 
 def determine(conn, parameter_id, lens, slug, note):
@@ -1383,7 +1411,10 @@ def determine(conn, parameter_id, lens, slug, note):
     n_axes = sum(1 for a in (axes_clinical, axes_co1, axes_co2) if a)
 
     conv = None
-    state, design_scale = None, SCALE_POPULATION
+    # WHOM THE CELL IS FOR, read off its key (OD-48, "whom it is for"; T-056 item 3a): `universal` when it
+    # names no identity, `population` otherwise. What it rests on is `regulatory_stratum_only`'s alone.
+    state = None
+    design_scale = SCALE_POPULATION if identity else SCALE_UNIVERSAL
     tier_basis, governing, conf, gap_needed = None, [], None, False
     code_floor_only, regulatory_stratum_only = 0, 0
     rests_on_proxy_inference = 0
@@ -1451,7 +1482,7 @@ def determine(conn, parameter_id, lens, slug, note):
     elif regulatory:
         # G1: a regulatory-stratum determination. It may be NAMED best practice (owner
         # 2026-10-30, ratified in the second entry of that date; tier-system section 8, Option A),
-        # at the weak band and with the code-derived flag: never `stated`, never marked full.
+        # with the code-derived flag: never `stated`; its marker is its sources' circle (T-117).
         #
         # ── OPEN DOCTRINAL QUESTION, RECORDED 2026-09-10, DELIBERATELY NOT DECIDED ──
         # The B5a tier gate above conditions a source to NON-ANCHORING when its stored
@@ -1486,7 +1517,6 @@ def determine(conn, parameter_id, lens, slug, note):
         # takes it: it is a §2.3/tier-system question, it needs a DR, and the two
         # consequences above are the evidence it should start from.
         rich, why = regulatory_richness(b["t45"], b["t6"])
-        design_scale = SCALE_UNIVERSAL
         regulatory_stratum_only = 1
         code_floor_only = 1 if (b["t6"] and not b["t45"]) else 0
         if rich:
@@ -1551,7 +1581,7 @@ def determine(conn, parameter_id, lens, slug, note):
                                       "(" + why + ") and " + str(len(finding_anchors)) +
                                       " anchoring-tier finding(s) supply the direction. The "
                                       "value is selected most-accommodatingly within what the "
-                                      "threshold permits; no source states it. Owner "
+                                      "threshold permits, from the bounds the governing sources state. Owner "
                                       "2026-09-16: 'yes it's not perfect it's a proxy'.",
                             synth=None)
                 conf = dict(present=[f"Tier 4-5 standards ({len(b['t45'])})",
@@ -1644,7 +1674,7 @@ def determine(conn, parameter_id, lens, slug, note):
                 (parameter_id,)).fetchone()
             _direction = _dir_row[0] if _dir_row else None
             _direction_ref = _dir_row[1] if _dir_row and len(_dir_row) > 1 else None
-    value_min, value_max, value_unit, value_note, value_notations = \
+    value_min, value_max, value_unit, value_note, value_notations, stating_ids = \
         compose_value(conn, links, _direction)
 
     # THE DERIVATION HANDSHAKE (080). H2/H3/H4 of DR-2026-07-13, whose
@@ -1720,38 +1750,68 @@ def determine(conn, parameter_id, lens, slug, note):
         has_unverified = has_unverified or any(
             not _verified(r) for r in finding_recs + confirmer_recs if not _is_disqualified(r))
 
-    # THE MARKER (migration 116; RULINGS R7, R39). Only a stated or provisional cell carries one.
-    # Each VERIFIED governing source takes its tier-system section 5 band and the cell the floor
-    # of their mean; unverified ones are left out, and a cell with no verified source is weak. The
-    # 2026-09-13 owner rulings give that function for a derived figure's inputs; applying it to a
-    # cell's governing sources is RULINGS R7 as amended by R49(a), not put to the owner at this
-    # level. A value read off the regulatory stratum, as a floor claim or as the threshold of a
-    # proxy inference, is weak (Option A section 2.3): a floor claim is pinned there by the row's
-    # CHECK, and a proxy determination's code leaves weak only to the extent that studies confirm
-    # its governing rows (`_confirmed_bands`), a rule that lives here alone because a CHECK cannot
-    # read extraction_relations. THE MARKER IS A CACHE over those edges and over how rows are
-    # graded and sources verified: `derivation_sha` hashes none of it (its one edge term is the set
-    # of conditioned governing claims, below). `db.py` refuses a `confirms`
-    # edge to a row a live proxy determination is governed by (`_refuse_live_confirmation`),
-    # a `condition_on` edge from a row that governs a live determination and has none yet
-    # (`_write_relation_edge`), and regrading a row in a live determination's provenance
-    # (`amend_extraction`); retiring the determination is how it is re-determined. NOT guarded: a
-    # change of a source's verification_status, of a governing row's comparator, and a finding row
-    # added after the answer was written.
+    # THE MARKER (migration 116; T-117). Only a stated or provisional cell carries one. A cell that
+    # SHOWS A VALUE takes the mark of the sources that state it (OD-59, "its own"; `own`): the
+    # tier-system section 5 circle, or the warning marker in place of it for a grey basis (OD-64).
+    # Where that needs an owner answer the cell is REFUSED, naming every question that blocks it:
+    # a stating source that is not VERIFIED (OD-99 Question 1, and OD-100 if it could not be
+    # retrieved: this engine reads no retrieval log, so it cannot tell the two apart), and stating
+    # sources whose marks differ, or could differ under either answer to OD-99 Question 1 (OD-92). A
+    # cell that shows no value keeps RULINGS R7: the floor of the mean of its VERIFIED governing
+    # sources' circles, weak when none is verified. A floor claim is no longer pinned weak: a T4 basis
+    # shows the half circle ("T4 only half circle"). A row confirmed by a study takes the study's band
+    # (R39, `_confirmed_bands`); a regulatory basis every governing row of which a study confirms is
+    # then no longer regulation-only (OR-22b; one confirmed clause does not confirm the code, R39), so
+    # `regulatory_stratum_only` and the tier_basis suffix move together
+    # (the proxy branch's precedent; the CHECK keeps ● off a regulation-only row). THE MARKER IS A
+    # CACHE over the `confirms` edges and over how rows are graded and sources verified:
+    # `derivation_sha` hashes none of it (its one edge term is the set of conditioned governing
+    # claims, below). `db.py` refuses a `confirms` edge to a row a live proxy determination is
+    # governed by (`_refuse_live_confirmation`), a `condition_on` edge from a row that governs a
+    # live determination and has none yet (`_write_relation_edge`), and regrading a row in a live
+    # determination's provenance (`amend_extraction`); retiring the determination is how it is
+    # re-determined. NOT guarded: a change of a source's verification_status, of a governing row's
+    # comparator, and a finding row added after the answer was written.
     marker = None
     if state in ("stated", "provisional"):
-        if regulatory_stratum_only:
-            source_bands = []
+        by_ref = {r["ref_id"]: r for r in recs}
+        bands = {g: band(by_ref[g]["tier"], by_ref[g]["evidence_type"]) for g in governing}
+        confirmed, wholly_confirmed = _confirmed_bands(conn, parameter_id, links, confirmer_anchors, lens, bands)
+        if value_min is not None or value_max is not None:
+            _ref_of = {l["extraction_id"]: l["ref_id"] for l in links}
+            basis = sorted({_ref_of[e] for e in stating_ids})
+            if not basis:
+                raise AssertionError("engine defect: a value is shown that no governing row states")
+            marks = {g: own(by_ref[g], confirmed[g]) for g in basis}
+            blocked = []
+            unverified = [g for g, m in marks.items() if m is None]
+            if unverified:
+                blocked.append(
+                    f"OD-99 (referred to the owner, Question 1) and OD-100: {', '.join(unverified)} "
+                    f"state{'s' if len(unverified) == 1 else ''} the shown value and "
+                    f"{'is' if len(unverified) == 1 else 'are'} not VERIFIED; whether such a value "
+                    f"carries the warning marker or its tier's circle, and whether a source that "
+                    f"could not be retrieved may govern at all, are the owner's to say.")
+            if len(basis) > 1 and any(
+                    len({m or alt(g) for g, m in marks.items()}) > 1
+                    for alt in (lambda g: EvidenceMarker.WARNING, lambda g: confirmed[g])):
+                blocked.append(
+                    "OD-92 (referred to the owner): several sources state the shown value and their "
+                    "markers differ (" + ", ".join(
+                        f"{g}: {m.value if m else EvidenceMarker.WARNING.value + ' or ' + confirmed[g].value}"
+                        for g, m in marks.items()) + "); which marker the value carries is the owner's to say.")
+            if blocked:
+                raise OpenQuestion(
+                    f"parameter {parameter_id} ({lens_key(lens)}): the cell is refused, naming every open "
+                    f"question that blocks it. " + " ".join(blocked) + " Nothing written.", links)
+            mark = next(iter(marks.values()))
         else:
-            by_ref = {r["ref_id"]: r for r in recs}
-            verified = [g for g in governing if _verified(by_ref[g])]
-            if rests_on_proxy_inference:
-                confirmed = _confirmed_bands(conn, parameter_id, links, confirmer_anchors, lens)
-                source_bands = [confirmed.get(g, EvidenceMarker.WEAK) for g in verified]
-            else:
-                source_bands = [band(by_ref[g]["tier"], by_ref[g]["evidence_type"])
-                                for g in verified]
-        marker = floor_mean(source_bands or [EvidenceMarker.WEAK]).value
+            basis = [g for g in governing if _verified(by_ref[g])]
+            mark = floor_mean([confirmed[g] for g in basis] or [EvidenceMarker.WEAK])
+        if regulatory_stratum_only and basis and all(g in wholly_confirmed for g in basis):
+            regulatory_stratum_only = 0
+            tier_basis = tier_basis.replace("(regulatory_stratum_only)", "(confirmed_by_study)")
+        marker = mark.value
 
     return {
         "links": links,
@@ -1845,6 +1905,9 @@ def stale_determinations(conn):
         lens = dict(zip(LENS_ORDER, rest))
         try:
             det = determine(conn, pid, lens, "", "recomputed")
+        except OpenQuestion as exc:
+            out.append((sid, [f"marker (refused: {exc})"]))
+            continue
         except Refusal:
             # The figures behind a stored cell can leave its lens when a link is retired.
             out.append((sid, ["lens (no figure is stated in it now)"]))
@@ -1992,6 +2055,15 @@ class Refusal(ValueError):
     the write library to share an exception class neither surface ever catches from the
     other would buy nothing.
     """
+
+
+class OpenQuestion(Refusal):
+    """A refusal that names an open owner question (OD-92, OD-99, OD-100): the cell is not answered
+    until the owner answers. Apart from a lens refusal so `stale_determinations` can say which."""
+
+    def __init__(self, message, links=()):
+        super().__init__(message)
+        self.links = list(links)    # the provenance graded before the refusal: what the cell gathered
 
 
 _ARGS = None   # main()'s parsed namespace: argparse takes abbreviations of any length, so the session and --db are read from it

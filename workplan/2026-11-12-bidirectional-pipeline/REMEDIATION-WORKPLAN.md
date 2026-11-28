@@ -1398,6 +1398,102 @@ Each entry was written as **OWNER DECISION REQUIRED**; its status line says what
 
 - **Status:** read the ledger's last line, `grep -n -F "OD-89 STATUS:" references/project-standards.md | tail -1`. Same convention as OD-84.
 
+### OD-90  The four figures on the first page (Q1)
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-90 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-90 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-91  The first cell and the order of work (Q4)
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-91 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-91 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-92  Several stating sources carry different markers (Q-B2)
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-92 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-92 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-93  A Co-1 research publication counts under OD-58 as a T1 one does (Q-B3)
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-93 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-93 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-94  Q-B3, the rest
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-94 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-94 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-95  The academic-route record: do nothing now (Q-B4)
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-95 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-95 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-96  Q-B5, the code half
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-96 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-96 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-97  Q-B5, the grey half
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-97 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-97 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-98  `rests_on_proxy_inference` is not by itself a thin cause (Q3b)
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-98 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-98 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-99  The route gate and C10
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-99 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-99 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-100  A source that could not be retrieved and has no route
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-100 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-100 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-101  The eligibility union: an unverified Co-1 source governs on the terms of an unverified T1 one
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-101 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-101 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-102  The harm record, deferred to a tooling pull request with or before T-125's capture path
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-102 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-102 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-103  The page: method only
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-103 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-103 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-104  The page: the owner's meanings
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-104 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-104 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-105  Carrying out "D1 retire": who may author the entry the tool needs
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-105 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-105 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-106  T-039, the owner's edit request
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-106 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-106 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-107  AU-04, the doctrine-recheck triggers
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-107 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-107 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-108  AU-13, expert consensus
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-108 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-108 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-109  AU-20, done-lines D-02 and D-13
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-109 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-109 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-110  What can start, and the task-file edits owed
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-110 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-110 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-111  `design_scale` prose against OD-48
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-111 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-111 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-112  The in-scope filter: only OD-04's jurisdictions are shown
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-112 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-112 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
+### OD-113  Contested grades: the page prints every grade row
+
+- **Status:** read the ledger's last line, `grep -n -F "OD-113 STATUS:" references/project-standards.md | tail -1`, and its check line, `grep -n -F "OD-113 CHECK:" references/project-standards.md | tail -1` (the ledger entry "Delegated resolutions 2026-11-27"). Delegated or referred back to the owner, as that line says; never the owner's own answer.
+
 ## 9. Retained stress-test value
 
 Three rounds of stress scripts found defects that no registered check finds. What is kept and why is in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/RETAINED.md` (the owner permitted retention: `grep -n -F "retain" references/project-standards.md | tail -3`).

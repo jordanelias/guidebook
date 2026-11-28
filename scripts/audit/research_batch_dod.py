@@ -447,7 +447,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # I4). Until then this read search_executions and failed a non-English search whose
     # target_evidence_type was 'grey'. That tested a proxy -- what a search SOUGHT -- and not
     # the harm the rule names, which happens when a source is FILED: a non-English journal
-    # article filed evidence_type='grey' renders ○ where it is owed ● (governance/
+    # article filed evidence_type='grey' renders ⚠ where it is owed ● (governance/
     # tier-system.md). The proxy was wrong both ways. It never saw a journal article filed
     # grey from an untargeted or English-targeted search, and it pushed batch 23 to retarget
     # two searches that genuinely sought grey material to 'co1' to clear the gate (session
