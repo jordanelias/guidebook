@@ -9107,3 +9107,8 @@ DATE: 2026-11-28 — owner statement, relayed in session and recorded on contact
 "Where evidence is unable to determine for itself, the judgment phase will adjudicate the missing domains/values/relationships/etc and thereby determine admissible"
 READING (not the owner's words): a figure or source that arrives without its domain, a value, a relationship or a lens is recorded as it is, and judgment supplies what is missing; whether the result is admissible is judgment's finding, not a gate at recording. CLAUDE.md §3 places admission at the evidence stage ("what was admitted") and weighing at judgment, so this statement may move part of admission; whether it does is the owner's to say. It bears on GAP-388.
 DATE: 2026-11-28 — owner statement, relayed in session and recorded on contact per CLAUDE.md rule 0.
+
+## Owner statement 2026-11-28 (sixth) — what evidence and judgment are
+"Evidence is the recording of our research, and Judgment is the vetting of it to show saliency"
+READING (not the owner's words): evidence records what the research found, as found; judgment vets it and shows which of it bears on a determination. Read with the fifth statement above, a refusal at recording for want of a classification, domain or admissibility finding belongs to judgment's work, not evidence's. CLAUDE.md §3's table describes evidence as "what was admitted, its identity and its verification" and judgment as "what each source asserts for each parameter, whether it is sound, and how it weighs"; whether that table is amended is the owner's to say. It bears on GAP-388.
+DATE: 2026-11-28 — owner statement, relayed in session and recorded on contact per CLAUDE.md rule 0.
