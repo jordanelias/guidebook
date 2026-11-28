@@ -9064,3 +9064,10 @@ ACTION:
 5. Re-derive every figure by its command.
 
 DATE: 2026-11-27 — delegated resolutions after the independent checks named above; three independent checks recorded; not an owner statement.
+
+## Owner statements 2026-11-28 — research starts; hand fixes are recorded as tooling issues
+"start doing our research across languages and jurisdictions"
+"whatever doesn't work in a session just gets fixed by hand logically within context of project then recorded as a tooling issue to resolve"
+"solving by hand is also a clue for how to solve a tooling problem"
+SUPERSEDES: the 2026-11-27 delegated resolutions' ACTION items 1 and 2 (OD-110), as sequencing only.
+DATE: 2026-11-28 — owner statements, relayed in session and recorded on contact per CLAUDE.md rule 0.
