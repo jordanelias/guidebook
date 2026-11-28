@@ -9079,3 +9079,37 @@ ACTION: TERM-095 (`rise`, from REF-00992 Table 1's column 'Maximum rise') and pa
 DATE: 2026-11-28 — owner statement and option selection, relayed in session; the first sentence alone was tentative and the selection is what is recorded as the ruling.
 
 CORRECTION 2026-11-28 to the entry above (adversarial pass 12, finding 1): the option the owner selected was labelled "(b) Mint a per-flight rise term (Recommended)", and the prompt that offered it opened with "'could work' is not yet a ruling" and the stored warning against TERM-090. The words after the owner's first sentence are the owner's selection of that labelled option, not typed words; "a per-flight rise term" in the heading is the option's label, not a coined name. Record the answer as that selection only.
+
+## Owner statements 2026-11-28 (later) — search intensity; log refusals, denials and hand edits
+"I feel like you are logging too few searches per run. Please increase your searching intensity."
+"Please log all instances of refusals and denials."
+"Please log all instances of hand editing, ie overriding tools."
+ACTION: the next batch is a search batch with many more logged searches per run; refusals, harness denials and hand edits are kept in `scratchpad/<session>/overrides-refusals-denials.md` and, for writer refusals, in `refusals.jsonl` with dispositions.
+DATE: 2026-11-28 — owner statements, relayed in session and recorded on contact per CLAUDE.md rule 0.
+
+## Owner statements 2026-11-28 (third) — domains connect to groups automatically; evidence is not refused for lacking a classification
+"ramps do not specifically need to state populations. ramps as ramps are circulation related, which means that they would automatically key on to all identities/ICF/access needs that are concerned with mobility and circulation"
+"this is why we have categories for parameters too: so that we can automatically relate parameters to their needs"
+"it's why judgment needs to be performed upon logged evidence, and evidence shouldn't be getting refused because it doesn't have a classification yet because there's another phase that can do that in supplement"
+"Domains should be automatically connected identities/ICF/needs."
+"This is a mission critical requirement as it appears that it will have huge impacts upon recording research and preventing refusals"
+"If evidence is not able to log the domain by itself when recording information, then it still needs to be approved so that the judgment phase can properly assign the domain and consequently the relevant groups"
+TOUCHES (rule 0, not yet changed in code): the `add-extraction` refusal "an extraction must be stated in at least one lens (D-0182)", which turns away a figure with no lens, and the absence of any link from a parameter's domain (`terms.domain`) to identities, ICF codes and access needs. D-0182's cardinality rule is read as governing the judged link, not the logging of evidence; whether that reading stands is the owner's.
+ACTION: GAP filed at P1 (tooling PR, rule 10): accept evidence with no lens and no domain, and derive the groups from the domain at judgment. Until it ships, code rows carry a provisional lens flagged as such. The mapping from each domain to its identities, ICF codes and needs is not written here: it is doctrine for the owner or an adjudication with a warrant.
+DATE: 2026-11-28 — owner statements, relayed in session and recorded on contact per CLAUDE.md rule 0.
+
+## Owner statement 2026-11-28 (fourth) — the chain from scope to groups to domains
+"Universal/Population Specific/Individual relates to Identity/ICF/Access Needs relates to accessible design domains under which parameters are categorized"
+READING (not the owner's words): the chain runs scope of a determination (universal, population specific, individual) → the groups it is stated for (identity, ICF, access needs) → the design domains that categorise parameters. The statement does not say which scope pairs with which lens, so none is assumed; whether it changes D-0170 (the lenses) or the 2026-08-27 ruling that the crossing is judgment's output is the owner's to say. It bears on GAP-388.
+DATE: 2026-11-28 — owner statement, relayed in session and recorded on contact per CLAUDE.md rule 0.
+
+## Owner statement 2026-11-28 (fifth) — judgment adjudicates what evidence cannot determine, and thereby admissibility
+"Where evidence is unable to determine for itself, the judgment phase will adjudicate the missing domains/values/relationships/etc and thereby determine admissible"
+READING (not the owner's words): a figure or source that arrives without its domain, a value, a relationship or a lens is recorded as it is, and judgment supplies what is missing; whether the result is admissible is judgment's finding, not a gate at recording. CLAUDE.md §3 places admission at the evidence stage ("what was admitted") and weighing at judgment, so this statement may move part of admission; whether it does is the owner's to say. It bears on GAP-388.
+DATE: 2026-11-28 — owner statement, relayed in session and recorded on contact per CLAUDE.md rule 0.
+
+## Owner statement 2026-11-28 (sixth) — what evidence and judgment are
+"Evidence is the recording of our research, and Judgment is the vetting of it to show saliency"
+READING (not the owner's words): evidence records what the research found, as found; judgment vets it and shows which of it bears on a determination. Read with the fifth statement above, a refusal at recording for want of a classification, domain or admissibility finding belongs to judgment's work, not evidence's. CLAUDE.md §3's table describes evidence as "what was admitted, its identity and its verification" and judgment as "what each source asserts for each parameter, whether it is sound, and how it weighs"; whether that table is amended is the owner's to say. It bears on GAP-388.
+DATE: 2026-11-28 — owner statement, relayed in session and recorded on contact per CLAUDE.md rule 0.
+Follow-up to the sixth statement, same day: "Again, mission critical". Both the fifth and sixth statements are marked mission critical by the owner, in addition to the third entry's statement of the same day.
