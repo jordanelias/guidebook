@@ -9079,3 +9079,10 @@ ACTION: TERM-095 (`rise`, from REF-00992 Table 1's column 'Maximum rise') and pa
 DATE: 2026-11-28 — owner statement and option selection, relayed in session; the first sentence alone was tentative and the selection is what is recorded as the ruling.
 
 CORRECTION 2026-11-28 to the entry above (adversarial pass 12, finding 1): the option the owner selected was labelled "(b) Mint a per-flight rise term (Recommended)", and the prompt that offered it opened with "'could work' is not yet a ruling" and the stored warning against TERM-090. The words after the owner's first sentence are the owner's selection of that labelled option, not typed words; "a per-flight rise term" in the heading is the option's label, not a coined name. Record the answer as that selection only.
+
+## Owner statements 2026-11-28 (later) — search intensity; log refusals, denials and hand edits
+"I feel like you are logging too few searches per run. Please increase your searching intensity."
+"Please log all instances of refusals and denials."
+"Please log all instances of hand editing, ie overriding tools."
+ACTION: the next batch is a search batch with many more logged searches per run; refusals, harness denials and hand edits are kept in `scratchpad/<session>/overrides-refusals-denials.md` and, for writer refusals, in `refusals.jsonl` with dispositions.
+DATE: 2026-11-28 — owner statements, relayed in session and recorded on contact per CLAUDE.md rule 0.
