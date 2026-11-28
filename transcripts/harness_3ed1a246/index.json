@@ -1,0 +1,30 @@
+[
+  {
+    "started": "2026-11-28T01:06:45",
+    "role": "other",
+    "bytes": 158253,
+    "agent_id_prefix": "aa595b72",
+    "file": "2026-11-28T01-06-45_other_aa595b72.jsonl"
+  },
+  {
+    "started": "2026-11-28T01:08:58",
+    "role": "other",
+    "bytes": 924167,
+    "agent_id_prefix": "a504079d",
+    "file": "2026-11-28T01-08-58_other_a504079d.jsonl"
+  },
+  {
+    "started": "2026-11-28T01:34:49",
+    "role": "adversarial",
+    "bytes": 499121,
+    "agent_id_prefix": "a19d1bf7",
+    "file": "2026-11-28T01-34-49_adversarial_a19d1bf7.jsonl"
+  },
+  {
+    "started": "2026-11-28T02:33:57",
+    "role": "adversarial",
+    "bytes": 364199,
+    "agent_id_prefix": "a85451ef",
+    "file": "2026-11-28T02-33-57_adversarial_a85451ef.jsonl"
+  }
+]
