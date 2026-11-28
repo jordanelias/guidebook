@@ -32,3 +32,7 @@ No SQL was written by hand, `data/guidebook.db` was never written outside `migra
 | O9 | Edited `workplan/2026-11-27-back-to-work-plan.md` twice with Python string replacement | a normal edit | none |
 | O10 | Recorded translation drafts myself; obtained the blind second translation from a subagent and did not record its verdict | the translator and reviewer each recording their own act | GAP-385 |
 | O11 | Wrote two scratchpad notes by hand (`priors.md`, `adversarial-pass-12-not-recorded.md`) for facts the database could not take | a database home | the pass refusal itself (one pass per batch) |
+
+## Added late in the session
+- O12: every code row of this session carries lens MOB with basis 'context' because `add-extraction` refuses a figure with no lens (D-0182); the lens is provisional and the owner's statements of 2026-11-28 (third entry in the ledger) say it should be derived from the parameter's domain at judgment. GAP filed.
+- Denials since the table above: none. Writer refusals since: none beyond those disposed.

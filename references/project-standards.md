@@ -9086,3 +9086,14 @@ CORRECTION 2026-11-28 to the entry above (adversarial pass 12, finding 1): the o
 "Please log all instances of hand editing, ie overriding tools."
 ACTION: the next batch is a search batch with many more logged searches per run; refusals, harness denials and hand edits are kept in `scratchpad/<session>/overrides-refusals-denials.md` and, for writer refusals, in `refusals.jsonl` with dispositions.
 DATE: 2026-11-28 — owner statements, relayed in session and recorded on contact per CLAUDE.md rule 0.
+
+## Owner statements 2026-11-28 (third) — domains connect to groups automatically; evidence is not refused for lacking a classification
+"ramps do not specifically need to state populations. ramps as ramps are circulation related, which means that they would automatically key on to all identities/ICF/access needs that are concerned with mobility and circulation"
+"this is why we have categories for parameters too: so that we can automatically relate parameters to their needs"
+"it's why judgment needs to be performed upon logged evidence, and evidence shouldn't be getting refused because it doesn't have a classification yet because there's another phase that can do that in supplement"
+"Domains should be automatically connected identities/ICF/needs."
+"This is a mission critical requirement as it appears that it will have huge impacts upon recording research and preventing refusals"
+"If evidence is not able to log the domain by itself when recording information, then it still needs to be approved so that the judgment phase can properly assign the domain and consequently the relevant groups"
+TOUCHES (rule 0, not yet changed in code): the `add-extraction` refusal "an extraction must be stated in at least one lens (D-0182)", which turns away a figure with no lens, and the absence of any link from a parameter's domain (`terms.domain`) to identities, ICF codes and access needs. D-0182's cardinality rule is read as governing the judged link, not the logging of evidence; whether that reading stands is the owner's.
+ACTION: GAP filed at P1 (tooling PR, rule 10): accept evidence with no lens and no domain, and derive the groups from the domain at judgment. Until it ships, code rows carry a provisional lens flagged as such. The mapping from each domain to its identities, ICF codes and needs is not written here: it is doctrine for the owner or an adjudication with a warrant.
+DATE: 2026-11-28 — owner statements, relayed in session and recorded on contact per CLAUDE.md rule 0.
