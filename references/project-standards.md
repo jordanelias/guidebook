@@ -9097,3 +9097,8 @@ DATE: 2026-11-28 — owner statements, relayed in session and recorded on contac
 TOUCHES (rule 0, not yet changed in code): the `add-extraction` refusal "an extraction must be stated in at least one lens (D-0182)", which turns away a figure with no lens, and the absence of any link from a parameter's domain (`terms.domain`) to identities, ICF codes and access needs. D-0182's cardinality rule is read as governing the judged link, not the logging of evidence; whether that reading stands is the owner's.
 ACTION: GAP filed at P1 (tooling PR, rule 10): accept evidence with no lens and no domain, and derive the groups from the domain at judgment. Until it ships, code rows carry a provisional lens flagged as such. The mapping from each domain to its identities, ICF codes and needs is not written here: it is doctrine for the owner or an adjudication with a warrant.
 DATE: 2026-11-28 — owner statements, relayed in session and recorded on contact per CLAUDE.md rule 0.
+
+## Owner statement 2026-11-28 (fourth) — the chain from scope to groups to domains
+"Universal/Population Specific/Individual relates to Identity/ICF/Access Needs relates to accessible design domains under which parameters are categorized"
+READING (not the owner's words): the chain runs scope of a determination (universal, population specific, individual) → the groups it is stated for (identity, ICF, access needs) → the design domains that categorise parameters. The statement does not say which scope pairs with which lens, so none is assumed; whether it changes D-0170 (the lenses) or the 2026-08-27 ruling that the crossing is judgment's output is the owner's to say. It bears on GAP-388.
+DATE: 2026-11-28 — owner statement, relayed in session and recorded on contact per CLAUDE.md rule 0.
